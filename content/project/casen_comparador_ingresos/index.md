@@ -6,7 +6,7 @@ tags:
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera
-date: "2019-07-01"
+date: "2024-01-21"
 draft: false
 excerpt: 
 layout: single

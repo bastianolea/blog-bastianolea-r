@@ -3,6 +3,7 @@ title: Indicadores económicos de Chile
 subtitle: Visualizador de datos económicos
 tags:
 - shiny
+- web scraping
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera

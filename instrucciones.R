@@ -16,5 +16,9 @@ blogdown::check_netlify()
 
 # obtener dominio rbind https://github.com/rbind/support/issues/new
 
+# carpetas
+# blog: content/blog
+# proyectos: content/project
+
 
 # agregar más paginas: https://hugo-apero-docs.netlify.app/start/section-config/?panelset=project-%25F0%259F%2593%25B7&panelset1=list-sidebar-%25F0%259F%2593%25B7
