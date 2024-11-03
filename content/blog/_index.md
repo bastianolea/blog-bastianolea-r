@@ -25,7 +25,7 @@ sidebar:
   series_link: true
   show_sidebar_adunit: true
   tags_link: true
-  text_link_label: Subscribe via RSS
+  text_link_label: Suscribirse por RSS
   text_link_url: /index.xml
 thumbnail_left: true
 title: "Blog: análisis de datos en R"
