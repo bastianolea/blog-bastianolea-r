@@ -2,7 +2,7 @@
 cascade:
   headless: true
 description: |
-  A website template for Hugo developed by RStudio & Formspree and available for free.
+  Información sobre Bastián Olea Herrera, analista de datos, sociólogx y desarrollador en R.
 headless: false
 show_header: true
 sidebar_left: false

@@ -1,17 +1,29 @@
 ---
 ## Configure page content in wide column
-title: "Why apéro?" # leave blank to exclude
-number_featured: 1 # pulling from mainSections in config.toml
+title: "Acerca de mi y este sitio" # leave blank to exclude
+number_featured: 3 # pulling from mainSections in config.toml
 use_featured: false # if false, use most recent by date
 number_categories: 3 # set to zero to exclude
+
 show_intro: true
 intro: |
-  Apéro is a unique kind of casual get-together in French culture, when you gather with friends and get to know each other better over some apéritifs, snacks, and anything in between. A good apéro is one where you'd happily spend a few hours just hanging out.
+  Bastián Olea Herrera, sociólogo, 31 años, ubicado en La Florida, Santiago de Chile. 
+  - Magíster en Sociología (2019) (Pontificia Universidad Católica de Chile),
+  - Licenciado en Sociología y Bachiller en Ciencias Sociales (2016) (Universidad Alberto Hurtado),
+  - dos diplomaturas en las áreas de la ciencia de datos (UC) y la estética y los estudios de género (UC).
   
-  I hope this theme helps you create your own virtual apéro. A place where you and your site's visitors enjoy spending time, and one that helps folks get to know you better. 
-show_outro: true
+  Especialización en sociología del cuerpo, sociología del género y ciencia de datos (mediante el lenguaje de programación estadística R).
+  
+  Actualmente me dedico al análisis de datos, específicamente a la programación y desarrollo de aplicaciones web interactivas para visualizar e interpretar datos estadísticos y sociales para clientes tales como universidades, empresas y consultoras. También me mantengo estudiando en las áreas de los estudios de género, la sociología del cuerpo, la teoría queer y la filosofía feminista.
+  
+  En este blog comparto documentos, tutoriales y recursos sobre el lenguaje de programación estadística R. Puedes contactarme si tienes alguna pregunta o comentario, o si necesitas apoyo con tu investigación o tesis.
+  
+  {{< figure src="/img/bastian-olea-1b.jpeg" width="480">}}
+
+show_outro: false
 outro: |
   <i class="fas fa-glass-cheers pr2"></i>Sincere thanks to [Maëlle Salmon](https://masalmon.eu/) for her help naming this Hugo theme!
+
 ---
 
 ** index doesn't contain a body, just front matter above.

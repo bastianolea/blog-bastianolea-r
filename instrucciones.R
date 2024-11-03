@@ -9,7 +9,7 @@ blogdown::serve_site()
 usethis::browse_github()
 
 # configurar netlifly
-blogdown::config_netlify()
+# blogdown::config_netlify()
 blogdown::check_netlify()
 
 # los colores se cambian en assets/tema-morado-hex.scss

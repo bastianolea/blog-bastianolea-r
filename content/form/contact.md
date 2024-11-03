@@ -1,8 +1,6 @@
 ---
 date: "2019-02-25T13:38:41-06:00"
-description: This template has a **contact-us** form built right in. All you need
-  to do is add a valid recipient form-id to the front matter of this form page and
-  you're ready to receive submissions.
+description: Con este formulario puedes escribirme directamente cualquier duda, consulta, o propuesta. Haré lo posible por responderte a la brevedad. También puedes escribirme por medio de alguna de mis redes sociales.
 draft: false
 formspree_form_id: xrbgprnw
 layout: split-right
