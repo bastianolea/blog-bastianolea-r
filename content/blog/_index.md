@@ -11,13 +11,16 @@ cascade:
     text_link_url: /blog/
 description: "This is a fully featured blog that supports categories, \ntags, series,
   and pagination.\n"
+
 layout: list-sidebar
 show_author_byline: true
 show_button_links: false
 show_post_date: true
 show_post_thumbnail: true
+
 sidebar:
-  author: The R Markdown Team @RStudio
+  title: A Sidebar for Your Thoughts
+  author: Bastián Olea Herrera
   categories_link: true
   description: "This is a fully featured blog that supports categories,\ntags, series,
     and pagination. Even this sidebar offers \na ton of customizations.\n\nCheck out
@@ -27,7 +30,6 @@ sidebar:
   tags_link: true
   text_link_label: Subscribe via RSS
   text_link_url: /index.xml
-  title: A Sidebar for Your Thoughts
 thumbnail_left: true
 title: A Blog That Works
 ---

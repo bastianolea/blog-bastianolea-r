@@ -1,5 +1,5 @@
 ---
-action_label: Read More &rarr;
+action_label: Ver más &rarr;
 action_link: /about
 action_type: text
 description: Sit down, relax, and get to know Hugo Apéro. Built on top of Blogophonic,
@@ -12,9 +12,9 @@ images:
 - img/revoir.jpg
 show_action_link: true
 show_social_links: true
-subtitle: A Hugo theme you'll want to hang out with
-text_align_left: false
-title: Hugo Apéro
+subtitle: Analista de datos y desarrollador en R
+text_align_left: true
+title: Bastián Olea Herrera
 type: home
 ---
 
