@@ -17,12 +17,10 @@ links:
   name: código
   url: https://github.com/bastianolea/servel_scraping_votaciones
 ---
-
-Con motivo de las elecciones municipales, estuve generando algunas visualizaciones ”en tiempo real” de los resultados de las elecciones de alcaldías. 
+![](servel_resultados_multi_featured.png)
+Con motivo de las elecciones municipales, estuve generando algunas visualizaciones ”en tiempo real” de los resultados de las elecciones de alcaldías. Los datos de conteo de votos los fui obteniendo minuto a minuto mediante web scraping con `{RSelenium}`, que permite programar un navegador web para que interactúe con un sitio como si fuera humano. Entonces, el navegador robot (marioneta, le llaman) iba apretando todos los botones, sin intervención de mi parte, para encontrar y copiar los resultados de cada comuna del país.
 
 ![](servel_tabla_Peñalolen_28-10-24_0101.png)
-
-Los datos de conteo de votos los fui obteniendo minuto a minuto mediante web scraping con `{RSelenium}`, que permite programar un navegador web para que interactúe con un sitio como si fuera humano. Entonces, el navegador robot (marioneta, le llaman) iba apretando todos los botones, sin intervención de mi parte, para encontrar y copiar los resultados de cada comuna del país.
 
 ![](servel_resultados_multi_featured)
 
