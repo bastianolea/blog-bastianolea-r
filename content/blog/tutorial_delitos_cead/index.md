@@ -8,6 +8,7 @@ categories:
   - Tutoriales
 tags:
   - web scraping
+  - fuentes de datos
   - chile
 format: hugo-md
 lang: es

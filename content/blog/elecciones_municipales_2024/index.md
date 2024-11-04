@@ -1,5 +1,5 @@
 ---
-title: Visualización de resultados en vivo de las elecciones municipales 2024
+title: Visualización y scraping de resultados en vivo de las elecciones municipales 2024
 author: Bastián Olea Herrera
 format: hugo-md
 date: 2024-10-30
@@ -9,6 +9,7 @@ tags:
   - visualización de datos
   - gráficos
   - tablas
+  - fuentes de datos
   - Chile
 lang: es
 links:
