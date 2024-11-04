@@ -7,7 +7,7 @@ cascade:
   show_author_byline: false
   show_comments: true
   show_post_date: true
-  show_post_time: true
+  show_post_time: false
   sidebar:
     show_sidebar_adunit: false
     text_link_label: Ver clases
@@ -19,7 +19,7 @@ show_author_byline: false
 show_button_links: true
 show_post_date: true
 show_post_thumbnail: true
-show_post_time: true
+show_post_time: false
 
 title: Clases de R
 ---
