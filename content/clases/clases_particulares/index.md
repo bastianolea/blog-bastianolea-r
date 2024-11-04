@@ -5,9 +5,11 @@ draft: false
 excerpt: Clases particulares de R, para personas con o sin conocimiento previo, personalizadas a la temática que te interese aprender y/o aplicar.
 layout: single
 location: Online
-subtitle: Sesiones personalizadas de temática libre
+subtitle: Sesiones personalizadas de temática libre. ¡Inscripciones abiertas!
 title: Clases particulares de R
 ---
+
+**Inscripciones abiertas.**
 
 [**Contáctame para agendar una clase particular**](/contact/), indicando tu experiencia con R (puede ser aprender desde cero), los temas que te interesan, y/o el proyecto que desees realizar.
 
