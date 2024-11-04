@@ -1,18 +1,22 @@
 ---
-action_label: Ver más >
-action_link: /project
-action_type: text
-description: 'Este sitio contiene todo tipo de recursos sobre programación con el lenguaje R aplicado a datos sociales. Mi objetivo es compartir datos sociales sobre Chile de forma atractiva y accesible, para que cualquier persona pueda explorar datos que le permitan responder sus inquietudes, o bien, adentrarse en el código y desarrollar sus propios análisis.'
+
+title: Bastián Olea Herrera
+subtitle: Sociólogo, analista de datos y desarrollador R
+type: home
+
+description: 'Este sitio contiene todo tipo de recursos sobre programación con el lenguaje R aplicado al análisis de datos sociales. Comparto datos, proyectos, consejos y tutoriales para que otras personas puedan adentrarse en la programación con R. También busco compartir datos sociales sobre Chile de forma atractiva y accesible, por medio de aplicaciones interactivas y otros proyectos desarrollados en R, para que cualquier persona pueda explorar datos que le permitan responder sus inquietudes.'
 
 image_left: true
 images:
 - img/collage_vertical.png
+
 show_action_link: true
 show_social_links: true
-subtitle: Analista de datos y desarrollador en R
 text_align_left: true
-title: Bastián Olea Herrera
-type: home
+
+action_label: Ver más >
+action_link: /apps
+action_type: text
 
 ---
 

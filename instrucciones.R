@@ -4,6 +4,7 @@
 
 # previsualizar sitio
 blogdown::serve_site()
+blogdown::stop_server()
 
 # ver en github
 usethis::browse_github()
