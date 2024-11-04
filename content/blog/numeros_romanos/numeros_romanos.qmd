@@ -1,0 +1,59 @@
+---
+title: "Números romanos en R"
+author: Bastián Olea Herrera
+format: hugo-md
+date: 2024-09-25
+categories:
+  - Procesamiento de datos
+tags:
+  - curiosidades
+lang: es
+excerpt: ¿Sabías que R tiene un tipo de datos para números romanos? Yo tampoco
+---
+
+¿Sabías que R tiene un tipo de datos para números romanos? Yo tampoco. 
+
+```{r}
+#| message: false
+
+library(dplyr)
+
+regiones <- tibble(region = c("I Región de Tarapacá", "II Región de Antofagasta", "III Región de Atacama", 
+                              "IV Región de Coquimbo", "IX Región de La Araucanía", "V Región de Valparaíso", 
+                              "VI Región del Libertador General Bernardo O'Higgins", "VII Región del Maule", 
+                              "VIII Región del Bío Bío", "X Región de los Lagos", "XI Región de Aysén del General Carlos Ibañez del Campo", 
+                              "XII Región de Magallanes y la Antártica Chilena", "XIII Región Metropolitana", 
+                              "XIV Región Los Ríos", "XV Región Arica y Parinacota", "XVI Ñuble"
+))
+```
+
+Si extraemos la primera palabra de la variable `region`, obtenemos solamente el número romano.
+```{r}
+regiones_2 <- regiones |> 
+  mutate(romano = stringr::str_extract(region, "\\w+"))
+
+regiones_2
+```
+
+Luego, convertimos le damos al número romano la clase apropiada:
+
+```{r}
+regiones_3 <- regiones_2 |> 
+  mutate(romano = as.roman(romano)) |> 
+  relocate(romano, .before = 1)
+
+regiones_3
+```
+
+```{r}
+class(regiones_3$romano)
+```
+
+Finalmente, vemos cómo resulta posible convertir desde números romanos a números arábigos; es decir, a la clase `numeric` en R. 
+
+```{r}
+regiones_2 |> 
+  mutate(numero = as.numeric(romano)) |> 
+  relocate(numero, .after = romano)
+```
+
