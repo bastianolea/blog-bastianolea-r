@@ -13,6 +13,11 @@ format: hugo-md
 lang: es
 editor_options:
   chunk_output_type: console
+links:
+- icon: github
+  icon_pack: fab
+  name: código
+  url: https://github.com/bastianolea/tutorial_r_datos_delincuencia
 ---
 
 

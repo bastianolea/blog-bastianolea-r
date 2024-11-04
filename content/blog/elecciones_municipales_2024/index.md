@@ -11,6 +11,11 @@ tags:
   - tablas
   - Chile
 lang: es
+links:
+- icon: github
+  icon_pack: fab
+  name: código
+  url: https://github.com/bastianolea/servel_scraping_votaciones
 ---
 
 Con motivo de las elecciones municipales, estuve generando algunas visualizaciones ”en tiempo real” de los resultados de las elecciones de alcaldías. 

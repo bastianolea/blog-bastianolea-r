@@ -14,7 +14,7 @@ cascade:
 description: Aplicaciones de ciencia de datos, desarrolladas en R. Estas apps se enfocan principalmente en visualizar y hacer públicos datos de relevancia social. Todas las apps son de código abierto, y puedes examinar su funcionamiento, o copiarlas para usarlas en tus propios proyectos.
 
 layout: list-grid
-show_author_byline: true
+show_author_byline: false
 show_button_links: true
 show_post_date: true
 show_post_thumbnail: true
