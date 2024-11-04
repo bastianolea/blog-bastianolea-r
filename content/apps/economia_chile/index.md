@@ -9,7 +9,9 @@ categories:
 author: Bastián Olea Herrera
 date: "2024-05-25"
 draft: false
-excerpt: 
+excerpt: "Tablero que presenta +8 indicadores económicos del Banco Central de Chile, cuya presentación resumida permite analizar la situación económica del país.
+Los datos de esta aplicación son obtenidos de forma automática dos veces al día, garantizando que se encuentren actualizados. Además, la arquitectura de esta app facilita el proceso de añadir nuevos indicadores."
+
 layout: single
 links:
 - icon: link

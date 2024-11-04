@@ -30,7 +30,7 @@
       <description>&lt;p&gt;Con motivo de las elecciones municipales, estuve generando algunas visualizaciones ”en tiempo real” de los resultados de las elecciones de alcaldías.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;servel_tabla_Pen%CC%83alolen_28-10-24_0101.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Los datos de conteo de votos los fui obteniendo minuto a minuto mediante web scraping con &lt;code&gt;{RSelenium}&lt;/code&gt;, que permite programar un navegador web para que interactúe con un sitio como si fuera humano. Entonces, el navegador robot (marioneta, le llaman) iba apretando todos los botones, sin intervención de mi parte, para encontrar y copiar los resultados de cada comuna del país.&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Usar un modelo de lenguaje local (LLM) para analiar texto en R</title>
+      <title>Usar un modelo de lenguaje local (LLM) para analizar texto en R</title>
       <link>http://localhost:4321/blog/introduccion_llm_mall/</link>
       <pubDate>Tue, 29 Oct 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:4321/blog/introduccion_llm_mall/</guid>
@@ -72,6 +72,27 @@
       <description>&lt;p&gt;En este tutorial crearemos un mapa de una región de Chile, y sobre el polígono geográfico aplicaremos otros elementos geográficos como calles, avenidas y carreteras, obtenidos desde Open Street Map (proveedor de mapas online abierto y comunitario).&lt;/p&gt;&#xA;&lt;p&gt;Esto puede servir para crear visualizaciones de datos espaciales minimalistas que de todos modos entreguen elementos urbanos de referencia para que les usuaries puedan ubicarse mejor espacialmente.&lt;/p&gt;&#xA;&lt;p&gt;Usaremos &lt;code&gt;{dplyr}&lt;/code&gt; para manipular los datos, el paquete &lt;code&gt;{ggplot2}&lt;/code&gt; para visualización de datos, &lt;code&gt;{sf}&lt;/code&gt; para tratamiento de elementos espaciales, &lt;code&gt;{rnaturalearth}&lt;/code&gt; para obtener mapas de cualquier país o región del mundo, y &lt;code&gt;{osmdata}&lt;/code&gt; para obtener datos estaciales desde Open Street Map (OSM) por medio de su API pública.&lt;/p&gt;</description>
     </item>
     <item>
+      <title>Análisis de prensa chilena</title>
+      <link>http://localhost:4321/apps/prensa_chile/</link>
+      <pubDate>Thu, 08 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:4321/apps/prensa_chile/</guid>
+      <description>&lt;p&gt;Proyecto de ciencia de datos desarrollado en R para analizar texto de noticias chilenas. Comprende módulos para realizar web scraping de sitios web de prensa para obtener el texto de sus noticias, procesos para transformar ese texto en palabras (tokens), y procesos para analizar dicho corpus de palabras usando distintas técnicas estadísticas.&lt;/p&gt;&#xA;&lt;p&gt;Actualmente, el corpus de noticias obtenido supera las 590.000 noticias individuales, las cuales suman un total de 105 millones (!) de palabras, abarcando más de 33 fuentes periodísticas distintas.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Estadísticas de delincuencia en Chile</title>
+      <link>http://localhost:4321/apps/delincuencia_chile/</link>
+      <pubDate>Wed, 10 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:4321/apps/delincuencia_chile/</guid>
+      <description>&lt;p&gt;En este &#xA;&lt;a href=&#34;https://bastianoleah.shinyapps.io/delincuencia_chile&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;visualizador web&lt;/a&gt; se presentan gráficos con datos estadísticas delictuales entregadas por el &#xA;&lt;a href=&#34;https://cead.spd.gov.cl/estadisticas-delictuales/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Centro de Estudio y Análisis del Delito (CEAD),&lt;/a&gt; quienes a su vez obtienen los datos desde reportes de Carabineros y la Policía de Investigaciones de Chile al Ministerio del Interior y Seguridad Pública.&lt;/p&gt;&#xA;&lt;p&gt;Según el &#xA;&lt;a href=&#34;https://cead.spd.gov.cl/estadisticas-delictuales/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CEAD,&lt;/a&gt; cada dato de delito se compone por: &lt;em&gt;denuncias formales que la ciudadanía realiza en alguna unidad policial posterior a la ocurrencia del delito, más los delitos de los que la policía toma conocimiento al efectuar una detención en flagrancia, es decir, mientras ocurre el ilícito.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Proyecciones de población del Censo</title>
+      <link>http://localhost:4321/apps/censo_proyecciones/</link>
+      <pubDate>Mon, 17 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:4321/apps/censo_proyecciones/</guid>
+      <description>&lt;p&gt;&#xA;&lt;a href=&#34;https://bastianoleah.shinyapps.io/censo_proyecciones/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Aplicación web&lt;/a&gt; que visualiza los datos oficiales del &#xA;&lt;a href=&#34;https://www.ine.gob.cl&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Instituto Nacional de Estadísticas&lt;/a&gt; de Chile sobre &#xA;&lt;a href=&#34;https://www.ine.gob.cl/estadisticas/sociales/demografia-y-vitales/proyecciones-de-poblacion&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;proyecciones de población&lt;/a&gt;; es decir, estimaciones del crecimiento poblacional hacia el futuro, a partir de los datos obtenidos en los censos oficiales.&lt;/p&gt;&#xA;&lt;p&gt;El script &lt;code&gt;importar_opblacion_proyecciones.R&lt;/code&gt; descarga directamente el archivo Excel con las proyecciones oficiales desde el INE, para usarlo en este proyecto.&lt;/p&gt;&#xA;&#xA;&#xA;&#xA;&#xA;&lt;h2 id=&#34;datos&#34;&gt;Datos&#xA;  &lt;a href=&#34;#datos&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&#xA;      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;&#xA;      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;&#xA;    &lt;/svg&gt;&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;p&gt;En la carpeta &lt;code&gt;datos_procesados&lt;/code&gt; se encuentran tablas de datos procesados en base a las proyecciones oficiales, incluyendo:&lt;/p&gt;</description>
+    </item>
+    <item>
       <title>Comparador de mapas comunales de Chile</title>
       <link>http://localhost:4321/apps/comparador_mapas_chile/</link>
       <pubDate>Sat, 15 Jun 2024 00:00:00 +0000</pubDate>
@@ -93,11 +114,11 @@
       <description>&lt;p&gt;&#xA;&lt;a href=&#34;https://bastianoleah.shinyapps.io/economia_chile/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Aplicación web&lt;/a&gt; tipo dashboard que busca presentar de forma sencilla y compacta los principales indicadores de la economía chilena.&lt;/p&gt;&#xA;&lt;p&gt;Los datos de este repositorio se actualizan automáticamente cada 12 horas por medio de GitHub Actions. Estos datos se obtienen realizando web scraping al &#xA;&lt;a href=&#34;https://www.bcentral.cl/web/banco-central&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;sitio web del Banco Central.&lt;/a&gt; usando el &#xA;&lt;a href=&#34;https://rvest.tidyverse.org&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;paquete de R &lt;code&gt;{rvest}&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;&#xA;&#xA;&#xA;&#xA;&#xA;&lt;h3 id=&#34;indicadores-disponibles&#34;&gt;Indicadores disponibles&#xA;  &lt;a href=&#34;#indicadores-disponibles&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&#xA;      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;&#xA;      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;&#xA;    &lt;/svg&gt;&lt;/a&gt;&#xA;&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;PIB&lt;/li&gt;&#xA;&lt;li&gt;IMACEC&lt;/li&gt;&#xA;&lt;li&gt;IPC&lt;/li&gt;&#xA;&lt;li&gt;IPSA&lt;/li&gt;&#xA;&lt;li&gt;UF&lt;/li&gt;&#xA;&lt;li&gt;Tasa de desempleo&lt;/li&gt;&#xA;&lt;li&gt;Índice de remuneraciones reales&lt;/li&gt;&#xA;&lt;li&gt;Inversión extranjera &lt;strong&gt;(nuevo)&lt;/strong&gt;&lt;/li&gt;&#xA;&lt;li&gt;Precio del cobre &lt;strong&gt;(nuevo)&lt;/strong&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;img src=&#34;otros/pantallazos/pantallazo1.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Análisis de prensa chilena</title>
-      <link>http://localhost:4321/apps/prensa_chile/</link>
-      <pubDate>Mon, 08 Apr 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:4321/apps/prensa_chile/</guid>
-      <description>&lt;p&gt;Proyecto de ciencia de datos desarrollado en R para analizar texto de noticias chilenas. Comprende módulos para realizar web scraping de sitios web de prensa para obtener el texto de sus noticias, procesos para transformar ese texto en palabras (tokens), y procesos para analizar dicho corpus de palabras usando distintas técnicas estadísticas.&lt;/p&gt;&#xA;&lt;p&gt;Actualmente, el corpus de noticias obtenido supera las 590.000 noticias individuales, las cuales suman un total de 105 millones (!) de palabras, abarcando más de 33 fuentes periodísticas distintas.&lt;/p&gt;</description>
+      <title>Corrupción en Chile</title>
+      <link>http://localhost:4321/apps/corrupcion_chile/</link>
+      <pubDate>Mon, 20 May 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:4321/apps/corrupcion_chile/</guid>
+      <description>&lt;p&gt;&#xA;&lt;a href=&#34;https://bastianoleah.shinyapps.io/corrupcion_chile/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Aplicación web&lt;/a&gt; que permite visualizar datos sobre los casos más relevantes de corrupción en Chile.&lt;/p&gt;&#xA;&lt;p&gt;Este repositorio compila datos abiertos sobre este tema país, y produce gráficos que permiten analizar cómo y desde dónde ha operado la corrupción en Chile.&lt;/p&gt;&#xA;&lt;p&gt;Los casos de corrupción incluidos son aquellos donde se involucre perjuicio económico a recursos públicos, sector público, o al fisco en general.&lt;/p&gt;&#xA;&lt;p&gt;Los datos son recopilados manualmente, y se obtienen desde fuentes periodísticas. El criterio de inclusión para cada caso es que existan fuentes confiables de prensa que indiquen la existencia de una investigación, evidencia plausible de posible corrupción, o bien una sentencia o condena.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Millonarios de Chile</title>
@@ -112,20 +133,6 @@
       <pubDate>Sat, 24 Feb 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:4321/apps/femicidios_chile/</guid>
       <description>&lt;p&gt;&#xA;&lt;a href=&#34;https://bastianoleah.shinyapps.io/femicidios_chile/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Aplicación web&lt;/a&gt; para la visualización de datos del &#xA;&lt;a href=&#34;http://www.nomasviolenciacontramujeres.cl/registro-de-femicidios/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;registro de femicidios&lt;/a&gt; realizado por la &#xA;&lt;a href=&#34;www.nomasviolenciacontramujeres.cl&#34;&gt;Red Chilena contra la Violencia hacia las Mujeres&lt;/a&gt; desde 2010 en adelante.&lt;/p&gt;&#xA;&lt;p&gt;Este proyecto incluye scripts de R para descargar todos los datos oficiales recopilados por la Red (obteniendo los enlaces usando web scraping y descargándolos desde Google Docs), limpiarlos, y procesarlos para su visualización, además de la &#xA;&lt;a href=&#34;https://bastianoleah.shinyapps.io/femicidios_chile/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;web app de visualización, desarrollada con Shiny.&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;La georeferenciación de los datos se basa en la información de localidad o comuna, y cuando no se entrega información de comuna, se aplica la capital regional de la región indicada.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Corrupción en Chile</title>
-      <link>http://localhost:4321/apps/corrupcion_chile/</link>
-      <pubDate>Tue, 20 Feb 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:4321/apps/corrupcion_chile/</guid>
-      <description>&lt;p&gt;&#xA;&lt;a href=&#34;https://bastianoleah.shinyapps.io/corrupcion_chile/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Aplicación web&lt;/a&gt; que permite visualizar datos sobre los casos más relevantes de corrupción en Chile.&lt;/p&gt;&#xA;&lt;p&gt;Este repositorio compila datos abiertos sobre este tema país, y produce gráficos que permiten analizar cómo y desde dónde ha operado la corrupción en Chile.&lt;/p&gt;&#xA;&lt;p&gt;Los casos de corrupción incluidos son aquellos donde se involucre perjuicio económico a recursos públicos, sector público, o al fisco en general.&lt;/p&gt;&#xA;&lt;p&gt;Los datos son recopilados manualmente, y se obtienen desde fuentes periodísticas. El criterio de inclusión para cada caso es que existan fuentes confiables de prensa que indiquen la existencia de una investigación, evidencia plausible de posible corrupción, o bien una sentencia o condena.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Estadísticas de delincuencia en Chile</title>
-      <link>http://localhost:4321/apps/delincuencia_chile/</link>
-      <pubDate>Sat, 10 Feb 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:4321/apps/delincuencia_chile/</guid>
-      <description>&lt;p&gt;En este &#xA;&lt;a href=&#34;https://bastianoleah.shinyapps.io/delincuencia_chile&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;visualizador web&lt;/a&gt; se presentan gráficos con datos estadísticas delictuales entregadas por el &#xA;&lt;a href=&#34;https://cead.spd.gov.cl/estadisticas-delictuales/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Centro de Estudio y Análisis del Delito (CEAD),&lt;/a&gt; quienes a su vez obtienen los datos desde reportes de Carabineros y la Policía de Investigaciones de Chile al Ministerio del Interior y Seguridad Pública.&lt;/p&gt;&#xA;&lt;p&gt;Según el &#xA;&lt;a href=&#34;https://cead.spd.gov.cl/estadisticas-delictuales/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CEAD,&lt;/a&gt; cada dato de delito se compone por: &lt;em&gt;denuncias formales que la ciudadanía realiza en alguna unidad policial posterior a la ocurrencia del delito, más los delitos de los que la policía toma conocimiento al efectuar una detención en flagrancia, es decir, mientras ocurre el ilícito.&lt;/em&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>Brechas de género Casen</title>
@@ -154,6 +161,13 @@
       <pubDate>Wed, 27 Sep 2023 00:00:00 +0000</pubDate>
       <guid>http://localhost:4321/blog/tutorial_delitos_cead/</guid>
       <description>&lt;p&gt;En este script detallaré cómo descargar datos de estadísticas delictuales del Centro de Estudios y Análisis del Delito (CEAD) de Chile utilizando técnicas de web scraping en R. Las estadísticas disponibles en el sitio web de CEAD corresponden a los siguientes datos oficiales: &lt;em&gt;Estadísticas Oficiales de Delitos de Mayor Connotación Social (DMCS), Violencia Intrafamiliar (VIF), Incivilidades y otros hechos informados por Carabineros y la Policía de Investigaciones de Chile al Ministerio del Interior y Seguridad Pública.&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Graficador encuesta CEP</title>
+      <link>http://localhost:4321/apps/cep_graficador/</link>
+      <pubDate>Thu, 15 Jun 2023 00:00:00 +0000</pubDate>
+      <guid>http://localhost:4321/apps/cep_graficador/</guid>
+      <description>&lt;p&gt;Aplicación web que permite visualizar gráficos de los resultados de las encuestas del Centro de Estudios Públicos.&#xA;Además, permite desagregar resultados en base a categorías sociodemográficas, filtrar grupos, configurar los gráficos y descargar los datos.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;pantallazo_graficador_cep.jpg&#34; alt=&#34;&#34;&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>Contacto</title>

@@ -8,7 +8,9 @@ categories:
 author: Bastián Olea Herrera
 date: "2024-01-21"
 draft: false
-excerpt: 
+excerpt: "Visualizador que compara distribuciones y promedios de ingresos entre las comunas de Chile, para observar las diferencias en las realidades socioeconómicas del país.
+Selecciona un grupo de comunas, y elige una variable de ingresos, como ingresos individuales, ingresos por hogar, ingresos per cápita o montos de pensiones/jubilación, para obtener un gráfico de densidad que describe y compara las poblaciones de las comunas, y un gráfico de dispersión que ubica los ingresos de las comunas seleccionadas en comparación a todas las demás comunas del país."
+
 layout: single
 links:
 - icon: link

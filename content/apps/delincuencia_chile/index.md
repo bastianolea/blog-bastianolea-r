@@ -6,9 +6,11 @@ tags:
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera
-date: "2024-02-10"
+date: "2024-07-10"
 draft: false
-excerpt: 
+excerpt: "Visualización de estadísticas oficiales de delincuencia, separadas por comuna y delito, para darle contexto y seriedad a un tema país a partir de datos objetivos.
+Selecciona una comuna y luego uno o varios delitos para obtener un gráfico de líneas que muestra una serie de tiempo de la cantidad de delitos, desde 2010 hasta 2023. Además, puedes visualizar la cantidad de delitos por año en la comuna seleccionada, el promedio de delitos en los gobiernos recientes, y una visualización de los tres delitos más frecuentes en cada comuna."
+
 layout: single
 links:
 - icon: link

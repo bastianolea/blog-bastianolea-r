@@ -8,7 +8,9 @@ categories:
 author: Bastián Olea Herrera
 date: "2024-02-24"
 draft: false
-excerpt: 
+excerpt: "Sitio con gráficos y tablas que expresan en cifras los datos de femicidios cometidos en Chile.
+Estos datos, mantenidos por la Red Chilena contra la Violencia hacia las Mujeres, expresan la brutalidad manifestada de una sociedad patriarcal donde la violencia es una realidad transversal, llevada a su extremo en la agresión y asesinato de mujeres por razones de género."
+
 layout: single
 links:
 - icon: link

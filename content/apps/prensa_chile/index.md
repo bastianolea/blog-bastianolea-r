@@ -6,9 +6,11 @@ tags:
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera
-date: "2024-04-08"
+date: "2024-08-08"
 draft: false
-excerpt: 
+excerpt: "Aplicación de análisis de texto de prensa escrita chilena. Contiene varios gráficos que cuantifican el contenido de las noticias de Chile, semana por semana. Los gráficos permiten identificar qué palabras son las más usadas a través del tiempo, lo cual a su vez revela cómo va variando el acontecer nacional.
+Los datos de esta aplicación son obtenidos mediante web scraping de forma diaria, pero la app se actualiza semanalmente. La base de datos comprende más de 600 mil noticias, que suman más de 100 millones de palabras, abarcando más de 21 fuentes periodísticas distintas."
+
 layout: single
 links:
 - icon: link

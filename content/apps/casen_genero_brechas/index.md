@@ -8,7 +8,9 @@ categories:
 author: Bastián Olea Herrera
 date: "2024-01-31"
 draft: false
-excerpt: 
+excerpt: "Visualizador que detalla brechas de género en temas sociales, de vivienda e ingresos, para analizar variables en las que las mujeres experimentan peores condiciones de vida, a nivel regional
+Selecciona una de las variables disponibles para generar un gráfico con todas las regiones del país, donde se detalla el porcentaje de la población femenina y masculina afectada por la variable seleccionada, o si eliges variables de vivienda o familia, el porcentaje de hogares con jefatura femenina o masculina correspondientes. Los puntos del gráfico además se detallan con las brechas o diferencias entre géneros existentes, volviendo explícitas las desigualdades o ausencia de las mismas."
+
 layout: single
 links:
 - icon: link

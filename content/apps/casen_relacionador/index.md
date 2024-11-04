@@ -8,7 +8,9 @@ categories:
 author: Bastián Olea Herrera
 date: "2024-01-14"
 draft: false
-excerpt: 
+excerpt: "Visualizador que permite relacionar hasta 3 variables socioeconómicas en un gráfico de dispersión por comunas, para analizar la relación entre ellas.
+Este visualizador permite experimentar correlaciones con numerosas variables de temas como ingresos, educación, condiciones de vida, condiciones laborales, y más, dado que permite utilizar libremente cualquiera de ellas como los ejes del gráfico, creando así visualizaciones personalizadas. Por ejemplo, se puede explorar si las comunas con bajo nivel educacional promedio son también las de menores ingresos, si es que las comunas con viviendas de menor calidad y menores ingresos se correlacionan con mayor hacinamiento o no, si las comunas de altos ingresos tienen menores afiliados a Fonasa, y más."
+
 layout: single
 links:
 - icon: link

@@ -8,7 +8,9 @@ categories:
 author: Bastián Olea Herrera
 date: "2024-03-13"
 draft: false
-excerpt: 
+excerpt: "Con este visualizador puedes poner en perspectiva las fortunas individuales más grandes del país, para así dimensionar un aspecto clave de la desigualdad en Chile y el mundo.
+Diversas fuentes de datos permiten recopilar un listado de los empresarios más ricos de Chile. Distintas técnicas estadísticas y de visualización permiten dimensionar las enormes fortunas de estas personas, por ejemplo, comparando con los propios ingresos del usuario, o con los ingresos de toda la población del país."
+
 layout: single
 links:
 - icon: link

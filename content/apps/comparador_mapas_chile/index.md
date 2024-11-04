@@ -8,7 +8,9 @@ categories:
 author: Bastián Olea Herrera
 date: "2024-06-15"
 draft: false
-excerpt: 
+excerpt: "Aplicación que reúne más de 170 variables urbanísticas, sociales y económicas, de nivel comunal, para todas las comunas del país, que permite al usuario elegir dos variables simultáneamente para compararlas visualmente por medio de dos mapas regionales.
+El visualizador entrega la posibilidad de poner a prueba relaciones entre variables tan distintas como áreas verdes y puntajes de pruebas de selección universitaria, nivel de ingresos y tasa de delitos, participación electoral y situación de las viviendas, etc., dejando al usuario la tarea de explicar los fenómenos que pueden surgir."
+
 layout: single
 links:
 - icon: link

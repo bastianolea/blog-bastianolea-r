@@ -6,9 +6,11 @@ tags:
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera
-date: "2024-02-20"
+date: "2024-05-20"
 draft: false
-excerpt: 
+excerpt: "Catálogo y visualizador de los casos de corrupción más trascendentes del último tiempo en Chile, para poner en perspectiva los montos, responsables, y sectores políticos asociados.
+Los datos son recopilados manualmente para producir una tabla con la mayor información posible sobre casos de corrupción, incluyendo responsables, delitos específicos, afiliación a partidos políticos, fundaciones involucradas y más, para alientar visualizaciones interactivas que permitan a la cuidadanía comprender de dónde viene la corrupción y cómo nos afecta como país."
+
 layout: single
 links:
 - icon: link
