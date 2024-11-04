@@ -1,6 +1,8 @@
 ---
 author: Bastián Olea Herrera
+type: talk
 cascade:
+  type: talk
   author: Bastián Olea Herrera
   show_author_byline: false
   show_comments: true
@@ -17,7 +19,7 @@ show_author_byline: false
 show_button_links: true
 show_post_date: true
 show_post_thumbnail: true
-show_post_time: false
+show_post_time: true
 
 title: Clases de R
 ---
