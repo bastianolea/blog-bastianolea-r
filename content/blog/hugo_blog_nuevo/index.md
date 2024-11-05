@@ -21,7 +21,9 @@ Lo creé usando [Hugo](https://gohugo.io), un generador de sitios web estáticos
 
 La [guía para aprender a usar Hugo Apéro](https://hugo-apero-docs.netlify.app) y dejar tu blog operacional es muy amigable y sencilla de seguir! Lo recomiendo, solo me tomó una tarde. Tiene amplia documentación y recursos [en su repositorio.](https://github.com/hugo-apero/)
 
-El sitio web se genera con `{blogdown}` dentro de un proyecto de R cada vez que hago un cambio en el código del sitio. Luego, cuando subo los cambios del sitio a GitHub, [Netlifly](https://www.netlify.com) detecta los cambios, reconstruye el sitio y lo re-publica en minutos. De esta forma, el proceso es de _despliegue continuo:_ cada cambio local que hago, al ser subido al [repositorio remoto,](https://github.com/bastianolea/blog-r) gatilla la reconstrucción del sitio y su actualización en la versión pública del sitio web.
+El sitio web se genera con `{blogdown}` dentro de un proyecto de R cada vez que hago un cambio en el código del sitio. Luego, cuando subo los cambios del sitio a GitHub, [Netlifly](https://www.netlify.com) detecta los cambios, reconstruye el sitio y lo re-publica en minutos. De esta forma, el proceso es de _despliegue continuo:_ cada cambio local que hago, al ser subido al [repositorio remoto,](https://github.com/bastianolea/blog-r) gatilla la reconstrucción del sitio y su actualización en la versión pública del sitio web. 
+
+La gracia de un sitio estático es que su contenido online no cambia, porque es un sitio web normal, y por lo tanto es liviano de cargar y debiese ser muy barato o gratis de hostear (no requiere de un servidor con capacidad computacional, como es el caso con las [aplicaciones Shiny](https://bastianolea.github.io/shiny_apps/)).
 
 La totalidad del código de este sitio web [está disponible en el repositorio `blog-r` en mi GitHub.](https://github.com/bastianolea/blog-r)
 
