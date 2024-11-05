@@ -9,7 +9,7 @@ link_list_label: "Enlaces"
 link_list:
 - name: Sitio de apps Shiny
   url: https://bastianolea.github.io/shiny_apps/
-- name: Sitio web personal
+- name: Sitio web personal/académico
   url: https://bastian.olea.biz
 
 
