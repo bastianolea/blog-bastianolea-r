@@ -50,7 +50,7 @@
   <meta itemprop="dateModified" content="2023-09-27T00:00:00+00:00">
   <meta itemprop="wordCount" content="2241">
   <meta itemprop="image" content="http://localhost:4321/blog/tutorial_delitos_cead/instrucciones_curl-featured.png">
-  <meta itemprop="keywords" content="Web Scraping,Fuentes De Datos,Chile">
+  <meta itemprop="keywords" content="Web scraping,Fuentes de datos,Chile">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
@@ -159,9 +159,9 @@
 </h2>
 <p>El sitio web del CEAD ofrece una interfaz web donde se pueden obtener tablas con datos delictuales por comuna o región, para los delitos o grupos de delitos especificados, y para los años que se le indique. Luego de hacer selecciones para obtener los datos en el sitio de CEAD, podemos ingresar al inspector web de nuestro navegador, y en el apartado de <em>red</em> podemos identificar en el documento <code>get_estadisticas_delictuales.php</code> que las selecciones que hicimos se traducen en una solicitud XML que se envía al servidor de CEAD y retorna los datos correspondientes.</p>
 <p>A modo de ejemplo, realicemos una selección sencilla en la web de CEAD:</p>
-<p><img src="ejemplo_interfaz.png" alt=""></p>
+<p><img src="/blog/tutorial_delitos_cead/ejemplo_interfaz.png"></p>
 <p>En el inspector web del navegador (en este caso Safari), vamos a <em>red</em>, identificamos <code>get_estadisticas_delictuales.php</code>, y en el menú contextual elegimos <code>copiar como cURL</code> para ver la solicitud que se envió al servidor de CEAD para obtener los datos:</p>
-<p><img src="instrucciones_curl-featured.png" alt=""></p>
+<p><img src="/blog/tutorial_delitos_cead/instrucciones_curl-featured.png"></p>
 <p>Adjunto un ejemplo de cURL:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-xml" data-lang="xml"><span style="display:flex;"><span>curl &#39;https://cead.spd.gov.cl/wp-content/themes/gobcl-wp-master/data/get_estadisticas_delictuales.php&#39;-X &#39;POST&#39;-H &#39;Content-Type: application/x-www-form-urlencoded; charset=UTF-8&#39;-H &#39;Accept: /&#39;-H &#39;Sec-Fetch-Site: same-origin&#39;-H &#39;Accept-Language: es-419,es;q=0.9&#39;-H &#39;Accept-Encoding: gzip, deflate, br&#39;-H &#39;Sec-Fetch-Mode: cors&#39;-H &#39;Host: cead.spd.gov.cl&#39;-H &#39;Origin: https://cead.spd.gov.cl&#39;-H &#39;Content-Length: 674&#39;-H &#39;User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Safari/605.1.15&#39;-H &#39;Referer: https://cead.spd.gov.cl/estadisticas-delictuales/&#39;-H &#39;Connection: keep-alive&#39;-H &#39;Sec-Fetch-Dest: empty&#39;-H &#39;Cookie: _ga=GA1.3.359881599.1695818071; _gid=GA1.3.1925657744.1695818071; PHPSESSID=p580t8bid8coo6gk46bg7i1162&#39;-H &#39;X-Requested-With: XMLHttpRequest&#39;–data &#39;medida=1<span style="color:#eb6f92">&amp;</span>tipoVal=2<span style="color:#eb6f92">&amp;</span>anio%5B%5D=2022<span style="color:#eb6f92">&amp;</span>delitos_agrupados%5B%5D=2<span style="color:#eb6f92">&amp;</span>delitos_agrupados%5B%5D=4<span style="color:#eb6f92">&amp;</span>delitos_agrupados%5B%5D=3<span style="color:#eb6f92">&amp;</span>delitos_agrupados_nombres%5B%5D=Abusos+sexuales+y+otros+delitos+sexuales<span style="color:#eb6f92">&amp;</span>delitos_agrupados_nombres%5B%5D=Incivilidades<span style="color:#eb6f92">&amp;</span>delitos_agrupados_nombres%5B%5D=Delitos+de+mayor+connotaci%C3%B3n+social<span style="color:#eb6f92">&amp;</span>delitos%5B%5D=17<span style="color:#eb6f92">&amp;</span>delitos%5B%5D=3<span style="color:#eb6f92">&amp;</span>delitos%5B%5D=4<span style="color:#eb6f92">&amp;</span>delitos%5B%5D=5<span style="color:#eb6f92">&amp;</span>delitos%5B%5D=20<span style="color:#eb6f92">&amp;</span>delitos_nombres%5B%5D=Consumo+alcohol+v%C3%ADa+p%C3%BAblica<span style="color:#eb6f92">&amp;</span>delitos_nombres%5B%5D=Homicidios<span style="color:#eb6f92">&amp;</span>delitos_nombres%5B%5D=Hurtos<span style="color:#eb6f92">&amp;</span>delitos_nombres%5B%5D=Lesiones+leves<span style="color:#eb6f92">&amp;</span>delitos_nombres%5B%5D=Ebriedad<span style="color:#eb6f92">&amp;</span>region%5B%5D=15<span style="color:#eb6f92">&amp;</span>region_nombres%5B%5D=Regi%C3%B3n+de+Arica+y+Parinacota<span style="color:#eb6f92">&amp;</span>seleccion=2<span style="color:#eb6f92">&amp;</span>descarga=false&#39;
 </span></span></code></pre></div><p>Nuestro objetivo, entonces, es replicar esta solicitud en R para obtener los datos sin tener que usar la interfaz web de CEAD.</p>
@@ -566,7 +566,9 @@ Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xml
     
     
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="mailto:bastianolea@gmail.com" title="envelope" >
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
       <i class="fas fa-envelope fa-lg fa-fw"></i>
     </a>
   
