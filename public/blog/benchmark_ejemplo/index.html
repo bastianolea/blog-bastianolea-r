@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Comparar el rendimiento expresiones en R | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Para comparar el rendimiento de distintas expresiones en R, realizamos un _benchmark,_ al cual le entregamos las expresiones que queremos comparar, y nos entregará un detalle de su velocidad de ejecución. Así podemos optar por una de las operaciones en base a su mejor rendimiento.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Comparar el rendimiento expresiones en R | Blog">
+<meta property="og:description" content="Para comparar el rendimiento de distintas expresiones en R, realizamos un _benchmark,_ al cual le entregamos las expresiones que queremos comparar, y nos entregará un detalle de su velocidad de ejecución. Así podemos optar por una de las operaciones en base a su mejor rendimiento." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/benchmark_ejemplo/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+    
+    
+  
+  <meta itemprop="name" content="Comparar el rendimiento expresiones en R">
+  <meta itemprop="description" content="Al programar algo, siempre existen varias formas de lograr un mismo objetivo. Un criterio para elegir una forma por sobre otra puede ser el rendimiento: si hay dos formas de hacer algo, elegir la forma que se ejecute más rápido.1
+Para comparar el rendimiento de distintas expresiones en R, realizamos un benchmark, al cual le entregamos las expresiones que queremos comparar, y nos entregará un detalle de su velocidad de ejecución, consumo de memoria, y otros.">
+  <meta itemprop="datePublished" content="2024-11-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-11-05T00:00:00+00:00">
+  <meta itemprop="wordCount" content="494">
+  <meta itemprop="keywords" content="Consejos,Procesamiento de datos">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.ee4cb156bab021bf583b75e458368e05e8682adcd4a783814f7a57cbcf41777c.css" integrity="sha256-7kyxVrqwIb9YO3XkWDaOBehoKtzUp4OBT3pXy89Bd3w=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.bebab142e3ad4c47834f81e426b8adcd5b747151cc6f7d8358a68b4a30c7ff48.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Comparar el rendimiento expresiones en R</h1>
+        
+        
+        <p class="f7 db mv0 ttu">November 5, 2024</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>Al programar algo, siempre existen varias formas de lograr un mismo objetivo. Un criterio para elegir una forma por sobre otra puede ser el rendimiento: si hay dos formas de hacer algo, elegir la forma que se ejecute más rápido.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>Para comparar el rendimiento de distintas expresiones en R, realizamos un <em>benchmark,</em> al cual le entregamos las expresiones que queremos comparar, y nos entregará un detalle de su velocidad de ejecución, consumo de memoria, y otros.</p>
+<p>Como ejemplo, crearemos un dataframe de 100 millones de filas, con dos variables.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># crear datos</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tibble</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var1</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">runif</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1e8</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">var2</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">runif</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1e8</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span>
+</span></span></code></pre></div><pre><code># A tibble: 100,000,000 × 2
+     var1  var2
+    &lt;dbl&gt; &lt;dbl&gt;
+ 1 0.0725 0.628
+ 2 0.664  0.358
+ 3 0.169  0.119
+ 4 0.0369 0.879
+ 5 0.708  0.546
+ 6 0.607  0.835
+ 7 0.955  0.839
+ 8 0.198  0.197
+ 9 0.564  0.456
+10 0.788  0.960
+# ℹ 99,999,990 more rows
+</code></pre>
+<p>Pongámonos en el caso de que queremos filtrar este dataframe, y en consideración de su gran tamaño, queremos ver la forma más veloz de filtrarlo. Para ello, comparamos la evaluación de un filtro con <code>{dplyr}</code>, y otro con <code>{base}</code> (las funciones por defecto de R, que usualmente son más rápidas).</p>
+<p>Usamos la función <code>bench::mark</code>, a la cual le entregamos las expresiones con un nombre para distinguirlas, y le definimos los argumentos <code>check = FALSE</code> para que ignore diferencias en el resultado e <code>iterations</code> para especificar la cantidad de veces que queremos hacer las comparaciones (con más iteraciones nos aseguramos que el desempeño sea <em>normal</em> y no influenciado por factores externos de nuestro computador).</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># comparar ejecución</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">bench</span><span style="color:#908caa">::</span><span style="color:#ea9a97">mark</span><span style="color:#908caa">(</span><span style="color:#ea9a97">check</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">iterations</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f6c177">&#34;dplyr&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var1</span> <span style="color:#908caa">&gt;</span> <span style="color:#ea9a97">var2</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f6c177">&#34;base&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">datos[datos</span><span style="color:#908caa">$</span><span style="color:#ea9a97">var1</span> <span style="color:#908caa">&gt;</span> <span style="color:#ea9a97">datos</span><span style="color:#908caa">$</span><span style="color:#ea9a97">var2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">]</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 2 × 6
+  expression      min   median `itr/sec` mem_alloc `gc/sec`
+  &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
+1 dplyr         453ms    467ms      2.13    2.42GB     2.98
+2 base          331ms    339ms      2.92     1.3GB     1.17
+</code></pre>
+<p>En la comparación vemos que <code>dplyr::filter()</code> es aproximadamente 100 milisegundos más lento que un filtro realizado con <code>{base}</code>, pero además usa casi 1GB más de memoria. También entrega datos como las iteraciones por segundo, es decir, las veces que se ejecutaría cada operación por segundo. Todas estas métricas nos podrían ayudar a decidir una opción por sobre otra.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>mi opinión personal es que, entre valorar tiempo de ejecución (que algo corra más rápido) y tiempo de desarrollo (lo que te cuesta escribirlo/entenderlo), el tiempo de desarrollo (es decir, tu tiempo como humano o trabajador) es más valioso que tener a un procesador trabajando por más tiempo. En ese sentido, usualmente considero que es mejor la opción que sea más fácil de programar, y también más fácil de leer e interpretar. Sin embargo, hay casos donde la velocidad puede primar, como es el caso de aplicaciones interactivas (donde la espera se la traspasas a tus usuarios/as), o en cálculos con cantidades grandes de datos, donde cada centésima de segundo de ejecución se puede multiplicar por millones.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Posted on:</dt>
+    <dd class="fw5 ml0">November 5, 2024</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Length:</dt>
+    <dd class="fw5 ml0">3 minute read, 494 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/consejos">consejos</a>  <a href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">See Also:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/elecciones_municipales_2024/">Visualización y scraping de resultados en vivo de las elecciones municipales 2024</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/evitar_errores/">Evitar que un loop se detenga debido a errores</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/furrr_multiprocesador/">Cálculos multiprocesador en R con `{furrr}`</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="http://localhost:4321/blog/hugo_blog_nuevo/">&larr; Blog sobre éste blog</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/simel_scraping/">Scraping de datos del Sistema de Información del Mercado Laboral &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2024 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastimapache.bsky.social" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.threads.net/@raccunnie" title="threads" target="_blank" rel="me noopener">
+      <i class="fab fa-threads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

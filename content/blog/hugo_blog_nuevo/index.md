@@ -42,32 +42,55 @@ _Lo malo_
 - No encuentro recursos para personalizar detalles
 - Difícil de encontrar respuestas en internet
 
-Algunas dificultades que tuve con el procedimiento, y cómo las resolví:
+----
 
-- **Crear nuevas secciones**
+### Dificultades y soluciones
+Algunas dificultades que tuve con el blog, y cómo las resolví:
+
+#### Crear nuevas secciones
   - El blog viene con secciones por defecto (_blog, talks, about, projects_), y me costó un poco entender [cómo crear nuevas o cambiarles el nombre](https://hugo-apero-docs.netlify.app/start/section-config/#renaming-sections) a las existentes.
   - Luego entendí que las carpetas dentro de `content/` se vuelven en secciones si las llamas desde el archivo de configuración `config.yoml`, y que adquieren una apariencia por defecto, pero puedes camibiarla en el _front matter_ de cada una (el archivo `_index.md` dentro de `content/blog`, por ejemplo).
 
-- **Carpeta static**
+#### Carpeta static
   - Carpeta con los elementos estáticos que se copian a public y que van a estar disponibles para el resto del sitio, como algunas imágenes
 
-- **Carpeta public**
+#### Carpeta public
   - Al principio no entendía por qué tenía todo duplicado, pero luego entendí que `public` es una carpeta que se genera cada vez que actualizas el sitio, y su objetivo es ser literalmente el sitio al cual van a acceder las personas por su navegador web. Pero a esta carpeta sólo se le agregan cosas, no se eliminan, así que si subiste algo por error tienes que borrarlo manualmente de `public` (por ejemplo, yo subí una carpeta con 30 imágenes siendo que solo estaba usando una)
   - Es seguro borrar todo el contenido de public, porque al guardar un cambio en tu sitio se re-escribe toda esta carpeta desde cero. Así evitas que queden recursos innecesarios en el sitio.
 
-- **Redirects**
+#### Redirects
   - Las redirecciones sirven para que, luego de que consigas una nueva url para tu sitio `*.netlify.app`, puedas hacer que la gente que entre a la dirección `*.netlify.app` sea redireccionada automáticamente a tu nueva url. En mi caso, resirigí desde [bastianoleah.netlify.app](bastianoleah.netlify.app) a [https://bastianolea.rbind.io](https://bastianolea.rbind.io). El dominio que usé para este sitio, _rbind.io_, es un [servicio de la comunidad R](https://support.rbind.io/about/) de "unir" blogs y sitios webs de usuarios/as de R, y puedes pedir en su repositorio que te cedan un subdominio para que lo uses para tu blog.
   - Es muy fácil [especificar redirecciones](https://yihui.org/en/2017/11/301-redirect/#another-application-redirect-netlify-com-to-your-own-domain) creando un archivo llamado `_redirects` en `static`: link original y redirección.
   - Así evitas que los usuarios entren sin `https` a tu sitio, y que si entran a una url interna o antigua se les lleve a la url nueva.
   
-- **Quarto documents en tu blog**
+#### Quarto documents para crear posts en tu blog
   - Para crear un post a partir de un documento Quarto, solamente tienes que poner en el `yaml` del documento quarto `format: hugo-md`. De este modo, el documento se va a renderizar en formato markdown, y si se llama `index.md`, va a aparecer como un post.
   - Usar Quarto te permite usar `{shiny}` para construir HTML para tu sitio (por ejemplo, usando `div()` y otras funciones de Shiny).
   - En los chunks donde uses Shiny debes ponerles `#| output: asis` para que su resultado salga como HTML y se vea en el sitio.
+  
+#### Modificar el `css`
+  - En la carpeta `assets/scss/` puedes modificar los archivos `.scss` para alterar manualmente la apariencia de tu sitio. Personalmente cambié el archivo `assets/scss/_code.scss` para modificar la apariencia de los outputs de consola, para que tuvieran fondo oscuro y color distinto, con el siguiente código:
+    ```css
+    .pre {
+      overflow-x: auto;
+      overflow-y: hidden;
+      overflow:   scroll;
+      background-color: #232137 !important;
+      color: #8A75A3 !important;
+      border: none !important;
+      border-radius: 6px !important;
+      font-weight: 200 !important;
+      font-size: 90% !important;
+      }
+    ```
 
+----
+
+### Pendientes
 Igual me quedaron algunas cosas pendientes que no he sabido resolver 😞 
 - Traducir fechas y otros textos, no encontré cómo cambiarlo 🙁 
 
+----
 
 ## Conclusiones
 

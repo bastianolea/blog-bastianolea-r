@@ -49,7 +49,7 @@
 Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y gratuito. Hugo se puede usar a través de R usando {blogdown} y el tema Hugo Apéro, creado por Alison Hill, y así puedes crear páginas y publicaciones usando Quarto o RMarkdown. De ese modo resulta muy fácil integrar las cosas que hagas con R en tu sitio, compartiendo el código en los posts.">
   <meta itemprop="datePublished" content="2024-11-07T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-07T00:00:00+00:00">
-  <meta itemprop="wordCount" content="968">
+  <meta itemprop="wordCount" content="1048">
   <meta itemprop="keywords" content="Quarto">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -57,7 +57,7 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
   <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.b306a223c0775f9d04ec778e793f8d76c2b1aa476c23b61134085232a95ac9c8.css" integrity="sha256-swaiI8B3X50E7HeOeT&#43;NdsKxqkdsI7YRNAhSMqlaycg=" media="screen">
+  <link rel="stylesheet" href="/style.main.min.ee4cb156bab021bf583b75e458368e05e8682adcd4a783814f7a57cbcf41777c.css" integrity="sha256-7kyxVrqwIb9YO3XkWDaOBehoKtzUp4OBT3pXy89Bd3w=" media="screen">
   
   
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -185,31 +185,58 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
 <li>No encuentro recursos para personalizar detalles</li>
 <li>Difícil de encontrar respuestas en internet</li>
 </ul>
-<p>Algunas dificultades que tuve con el procedimiento, y cómo las resolví:</p>
-<ul>
-<li>
-<p><strong>Crear nuevas secciones</strong></p>
+<hr>
+
+
+
+
+<h3 id="dificultades-y-soluciones">Dificultades y soluciones
+  <a href="#dificultades-y-soluciones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Algunas dificultades que tuve con el blog, y cómo las resolví:</p>
+
+
+
+
+<h4 id="crear-nuevas-secciones">Crear nuevas secciones
+  <a href="#crear-nuevas-secciones"></a>
+</h4>
 <ul>
 <li>El blog viene con secciones por defecto (<em>blog, talks, about, projects</em>), y me costó un poco entender 
 <a href="https://hugo-apero-docs.netlify.app/start/section-config/#renaming-sections" target="_blank" rel="noopener">cómo crear nuevas o cambiarles el nombre</a> a las existentes.</li>
 <li>Luego entendí que las carpetas dentro de <code>content/</code> se vuelven en secciones si las llamas desde el archivo de configuración <code>config.yoml</code>, y que adquieren una apariencia por defecto, pero puedes camibiarla en el <em>front matter</em> de cada una (el archivo <code>_index.md</code> dentro de <code>content/blog</code>, por ejemplo).</li>
 </ul>
-</li>
-<li>
-<p><strong>Carpeta static</strong></p>
+
+
+
+
+<h4 id="carpeta-static">Carpeta static
+  <a href="#carpeta-static"></a>
+</h4>
 <ul>
 <li>Carpeta con los elementos estáticos que se copian a public y que van a estar disponibles para el resto del sitio, como algunas imágenes</li>
 </ul>
-</li>
-<li>
-<p><strong>Carpeta public</strong></p>
+
+
+
+
+<h4 id="carpeta-public">Carpeta public
+  <a href="#carpeta-public"></a>
+</h4>
 <ul>
 <li>Al principio no entendía por qué tenía todo duplicado, pero luego entendí que <code>public</code> es una carpeta que se genera cada vez que actualizas el sitio, y su objetivo es ser literalmente el sitio al cual van a acceder las personas por su navegador web. Pero a esta carpeta sólo se le agregan cosas, no se eliminan, así que si subiste algo por error tienes que borrarlo manualmente de <code>public</code> (por ejemplo, yo subí una carpeta con 30 imágenes siendo que solo estaba usando una)</li>
 <li>Es seguro borrar todo el contenido de public, porque al guardar un cambio en tu sitio se re-escribe toda esta carpeta desde cero. Así evitas que queden recursos innecesarios en el sitio.</li>
 </ul>
-</li>
-<li>
-<p><strong>Redirects</strong></p>
+
+
+
+
+<h4 id="redirects">Redirects
+  <a href="#redirects"></a>
+</h4>
 <ul>
 <li>Las redirecciones sirven para que, luego de que consigas una nueva url para tu sitio <code>*.netlify.app</code>, puedas hacer que la gente que entre a la dirección <code>*.netlify.app</code> sea redireccionada automáticamente a tu nueva url. En mi caso, resirigí desde 
 <a href="bastianoleah.netlify.app">bastianoleah.netlify.app</a> a 
@@ -219,20 +246,56 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
 <a href="https://yihui.org/en/2017/11/301-redirect/#another-application-redirect-netlify-com-to-your-own-domain" target="_blank" rel="noopener">especificar redirecciones</a> creando un archivo llamado <code>_redirects</code> en <code>static</code>: link original y redirección.</li>
 <li>Así evitas que los usuarios entren sin <code>https</code> a tu sitio, y que si entran a una url interna o antigua se les lleve a la url nueva.</li>
 </ul>
-</li>
-<li>
-<p><strong>Quarto documents en tu blog</strong></p>
+
+
+
+
+<h4 id="quarto-documents-para-crear-posts-en-tu-blog">Quarto documents para crear posts en tu blog
+  <a href="#quarto-documents-para-crear-posts-en-tu-blog"></a>
+</h4>
 <ul>
 <li>Para crear un post a partir de un documento Quarto, solamente tienes que poner en el <code>yaml</code> del documento quarto <code>format: hugo-md</code>. De este modo, el documento se va a renderizar en formato markdown, y si se llama <code>index.md</code>, va a aparecer como un post.</li>
 <li>Usar Quarto te permite usar <code>{shiny}</code> para construir HTML para tu sitio (por ejemplo, usando <code>div()</code> y otras funciones de Shiny).</li>
 <li>En los chunks donde uses Shiny debes ponerles <code>#| output: asis</code> para que su resultado salga como HTML y se vea en el sitio.</li>
 </ul>
-</li>
+
+
+
+
+<h4 id="modificar-el-css">Modificar el <code>css</code>
+  <a href="#modificar-el-css"></a>
+</h4>
+<ul>
+<li>En la carpeta <code>assets/scss/</code> puedes modificar los archivos <code>.scss</code> para alterar manualmente la apariencia de tu sitio. Personalmente cambié el archivo <code>assets/scss/_code.scss</code> para modificar la apariencia de los outputs de consola, para que tuvieran fondo oscuro y color distinto, con el siguiente código:
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-css" data-lang="css"><span style="display:flex;"><span><span style="color:#908caa">.</span><span style="color:#9ccfd8">pre</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#3e8fb0">overflow-x</span><span style="color:#908caa">:</span> <span style="color:#3e8fb0">auto</span><span style="color:#908caa">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#3e8fb0">overflow-y</span><span style="color:#908caa">:</span> <span style="color:#3e8fb0">hidden</span><span style="color:#908caa">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#3e8fb0">overflow</span><span style="color:#908caa">:</span>   <span style="color:#3e8fb0">scroll</span><span style="color:#908caa">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#3e8fb0">background-color</span><span style="color:#908caa">:</span> <span style="color:#f6c177">#232137</span> <span style="color:#6e6a86">!important</span><span style="color:#908caa">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#3e8fb0">color</span><span style="color:#908caa">:</span> <span style="color:#f6c177">#8A75A3</span> <span style="color:#6e6a86">!important</span><span style="color:#908caa">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#3e8fb0">border</span><span style="color:#908caa">:</span> <span style="color:#3e8fb0">none</span> <span style="color:#6e6a86">!important</span><span style="color:#908caa">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#3e8fb0">border-radius</span><span style="color:#908caa">:</span> <span style="color:#f6c177">6</span><span style="color:#3e8fb0">px</span> <span style="color:#6e6a86">!important</span><span style="color:#908caa">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#3e8fb0">font-weight</span><span style="color:#908caa">:</span> <span style="color:#f6c177">200</span> <span style="color:#6e6a86">!important</span><span style="color:#908caa">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#3e8fb0">font-size</span><span style="color:#908caa">:</span> <span style="color:#f6c177">90</span><span style="color:#3e8fb0">%</span> <span style="color:#6e6a86">!important</span><span style="color:#908caa">;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">}</span>
+</span></span></code></pre></div></li>
 </ul>
+<hr>
+
+
+
+
+<h3 id="pendientes">Pendientes
+  <a href="#pendientes"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
 <p>Igual me quedaron algunas cosas pendientes que no he sabido resolver 😞</p>
 <ul>
 <li>Traducir fechas y otros textos, no encontré cómo cambiarlo 🙁</li>
 </ul>
+<hr>
 
 
 
@@ -254,7 +317,7 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Length:</dt>
-    <dd class="fw5 ml0">5 minute read, 968 words</dd>
+    <dd class="fw5 ml0">5 minute read, 1048 words</dd>
   </dl>
   
   
@@ -278,7 +341,7 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4321/blog/simel_scraping/">Scraping de datos del Sistema de Información del Mercado Laboral &rarr;</a>
+    href="http://localhost:4321/blog/benchmark_ejemplo/">Comparar el rendimiento expresiones en R &rarr;</a>
   
 </div>
 
@@ -289,10 +352,10 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
   
     
       <script src="https://utteranc.es/client.js"
-              repo="apreshill/apero"
+              repo="bastianolea/blog-r"
               issue-term="pathname"
-              theme="boxy-light"
-              label="comments :crystal_ball:"
+              theme="github-light"
+              label="comments"
               crossorigin="anonymous"
               async
               type="text/javascript">

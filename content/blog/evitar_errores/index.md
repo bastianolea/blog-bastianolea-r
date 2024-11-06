@@ -8,6 +8,7 @@ categories:
 tags:
   - procesamiento de datos
   - loops
+  - consejos
 lang: es
 excerpt: >-
   ¿Tienes que hacer un loop, pero se detiene porque hay un error en uno de los
