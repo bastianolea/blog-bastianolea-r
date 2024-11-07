@@ -2,15 +2,15 @@
 title: Desarrollo de aplicaciones web interactivas con R y Shiny (2a versión)
 subtitle: Dirigido a usuarios/as de R
 author: Bastián Olea Herrera
-date: "2024-11-21"
-date_end: "2024-12-12"
+date: "2024-11-21T19:00:00.000Z"
+date_end: "2024-12-12T21:00:00.000Z"
 draft: false
-excerpt: Curso online de cuatro sesiones, donde aprenderás desde cero a desarrollar apps para visualizar, explorar y presentar tus datos. **¡Inscripciones abiertas!**
+excerpt: Curso online de cuatro sesiones, donde aprenderás desde cero a desarrollar apps para visualizar, explorar y presentar tus datos. ¡Inscripciones abiertas!
 layout: single
 location: Online
 ---
 
-[**Inscripciones aquí**](https://spatiallab.cl/cursos-1/ola/services/2da-version-curso-desarrollo-de-aplicaciones-web-interactivas-usando-r-y-shiny)
+**¡Inscripciones abiertas!** [**Inscríbete aquí**](https://spatiallab.cl/cursos-1/ola/services/2da-version-curso-desarrollo-de-aplicaciones-web-interactivas-usando-r-y-shiny)
 
 ![](curso_desarrollo_apps_2_1-featured.jpeg)
 
