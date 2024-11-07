@@ -5,6 +5,7 @@ format: hugo-md
 date: 2024-09-05T00:00:00.000Z
 tags:
   - procesamiento de datos
+  - consejos
 lang: es
 excerpt: >-
   Si tienes que trabajar con bases de datos muy grandes, puedes acelerar el

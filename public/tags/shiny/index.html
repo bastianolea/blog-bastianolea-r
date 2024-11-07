@@ -45,8 +45,8 @@
   
   <meta itemprop="name" content="Shiny">
   <meta itemprop="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
-  <meta itemprop="datePublished" content="2024-08-08T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-08-08T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2024-11-06T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-11-06T00:00:00+00:00">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
@@ -119,6 +119,136 @@
     <p class="f6 f5-ns measure lh-copy tc center"></p>
   </section>
   <section class="blog-content mw7 center">
+  
+    
+                               
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/tutorial_shinyapps/" class="db">Tutorial: publicar una app Shiny en shinyapps.io</a></h1>
+      
+    </header>
+      
+      <p class="lh-copy mb4"><ul>
+<li>
+<p>Crear una cuenta en ShinyApps.io
+<p><a href="https://www.shinyapps.io" target="_blank" rel="noopener">
+<a href="https://www.shinyapps.io" target="_blank" rel="noopener">https://www.shinyapps.io</a></a></p></p>
+</li>
+<li>
+<p>Las cuentas gratuitas permiten tener hasta 5 aplicaciones, con 25 horas de uso mensual (en total, entre todos tus usuarios)</p>
+</li>
+<li>
+<p>El plan inicial (13USD) permite 25 aplicaciones y 1000 horas de uso mensual.</p>
+</li>
+</ul>
+<p><img src="/blog/tutorial_shinyapps/tutorial_shinyapps_5.png"></p>
+<p>Instalar el paquete {rsconnect}</p>
+<pre tabindex="0"><code>install.packages(&#39;rsconnect&#39;)
+</code></pre><p>Autorizar tu cuenta de ShinyApps.io en RStudio.
+Para ello, shinyapps te entrega un código secreto asociado a tu cuenta, el cual debes registrar en tu sesión de R</p></p>
+    <footer>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+  
+    
+                               
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/tutorial_digitalocean/" class="db">Tutorial: publicar una app Shiny en Digital Ocean</a></h1>
+      
+    </header>
+      
+      <p class="lh-copy mb4"><p>[3] Digital Ocean</p>
+<p><img src="/blog/tutorial_digitalocean/tutorial_digitalocean_2.png"></p>
+<p><img src="/blog/tutorial_digitalocean/tutorial_digitalocean_3.png"></p>
+<ul>
+<li>crear una cuenta (necesita medio de pago)</li>
+</ul>
+<p>
+<a href="https://m.do.co/c/b117f791b027" target="_blank" rel="noopener">https://m.do.co/c/b117f791b027</a></p>
+<p><img src="/blog/tutorial_digitalocean/tutorial_digitalocean_4.png"></p>
+<ul>
+<li>
+<p>crear droplet</p>
+<ul>
+<li>elegir imagen RStudio</li>
+</ul>
+<p><img src="/blog/tutorial_digitalocean/tutorial_digitalocean_5.png"></p>
+<ul>
+<li>elegir configuración
+<img src="/blog/tutorial_digitalocean/tutorial_digitalocean_6.png"></li>
+</ul>
+</li>
+</ul>
+<p><img src="/blog/tutorial_digitalocean/tutorial_digitalocean_7.png"></p>
+<ul>
+<li>configurar droplet
+<ul>
+<li>crear usuarios</li>
+</ul>
+</li>
+</ul>
+<pre tabindex="0"><code>adduser usuario
+</code></pre><pre tabindex="0"><code>adduser usuarioprueba
+usermod -aG sudo usuarioprueba
+</code></pre><ul>
+<li>abrir Rstudio: IP:8787</li>
+</ul>
+<p><img src="/blog/tutorial_digitalocean/tutorial_digitalocean_1.png"></p>
+<ul>
+<li>
+<p>Clonar una app</p>
+<ul>
+<li>Nuevo proyecto</li>
+<li>Proyecto desde control de versiones</li>
+<li>
+<a href="https://github.com/bastianolea/estimador_ingresos_trabajo.git" target="_blank" rel="noopener">https://github.com/bastianolea/estimador_ingresos_trabajo.git</a></li>
+</ul>
+</li>
+<li>
+<p>Enlazar proyecto con la carpeta de shiny-server</p>
+</li>
+</ul>
+<pre tabindex="0"><code>sudo ln -s ~/miaplicacion /srv/shiny-server/
+</code></pre><ul>
+<li>Instalar paquetes para Shiny
+Desde la consola de Digital Ocean:</li>
+</ul>
+<pre tabindex="0"><code>sudo su - shiny
+R
+install.packages(&#34;...&#34;)
+</code></pre><ul>
+<li>Editar configuración de Shiny</li>
+</ul>
+<pre tabindex="0"><code>sudo nano /etc/shiny-server/shiny-server.conf
+</code></pre><p>Dentro de este archivo, agregar estas opciones:</p></p>
+    <footer>
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
   
     
                                
