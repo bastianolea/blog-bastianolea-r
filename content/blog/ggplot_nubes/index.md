@@ -1,5 +1,5 @@
 ---
-title: ¿Arte? Nubes aleatorias en ggplot
+title: '¿Arte? Nubes aleatorias en `{ggplot2}`'
 author: Bastián Olea Herrera
 date: '2024-11-08'
 format: hugo-md
@@ -107,10 +107,10 @@ map(1:9, ~{
   iris |> 
     ggplot(aes(x = Sepal.Length, y = Sepal.Width, alpha = Petal.Length,
                size = Petal.Length, color = Sepal.Width)) +
-    geom_jitter(width = jitter_x, height = jitter_y) |> with_blur(sigma = 7) +
+    geom_jitter(width = jitter_x, height = jitter_y) |> with_blur(sigma = 9) +
     theme_void() +
     scale_size(range = c(tamaño_min, tamaño_max)) +
-    scale_alpha(range = c(.08, .0)) +
+    scale_alpha(range = c(.07, .0)) +
     scale_color_gradient2(low = "red", mid = "purple", high = "blue", 
                           midpoint = centro_color) +
     theme(legend.position = "none") +

@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.136.5">
-<title>¿Arte? Nubes aleatorias en ggplot | Blog</title>
+<title>¿Arte? Nubes aleatorias en `{ggplot2}` | Blog</title>
 
 
 <meta property="twitter:site" content="@bastimapache">
@@ -29,7 +29,7 @@ Tomé el dataframe `iris`, configuré algunos elementos aleatorios en el gráfic
 
 
 <meta property="og:site_name" content="Blog">
-<meta property="og:title" content="¿Arte? Nubes aleatorias en ggplot | Blog">
+<meta property="og:title" content="¿Arte? Nubes aleatorias en `{ggplot2}` | Blog">
 <meta property="og:description" content="Probando un poco de arte generativo en `{ggplot2}`. La idea era generar gráficos que parecieran nubes o humo. 
 Tomé el dataframe `iris`, configuré algunos elementos aleatorios en el gráfico, le agregué un efecto de desenfoque a los puntos, y luego hice un loop que genera 9 gráficos con parámetros aleatorios." />
 <meta property="og:type" content="page" />
@@ -46,7 +46,7 @@ Tomé el dataframe `iris`, configuré algunos elementos aleatorios en el gráfic
     
     
   
-  <meta itemprop="name" content="¿Arte? Nubes aleatorias en ggplot">
+  <meta itemprop="name" content="¿Arte? Nubes aleatorias en `{ggplot2}`">
   <meta itemprop="description" content="Probando un poco de arte generativo en {ggplot2}. La idea era generar gráficos que parecieran nubes o humo.
 Tomé el dataframe iris, configuré algunos elementos aleatorios en el gráfico, le agregué un efecto de desenfoque a los puntos, y luego hice un loop que genera 9 gráficos con parámetros aleatorios.
 library(dplyr) library(glue) library(ggplot2) library(ggfx) library(purrr) Partimos con un gráfico base usando los datos de iris, donde los puntos crecen en base a una variable, y también aumentan su transparencia en la misma medida que aumentan su tamaño. De esta forma, los puntos más grandes son también menos visibles.">
@@ -126,7 +126,7 @@ library(dplyr) library(glue) library(ggplot2) library(ggfx) library(purrr) Parti
   <section class="page-content mw7 center">
     <article class="post-content pa0 ph4-l">
       <header class="post-header">
-        <h1 class="f1 lh-solid measure-narrow mb3 fw4">¿Arte? Nubes aleatorias en ggplot</h1>
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">¿Arte? Nubes aleatorias en `{ggplot2}`</h1>
         
         
         <p class="f7 db mv0 ttu">8/11/2024</p>
@@ -200,10 +200,10 @@ library(dplyr) library(glue) library(ggplot2) library(ggfx) library(purrr) Parti
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sepal.Length</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sepal.Width</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Petal.Length</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Petal.Length</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sepal.Width</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">geom_jitter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">width</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">jitter_x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">height</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">jitter_y</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">with_blur</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sigma</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">7</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">geom_jitter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">width</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">jitter_x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">height</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">jitter_y</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">with_blur</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sigma</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">9</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">theme_void</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">scale_size</span><span style="color:#908caa">(</span><span style="color:#ea9a97">range</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tamaño_min</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">tamaño_max</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">scale_alpha</span><span style="color:#908caa">(</span><span style="color:#ea9a97">range</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">.08</span><span style="color:#908caa">,</span> <span style="color:#f6c177">.0</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">scale_alpha</span><span style="color:#908caa">(</span><span style="color:#ea9a97">range</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">.07</span><span style="color:#908caa">,</span> <span style="color:#f6c177">.0</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">scale_color_gradient2</span><span style="color:#908caa">(</span><span style="color:#ea9a97">low</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;red&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">mid</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;purple&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">high</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;blue&#34;</span><span style="color:#908caa">,</span> 
 </span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">midpoint</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">centro_color</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">legend.position</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;none&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>

@@ -92,6 +92,40 @@ Algunas dificultades que tuve con el blog, y cómo las resolví:
       font-size: 90% !important;
       }
     ```
+    
+#### Crear un post nuevo
+  - Encontraba engorroso eso de crear un nuevo archivo `index.md` para cada post, porque tenía que copiar y pegar las etiquetas y código que van al inicio. Pero luego me di cuenta de que hay una función de `{blogdown}` que te crea posts nuevos:
+    ```r
+    # crear un post
+    blogdown::new_post(title = "Nubes aleatorias en ggplot", 
+                       subdir = "blog/",
+                       file = "blog/ggplot_nubes/index.md", # define el "slug", la dirección url del post
+                       author = "Bastián Olea Herrera",
+                       tags = c("ggplot2", "gráficos", "curiosidades")
+    )
+    ```
+    
+----
+
+### Consejos
+Mantengo un archivo `.R` en el inicio del blog, donde tengo todos los comandos que uso regularmente para el sitio:
+
+```r
+blogdown::serve_site() # previsualizar sitio
+blogdown::stop_server() # detener previsualización
+blogdown::stop_server(); blogdown::serve_site() # reiniciar previsualización
+
+# crear un post nuevo
+blogdown::new_post(title = "Nubes aleatorias en ggplot", 
+                   subdir = "blog/",
+                   file = "blog/ggplot_nubes/index.md",
+                   author = "Bastián Olea Herrera",
+                   tags = c("ggplot2", "gráficos", "curiosidades")
+)
+
+# ver sitio en github
+usethis::browse_github()
+```
 
 ----
 
