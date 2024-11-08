@@ -1,8 +1,6 @@
 ---
 title: Femicidios en Chile
 subtitle: Visualizador de estadísticas de femicidios
-tags:
-- shiny
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera

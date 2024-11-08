@@ -1,8 +1,6 @@
 ---
 title: Brechas de género Casen
 subtitle: Visualizador de desigualdad de género
-tags:
-- shiny
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera

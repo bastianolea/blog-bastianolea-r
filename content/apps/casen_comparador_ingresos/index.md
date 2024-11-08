@@ -1,8 +1,6 @@
 ---
 title: Comparador de ingresos Casen
 subtitle: Visualizador interactivo de ingresos
-tags:
-- shiny
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera

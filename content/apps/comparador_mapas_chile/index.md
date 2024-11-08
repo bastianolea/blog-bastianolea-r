@@ -1,8 +1,6 @@
 ---
 title: Comparador de mapas comunales de Chile
 subtitle: Visualizador de múltiples variables georeferenciadas
-tags:
-- shiny
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera

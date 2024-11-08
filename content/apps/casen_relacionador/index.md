@@ -1,8 +1,6 @@
 ---
 title: Relacionador Casen
 subtitle: Visualizador interactivo variables socioeconómicas
-tags:
-- shiny
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera

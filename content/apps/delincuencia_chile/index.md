@@ -1,8 +1,6 @@
 ---
 title: Estadísticas de delincuencia en Chile
 subtitle: Visualizador interactivo de datos oficiales sobre delincuencia
-tags:
-- shiny
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera

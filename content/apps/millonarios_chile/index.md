@@ -1,8 +1,6 @@
 ---
 title: Millonarios de Chile
 subtitle: Visualizador de riquezas extremas
-tags:
-- shiny
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera

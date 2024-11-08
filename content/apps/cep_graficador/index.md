@@ -1,8 +1,6 @@
 ---
 title: Graficador encuesta CEP
 subtitle: Visualizador interactivo de resultados oficiales de la encuesta CEP
-tags:
-- shiny
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera

@@ -1,8 +1,6 @@
 ---
 title: Proyecciones de población del Censo
 subtitle: Visualizador proyecciones estadísticas oficiales de población para Chile
-tags:
-- shiny
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera

@@ -8,11 +8,11 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Nubes aleatorias en ggplot", 
+blogdown::new_post(title = "Tutorial: aplicación web Shiny básica", 
                    subdir = "blog/",
-                   file = "blog/ggplot_nubes/index.md",
+                   file = "blog/tutorial_shiny_1/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("ggplot2", "gráficos", "curiosidades")
+                   tags = c("shiny", "tutorial")
 )
 
 # ver en github

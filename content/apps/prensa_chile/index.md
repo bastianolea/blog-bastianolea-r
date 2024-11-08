@@ -2,7 +2,8 @@
 title: Análisis de prensa chilena
 subtitle: Visualizador y análisis de texto de datos de prensa
 tags:
-- shiny
+- Análisis de texto
+- Web scraping
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera

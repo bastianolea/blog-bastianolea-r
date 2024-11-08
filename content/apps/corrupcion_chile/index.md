@@ -1,8 +1,6 @@
 ---
 title: Corrupción en Chile
 subtitle: Visualizador de datos de corrupción
-tags:
-- shiny
 categories:
 - Aplicaciones
 author: Bastián Olea Herrera
