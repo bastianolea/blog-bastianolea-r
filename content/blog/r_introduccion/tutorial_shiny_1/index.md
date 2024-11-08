@@ -107,7 +107,11 @@ shinyApp(ui, server)
 
 Al incluir esta línea en nuestro script, RStudio detectará que se trata de una aplicación, y ofrecerá un nuevo botón en la parte superior derecha del panel de scripts: el botón para ejecutar la app (_Run App_).
 
+<div style="text-align: center; margin:auto; max-width: 400px;">
+
 ![](tutorial_shiny_2.png)
+
+</div>
 
 Pero antes, revisemos la totalidad de nuestro (breve) script hasta el momento:
 
@@ -166,7 +170,12 @@ Como segundo argumento, usualmente hay que poner la _etiqueta_ del input, que es
 
 Luego de agregar el input al `ui` de tu app, puedes volver a ejecutarla para ver cómo va quedando. 
 
+<div style="text-align: center; margin:auto; max-width: 500px;">
+
 ![](tutorial_shiny_4.png)
+
+</div>
+
 
 ### Server 
 Por ahora, el input que creamos no hace nada. Para hacer que haga algo, hay que usarlo en `server`.
@@ -295,7 +304,12 @@ texto <- reactive({
 
 Ejecutamos la app, y vemos que ahora tenemos dos inputs, los cuales se usan en un mismo objeto reactivo, el cual se actualiza cuando cualquiera de los dos inputs cambia.
 
+<div style="text-align: center; margin:auto; max-width: 560px;">
+
 ![](tutorial_shiny_5.png)
+
+</div>
+
 
 ¡Listo! 🥳 Tienes una app Shiny básica con inputs, reactividad y outputs. Puedes encontrar todo el [código de la aplicación de este tutorial en este enlace.](https://github.com/bastianolea/blog-r/blob/master/content/blog/r_introduccion/tutorial_shiny_1/app.R)
 
