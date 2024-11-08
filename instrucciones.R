@@ -8,11 +8,12 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Tutorial: aplicación web Shiny básica", 
+blogdown::new_post(title = "Recursos sobre R", 
                    subdir = "blog/",
-                   file = "blog/tutorial_shiny_1/index.md",
+                   # file = "blog/tutorial_shiny_1/index.md",
+                   file = "blog/r_introduccion/recursos_r/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("shiny", "tutorial")
+                   tags = c()
 )
 
 # ver en github

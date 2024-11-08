@@ -318,3 +318,5 @@ El siguiente paso es compartirla con los demás! Para eso, puedes seguir el tuto
 ----
 
 Si tienes cualquier consulta, necesitas apoyo con tu aplicación Shiny, o deseas que te ayude a desarrollar un proyecto, no dudes en [contactarme](/contact/).
+
+[Revisa mis clases para ver los cursos anteriores de Shiny](/clases/) que he impartido, los cuales contienen código y ejemplos de aplicaciones.
