@@ -3,9 +3,9 @@ title: Introducción a R
 description: |
   Serie de posts y tutoriales del nivel más básico, para quienes quieran adentrarse por primera vez en el análisis de datos con R.
 author: Bastián Olea Herrera
-show_post_thumbnail: true
-show_author_byline: true
-show_post_date: true
+show_post_thumbnail: false
+show_author_byline: false
+show_post_date: false
 # for series listing page layout
 layout: list-sidebar # list, list-sidebar, list-grid
 
@@ -15,6 +15,8 @@ sidebar:
   author: Bastián Olea Herrera
   description: |
     Contenido para principiantes en R. Serie de posts y tutoriales del nivel más básico, para quienes quieran adentrarse por primera vez en el análisis de datos con R.
+    
+    Si tienes alguna duda con R, no entiendes alguno de los contenidos, o necesitas apoyo personalizado, puedes [contactarme.](/contact/)
   text_link_label: ""
   text_link_url: ""
   show_sidebar_adunit: false # show ad container
