@@ -7,6 +7,14 @@ blogdown::serve_site()
 blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
+# crear un post
+blogdown::new_post(title = "Nubes aleatorias en ggplot", 
+                   subdir = "blog/",
+                   file = "blog/ggplot_nubes/index.md",
+                   author = "Bastián Olea Herrera",
+                   tags = c("ggplot2", "gráficos", "curiosidades")
+)
+
 # ver en github
 usethis::browse_github()
 
