@@ -97,7 +97,7 @@ Algunas dificultades que tuve con el blog, y cómo las resolví:
 
 ### Pendientes
 Igual me quedaron algunas cosas pendientes que no he sabido resolver 😞 
-- Traducir fechas y otros textos, no encontré cómo cambiarlo 🙁 
+- Traducir los meses, no encontré cómo cambiarlo 🙁 
 
 ----
 

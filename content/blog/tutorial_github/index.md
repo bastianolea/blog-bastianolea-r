@@ -9,11 +9,13 @@ categories:
 tags:
   - git
 lang: es
-excerpt: 
+excerpt: En este tutorial se entregan los pasos para empezar a usar git con tus proyectos de R, meddiante la creación de repositorios git. git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas y colaborar en un mismo proyecto.
 ---
 
+En este tutorial se entregan los pasos para empezar a usar git con tus proyectos de R, meddiante la creación de repositorios git. git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas y colaborar en un mismo proyecto.
 
-Diferencia entre git y GitHub
+
+### Diferencia entre git y GitHub
 
 ## Crear una cuenta GitHub
 - crear cuenta github
@@ -24,7 +26,7 @@ install.packages("usethis")
 ```
 
 ## Clonar un repositorio de R
-![](tutorial_github_1.png)
+![](tutorial_github_1-featured.png)
 ![](tutorial_github_2.png)
 ![](tutorial_github_3.png)
 ![](tutorial_github_4.png)

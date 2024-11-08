@@ -4,6 +4,7 @@ author: Bastián Olea Herrera
 format: hugo-md
 date: 2024-11-07T00:00:00.000Z
 draft: false
+series: Introducción a R
 categories:
   - Tutoriales
 tags:

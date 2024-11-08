@@ -21,7 +21,7 @@ sidebar:
   author: Bastián Olea Herrera
   categories_link: false
   description: "Publicaciones periodicas sobre el uso de R para análisis de datos, incluyendo tutoriales, reseñas, tips o consejos, novedades, y más. En esta sección del sitio iré compartiendo posts de distinto tipo acerca de R, ya sean tutoriales completos sobre una temática, o publicaciones breves sobre algún aspecto que quise compartir."
-  series_link: false
+  series_link: true
   show_sidebar_adunit: false
   tags_link: true
 thumbnail_left: false

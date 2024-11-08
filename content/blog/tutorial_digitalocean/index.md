@@ -9,7 +9,7 @@ categories:
 tags:
   - Shiny
 lang: es
-excerpt: 
+excerpt: En este tutorial encuentras instrucciones paso a paso para crear un droplet (servidor privado) en Digital Ocean, en el cual puedes subir aplicaciones Shiny, ejecutar RStudio, dejar automatizados procesos recurrentes de análisis de datos o web scraping, y más.
 ---
 
 
@@ -18,7 +18,7 @@ excerpt:
 ![](tutorial_digitalocean_2.png)
 
 
-![](tutorial_digitalocean_3.png)
+![](tutorial_digitalocean_3-featured.png)
 
 - crear una cuenta (necesita medio de pago)
 
