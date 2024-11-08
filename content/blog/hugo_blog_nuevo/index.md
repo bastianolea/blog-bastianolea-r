@@ -1,5 +1,5 @@
 ---
-title: Blog sobre éste blog
+title: Post sobre mi nuevo blog (este mismo)
 author: Bastián Olea Herrera
 format: hugo-md
 date: 2024-11-07
@@ -15,7 +15,7 @@ links:
   url: https://github.com/bastianolea?tab=repositories
 ---
 
-Éste es un post sobre este mismo blog. Quería compartir el proceso de creación de éste blog.
+Éste es un post sobre este mismo blog. Quería compartir el proceso de creación del blog, porque me pareció interesante y entretenido.
 
 Lo creé usando [Hugo](https://gohugo.io), un generador de sitios web estáticos de código abierto y gratuito. Hugo se puede usar a través de R usando `{blogdown}` y el tema [Hugo Apéro](https://hugo-apero.netlify.app), creado por [Alison Hill](https://www.apreshill.com), y así puedes crear páginas y publicaciones usando Quarto o RMarkdown. De ese modo resulta muy fácil integrar las cosas que hagas con R en tu sitio, compartiendo el código en los posts. 
 
@@ -73,6 +73,9 @@ Algunas dificultades que tuve con el blog, y cómo las resolví:
 
 #### Traducir elementos del sitio
   - Hay varios elementos de texto del sitio que vienen por defecto en inglés, pero pueden ser traducidos si abres los archivos html y modificas `<p>El texto dentro de los tags</p>`. Los archivos están en `themes/hugo-apero/layouts/`.
+  
+#### Cambiar formatos de las fechas
+  - Hay que navegar los archivos del tema del sitio, en `themes/hugo-apero/layouts/`, y buscar los elementos que contienen la fecha así: `{{ .PublishDate.Format "January 2, 2006" }}`, y cambiarlos por el formato de fecha que prefieras, consideando que el día, mes y año deben ser los que salen en ese formato (2 de enero de 2006). Yo los dejé así: `{{ .PublishDate.Format "2/1/2006" }}`
 
 #### Modificar el `css`
   - En la carpeta `assets/scss/` puedes modificar los archivos `.scss` para alterar manualmente la apariencia de tu sitio. Personalmente cambié el archivo `assets/scss/_code.scss` para modificar la apariencia de los outputs de consola, para que tuvieran fondo oscuro y color distinto, con el siguiente código:
