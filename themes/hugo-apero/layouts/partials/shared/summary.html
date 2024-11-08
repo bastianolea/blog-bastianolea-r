@@ -33,7 +33,7 @@
       <footer class="w-100">
       <!--ensures section Params are respected-->
       {{ if $root.Params.show_author_byline }}<p class="f7 db mv1">{{ if .Params.author }}By {{ .Params.author }}{{ end }}{{ with .Params.categories }} in{{ range . }} <a href="{{ "categories/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}{{ end }}</p>{{ end }}
-      {{ if $root.Params.show_post_date }}<p class="f7 db mv1">{{ .PublishDate.Format "January 2, 2006" }}</p>{{ end }}
+      {{ if $root.Params.show_post_date }}<p class="f7 db mv1">{{ .PublishDate.Format "2/1/2006" }}</p>{{ end }}
       {{ if and $root.Params.show_button_links .Params.links }}
         <p class="db pt1">
         {{ partial "shared/btn-links.html" . }}
@@ -56,7 +56,7 @@
       {{ with $summary }}<p class="lh-copy mb4">{{ . | markdownify | emojify }}</p>{{ end }}
     <footer>
       {{ if $root.Params.show_author_byline }}<p class="f7 db mv2">{{ if .Params.author }}By {{ .Params.author }}{{ end }}{{ with .Params.categories }} in{{ range . }} <a href="{{ "categories/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}{{ end }}</p>{{ end }}
-      {{ if $root.Params.show_post_date }}<p class="f7 db mv2">{{ .PublishDate.Format "January 2, 2006" }}</p>{{ end }}
+      {{ if $root.Params.show_post_date }}<p class="f7 db mv2">{{ .PublishDate.Format "2/1/2006" }}</p>{{ end }}
       {{ if and $root.Params.show_button_links .Params.links }}
         <p class="db pt1">
         {{ partial "shared/btn-links.html" . }}
