@@ -53,7 +53,7 @@ Ahí creas una nueva llave, y puedes realizar el proceso de enlazamiento de tu c
 
 Dentro del menú que se abre, elige el botón _Connect_ para agregar una cuenta nueva, y pegas el bloque de código con tu _token_ y _secret._
 
-![](tutorial_shinyapps_3-featured.png)
+![](tutorial_shinyapps_3.png)
 
 
 ## Publicar una aplicación
