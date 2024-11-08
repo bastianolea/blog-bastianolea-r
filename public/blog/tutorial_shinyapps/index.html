@@ -24,12 +24,12 @@
   
     
   
-<meta name="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
+<meta name="description" content="¿Desarrollaste una aplicación con Shiny, y quieres compartirla con el mundo? shinyapps.io es, en mi experiencia, el servicio más sencillo de usar para poder hacer públicas tus aplicaciones Shiny. Este post contiene instrucciones paso a paso para que publiques y compartas tus aplicaciones.">
 
 
 <meta property="og:site_name" content="Blog">
 <meta property="og:title" content="Tutorial: publicar una app Shiny en shinyapps.io | Blog">
-<meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
+<meta property="og:description" content="¿Desarrollaste una aplicación con Shiny, y quieres compartirla con el mundo? shinyapps.io es, en mi experiencia, el servicio más sencillo de usar para poder hacer públicas tus aplicaciones Shiny. Este post contiene instrucciones paso a paso para que publiques y compartas tus aplicaciones." />
 <meta property="og:type" content="page" />
 <meta property="og:url" content="http://localhost:4321/blog/tutorial_shinyapps/" />
 <meta property="og:locale" content="es-ES">
@@ -38,21 +38,20 @@
 
 
     
-        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+        <meta property="og:image" content="http://localhost:4321/blog/tutorial_shinyapps/tutorial_shinyapps_3-featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+        <meta name="twitter:image" content="http://localhost:4321/blog/tutorial_shinyapps/tutorial_shinyapps_3-featured.png" >
     
     
   
   <meta itemprop="name" content="Tutorial: publicar una app Shiny en shinyapps.io">
-  <meta itemprop="description" content="Crear una cuenta en ShinyApps.io https://www.shinyapps.io
-Las cuentas gratuitas permiten tener hasta 5 aplicaciones, con 25 horas de uso mensual (en total, entre todos tus usuarios)
-El plan inicial (13USD) permite 25 aplicaciones y 1000 horas de uso mensual.
-Instalar el paquete {rsconnect}
-install.packages(&#39;rsconnect&#39;) Autorizar tu cuenta de ShinyApps.io en RStudio. Para ello, shinyapps te entrega un código secreto asociado a tu cuenta, el cual debes registrar en tu sesión de R">
-  <meta itemprop="datePublished" content="2024-11-06T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-11-06T00:00:00+00:00">
-  <meta itemprop="wordCount" content="113">
+  <meta itemprop="description" content="¿Desarrollaste una aplicación con Shiny, y quieres compartirla con el mundo? shinyapps.io es, en mi experiencia, el servicio más sencillo de usar para poder hacer públicas tus aplicaciones Shiny.
+El primer paso es, lógicamente, tener una app Shiny funcionando. Para asegurarte que tu app funcione sin problemas, acá van soluciones a los errores más frecuentes de las apps Shiny:
+Asegúrate de que tus scripts (app.R, o bien, ui.R y server.R) estén todos dentro de una misma carpeta Confirma que los datos que cargue tu app estén en la misma carpeta que tu script, o bien, entro de carpetas que estén al mismo nivel que tus scripts. En otras palabras, si tu app carga datos, las rutas deberían/ser/así.csv o así.rds, y no ~/users/tu/documents/cosas/app/datos.xlsx ni tampoco C:\Users\Desktop\app\datos\data.csv. Reinicia tu sesión de R (Session &gt; Restart R) y confirma que tu aplicación funciona correctamente. Así confirmas que tu app carga todos los paquetes necesarios, y que no depende de algo que estaba en tu entorno de R pero que no era reproducible desde su código. Luego, debes crearte una cuenta en shinyapps.io. Las cuentas gratuitas permiten tener hasta 5 aplicaciones, con 25 horas de uso mensual (en total, entre todos tus usuarios). Ésto es más que suficiente para apps de pruebas y con pocos usuarios, considerando que al superar el límite de horas no te interrumpen imnediatamente el acceso a tu aplicación. El plan inicial (13USD) permite 25 aplicaciones y 1000 horas de uso mensual.">
+  <meta itemprop="datePublished" content="2024-11-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-11-07T00:00:00+00:00">
+  <meta itemprop="wordCount" content="749">
+  <meta itemprop="image" content="http://localhost:4321/blog/tutorial_shinyapps/tutorial_shinyapps_3-featured.png">
   <meta itemprop="keywords" content="Shiny">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -124,55 +123,85 @@ install.packages(&#39;rsconnect&#39;) Autorizar tu cuenta de ShinyApps.io en RSt
         <h1 class="f1 lh-solid measure-narrow mb3 fw4">Tutorial: publicar una app Shiny en shinyapps.io</h1>
         
         
-        <p class="f7 db mv0 ttu">November 6, 2024</p>
+        <p class="f7 db mv0 ttu">November 7, 2024</p>
 
       
 
       </header>
       <section class="post-body pt5 pb4">
-        <ul>
-<li>
-<p>Crear una cuenta en ShinyApps.io
-
-<a href="https://www.shinyapps.io" target="_blank" rel="noopener">https://www.shinyapps.io</a></p>
-</li>
-<li>
-<p>Las cuentas gratuitas permiten tener hasta 5 aplicaciones, con 25 horas de uso mensual (en total, entre todos tus usuarios)</p>
-</li>
-<li>
-<p>El plan inicial (13USD) permite 25 aplicaciones y 1000 horas de uso mensual.</p>
-</li>
+        <p>¿Desarrollaste una aplicación con Shiny, y quieres compartirla con el mundo? 
+<a href="https://www.shinyapps.io" target="_blank" rel="noopener">shinyapps.io</a> es, en mi experiencia, el servicio más sencillo de usar para poder hacer públicas tus aplicaciones Shiny.</p>
+<p>El primer paso es, lógicamente, tener una app Shiny funcionando. Para asegurarte que tu app funcione sin problemas, acá van soluciones a los errores más frecuentes de las apps Shiny:</p>
+<ul>
+<li>Asegúrate de que tus scripts (<code>app.R</code>, o bien, <code>ui.R</code> y <code>server.R</code>) estén todos dentro de una misma carpeta</li>
+<li>Confirma que los datos que cargue tu app estén en la misma carpeta que tu script, o bien, entro de carpetas que estén al mismo nivel que tus scripts. En otras palabras, si tu app carga datos, las rutas <code>deberían/ser/así.csv</code> o <code>así.rds</code>, y no <code>~/users/tu/documents/cosas/app/datos.xlsx</code> ni tampoco <code>C:\Users\Desktop\app\datos\data.csv</code>.</li>
+<li>Reinicia tu sesión de R (Session &gt; Restart R) y confirma que tu aplicación funciona correctamente. Así confirmas que tu app carga todos los paquetes necesarios, y que no depende de algo que estaba en tu entorno de R pero que no era reproducible desde su código.</li>
 </ul>
+<p>Luego, debes crearte una cuenta en 
+<a href="https://www.shinyapps.io" target="_blank" rel="noopener">shinyapps.io</a>. Las cuentas gratuitas permiten tener hasta 5 aplicaciones, con 25 horas de uso mensual (en total, entre todos tus usuarios). Ésto es más que suficiente para apps de pruebas y con pocos usuarios, considerando que al superar el límite de horas no te interrumpen imnediatamente el acceso a tu aplicación. El plan inicial (13USD) permite 25 aplicaciones y 1000 horas de uso mensual.</p>
 <p><img src="/blog/tutorial_shinyapps/tutorial_shinyapps_5.png"></p>
-<p>Instalar el paquete {rsconnect}</p>
+<p>Después, en tu sesión de R, debes instalar el paquete <code>{rsconnect}</code>, que permite la conexión entre R y el servicio:</p>
 <pre tabindex="0"><code>install.packages(&#39;rsconnect&#39;)
-</code></pre><p>Autorizar tu cuenta de ShinyApps.io en RStudio.
-Para ello, shinyapps te entrega un código secreto asociado a tu cuenta, el cual debes registrar en tu sesión de R</p>
-<p><img src="/blog/tutorial_shinyapps/tutorial_shinyapps_2.png"></p>
+</code></pre>
+
+
+
+<h2 id="conectar-tu-cuenta-a-rstudio">Conectar tu cuenta a RStudio
+  <a href="#conectar-tu-cuenta-a-rstudio"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Una vez que tengas tu cuenta y R preparado, debes autorizar tu cuenta de shinyapps.io en RStudio, para que tu cuenta quede guardada en RStudio y así puedas subir cosas. Para ello, ShinyApps te entrega un código secreto asociado a tu cuenta, el cual debes registrar en tu sesión de R.</p>
+<p><img src="/blog/tutorial_shinyapps/tutorial_shinyapps_1.png"></p>
+<p>Al crear tu cuenta, el sitio te explica ésto, y te entrega un bloque de código similar al que pongo a continuación. Al ejecutar ese código en tu sesión de R, registra tu cuenta de shinyapps.io con tu computadora.</p>
 <pre tabindex="0"><code>rsconnect::setAccountInfo(name=‘cuenta’,
 			  token=‘&lt;TOKEN&gt;,
 			  secret=&#39;&lt;SECRET&gt;&#39;)
-</code></pre><p><img src="/blog/tutorial_shinyapps/tutorial_shinyapps_1.png"></p>
-<p>Botón <em>publicar</em>
-<img src="/blog/tutorial_shinyapps/tutorial_shinyapps_4.png"></p>
-<p>Agregar cuenta</p>
-<p><img src="/blog/tutorial_shinyapps/tutorial_shinyapps_3.png">
-Copiar y pegar en el panel</p>
+</code></pre><p>Si ya tienes tu cuenta, pero necesitas conectarla con RStudio, en el menú superior del sitio puedes entrar a <em>Tokens</em> y crear una nueva llave.</p>
+<p><img src="/blog/tutorial_shinyapps/tutorial_shinyapps_2.png"></p>
+<p>Ahí creas una nueva llave, y puedes realizar el proceso de enlazamiento de tu cuenta con RStudio desde RStudio: en el botón azul <em>publicar</em> en la esquina superior derecha de tu panel de scripts de RStudio, y presiona <em>Manage Accounts,</em> o bien, abre las opciones globales de RStudio (menú Tools &gt; Global Options) y entra al panel <em>Publishing.</em></p>
+<p><img src="/blog/tutorial_shinyapps/tutorial_shinyapps_4.png"></p>
+<p>Dentro del menú que se abre, elige el botón <em>Connect</em> para agregar una cuenta nueva, y pegas el bloque de código con tu <em>token</em> y <em>secret.</em></p>
+<p><img src="/blog/tutorial_shinyapps/tutorial_shinyapps_3-featured.png"></p>
+
+
+
+
+<h2 id="publicar-una-aplicación">Publicar una aplicación
+  <a href="#publicar-una-aplicaci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Una vez realizados los pasos anteriores podrás subir tus aplicaciones. Cuando abras un script de una app Shiny, verás el botón azul de <em>publicar</em> al lado del botón <em>Run App.</em> En este botón eliges <em>Publish Application</em> para empezar el proceso de subir tu aplicación local a shinyapps.io.</p>
 <p><img src="/blog/tutorial_shinyapps/tutorial_shinyapps_8.png"></p>
-<p>En el script de tu aplicación Shiny, presiona el botón azul de Publicar
-Selecciona los archivos a incluir, tu cuenta, y el nombre de la aplicación
-Presiona Publicar</p>
+<p>En la ventana que se abre, debes seleccionar los scripts y archivos que se requieren para que tu aplicación funcione. Puedes des-seleccionar los que no sean cruciales para el funcionamiento de la app. Luego le das un nombre a tu splicación (que será parte del enlace que la gente usará para acceder a tu app, así que elige bien), y presionas <em>Publish.</em></p>
 <p><img src="/blog/tutorial_shinyapps/tutorial_shinyapps_7.png"></p>
+<p>Se abrirá un panel nuevo en tu panel de consola, titulado <em>Deploy,</em> donde se indicará el avance de la construcción de tu aplicación. Dependiendo de la cantidad de paquetes que uses, se demorará más o menos en generar el entorno de tu aplicación. Finalmente, el mismo panel te entregará el enlace a tu aplicación, y si seleccionaste la opción en el paso anterior, tu app se abrirá en tu navegador web. ¡Listo! Tu app fue publicada en los servidores de shinyapps.io, y ya está lista para ser compartida.</p>
+
+
+
+
+<h2 id="solución-de-problemas">Solución de problemas
+  <a href="#soluci%c3%b3n-de-problemas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Si tu aplicación remota (la versión que acabas de publicar) no se ejecuta, o arroja errores, puedes entrar a tu perfil en shinyapps.io, elegir la aplicación, y revisar los registros (logs) de tu aplicación para ver lo que dicen los errores. Usualmente puede ocurrir porque faltó cargar un paquete, o una ruta estaba mal especificada.</p>
+<p><img src="/blog/tutorial_shinyapps/tutorial_shinyapps_9.png"></p>
+<p>En el panel de logs también puedes ver los mensajes que tu aplicación emite, lo que puede ayudarte a detectar problemas.</p>
 
         
         <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
     <dt class="fw7">Posted on:</dt>
-    <dd class="fw5 ml0">November 6, 2024</dd>
+    <dd class="fw5 ml0">November 7, 2024</dd>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Length:</dt>
-    <dd class="fw5 ml0">1 minute read, 113 words</dd>
+    <dd class="fw5 ml0">4 minute read, 749 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -201,12 +230,12 @@ Presiona Publicar</p>
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4321/blog/tutorial_digitalocean/">&larr; Tutorial: publicar una app Shiny en Digital Ocean</a>
+    href="http://localhost:4321/blog/hugo_blog_nuevo/">&larr; Blog sobre éste blog</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4321/blog/benchmark_ejemplo/">Comparar el rendimiento expresiones en R &rarr;</a>
+    href="http://localhost:4321/blog/tutorial_github/">Tutorial: crear un repositorio git para tu proyecto de R y subirlo a GitHub &rarr;</a>
   
 </div>
 
