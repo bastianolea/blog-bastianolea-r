@@ -297,7 +297,7 @@ Ejecutamos la app, y vemos que ahora tenemos dos inputs, los cuales se usan en u
 
 ![](tutorial_shiny_5.png)
 
-¡Listo! 🥳 Tienes una app Shiny básica con inputs, reactividad y outputs.
+¡Listo! 🥳 Tienes una app Shiny básica con inputs, reactividad y outputs. Puedes encontrar todo el [código de la aplicación de este tutorial en este enlace.](https://github.com/bastianolea/blog-r/blob/master/content/blog/r_introduccion/tutorial_shiny_1/app.R)
 
 El siguiente paso es compartirla con los demás! Para eso, puedes seguir el tutorial [publicar una app Shiny en shinyapps.io](/blog/r_introduccion/tutorial_shinyapps/), y en unos minutos podrás subir tu aplicación Shiny a internet, gratis.
 
