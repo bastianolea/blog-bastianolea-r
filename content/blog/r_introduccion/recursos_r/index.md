@@ -3,7 +3,6 @@ title: Recursos sobre R
 subtitle: Lista de sitios web, recursos, blogs y otras cosas interesantes sobre R que uso/consulto frecuentemente
 author: Bastián Olea Herrera
 date: '2024-11-08'
-weight: 999
 slug: []
 categories: []
 tags: []

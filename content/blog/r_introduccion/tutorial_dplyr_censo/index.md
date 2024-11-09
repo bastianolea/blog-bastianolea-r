@@ -1,9 +1,10 @@
 ---
 title: 'Tutorial: introducción a {dplyr} con datos de población'
 author: Bastián Olea Herrera
-date: '2024-11-08'
+date: '2024-11-09'
 draft: false
-weight: 4
+weight: 3
+series_weight: 3
 format: hugo-md
 slug: []
 categories:

@@ -5,6 +5,7 @@ format: hugo-md
 date: 2024-11-07T00:00:00.000Z
 draft: false
 weight: 1
+series_weight: 1
 series: Introducción a R
 tags:
 categories:

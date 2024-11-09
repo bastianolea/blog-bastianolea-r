@@ -5,6 +5,7 @@ author: Bastián Olea Herrera
 format: hugo-md
 date: 2024-11-07T00:00:00.000Z
 weight: 2
+series_weight: 2
 draft: false
 series: Introducción a R
 categories: []
