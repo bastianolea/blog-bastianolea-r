@@ -1,5 +1,5 @@
 ---
-title: '¿Arte? Nubes aleatorias en `{ggplot2}`'
+title: '¿Arte? Nubes aleatorias en {ggplot2}'
 author: Bastián Olea Herrera
 date: '2024-11-08'
 format: hugo-md

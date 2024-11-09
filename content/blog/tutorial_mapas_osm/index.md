@@ -1,5 +1,5 @@
 ---
-title: 'Tutorial: Mapa en `{ggplot2}` con calles desde Open Street Map'
+title: 'Tutorial: Mapa en {ggplot2} con calles desde Open Street Map'
 author: Bastián Olea Herrera
 date: 2024-09-03T00:00:00.000Z
 categories:

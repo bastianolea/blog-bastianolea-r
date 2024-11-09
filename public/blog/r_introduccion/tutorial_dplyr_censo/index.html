@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Tutorial: introducción a {dplyr} con datos de población | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Tutorial de introducción al paquete `{dplyr}` para la exploración y análisis de datos con R. Está dirigido a principiantes. En este tutorial veremos cómo explorar un conjunto de datos sobre población.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Tutorial: introducción a {dplyr} con datos de población | Blog">
+<meta property="og:description" content="Tutorial de introducción al paquete `{dplyr}` para la exploración y análisis de datos con R. Está dirigido a principiantes. En este tutorial veremos cómo explorar un conjunto de datos sobre población." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/r_introduccion/tutorial_dplyr_censo/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4321/blog/r_introduccion/sidebar-featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4321/blog/r_introduccion/sidebar-featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Tutorial: introducción a {dplyr} con datos de población">
+  <meta itemprop="description" content="Este post es una introducción al paquete {dplyr} para la exploración y análisis de datos con R. Está dirigido a principiantes de R. En este tutorial veremos:
+carga de datos de Excel seleccionar columnas ordenar tablas de datos seleccionar filas de una tabla de datos filtrar datos Los datos usados en este tutorial son las Proyecciones de población para 2024 de Chile, calculadas por el Instituto Nacional de Estadísticas (INE). La obtención, procesamiento y visualización de estos datos puede encontrarse en este repositorio, junto a una aplicación web desarrollada en R para visualizar los datos.">
+  <meta itemprop="datePublished" content="2024-11-08T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-11-08T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2525">
+  <meta itemprop="keywords" content="Dplyr">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.ee4cb156bab021bf583b75e458368e05e8682adcd4a783814f7a57cbcf41777c.css" integrity="sha256-7kyxVrqwIb9YO3XkWDaOBehoKtzUp4OBT3pXy89Bd3w=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.bebab142e3ad4c47834f81e426b8adcd5b747151cc6f7d8358a68b4a30c7ff48.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container single-series">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+                       
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 pl3-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Tutorial: introducción a {dplyr} con datos de población</h1>
+        
+        <p class="f6 measure lh-copy mv1">Por Bastián Olea Herrera in <a href="http://localhost:4321/categories/tutoriales">Tutoriales</a> </p>
+        <p class="f7 db mv0 ttu">8/11/2024</p>
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>Este post es una introducción al paquete <code>{dplyr}</code> para la exploración y análisis de datos con R. Está dirigido a principiantes de R. <!-- Si es primera vez que usas R, te recomiendo revisar primero [este breve tutorial inicial de R.](/blog/tutorial_r_1/). --></p>
+<p><em>En este tutorial veremos:</em></p>
+<ul>
+<li>carga de datos de Excel</li>
+<li>seleccionar columnas</li>
+<li>ordenar tablas de datos</li>
+<li>seleccionar filas de una tabla de datos</li>
+<li>filtrar datos</li>
+</ul>
+<p>Los datos usados en este tutorial son las 
+<a href="https://www.ine.gob.cl/estadisticas/sociales/demografia-y-vitales/proyecciones-de-poblacion" target="_blank" rel="noopener">Proyecciones de población para 2024 de Chile</a>, calculadas por el Instituto Nacional de Estadísticas (INE). La obtención, procesamiento y visualización de estos datos puede encontrarse 
+<a href="https://github.com/bastianolea/censo_proyecciones_poblacion" target="_blank" rel="noopener">en este repositorio,</a> junto a una 
+<a href="https://github.com/bastianolea/censo_proyecciones" target="_blank" rel="noopener">aplicación web desarrollada en R para visualizar los datos</a>.</p>
+
+
+
+
+<h2 id="instalación-de-paquetes">Instalación de paquetes
+  <a href="#instalaci%c3%b3n-de-paquetes"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Los paquetes son conjuntos de funciones, programas, datos y documentación que sirven para potenciar R. Para poder usarlos, primero hay que instalarlos en nuestro computador usando la función <code>install.packages()</code>. Luego de instalarlos, simplemente los cargamos usando <code>library()</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># es necesario instalarlos una sola vez</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;dplyr&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;readxl&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Luego cargamos los paquetes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># manipulación de datos</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">readxl</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># carga de archivos Excel</span>
+</span></span></code></pre></div><p><code>{dplyr}</code> es un paquete parte del Tidyverse, que se usa para manipular datos a partir de funciones que emulan instrucciones sencillas, como <em>seleccionar, filtrar,</em> etc.</p>
+
+
+
+
+<h2 id="cargar-datos">Cargar datos
+  <a href="#cargar-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Antes que nada, debemos descargar el archivo que usaremos para el tutorial: 
+<a href="https://raw.githubusercontent.com/bastianolea/censo_proyecciones_poblacion/refs/heads/main/datos_procesados/censo_proyeccion_2024.xlsx" target="_blank" rel="noopener">clic aquí para descargar el archivo Excel <code>censo_proyeccion_2024.xlsx</code></a></p>
+<p>Importamos los datos que usaremos con la funcion <code>read_excel()</code>, cuyo argumento es el nombre del archivo. Asignamos el resultado a un objeto, y así tenemos nuetros datos de Excel cargados en R:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_excel</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;censo_proyeccion_2024.xlsx&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># cargar</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#6e6a86"># ver los datos de dataframe o tabla</span>
+</span></span></code></pre></div><pre><code># A tibble: 346 × 7
+   cut_region region      cut_provincia provincia   cut_comuna comuna  población
+        &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
+ 1          1 Tarapacá               11 Iquique           1101 Iquique    231962
+ 2          1 Tarapacá               11 Iquique           1107 Alto H…    143294
+ 3          1 Tarapacá               14 Tamarugal         1401 Pozo A…     18713
+ 4          1 Tarapacá               14 Tamarugal         1402 Camiña       1374
+ 5          1 Tarapacá               14 Tamarugal         1403 Colcha…      1558
+ 6          1 Tarapacá               14 Tamarugal         1404 Huara        3095
+ 7          1 Tarapacá               14 Tamarugal         1405 Pica         6291
+ 8          2 Antofagasta            21 Antofagasta       2101 Antofa…    444276
+ 9          2 Antofagasta            21 Antofagasta       2102 Mejill…     15877
+10          2 Antofagasta            21 Antofagasta       2103 Sierra…      1800
+# ℹ 336 more rows
+</code></pre>
+<p>Para ver más filas del dataframe, usamos la función <code>print()</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">print</span><span style="color:#908caa">(</span><span style="color:#ea9a97">censo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">20</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 346 × 7
+   cut_region region      cut_provincia provincia   cut_comuna comuna  población
+        &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
+ 1          1 Tarapacá               11 Iquique           1101 Iquique    231962
+ 2          1 Tarapacá               11 Iquique           1107 Alto H…    143294
+ 3          1 Tarapacá               14 Tamarugal         1401 Pozo A…     18713
+ 4          1 Tarapacá               14 Tamarugal         1402 Camiña       1374
+ 5          1 Tarapacá               14 Tamarugal         1403 Colcha…      1558
+ 6          1 Tarapacá               14 Tamarugal         1404 Huara        3095
+ 7          1 Tarapacá               14 Tamarugal         1405 Pica         6291
+ 8          2 Antofagasta            21 Antofagasta       2101 Antofa…    444276
+ 9          2 Antofagasta            21 Antofagasta       2102 Mejill…     15877
+10          2 Antofagasta            21 Antofagasta       2103 Sierra…      1800
+11          2 Antofagasta            21 Antofagasta       2104 Taltal      13967
+12          2 Antofagasta            22 El Loa            2201 Calama     196152
+13          2 Antofagasta            22 El Loa            2202 Ollagüe       269
+14          2 Antofagasta            22 El Loa            2203 San Pe…     11030
+15          2 Antofagasta            23 Tocopilla         2301 Tocopi…     28354
+16          2 Antofagasta            23 Tocopilla         2302 María …      6507
+17          3 Atacama                31 Copiapó           3101 Copiapó    176100
+18          3 Atacama                31 Copiapó           3102 Caldera     19964
+19          3 Atacama                31 Copiapó           3103 Tierra…     14431
+20          3 Atacama                32 Chañaral          3201 Chañar…     13017
+# ℹ 326 more rows
+</code></pre>
+<p>Ahora que tenemos nuestros datos cargados como un objeto en nuestro entorno de R, podemos empezar a manipularlo y explorarlo usando <code>{dplyr}</code>.</p>
+
+
+
+
+<h2 id="seleccionar-columnas">Seleccionar columnas
+  <a href="#seleccionar-columnas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>La función <code>select()</code> selecciona columnas del dataframe.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># comando + shift + M</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">población</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 346 × 2
+   comuna        población
+   &lt;chr&gt;             &lt;dbl&gt;
+ 1 Iquique          231962
+ 2 Alto Hospicio    143294
+ 3 Pozo Almonte      18713
+ 4 Camiña             1374
+ 5 Colchane           1558
+ 6 Huara              3095
+ 7 Pica               6291
+ 8 Antofagasta      444276
+ 9 Mejillones        15877
+10 Sierra Gorda       1800
+# ℹ 336 more rows
+</code></pre>
+<p>El operador <code>|&gt;</code> es un conector, y significa que <em>a este objeto le hago esto otro;</em> es decir, se lee como si dijera &ldquo;luego&rdquo; o &ldquo;entonces&rdquo;. En este caso: <em>a <code>censo</code> le selecciono <code>comuna</code> y <code>población</code>.</em></p>
+<p>Podemos seleccionar negativamente; es decir, excluir ciertas columnas</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#908caa">-</span><span style="color:#ea9a97">cut_provincia</span><span style="color:#908caa">,</span> <span style="color:#908caa">-</span><span style="color:#ea9a97">cut_comuna</span><span style="color:#908caa">,</span> <span style="color:#908caa">-</span><span style="color:#ea9a97">cut_region</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 346 × 4
+   region      provincia   comuna        población
+   &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;             &lt;dbl&gt;
+ 1 Tarapacá    Iquique     Iquique          231962
+ 2 Tarapacá    Iquique     Alto Hospicio    143294
+ 3 Tarapacá    Tamarugal   Pozo Almonte      18713
+ 4 Tarapacá    Tamarugal   Camiña             1374
+ 5 Tarapacá    Tamarugal   Colchane           1558
+ 6 Tarapacá    Tamarugal   Huara              3095
+ 7 Tarapacá    Tamarugal   Pica               6291
+ 8 Antofagasta Antofagasta Antofagasta      444276
+ 9 Antofagasta Antofagasta Mejillones        15877
+10 Antofagasta Antofagasta Sierra Gorda       1800
+# ℹ 336 more rows
+</code></pre>
+<p>También podemos seleccionar columnas en base a sus nombres parciales:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#908caa">-</span><span style="color:#ea9a97">contains</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;cut&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 346 × 4
+   region      provincia   comuna        población
+   &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;             &lt;dbl&gt;
+ 1 Tarapacá    Iquique     Iquique          231962
+ 2 Tarapacá    Iquique     Alto Hospicio    143294
+ 3 Tarapacá    Tamarugal   Pozo Almonte      18713
+ 4 Tarapacá    Tamarugal   Camiña             1374
+ 5 Tarapacá    Tamarugal   Colchane           1558
+ 6 Tarapacá    Tamarugal   Huara              3095
+ 7 Tarapacá    Tamarugal   Pica               6291
+ 8 Antofagasta Antofagasta Antofagasta      444276
+ 9 Antofagasta Antofagasta Mejillones        15877
+10 Antofagasta Antofagasta Sierra Gorda       1800
+# ℹ 336 more rows
+</code></pre>
+<p>Selección de columnas por el numero de una columna (su posición):</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">:</span><span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">población</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 346 × 4
+   cut_region region      cut_provincia población
+        &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;     &lt;dbl&gt;
+ 1          1 Tarapacá               11    231962
+ 2          1 Tarapacá               11    143294
+ 3          1 Tarapacá               14     18713
+ 4          1 Tarapacá               14      1374
+ 5          1 Tarapacá               14      1558
+ 6          1 Tarapacá               14      3095
+ 7          1 Tarapacá               14      6291
+ 8          2 Antofagasta            21    444276
+ 9          2 Antofagasta            21     15877
+10          2 Antofagasta            21      1800
+# ℹ 336 more rows
+</code></pre>
+
+
+
+
+<h2 id="ordenar-filas">Ordenar filas
+  <a href="#ordenar-filas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Usamos la función <code>arrange()</code> para ordenar las filas de nuestros datos de acuerdo a otra variable:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">población</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 346 × 2
+   comuna        población
+   &lt;chr&gt;             &lt;dbl&gt;
+ 1 Antártica           151
+ 2 Río Verde           205
+ 3 Laguna Blanca       248
+ 4 Ollagüe             269
+ 5 Timaukel            276
+ 6 Tortel              585
+ 7 San Gregorio        651
+ 8 Primavera           674
+ 9 O'Higgins           675
+10 General Lagos       801
+# ℹ 336 more rows
+</code></pre>
+<p>Ordenar de mayor a menor:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">desc</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">población</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 346 × 3
+   region                    comuna       población
+   &lt;chr&gt;                     &lt;chr&gt;            &lt;dbl&gt;
+ 1 Metropolitana de Santiago Puente Alto     667904
+ 2 Metropolitana de Santiago Maipú           586812
+ 3 Metropolitana de Santiago Santiago        544388
+ 4 Antofagasta               Antofagasta     444276
+ 5 Metropolitana de Santiago La Florida      407297
+ 6 Valparaíso                Viña del Mar    371490
+ 7 Metropolitana de Santiago San Bernardo    348640
+ 8 Metropolitana de Santiago Las Condes      343632
+ 9 Valparaíso                Valparaíso      320816
+10 La Araucanía              Temuco          309696
+# ℹ 336 more rows
+</code></pre>
+<p>Ordenar por dos variables a la vez</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">desc</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">población</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">print</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">20</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 346 × 3
+   region             comuna               población
+   &lt;chr&gt;              &lt;chr&gt;                    &lt;dbl&gt;
+ 1 Antofagasta        Antofagasta             444276
+ 2 Antofagasta        Calama                  196152
+ 3 Antofagasta        Tocopilla                28354
+ 4 Antofagasta        Mejillones               15877
+ 5 Antofagasta        Taltal                   13967
+ 6 Antofagasta        San Pedro de Atacama     11030
+ 7 Antofagasta        María Elena               6507
+ 8 Antofagasta        Sierra Gorda              1800
+ 9 Antofagasta        Ollagüe                    269
+10 Arica y Parinacota Arica                   257163
+11 Arica y Parinacota Putre                     2569
+12 Arica y Parinacota Camarones                 1246
+13 Arica y Parinacota General Lagos              801
+14 Atacama            Copiapó                 176100
+15 Atacama            Vallenar                 57360
+16 Atacama            Caldera                  19964
+17 Atacama            Tierra Amarilla          14431
+18 Atacama            Diego de Almagro         13909
+19 Atacama            Chañaral                 13017
+20 Atacama            Huasco                   11590
+# ℹ 326 more rows
+</code></pre>
+
+
+
+
+<h2 id="filtrar-datos">Filtrar datos
+  <a href="#filtrar-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Con la función <code>filter()</code> podemos filtrar nuestro dataframe a partir de una comparación, dejando solamente las filas del dataframe que cumplan con la comparación.</p>
+<p>Por ejemplo, dejar sólo las filas donde la comuna sea &ldquo;Providencia&rdquo;:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comuna</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Providencia&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 7
+  cut_region region          cut_provincia provincia cut_comuna comuna población
+       &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
+1         13 Metropolitana …           131 Santiago       13123 Provi…    164009
+</code></pre>
+<p>Excluir las filas donde la columna sea &ldquo;Alto Hospicio&rdquo;:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comuna</span> <span style="color:#908caa">!=</span> <span style="color:#f6c177">&#34;Alto Hospicio&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 345 × 7
+   cut_region region      cut_provincia provincia   cut_comuna comuna  población
+        &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
+ 1          1 Tarapacá               11 Iquique           1101 Iquique    231962
+ 2          1 Tarapacá               14 Tamarugal         1401 Pozo A…     18713
+ 3          1 Tarapacá               14 Tamarugal         1402 Camiña       1374
+ 4          1 Tarapacá               14 Tamarugal         1403 Colcha…      1558
+ 5          1 Tarapacá               14 Tamarugal         1404 Huara        3095
+ 6          1 Tarapacá               14 Tamarugal         1405 Pica         6291
+ 7          2 Antofagasta            21 Antofagasta       2101 Antofa…    444276
+ 8          2 Antofagasta            21 Antofagasta       2102 Mejill…     15877
+ 9          2 Antofagasta            21 Antofagasta       2103 Sierra…      1800
+10          2 Antofagasta            21 Antofagasta       2104 Taltal      13967
+# ℹ 335 more rows
+</code></pre>
+<p>Dejar sólo las observaciones donde la población sea mayor a un valor:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">300000</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 10 × 7
+   cut_region region         cut_provincia provincia cut_comuna comuna población
+        &lt;dbl&gt; &lt;chr&gt;                  &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
+ 1          2 Antofagasta               21 Antofaga…       2101 Antof…    444276
+ 2          5 Valparaíso                51 Valparaí…       5101 Valpa…    320816
+ 3          5 Valparaíso                51 Valparaí…       5109 Viña …    371490
+ 4          9 La Araucanía              91 Cautín          9101 Temuco    309696
+ 5         13 Metropolitana…           131 Santiago       13101 Santi…    544388
+ 6         13 Metropolitana…           131 Santiago       13110 La Fl…    407297
+ 7         13 Metropolitana…           131 Santiago       13114 Las C…    343632
+ 8         13 Metropolitana…           131 Santiago       13119 Maipú     586812
+ 9         13 Metropolitana…           132 Cordille…      13201 Puent…    667904
+10         13 Metropolitana…           134 Maipo          13401 San B…    348640
+</code></pre>
+<p>Población menor a 1000, sólo dejar comuna y población, y ordenar de menor a mayor:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span> <span style="color:#908caa">&lt;</span> <span style="color:#f6c177">1000</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">población</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 11 × 2
+   comuna        población
+   &lt;chr&gt;             &lt;dbl&gt;
+ 1 Antártica           151
+ 2 Río Verde           205
+ 3 Laguna Blanca       248
+ 4 Ollagüe             269
+ 5 Timaukel            276
+ 6 Tortel              585
+ 7 San Gregorio        651
+ 8 Primavera           674
+ 9 O'Higgins           675
+10 General Lagos       801
+11 Lago Verde          914
+</code></pre>
+<p>Podemos hacer filtros usando funciones que operen sobre las columnas, por ejemplo, para filtrar las filas donde la población sea igual al mínimo de población:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span> <span style="color:#908caa">==</span> <span style="color:#ea9a97">min</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">provincia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">población</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 4
+  region                               comuna    provincia         población
+  &lt;chr&gt;                                &lt;chr&gt;     &lt;chr&gt;                 &lt;dbl&gt;
+1 Magallanes y de la Antártica Chilena Antártica Antártica Chilena       151
+</code></pre>
+<p>Un caso más útil sería filtrar los casos donde la población sea mayor o igual al promedio de población:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span> <span style="color:#908caa">&gt;=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">provincia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">población</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 84 × 4
+   region      comuna        provincia   población
+   &lt;chr&gt;       &lt;chr&gt;         &lt;chr&gt;           &lt;dbl&gt;
+ 1 Tarapacá    Iquique       Iquique        231962
+ 2 Tarapacá    Alto Hospicio Iquique        143294
+ 3 Antofagasta Antofagasta   Antofagasta    444276
+ 4 Antofagasta Calama        El Loa         196152
+ 5 Atacama     Copiapó       Copiapó        176100
+ 6 Coquimbo    La Serena     Elqui          267400
+ 7 Coquimbo    Coquimbo      Elqui          275644
+ 8 Coquimbo    Ovalle        Limarí         124401
+ 9 Valparaíso  Valparaíso    Valparaíso     320816
+10 Valparaíso  Viña del Mar  Valparaíso     371490
+# ℹ 74 more rows
+</code></pre>
+<p>También es posible filtrar usando objetos que creamos con anterioridad:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">min_pob</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">25000</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">max_pob</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">30000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span> <span style="color:#908caa">&gt;</span> <span style="color:#ea9a97">min_pob</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">población</span> <span style="color:#908caa">&lt;</span> <span style="color:#ea9a97">max_pob</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">provincia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">region</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 16 × 4
+   población comuna     provincia   region                                   
+       &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;                                    
+ 1     28354 Tocopilla  Tocopilla   Antofagasta                              
+ 2     29916 Salamanca  Choapa      Coquimbo                                 
+ 3     27898 La Cruz    Quillota    Valparaíso                               
+ 4     27065 Cartagena  San Antonio Valparaíso                               
+ 5     27286 Llaillay   San Felipe  Valparaíso                               
+ 6     27749 Las Cabras Cachapoal   Libertador General Bernardo O'Higgins    
+ 7     28552 Mostazal   Cachapoal   Libertador General Bernardo O'Higgins    
+ 8     26746 Hualqui    Concepción  Biobío                                   
+ 9     27152 Lebu       Arauco      Biobío                                   
+10     28028 Nacimiento Bíobío      Biobío                                   
+11     25515 Carahue    Cautín      La Araucanía                             
+12     25488 Freire     Cautín      La Araucanía                             
+13     26617 Pitrufquen Cautín      La Araucanía                             
+14     26558 Collipulli Malleco     La Araucanía                             
+15     25218 Aysén      Aysén       Aysén del General Carlos Ibáñez del Campo
+16     29067 Coihueco   Punilla     Ñuble                                    
+</code></pre>
+<p>Del mismo modo, podemos filtrar usando la cifra del promedio de población:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">promedio</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">censo</span><span style="color:#908caa">$</span><span style="color:#ea9a97">población</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span> <span style="color:#908caa">&gt;</span> <span style="color:#ea9a97">promedio</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 84 × 7
+   cut_region region      cut_provincia provincia   cut_comuna comuna  población
+        &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
+ 1          1 Tarapacá               11 Iquique           1101 Iquique    231962
+ 2          1 Tarapacá               11 Iquique           1107 Alto H…    143294
+ 3          2 Antofagasta            21 Antofagasta       2101 Antofa…    444276
+ 4          2 Antofagasta            22 El Loa            2201 Calama     196152
+ 5          3 Atacama                31 Copiapó           3101 Copiapó    176100
+ 6          4 Coquimbo               41 Elqui             4101 La Ser…    267400
+ 7          4 Coquimbo               41 Elqui             4102 Coquim…    275644
+ 8          4 Coquimbo               43 Limarí            4301 Ovalle     124401
+ 9          5 Valparaíso             51 Valparaíso        5101 Valpar…    320816
+10          5 Valparaíso             51 Valparaíso        5109 Viña d…    371490
+# ℹ 74 more rows
+</code></pre>
+
+
+
+
+<h2 id="seleccionar-filas">Seleccionar filas
+  <a href="#seleccionar-filas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Usamos <code>slice()</code> para seleccionar filas específicas del dataframe:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice</span><span style="color:#908caa">(</span><span style="color:#f6c177">200</span><span style="color:#908caa">:</span><span style="color:#f6c177">220</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># filas del 200 al 220</span>
+</span></span></code></pre></div><pre><code># A tibble: 21 × 7
+   cut_region region       cut_provincia provincia  cut_comuna comuna  población
+        &lt;dbl&gt; &lt;chr&gt;                &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt; &lt;chr&gt;       &lt;dbl&gt;
+ 1          9 La Araucanía            92 Malleco          9205 Lonqui…     11109
+ 2          9 La Araucanía            92 Malleco          9206 Los Sa…      7468
+ 3          9 La Araucanía            92 Malleco          9207 Lumaco       9916
+ 4          9 La Araucanía            92 Malleco          9208 Purén       12103
+ 5          9 La Araucanía            92 Malleco          9209 Renaico     11002
+ 6          9 La Araucanía            92 Malleco          9210 Traigu…     19260
+ 7          9 La Araucanía            92 Malleco          9211 Victor…     35554
+ 8         10 Los Lagos              101 Llanquihue      10101 Puerto…    280955
+ 9         10 Los Lagos              101 Llanquihue      10102 Calbuco     37626
+10         10 Los Lagos              101 Llanquihue      10103 Cochamó      3947
+# ℹ 11 more rows
+</code></pre>
+<p>También puede servir para seleccionar la fila que tenga el mayor o menos valor en una columna:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 7
+  cut_region region          cut_provincia provincia cut_comuna comuna población
+       &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
+1         13 Metropolitana …           132 Cordille…      13201 Puent…    667904
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_min</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 7
+  cut_region region          cut_provincia provincia cut_comuna comuna población
+       &lt;dbl&gt; &lt;chr&gt;                   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt;
+1         12 Magallanes y d…           122 Antártic…      12202 Antár…       151
+</code></pre>
+<p>Incluso nos puede servir para seleccionar una cantidad de filas elegidas al azar:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comuna</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 5 × 1
+  comuna       
+  &lt;chr&gt;        
+1 Alto Hospicio
+2 Pichilemu    
+3 Machalí      
+4 Santa Cruz   
+5 Curicó       
+</code></pre>
+
+
+
+
+<h2 id="selección-de-filas-por-grupos">Selección de filas por grupos
+  <a href="#selecci%c3%b3n-de-filas-por-grupos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Haciendo uso de la función <code>group_by()</code> podemos realizar operaciones en base a grupos. Esto significa que si agrupamos por región, y luego usamos <code>slice_max()</code> para obtener las observaciones con mayor población, el filtro de <code>slice_max()</code> se realizará una vez por cada región. Entonces, en vez de solamente obtener la comuna de mayor población del país, obtendremos la comuna con mayor población para cada región.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">población</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">población</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 16 × 3
+# Groups:   region [16]
+   region                                    comuna       población
+   &lt;chr&gt;                                     &lt;chr&gt;            &lt;dbl&gt;
+ 1 Antofagasta                               Antofagasta     444276
+ 2 Arica y Parinacota                        Arica           257163
+ 3 Atacama                                   Copiapó         176100
+ 4 Aysén del General Carlos Ibáñez del Campo Coyhaique        62046
+ 5 Biobío                                    Concepción      239776
+ 6 Coquimbo                                  Coquimbo        275644
+ 7 La Araucanía                              Temuco          309696
+ 8 Libertador General Bernardo O'Higgins     Rancagua        274407
+ 9 Los Lagos                                 Puerto Montt    280955
+10 Los Ríos                                  Valdivia        182086
+11 Magallanes y de la Antártica Chilena      Punta Arenas    145713
+12 Maule                                     Talca           242344
+13 Metropolitana de Santiago                 Puente Alto     667904
+14 Tarapacá                                  Iquique         231962
+15 Valparaíso                                Viña del Mar    371490
+16 Ñuble                                     Chillán         204091
+</code></pre>
+<p>Con esto concluye este tutorial inicial para manipular datos con el paquete <code>{dplyr}</code>. En siguientes tutoriales iremos usando funciones más complejas y avanzadas! 🫣</p>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="http://localhost:4321/blog/r_introduccion/por_que_r/">&larr; ¿Por qué usar R?</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/r_introduccion/tutorial_shiny_1/">Tutorial: crea una aplicación Shiny básica &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+
+<aside class="page-sidebar" role="complementary">
+                         
+ 
+
+
+                       
+ 
+
+
+
+
+
+
+
+
+
+
+
+  <img src="/blog/r_introduccion/sidebar-featured.png" class="db ma0">
+
+
+<div class="blog-info ph4 pt4 pb4 pb0-l">
+  
+
+  <h1 class="f3">Introducción a R</h1>
+  <p class="f6 lh-copy measure"><p>Contenido para principiantes en R. Serie de posts y tutoriales del nivel más básico, para quienes quieran adentrarse por primera vez en el análisis de datos con R.</p>
+<p>Si tienes alguna duda con R, no entiendes alguno de los contenidos, o necesitas apoyo personalizado, puedes 
+<a href="/contact/">contactarme.</a></p>
+</p>
+  <p class="f7 measure lh-copy i mh0-l">Escrito por Bastián Olea Herrera</p>
+
+
+  
+
+</div>
+
+
+                         
+ 
+
+
+
+<div class="flex items-start sticky ph4 pb4">
+  <div class="w-two-thirds w-50-l ph0">
+    
+    <h2 class="mt3 mb3 f5 fw7 ttu tracked"><a class="no-underline dim" href="/blog/r_introduccion/">Publicaciones de la serie</a></h2>
+    <nav id="SeriesTableOfContents">
+        <ul>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/instalar_r/"><a href="http://localhost:4321/blog/r_introduccion/instalar_r/">Primer paso: instalar R</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/por_que_r/"><a href="http://localhost:4321/blog/r_introduccion/por_que_r/">¿Por qué usar R?</a></li>
+        
+          
+          <li class="active" hugo-nav="/blog/r_introduccion/tutorial_dplyr_censo/"><a href="http://localhost:4321/blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shiny_1/"><a href="http://localhost:4321/blog/r_introduccion/tutorial_shiny_1/">Tutorial: crea una aplicación Shiny básica</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shinyapps/"><a href="http://localhost:4321/blog/r_introduccion/tutorial_shinyapps/">Tutorial: publicar una app Shiny en shinyapps.io</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/recursos_r/"><a href="http://localhost:4321/blog/r_introduccion/recursos_r/">Recursos sobre R</a></li>
+        
+        </ul>
+      </nav>
+  </div>
+  <details open id="PageTableOfContents">
+    <summary><h2 class="mv0 f5 fw7 ttu tracked dib">Índice</h2></summary>
+    <div class="pl2 pr0 mh0">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#instalación-de-paquetes">Instalación de paquetes</a></li>
+    <li><a href="#cargar-datos">Cargar datos</a></li>
+    <li><a href="#seleccionar-columnas">Seleccionar columnas</a></li>
+    <li><a href="#ordenar-filas">Ordenar filas</a></li>
+    <li><a href="#filtrar-datos">Filtrar datos</a></li>
+    <li><a href="#seleccionar-filas">Seleccionar filas</a></li>
+    <li><a href="#selección-de-filas-por-grupos">Selección de filas por grupos</a></li>
+  </ul>
+</nav>
+    </div>
+  </details>
+  
+</div>
+</aside>
+
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2024 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastimapache.bsky.social" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.threads.net/@raccunnie" title="threads" target="_blank" rel="me noopener">
+      <i class="fab fa-threads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

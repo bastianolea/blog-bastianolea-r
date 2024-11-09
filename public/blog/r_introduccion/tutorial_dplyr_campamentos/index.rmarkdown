@@ -1,0 +1,538 @@
+---
+title: 'Tutorial: introducción a {dplyr} usando datos de campamentos'
+author: Bastián Olea Herrera
+date: '2024-11-08'
+draft: true
+format: hugo-md
+slug: []
+categories:
+  - Tutoriales
+tags:
+  - dplyr
+---
+
+
+
+
+https://github.com/bastianolea/campamentos_chile
+
+Actualizacion Catastro campamentos 2024. Ministerio de Vivienda y Urbanismo - Centro de Estudios
+https://geoportal-open-data-minvu-2-minvu.hub.arcgis.com/datasets/MINVU::actualizacion-catastro-campamentos-2024-1/about
+
+
+instalar paquetes (solo se necesita hacer una vez)
+
+
+
+```{r}
+#| eval: false
+install.packages("readxl")
+```
+
+
+
+
+
+cargar paquetes (cada vez que queramos usarlos)
+
+
+
+```{r}
+library(readxl)
+```
+
+
+
+
+
+# cargar datos desde Excel ----
+
+
+
+```{r}
+datos <- read_excel("campamentos_chile_2024.xlsx")
+```
+
+
+
+
+usamos el paquete dplyr, que nos permite manejar datos con mayor facilidad
+
+
+
+
+```{r}
+# install.packages("dplyr")
+library(dplyr)
+```
+
+
+
+una de las particularidades de dplyr es el uso de un "pipe" o conector, lo que
+nos ayuda a encadenar instrucciones. Este conector puede escribirse como %>% o |>
+y también puede hacerse si presionas las teclas comando + shift + M (en Mac) y control + shift + M (en Windows)
+es equivalente a leerlo como si dijera "luego" o "entonces"
+
+
+
+
+
+```{r}
+# ejemplo de dos operaciones encadenadas
+datos |> 
+    select(nombre, hogares, hectareas) |> 
+    filter(hogares > 60)
+```
+
+
+
+
+
+## seleccionar 
+
+
+
+```{r}
+
+
+datos |> 
+  select(nombre, hectareas)
+
+# excluir
+datos |> 
+  select(-cut, -cut_r, -cut_p)
+
+# seleccionar en base al nombre de la columna
+datos |> 
+  select(-contains("cut"))
+
+# selección por el numero de una columna (su posición)
+datos |> 
+  select(1:4, año)
+```
+
+
+
+
+
+## mirar ----
+
+
+
+```{r}
+
+datos |> 
+  glimpse()
+
+datos |> 
+  head(40)
+
+datos |> 
+  tail(40) |> 
+  print(n=Inf)
+
+datos |> 
+  slice(1000:1010)
+
+datos |> 
+  slice_max(hogares,  n = 10)
+
+datos |> 
+  slice_min(hogares, n = 10)
+
+datos |> slice_sample(n = 5)
+```
+
+
+
+
+
+## ordenar ----
+
+
+
+```{r}
+
+datos |> 
+  arrange(nombre)
+
+datos |> 
+  arrange(desc(hogares))
+
+datos |> 
+  arrange(comuna, desc(hogares)) |> 
+  select(nombre, comuna, hogares)
+
+datos |> glimpse()
+
+datos2 <- datos |> 
+  select(1:4) |> 
+  slice_sample(n = 10)
+```
+
+
+
+
+## conteos ----
+conteo de casos de una variable
+detecta todos las categoría posibles de una variable, y cuenta
+las observaciones pertenecientes a cada categoría
+
+
+
+
+```{r}
+
+datos3 |> 
+  count(tamaño)
+
+datos3 |> 
+  count(region, tamaño) |> 
+  print(n = Inf)
+```
+
+```{r}
+# combinamos un conteo con un ordenamiento de las filas
+campamentos |> 
+  count(region) |> 
+  arrange(desc(n))
+
+campamentos |> 
+  count(comuna) |> 
+  arrange(desc(n))
+
+campamentos |> 
+  count(region, comuna) |> 
+  arrange(desc(n)) 
+```
+
+
+
+
+
+
+## filtros ----
+
+
+
+```{r}
+
+datos |> 
+  filter(hogares > 80)
+
+datos |> 
+  filter(hogares < 10)
+
+datos |> 
+  filter(region == "Ñuble")
+
+datos |> 
+  filter(region != "Valparaíso")
+
+datos |> 
+  filter(hogares > 90, hectareas > 30)
+
+datos |> 
+  filter(hogares > 90) |> 
+  filter(hectareas > 30)
+
+datos |> 
+  filter(hogares > 90 & hogares != 91)
+
+datos |> 
+  filter(hogares > 300 | hectareas > 100)
+
+datos |> 
+  filter(hogares > 30 & region == "Ñuble" |
+         hogares > 300 & region == "Valparaíso")
+
+```
+
+```{r}
+# fitrar datos usando un objeto
+prom_hogares <- mean(datos$hogares)
+
+datos |> 
+  filter(hogares > prom_hogares) #mayores que el promedio
+
+# filtrar datos a partir de una operación sobre una columna
+datos |> 
+  filter(hogares > mean(hogares) * 8)
+
+datos |> 
+  filter(hogares > quantile(hogares, .9))
+
+```
+
+```{r}
+# combinamos un filtro con un conteo y un ordenar, así
+# obtenemos un conteo de los campamentos por comuna que tienen más de 5,
+# hogares, ordenados de mayor a menor
+campamentos |> 
+  filter(hogares > 5) |> 
+  count(comuna) |> 
+  arrange(desc(n))
+
+campamentos |> 
+  filter(hogares < 5) |> 
+  count(comuna) |> 
+  arrange(desc(n))
+```
+
+
+
+
+
+## crear variables ----
+
+
+
+```{r}
+# crear una nueva variable en base al valor de otra variable
+campamentos |> 
+  select(1:4, hogares) |> 
+  mutate(prueba = "hola")
+
+# pegar texto
+datos |> 
+  select(nombre, where(is.numeric), -cut) |> 
+  mutate(columna1 = paste("Numero de hogares:", hogares))
+
+# redondear
+datos |> 
+  select(nombre, where(is.numeric), -cut) |> 
+  mutate(hectareas2 = round(hectareas, digits = 1))
+
+# nueva columna a partir de un cálculo
+datos |> 
+  select(nombre, where(is.numeric), -cut) |> 
+  mutate(densidad = hectareas/hogares)
+
+# nueva columna a partir de una condicional
+datos |> 
+  mutate(prioridad = hectareas > 2)
+         
+```
+
+```{r}
+
+# entonces, usamos este conocimiento para crear una columna donde
+# se ponga TRUE o FALSE dependiendo si cada observación cumple o no
+# la comparación que le damos
+# así podemos crear una nueva variable con un condicional
+campamentos |> 
+  select(nombre, region, hogares) |> 
+  mutate(tipo = hogares > 50)
+
+campamentos |> 
+  select(nombre, region, hogares) |> 
+  mutate(tipo = hogares > 40)
+```
+
+
+
+
+
+### if else ----  
+
+
+
+
+```{r}
+# un if else es una comparación, pero que en vez de retornar TRUE o FALSE,
+# retorna los valores que nosotras le pidamos
+plata <- 1000000
+plata < 300000
+# una comparación normal retorna TRUE o FALSE
+
+# pero en el ifelse, le especificamos primero la comparación,
+# luego lo que queremos que retorne si la comparación es TRUE,
+# y finalmente lo que queremos que retorne si es false
+ifelse(plata < 300000, yes = "poca", no = "mucha")
+
+ifelse(plata < 300000, 
+       yes = "poca", no = "mucha")
+
+ifelse(plata < 3000000, 
+       yes = "poca", 
+       no = "mucha")
+
+# también se puede escribir así, obviando el "yes" y "no"
+ifelse(plata < 300000, "poca", "mucha")
+
+```
+
+```{r}
+# entonces, usamos este conocimiento para crear una variable usando ifelse:
+campamentos |> 
+  select(nombre, region, hogares) |> 
+  mutate(tipo = ifelse(hogares > 40, 
+                       yes = "grande", 
+                       no = "chico")
+  )
+```
+
+```{r}
+datos |> 
+  select(nombre, where(is.numeric), -cut) |> 
+  mutate(prioridad = ifelse(hectareas > 2, "prioridad", "normal"))
+
+```
+
+
+
+
+### case when ----
+case_when es equivalente a usar varios ifelse seguidos, y por lo tanto
+nos permite crear variables más complejas, que tengan más de dos categorías
+y se usa poniendo todas las evaluaciones junto al valor que queremos que adopten
+si es que estas comparaciones son TRUE
+
+como prueba, vamos a uncluir una sola comparación, para ver que le otorga
+el valor solo a las observaciones correspondientes, y las demás las deja vacías
+
+
+
+
+```{r}
+campamentos3 |> 
+  mutate(categoria = case_when(densidad_km < 0.3 ~ "baja"))
+
+```
+
+```{r}
+
+datos |> 
+  select(nombre, where(is.numeric), -cut) |> 
+  mutate(tamaño = case_when(hogares > 60 ~ "grande",
+                            hogares >= 30 ~ "mediano",
+                            hogares < 20 ~ "chico"))
+
+```
+
+```{r}
+
+# finalmente, este ejemplo pone suficientes comparaciones para cubrir cualquier número posible
+campamentos3 |> 
+  mutate(categoria = case_when(densidad_km < 0.3 ~ "baja",
+                               densidad_km < 0.6 ~ "media",
+                               densidad_km < 0.9 ~ "alta",
+                               densidad_km >= 0.9 ~ "muy alta"
+  ))
+```
+
+
+
+en estos ejemplos, usamos ocmparaciones que proponen un valor numérico, y coinciden con los valores inferiores
+al valor que pusimos, entonces va de menor a mayor: de 0.3 para abajo, de 0.6 para abajo, de 0.9 para abajo,
+y lo importante es entender que una vez que una observación adquiere su etiqueta, las demás comparaciones no la van a sobreescribir,
+por ejemplo, si tenemos el valor 0.2, va a ser etiquetado por la comparación "valores menores a 0.3", porque es menor a 0.3, pero cuando
+se aplique la siguiente comparación, que es "valores menores a 0.6", a pesar de que 0.2 también es menor a 0.6, no va a
+recibir una nueva etiqueta, porque ya obtuvo una en la comparación anterior (menores a 0.3).
+
+las comparaciones también pueden combinarse para volverse más específicas
+en este ejemplo definimos no solamente si son menores a un valor, sino que definimos un rango de valores:
+mayores a 0 y menores a 3; mayores o iguales a 0.3 y menores a 0.6; etc.
+
+
+también podemos especificar el argumento .default para que le otorgue a un valor a "todos los demás";
+es decir, a los valores que no coincidieron con ninguna condición
+
+
+
+
+```{r}
+campamentos3 |>
+  mutate(categoria = case_when(
+    densidad_km > 0 & densidad_km < 0.3 ~ "baja",
+    densidad_km >= 0.3 & densidad_km < 0.6 ~ "media",
+    densidad_km >= 0.6 & densidad_km < 0.9 ~ "alta",
+    .default = "desconocido")) |>
+  filter(categoria != "desconocido") |>
+  print(n = 30)
+
+```
+
+
+
+
+
+finalmente, case_when nos permite crear cualquier tipo de comparación arbitraria,
+usando cualquier columna de nuestro dataframe; por ejemplo, en este caso estamos
+etiquetando una variable sobre densidad, pero si lo decidimos podemos combinar la
+densidad con una región; es decir, solo las observaciones que no son de Valparaíso pueden ser altas
+
+
+
+
+```{r}
+campamentos3 |>
+  mutate(categoria = case_when(densidad_km > 0 & densidad_km < 0.3 ~ "baja",
+                               densidad_km >= 0.3 & densidad_km < 0.6 ~ "media",
+                               region != "Valparaíso" & densidad_km >= 0.6 & densidad_km < 0.9 ~ "alta"))
+
+
+```
+
+
+
+
+
+crear varias variables 
+
+
+
+```{r}
+
+datos3 <- datos |> 
+  select(nombre, region, where(is.numeric), -cut) |> 
+  mutate(densidad = hectareas/hogares) |> 
+  mutate(prioridad = ifelse(hectareas > 2, "prioridad", "normal")) |> 
+  mutate(tamaño = case_when(hogares > 60 ~ "grande",
+                            hogares > 30 ~ "mediano",
+                            .default = "chico")
+
+```
+
+
+
+
+
+
+## pivotar a ancho ----
+
+
+
+
+```{r}
+
+library(tidyr)
+
+tablita <- datos3 |> 
+  count(region, tamaño) |> 
+  pivot_wider(names_from = tamaño, values_from = n, 
+              values_fill = 0)
+
+```
+
+
+
+
+
+# guardar en excel ----
+
+
+
+```{r}
+
+
+tablita |> 
+  select(region, chico, mediano, grande)
+
+tablita2 <- tablita |> 
+  relocate(mediano, .after = chico)
+
+writexl::write_xlsx(tablita2, "tabla_campamentos.xlsx")
+
+```
+

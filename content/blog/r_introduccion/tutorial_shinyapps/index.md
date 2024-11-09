@@ -3,6 +3,7 @@ title: 'Tutorial: publicar una app Shiny en shinyapps.io'
 author: Bastián Olea Herrera
 date: 2024-11-07T00:00:00.000Z
 draft: false
+weight: 21
 series: Introducción a R
 categories:
   - Tutoriales
