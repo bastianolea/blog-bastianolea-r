@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Predecir género a partir de nombres usando un modelo de lenguaje en R | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Predecir género a partir de nombres usando un modelo de lenguaje en R | Blog">
+<meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/genero_nombres_llm/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+    
+    
+  
+  <meta itemprop="name" content="Predecir género a partir de nombres usando un modelo de lenguaje en R">
+  <meta itemprop="description" content="Hace poco conocí el paquete {mall}, que facilita mucho el uso de un un modelo grande de lenguaje (LLM) como una herramienta cotidiana para el análisis y procesamiento de datos.
+El paquete incluye varias funciones para usar un modelo LLM en una columna de un dataframe. {mall} te puede ayudar a :
+clasificar el contenido de una variable resumir textos extraer sentimiento a partir del texto extraer información desde el texto confirmar si algo es verdadero o falso a partir de un texto y también a aplicar cualquier prompt a una variable. Recientemente lo usé para un caso real, donde tenía una columna de casi 2.000 nombres, y necesitaba asignarle un género a cada una de estas personas, solamente a partir de sus nombres y apellidos.">
+  <meta itemprop="datePublished" content="2024-11-10T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-11-10T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1156">
+  <meta itemprop="keywords" content="Procesamiento de datos,Inteligencia artificial,Análisis de texto">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.55dbd02bca0ffe5b529947b6e820112767ccd613c06be72b72edf1514d53ed34.css" integrity="sha256-VdvQK8oP/ltSmUe26CARJ2fM1hPAa&#43;crcu3xUU1T7TQ=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.bebab142e3ad4c47834f81e426b8adcd5b747151cc6f7d8358a68b4a30c7ff48.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Predecir género a partir de nombres usando un modelo de lenguaje en R</h1>
+        
+        
+        <p class="f7 db mv0 ttu">10/11/2024</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>
+<a href="https://bastianolea.rbind.io/blog/introduccion_llm_mall/" target="_blank" rel="noopener">Hace poco</a> conocí 
+<a href="https://mlverse.github.io/mall/" target="_blank" rel="noopener">el paquete <code>{mall}</code></a>, que facilita mucho el uso de un un modelo grande de lenguaje (LLM) como una herramienta cotidiana para el análisis y procesamiento de datos.</p>
+<p>El paquete incluye varias funciones para usar un modelo LLM en una columna de un dataframe. <code>{mall}</code> te puede ayudar a :</p>
+<ul>
+<li>clasificar el contenido de una variable</li>
+<li>resumir textos</li>
+<li>extraer sentimiento a partir del texto</li>
+<li>extraer información desde el texto</li>
+<li>confirmar si algo es verdadero o falso a partir de un texto</li>
+<li>y también a aplicar cualquier prompt a una variable.</li>
+</ul>
+<p>Recientemente lo usé para un caso real, donde tenía una columna de casi 2.000 nombres, y necesitaba asignarle un género a cada una de estas personas, solamente a partir de sus nombres y apellidos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># manipulación de datos</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">readr</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># cargar datos</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tictoc</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># medición de tiempo</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mall</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># aplicar modelos de lenguaje en dataframe</span>
+</span></span></code></pre></div><p>
+<a href="https://github.com/bastianolea/servel_scraping_votaciones" target="_blank" rel="noopener">Los datos provienen del servicio electoral de Chile</a>, y los nombres corresponden a 1.576 candidatos y candidatas a alcaldías.</p>
+<p>Con el siguiente código puedes descargar los datos listos para su uso:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">archivo_remoto</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;https://raw.githubusercontent.com/bastianolea/servel_scraping_votaciones/refs/heads/main/datos/resultados_alcaldes_2024.csv&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">candidatos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">readr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">read_csv2</span><span style="color:#908caa">(</span><span style="color:#ea9a97">archivo_remoto</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombres</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">candidato</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">partido</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sector</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombres</span> <span style="color:#908caa">!=</span> <span style="color:#f6c177">&#34;Nulo/Blanco&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">candidatos</span>
+</span></span></code></pre></div><pre><code># A tibble: 1,576 × 3
+   nombres                            partido sector       
+   &lt;chr&gt;                              &lt;chr&gt;   &lt;chr&gt;        
+ 1 Marco Antonio Gonzalez Candia      RN      Derecha      
+ 2 Veronica Maricel Cueto Cueto       IND     Independiente
+ 3 Marcela Maritza Mansilla Potocnjak IND     Independiente
+ 4 Alejandro Felipe Ricotti Sepulveda IND     Independiente
+ 5 Carlos Orlando Tapia Aviles        IND     Independiente
+ 6 Maria Luisa Hamilton Velasco       IND     Independiente
+ 7 Gaston Dubournais Riveros          IND     Independiente
+ 8 Marcela Chamorro Macias            IND     Izquierda    
+ 9 Jose Andres Arellano Blanco        IND     Independiente
+10 Andrea Elizabeth Galvez Sepulveda  REP     Derecha      
+# ℹ 1,566 more rows
+</code></pre>
+<p>En esta instancia, tengo configurado <code>{ollamar}</code> para que use el modelo Llama 3.2, de 3 billones de parámetros. Podemos instalar este modelo, o uno distinto, con estas instrucciones:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ollamar</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ollamar</span><span style="color:#908caa">::</span><span style="color:#ea9a97">pull</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;llama3.2&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># descargar e instalar un modelo</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mall</span><span style="color:#908caa">::</span><span style="color:#ea9a97">llm_use</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;ollama&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;llama3.2&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># elegir un modelo instalado</span>
+</span></span></code></pre></div><p>En una primera prueba, le entregamos al modelo de lenguaje a la columna <code>nombres</code> (que contiene nombre, segundo nombre, apellido, y segundo apellido), y le pedimos al modelo que clasifique cada observación como <em>masculino</em> o <em>femenino.</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tic</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">resultados_1</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">candidatos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">llm_classify</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombres</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;masculino&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;femenino&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">pred_name</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;genero&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Ollama local server running
+
+── mall session object 
+
+Backend: Ollama
+LLM session: model:llama3.2:latest
+R session:
+cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpntMvSc/_mall_cache127421f0326aa
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">toc</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><pre><code>421.687 sec elapsed
+</code></pre>
+<p>El proceso tarda aproximadamente 7 minutos en clasificar los casi 1.576 nombres, un ritmo de 0.26 segundos por cada predicción.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">resultados_1</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">genero</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombres</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">15</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 15 × 2
+   genero    nombres                           
+   &lt;chr&gt;     &lt;chr&gt;                             
+ 1 masculino Mario Llancaleo Blanco            
+ 2 masculino Joaquin Alberto Cuadra Reyes      
+ 3 masculino Rodrigo Sebastián Loyola Morenilla
+ 4 masculino Rafael Gonzalez Navarrete         
+ 5 masculino Victor Ramon Toro Leiva           
+ 6 masculino Carol Bown Sepulveda              
+ 7 masculino Christian Sergio Mamani Flores    
+ 8 masculino Felipe Ignacio Fuentealba Godoy   
+ 9 masculino Mario Desbordes Jimenez           
+10 femenino  Nancy Milena Alfaro Jurjevic      
+11 masculino Luis Hernan Gonzalez Uribe        
+12 femenino  Corina Diaz Arancibia             
+13 masculino Jesus Silverio Morales Rosales    
+14 masculino Juan Marcelo Valenzuela Henriquez 
+15 masculino Sebastián Chacon Soto             
+</code></pre>
+<p>Para la segunda prueba, intentamos entregarle al modelo <em>solamente los nombres</em>, excluyendo segundos nombres y apellidos, bajo el supuesto de que el primer nombre es el mejor predictor del género, mientras que los apellidos no son un predictor del género.</p>
+<p>Probamos el código con una 
+<a href="https://stringr.tidyverse.org/articles/regular-expressions.html" target="_blank" rel="noopener">expresión regular</a> (regex) para extraer la primera palabra de una secuencia de texto:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">candidatos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">stringr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">str_extract</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombres</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;\\w+&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombres</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 5 × 2
+  nombre   nombres                    
+  &lt;chr&gt;    &lt;chr&gt;                      
+1 Patricia Patricia Ivonne Boffa Casas
+2 Bernardo Bernardo Brito Videla      
+3 Luis     Luis Flores Barraza        
+4 Javier   Javier Tito Huaylla        
+5 Maite    Maite Larrondo Laborde     
+</code></pre>
+<p>Realizamos la segunda prueba de clasificación, esta vez solamente con el primer nombre:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tic</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">resultados_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">candidatos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">stringr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">str_extract</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombres</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;\\w+&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># extraer nombres</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">llm_classify</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;masculino&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;femenino&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">pred_name</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;genero&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">toc</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><pre><code>139.47 sec elapsed
+</code></pre>
+<p>Esta vez el proceso tarda aproximadamente 2 minutos, ¡casi 4 veces más rápido! El modelo clasifica los textos más rápido mientras menos texto tenga que analizar.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">resultados_2</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">genero</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombre</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 10 × 2
+   genero    nombre  
+   &lt;chr&gt;     &lt;chr&gt;   
+ 1 masculino Pablo   
+ 2 masculino Luis    
+ 3 femenino  Sandra  
+ 4 masculino Johnny  
+ 5 masculino Miguel  
+ 6 masculino Oscar   
+ 7 masculino Luis    
+ 8 masculino Gonzalo 
+ 9 masculino Juan    
+10 masculino Mauricio
+</code></pre>
+<p>Revisemos los resultados, obteniendo una muestra al azar de 30 nombres:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">resultados_2</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombres</span> <span style="color:#908caa">!=</span> <span style="color:#f6c177">&#34;Nulo/Blanco&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">relocate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">genero</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombre</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">.before</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">nombres</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">30</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">print</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">Inf</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 30 × 5
+   genero    nombre    nombres                             partido  sector      
+   &lt;chr&gt;     &lt;chr&gt;     &lt;chr&gt;                               &lt;chr&gt;    &lt;chr&gt;       
+ 1 masculino Christian Christian Arturo Cardenas Silva     IND      Independien…
+ 2 masculino Osvaldo   Osvaldo Cartagena Garcia            IND      Independien…
+ 3 masculino Romelio   Romelio Borquez Hidalgo             IND      Derecha     
+ 4 masculino Patricio  Patricio Marchant Ulloa             IND      Centro      
+ 5 masculino Claudio   Claudio Miranda Ibañez              IND      Independien…
+ 6 masculino Marcos    Marcos Gaete Flores                 IND      Derecha     
+ 7 masculino Raul      Raul Jaime Espejo Escobar           IND      Independien…
+ 8 masculino Camilo    Camilo Alejandro Rapu Riroroko      IND      Centro      
+ 9 femenino  Clara     Clara Lazcano Fernández             IND      Derecha     
+10 masculino Drazen    Drazen Andre Markusovic Caceres     PDG      Derecha     
+11 femenino  Denisse   Denisse Tamara Leon Rojas           REP      Derecha     
+12 masculino Juan      Juan Pablo Gomez Ramirez            IND      Independien…
+13 masculino Alexis    Alexis Mendez Uribe                 IND      Independien…
+14 femenino  Juana     Juana Sarmiento Acosta              IND      Independien…
+15 masculino Marco     Marco Antonio Gonzalez Candia       RN       Derecha     
+16 masculino Miguel    Miguel Bruna Silva                  IND      Independien…
+17 masculino Hernaldo  Hernaldo Andres Ahumada Chavez      IND      Independien…
+18 femenino  Nivia     Nivia Del Carmen Riquelme Gutierrez IGUALDAD Izquierda   
+19 masculino Cristian  Cristian Alejandro Sobarzo Sanhueza IND      Independien…
+20 masculino Cristian  Cristian Andres Pozo Parraguez      PS       Izquierda   
+21 femenino  Rosa      Rosa Torres Escobedo                IND      Independien…
+22 masculino Juan      Juan Carlos Gonzalez Romo           IND      Independien…
+23 femenino  Paula     Paula Rodriguez Valenzuela          IND      Independien…
+24 masculino Gabriel   Gabriel Silva Gonzalez              IND      Independien…
+25 femenino  Daniela   Daniela Isabel Munizaga Villegas    REP      Derecha     
+26 masculino Ramon     Ramon Sandoval Zurita               IND      Independien…
+27 masculino Ramon     Ramon Bahamonde Cea                 IND      Independien…
+28 masculino Claudio   Claudio Arellano Cortes             IND      Independien…
+29 femenino  Sigrid    Sigrid Ramirez Arias                IND      Derecha     
+30 masculino Patricio  Patricio Ernesto Gonzalez Nuñez     IND      Independien…
+</code></pre>
+<p>Revisando los nombres, al parecer las predicciones son bastante buenas, pero al hacer más pruebas nos damos cuenta de que no es 100% infalible, ya que se equivoca en algunos nombres como <em>Aracelli, Edita, Elizabeth,</em> o <em>Josselyn.</em> si se requiere aumentar la calidad de la predicción, podría 
+<a href="https://ollama.com/library" target="_blank" rel="noopener">instalarse un modelo de lenguaje más grande.</a></p>
+<p>En conclusión, se trata de una herramienta muy fácil de implementar, que también es capaz de ahorrarnos bastante tiempo, por ejemplo, en el desarrollo de un algoritmo que detecte el nombre a partir de ciertas estructuras en la composición de cada uno, o bien, en tener que contrastar los nombres con alguna base de datos ya existente de nombres con un género asignado (si es que existe).</p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">November 10, 2024</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">6 minute read, 1156 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a>  <a href="http://localhost:4321/tags/an%C3%A1lisis-de-texto">análisis de texto</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/benchmark_ejemplo/">Comparar el rendimiento expresiones en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/elecciones_municipales_2024/">Visualización y scraping de resultados en vivo de las elecciones municipales 2024</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/introduccion_llm_mall/">Usar un modelo de lenguaje local (LLM) para analizar texto en R</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="http://localhost:4321/blog/convertr/">&larr; Convertir un script de R con comentarios a un documento Quarto</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/ggplot_nubes/">¿Arte? Nubes aleatorias en {ggplot2} &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2024 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastimapache.bsky.social" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.threads.net/@raccunnie" title="threads" target="_blank" rel="me noopener">
+      <i class="fab fa-threads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

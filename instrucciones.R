@@ -8,18 +8,18 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Convertir un script de R con comentarios a un documento Quarto", 
+blogdown::new_post(title = "Predecir el género a partir de nombres en R usando un modelo de lenguaje", 
                    subdir = "blog/",
-                   file = "blog/convertr/index.md",
+                   file = "blog/genero_nombres_llm/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos", "Quarto"),
+                   tags = c("procesamiento de datos", "inteligencia artificial"),
                    categories = c() 
 )
 
 # convertir script a Quarto
 convertr::r_to_qmd(
-  input_dir = "~/Documents/Clases R/Clases particulares/Sigrid/clase_1/casen.R",
-  output_dir = "~/R/blog/blog-r/content/blog/casen_cargar/casen.qmd"
+  input_dir = "~/R/servel_votaciones/pruebas/genero_candidatos_LLM.R",
+  output_dir = "~/R/blog/blog-r/content/blog/genero_nombres_llm/codigo.qmd"
 )
 
 # ver en github
