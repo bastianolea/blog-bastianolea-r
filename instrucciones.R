@@ -8,13 +8,18 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Tutorial: introducción a {dplyr}", 
+blogdown::new_post(title = "Convertir un script de R con comentarios a un documento Quarto", 
                    subdir = "blog/",
-                   # file = "blog/tutorial_shiny_1/index.md",
-                   file = "blog/r_introduccion/tutorial_dplyr_1/index.md",
+                   file = "blog/convertr/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("dplyr"),
-                   categories = c("Tutoriales") 
+                   tags = c("consejos", "Quarto"),
+                   categories = c() 
+)
+
+# convertir script a Quarto
+convertr::r_to_qmd(
+  input_dir = "~/Documents/Clases R/Clases particulares/Sigrid/clase_1/casen.R",
+  output_dir = "~/R/blog/blog-r/content/blog/casen_cargar/casen.qmd"
 )
 
 # ver en github

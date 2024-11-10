@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=7181&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Cargar y explorar datos de la encuesta Casen en R, usando factor de expansión | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Cargar y explorar datos de la encuesta Casen en R, usando factor de expansión | Blog">
+<meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:7181/blog/casen_introduccion/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:7181/blog/sidebar-listing.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:7181/blog/sidebar-listing.png" >
+    
+    
+  
+  <meta itemprop="name" content="Cargar y explorar datos de la encuesta Casen en R, usando factor de expansión">
+  <meta itemprop="description" content="Este post ejemplifica tres formas de cargar y explorar los datos de la encuesta Casen 2022, la Encuesta de caracterización socioeconómica nacional.
+Veremos cómo obtener resultados de la Casen a nivel de país, región y comuna, usando dos formas de aplicar el factor de expansión. El factor de expansión es necesario de aplicar para transformar los resultados de la muestra de la encuesta a cifras que tienen representación a los distintos niveles de agrupación geográfica.">
+  <meta itemprop="datePublished" content="2024-11-10T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-11-10T00:00:00+00:00">
+  <meta itemprop="wordCount" content="3757">
+  <meta itemprop="keywords" content="Dplyr,Chile,Estadística">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.ee4cb156bab021bf583b75e458368e05e8682adcd4a783814f7a57cbcf41777c.css" integrity="sha256-7kyxVrqwIb9YO3XkWDaOBehoKtzUp4OBT3pXy89Bd3w=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.bebab142e3ad4c47834f81e426b8adcd5b747151cc6f7d8358a68b4a30c7ff48.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:7181/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Cargar y explorar datos de la encuesta Casen en R, usando factor de expansión</h1>
+        
+        
+        <p class="f7 db mv0 ttu">10/11/2024</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>Este post ejemplifica tres formas de cargar y explorar los datos de la encuesta Casen 2022, la 
+<a href="https://observatorio.ministeriodesarrollosocial.gob.cl/encuesta-casen-2022" target="_blank" rel="noopener">Encuesta de caracterización socioeconómica nacional</a>.</p>
+<p>Veremos cómo obtener resultados de la Casen a nivel de país, región y comuna, usando dos formas de aplicar el factor de expansión. El factor de expansión es necesario de aplicar para transformar los resultados de la muestra de la encuesta a cifras que tienen representación a los distintos niveles de agrupación geográfica.</p>
+<p>Para seguir las instrucciones, primero debes descargar los datos originales de la encuesta desde 
+<a href="https://observatorio.ministeriodesarrollosocial.gob.cl/encuesta-casen-2022" target="_blank" rel="noopener">este enlace</a> (presionar <em>Bases de datos</em>) en formato Stata, junto con la base de datos complementaria de provincia y comuna. Crea un nuevo proyecto de RStudio, y dentro de la carpeta del proyecto ubica ambos archivos.</p>
+<p>Los archivos necesarios son:</p>
+<ul>
+<li><em>Base de datos Casen 2022 STATA (versión 18 de marzo 2024)</em></li>
+<li><em>Base de datos provincia y comuna Casen 2022 STATA</em></li>
+</ul>
+<p>Primero, cargamos los paquetes que usaremos a través de este tutorial:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">haven</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># carga datos formato Stata (.dta)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># manipulación de datos</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tidyr</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># ordenamiento y limpieza de datos</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">srvyr</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># análisis de encuestas complejas, entre otros</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">scales</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># crear porcentajes a partir de proporciones</span>
+</span></span></code></pre></div>
+
+
+
+<h2 id="cargar-datos-de-casen">Cargar datos de Casen
+  <a href="#cargar-datos-de-casen"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Cargar base de datos principal de la encuesta Casen, en formato Stata (<code>.dta</code>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_dta</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Base de datos Casen 2022 STATA.dta&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Explorar los datos cargados:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">:</span><span style="color:#f6c177">20</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">glimpse</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><pre><code>Rows: 202,231
+Columns: 20
+$ id_vivienda  &lt;dbl&gt; 1000901, 1000901, 1000901, 1000902, 1000902, 1000902, 100…
+$ folio        &lt;dbl&gt; 100090101, 100090101, 100090101, 100090201, 100090201, 10…
+$ id_persona   &lt;dbl&gt; 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 1, 2, 1, 1, 2, 3, 4, 1, 2, …
+$ region       &lt;dbl+lbl&gt; 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 1…
+$ area         &lt;dbl+lbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,…
+$ cod_upm      &lt;dbl&gt; 10009, 10009, 10009, 10009, 10009, 10009, 10009, 10009, 1…
+$ nse          &lt;dbl+lbl&gt; 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,…
+$ estrato      &lt;dbl&gt; 1630324, 1630324, 1630324, 1630324, 1630324, 1630324, 163…
+$ hogar        &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
+$ expr         &lt;dbl&gt; 43, 43, 44, 51, 51, 52, 51, 42, 42, 42, 38, 38, 33, 56, 5…
+$ expr_osig    &lt;dbl&gt; 54, NA, 122, NA, 131, NA, 44, 101, 47, NA, 81, 56, 43, 84…
+$ varstrat     &lt;dbl&gt; 751, 751, 751, 751, 751, 751, 751, 751, 751, 751, 751, 75…
+$ varunit      &lt;dbl&gt; 12041, 12041, 12041, 12041, 12041, 12041, 12041, 12041, 1…
+$ fecha_entrev &lt;date&gt; 2023-01-28, 2023-01-28, 2023-01-28, 2022-12-29, 2022-12-…
+$ p1           &lt;dbl+lbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
+$ p2           &lt;dbl+lbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,…
+$ p3           &lt;dbl+lbl&gt; 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,…
+$ p4           &lt;dbl+lbl&gt; 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,…
+$ p9           &lt;dbl&gt; 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 2, 2, 1, 4, 4, 4, 4, 2, 2, …
+$ p10          &lt;dbl+lbl&gt;  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, NA,  …
+</code></pre>
+<p>Notamos que las columnas que corresponden a preguntas de la encuesta vienen en formato <code>&lt;bls+lbl&gt;</code>, un formato propio del paquete <code>{haven}</code>, que combina los valores numéricos de las variables con las etiquetas de sus categorías de respuesta.</p>
+<p>Cargar la base de datos complementaria que contiene columnas de factor de expansión, comuna y provincia:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_comunas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_dta</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Base de datos provincia y comuna Casen 2022 STATA.dta&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Revisar contenidos del segundo archivo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_comunas</span>
+</span></span></code></pre></div><pre><code># A tibble: 202,231 × 6
+       folio id_persona provincia     comuna          expp  expc
+       &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl+lbl&gt;     &lt;dbl+lbl&gt;      &lt;dbl&gt; &lt;dbl&gt;
+ 1 100090101          1 163 [Punilla] 16303 [Ñiquén]    51    52
+ 2 100090101          2 163 [Punilla] 16303 [Ñiquén]    50    53
+ 3 100090101          3 163 [Punilla] 16303 [Ñiquén]    51    52
+ 4 100090201          1 163 [Punilla] 16303 [Ñiquén]    51    52
+ 5 100090201          2 163 [Punilla] 16303 [Ñiquén]    50    52
+ 6 100090201          3 163 [Punilla] 16303 [Ñiquén]    51    52
+ 7 100090201          4 163 [Punilla] 16303 [Ñiquén]    51    52
+ 8 100090301          1 163 [Punilla] 16303 [Ñiquén]    51    52
+ 9 100090301          2 163 [Punilla] 16303 [Ñiquén]    51    52
+10 100090301          3 163 [Punilla] 16303 [Ñiquén]    51    52
+# ℹ 202,221 more rows
+</code></pre>
+<p>Ahora que tenemos cargadas la base de datos principal de la encuesta, y la base secundaria que contiene las columnas sobre datos comunales, debemos unir ambas a partir de las variables que identifican las observaciones únicas de la encuesta: <code>folio</code> e <code>id_persona</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">left_join</span><span style="color:#908caa">(</span><span style="color:#ea9a97">casen</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#ea9a97">casen_comunas</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#ea9a97">by</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">join_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">folio</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">id_persona</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><p>Obtenemos un nuevo dataframe que contiene las columnas de ambas bases. Debemos confirmar que la unión se realizó correctamente, comparando que la cantidad de filas de la base resultante sea igual a la de la base original.</p>
+
+
+
+
+<h2 id="obtener-frecuencias-y-porcentajes-de-variables-de-la-casen">Obtener frecuencias y porcentajes de variables de la Casen
+  <a href="#obtener-frecuencias-y-porcentajes-de-variables-de-la-casen"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>A modelo creativo, realizaremos tres formas distintas de obtener conteos de variables a partir de la encuesta. Con esto nos referimos, por ejemplo, a obtener la cantidad de casos bajo cada nivel de pobreza económica, calcular la frecuencia de cada nivel educacional, etc.</p>
+
+
+
+
+<h3 id="conteo-sin-aplicar-factor-de-expansión">Conteo sin aplicar factor de expansión
+  <a href="#conteo-sin-aplicar-factor-de-expansi%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Primero realizaremos un conteo básico de los casos de una variable, sin realizar ninguna consideración metodológica respecto al muestreo de la encuesta. Es decir, solamente contar las filas de la base de datos. Esto lo haremos a pesar de ser incorrecto porque es la forma más básica de realizar la operación, y también para poder compararlo más adelante a las formas correctas de contar los casos en la encuesta que Casen.</p>
+<p>Contar la frecuencia de una variable a nivel nacional, sin factor de expansión (inexacto):</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_2</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">round</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">/</span><span style="color:#ea9a97">sum</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">),</span> <span style="color:#f6c177">2</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">porcentaje</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">percent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 4 × 4
+  pobreza                      n     p porcentaje
+  &lt;dbl+lbl&gt;                &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
+1  1 [Pobreza extrema]      4657  0.02 2%        
+2  2 [Pobreza no extrema]  10616  0.05 5%        
+3  3 [No pobreza]         186838  0.92 92%       
+4 NA                         120  0    0%        
+</code></pre>
+<p>Contar la frecuencia de una variable a nivel regional, sin factor de expansión (inexacto):</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_2</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">round</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">/</span><span style="color:#ea9a97">sum</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">),</span> <span style="color:#f6c177">2</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">porcentaje</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">percent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 63 × 5
+# Groups:   region [16]
+   region                    pobreza                     n     p porcentaje
+   &lt;dbl+lbl&gt;                 &lt;dbl+lbl&gt;               &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
+ 1 1 [Región de Tarapacá]     1 [Pobreza extrema]      300  0.03 3%        
+ 2 1 [Región de Tarapacá]     2 [Pobreza no extrema]   589  0.07 7%        
+ 3 1 [Región de Tarapacá]     3 [No pobreza]          7798  0.9  90%       
+ 4 1 [Región de Tarapacá]    NA                          4  0    0%        
+ 5 2 [Región de Antofagasta]  1 [Pobreza extrema]      265  0.03 3%        
+ 6 2 [Región de Antofagasta]  2 [Pobreza no extrema]   462  0.05 5%        
+ 7 2 [Región de Antofagasta]  3 [No pobreza]          8300  0.92 92%       
+ 8 2 [Región de Antofagasta] NA                          2  0    0%        
+ 9 3 [Región de Atacama]      1 [Pobreza extrema]      250  0.03 3%        
+10 3 [Región de Atacama]      2 [Pobreza no extrema]   507  0.06 6%        
+# ℹ 53 more rows
+</code></pre>
+<p>Contar la frecuencia de una variable a nivel comunal, sin factor de expansión (inexacto):</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_2</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">13</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#908caa">-</span><span style="color:#ea9a97">region</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">round</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">/</span><span style="color:#ea9a97">sum</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">),</span> <span style="color:#f6c177">2</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">porcentaje</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">percent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 155 × 5
+# Groups:   comuna [52]
+   comuna              pobreza                    n     p porcentaje
+   &lt;dbl+lbl&gt;           &lt;dbl+lbl&gt;              &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;     
+ 1 13101 [Santiago]    1 [Pobreza extrema]       50  0.03 3%        
+ 2 13101 [Santiago]    2 [Pobreza no extrema]    58  0.03 3%        
+ 3 13101 [Santiago]    3 [No pobreza]          1685  0.94 94%       
+ 4 13102 [Cerrillos]   1 [Pobreza extrema]       17  0.04 4%        
+ 5 13102 [Cerrillos]   2 [Pobreza no extrema]     8  0.02 2%        
+ 6 13102 [Cerrillos]   3 [No pobreza]           376  0.94 94%       
+ 7 13103 [Cerro Navia] 1 [Pobreza extrema]        6  0.01 1%        
+ 8 13103 [Cerro Navia] 2 [Pobreza no extrema]     7  0.01 1%        
+ 9 13103 [Cerro Navia] 3 [No pobreza]           542  0.98 98%       
+10 13104 [Conchalí]    1 [Pobreza extrema]       21  0.04 4%        
+# ℹ 145 more rows
+</code></pre>
+
+
+
+
+<h2 id="conteo-usando-factor-de-expansión">Conteo usando factor de expansión
+  <a href="#conteo-usando-factor-de-expansi%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para aplicar el factor de expansión a la base de datos, usamos las columnas <code>expr</code> y <code>expc</code>, que contienen el factor de expansión regional y comunal, respectivamente. En términos sencillos, esta cifra indica la cantidad de personas que debiese representar cada observación de la encuesta, si se pretende que la encuesta represente a la población real.</p>
+<p>Primero seleccionamos las columnas de la base que utilizaremos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_3</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">casen_2</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">pobreza</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">starts_with</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;exp&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><p>Aplicaremos el factor de expansión usando la función <code>uncount()</code> del paquete <code>{tidyr}</code>, que básicamente multiplica las filas por el factor de expansión indicado en una variable. Por ejemplo,
+si una fila de la base tiene un factor de expansión 53, entonces al aplicar <code>uncount()</code>, dicha fila se repetirá 53 veces.</p>
+<p>Esto significa que nuestra base de datos aumentará considerablemente su tamaño, potencialmente alcanzando la cantidad de filas cercana a la población nacional. Esta puede ser una cantidad de datos demasiado grande para ciertos computadores, por lo que se recomienda primero filtrar por la región o comuna que se utilizará para el análisis.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_antofagasta</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">casen_3</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Realizar expansión de las filas de la base filtrada. Nótese la cantidad de observaciones que resulta de este procedimiento.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tidyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">casen_antofagasta_exp</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">casen_antofagasta</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># aplicar factor de expansión</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">uncount</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expc</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">casen_antofagasta_exp</span>
+</span></span></code></pre></div><pre><code># A tibble: 710,691 × 6
+   region                    comuna        pobreza         expr expr_osig  expp
+   &lt;dbl+lbl&gt;                 &lt;dbl+lbl&gt;     &lt;dbl+lbl&gt;      &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+ 1 2 [Región de Antofagasta] 2201 [Calama] 3 [No pobreza]    67        81    68
+ 2 2 [Región de Antofagasta] 2201 [Calama] 3 [No pobreza]    67        81    68
+ 3 2 [Región de Antofagasta] 2201 [Calama] 3 [No pobreza]    67        81    68
+ 4 2 [Región de Antofagasta] 2201 [Calama] 3 [No pobreza]    67        81    68
+ 5 2 [Región de Antofagasta] 2201 [Calama] 3 [No pobreza]    67        81    68
+ 6 2 [Región de Antofagasta] 2201 [Calama] 3 [No pobreza]    67        81    68
+ 7 2 [Región de Antofagasta] 2201 [Calama] 3 [No pobreza]    67        81    68
+ 8 2 [Región de Antofagasta] 2201 [Calama] 3 [No pobreza]    67        81    68
+ 9 2 [Región de Antofagasta] 2201 [Calama] 3 [No pobreza]    67        81    68
+10 2 [Región de Antofagasta] 2201 [Calama] 3 [No pobreza]    67        81    68
+# ℹ 710,681 more rows
+</code></pre>
+<p>Obtener frecuencia y porcentaje de una variable de la Casen, a nivel regional, aplicando factor de expansión:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_antofagasta_exp</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># contar variable</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># calcular porcentaje</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">n</span><span style="color:#908caa">/</span><span style="color:#ea9a97">sum</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">porcentaje</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">percent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 4 × 4
+  pobreza                      n        p porcentaje
+  &lt;dbl+lbl&gt;                &lt;int&gt;    &lt;dbl&gt; &lt;chr&gt;     
+1  1 [Pobreza extrema]     19131 0.0269   2.7%      
+2  2 [Pobreza no extrema]  34907 0.0491   4.9%      
+3  3 [No pobreza]         656560 0.924    92.4%     
+4 NA                          93 0.000131 0.0%      
+</code></pre>
+<p>Obtener frecuencia y porcentaje de una variable de la Casen, a nivel comunal, aplicando factor de expansión:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_antofagasta_exp</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># agrupar por comuna</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># contar variable</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># calcular porcentaje</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">n</span><span style="color:#908caa">/</span><span style="color:#ea9a97">sum</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">porcentaje</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">percent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 24 × 6
+# Groups:   region, comuna [8]
+   region                    comuna            pobreza      n       p porcentaje
+   &lt;dbl+lbl&gt;                 &lt;dbl+lbl&gt;         &lt;dbl+l&gt;  &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;     
+ 1 2 [Región de Antofagasta] 2101 [Antofagast… 1 [Pob…  12108 0.0276  2.8%      
+ 2 2 [Región de Antofagasta] 2101 [Antofagast… 2 [Pob…  18767 0.0428  4.3%      
+ 3 2 [Región de Antofagasta] 2101 [Antofagast… 3 [No … 408071 0.930   93.0%     
+ 4 2 [Región de Antofagasta] 2102 [Mejillones] 1 [Pob…     95 0.00613 0.6%      
+ 5 2 [Región de Antofagasta] 2102 [Mejillones] 2 [Pob…    449 0.0290  2.9%      
+ 6 2 [Región de Antofagasta] 2102 [Mejillones] 3 [No …  14955 0.965   96.5%     
+ 7 2 [Región de Antofagasta] 2103 [Sierra Gor… 1 [Pob…     39 0.0218  2.2%      
+ 8 2 [Región de Antofagasta] 2103 [Sierra Gor… 2 [Pob…     65 0.0364  3.6%      
+ 9 2 [Región de Antofagasta] 2103 [Sierra Gor… 3 [No …   1684 0.942   94.2%     
+10 2 [Región de Antofagasta] 2104 [Taltal]     1 [Pob…   1045 0.0752  7.5%      
+# ℹ 14 more rows
+</code></pre>
+<p>Obtener frecuencia y porcentaje de una variable creada a partir de la Casen, aplicando factor de expansión. Para este ejemplo, crearemos una nueva variable que unifique los dos niveles de pobreza en uno solo, generando una variable económica <em>pobre/no pobre:</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_antofagasta_exp</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># crear variable dicotómica</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza_2</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">ifelse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span> <span style="color:#908caa">%in%</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;pobre&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;no pobre&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># conteo</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza_2</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># calcular porcentaje</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">n</span><span style="color:#908caa">/</span><span style="color:#ea9a97">sum</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">porcentaje</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">percent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># filtrar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza_2</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;pobre&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 7 × 6
+# Groups:   region, comuna [7]
+  region                    comuna             pobreza_2     n      p porcentaje
+  &lt;dbl+lbl&gt;                 &lt;dbl+lbl&gt;          &lt;chr&gt;     &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt;     
+1 2 [Región de Antofagasta] 2101 [Antofagasta] pobre     30875 0.0703 7%        
+2 2 [Región de Antofagasta] 2102 [Mejillones]  pobre       544 0.0351 4%        
+3 2 [Región de Antofagasta] 2103 [Sierra Gord… pobre       104 0.0582 6%        
+4 2 [Región de Antofagasta] 2104 [Taltal]      pobre      2423 0.174  17%       
+5 2 [Región de Antofagasta] 2201 [Calama]      pobre     15445 0.0793 8%        
+6 2 [Región de Antofagasta] 2203 [San Pedro d… pobre       394 0.0363 4%        
+7 2 [Región de Antofagasta] 2301 [Tocopilla]   pobre      4253 0.150  15%       
+</code></pre>
+<hr>
+
+
+
+
+<h2 id="conteo-de-encuestas-de-muestreo-complejo">Conteo de encuestas de muestreo complejo
+  <a href="#conteo-de-encuestas-de-muestreo-complejo"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Usando el paquete <code>{srvyr}</code> podemos crear un objeto de diseño de encuestas complejas, que utilice variables acerca del diseño y muestreo de la Casen para poder calcular correctamente los estadísticos que necesitemos, incluyendo la aplicación del factor de expansión.</p>
+<p>Establecer el diseño de encuestas complejas para la Casen:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">srvyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">casen_svy</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">casen_2</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">as_survey</span><span style="color:#908caa">(</span><span style="color:#ea9a97">weights</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">expr</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">strata</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">estrato</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">ids</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">id_persona</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">nest</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Luego, podemos utilizar este diseño para calcular frecuencias y porcentajes, entre otros, de la forma metodológicamente correcta.</p>
+<p>Calcular frecuencia y porcentaje de una variable a nivel país, usando diseño de encuestas complejas, con factor de expansión:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_svy</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarize</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">survey_total</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">survey_mean</span><span style="color:#908caa">())</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># select(pobreza, n, p) |&gt; </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">porcentaje</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">percent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">accuracy</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.01</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 4 × 6
+  pobreza                        n    n_se        p      p_se porcentaje
+  &lt;dbl+lbl&gt;                  &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;     
+1  1 [Pobreza extrema]      397608  12243. 0.0200   0.000432  2.00%     
+2  2 [Pobreza no extrema]   894216  22302. 0.0450   0.000870  4.50%     
+3  3 [No pobreza]         18572834 573457. 0.934    0.00118   93.43%    
+4 NA                         13915   1817. 0.000700 0.0000932 0.07%     
+</code></pre>
+<p>Notamos que éste método de calcular los estadísticos también nos ofrece los errores estándar de los conteos y los porcentajes.</p>
+<p>Calcular frecuencia y porcentaje de una variable a nivel regional, usando diseño de encuestas complejas, con factor de expansión:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_svy</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarize</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">survey_total</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">survey_mean</span><span style="color:#908caa">())</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">n</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">p</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">porcentaje</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">percent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">accuracy</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.01</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 4 × 4
+  pobreza                      n         p porcentaje
+  &lt;dbl+lbl&gt;                &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;     
+1  1 [Pobreza extrema]     19618 0.0276    2.76%     
+2  2 [Pobreza no extrema]  34593 0.0487    4.87%     
+3  3 [No pobreza]         656641 0.924     92.36%    
+4 NA                          69 0.0000971 0.01%     
+</code></pre>
+<p>Calcular frecuencia y porcentaje de una variable a nivel comunal, usando diseño de encuestas complejas, con factor de expansión:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_svy</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">13</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">pobreza</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarize</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">survey_total</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">survey_mean</span><span style="color:#908caa">())</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">n</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">p</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">porcentaje</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">percent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">accuracy</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.01</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">print</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">15</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Adding missing grouping variables: `comuna`
+
+# A tibble: 155 × 5
+# Groups:   comuna [52]
+   comuna              pobreza                     n      p porcentaje
+   &lt;dbl+lbl&gt;           &lt;dbl+lbl&gt;               &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;     
+ 1 13101 [Santiago]    1 [Pobreza extrema]     12501 0.0253 2.53%     
+ 2 13101 [Santiago]    2 [Pobreza no extrema]  17213 0.0348 3.48%     
+ 3 13101 [Santiago]    3 [No pobreza]         465004 0.940  93.99%    
+ 4 13102 [Cerrillos]   1 [Pobreza extrema]      3232 0.0406 4.06%     
+ 5 13102 [Cerrillos]   2 [Pobreza no extrema]   1336 0.0168 1.68%     
+ 6 13102 [Cerrillos]   3 [No pobreza]          75048 0.943  94.26%    
+ 7 13103 [Cerro Navia] 1 [Pobreza extrema]      1227 0.0116 1.16%     
+ 8 13103 [Cerro Navia] 2 [Pobreza no extrema]   1442 0.0137 1.37%     
+ 9 13103 [Cerro Navia] 3 [No pobreza]         102811 0.975  97.47%    
+10 13104 [Conchalí]    1 [Pobreza extrema]      4409 0.0395 3.95%     
+11 13104 [Conchalí]    2 [Pobreza no extrema]   3544 0.0318 3.18%     
+12 13104 [Conchalí]    3 [No pobreza]         103635 0.929  92.87%    
+13 13105 [El Bosque]   1 [Pobreza extrema]      3998 0.0225 2.25%     
+14 13105 [El Bosque]   2 [Pobreza no extrema]   8053 0.0454 4.54%     
+15 13105 [El Bosque]   3 [No pobreza]         165284 0.932  93.20%    
+# ℹ 140 more rows
+</code></pre>
+<p>Repetimos el ejemplo anterior, pero creando una variable dicotómica de pobreza para agrupar los dos niveles de pobreza:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_svy</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">13</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># crear variable dicotómica</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza_2</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">ifelse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span> <span style="color:#908caa">%in%</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;pobre&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;no pobre&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># calcular</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">pobreza_2</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarize</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">survey_total</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">survey_mean</span><span style="color:#908caa">())</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza_2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">n</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">p</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">porcentaje</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">percent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">accuracy</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.01</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza_2</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;pobre&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">print</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">15</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 52 × 5
+# Groups:   comuna [52]
+   pobreza_2 comuna                       n       p porcentaje
+   &lt;chr&gt;     &lt;dbl+lbl&gt;                &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     
+ 1 pobre     13101 [Santiago]         29714 0.0601  6.01%     
+ 2 pobre     13102 [Cerrillos]         4568 0.0574  5.74%     
+ 3 pobre     13103 [Cerro Navia]       2669 0.0253  2.53%     
+ 4 pobre     13104 [Conchalí]          7953 0.0713  7.13%     
+ 5 pobre     13105 [El Bosque]        12051 0.0680  6.80%     
+ 6 pobre     13106 [Estación Central]  9481 0.0454  4.54%     
+ 7 pobre     13107 [Huechuraba]        3510 0.0322  3.22%     
+ 8 pobre     13108 [Independencia]    12977 0.0703  7.03%     
+ 9 pobre     13109 [La Cisterna]       8309 0.0651  6.51%     
+10 pobre     13110 [La Florida]       13691 0.0289  2.89%     
+11 pobre     13111 [La Granja]         9140 0.0793  7.93%     
+12 pobre     13112 [La Pintana]       32563 0.135   13.46%    
+13 pobre     13113 [La Reina]          2027 0.0159  1.59%     
+14 pobre     13114 [Las Condes]        1720 0.00574 0.57%     
+15 pobre     13115 [Lo Barnechea]       705 0.00738 0.74%     
+# ℹ 37 more rows
+</code></pre>
+<p>Realizar conteos obteniendo intervalos de confianza:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_svy</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">pobreza</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarize</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">survey_total</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">survey_mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">vartype</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;se&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ci&#34;</span><span style="color:#908caa">)))</span>
+</span></span></code></pre></div><pre><code># A tibble: 24 × 9
+# Groups:   region, comuna [8]
+   region       comuna     pobreza      n   n_se       p    p_se   p_low   p_upp
+   &lt;dbl+lbl&gt;    &lt;dbl+lbl&gt;  &lt;dbl+l&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1 2 [Región d… 2101 [Ant… 1 [Pob…  12195 2.83e3 0.0280  0.00455 0.0190  0.0370 
+ 2 2 [Región d… 2101 [Ant… 2 [Pob…  18947 5.09e3 0.0435  0.00778 0.0281  0.0589 
+ 3 2 [Región d… 2101 [Ant… 3 [No … 404323 1.01e5 0.928   0.0120  0.905   0.952  
+ 4 2 [Región d… 2102 [Mej… 1 [Pob…     68 1.37e1 0.00485 0.00185 0.00119 0.00851
+ 5 2 [Región d… 2102 [Mej… 2 [Pob…    409 1.18e2 0.0292  0.00679 0.0157  0.0426 
+ 6 2 [Región d… 2102 [Mej… 3 [No …  13552 4.51e3 0.966   0.00791 0.950   0.982  
+ 7 2 [Región d… 2103 [Sie… 1 [Pob…     22 1.04e1 0.0173  0.00400 0.00936 0.0252 
+ 8 2 [Región d… 2103 [Sie… 2 [Pob…     44 1.56e1 0.0346  0.00678 0.0212  0.0480 
+ 9 2 [Región d… 2103 [Sie… 3 [No …   1207 4.23e2 0.948   0.00761 0.933   0.963  
+10 2 [Región d… 2104 [Tal… 1 [Pob…   1239 2.45e2 0.0768  0.0169  0.0433  0.110  
+# ℹ 14 more rows
+</code></pre>
+<p>Repetir el ejemplo, pero utilizando otra variable:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_svy</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">v4</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarize</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">survey_total</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">survey_mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">vartype</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;se&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ci&#34;</span><span style="color:#908caa">)))</span>
+</span></span></code></pre></div><pre><code># A tibble: 43 × 9
+# Groups:   region, comuna [8]
+   region      comuna     v4           n   n_se       p    p_se    p_low   p_upp
+   &lt;dbl+lbl&gt;   &lt;dbl+lbl&gt;  &lt;dbl+l&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+ 1 2 [Región … 2101 [Ant… 1 [1. …  80318 22990. 0.184   2.70e-2  1.31e-1 0.238  
+ 2 2 [Región … 2101 [Ant… 2 [2. … 321605 80216. 0.739   2.16e-2  6.96e-1 0.781  
+ 3 2 [Región … 2101 [Ant… 3 [3. …   3208   779. 0.00737 7.58e-4  5.87e-3 0.00887
+ 4 2 [Región … 2101 [Ant… 4 [4. …  11973  2714. 0.0275  2.89e-3  2.18e-2 0.0332 
+ 5 2 [Región … 2101 [Ant… 5 [5. …  17714  5218. 0.0407  8.21e-3  2.44e-2 0.0569 
+ 6 2 [Región … 2101 [Ant… 6 [6. …    647   212. 0.00149 4.79e-4  5.37e-4 0.00243
+ 7 2 [Región … 2102 [Mej… 1 [1. …   1160   203. 0.0827  1.61e-2  5.09e-2 0.114  
+ 8 2 [Región … 2102 [Mej… 2 [2. …  12285  4296. 0.876   2.17e-2  8.33e-1 0.919  
+ 9 2 [Región … 2102 [Mej… 5 [5. …    548   140. 0.0391  6.54e-3  2.61e-2 0.0520 
+10 2 [Región … 2102 [Mej… 6 [6. …     36    36  0.00257 2.68e-3 -2.73e-3 0.00787
+# ℹ 33 more rows
+</code></pre>
+<hr>
+
+
+
+
+<h2 id="comparación-de-resultados">Comparación de resultados
+  <a href="#comparaci%c3%b3n-de-resultados"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Luego de haber visto tres métodos para calcular frecuencias y porcentajes desde la encuesta que hacen utilizando factor de expansión, para cerrar compararemos los resultados de los tres métodos.</p>
+<p><strong>Conteo simple, sin expansión:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_2</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">round</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">/</span><span style="color:#ea9a97">sum</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">),</span> <span style="color:#f6c177">4</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">porcentaje</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">percent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 4 × 4
+  pobreza                     n      p porcentaje
+  &lt;dbl+lbl&gt;               &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt;     
+1  1 [Pobreza extrema]      386 0.0188 1.9%      
+2  2 [Pobreza no extrema]   958 0.0466 4.7%      
+3  3 [No pobreza]         19202 0.934  93.4%     
+4 NA                          6 0.0003 0.0%      
+</code></pre>
+<p><strong>Conteo y porcentaje con factor de expansión:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_2</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">uncount</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expr</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">round</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">/</span><span style="color:#ea9a97">sum</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">),</span> <span style="color:#f6c177">4</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">porcentaje</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">percent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">accuracy</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.001</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 4 × 4
+  pobreza                       n      p porcentaje
+  &lt;dbl+lbl&gt;                 &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt;     
+1  1 [Pobreza extrema]      38850 0.0194 1.940%    
+2  2 [Pobreza no extrema]   92721 0.0463 4.630%    
+3  3 [No pobreza]         1869211 0.934  93.400%   
+4 NA                          495 0.0002 0.020%    
+</code></pre>
+<p><strong>Conteo y porcentaje con factor de expansión y diseño de encuesta compleja:</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">casen_svy</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarize</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">survey_total</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">p</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">survey_mean</span><span style="color:#908caa">())</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pobreza</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">n</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">p</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">porcentaje</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">percent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">p</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">accuracy</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.001</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 4 × 4
+  pobreza                       n        p porcentaje
+  &lt;dbl+lbl&gt;                 &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;     
+1  1 [Pobreza extrema]      38850 0.0194   1.941%    
+2  2 [Pobreza no extrema]   92721 0.0463   4.633%    
+3  3 [No pobreza]         1869211 0.934    93.401%   
+4 NA                          495 0.000247 0.025%    
+</code></pre>
+<p>Los resultados de los tres métodos difieren, especialmente los del primer método con los del segundo y tercero. El segundo y tercer método solo difieren en sus decimales, pero aún así es importante comparar ambos y tomar la decisión apropiada antes de realizar el análisis:</p>
+<ol>
+<li>El primer método <em>no debe usarse nunca,</em> pues no aplica correctamente la metodología de la encuesta, y sus resultados difieren de la realidad.</li>
+<li>El segundo método, usando <code>tidyr::uncount()</code>, si bien puede parecer más conveniente y rápido de aplicar, obtiene resultados tiene un peor desempeño al obtener los resultados, y consume una <em>muy alta</em> cantidad de memoria para calcular resultados a nivel nacional, o incluso regiones o comunas de gran población. En computadores con menos de 24 GB de memoria, probablemente no pueda ser posible calcular estadísticos a nivel nacional sin realizar pasos intermediarios para disminuir el consumo de memoria (como separar el cálculo por regiones y luego realizar las sumas entre ellas).</li>
+<li>Entre los tres métodos, el más correcto de utilizar es el tercero, usando el paquete <code>{srvyr}</code>. Además de entregar los resultados con mayor eficiencia y velocidad, aplica correctamente la metodología de muestreo especificada por la encuesta, por lo que también es el método más exacto.</li>
+</ol>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">November 10, 2024</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">18 minute read, 3757 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categorías:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:7181/categories/tutoriales">Tutoriales</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:7181/tags/dplyr">dplyr</a>  <a href="http://localhost:7181/tags/chile">chile</a>  <a href="http://localhost:7181/tags/estad%C3%ADstica">estadística</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/r_introduccion/tutorial_dplyr_campamentos/">Tutorial: introducción a {dplyr} usando datos de campamentos</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/tutorial_mapas_osm/">Tutorial: Mapa en {ggplot2} con calles desde Open Street Map</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:7181/blog/convertr/">Convertir un script de R con comentarios a un documento Quarto &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2024 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Made with <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Based on <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastimapache.bsky.social" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.threads.net/@raccunnie" title="threads" target="_blank" rel="me noopener">
+      <i class="fab fa-threads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

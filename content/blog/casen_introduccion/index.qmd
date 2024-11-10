@@ -1,0 +1,311 @@
+---
+title: Cargar y explorar datos de la encuesta Casen en R, usando factor de expansión
+author: Bastián Olea Herrera
+date: '2024-11-10'
+format: hugo-md
+slug: []
+categories:
+  - Tutoriales
+tags:
+  - dplyr
+  - chile
+  - estadística
+---
+
+Este post ejemplifica tres formas de cargar y explorar los datos de la encuesta Casen 2022, la [Encuesta de caracterización socioeconómica nacional](https://observatorio.ministeriodesarrollosocial.gob.cl/encuesta-casen-2022).
+
+Veremos cómo obtener resultados de la Casen a nivel de país, región y comuna, usando dos formas de aplicar el factor de expansión. El factor de expansión es necesario de aplicar para transformar los resultados de la muestra de la encuesta a cifras que tienen representación a los distintos niveles de agrupación geográfica. 
+
+Para seguir las instrucciones, primero debes descargar los datos originales de la encuesta desde [este enlace](https://observatorio.ministeriodesarrollosocial.gob.cl/encuesta-casen-2022) (presionar _Bases de datos_) en formato Stata, junto con la base de datos complementaria de provincia y comuna. Crea un nuevo proyecto de RStudio, y dentro de la carpeta del proyecto ubica ambos archivos.
+
+Los archivos necesarios son:
+- _Base de datos Casen 2022 STATA (versión 18 de marzo 2024)_
+- _Base de datos provincia y comuna Casen 2022 STATA_
+
+Primero, cargamos los paquetes que usaremos a través de este tutorial:
+```{r}
+#| message: false
+library(haven) # carga datos formato Stata (.dta)
+library(dplyr) # manipulación de datos
+library(tidyr) # ordenamiento y limpieza de datos
+library(srvyr) # análisis de encuestas complejas, entre otros
+library(scales) # crear porcentajes a partir de proporciones
+```
+
+## Cargar datos de Casen
+Cargar base de datos principal de la encuesta Casen, en formato Stata (`.dta`):
+```{r cargar}
+#| cache: true
+casen <- read_dta("Base de datos Casen 2022 STATA.dta")
+```
+
+Explorar los datos cargados:
+```{r}
+casen |> select(1:20) |> glimpse()
+```
+Notamos que las columnas que corresponden a preguntas de la encuesta vienen en formato `<bls+lbl>`, un formato propio del paquete `{haven}`, que combina los valores numéricos de las variables con las etiquetas de sus categorías de respuesta.
+
+Cargar la base de datos complementaria que contiene columnas de factor de expansión, comuna y provincia:
+```{r}
+#| cache: true
+casen_comunas <- read_dta("Base de datos provincia y comuna Casen 2022 STATA.dta")
+```
+
+Revisar contenidos del segundo archivo:
+```{r}
+casen_comunas
+```
+
+Ahora que tenemos cargadas la base de datos principal de la encuesta, y la base secundaria que contiene las columnas sobre datos comunales, debemos unir ambas a partir de las variables que identifican las observaciones únicas de la encuesta: `folio` e `id_persona`.
+```{r}
+#| cache: true
+casen_2 <- left_join(casen,
+                     casen_comunas,
+                     by = join_by(folio, id_persona))
+```
+Obtenemos un nuevo dataframe que contiene las columnas de ambas bases. Debemos confirmar que la unión se realizó correctamente, comparando que la cantidad de filas de la base resultante sea igual a la de la base original.
+
+
+## Obtener frecuencias y porcentajes de variables de la Casen
+
+A modelo creativo, realizaremos tres formas distintas de obtener conteos de variables a partir de la encuesta. Con esto nos referimos, por ejemplo, a obtener la cantidad de casos bajo cada nivel de pobreza económica, calcular la frecuencia de cada nivel educacional, etc.
+
+
+### Conteo sin aplicar factor de expansión
+Primero realizaremos un conteo básico de los casos de una variable, sin realizar ninguna consideración metodológica respecto al muestreo de la encuesta. Es decir, solamente contar las filas de la base de datos. Esto lo haremos a pesar de ser incorrecto porque es la forma más básica de realizar la operación, y también para poder compararlo más adelante a las formas correctas de contar los casos en la encuesta que Casen.
+
+Contar la frecuencia de una variable a nivel nacional, sin factor de expansión (inexacto):
+```{r}
+casen_2 |> 
+  count(pobreza) |> 
+  mutate(p = round(n/sum(n), 2)) |> 
+  mutate(porcentaje = percent(p))
+```
+
+Contar la frecuencia de una variable a nivel regional, sin factor de expansión (inexacto):
+```{r}
+casen_2 |> 
+  group_by(region) |> 
+  count(pobreza) |> 
+  mutate(p = round(n/sum(n), 2)) |> 
+  mutate(porcentaje = percent(p))
+```
+
+Contar la frecuencia de una variable a nivel comunal, sin factor de expansión (inexacto):
+```{r}
+casen_2 |> 
+  filter(region == 13) |> 
+  select(-region) |> 
+  group_by(comuna) |> 
+  count(pobreza) |> 
+  mutate(p = round(n/sum(n), 2)) |> 
+  mutate(porcentaje = percent(p))
+```
+
+
+## Conteo usando factor de expansión 
+
+Para aplicar el factor de expansión a la base de datos, usamos las columnas `expr` y `expc`, que contienen el factor de expansión regional y comunal, respectivamente. En términos sencillos, esta cifra indica la cantidad de personas que debiese representar cada observación de la encuesta, si se pretende que la encuesta represente a la población real.
+
+Primero seleccionamos las columnas de la base que utilizaremos:
+```{r}
+casen_3 <- casen_2 |> 
+  select(region, comuna, 
+         pobreza,
+         starts_with("exp"))
+```
+
+
+Aplicaremos el factor de expansión usando la función `uncount()` del paquete `{tidyr}`, que básicamente multiplica las filas por el factor de expansión indicado en una variable. Por ejemplo,
+si una fila de la base tiene un factor de expansión 53, entonces al aplicar `uncount()`, dicha fila se repetirá 53 veces.
+
+Esto significa que nuestra base de datos aumentará considerablemente su tamaño, potencialmente alcanzando la cantidad de filas cercana a la población nacional. Esta puede ser una cantidad de datos demasiado grande para ciertos computadores, por lo que se recomienda primero filtrar por la región o comuna que se utilizará para el análisis. 
+```{r}
+casen_antofagasta <- casen_3 |> 
+  filter(region == 2)
+```
+
+
+Realizar expansión de las filas de la base filtrada. Nótese la cantidad de observaciones que resulta de este procedimiento.
+```{r}
+#| cache: true
+library(tidyr)
+
+casen_antofagasta_exp <- casen_antofagasta |> 
+  # aplicar factor de expansión
+  uncount(expc)
+
+casen_antofagasta_exp
+```
+
+Obtener frecuencia y porcentaje de una variable de la Casen, a nivel regional, aplicando factor de expansión:
+```{r}
+casen_antofagasta_exp |> 
+  # contar variable
+  count(pobreza) |> 
+  # calcular porcentaje
+  mutate(p = n/sum(n)) |> 
+  mutate(porcentaje = percent(p))
+```
+
+Obtener frecuencia y porcentaje de una variable de la Casen, a nivel comunal, aplicando factor de expansión:
+```{r}
+casen_antofagasta_exp |> 
+  # agrupar por comuna
+  group_by(region, comuna) |> 
+  # contar variable
+  count(pobreza) |> 
+  # calcular porcentaje
+  mutate(p = n/sum(n)) |> 
+  mutate(porcentaje = percent(p))
+```
+
+Obtener frecuencia y porcentaje de una variable creada a partir de la Casen, aplicando factor de expansión. Para este ejemplo, crearemos una nueva variable que unifique los dos niveles de pobreza en uno solo, generando una variable económica _pobre/no pobre:_
+```{r}
+casen_antofagasta_exp |> 
+  # crear variable dicotómica
+  mutate(pobreza_2 = ifelse(pobreza %in% c(1, 2), "pobre", "no pobre")) |> 
+  # conteo
+  group_by(region, comuna) |> 
+  count(pobreza_2) |> 
+  # calcular porcentaje
+  group_by(region, comuna) |> 
+  mutate(p = n/sum(n)) |> 
+  mutate(porcentaje = percent(p)) |> 
+  # filtrar
+  filter(pobreza_2 == "pobre")
+```
+
+----
+
+## Conteo de encuestas de muestreo complejo
+
+Usando el paquete `{srvyr}` podemos crear un objeto de diseño de encuestas complejas, que utilice variables acerca del diseño y muestreo de la Casen para poder calcular correctamente los estadísticos que necesitemos, incluyendo la aplicación del factor de expansión.
+
+Establecer el diseño de encuestas complejas para la Casen:
+```{r}
+#| message: false
+#| cache: true
+library(srvyr)
+
+casen_svy <- casen_2 |> 
+  as_survey(weights = expr, 
+            strata = estrato, 
+            ids = id_persona, 
+            nest = TRUE)
+```
+
+
+Luego, podemos utilizar este diseño para calcular frecuencias y porcentajes, entre otros, de la forma metodológicamente correcta.
+
+Calcular frecuencia y porcentaje de una variable a nivel país, usando diseño de encuestas complejas, con factor de expansión:
+```{r}
+casen_svy |> 
+  group_by(pobreza) |> 
+  summarize(n = survey_total(),
+            p = survey_mean()) |> 
+  # select(pobreza, n, p) |> 
+  mutate(porcentaje = percent(p, accuracy = 0.01))
+```
+
+Notamos que éste método de calcular los estadísticos también nos ofrece los errores estándar de los conteos y los porcentajes.
+
+Calcular frecuencia y porcentaje de una variable a nivel regional, usando diseño de encuestas complejas, con factor de expansión:
+```{r}
+casen_svy |> 
+  filter(region == 2) |> 
+  group_by(pobreza) |> 
+  summarize(n = survey_total(),
+            p = survey_mean()) |> 
+  select(pobreza, n, p) |> 
+  mutate(porcentaje = percent(p, accuracy = 0.01))
+```
+
+Calcular frecuencia y porcentaje de una variable a nivel comunal, usando diseño de encuestas complejas, con factor de expansión:
+```{r}
+casen_svy |> 
+  filter(region == 13) |> 
+  group_by(comuna, pobreza) |> 
+  summarize(n = survey_total(),
+            p = survey_mean()) |> 
+  select(pobreza, n, p) |> 
+  mutate(porcentaje = percent(p, accuracy = 0.01)) |> 
+  print(n = 15)
+```
+Repetimos el ejemplo anterior, pero creando una variable dicotómica de pobreza para agrupar los dos niveles de pobreza:
+```{r}
+casen_svy |> 
+  filter(region == 13) |> 
+  # crear variable dicotómica
+  mutate(pobreza_2 = ifelse(pobreza %in% c(1, 2), "pobre", "no pobre")) |> 
+  # calcular
+  group_by(comuna, pobreza_2) |> 
+  summarize(n = survey_total(),
+            p = survey_mean()) |> 
+  select(pobreza_2, comuna, n, p) |>
+  mutate(porcentaje = percent(p, accuracy = 0.01)) |> 
+  filter(pobreza_2 == "pobre") |> 
+  print(n = 15)
+```
+
+
+Realizar conteos obteniendo intervalos de confianza:
+```{r}
+casen_svy |> 
+  filter(region == 2) |> 
+  group_by(region, comuna, pobreza) |> 
+  summarize(n = survey_total(),
+            p = survey_mean(vartype = c("se", "ci")))
+```
+
+Repetir el ejemplo, pero utilizando otra variable:
+```{r}
+casen_svy |> 
+  filter(region == 2) |> 
+  group_by(region, comuna, v4) |> 
+  summarize(n = survey_total(),
+            p = survey_mean(vartype = c("se", "ci")))
+```
+
+----
+
+## Comparación de resultados
+
+Luego de haber visto tres métodos para calcular frecuencias y porcentajes desde la encuesta que hacen utilizando factor de expansión, para cerrar compararemos los resultados de los tres métodos.
+
+**Conteo simple, sin expansión:**
+```{r}
+casen_2 |> 
+  filter(region == 5) |> 
+  count(pobreza) |> 
+  mutate(p = round(n/sum(n), 4)) |> 
+  mutate(porcentaje = percent(p))
+```
+
+**Conteo y porcentaje con factor de expansión:**
+```{r}
+casen_2 |> 
+  filter(region == 5) |> 
+  uncount(expr) |> 
+  count(pobreza) |> 
+  mutate(p = round(n/sum(n), 4)) |> 
+  mutate(porcentaje = percent(p, accuracy = 0.001))
+```
+
+**Conteo y porcentaje con factor de expansión y diseño de encuesta compleja:**
+```{r}
+casen_svy |> 
+  filter(region == 5) |> 
+  group_by(pobreza) |> 
+  summarize(n = survey_total(),
+            p = survey_mean()) |> 
+  select(pobreza, n, p) |> 
+  mutate(porcentaje = percent(p, accuracy = 0.001))
+```
+
+Los resultados de los tres métodos difieren, especialmente los del primer método con los del segundo y tercero. El segundo y tercer método solo difieren en sus decimales, pero aún así es importante comparar ambos y tomar la decisión apropiada antes de realizar el análisis:
+
+1. El primer método _no debe usarse nunca,_ pues no aplica correctamente la metodología de la encuesta, y sus resultados difieren de la realidad. 
+2. El segundo método, usando `tidyr::uncount()`, si bien puede parecer más conveniente y rápido de aplicar, obtiene resultados tiene un peor desempeño al obtener los resultados, y consume una _muy alta_ cantidad de memoria para calcular resultados a nivel nacional, o incluso regiones o comunas de gran población. En computadores con menos de 24 GB de memoria, probablemente no pueda ser posible calcular estadísticos a nivel nacional sin realizar pasos intermediarios para disminuir el consumo de memoria (como separar el cálculo por regiones y luego realizar las sumas entre ellas).
+3. Entre los tres métodos, el más correcto de utilizar es el tercero, usando el paquete `{srvyr}`. Además de entregar los resultados con mayor eficiencia y velocidad, aplica correctamente la metodología de muestreo especificada por la encuesta, por lo que también es el método más exacto.
+
