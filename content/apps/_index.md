@@ -20,6 +20,16 @@ show_post_date: true
 show_post_thumbnail: true
 
 title: Aplicaciones de ciencia de datos
+
+show_outro: true
+outro: |
+  <div>
+    <div style="display: flex;
+    justify-content: center;
+    align-items: center;">
+      <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+    </div>
+  </div>
 ---
 
 ** No content for the project index. This file provides front matter for the blog including the layout and boolean options. **

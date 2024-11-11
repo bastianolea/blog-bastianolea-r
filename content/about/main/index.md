@@ -10,7 +10,7 @@ intro: |
   Bastián Olea Herrera, sociólogo, 31 años, ubicado en La Florida, Santiago de Chile. 
   - **Magíster en Sociología** (2019) (Pontificia Universidad Católica de Chile),
   - Licenciado en Sociología y Bachiller en Ciencias Sociales (2016) (Universidad Alberto Hurtado),
-  - dos diplomaturas en las áreas de la ciencia de datos (PUC), y la estética y los estudios de género (PUC).
+  - dos diplomados en las áreas de la ciencia de datos (PUC), y la estética y los estudios de género (PUC).
   
   Especialización en sociología del cuerpo, sociología del género y ciencia de datos (mediante el lenguaje de programación estadística R).
   
@@ -18,10 +18,15 @@ intro: |
   
   En este blog comparto documentos, tutoriales y recursos sobre el lenguaje de programación estadística R. Puedes contactarme si tienes alguna pregunta o comentario, o si necesitas apoyo con tu investigación o tesis.
 
-show_outro: false
+show_outro: true
 outro: |
-  <i class="fas fa-glass-cheers pr2"></i>Sincere thanks to [Maëlle Salmon](https://masalmon.eu/) for her help naming this Hugo theme!
-
+  <div>
+    <div style="display: flex;
+    justify-content: center;
+    align-items: center;">
+      <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+    </div>
+  </div>
 ---
 
 ** index doesn't contain a body, just front matter above.

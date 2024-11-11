@@ -12,7 +12,7 @@ links:
 - icon: github
   icon_pack: fab
   name: código
-  url: https://github.com/bastianolea?tab=repositories
+  url: https://github.com/bastianolea/blog-bastianolea-r
 ---
 
 Éste es un post sobre este mismo blog. Quería compartir el proceso de creación del blog, porque me pareció interesante y entretenido.
@@ -121,6 +121,12 @@ blogdown::new_post(title = "Nubes aleatorias en ggplot",
                    file = "blog/ggplot_nubes/index.md",
                    author = "Bastián Olea Herrera",
                    tags = c("ggplot2", "gráficos", "curiosidades")
+)
+
+# convertir script a Quarto
+convertr::r_to_qmd(
+  input_dir = "~/R/servel_votaciones/pruebas/genero_candidatos_LLM.R",
+  output_dir = "~/R/blog/blog-r/content/blog/genero_nombres_llm/codigo.qmd"
 )
 
 # ver sitio en github
