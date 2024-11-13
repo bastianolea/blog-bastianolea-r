@@ -10,15 +10,15 @@ tags:
   - análisis de texto
 ---
 
-[Hace poco](https://bastianolea.rbind.io/blog/introduccion_llm_mall/) conocí [el paquete `{mall}`](https://mlverse.github.io/mall/), que facilita mucho el uso de un un modelo grande de lenguaje (LLM) como una herramienta cotidiana para el análisis y procesamiento de datos. 
+[Hace poco](https://bastianolea.rbind.io/blog/introduccion_llm_mall/) conocí [el paquete `{mall}`](https://mlverse.github.io/mall/), que facilita mucho el uso de un un modelo de lenguaje (LLM) local como una herramienta cotidiana para el análisis y procesamiento de datos. 
 
-El paquete incluye varias funciones para usar un modelo LLM en una columna de un dataframe. `{mall}` te puede ayudar a :
+El paquete incluye varias funciones para usar un modelo LLM local en las columnas de un dataframe. `{mall}` te puede ayudar a :
 - clasificar el contenido de una variable
 - resumir textos
 - extraer sentimiento a partir del texto
 - extraer información desde el texto
 - confirmar si algo es verdadero o falso a partir de un texto
-- y también a aplicar cualquier prompt a una variable.
+- y también a aplicar cualquier _prompt_ a una variable.
 
 Recientemente lo usé para un caso real, donde tenía una columna de casi 2.000 nombres, y necesitaba asignarle un género a cada una de estas personas, solamente a partir de sus nombres y apellidos. 
 
@@ -44,7 +44,7 @@ candidatos <- readr::read_csv2(archivo_remoto) |>
 candidatos
 ```
 
-En esta instancia, tengo configurado `{ollamar}` para que use el modelo Llama 3.2, de 3 billones de parámetros. Podemos instalar este modelo, o uno distinto, con estas instrucciones:
+En esta instancia, tengo configurado `{ollamar}` para que use el modelo local y de código abierto [Llama 3.2](https://www.llama.com), de 3 billones de parámetros. Podemos instalar este modelo, o uno distinto, con estas instrucciones:
 
 ```{r elegir_modelo}
 #| eval: false
@@ -94,7 +94,7 @@ resultados_2 <- candidatos |>
 toc()
 ```
 
-Esta vez el proceso tarda aproximadamente 2 minutos, ¡casi 4 veces más rápido! El modelo clasifica los textos más rápido mientras menos texto tenga que analizar.
+Esta vez el proceso tarda aproximadamente 2 minutos, ¡casi 4 veces más rápido! El modelo clasifica los textos más rápido mientras menos texto tenga que analizar. Es importante mencionar que la velocidad va a depender mucho de tu computador, específicamente su GPU.
 
 ```{r}
 resultados_2 |> select(genero, nombre) |> slice_sample(n = 10)

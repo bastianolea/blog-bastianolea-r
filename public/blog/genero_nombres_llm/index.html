@@ -45,12 +45,12 @@
     
   
   <meta itemprop="name" content="Predecir género a partir de nombres usando un modelo de lenguaje en R">
-  <meta itemprop="description" content="Hace poco conocí el paquete {mall}, que facilita mucho el uso de un un modelo grande de lenguaje (LLM) como una herramienta cotidiana para el análisis y procesamiento de datos.
-El paquete incluye varias funciones para usar un modelo LLM en una columna de un dataframe. {mall} te puede ayudar a :
+  <meta itemprop="description" content="Hace poco conocí el paquete {mall}, que facilita mucho el uso de un un modelo de lenguaje (LLM) local como una herramienta cotidiana para el análisis y procesamiento de datos.
+El paquete incluye varias funciones para usar un modelo LLM local en las columnas de un dataframe. {mall} te puede ayudar a :
 clasificar el contenido de una variable resumir textos extraer sentimiento a partir del texto extraer información desde el texto confirmar si algo es verdadero o falso a partir de un texto y también a aplicar cualquier prompt a una variable. Recientemente lo usé para un caso real, donde tenía una columna de casi 2.000 nombres, y necesitaba asignarle un género a cada una de estas personas, solamente a partir de sus nombres y apellidos.">
   <meta itemprop="datePublished" content="2024-11-11T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-11T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1156">
+  <meta itemprop="wordCount" content="1176">
   <meta itemprop="keywords" content="Procesamiento de datos,Inteligencia artificial,Análisis de texto">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -135,15 +135,15 @@ clasificar el contenido de una variable resumir textos extraer sentimiento a par
       <section class="post-body pt5 pb4">
         <p>
 <a href="https://bastianolea.rbind.io/blog/introduccion_llm_mall/" target="_blank" rel="noopener">Hace poco</a> conocí 
-<a href="https://mlverse.github.io/mall/" target="_blank" rel="noopener">el paquete <code>{mall}</code></a>, que facilita mucho el uso de un un modelo grande de lenguaje (LLM) como una herramienta cotidiana para el análisis y procesamiento de datos.</p>
-<p>El paquete incluye varias funciones para usar un modelo LLM en una columna de un dataframe. <code>{mall}</code> te puede ayudar a :</p>
+<a href="https://mlverse.github.io/mall/" target="_blank" rel="noopener">el paquete <code>{mall}</code></a>, que facilita mucho el uso de un un modelo de lenguaje (LLM) local como una herramienta cotidiana para el análisis y procesamiento de datos.</p>
+<p>El paquete incluye varias funciones para usar un modelo LLM local en las columnas de un dataframe. <code>{mall}</code> te puede ayudar a :</p>
 <ul>
 <li>clasificar el contenido de una variable</li>
 <li>resumir textos</li>
 <li>extraer sentimiento a partir del texto</li>
 <li>extraer información desde el texto</li>
 <li>confirmar si algo es verdadero o falso a partir de un texto</li>
-<li>y también a aplicar cualquier prompt a una variable.</li>
+<li>y también a aplicar cualquier <em>prompt</em> a una variable.</li>
 </ul>
 <p>Recientemente lo usé para un caso real, donde tenía una columna de casi 2.000 nombres, y necesitaba asignarle un género a cada una de estas personas, solamente a partir de sus nombres y apellidos.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># manipulación de datos</span>
@@ -175,7 +175,8 @@ clasificar el contenido de una variable resumir textos extraer sentimiento a par
 10 Andrea Elizabeth Galvez Sepulveda  REP     Derecha      
 # ℹ 1,566 more rows
 </code></pre>
-<p>En esta instancia, tengo configurado <code>{ollamar}</code> para que use el modelo Llama 3.2, de 3 billones de parámetros. Podemos instalar este modelo, o uno distinto, con estas instrucciones:</p>
+<p>En esta instancia, tengo configurado <code>{ollamar}</code> para que use el modelo local y de código abierto 
+<a href="https://www.llama.com" target="_blank" rel="noopener">Llama 3.2</a>, de 3 billones de parámetros. Podemos instalar este modelo, o uno distinto, con estas instrucciones:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ollamar</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">ollamar</span><span style="color:#908caa">::</span><span style="color:#ea9a97">pull</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;llama3.2&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># descargar e instalar un modelo</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">mall</span><span style="color:#908caa">::</span><span style="color:#ea9a97">llm_use</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;ollama&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;llama3.2&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># elegir un modelo instalado</span>
@@ -200,23 +201,23 @@ cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpntMvSc/_mall_
 <p>El proceso tarda aproximadamente 7 minutos en clasificar los casi 1.576 nombres, un ritmo de 0.26 segundos por cada predicción.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">resultados_1</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">genero</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombres</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">15</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><pre><code># A tibble: 15 × 2
-   genero    nombres                        
-   &lt;chr&gt;     &lt;chr&gt;                          
- 1 femenino  Daniela Vecchiola Riquelme     
- 2 masculino Mai Teao Osorio                
- 3 masculino Bruno Del Carmen Mansilla Perez
- 4 masculino Marcos Morales Ureta           
- 5 femenino  Mariela Parada Enero           
- 6 masculino Pablo Antonio Gierke Quevedo   
- 7 masculino Mario Antonio Arros Muñoz      
- 8 femenino  Miriam Curriao Espuñan         
- 9 masculino Rafael Ramirez Parra           
-10 masculino Luis Molina Melo               
-11 femenino  Pilar Carolina Roa Alarcon     
-12 masculino Miguel Abuter Leon             
-13 masculino Felipe Eduardo Muñoz Vallejos  
-14 masculino Drazen Andre Markusovic Caceres
-15 femenino  Maria Teresa Cagalj Kralj      
+   genero    nombres                         
+   &lt;chr&gt;     &lt;chr&gt;                           
+ 1 masculino Juan Jesus Herrera Fuentes      
+ 2 masculino Efrain Oporto Torres            
+ 3 masculino Dino Lotito Flores              
+ 4 masculino Maria Marjorie Jopia Herrera    
+ 5 masculino Jorge Contanzo Bravo            
+ 6 masculino Cristobal Sanchez Carvallo      
+ 7 masculino Humberto Garcia Diaz            
+ 8 masculino Gustavo Diego Marquez Cadagan   
+ 9 masculino Maximiliano Radonich Radonich   
+10 masculino Luis Reinaldo Pradenas Moran    
+11 masculino Nelson Fernando Lazcano Silva   
+12 masculino Bernardo Cornejo Ceron          
+13 masculino Rodrigo Esteban Castro Sepulveda
+14 masculino Juan Pablo Gomez Ramirez        
+15 masculino Kether Bautista Gomez Pasten    
 </code></pre>
 <p>Para la segunda prueba, intentamos entregarle al modelo <em>solamente los nombres</em>, excluyendo segundos nombres y apellidos, bajo el supuesto de que el primer nombre es el mejor predictor del género, mientras que los apellidos no son un predictor del género.</p>
 <p>Probamos el código con una 
@@ -226,13 +227,13 @@ cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpntMvSc/_mall_
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombres</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><pre><code># A tibble: 5 × 2
-  nombre   nombres                         
-  &lt;chr&gt;    &lt;chr&gt;                           
-1 Veronica Veronica Noelia Aguilar Martínez
-2 Oscar    Oscar Llanos Silva              
-3 Juan     Juan Rodrigo Fuentes Fernández  
-4 Zandra   Zandra Sofia Maulen Jofre       
-5 Tito     Tito Correa Verdugo             
+  nombre  nombres                       
+  &lt;chr&gt;   &lt;chr&gt;                         
+1 Marcelo Marcelo Patricio Bersano Reyes
+2 Americo Americo Guajardo Oyarce       
+3 Jorge   Jorge Westermeier Estrada     
+4 Omar    Omar Vera Castro              
+5 Camilo  Camilo Riffo Quintana         
 </code></pre>
 <p>Realizamos la segunda prueba de clasificación, esta vez solamente con el primer nombre:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tic</span><span style="color:#908caa">()</span>
@@ -244,7 +245,7 @@ cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpntMvSc/_mall_
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">toc</span><span style="color:#908caa">()</span>
 </span></span></code></pre></div><pre><code>139.47 sec elapsed
 </code></pre>
-<p>Esta vez el proceso tarda aproximadamente 2 minutos, ¡casi 4 veces más rápido! El modelo clasifica los textos más rápido mientras menos texto tenga que analizar.</p>
+<p>Esta vez el proceso tarda aproximadamente 2 minutos, ¡casi 4 veces más rápido! El modelo clasifica los textos más rápido mientras menos texto tenga que analizar. Es importante mencionar que la velocidad va a depender mucho de tu computador, específicamente su GPU.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">resultados_2</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">genero</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombre</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><pre><code># A tibble: 10 × 2
    genero    nombre  
@@ -312,7 +313,7 @@ cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpntMvSc/_mall_
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">6 minute read, 1156 words</dd>
+    <dd class="fw5 ml0">6 minute read, 1176 words</dd>
   </dl>
   
   
@@ -338,6 +339,9 @@ cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpntMvSc/_mall_
       <footer class="post-footer">
         <div class="post-pagination dt w-100 mt4 mb2">
   
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="http://localhost:4321/blog/portafolio_trabajos_r/">&larr; Portafolio de trabajos previos en R</a>
   
   
   

@@ -11,15 +11,15 @@ tags:
 ---
 
 
-[Hace poco](https://bastianolea.rbind.io/blog/introduccion_llm_mall/) conocí [el paquete `{mall}`](https://mlverse.github.io/mall/), que facilita mucho el uso de un un modelo grande de lenguaje (LLM) como una herramienta cotidiana para el análisis y procesamiento de datos.
+[Hace poco](https://bastianolea.rbind.io/blog/introduccion_llm_mall/) conocí [el paquete `{mall}`](https://mlverse.github.io/mall/), que facilita mucho el uso de un un modelo de lenguaje (LLM) local como una herramienta cotidiana para el análisis y procesamiento de datos.
 
-El paquete incluye varias funciones para usar un modelo LLM en una columna de un dataframe. `{mall}` te puede ayudar a :
+El paquete incluye varias funciones para usar un modelo LLM local en las columnas de un dataframe. `{mall}` te puede ayudar a :
 - clasificar el contenido de una variable
 - resumir textos
 - extraer sentimiento a partir del texto
 - extraer información desde el texto
 - confirmar si algo es verdadero o falso a partir de un texto
-- y también a aplicar cualquier prompt a una variable.
+- y también a aplicar cualquier *prompt* a una variable.
 
 Recientemente lo usé para un caso real, donde tenía una columna de casi 2.000 nombres, y necesitaba asignarle un género a cada una de estas personas, solamente a partir de sus nombres y apellidos.
 
@@ -59,7 +59,7 @@ candidatos
     10 Andrea Elizabeth Galvez Sepulveda  REP     Derecha      
     # ℹ 1,566 more rows
 
-En esta instancia, tengo configurado `{ollamar}` para que use el modelo Llama 3.2, de 3 billones de parámetros. Podemos instalar este modelo, o uno distinto, con estas instrucciones:
+En esta instancia, tengo configurado `{ollamar}` para que use el modelo local y de código abierto [Llama 3.2](https://www.llama.com), de 3 billones de parámetros. Podemos instalar este modelo, o uno distinto, con estas instrucciones:
 
 ``` r
 library(ollamar)
@@ -99,23 +99,23 @@ resultados_1 |> select(genero, nombres) |> slice_sample(n = 15)
 ```
 
     # A tibble: 15 × 2
-       genero    nombres                        
-       <chr>     <chr>                          
-     1 femenino  Daniela Vecchiola Riquelme     
-     2 masculino Mai Teao Osorio                
-     3 masculino Bruno Del Carmen Mansilla Perez
-     4 masculino Marcos Morales Ureta           
-     5 femenino  Mariela Parada Enero           
-     6 masculino Pablo Antonio Gierke Quevedo   
-     7 masculino Mario Antonio Arros Muñoz      
-     8 femenino  Miriam Curriao Espuñan         
-     9 masculino Rafael Ramirez Parra           
-    10 masculino Luis Molina Melo               
-    11 femenino  Pilar Carolina Roa Alarcon     
-    12 masculino Miguel Abuter Leon             
-    13 masculino Felipe Eduardo Muñoz Vallejos  
-    14 masculino Drazen Andre Markusovic Caceres
-    15 femenino  Maria Teresa Cagalj Kralj      
+       genero    nombres                         
+       <chr>     <chr>                           
+     1 masculino Juan Jesus Herrera Fuentes      
+     2 masculino Efrain Oporto Torres            
+     3 masculino Dino Lotito Flores              
+     4 masculino Maria Marjorie Jopia Herrera    
+     5 masculino Jorge Contanzo Bravo            
+     6 masculino Cristobal Sanchez Carvallo      
+     7 masculino Humberto Garcia Diaz            
+     8 masculino Gustavo Diego Marquez Cadagan   
+     9 masculino Maximiliano Radonich Radonich   
+    10 masculino Luis Reinaldo Pradenas Moran    
+    11 masculino Nelson Fernando Lazcano Silva   
+    12 masculino Bernardo Cornejo Ceron          
+    13 masculino Rodrigo Esteban Castro Sepulveda
+    14 masculino Juan Pablo Gomez Ramirez        
+    15 masculino Kether Bautista Gomez Pasten    
 
 Para la segunda prueba, intentamos entregarle al modelo *solamente los nombres*, excluyendo segundos nombres y apellidos, bajo el supuesto de que el primer nombre es el mejor predictor del género, mientras que los apellidos no son un predictor del género.
 
@@ -129,13 +129,13 @@ candidatos |>
 ```
 
     # A tibble: 5 × 2
-      nombre   nombres                         
-      <chr>    <chr>                           
-    1 Veronica Veronica Noelia Aguilar Martínez
-    2 Oscar    Oscar Llanos Silva              
-    3 Juan     Juan Rodrigo Fuentes Fernández  
-    4 Zandra   Zandra Sofia Maulen Jofre       
-    5 Tito     Tito Correa Verdugo             
+      nombre  nombres                       
+      <chr>   <chr>                         
+    1 Marcelo Marcelo Patricio Bersano Reyes
+    2 Americo Americo Guajardo Oyarce       
+    3 Jorge   Jorge Westermeier Estrada     
+    4 Omar    Omar Vera Castro              
+    5 Camilo  Camilo Riffo Quintana         
 
 Realizamos la segunda prueba de clasificación, esta vez solamente con el primer nombre:
 
@@ -151,7 +151,7 @@ toc()
 
     139.47 sec elapsed
 
-Esta vez el proceso tarda aproximadamente 2 minutos, ¡casi 4 veces más rápido! El modelo clasifica los textos más rápido mientras menos texto tenga que analizar.
+Esta vez el proceso tarda aproximadamente 2 minutos, ¡casi 4 veces más rápido! El modelo clasifica los textos más rápido mientras menos texto tenga que analizar. Es importante mencionar que la velocidad va a depender mucho de tu computador, específicamente su GPU.
 
 ``` r
 resultados_2 |> select(genero, nombre) |> slice_sample(n = 10)

@@ -8,11 +8,11 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Predecir el género a partir de nombres en R usando un modelo de lenguaje", 
+blogdown::new_post(title = "Portafolio de trabajos remunerados en R", 
                    subdir = "blog/",
-                   file = "blog/genero_nombres_llm/index.md",
+                   file = "blog/portafolio_trabajos_r/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("procesamiento de datos", "inteligencia artificial"),
+                   tags = c("aplicaciones", "gráficos", "shiny", "tablas", "mapas", "quarto"),
                    categories = c() 
 )
 

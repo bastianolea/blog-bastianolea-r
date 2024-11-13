@@ -23,6 +23,8 @@ La [guía para aprender a usar Hugo Apéro](https://hugo-apero-docs.netlify.app)
 
 El sitio web se genera con `{blogdown}` dentro de un proyecto de R cada vez que hago un cambio en el código del sitio. Luego, cuando subo los cambios del sitio a GitHub, [Netlifly](https://www.netlify.com) detecta los cambios, reconstruye el sitio y lo re-publica en minutos. De esta forma, el proceso es de _despliegue continuo:_ cada cambio local que hago, al ser subido al [repositorio remoto,](https://github.com/bastianolea/blog-r) gatilla la reconstrucción del sitio y su actualización en la versión pública del sitio web. 
 
+Si bien Netlify te da un dominio `.netlify.app`, opté por un dominio `.rbind.io` en [la página de Rbind](https://support.rbind.io/about/), una comunidad que engloba sitios y blogs sobre R bajo un mismo dominio. Además, `rbind.io` se ve más lindo que `netlify.app` 😌
+
 La gracia de un sitio estático es que su contenido online no cambia, porque es un sitio web normal, y por lo tanto es liviano de cargar y debiese ser muy barato o gratis de hostear (no requiere de un servidor con capacidad computacional, como es el caso con las [aplicaciones Shiny](https://bastianolea.github.io/shiny_apps/)).
 
 La totalidad del código de este sitio web [está disponible en el repositorio `blog-r` en mi GitHub.](https://github.com/bastianolea/blog-r)
@@ -30,7 +32,7 @@ La totalidad del código de este sitio web [está disponible en el repositorio `
 
 ## Sobre Hugo Apéro
 
-Las [instrucciones de Hugo Apéro](https://hugo-apero-docs.netlify.app/start/) me parecieron fáciles de seguir, lo suficientemente sencillas para que cualquier persona sin experiencia en sitios web (yo) pueda seguirlas. Además, te prsentan [ejemplos hermosos](https://hugo-apero-docs.netlify.app/project/) de otros blogs que usan el tema. 
+Las [instrucciones de Hugo Apéro](https://hugo-apero-docs.netlify.app/start/) me parecieron fáciles de seguir, lo suficientemente sencillas para que cualquier persona sin experiencia en sitios web (yo) pueda seguirlas. Además, te presentan [ejemplos hermosos](https://hugo-apero-docs.netlify.app/project/) de otros blogs que usan el tema. 
 
 _Lo bueno:_
 - Muy simple de usar
