@@ -88,6 +88,7 @@ _Aplicación web desarrollada con R y Shiny con gráficos ggplot2, además de un
 ![](covid/covid-19_chile_3.JPG)
 
 
+----
 
 
 ## Graficador Centro de Estudios Públicos (CEP)
