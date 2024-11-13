@@ -71,9 +71,9 @@ stringr::str_extract()
 ```
 La extracción de texto resulta muy útil cuando la combinas con expresiones regulares (regex). Te permite, por ejemplo, extraer la primera palabra de una cadena de texto, o la última palabra. Te permite extraer distintas formas de escribir un mismo concepto. Te permite extraer textos  que empiecen con algo y terminen con otro término, independiente del texto que haya entre ambos extremos.
 
-### Exraer años desde un texto
+### Extraer años desde un texto
 ```r
-stringr::str_extract(“\\d{4}”)
+stringr::str_extract("\\d{4}")
 ```
 Una tarea común al limpiar datos es poder extraer el año que puede venir dentro de una columna de una fecha, de una variable de texto, o de un texto distinto que incluye alguna fecha dentro de sí. Con esta expresión de regex podemos extraer una cifra numérica de cuatro dígitos, que en la mayoría de los casos corresponde al año que queremos obtener.
 
