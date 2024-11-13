@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Tips para limpieza de datos en R | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Algunos de los paquetes y funciones que uso frecuentemente al momento de limpiar datos en R.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Tips para limpieza de datos en R | Blog">
+<meta property="og:description" content="Algunos de los paquetes y funciones que uso frecuentemente al momento de limpiar datos en R." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/limpieza_tips/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+    
+    
+  
+  <meta itemprop="name" content="Tips para limpieza de datos en R">
+  <meta itemprop="description" content="En este post dejo algunos de los paquetes y funciones que uso frecuentemente al momento de limpiar datos en R. Voy a ir actualizando este post por si se me van ocurriendo más.
+library(janitor) library(stringr) library(dplyr) library(lubridate) Limpiar nombres de columnas janitor::clean_names() Como su nombre lo indica, esta función cambia los nombres de las variables o columnas para estandarizar la forma en que están escritas: todo en minúsculas, sin espacios, sin símbolos, y las palabras separadas con guión bajo. Esto facilita mucho el trabajo con datos, ya que minimiza las probabilidades de qué te equivoques al escribir el nombre de una columna. Personalmente siempre ocupo esta función al momento de cargar datos, sobre todo si estos datos vienen desde Excel. Lo único malo de clean_names() es que esta función también cambia las eñes por enes.">
+  <meta itemprop="datePublished" content="2024-11-13T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-11-13T00:00:00+00:00">
+  <meta itemprop="wordCount" content="776">
+  <meta itemprop="keywords" content="Consejos,Procesamiento de datos">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.55dbd02bca0ffe5b529947b6e820112767ccd613c06be72b72edf1514d53ed34.css" integrity="sha256-VdvQK8oP/ltSmUe26CARJ2fM1hPAa&#43;crcu3xUU1T7TQ=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.bebab142e3ad4c47834f81e426b8adcd5b747151cc6f7d8358a68b4a30c7ff48.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Tips para limpieza de datos en R</h1>
+        
+        
+        <p class="f7 db mv0 ttu">13/11/2024</p>
+
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>En este post dejo algunos de los paquetes y funciones que uso frecuentemente al momento de limpiar datos en R. Voy a ir actualizando este post por si se me van ocurriendo más.</p>
+<div style = "max-width: 220px">
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">janitor</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lubridate</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div></div>
+
+
+
+
+<h3 id="limpiar-nombres-de-columnas">Limpiar nombres de columnas
+  <a href="#limpiar-nombres-de-columnas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">janitor</span><span style="color:#908caa">::</span><span style="color:#ea9a97">clean_names</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Como su nombre lo indica, esta función cambia los nombres de las variables o columnas para estandarizar la forma en que están escritas: todo en minúsculas, sin espacios, sin símbolos, y las palabras separadas con guión bajo. Esto facilita mucho el trabajo con datos, ya que minimiza las probabilidades de qué te equivoques al escribir el nombre de una columna. Personalmente siempre ocupo esta función al momento de cargar datos, sobre todo si estos datos vienen desde Excel. Lo único malo de <code>clean_names()</code> es que esta función también cambia las eñes por enes.</p>
+
+
+
+
+<h3 id="corregir-tablas-sin-nombres-de-columnas">Corregir tablas sin nombres de columnas
+  <a href="#corregir-tablas-sin-nombres-de-columnas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">janitor</span><span style="color:#908caa">::</span><span style="color:#ea9a97">row_to_names</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Esta función soluciona un problema bastante común al cargar datos desde Excel, que es que las planillas de datos de Excel suelen venir con filas vacías arriba. Esto porque los usuarios de Excel les gusta darle un espaciado a las tablas, pero al momento de cargar esos datos, las filas vacías producen problemas.</p>
+
+
+
+
+<h3 id="eliminar-filas-y-columnas-vacías">Eliminar filas y columnas vacías
+  <a href="#eliminar-filas-y-columnas-vac%c3%adas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">janitor</span><span style="color:#908caa">::</span><span style="color:#ea9a97">remove_empty</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Una función muy conveniente para limpiar datos, porque permite eliminar con una sola instrucción las filas vacías, o las columnas vacías. En Excel es común separar distintas tablas con filas o columnas vacías, o usar filas vacías o columnas vacías para hacer espacio entre los datos. De este modo, todas las columnas y celdas de nuestra tabla de datos contendrán información.</p>
+
+
+
+
+<h3 id="filtrar-datos-según-un-patrón-de-texto">Filtrar datos según un patrón de texto
+  <a href="#filtrar-datos-seg%c3%ban-un-patr%c3%b3n-de-texto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">())</span>
+</span></span></code></pre></div><p>La combinación de estas dos funciones permite filtrar las filas que contengan un texto parcial. Se puede usar para excluir filas que contengan un cierto patrón de texto si se le antepone un signo de exclamación</p>
+
+
+
+
+<h3 id="buscar-y-reemplazar-texto">Buscar y reemplazar texto
+  <a href="#buscar-y-reemplazar-texto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">str_replace</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>A esta función se le entrega una columna, y dos textos: el texto que queremos detectar, y después el texto que queremos reemplazar. De esta forma, podemos encontrar ciertos patrones de texto y reemplazarlos por otros, facilitando procesos de limpieza que involucren corregir cosas mal escritas, cambiar ciertos símbolos por otros, etc.</p>
+
+
+
+
+<h3 id="creación-de-variables-co-múltiples-condicionales">Creación de variables co múltiples condicionales
+  <a href="#creaci%c3%b3n-de-variables-co-m%c3%baltiples-condicionales"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">case_when</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Es una función muy poderosa para poder crear nuevas variables en base al contenido de otras variables. Su potencial radica en la facilidad que te entrega para utilizar múltiples condiciones simultáneas para especificar las categorías de la nueva variable. Por ejemplo, si una cierta celda contiene un número, puedes hacer una operación. Pero si no contiene números, puedes hacer otra. Pero si el número tiene cierto largo puede ser algo distinto, etc.</p>
+
+
+
+
+<h3 id="corregir-mayúsculas-de-un-texto">Corregir mayúsculas de un texto
+  <a href="#corregir-may%c3%basculas-de-un-texto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">str_to_sentence</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>El uso de mayúsculas suele ser un problema al trabajar con datos, pero esta función, junto con sus funciones hermanas, facilitan transformar las mayúsculas de cualquier texto. Con <code>str_to_sentence()</code> se pone solamente la primera letra de una oración con mayúscula y el resto en minúsculas. Mientras <code>str_to_upper()</code> y <code>str_to_lower()</code> transforman todo a mayúsculas o todo a minúsculas, respectivamente.</p>
+
+
+
+
+<h3 id="extraer-un-patrón-de-texto">Extraer un patrón de texto
+  <a href="#extraer-un-patr%c3%b3n-de-texto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">str_extract</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>La extracción de texto resulta muy útil cuando la combinas con expresiones regulares (regex). Te permite, por ejemplo, extraer la primera palabra de una cadena de texto, o la última palabra. Te permite extraer distintas formas de escribir un mismo concepto. Te permite extraer textos  que empiecen con algo y terminen con otro término, independiente del texto que haya entre ambos extremos.</p>
+
+
+
+
+<h3 id="exraer-años-desde-un-texto">Exraer años desde un texto
+  <a href="#exraer-a%c3%b1os-desde-un-texto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">str_extract</span><span style="color:#908caa">(</span>“<span style="color:#ea9a97">\\d</span><span style="color:#908caa">{</span><span style="color:#f6c177">4</span><span style="color:#908caa">}</span>”<span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Una tarea común al limpiar datos es poder extraer el año que puede venir dentro de una columna de una fecha, de una variable de texto, o de un texto distinto que incluye alguna fecha dentro de sí. Con esta expresión de regex podemos extraer una cifra numérica de cuatro dígitos, que en la mayoría de los casos corresponde al año que queremos obtener.</p>
+
+
+
+
+<h3 id="convertir-fechas">Convertir fechas
+  <a href="#convertir-fechas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">lubridate</span><span style="color:#908caa">::</span><span style="color:#ea9a97">dmy</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Una confusión común al trabajar con R ocurre cuando intentan nacer una operación sobre una columna que no permite ese tipo de operaciones. Como sumar números que en realidad son variables de formato texto. Lo mismo pasa con las fechas, que suelen ser expresadas en texto, pero que necesitan ser interpretadas como una fecha para poder realizar operaciones propias de una fecha, como calcular rangos de tiempo, sumar o restar días, extraer meses o años, saber el día de la semana, etc. Con esta función, es tan sencillo como indicar que la fecha viene expresada en <em>día mes año,</em> o si viene como <em>año mes día,</em> usar la variante <code>ymd()</code>.</p>
+<hr>
+<p>¿Tienes alguna otra función o paquete de R que uses regularmente para limpiar datos? Cuéntame en los comentarios 😊</p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">November 13, 2024</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">4 minute read, 776 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/consejos">consejos</a>  <a href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/genero_nombres_llm/">Predecir género a partir de nombres usando un modelo de lenguaje en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/convertr/">Convertir un script de R con comentarios a un documento Quarto</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/benchmark_ejemplo/">Comparar el rendimiento expresiones en R</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/portafolio_trabajos_r/">Portafolio de trabajos previos en R &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2024 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastimapache.bsky.social" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.threads.net/@raccunnie" title="threads" target="_blank" rel="me noopener">
+      <i class="fab fa-threads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

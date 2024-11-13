@@ -8,11 +8,11 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Portafolio de trabajos remunerados en R", 
+blogdown::new_post(title = "Tips para limpieza de datos en R", 
                    subdir = "blog/",
-                   file = "blog/portafolio_trabajos_r/index.md",
+                   file = "blog/limpieza_tips/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("aplicaciones", "gráficos", "shiny", "tablas", "mapas", "quarto"),
+                   tags = c("consejos", "procesamiento de datos"),
                    categories = c() 
 )
 
