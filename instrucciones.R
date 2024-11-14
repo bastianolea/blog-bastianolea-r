@@ -8,9 +8,9 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Contar días hábiles entre dos fechas en R", 
+blogdown::new_post(title = "Prueba", 
                    subdir = "blog/",
-                   file = "blog/contar_dias_habiles/index.md",
+                   file = "blog/pruebas/index.md",
                    author = "Bastián Olea Herrera",
                    tags = c("consejos", "procesamiento de datos", "lubridate"),
                    categories = c() 

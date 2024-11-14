@@ -107,6 +107,18 @@ Algunas dificultades que tuve con el blog, y cómo las resolví:
     )
     ```
     
+#### Hacer que se vean las etiquetas en cada post
+  - Si bien las etiquetas o tax de los postes aparecen al final de cada uno, yo quería que aparecieran debajo de la fecha, en el titular de cada publicación. Siguiendo este tutorial, encontré el archivo que hay que editar, y el código que era necesario agregar:
+  
+    En el archivo `themes/hugo-apero/layouts/_default/single.html`, que controla el diseño de todos los blog posts, agregar:
+  
+    ```html
+    {{ with .Params.tags }}
+      <dl class="f6 lh-copy">
+        <em><dd class="fw5 ml0">Tags: {{ range . }} <a href="{{ "tags/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}</dd></em>
+      </dl>
+    {{ end }}
+    ```
 ----
 
 ### Consejos
