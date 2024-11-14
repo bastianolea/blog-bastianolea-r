@@ -49,7 +49,7 @@
 Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y gratuito. Hugo se puede usar a través de R usando {blogdown} y el tema Hugo Apéro, creado por Alison Hill, y así puedes crear páginas y publicaciones usando Quarto o RMarkdown. De ese modo resulta muy fácil integrar las cosas que hagas con R en tu sitio, compartiendo el código en los posts.">
   <meta itemprop="datePublished" content="2024-11-07T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-07T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1499">
+  <meta itemprop="wordCount" content="1573">
   <meta itemprop="keywords" content="Quarto">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -130,7 +130,7 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/quarto">quarto</a> </dd></em>
+          <em><dd class="fw5 ml0" style = "font-size: 12px">Temas:  <a style = "font-size: 12px" href="http://localhost:4321/tags/quarto">quarto</a> </dd></em>
           </dl>
           
           
@@ -346,19 +346,32 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
 
 
 
-<h4 id="hacer-que-se-vean-las-etiquetas-en-cada-post">Hacer que se vean las etiquetas en cada post
-  <a href="#hacer-que-se-vean-las-etiquetas-en-cada-post"></a>
+<h4 id="hacer-que-se-vean-las-etiquetas-en-el-titular-de-cada-post">Hacer que se vean las etiquetas en el titular de cada post
+  <a href="#hacer-que-se-vean-las-etiquetas-en-el-titular-de-cada-post"></a>
 </h4>
 <ul>
 <li>
-<p>Si bien las etiquetas o tax de los postes aparecen al final de cada uno, yo quería que aparecieran debajo de la fecha, en el titular de cada publicación. Siguiendo este tutorial, encontré el archivo que hay que editar, y el código que era necesario agregar:</p>
+<p>Si bien las etiquetas o tax de los postes aparecen al final de cada uno, yo quería que aparecieran debajo de la fecha, en el titular de cada publicación. 
+<a href="https://www.jakewiesler.com/blog/hugo-taxonomies" target="_blank" rel="noopener">Siguiendo este tutorial,</a> encontré el archivo que hay que editar, y el código que era necesario agregar:</p>
 <p>En el archivo <code>themes/hugo-apero/layouts/_default/single.html</code>, que controla el diseño de todos los blog posts, agregar:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span>{{ with .Params.tags }}
 </span></span><span style="display:flex;"><span>  <span style="color:#908caa">&lt;</span><span style="color:#ea9a97">dl</span> <span style="color:#ea9a97">class</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;f6 lh-copy&#34;</span><span style="color:#908caa">&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#908caa">&lt;</span><span style="color:#ea9a97">em</span><span style="color:#908caa">&gt;&lt;</span><span style="color:#ea9a97">dd</span> <span style="color:#ea9a97">class</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;fw5 ml0&#34;</span><span style="color:#908caa">&gt;</span>Tags: {{ range . }} <span style="color:#908caa">&lt;</span><span style="color:#ea9a97">a</span> <span style="color:#ea9a97">href</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;{{ &#34;</span><span style="color:#ea9a97">tags</span><span style="color:#eb6f92">/&#34;</span> <span style="color:#eb6f92">|</span> <span style="color:#ea9a97">absURL</span> <span style="color:#eb6f92">}}{{</span> <span style="color:#eb6f92">.</span> <span style="color:#eb6f92">|</span> <span style="color:#ea9a97">urlize</span> <span style="color:#eb6f92">}}&#34;</span><span style="color:#908caa">&gt;</span>{{ . }}<span style="color:#908caa">&lt;/</span><span style="color:#ea9a97">a</span><span style="color:#908caa">&gt;</span> {{ end }}<span style="color:#908caa">&lt;/</span><span style="color:#ea9a97">dd</span><span style="color:#908caa">&gt;&lt;/</span><span style="color:#ea9a97">em</span><span style="color:#908caa">&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#908caa">&lt;/</span><span style="color:#ea9a97">dl</span><span style="color:#908caa">&gt;</span>
 </span></span><span style="display:flex;"><span>{{ end }}
-</span></span></code></pre></div></li>
+</span></span></code></pre></div><p>Le agregué itálicas al texto y la palabra &ldquo;Tags&rdquo;, pero puedes poner lo que quieras.</p>
+</li>
+</ul>
+
+
+
+
+<h4 id="hacer-que-se-vean-las-etiquetas-de-cada-post-en-la-lista-de-posts-del-blog">Hacer que se vean las etiquetas de cada post en la lista de posts del blog
+  <a href="#hacer-que-se-vean-las-etiquetas-de-cada-post-en-la-lista-de-posts-del-blog"></a>
+</h4>
+<ul>
+<li>Lo mismo que en el paso anterior, solamente que en el archivo <code>themes/hugo-apero/layouts/partials/shared/summary.html</code>, que es el que controla los &ldquo;resúmenes&rdquo; de cada post que aparecen en la 
+<a href="/blog/">lista de publicaciones del blog.</a> En este caso le saqué la palabra &ldquo;Tags&rdquo;.</li>
 </ul>
 <hr>
 
@@ -429,7 +442,7 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">8 minute read, 1499 words</dd>
+    <dd class="fw5 ml0">8 minute read, 1573 words</dd>
   </dl>
   
   

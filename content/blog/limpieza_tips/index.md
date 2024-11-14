@@ -6,8 +6,10 @@ slug: []
 categories: []
 tags:
   - consejos
-  - procesamiento de datos
-excerpt: Algunos de los paquetes y funciones que uso frecuentemente al momento de limpiar datos en R.
+  - limpieza de datos
+  - texto
+excerpt: >-
+  Algunos de los paquetes y funciones que uso frecuentemente al momento de limpiar datos en R.
 ---
 
 En este post dejo algunos de los paquetes y funciones que uso frecuentemente al momento de limpiar datos en R. Voy a ir actualizando este post por si se me van ocurriendo más.

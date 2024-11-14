@@ -6,7 +6,7 @@ format: hugo-md
 slug: []
 categories: []
 tags:
-  - consejos
+  - limpieza de datos
   - procesamiento de datos
   - lubridate
 excerpt: >-

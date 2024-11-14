@@ -55,6 +55,13 @@
       {{ $summary := cond (ne .Params.excerpt nil) .Params.excerpt .Summary }}
       {{ with $summary }}<p class="lh-copy mb4">{{ . | markdownify | emojify }}</p>{{ end }}
     <footer>
+      <!-- agregar tags -->
+        {{ with .Params.tags }}
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0">{{ range . }} <a style = "font-size: 12px; color: #543A74 !important;", href="{{ "tags/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}</dd></em>
+        </dl>
+        {{ end }}
+        <!-- /agregar tags -->
       {{ if $root.Params.show_author_byline }}<p class="f7 db mv2">{{ if .Params.author }}Por {{ .Params.author }}{{ end }}{{ with .Params.categories }} in{{ range . }} <a href="{{ "categories/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}{{ end }}</p>{{ end }}
       {{ if $root.Params.show_post_date }}<p class="f7 db mv2">{{ .PublishDate.Format "2/1/2006" }}</p>{{ end }}
       {{ if and $root.Params.show_button_links .Params.links }}

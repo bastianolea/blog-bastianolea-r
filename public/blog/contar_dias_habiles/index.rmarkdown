@@ -6,7 +6,7 @@ format: hugo-md
 slug: []
 categories: []
 tags:
-  - consejos
+  - limpieza de datos
   - procesamiento de datos
   - lubridate
 excerpt: En esta guía explico cómo hacer un cálculo de diferencia entre fechas, o conteo entre de días entre dos fechas, ya sea entre días corridos o solamente considerando los días hábiles.
