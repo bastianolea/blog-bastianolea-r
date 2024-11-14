@@ -15,6 +15,7 @@ excerpt: En esta guía explico cómo hacer un cálculo de diferencia entre fecha
 
 ```{r}
 #| message: false
+
 library(dplyr) # manipulación de datos
 library(lubridate) # trabajar con fechas
 library(RQuantLib) # paquete con calendarios
@@ -25,6 +26,9 @@ library(bizdays) # paquete para contar días hábiles
 Hoy se me planteó un pequeño desafío que no había tenido que hacer antes. Tenía que contar la cantidad de días entre dos fechas.
 
 Esto no es particularmente complejo, de hecho es demasiado fácil:
+
+
+### Contar la cantidad de días entre dos fechas
 
 Primero definimos las dos fechas:
 
@@ -49,6 +53,9 @@ fecha_hoy - fecha_anterior
 ```
 
 En R, tan sencillo como restar dos fechas para obtener la diferencia de tiempo entre ambas. 
+
+
+### Contar la cantidad de _días hábiles_ entre dos fechas
 
 Pero el problema no era que tenía que contar entre dos fechas, sino que tenía que contar sólo los **días hábiles** entre ambas.
 
@@ -98,4 +105,34 @@ datos |>
   )
 ```
 
+### Contar la cantidad de _días de semana_ entre dos fechas
 
+Naturalmente, existe otra forma de hacer esto, mucho más básica. Consiste en crear una secuencia con todas las fechas que hay entre las dos fechas, e ir evaluando si cada una de esas fechas cae el día de semana o en fin de semana.
+
+Primero creamos la secuencia de fechas:
+```{r}
+secuencia <- seq.Date(fecha_anterior, fecha_hoy, by = "days")
+secuencia
+```
+
+Luego utilizamos la función `wday()` para saber en qué día de la semana cae cada una de las fechas, indicando que queremos que el día lunes sea equivalente a 1, por lo que el fin de semana correspondería a los números 6 y 7:
+```{r}
+secuencia_dias <- lubridate::wday(secuencia, week_start = 1)
+secuencia_dias
+```
+
+En esta secuencia, cada número corresponde a una de las fechas del vector anterior, y el número representa el día de la semana: el número 4 es jueves, el número 5 es viernes, el número 6 es sábado, y así sucesivamente.
+
+Finalmente, sólo queda evaluar cuales de las fechas son días a menores o iguales a 5 (es decir, días de semana y no sábado ni domingo)
+```{r}
+secuencia_dias <= 5
+```
+
+La comparación retorna _verdadero_ cuando el número es menor igual a cinco, y _falso_ cuando es mayor o igual. O sea, verdadero cuando es día de semana, y falso cuándo es fin de semana.
+
+Luego contamos la cantidad de días que coinciden con la condición dada, y listo.
+```{r}
+sum(secuencia_dias <= 5)
+```
+
+Obtenemos que entre el 13 de noviembre y el 30 de octubre de 2024 hay 11 días de semana (es decir, días entre lunes y viernes).

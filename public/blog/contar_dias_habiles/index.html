@@ -47,12 +47,11 @@
   <meta itemprop="name" content="Contar días hábiles entre dos fechas en R">
   <meta itemprop="description" content="library(dplyr) # manipulación de datos library(lubridate) # trabajar con fechas library(RQuantLib) # paquete con calendarios library(bizdays) # paquete para contar días hábiles Hoy se me planteó un pequeño desafío que no había tenido que hacer antes. Tenía que contar la cantidad de días entre dos fechas.
 Esto no es particularmente complejo, de hecho es demasiado fácil:
-Primero definimos las dos fechas:
-fecha_hoy &lt;- today() fecha_anterior &lt;- today() - weeks(2) fecha_hoy [1] &#34;2024-11-13&#34; fecha_anterior [1] &#34;2024-10-30&#34; Y luego usamos una sencilla función para buscar la diferencia entre ambas fechas:">
+Contar la cantidad de días entre dos fechas Primero definimos las dos fechas:">
   <meta itemprop="datePublished" content="2024-11-13T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-13T00:00:00+00:00">
-  <meta itemprop="wordCount" content="553">
-  <meta itemprop="keywords" content="Limpieza de datos,Procesamiento de datos,Lubridate">
+  <meta itemprop="wordCount" content="889">
+  <meta itemprop="keywords" content="Limpieza de datos,Procesamiento de datos,Fechas">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
@@ -132,7 +131,7 @@ fecha_hoy &lt;- today() fecha_anterior &lt;- today() - weeks(2) fecha_hoy [1] &#
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0" style = "font-size: 12px">Temas:  <a style = "font-size: 12px" href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a>  <a style = "font-size: 12px" href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a style = "font-size: 12px" href="http://localhost:4321/tags/lubridate">lubridate</a> </dd></em>
+          <em><dd class="fw5 ml0" style = "font-size: 12px">Temas:  <a style = "font-size: 12px" href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a>  <a style = "font-size: 12px" href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a style = "font-size: 12px" href="http://localhost:4321/tags/fechas">fechas</a> </dd></em>
           </dl>
           
           
@@ -146,15 +145,25 @@ fecha_hoy &lt;- today() fecha_anterior &lt;- today() - weeks(2) fecha_hoy [1] &#
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">bizdays</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># paquete para contar días hábiles</span>
 </span></span></code></pre></div><p>Hoy se me planteó un pequeño desafío que no había tenido que hacer antes. Tenía que contar la cantidad de días entre dos fechas.</p>
 <p>Esto no es particularmente complejo, de hecho es demasiado fácil:</p>
+
+
+
+
+<h3 id="contar-la-cantidad-de-días-entre-dos-fechas">Contar la cantidad de días entre dos fechas
+  <a href="#contar-la-cantidad-de-d%c3%adas-entre-dos-fechas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
 <p>Primero definimos las dos fechas:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">fecha_hoy</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">today</span><span style="color:#908caa">()</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">fecha_anterior</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">today</span><span style="color:#908caa">()</span> <span style="color:#908caa">-</span> <span style="color:#ea9a97">weeks</span><span style="color:#908caa">(</span><span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">fecha_hoy</span>
-</span></span></code></pre></div><pre><code>[1] &quot;2024-11-13&quot;
+</span></span></code></pre></div><pre><code>[1] &quot;2024-11-14&quot;
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">fecha_anterior</span>
-</span></span></code></pre></div><pre><code>[1] &quot;2024-10-30&quot;
+</span></span></code></pre></div><pre><code>[1] &quot;2024-10-31&quot;
 </code></pre>
 <p>Y luego usamos una sencilla función para buscar la diferencia entre ambas fechas:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">difftime</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fecha_hoy</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fecha_anterior</span><span style="color:#908caa">)</span>
@@ -165,6 +174,16 @@ fecha_hoy &lt;- today() fecha_anterior &lt;- today() - weeks(2) fecha_hoy [1] &#
 </span></span></code></pre></div><pre><code>Time difference of 14 days
 </code></pre>
 <p>En R, tan sencillo como restar dos fechas para obtener la diferencia de tiempo entre ambas.</p>
+
+
+
+
+<h3 id="contar-la-cantidad-de-días-hábiles-entre-dos-fechas">Contar la cantidad de <em>días hábiles</em> entre dos fechas
+  <a href="#contar-la-cantidad-de-d%c3%adas-h%c3%a1biles-entre-dos-fechas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
 <p>Pero el problema no era que tenía que contar entre dos fechas, sino que tenía que contar sólo los <strong>días hábiles</strong> entre ambas.</p>
 <p>Esto se vuelve más complejo. Primero, porque habría que definir una forma de saltarse los fines de semana. Pero también, los días hábiles son aquellos que no son festivos, y esto implica tener una lista de todos los días festivos o feriados. Pero además, ¡los días festivos son locales! Dependen de cada país y son distintos en cada uno, e incluso cambian en el tiempo: se crean nuevos, desaparecen otros, y algunos cambian de fecha entre año y año.</p>
 <p>Menos mal que en R existe un paquete para todo 😌 
@@ -211,6 +230,41 @@ actual, Brazil/ANBIMA, Brazil/B3, Brazil/BMF, QuantLib/Chile, weekends
 5 14457 2024-08-30 2024-11-13           75           48
 </code></pre>
 
+
+
+
+<h3 id="contar-la-cantidad-de-días-de-semana-entre-dos-fechas">Contar la cantidad de <em>días de semana</em> entre dos fechas
+  <a href="#contar-la-cantidad-de-d%c3%adas-de-semana-entre-dos-fechas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Naturalmente, existe otra forma de hacer esto, mucho más básica. Consiste en crear una secuencia con todas las fechas que hay entre las dos fechas, e ir evaluando si cada una de esas fechas cae el día de semana o en fin de semana.</p>
+<p>Primero creamos la secuencia de fechas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">secuencia</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">seq.Date</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fecha_anterior</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fecha_hoy</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">by</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;days&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">secuencia</span>
+</span></span></code></pre></div><pre><code> [1] &quot;2024-10-31&quot; &quot;2024-11-01&quot; &quot;2024-11-02&quot; &quot;2024-11-03&quot; &quot;2024-11-04&quot;
+ [6] &quot;2024-11-05&quot; &quot;2024-11-06&quot; &quot;2024-11-07&quot; &quot;2024-11-08&quot; &quot;2024-11-09&quot;
+[11] &quot;2024-11-10&quot; &quot;2024-11-11&quot; &quot;2024-11-12&quot; &quot;2024-11-13&quot; &quot;2024-11-14&quot;
+</code></pre>
+<p>Luego utilizamos la función <code>wday()</code> para saber en qué día de la semana cae cada una de las fechas, indicando que queremos que el día lunes sea equivalente a 1, por lo que el fin de semana correspondería a los números 6 y 7:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">secuencia_dias</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">lubridate</span><span style="color:#908caa">::</span><span style="color:#ea9a97">wday</span><span style="color:#908caa">(</span><span style="color:#ea9a97">secuencia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">week_start</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">secuencia_dias</span>
+</span></span></code></pre></div><pre><code> [1] 4 5 6 7 1 2 3 4 5 6 7 1 2 3 4
+</code></pre>
+<p>En esta secuencia, cada número corresponde a una de las fechas del vector anterior, y el número representa el día de la semana: el número 4 es jueves, el número 5 es viernes, el número 6 es sábado, y así sucesivamente.</p>
+<p>Finalmente, sólo queda evaluar cuales de las fechas son días a menores o iguales a 5 (es decir, días de semana y no sábado ni domingo)</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">secuencia_dias</span> <span style="color:#908caa">&lt;=</span> <span style="color:#f6c177">5</span>
+</span></span></code></pre></div><pre><code> [1]  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE
+[13]  TRUE  TRUE  TRUE
+</code></pre>
+<p>La comparación retorna <em>verdadero</em> cuando el número es menor igual a cinco, y <em>falso</em> cuando es mayor o igual. O sea, verdadero cuando es día de semana, y falso cuándo es fin de semana.</p>
+<p>Luego contamos la cantidad de días que coinciden con la condición dada, y listo.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sum</span><span style="color:#908caa">(</span><span style="color:#ea9a97">secuencia_dias</span> <span style="color:#908caa">&lt;=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] 11
+</code></pre>
+<p>Obtenemos que entre el 13 de noviembre y el 30 de octubre de 2024 hay 11 días de semana (es decir, días entre lunes y viernes).</p>
+
         
         <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
@@ -219,14 +273,14 @@ actual, Brazil/ANBIMA, Brazil/B3, Brazil/BMF, QuantLib/Chile, weekends
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">3 minute read, 553 words</dd>
+    <dd class="fw5 ml0">5 minute read, 889 words</dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a>  <a href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a href="http://localhost:4321/tags/lubridate">lubridate</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a>  <a href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a href="http://localhost:4321/tags/fechas">fechas</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
