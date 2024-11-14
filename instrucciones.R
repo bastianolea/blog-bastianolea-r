@@ -8,18 +8,18 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Tips para limpieza de datos en R", 
+blogdown::new_post(title = "Contar días hábiles entre dos fechas en R", 
                    subdir = "blog/",
-                   file = "blog/limpieza_tips/index.md",
+                   file = "blog/contar_dias_habiles/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos", "procesamiento de datos"),
+                   tags = c("consejos", "procesamiento de datos", "lubridate"),
                    categories = c() 
 )
 
 # convertir script a Quarto
 convertr::r_to_qmd(
-  input_dir = "~/R/servel_votaciones/pruebas/genero_candidatos_LLM.R",
-  output_dir = "~/R/blog/blog-r/content/blog/genero_nombres_llm/codigo.qmd"
+  input_dir = "~/Documents/Clases R/Clases particulares/Luciano/reporte_gestion/dias_habiles.R",
+  output_dir = "content/blog/contar_dias_habiles/codigo.qmd"
 )
 
 # ver en github

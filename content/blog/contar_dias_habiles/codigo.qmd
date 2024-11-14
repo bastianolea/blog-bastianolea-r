@@ -1,0 +1,69 @@
+library(dplyr) |> suppressPackageStartupMessages()
+library(lubridate) |> suppressPackageStartupMessages()
+
+install.packages("RQuantLib")
+install.packages('bizdays')
+
+paquete con calendarios
+
+```{r}
+library("RQuantLib") |> suppressPackageStartupMessages()
+```
+
+paquete para contar días hábiles
+
+```{r}
+library(bizdays) |> suppressPackageStartupMessages()
+```
+
+crear datos
+
+```{r}
+dato_5 <- tibble::tribble(
+  ~n, ~fecha_ingreso,
+  "168312",   "2024-02-19",
+  "R000308",   "2024-01-12",
+  "906678",   "2024-02-06",
+  "W020554",   "2024-05-07",
+  "140572",   "2024-05-08"
+)
+```
+
+definir fechas
+
+```{r}
+fecha_actual <- today()
+fecha_anterior <- fecha_actual-weeks(2)
+```
+
+cargar calendario chileno
+
+```{r}
+load_quantlib_calendars("Chile", from = "2016-01-01",
+                        to = "2026-12-31")
+
+calendars() # confirmar que el calendario está cargado
+```
+
+contar días normales
+
+```{r}
+difftime(fecha_anterior, fecha_actual)
+```
+
+contar días hábiles
+
+```{r}
+bizdays(fecha_anterior, fecha_actual, "QuantLib/Chile")
+```
+da 8, porque hubieron feriados la semana del 1 de noviembre
+
+probar con los datos
+
+```{r}
+dato_5 |> 
+  select(fecha_ingreso) |> 
+  mutate(dias_normales_actual = difftime(fecha_ingreso, fecha_actual) |> as.numeric() |> abs(),
+         dias_habiles_actual = bizdays(fecha_ingreso, fecha_actual, "QuantLib/Chile"))
+```
+
