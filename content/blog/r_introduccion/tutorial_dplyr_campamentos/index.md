@@ -17,7 +17,7 @@ excerpt: >-
 ---
 
 
-Este post es una introducción al paquete `{dplyr}` para la exploración y análisis de datos con R. Está dirigido a principiantes de R. <!-- Si es primera vez que usas R, te recomiendo revisar primero [este breve tutorial inicial de R.](/blog/tutorial_r_1/). -->
+Este post es una introducción al paquete `{dplyr}` para la exploración y análisis de datos con R. Está dirigido a principiantes de R. Si es primera vez que usas R, te recomiendo revisar primero [este breve tutorial inicial de R.](../../../../blog/r_introduccion/r_basico/).
 
 *En este tutorial veremos:*
 - carga de datos de Excel
@@ -1126,23 +1126,23 @@ gt(tabla_ancha) |>
             style = cell_text(style = "italic"))
 ```
 
-<div id="zzfffbkhks" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zzfffbkhks table {
+<div id="igplunabid" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#igplunabid table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zzfffbkhks thead, #zzfffbkhks tbody, #zzfffbkhks tfoot, #zzfffbkhks tr, #zzfffbkhks td, #zzfffbkhks th {
+#igplunabid thead, #igplunabid tbody, #igplunabid tfoot, #igplunabid tr, #igplunabid td, #igplunabid th {
   border-style: none;
 }
 
-#zzfffbkhks p {
+#igplunabid p {
   margin: 0;
   padding: 0;
 }
 
-#zzfffbkhks .gt_table {
+#igplunabid .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1168,12 +1168,12 @@ gt(tabla_ancha) |>
   border-left-color: #D3D3D3;
 }
 
-#zzfffbkhks .gt_caption {
+#igplunabid .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zzfffbkhks .gt_title {
+#igplunabid .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1185,7 +1185,7 @@ gt(tabla_ancha) |>
   border-bottom-width: 0;
 }
 
-#zzfffbkhks .gt_subtitle {
+#igplunabid .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1197,7 +1197,7 @@ gt(tabla_ancha) |>
   border-top-width: 0;
 }
 
-#zzfffbkhks .gt_heading {
+#igplunabid .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1209,13 +1209,13 @@ gt(tabla_ancha) |>
   border-right-color: #D3D3D3;
 }
 
-#zzfffbkhks .gt_bottom_border {
+#igplunabid .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zzfffbkhks .gt_col_headings {
+#igplunabid .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1230,7 +1230,7 @@ gt(tabla_ancha) |>
   border-right-color: #D3D3D3;
 }
 
-#zzfffbkhks .gt_col_heading {
+#igplunabid .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1250,7 +1250,7 @@ gt(tabla_ancha) |>
   overflow-x: hidden;
 }
 
-#zzfffbkhks .gt_column_spanner_outer {
+#igplunabid .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1262,15 +1262,15 @@ gt(tabla_ancha) |>
   padding-right: 4px;
 }
 
-#zzfffbkhks .gt_column_spanner_outer:first-child {
+#igplunabid .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zzfffbkhks .gt_column_spanner_outer:last-child {
+#igplunabid .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zzfffbkhks .gt_column_spanner {
+#igplunabid .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1282,11 +1282,11 @@ gt(tabla_ancha) |>
   width: 100%;
 }
 
-#zzfffbkhks .gt_spanner_row {
+#igplunabid .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zzfffbkhks .gt_group_heading {
+#igplunabid .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1312,7 +1312,7 @@ gt(tabla_ancha) |>
   text-align: left;
 }
 
-#zzfffbkhks .gt_empty_group_heading {
+#igplunabid .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1327,15 +1327,15 @@ gt(tabla_ancha) |>
   vertical-align: middle;
 }
 
-#zzfffbkhks .gt_from_md > :first-child {
+#igplunabid .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zzfffbkhks .gt_from_md > :last-child {
+#igplunabid .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zzfffbkhks .gt_row {
+#igplunabid .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1354,7 +1354,7 @@ gt(tabla_ancha) |>
   overflow-x: hidden;
 }
 
-#zzfffbkhks .gt_stub {
+#igplunabid .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1367,7 +1367,7 @@ gt(tabla_ancha) |>
   padding-right: 5px;
 }
 
-#zzfffbkhks .gt_stub_row_group {
+#igplunabid .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1381,15 +1381,15 @@ gt(tabla_ancha) |>
   vertical-align: top;
 }
 
-#zzfffbkhks .gt_row_group_first td {
+#igplunabid .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zzfffbkhks .gt_row_group_first th {
+#igplunabid .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zzfffbkhks .gt_summary_row {
+#igplunabid .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1399,16 +1399,16 @@ gt(tabla_ancha) |>
   padding-right: 5px;
 }
 
-#zzfffbkhks .gt_first_summary_row {
+#igplunabid .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#zzfffbkhks .gt_first_summary_row.thick {
+#igplunabid .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zzfffbkhks .gt_last_summary_row {
+#igplunabid .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1418,7 +1418,7 @@ gt(tabla_ancha) |>
   border-bottom-color: #D3D3D3;
 }
 
-#zzfffbkhks .gt_grand_summary_row {
+#igplunabid .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1428,7 +1428,7 @@ gt(tabla_ancha) |>
   padding-right: 5px;
 }
 
-#zzfffbkhks .gt_first_grand_summary_row {
+#igplunabid .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1438,7 +1438,7 @@ gt(tabla_ancha) |>
   border-top-color: #D3D3D3;
 }
 
-#zzfffbkhks .gt_last_grand_summary_row_top {
+#igplunabid .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1448,11 +1448,11 @@ gt(tabla_ancha) |>
   border-bottom-color: #D3D3D3;
 }
 
-#zzfffbkhks .gt_striped {
+#igplunabid .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zzfffbkhks .gt_table_body {
+#igplunabid .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1461,7 +1461,7 @@ gt(tabla_ancha) |>
   border-bottom-color: #D3D3D3;
 }
 
-#zzfffbkhks .gt_footnotes {
+#igplunabid .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1475,7 +1475,7 @@ gt(tabla_ancha) |>
   border-right-color: #D3D3D3;
 }
 
-#zzfffbkhks .gt_footnote {
+#igplunabid .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1484,7 +1484,7 @@ gt(tabla_ancha) |>
   padding-right: 5px;
 }
 
-#zzfffbkhks .gt_sourcenotes {
+#igplunabid .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1498,7 +1498,7 @@ gt(tabla_ancha) |>
   border-right-color: #D3D3D3;
 }
 
-#zzfffbkhks .gt_sourcenote {
+#igplunabid .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1506,72 +1506,72 @@ gt(tabla_ancha) |>
   padding-right: 5px;
 }
 
-#zzfffbkhks .gt_left {
+#igplunabid .gt_left {
   text-align: left;
 }
 
-#zzfffbkhks .gt_center {
+#igplunabid .gt_center {
   text-align: center;
 }
 
-#zzfffbkhks .gt_right {
+#igplunabid .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zzfffbkhks .gt_font_normal {
+#igplunabid .gt_font_normal {
   font-weight: normal;
 }
 
-#zzfffbkhks .gt_font_bold {
+#igplunabid .gt_font_bold {
   font-weight: bold;
 }
 
-#zzfffbkhks .gt_font_italic {
+#igplunabid .gt_font_italic {
   font-style: italic;
 }
 
-#zzfffbkhks .gt_super {
+#igplunabid .gt_super {
   font-size: 65%;
 }
 
-#zzfffbkhks .gt_footnote_marks {
+#igplunabid .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zzfffbkhks .gt_asterisk {
+#igplunabid .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zzfffbkhks .gt_indent_1 {
+#igplunabid .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zzfffbkhks .gt_indent_2 {
+#igplunabid .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zzfffbkhks .gt_indent_3 {
+#igplunabid .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zzfffbkhks .gt_indent_4 {
+#igplunabid .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zzfffbkhks .gt_indent_5 {
+#igplunabid .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zzfffbkhks .katex-display {
+#igplunabid .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zzfffbkhks div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#igplunabid div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1608,3 +1608,17 @@ write_xlsx(tabla_ancha, "tabla_campamentos.xlsx")
 ```
 
 Con esto concluye este tutorial inicial para manipular datos con el paquete `{dplyr}`. En siguientes tutoriales iremos usando funciones más complejas y avanzadas! 🫣
+
+------------------------------------------------------------------------
+
+Si este tutorial te sirvió, por favor considera hacerme una donación! Cualquier monto me ayuda al menos a poder tomarme un cafecito 🥺
+
+<div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+</div>

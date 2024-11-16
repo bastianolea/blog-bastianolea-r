@@ -17,7 +17,7 @@ excerpt: >-
 ---
 
 
-Este post es una introducción al paquete `{dplyr}` para la exploración y análisis de datos con R. Está dirigido a principiantes de R. <!-- Si es primera vez que usas R, te recomiendo revisar primero [este breve tutorial inicial de R.](/blog/tutorial_r_1/). -->
+Este post es una introducción al paquete `{dplyr}` para la exploración y análisis de datos con R. Está dirigido a principiantes de R. Si es primera vez que usas R, te recomiendo revisar primero [este breve tutorial inicial de R.](../../../../blog/r_introduccion/r_basico/).
 
 *En este tutorial veremos:*
 - carga de datos de Excel
@@ -508,13 +508,13 @@ censo |>
 ```
 
     # A tibble: 5 × 1
-      comuna       
-      <chr>        
-    1 Alto Hospicio
-    2 Pichilemu    
-    3 Machalí      
-    4 Santa Cruz   
-    5 Curicó       
+      comuna    
+      <chr>     
+    1 Quellón   
+    2 Los Sauces
+    3 Arauco    
+    4 Requínoa  
+    5 Angol     
 
 ## Selección de filas por grupos
 
@@ -549,3 +549,17 @@ censo |>
     16 Ñuble                                     Chillán         204091
 
 Con esto concluye este tutorial inicial para manipular datos con el paquete `{dplyr}`. En siguientes tutoriales iremos usando funciones más complejas y avanzadas! 🫣
+
+------------------------------------------------------------------------
+
+Si este tutorial te sirvió, por favor considera hacerme una donación! Cualquier monto me ayuda al menos a poder tomarme un cafecito 🥺
+
+<div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+</div>

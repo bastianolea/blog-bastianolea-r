@@ -13,6 +13,8 @@ tags:
 excerpt: "Tutorial de introducción al paquete `{dplyr}` para la exploración y análisis de datos con R. Está dirigido a principiantes. En este tutorial veremos cómo explorar un conjunto de datos sobre población."
 ---
 
+
+
 Este post es una introducción al paquete `{dplyr}` para la exploración y análisis de datos con R. Está dirigido a principiantes de R. Si es primera vez que usas R, te recomiendo revisar primero [este breve tutorial inicial de R.](/blog/r_introduccion/r_basico/).
 
 _En este tutorial veremos:_
@@ -29,6 +31,8 @@ Los datos usados en este tutorial son las [Proyecciones de población para 2024 
 
 Los paquetes son conjuntos de funciones, programas, datos y documentación que sirven para potenciar R. Para poder usarlos, primero hay que instalarlos en nuestro computador usando la función `install.packages()`. Luego de instalarlos, simplemente los cargamos usando `library()`.
 
+
+
 ```{r}
 #| eval: false
 # es necesario instalarlos una sola vez
@@ -36,7 +40,11 @@ install.packages("dplyr")
 install.packages("readxl")
 ```
 
+
+
 Luego cargamos los paquetes:
+
+
 
 ```{r}
 #| message: false
@@ -44,6 +52,8 @@ Luego cargamos los paquetes:
 library(dplyr) # manipulación de datos
 library(readxl) # carga de archivos Excel
 ```
+
+
 
 `{dplyr}` es un paquete parte del Tidyverse, que se usa para manipular datos a partir de funciones que emulan instrucciones sencillas, como _seleccionar, filtrar,_ etc.
 
@@ -54,51 +64,77 @@ Antes que nada, debemos descargar el archivo que usaremos para el tutorial: [cli
 
 Importamos los datos que usaremos con la funcion `read_excel()`, cuyo argumento es el nombre del archivo. Asignamos el resultado a un objeto, y así tenemos nuetros datos de Excel cargados en R:
 
+
+
 ```{r}
 censo <- read_excel("censo_proyeccion_2024.xlsx") # cargar
 
 censo # ver los datos de dataframe o tabla
 ```
 
+
+
 Para ver más filas del dataframe, usamos la función `print()`:
+
+
 
 ```{r}
 print(censo, n = 20)
 ```
+
+
 
 Ahora que tenemos nuestros datos cargados como un objeto en nuestro entorno de R, podemos empezar a manipularlo y explorarlo usando `{dplyr}`.
 
 ## Seleccionar columnas
 La función `select()` selecciona columnas del dataframe.
 
+
+
 ```{r}
 censo |> # comando + shift + M
   select(comuna, población)
 ```
 
+
+
 El operador `|>` es un conector, y significa que _a este objeto le hago esto otro;_ es decir, se lee como si dijera "luego" o "entonces". En este caso: _a `censo` le selecciono `comuna` y `población`._
 
 Podemos seleccionar negativamente; es decir, excluir ciertas columnas
+
+
 ```{r}
 censo |> 
   select(-cut_provincia, -cut_comuna, -cut_region)
 ```
 
+
+
 También podemos seleccionar columnas en base a sus nombres parciales:
+
+
 ```{r}
 censo |> 
   select(-contains("cut"))
 ```
 
+
+
 Selección de columnas por el numero de una columna (su posición):
+
+
 ```{r}
 censo |> 
   select(1:3, población)
 ```
 
 
+
+
 ## Ordenar filas
 Usamos la función `arrange()` para ordenar las filas de nuestros datos de acuerdo a otra variable:
+
+
 
 ```{r}
 censo |>
@@ -106,7 +142,11 @@ censo |>
   select(comuna, población)
 ```
 
+
+
 Ordenar de mayor a menor:
+
+
 ```{r}
 censo |> 
   arrange(desc(población)) |> 
@@ -114,7 +154,11 @@ censo |>
 ```
 
 
+
+
 Ordenar por dos variables a la vez
+
+
 ```{r}
 censo |> 
   arrange(region, desc(población)) |> 
@@ -123,25 +167,41 @@ censo |>
 ```
 
 
+
+
 ## Filtrar datos 
 Con la función `filter()` podemos filtrar nuestro dataframe a partir de una comparación, dejando solamente las filas del dataframe que cumplan con la comparación.
 
 Por ejemplo, dejar sólo las filas donde la comuna sea "Providencia":
+
+
 ```{r}
 censo |> filter(comuna == "Providencia")
 ```
 
+
+
 Excluir las filas donde la columna sea "Alto Hospicio":
+
+
 ```{r}
 censo |> filter(comuna != "Alto Hospicio")
 ```
 
+
+
 Dejar sólo las observaciones donde la población sea mayor a un valor:
+
+
 ```{r}
 censo |> filter(población > 300000)
 ```
 
+
+
 Población menor a 1000, sólo dejar comuna y población, y ordenar de menor a mayor:
+
+
 ```{r}
 censo |> 
   filter(población < 1000) |> 
@@ -149,21 +209,33 @@ censo |>
   arrange(población)
 ```
 
+
+
 Podemos hacer filtros usando funciones que operen sobre las columnas, por ejemplo, para filtrar las filas donde la población sea igual al mínimo de población:
+
+
 ```{r}
 censo |> 
   filter(población == min(población)) |> 
   select(region, comuna, provincia, población)
 ```
 
+
+
 Un caso más útil sería filtrar los casos donde la población sea mayor o igual al promedio de población:
+
+
 ```{r}
 censo |> 
   filter(población >= mean(población)) |> 
   select(region, comuna, provincia, población)
 ```
 
+
+
 También es posible filtrar usando objetos que creamos con anterioridad:
+
+
 ```{r}
 min_pob <- 25000
 max_pob <- 30000
@@ -174,7 +246,11 @@ censo |>
   select(población, comuna, provincia, region)
 ```
 
+
+
 Del mismo modo, podemos filtrar usando la cifra del promedio de población:
+
+
 ```{r}
 promedio <- mean(censo$población)
 
@@ -185,15 +261,23 @@ censo |>
 
 
 
+
+
 ## Seleccionar filas
 Usamos `slice()` para seleccionar filas específicas del dataframe:
+
+
 
 ```{r}
 censo |> 
   slice(200:220) # filas del 200 al 220
 ```
 
+
+
 También puede servir para seleccionar la fila que tenga el mayor o menos valor en una columna:
+
+
 ```{r}
 censo |> 
   slice_max(población)
@@ -203,15 +287,23 @@ censo |>
 censo |> 
   slice_min(población)
 ```
+
+
 Incluso nos puede servir para seleccionar una cantidad de filas elegidas al azar:
+
+
 ```{r}
 censo |> 
   slice_sample(n = 5) |> 
   select(comuna)
 ```
 
+
+
 ## Selección de filas por grupos
 Haciendo uso de la función `group_by()` podemos realizar operaciones en base a grupos. Esto significa que si agrupamos por región, y luego usamos `slice_max()` para obtener las observaciones con mayor población, el filtro de `slice_max()` se realizará una vez por cada región. Entonces, en vez de solamente obtener la comuna de mayor población del país, obtendremos la comuna con mayor población para cada región.
+
+
 
 ```{r}
 censo |> 
@@ -220,6 +312,8 @@ censo |>
   select(region, comuna, población)
 ```
 
+
+
 Con esto concluye este tutorial inicial para manipular datos con el paquete `{dplyr}`. En siguientes tutoriales iremos usando funciones más complejas y avanzadas! 🫣
 
 
@@ -227,6 +321,8 @@ Con esto concluye este tutorial inicial para manipular datos con el paquete `{dp
 
 
 Si este tutorial te sirvió, por favor considera hacerme una donación! Cualquier monto me ayuda al menos a poder tomarme un cafecito 🥺
+
+
 
 
 ```{=html}

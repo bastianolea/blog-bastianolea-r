@@ -45,11 +45,11 @@
     
   
   <meta itemprop="name" content="Introducción al lenguaje de programación R">
-  <meta itemprop="description" content="Introducción a R Esta guía contiene instrucciones paso a paso para aprender los aspectos más básicos del lenguaje R.
+  <meta itemprop="description" content="Introducción a R Esta guía contiene instrucciones paso a paso para aprender los aspectos más básicos del lenguaje R. Va dirigida a personas sin ningún conocimiento previo de R, así que si quieres aprender R desde cero, ¡sigue este tutorial!
 Si sigues estas instrucciones de principio a fin, aprenderás a: trabajar con el programa RStudio, a gestionar tus scripts para el análisis, a realizar las primeras operaciones matemáticas, a comprender los distintos tipos de datos que existen en R, y a manejar las operaciones fundamentales para todo análisis posterior, ya sea básico o avanzado: objetos, comparaciones, asignaciones, vectores, y funciones.">
   <meta itemprop="datePublished" content="2024-11-16T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-16T00:00:00+00:00">
-  <meta itemprop="wordCount" content="4446">
+  <meta itemprop="wordCount" content="4486">
   <meta itemprop="keywords" content="Tutoriales,Introducción a R">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -268,7 +268,7 @@ Si sigues estas instrucciones de principio a fin, aprenderás a: trabajar con el
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>Esta guía contiene instrucciones paso a paso para aprender los aspectos más básicos del lenguaje R.</p>
+<p>Esta guía contiene instrucciones paso a paso para aprender los aspectos más básicos del lenguaje R. Va dirigida a personas sin ningún conocimiento previo de R, así que si quieres aprender R desde cero, ¡sigue este tutorial!</p>
 <p>Si sigues estas instrucciones de principio a fin, aprenderás a: trabajar con el programa RStudio, a gestionar tus scripts para el análisis, a realizar las primeras operaciones matemáticas, a comprender los distintos tipos de datos que existen en R, y a manejar las operaciones fundamentales para todo análisis posterior, ya sea básico o avanzado: objetos, comparaciones, asignaciones, vectores, y funciones.</p>
 <p>Entender estos aspectos básicos del lenguaje es fundamental para que, en un futuro cercano, puedas utilizar R para analizar datos, crear visualizaciones, generar reportes, desarrollar aplicaciones, y mucho más.</p>
 <p>La idea de esta guía es aproximarnos a los principios más básicos de R, en partes pequeñas y con ejemplos simples, para poder entenderlos más fácilmente. Una vez que entendamos estos principios básicos, veremos que son aplicables a bases de datos de cientos o millones de observaciones simultáneamente, sin demasiada diferencia.</p>
@@ -768,7 +768,7 @@ Si sigues estas instrucciones de principio a fin, aprenderás a: trabajar con el
 <p>La función <code>sample()</code> permite obtener una cantidad de elementos al azar desde otro conjunto de elementos. Por ejemplo, obtengamos un número al azar entre uno y 10 millones:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">numeros</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">1</span><span style="color:#908caa">:</span><span style="color:#f6c177">10000000</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">numeros</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><pre><code>[1] 4961700
+</span></span></code></pre></div><pre><code>[1] 4407528
 </code></pre>
 <p>La función recibe como primer argumento el vector de elementos, y como segundo argumento la cantidad de elementos que queremos obtener al azar.</p>
 <p>Intenta cambiando el segundo argumento para que te entregue cuatro números al azar.</p>
@@ -802,7 +802,7 @@ Si sigues estas instrucciones de principio a fin, aprenderás a: trabajar con el
 <p>Podemos usar esta función combinada con <code>sample()</code> para obtener un muestreo aleatorio de cualquier tipo de elementos, lo que puede servir para hacer algunas cosas entretenidas:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">animales</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;gato&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;mapache&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;castor&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pollo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ratón&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pudú&#34;</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;el animal más lindo es el&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animales</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><pre><code>[1] &quot;el animal más lindo es el mapache&quot;
+</span></span></code></pre></div><pre><code>[1] &quot;el animal más lindo es el pudú&quot;
 </code></pre>
 
 
@@ -898,6 +898,15 @@ Si sigues estas instrucciones de principio a fin, aprenderás a: trabajar con el
 <hr>
 <p><em>Si entendiste este tutorial y quieres pasar al siguiente nivel, mala suerte porque todavía no lo escribo 😂 pero podrías atreverte a intentar con este otro tutorial en el cual se abarcan herramientas básicas de manipulación de datos: 
 <a href="../../../../blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></em></p>
+<p>Si este tutorial te sirvió, por favor considera hacerme una donación, al menos para poder tomarme un cafecito 🥺</p>
+<div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>

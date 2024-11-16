@@ -13,6 +13,8 @@ tags:
 excerpt: "Tutorial de introducción al paquete `{dplyr}` para la exploración y análisis de datos con R. Está dirigido a principiantes. En este tutorial veremos cómo explorar un conjunto de datos sociohabitacionales, y a crear nuevas variables."
 ---
 
+
+
 Este post es una introducción al paquete `{dplyr}` para la exploración y análisis de datos con R. Está dirigido a principiantes de R. Si es primera vez que usas R, te recomiendo revisar primero [este breve tutorial inicial de R.](/blog/r_introduccion/r_basico/).
 
 _En este tutorial veremos:_
@@ -29,6 +31,8 @@ Los datos usados en este tutorial corresponden al catastro de campamentos de Chi
 
 
 Para empezar, instalamos los paquetes que usaremos en este tutorial (solo se necesita hacer una vez, y sólo si es que no los tienes instalados).
+
+
 ```{r}
 #| eval: false
 install.packages("readxl") # cargar datos desde Excel
@@ -36,11 +40,15 @@ install.packages("dplyr") # manipulación de datos
 ```
 
 
+
+
 # Cargar datos
 
 Puedes [descargar el archivo `campamentos_chile_2024.xlsx` que usaremos en este tutorial desde este enlace](https://raw.githubusercontent.com/bastianolea/blog-r/refs/heads/master/content/blog/r_introduccion/tutorial_dplyr_campamentos/campamentos_chile_2024.xlsx). Los datos se obtuvieron desde [este repositorio.](https://github.com/bastianolea/campamentos_chile)
 
 Cargamos los datos desde Excel usando el nombre del archivo como argumento a la función `read_excel()`:
+
+
 ```{r}
 #| message: false
 library(readxl)
@@ -50,19 +58,27 @@ datos <- read_excel("campamentos_chile_2024.xlsx")
 datos
 ```
 
+
+
 Este tipo de objetos tabulares se llaman _dataframes,_ específicamente _tibble,_ que es un tipo de tabla. Los dataframes son tablas de datos hechas a partir de vectores, donde cada columna es un vector del mismo largo (misma cantidad de elementos). Los dataframes se caracterizan por tener distintas columnas que pueden de distinto tipo: numéricas, caracter (texto), lógico (TRUE/FALSE), fechas, entre otras. Todas las columnas tienen el mismo largo, que es equivalente a la cantidad de filas de la tabla.
 
 
 Para explorar los datos, usaremos el paquete `{dplyr}`, que nos permite manejar datos con mayor facilidad. `{dplyr}` sirve para manipular datos a partir de funciones que emulan instrucciones sencillas, como _seleccionar, filtrar,_ etc.
+
+
 
 ```{r}
 #| message: false
 library(dplyr)
 ```
 
+
+
 Una particularidad del uso de `{dplyr}` es el uso del operador `|>`, que es operador que nos permite conectar un objeto con una o múltiples operaciones que deseamos realizarle al objeto. 
 
 Ejemplo de dos operaciones encadenadas:
+
+
 
 ```{r}
 datos |> 
@@ -70,20 +86,32 @@ datos |>
   filter(hogares > 60)
 ```
 
+
+
 El conector significa que _a este objeto le hago esto otro;_ es decir, se lee como si dijera "luego" o "entonces". En este caso: _a `datos` le selecciono columnas y le aplico un filtro._
 
 ## Revisar
 Ejecutar el nombre del objeto nos permite que sus contenidos aparezcan en la consola de R.
+
+
 ```{r}
 datos
 ```
+
+
 Por defecto, la consola nos muestra 10 filas de la tabla. Si queremos ver más filas podemos usar la función `print()`
+
+
 
 ```{r}
 datos |> 
   print(n = 20)
 ```
+
+
 Las funciones `head()` y `tails()` te muestran las primeras o últimas filas de la tabla, respectivamente. Si la combinas con `print()`, puedes consultar la cantidad que quieras de filas al principio o final de tu tabla.
+
+
 
 ```{r}
 # ver últimas 20 filas
@@ -92,21 +120,33 @@ datos |>
   print(n=Inf)
 ```
 
+
+
 Una función útil para poder revisar los datos rápidamente de una forma distinta es `glimpse()`, que nos muestra la tabla pero con las columnas hacia abajo y los valores hacia el lado. Es como ver la tabla girada, permitiéndonos ver todas sus columnas, sus formatos, y un ejemplo de las primeras observaciones de cada variable.
+
+
 ```{r}
 datos |> 
   glimpse()
 ```
 
+
+
 La función `slice()` permite extraer filas específicas de la tabla, según su posición. Por ejemplo, aquí extraeremos las filas número 1000 al 1010:
+
+
 ```{r}
 datos |> 
   slice(1000:1010)
 ```
 
 
+
+
 ## Ordenar
 Ordenar observaciones en base a una o varias columnas
+
+
 ```{r}
 datos |> 
   arrange(nombre)
@@ -126,61 +166,97 @@ datos2 <- datos |>
 ```
 
 
+
+
 ## Seleccionar 
 Podemos reducir la cantidad de columnas de nuestra tabla usando `select()`. Esto puede servirnos para acotar la exploración de los datos, cuando no necesitamos ver todas las columnas al mismo tiempo.
+
+
 ```{r}
 datos |> 
   select(nombre, hectareas)
 ```
 
+
+
 Ante poniendo un signo menos antes del nombre de una columna podemos excluirla de nuestra tabla.
+
+
 ```{r}
 datos |> 
   select(-cut, -cut_r, -cut_p)
 ```
+
+
 Recordemos que, hasta que no asignemos estas operaciones a un nuevo objeto, no estamos modificando nuestros datos realmente, sino que solamente estamos aplicando operaciones sobre los datos de una forma no destructiva, como exploración o a modo de prueba.
 
 La función selecta acepta diversas formas de poder seleccionar o de seleccionar variables en base a sus nombres.
 
 Excluir columnas que incluyan cierto texto dentro de sus nombres:
+
+
 ```{r}
 datos |> 
   select(-contains("cut"))
 ```
+
+
 Seleccionar columnas que empiecen con cierto texto:
+
+
 ```{r}
 datos |> 
   select(starts_with("com"))
 ```
 
+
+
 Seleccionar comunas que terminen con un texto determinado:
+
+
 ```{r}
 datos |> 
   select(ends_with("a"))
 ```
+
+
 También podemos seleccionar columnas de un determinado tipo. En este caso, seleccionamos solamente las variables que sean numéricas:
+
+
 ```{r}
 datos |> 
   select(where(is.numeric))
 ```
 
 
+
+
 ## Conteos
 La función Count se aplica a una de las variables de nuestros datos, y cuenta la cantidad de observaciones que se corresponden con cada uno de los valores o niveles posibles de la variable. En otras palabras, cuenta la frecuencia de cada categoría de respuesta de la variable.
+
+
 
 ```{r}
 datos |> 
   count(region)
 ```
 
+
+
 Podemos combinar un conteo de una variable con el ordenamiento de las filas en base al conteo realizado, resultando una tabla ordenada de mayor a menor según las observaciones contadas:
+
+
 ```{r}
 datos |> 
   count(region) |> 
   arrange(desc(n))
 ```
 
+
+
 Naturalmente, es posible realizar conteos por más de una variable, mostrando las combinaciones entre ambas:
+
+
 ```{r}
 datos |> 
   count(region, comuna) |> 
@@ -188,10 +264,14 @@ datos |>
 ```
 
 
+
+
 ## Filtros
 Podemos realizar una comparación sobre una columna del dataframe para filtrar las observaciones (filas), dejando solamente las filas que cumplen con la condición.
 
 Por ejemplo, filtrar solamente los casos donde la cantidad de hogares sea mayor a 80:
+
+
 ```{r}
 datos |> 
   filter(hogares > 80)
@@ -202,21 +282,33 @@ datos |>
   filter(region == "Ñuble")
 ```
 
+
+
 Es posible realizar dos o más filtros de forma consecutiva:
+
+
 ```{r}
 datos |> 
   filter(hogares > 90, 
          hectareas > 30)
 ```
 
+
+
 También es posible usar otros operadores dentro de las comparaciones, Tales como el operador _o_ `|`, que en este caso nos va a permitir filtrar las observaciones que cumplan con una o con otra condición:
+
+
 ```{r}
 datos |> 
   filter(hogares > 300 | hectareas > 100)
 ```
+
+
 El filtro anterior deja las filas donde los hogares sean mayores a 300, o bien, las hectáreas sean mayores a 100, pudiendo darse el caso de que hayan filas con hogares mayores 300 pero hectáreas menores de 100, o con menos de 300 hogares pero con más de 100 hectáreas.
 
 Aplicando lo aprendido hasta el momento, podemos combinar un filtro con un conteo y un orden, así obtenemos un conteo de campamentos por comuna bajo un primer criterio de filtro, ordenados de mayor a menor:
+
+
 ```{r}
 datos |>
   filter(hogares > 10) |> 
@@ -225,26 +317,38 @@ datos |>
 ```
 
 
+
+
 ## Crear variables
 Hasta ahora, hemos explorado solamente con los datos que vienen directamente desde el archivo que cargamos. A continuación, crearemos nuevas variables a partir de los datos existentes, para potenciar nuestro análisis.
 
 La función `mutate()` crea nuevas variables. Lo primero que se indica dentro de `mutate()` es el nombre de la nueva variable que vamos a crear, después de un signo igual (`=`), y después la operación que creará esta nueva variable.
 
 En este primer ejemplo, crearemos la variable `prueba`, que contendrá un texto en todas las filas.
+
+
 ```{r}
 datos |>
   select(1:4, hogares) |> 
   mutate(prueba = "hola")
 ```
 
+
+
 Usamos la función `paste()` para crear una nueva variable que contenga un texto, al cual le agregamos la cifra de otra variable. La operación se realizará para cada una de las filas de nuestra tabla, utilizando las cifras que corresponda a la fila en cuestión:
+
+
 ```{r}
 datos |> 
   select(nombre, hogares) |> 
   mutate(texto = paste("Numero de hogares:", hogares))
 ```
 
+
+
 Es posible usar cualquier función que opere sobre una variable del tipo que corresponda. Por ejemplo, podemos redondear los valores de una variable numérica, y si a esta nueva variable creada le asignamos al mismo nombre de la variable original, la variable original será reemplazada por la versión nueva, con sus datos redondeados.
+
+
 ```{r}
 datos |> 
   select(nombre, where(is.numeric), -cut) |> 
@@ -252,19 +356,29 @@ datos |>
          area = round(area, digits = 0))
 ```
 
+
+
 También podemos crear una nueva variable a partir de un cálculo matemático:
+
+
 ```{r}
 datos |> 
   select(nombre, where(is.numeric), -cut) |> 
   mutate(densidad = hectareas/hogares)
 ```
 
+
+
 Si creamos una nueva variable en base a una comparación (en este caso, que las hectáreas sean mayores a 2), entonces la nueva variable será de tipo lógico, indicando las observaciones que cumplen con la comparación con `TRUE`, y las que no con `FALSE`.
+
+
 ```{r}
 datos |> 
   select(nombre, hectareas) |> 
   mutate(prioridad = hectareas > 2)
 ```
+
+
 Si lo pensamos, ésta es la misma forma mediante la cual funciona la función `filter()`: se establece una comparación, se evalúa si cada una de las filas cumple con la comparación, y finalmente se eliminan las que no cumplen (`FALSE`).
 
 ### Variables dicotómicas con `if_else()`
@@ -274,6 +388,8 @@ Siguiendo la lógica del ejemplo anterior, podemos usar una función que nos ayu
 Entonces, podemos usar `if_else()` para crear nuevas variables en base a una comparación, pero en vez de retornar verdadero o falso, puede retornar los valores que nosotros le pidamos.
 
 _Ejemplo:_
+
+
 ```{r}
 plata <- 1000000
 
@@ -293,7 +409,11 @@ if_else(plata < 300000, true = "poca", false = "mucha")
 if_else(plata < 300000, "poca", "mucha")
 ```
 
+
+
 Siguiendo el ejemplo, podemos usar la función dentro de mutate para crear nuestra nueva variable dicotómica:
+
+
 ```{r}
 datos |>
   select(nombre, hogares) |> 
@@ -303,7 +423,11 @@ datos |>
   )
 ```
 
+
+
 _Otro ejemplo:_
+
+
 ```{r}
 datos |> 
   select(nombre, region, hectareas) |> 
@@ -311,7 +435,11 @@ datos |>
   count(region, prioridad)
 ```
 
+
+
 Para los siguientes ejemplos, crearemos un nuevo dataframe en base al anterior, pero que contenga nuevas variables creadas mediante operaciones matemáticas:
+
+
 ```{r}
 datos_2 <- datos |> 
   mutate(densidad_ha = hectareas / hogares,
@@ -319,19 +447,27 @@ datos_2 <- datos |>
          densidad_km = area_km / hogares)
 ```
 
+
+
 ### Variables más complejas con `case_when()`
 La función `case_when()` es equivalente a usar varios `if_else()` seguidos, y por lo tanto nos permite crear variables más complejas, que tengan más de dos categorías. Se utiliza poniendo todas las evaluaciones junto al valor que queremos que adopten si es que estas comparaciones son `TRUE`.
 
 Como prueba, vamos a incluir una sola comparación, para ver que le otorga el valor solo a las observaciones correspondientes, y las demás las deja vacías:
+
+
 ```{r}
 datos_2 |> 
   select(nombre, densidad_km) |> 
   mutate(categoria = case_when(densidad_km < 0.3 ~ "baja"))
 ```
 
+
+
 El orden en que ponemos las comparaciones será importante, porque se ejecutan en el orden que las escribas, así que una vez que una fila adquiere un valor, la fila deja de ser evaluada en las siguientes comparaciones.
 
 El siguiente ejemplo usa tres comparaciones para abarcar todo el rango de números de la variable `hogares`:
+
+
 ```{r}
 datos_2 |> 
   select(nombre, hogares) |> 
@@ -340,7 +476,11 @@ datos_2 |>
                             hogares <= 30 ~ "chico"))
 ```
 
+
+
 _Otro ejemplo:_
+
+
 ```{r}
 datos_2 |> 
   select(nombre, densidad_km) |> 
@@ -350,6 +490,8 @@ datos_2 |>
                                densidad_km >= 0.9 ~ "muy alta"
   ))
 ```
+
+
 En el ejemplo anterior, usamos comparaciones que proponen un valor numérico, y coinciden con los valores inferiores al valor que pusimos. Entonces, el orden de asignación de los valores para la nueva variable va de menor a mayor: de 0.3 para abajo, de 0.6 para abajo, de 0.9 para abajo. Lo importante es entender que, una vez que una observación adquiere su etiqueta, las demás comparaciones no la van a sobreescribir. Por ejemplo, si tenemos el valor 0.2, va a ser etiquetado por la comparación _"valores menores a 0.3",_ porque es menor a 0.3. Pero cuando se aplique la siguiente comparación, que es _"valores menores a 0.6",_ a pesar de que 0.2 también es menor a 0.6, no va a recibir una nueva etiqueta, porque ya obtuvo una en la comparación anterior (menores a 0.3).
 
 Las comparaciones también pueden combinarse para volverse más específicas. En el siguiente ejemplo definiremos no solamente si son menores a un valor, sino que definimos un rango de valores:
@@ -358,6 +500,8 @@ Las comparaciones también pueden combinarse para volverse más específicas. En
 - etc
 
 Podemos especificar el argumento `.default` para que le otorgue a un valor a "todos los demás"; es decir, a los valores que no coincidieron con ninguna de las condiciones dadas.
+
+
 ```{r}
 datos_2 |>
   mutate(categoria = case_when(densidad_km > 0 & densidad_km < 0.3 ~ "baja",
@@ -369,7 +513,11 @@ datos_2 |>
   print(n = 15)
 ```
 
+
+
 Finalmente, `case_when()` nos permite crear cualquier tipo de comparación arbitraria, usando cualquier columna de nuestro dataframe; por ejemplo, en este caso vamos a etiquetar una variable sobre densidad, pero podemos condicionar cierta densidad con una región. En este ejemplo (solo con fines ilustrativos), las observaciones que son de Valparaíso _no_ pueden ser categorizadas como altas:
+
+
 ```{r}
 datos_2 |>
   mutate(categoria = case_when(densidad_km > 0 & densidad_km < 0.3 ~ "baja",
@@ -379,9 +527,13 @@ datos_2 |>
 ```
 
 
+
+
 ## Pivotar
 
 Creamos una pequeña tabla de conteo de casos a partir de dos variables de agrupación: la región y el tamaño.
+
+
 ```{r}
 tabla <- datos_2 |> 
   mutate(tamaño = case_when(hogares > 60 ~ "grande",
@@ -391,17 +543,25 @@ tabla <- datos_2 |>
 
 tabla
 ```
+
+
 En esta tabla, cada fila corresponde a una observación distinta; es decir, cada fila adquiere exactamente sólo un valor posible de cada una de las variables. Al mismo tiempo, cada columna solamente corresponde a una variable específica, y cada celda de la tabla solamente aloja un valor. Por ejemplo, en la primera fila, la _región_ es "Antofagasta", el _tamaño_ es "chico", y `n` es _42._ A esto se le denomina _formato largo_ o _Tidy,_ y [es un principio básico de mantener para el análisis de datos.](https://tidyr.tidyverse.org/articles/tidy-data.html#tidy-data)
 
 Sin embargo, al momento de compartir o publicar los datos, estas convenciones sobre ordenamiento de los datos dejan de ser prioridad. Usualmente, en las tablas destinadas para revisar o entregar resultados,
 las variables numéricas que están agrupadas por otras variables (_región_ y _tamaño,_ en nuestro ejemplo) suelen presentarse con cada una de las categorías de agrupación en una columna distinta. Entonces, Antofagasta ya no usaría tres filas, sino una sola fila, pero habrían tres columnas que correspondían al tamaño, chico mediano y grande, cada una de esas celdas es conteniendo el valor numérico correspondiente. Entonces, terminaríamos con un DataFramed donde cada región corresponda a una fila, y en cada fila habrán tres valores, cada uno correspondiendo a la categoría de la variable tamaño correspondiente.
 
 Para realizar esta [transformación de la estructura de los datos,](https://rstudio.github.io/cheatsheets/html/tidyr.html#reshape-data) cargaremos el paquete `{tidyr}`:
+
+
 ```{r}
 library(tidyr)
 ```
 
+
+
 La operación que necesitamos realizar es pivotar la tabla a un formato ancho. Para esto, definimos que _variable_ nos entregará los nombres de las nuevas columnas (en este ejemplo, el _tamaño_), y desde qué variable se sacarán los valores que se ubicarán en cada una de las columnas nuevas:
+
+
 ```{r}
 tabla_ancha <- tabla |> 
   pivot_wider(names_from = tamaño, 
@@ -411,7 +571,11 @@ tabla_ancha <- tabla |>
 
 tabla_ancha
 ```
+
+
 De esta forma, obtenemos una tabla más compacta, que nos permite visualizar los datos de una forma más sencilla.
+
+
 
 ```{r tabla}
 library(gt)
@@ -424,9 +588,13 @@ gt(tabla_ancha) |>
 ```
 
 
+
+
 ## Guardar en Excel
 
 Guardar una tabla o dataframe de R en formato Excel es tan sencillo como utilizar la función `write_xlsx()` y entregarle el objeto y el nombre del archivo que queremos crear.
+
+
 
 ```{r}
 #| eval: false
@@ -435,12 +603,16 @@ library(writexl)
 write_xlsx(tabla_ancha, "tabla_campamentos.xlsx")
 ```
 
+
+
 Con esto concluye este tutorial inicial para manipular datos con el paquete `{dplyr}`. En siguientes tutoriales iremos usando funciones más complejas y avanzadas! 🫣
 
 
 ----
 
 Si este tutorial te sirvió, por favor considera hacerme una donación! Cualquier monto me ayuda al menos a poder tomarme un cafecito 🥺
+
+
 
 
 ```{=html}
