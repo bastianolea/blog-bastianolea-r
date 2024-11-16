@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Introducción al lenguaje de programación R | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Instrucciones paso a paso para aprender los aspectos más básicos del lenguaje R. Dirigida a personas sin ningún conocimiento del lenguaje. Si quieres aprender R desde cero, esta publicación es para ti.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Introducción al lenguaje de programación R | Blog">
+<meta property="og:description" content="Instrucciones paso a paso para aprender los aspectos más básicos del lenguaje R. Dirigida a personas sin ningún conocimiento del lenguaje. Si quieres aprender R desde cero, esta publicación es para ti." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/r_introduccion/r_basico/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4321/blog/r_introduccion/sidebar-featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4321/blog/r_introduccion/sidebar-featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Introducción al lenguaje de programación R">
+  <meta itemprop="description" content="Introducción a R Esta guía contiene instrucciones paso a paso para aprender los aspectos más básicos del lenguaje R.
+Si sigues estas instrucciones de principio a fin, aprenderás a: trabajar con el programa RStudio, a gestionar tus scripts para el análisis, a realizar las primeras operaciones matemáticas, a comprender los distintos tipos de datos que existen en R, y a manejar las operaciones fundamentales para todo análisis posterior, ya sea básico o avanzado: objetos, comparaciones, asignaciones, vectores, y funciones.">
+  <meta itemprop="datePublished" content="2024-11-16T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-11-16T00:00:00+00:00">
+  <meta itemprop="wordCount" content="4399">
+  <meta itemprop="keywords" content="Tutoriales,Introducción a R">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.8188e464d20943a743b7d2f80f5fc1ecf9f20ea8d6d8ac02ac8251909caf9427.css" integrity="sha256-gYjkZNIJQ6dDt9L4D1/B7PnyDqjW2KwCrIJRkJyvlCc=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.bebab142e3ad4c47834f81e426b8adcd5b747151cc6f7d8358a68b4a30c7ff48.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container single-series">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      <div class="dib v-mid">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastimapache.bsky.social" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.threads.net/@raccunnie" title="threads" target="_blank" rel="me noopener">
+      <i class="fab fa-threads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+                       
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 pl3-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Introducción al lenguaje de programación R</h1>
+        
+        <p class="f6 measure lh-copy mv1">Por Bastián Olea Herrera en <a href="http://localhost:4321/categories/tutoriales">Tutoriales</a> </p>
+        <p class="f7 db mv0 ttu">16/11/2024</p>
+      </header>
+      <section class="post-body pt5 pb4">
+        
+
+
+
+<h2 id="introducción-a-r">Introducción a R
+  <a href="#introducci%c3%b3n-a-r"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Esta guía contiene instrucciones paso a paso para aprender los aspectos más básicos del lenguaje R.</p>
+<p>Si sigues estas instrucciones de principio a fin, aprenderás a: trabajar con el programa RStudio, a gestionar tus scripts para el análisis, a realizar las primeras operaciones matemáticas, a comprender los distintos tipos de datos que existen en R, y a manejar las operaciones fundamentales para todo análisis posterior, ya sea básico o avanzado: objetos, comparaciones, asignaciones, vectores, y funciones.</p>
+<p>Entender estos aspectos básicos del lenguaje es fundamental para que, en un futuro cercano, puedas utilizar R para analizar datos, crear visualizaciones, generar reportes, desarrollar aplicaciones, y mucho más.</p>
+<p>La idea de esta guía es aproximarnos a los principios más básicos de R, en partes pequeñas y con ejemplos simples, para poder entenderlos más fácilmente. Una vez que entendamos estos principios básicos, veremos que son aplicables a bases de datos de cientos o millones de observaciones simultáneamente, sin demasiada diferencia.</p>
+
+
+
+
+<h3 id="instalación">Instalación
+  <a href="#instalaci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Para <strong>instalar R</strong>, el lenguaje de programación, y además RStudio, el programa que te ayuda a trabajar con el lenguaje, dirígete a este post donde doy todas las instrucciones: 
+<a href="../../../../blog/r_introduccion/instalar_r/">Primer paso: Instalar R</a></p>
+<p>Una vez que 
+<a href="../../../../blog/r_introduccion/instalar_r/">hayamos instalado R y R Studio</a>, abrimos RStudio.</p>
+<p>El programa debía haberse más o menos así:</p>
+<p><img src="/blog/r_introduccion/r_basico/rstudio.png"></p>
+<p>Vemos que el estudio tiene cuatro paneles. De izquierda a derecha, y de arriba a abajo, los paneles principales son:</p>
+<ol>
+<li><em>Panel de scripts:</em> aquí tenemos nuestros archivos de texto con nuestro código. Podemos tener varias pestañas de distintos archivos de texto.</li>
+<li><em>Panel de entorno:</em> acá veremos los objetos que vayamos creando, que pueden ser números, texto, tablas de datos, funciones, gráficos y otros.</li>
+<li><em>Panel de consola:</em> en la consola se imprimen los resultados que arroja R a partir del código que ejecutamos en los scripts. También podemos ejecutar código directamente en la consola.</li>
+<li><em>Panel de archivos:</em> en este panel podemos navegar los archivos y carpetas de nuestro proyecto y/o computador.</li>
+</ol>
+
+
+
+
+<h3 id="scripts">Scripts
+  <a href="#scripts"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Al trabajar en R, realizamos nuestros análisis y pruebas mediante scripts. Los <strong>scripts</strong> son archivos de texto que terminan en <code>.R</code>. En estos archivos de texto escribimos nuestro código, intentando tener una instrucción por línea. Dentro del script, ejecutamos las instrucciones línea por línea, poniendo el cursor de texto en la línea que deseamos ejecutar, y presionando el botón <em>&ldquo;Run&rdquo;</em> (arriba a la derecha en el panel de scripts), o bien, presionando las teclas <code>comando + enter</code> en Mac y <code>control + enter</code> en Windows.</p>
+<p>Al ejecutar una línea o instrucción, el comando se va a enviar a la consola, que es el panel de abajo donde se muestran las operaciones realizadas, y la consola va a retornar la respuesta o resultado.</p>
+<p>La <strong>consola</strong> es la forma directa de interactuar con el lenguaje R. En ella, las instrucciones se escriben, un comando a la vez, y se presiona <em>enter</em> para enviar los comandos. La consola va a responder un resultado efímero, que sirve para que lo puedas revisar de forma rápida, pero no queda registrado en ninguna parte.</p>
+<p>Si escribimos nuestros comandos en scripts, los comandos van a quedar guardados en texto para que los puedas volver a ejecutar, revisar, etc. Una particularidad de los scripts, es que si una línea contiene un signo gato <code>#</code>, todo lo que esté después del gato se transformará un <strong>comentario.</strong> Esto significa que lo que esté después del signo no se ejecuta, y por lo tanto, puedes escribir lo que quieras. Es muy recomendable que a lo largo de tu script vayas dejando comentarios, iniciando una línea con el signo gato, para ir dejando registro de las cosas que estás haciendo, ideas al respecto, correcciones, preguntas, y aclaraciones, debido a que es muy fácil confundirse o olvidarse de lo que se está haciendo.</p>
+<hr>
+
+
+
+
+<h2 id="primeras-operaciones-en-r">Primeras operaciones en R
+  <a href="#primeras-operaciones-en-r"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Ahora que tenemos nuestro R y RStudio preparados, empezaremos a utilizar R para entender sus aspectos más básicos. La idea es que vayas copiando estos códigos y los vayas ejecutando uno a uno, para ver y entender cómo funciona.</p>
+
+
+
+
+<h3 id="tipos-de-datos">Tipos de datos
+  <a href="#tipos-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Un <em>dato</em> es una unidad mínima de información. Puede ser un número, una palabra, o incluso puede ser nada. Esto es lo que se denomina el <em>tipo</em> de un dato, y el tipo de un dato determina, en cierto modo, lo que podemos hacer con un dato.</p>
+<p>Los tipos principales son:</p>
+<p><em>Numéricos:</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f6c177">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#f6c177">3.1</span>
+</span></span></code></pre></div><p>Con los datos numéricos se pueden realizar todo tipo de operaciones matemáticas y transformaciones numéricas.</p>
+<p><em>Caracter</em> o <em>texto:</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">&#34;hola&#34;</span>
+</span></span></code></pre></div><p>Los textos van entre comillas, y pueden contener cualquier caracter dentro.</p>
+<p><em>Lógicos:</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#3e8fb0">TRUE</span>
+</span></span><span style="display:flex;"><span><span style="color:#3e8fb0">FALSE</span>
+</span></span></code></pre></div><p>Los datos de tipo lógico son una forma de representar una condición verdadera o falsa.</p>
+<p>En el lenguaje R, todos los datos son también denominados <em>objetos</em>, porque son elementos que contienen algo dentro de sí, aunque en lo que hemos visto hasta ahora, el objeto y su contenido son equivalentes (<code>1</code> es igual a <code>1</code>).</p>
+
+
+
+
+<h3 id="operaciones-matemáticas">Operaciones matemáticas
+  <a href="#operaciones-matem%c3%a1ticas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Quizás lo más básico que podemos hacer con un lenguaje de programación es sacar cálculos matemáticos. En R, esto es tan sencillo como escribir la expresión matemática, y teniendo el cursor de texto en la línea que queremos ejecutar, presionamos el botón <em>Run</em> (arriba a la derecha del script) o presionamos las teclas comando + enter.</p>
+<p>A lo largo de este tutorial, vamos a ir viendo bloques de código, seguidos de su resultado.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">2</span> <span style="color:#908caa">+</span> <span style="color:#f6c177">2</span> <span style="color:#6e6a86"># suma</span>
+</span></span></code></pre></div><pre><code>[1] 4
+</code></pre>
+<p>En estos dos bloques, el primero es la operación que hicimos, y el segundo es el resultado que entrega a la consola de R; en este caso, el resultado de 2 + 2.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">50</span> <span style="color:#908caa">*</span> <span style="color:#f6c177">100</span> <span style="color:#6e6a86"># multiplicación</span>
+</span></span></code></pre></div><pre><code>[1] 5000
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">4556</span> <span style="color:#908caa">-</span> <span style="color:#f6c177">1000</span> <span style="color:#6e6a86"># resta</span>
+</span></span></code></pre></div><pre><code>[1] 3556
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">6565</span> <span style="color:#908caa">/</span> <span style="color:#f6c177">89</span> <span style="color:#6e6a86"># división</span>
+</span></span></code></pre></div><pre><code>[1] 73.76404
+</code></pre>
+<p>Si escribimos estas operaciones en un script, podemos ejecutar las instrucciones en cualquier orden y cuando deseemos. Sólo debemos ir poniendo el cursor de texto en la línea que queramos y ejecutarla. O bien, podemos seleccionar varias líneas y ejecutarlas todas al mismo tiempo, teniendo cuidado de seleccionar las operaciones completas<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>Como el tipo de los datos determina las operaciones que podemos realizar, veremos que hay ciertas operaciones que no podemos hacer conciertos datos. Si intentamos sumar dos datos de tipo caracter (texto), obtenemos un error, que dice que estamos usando un dato que no es numérico.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">&#34;1&#34;</span> <span style="color:#908caa">+</span> <span style="color:#f6c177">&#34;1&#34;</span>
+</span></span></code></pre></div><pre><code>Error in &quot;1&quot; + &quot;1&quot;: non-numeric argument to binary operator
+</code></pre>
+<p>Es importante saber con qué tipo de datos estamos trabajando, para poder saber las herramientas que tenemos de nuestra disposición, o bien, para planificar qué hacer para poder hacer lo que necesitamos con los datos que tenemos.</p>
+<p>Con esta primera operaciones matemáticas podemos entender que en un script escribimos instrucciones y las vamos ejecutando. Al ir ejecutando operaciones consecutivas vamos estructurando nuestro análisis.</p>
+
+
+
+
+<h3 id="comparaciones">Comparaciones
+  <a href="#comparaciones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Las comparaciones son una de las operaciones computacionales más básicas, pero a su vez pueden ser muy poderosas.</p>
+<p>En una comparación, se utilizan símbolos específicos que realizan operaciones, llamados operadores, para pedirle a R que compare distintos datos.</p>
+<p>Al comparar datos, la respuesta obtenida va a ser si la comparación es igual o es distinta a lo establecido.</p>
+<p>Por ejemplo: ¿es 1 igual a 1?</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">1</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">1</span>
+</span></span></code></pre></div><pre><code>[1] TRUE
+</code></pre>
+<p>La <em>igualdad</em> se escribe <code>==</code>, y se usa para evaluar si dos cifras son iguales. En este caso, la comparación entre 1 y 1 retorna <code>TRUE</code> (verdadero), porque 1 es igual a 1.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">1</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">2</span>
+</span></span></code></pre></div><pre><code>[1] FALSE
+</code></pre>
+<p>1 no es igual a 2, por lo que la comparación retorna <code>FALSE</code> (falso).</p>
+<p>La operación inversa la igualdad es la <em>desigualdad</em>: evaluar si un dato es distinto de otro.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">40</span> <span style="color:#908caa">!=</span> <span style="color:#f6c177">30</span>
+</span></span></code></pre></div><pre><code>[1] TRUE
+</code></pre>
+<p>40 es distinto a 30, por lo que la comparación retorna <code>FALSE</code>. Si evaluamos si dos cifras iguales son distintas, lógicamente la respuesta va a ser verdadero (<code>TRUE</code>).</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">40</span> <span style="color:#908caa">!=</span> <span style="color:#f6c177">40</span>
+</span></span></code></pre></div><pre><code>[1] FALSE
+</code></pre>
+<p>Los operadores <em>mayor que</em> (<code>&gt;</code>) y <em>menor que</em> (<code>&lt;</code>) retorno si una cifra es mayor o menor, respectivamente.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">31</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">18</span>
+</span></span></code></pre></div><pre><code>[1] TRUE
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">40</span> <span style="color:#908caa">&lt;</span> <span style="color:#f6c177">80</span>
+</span></span></code></pre></div><pre><code>[1] TRUE
+</code></pre>
+<p>También existen los operadores mayor o igual, y menor o igual:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">40</span> <span style="color:#908caa">&gt;=</span> <span style="color:#f6c177">40</span>
+</span></span></code></pre></div><pre><code>[1] TRUE
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">50</span> <span style="color:#908caa">&gt;=</span> <span style="color:#f6c177">40</span>
+</span></span></code></pre></div><pre><code>[1] TRUE
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">4</span> <span style="color:#908caa">&lt;=</span> <span style="color:#f6c177">5</span>
+</span></span></code></pre></div><pre><code>[1] TRUE
+</code></pre>
+
+
+
+
+<h3 id="asignaciones">Asignaciones
+  <a href="#asignaciones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Anteriormente, mencionamos que los datos son objetos. Un objeto puede contener información de cualquier tipo, y lo relevante es que podemos crear todos los objetos que queramos para realizar nuestros análisis.</p>
+<p>¿Cómo crear un objeto? Creamos un objeto <em>asignando</em> un dato o valor a un nombre. Es decir, tenemos un dato, y queremos que ese dato esté contenido en un nuevo objeto, el cual tendrá un nombre específico.</p>
+<p>Para crear un objeto usamos el operador de asignación: <code>&lt;-</code></p>
+<p>Al crear un objeto nuevo, el objeto va a tener un nombre: el símbolo que va a contener el dato, y por medio del cual vamos a llamar el dato contenido en el objeto.</p>
+<p>Todos los objetos tienen un nombre, el cual puede ser solo una palabra sin separar por espacios, y puede contener símbolos como guión bajo, tildes, eñes y números.</p>
+<p><em>Crear objeto:</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">año</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">1993</span>
+</span></span></code></pre></div><p>De este modo, podemos <em>guardar</em> un dato en un objeto para usarlo más adelante.</p>
+<p>Para ver los contenidos del objeto, simplemente lo llamamos por su nombre:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">año</span>
+</span></span></code></pre></div><pre><code>[1] 1993
+</code></pre>
+<p>Al crear un objeto, aparece en el panel de entorno o <em>Environment,</em> en el panel superior derecho de RStudio.</p>
+<p>Podemos usar los objetos para realizar operaciones matemáticas, porque llamar a un objeto, es reutiliza el dato que está dentro de ese objeto:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">año</span> <span style="color:#908caa">+</span> <span style="color:#f6c177">10</span>
+</span></span></code></pre></div><pre><code>[1] 2003
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">2024</span> <span style="color:#908caa">-</span> <span style="color:#ea9a97">año</span>
+</span></span></code></pre></div><pre><code>[1] 31
+</code></pre>
+<p>Podemos crear un nuevo objeto a partir de un cálculo, escribiendo un cálculo y asignándolo a un nuevo objeto:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">edad</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">2024</span> <span style="color:#908caa">-</span> <span style="color:#ea9a97">año</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">edad</span>
+</span></span></code></pre></div><pre><code>[1] 31
+</code></pre>
+
+
+
+
+<h3 id="ejemplos">Ejemplos
+  <a href="#ejemplos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Para practicar con la idea de que los objetos son símbolos que contienen datos, crearemos distintos objetos los usaremos para hacer distintos cálculos sencillos.</p>
+
+
+
+
+<h4 id="ejemplo-1">Ejemplo 1
+  <a href="#ejemplo-1"></a>
+</h4>
+<p>En este ejemplo, definiremos unas cifras que representan el cálculo de un presupuesto.</p>
+<p>Primero, definimos varios datos. Cuando un dato hace referencia a un aspecto real de algo, ya sea una propiedad o cualidad, se le denomina <em>variable,</em> debido a que estas cualidades no son fijas, sino que cambian en las distintas situaciones, contextos o realidades.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">presupuesto</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">100000</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">pizza</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">12000</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">bebida</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">2500</span>
+</span></span></code></pre></div><p>Restamos todos los objetos para ver cuánto queda de presupuesto:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">presupuesto</span> <span style="color:#908caa">-</span> <span style="color:#ea9a97">pizza</span> <span style="color:#908caa">-</span> <span style="color:#ea9a97">bebida</span>
+</span></span></code></pre></div><pre><code>[1] 85500
+</code></pre>
+<p>También podemos usar paréntesis para ordenar nuestras operaciones:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">presupuesto</span> <span style="color:#908caa">-</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">pizza</span> <span style="color:#908caa">+</span> <span style="color:#ea9a97">bebida</span><span style="color:#908caa">)</span> 
+</span></span></code></pre></div><pre><code>[1] 85500
+</code></pre>
+
+
+
+
+<h4 id="ejemplo-2">Ejemplo 2
+  <a href="#ejemplo-2"></a>
+</h4>
+<p>Repetimos la creación de un presupuesto al definir nuestras variables:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">presupuesto</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">100000</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">pizza</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">12000</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">bebida</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">2500</span>
+</span></span></code></pre></div><p>El objeto <code>pizza</code> representa el precio de una sola pizza. Pero en este ejemplo, necesitamos comprar varias pizzas, así que crearemos un objeto nuevo a partir de una operación:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">pizzas_totales</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">pizza</span> <span style="color:#908caa">*</span> <span style="color:#f6c177">4</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">pizzas_totales</span>
+</span></span></code></pre></div><pre><code>[1] 48000
+</code></pre>
+<p>También tenemos que considerar la compra de bebidas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">bebidas_totales</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">bebida</span> <span style="color:#908caa">*</span> <span style="color:#f6c177">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">bebidas_totales</span>
+</span></span></code></pre></div><pre><code>[1] 5000
+</code></pre>
+<p>Ahora hacemos el cálculo del presupuesto considerando los dos objetos nuevos que creamos, y guardamos el resultado en otro objeto:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">total</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">pizzas_totales</span> <span style="color:#908caa">+</span> <span style="color:#ea9a97">bebidas_totales</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">total</span>
+</span></span></code></pre></div><pre><code>[1] 53000
+</code></pre>
+<p>Restamos el total de las compras con el presupuesto disponible:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">restante</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">presupuesto</span> <span style="color:#908caa">-</span> <span style="color:#ea9a97">total</span>
+</span></span></code></pre></div><p>Ahora revisamos el resultado:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">restante</span>
+</span></span></code></pre></div><pre><code>[1] 47000
+</code></pre>
+<p>La gracia de hacerlo así es que facilita la posiblidad de ir modificando los precios de los objetos, sus cantidades, y luego volver a ejecutar todas las líneas para llegar al resultado actualizado.</p>
+<p><em>Ejercicio:</em></p>
+<ul>
+<li>Intenta volver al principio del ejemplo, donde se definen las variables, y modifica el precio de alguna. Luego, vuelve a ejecutar los cálculos para llegar al nuevo monto restante.</li>
+<li>Intenta reescribir este último ejemplo, pero haciendo que las cantidades de pizzas y bebidas sean también variables que se definan al principio del cálculo, junto con el resto de las variables. Define estas nuevas variables con valores distintos, y llega al nuevo resultado.</li>
+</ul>
+<hr>
+<p>Si bien estos ejemplos pueden parecer muy básicos, la estructura de análisis más complejos sigue patrones bastante bastante similares a los que estamos viendo ahora.</p>
+<hr>
+
+
+
+
+<h2 id="vectores">Vectores
+  <a href="#vectores"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Hasta este punto, hemos visto operaciones sobre un solo dato a la vez; es decir, sobre objetos que contienen un solo elemento. Pero en la vida real, probablemente queremos realizar cálculos sobre múltiples datos a la vez, ya sea desde hojas de cálculos, planillas o bases de datos.</p>
+<p>Los objetos en R pueden tener múltiples propiedades. Una de estas es su largo. Un objeto que contiene un solo dato es un objeto de largo 1. Los <strong>vectores</strong> en R son objetos que contienen una secuencia de datos, una cadena de valores.</p>
+<p>Los vectores tienen elementos, tienen un largo, y tienen un tipo.</p>
+<p>Podemos crear un vector de forma manual con la función <code>c()</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#f6c177">6</span><span style="color:#908caa">,</span> <span style="color:#f6c177">7</span><span style="color:#908caa">,</span> <span style="color:#f6c177">8</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] 1 2 3 4 5 6 7 8
+</code></pre>
+<p>En este bloque de código hemos creado un vector, una secuencia de valores que tiene ocho elementos.</p>
+<p>En un vector podemos almacenar datos arbitrarios, siempre y cuando sean todos del mismo tipo.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">40</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">7</span><span style="color:#908caa">,</span> <span style="color:#f6c177">345</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1]  40   2   7 345
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;a&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;b&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;c&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;d&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot;
+</code></pre>
+<p>Si queremos crear un vector que contenga una secuencia continua de números, podemos usar el operador <code>:</code> entre el número de inicio y el número final de la secuencia:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">1</span><span style="color:#908caa">:</span><span style="color:#f6c177">10</span> <span style="color:#6e6a86"># números de 1 al 10</span>
+</span></span></code></pre></div><pre><code> [1]  1  2  3  4  5  6  7  8  9 10
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">1990</span><span style="color:#908caa">:</span><span style="color:#f6c177">2010</span> <span style="color:#6e6a86"># años del 1990 al 2010</span>
+</span></span></code></pre></div><pre><code> [1] 1990 1991 1992 1993 1994 1995 1996 1997 1998 1999 2000 2001 2002 2003 2004
+[16] 2005 2006 2007 2008 2009 2010
+</code></pre>
+<p>Podemos realizar <strong>operaciones</strong> sobre los vectores, dado que son secuencias de datos, y la operación se va a aplicar a todos sus elementos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">8</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span> <span style="color:#f6c177">100</span>
+</span></span></code></pre></div><pre><code>[1] 101 102 104 108
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">31</span><span style="color:#908caa">,</span> <span style="color:#f6c177">32</span><span style="color:#908caa">,</span> <span style="color:#f6c177">56</span><span style="color:#908caa">,</span> <span style="color:#f6c177">74</span><span style="color:#908caa">)</span> <span style="color:#908caa">-</span> <span style="color:#f6c177">2024</span>
+</span></span></code></pre></div><pre><code>[1] -1993 -1992 -1968 -1950
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#f6c177">1</span><span style="color:#908caa">:</span><span style="color:#f6c177">10</span> <span style="color:#908caa">*</span> <span style="color:#f6c177">20</span>
+</span></span></code></pre></div><pre><code> [1]  20  40  60  80 100 120 140 160 180 200
+</code></pre>
+<p>También podemos hacer <strong>comparaciones</strong> sobre los elementos de un vector:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">3</span><span style="color:#908caa">)</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">3</span>
+</span></span></code></pre></div><pre><code>[1]  TRUE  TRUE FALSE FALSE FALSE  TRUE
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;sí&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;no&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;sí&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;sí&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;no&#34;</span>
+</span></span></code></pre></div><pre><code>[1] FALSE  TRUE FALSE FALSE
+</code></pre>
+<p>Pero el potencial de los vectores es cuando están asignados a un objeto. Asignamos a un objeto el vector de números:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">edades</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">25</span><span style="color:#908caa">,</span> <span style="color:#f6c177">27</span><span style="color:#908caa">,</span> <span style="color:#f6c177">30</span><span style="color:#908caa">,</span> <span style="color:#f6c177">45</span><span style="color:#908caa">,</span> <span style="color:#f6c177">37</span><span style="color:#908caa">,</span> <span style="color:#f6c177">28</span><span style="color:#908caa">,</span> <span style="color:#f6c177">46</span><span style="color:#908caa">,</span> <span style="color:#f6c177">54</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Teniendo un objeto que contiene una secuencia de datos, ahora podemos realizar operaciones escritas de una forma más abstracta o resumida, y que se empiezan a acercar a casos de uso reales.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">edades</span> <span style="color:#908caa">-</span> <span style="color:#f6c177">40</span>
+</span></span></code></pre></div><pre><code>[1] -15 -13 -10   5  -3 -12   6  14
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">edades</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">30</span>
+</span></span></code></pre></div><pre><code>[1] FALSE FALSE FALSE  TRUE  TRUE FALSE  TRUE  TRUE
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">edades</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">30</span>
+</span></span></code></pre></div><pre><code>[1] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
+</code></pre>
+<p>Para acceder para acceder a uno de los valores específicos de un vector, usamos las sintaxis de corchetes. Dentro de corchetes ponemos el elemento o elementos del vector que queremos extraer.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">edades[3]</span>
+</span></span></code></pre></div><pre><code>[1] 30
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">edades[1</span><span style="color:#908caa">:</span><span style="color:#f6c177">3</span><span style="color:#ea9a97">]</span>
+</span></span></code></pre></div><pre><code>[1] 25 27 30
+</code></pre>
+
+
+
+
+<h3 id="tipos-de-datos-en-vectores">Tipos de datos en vectores
+  <a href="#tipos-de-datos-en-vectores"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Por definición, los valores de los vectores en R son todos de un mismo tipo. Esto se debe a que queremos realizar operaciones sobre los factores, y como las operaciones dependen del tipo de cada dato (no podrmos sumar letras), garantizar que los vectores sean de un mismo tipo permite que siempre podamos realizar operaciones en todas sus elementos.</p>
+<p>Cuando creamos un vector de distintos tipos de datos, R va a reducirlo por defecto a un solo tipo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;cinco&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;1&quot;     &quot;2&quot;     &quot;3&quot;     &quot;4&quot;     &quot;cinco&quot;
+</code></pre>
+<p>Si notamos la salida de la consola, podemos ver que los números aparecen envueltos en comillas, porque la presencia de un elemento de tipo carácter dentro del vector hizo que todos los demás elementos fueran convertidos a caracter.</p>
+
+
+
+
+<h3 id="ejemplos-1">Ejemplos
+  <a href="#ejemplos-1"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+
+
+
+
+<h4 id="ejemplo-1-1">Ejemplo 1
+  <a href="#ejemplo-1-1"></a>
+</h4>
+<p>Un vector con años de nacimiento, y luego restamos el año actual al vector, para obtener las edades actuales de las personas que nacieron en esos años.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">años</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">1992</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1997</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1986</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1980</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1999</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">edades</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">2024</span> <span style="color:#908caa">-</span> <span style="color:#ea9a97">años</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">edades</span>
+</span></span></code></pre></div><pre><code>[1] 32 27 38 44 25
+</code></pre>
+<p>Si el objeto resultante le sumamos 10, podemos obtener las edades que tendrían estas personas 10 años después.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">edades_en_10_años</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">edades</span> <span style="color:#908caa">+</span> <span style="color:#f6c177">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">edades_en_10_años</span>
+</span></span></code></pre></div><pre><code>[1] 42 37 48 54 35
+</code></pre>
+
+
+
+
+<h4 id="ejemplo-2-1">Ejemplo 2
+  <a href="#ejemplo-2-1"></a>
+</h4>
+<p>Tenemos un vector con precios de productos, y un objeto que contiene un determinado valor, que sería el presupuesto que tenemos. Queremos saber qué productos son más baratos que el presupuesto. Entonces, comparamos los elementos del vector <code>precios</code> con el <code>presupuesto</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">precios</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">10500</span><span style="color:#908caa">,</span> <span style="color:#f6c177">26990</span><span style="color:#908caa">,</span> <span style="color:#f6c177">9900</span><span style="color:#908caa">,</span> <span style="color:#f6c177">56700</span><span style="color:#908caa">,</span> <span style="color:#f6c177">12350</span><span style="color:#908caa">,</span> <span style="color:#f6c177">12000</span><span style="color:#908caa">,</span> <span style="color:#f6c177">24990</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">presupuesto</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">15000</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">precios</span> <span style="color:#908caa">&lt;</span> <span style="color:#ea9a97">presupuesto</span>
+</span></span></code></pre></div><pre><code>[1]  TRUE FALSE  TRUE FALSE  TRUE  TRUE FALSE
+</code></pre>
+<p>El resultado es un vector de valores lógicos que indican si que el precio es menor o no que el presupuesto.</p>
+<p>Podemos usar ese resultado para filtrar el vector <code>precios</code>, porque cada valor verdadero o falso se corresponde con el valor de la misma posición en el vector original. Es decir, el primer elemento del vector <code>precios</code> es menor al <code>presupuesto</code>, el segundo no, el tercero sí, etc. Así podemos obtener exactamente los datos que cumplen la condición:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">precios[precios</span> <span style="color:#908caa">&lt;</span> <span style="color:#ea9a97">presupuesto]</span>
+</span></span></code></pre></div><pre><code>[1] 10500  9900 12350 12000
+</code></pre>
+<p>Esto funciona porque, como habíamos mencionado antes, se pueden seleccionar elementos específicos del vector usando corchetes, y en este caso, los elementos que están siendo seleccionados son los que resultan <code>TRUE</code> de la comparación <code>precios &lt; presupuesto</code>.</p>
+<hr>
+
+
+
+
+<h2 id="funciones">Funciones
+  <a href="#funciones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Las funciones son pequeños programas que se aplican a nuestros objetos o vectores.</p>
+<p>El uso de funciones es la ventana que nos abre posibilidades a nuevas herramientas y análisis, porque dentro de ellas se pueden ejecutar operaciones e instrucciones mucho más complejas que las que hemos visto hasta el momento.</p>
+<p>Una función es simplemente un programa dentro del cual se entregan ciertos argumentos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">funcion</span><span style="color:#908caa">(</span><span style="color:#ea9a97">argumento_1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">argumento_2</span><span style="color:#908caa">,</span> <span style="color:#3e8fb0">...</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Dependiendo de lo que haga la función, dentro de ella podemos poner uno o varios vectores, un vector con algunas opciones definidas, u objetos más complejos que veremos adelante.</p>
+<p>Una función sencilla es la función <code>mean()</code>, que calcula el promedio de los valores de un vector:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">10</span><span style="color:#908caa">,</span> <span style="color:#f6c177">20</span><span style="color:#908caa">,</span> <span style="color:#f6c177">39</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code>[1] 23
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">cifras</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">7</span><span style="color:#908caa">,</span> <span style="color:#f6c177">8</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">9</span><span style="color:#908caa">,</span> <span style="color:#f6c177">0</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cifras</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] 4.090909
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">años</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">1992</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1997</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1986</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1980</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1999</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2010</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1993</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1976</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">edades</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">2024</span> <span style="color:#908caa">-</span> <span style="color:#ea9a97">años</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] 32.375
+</code></pre>
+<p>Como R es un lenguaje principalmente estadístico, hay varias funciones matemáticas que operan sobre vectores de números:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># promedio</span>
+</span></span></code></pre></div><pre><code>[1] 32.375
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">min</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># mínimo</span>
+</span></span></code></pre></div><pre><code>[1] 14
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># máximo</span>
+</span></span></code></pre></div><pre><code>[1] 48
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">median</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># mediana</span>
+</span></span></code></pre></div><pre><code>[1] 31.5
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sum</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># suma</span>
+</span></span></code></pre></div><pre><code>[1] 259
+</code></pre>
+<p>También hay funciones que no realizan cálculos sobre los datos, sino que nos dicen otra cosa sobre ellos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">length</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] 8
+</code></pre>
+<p>Algo que podría ser importante de confirmar, como hemos visto, sería el tipo de un vector. Para esto, existen varias funciones:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">class</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;numeric&quot;
+</code></pre>
+<p>La función permite saber la clase de un objeto, que es una propiedad de los objetos relacionada a su tipo. En este caso retorna <em>numeric,</em> porque se trata de números, pero en realidad el tipo es otro:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">typeof</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;double&quot;
+</code></pre>
+<p>Esto ocurre porque los números pueden ser de distintos tipos: hay números enteros (<em>integer</em>), números decimales (<em>double</em>), entre otros, y tienen características distintas. Pero es suficiente con saber si es o no numérico para la mayoría de los casos.</p>
+<p>Otras funciones permiten consultar si un objeto es de un tipo específico:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">is.numeric</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] TRUE
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">is.character</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] FALSE
+</code></pre>
+<p>Si tenemos un vector de un tipo que no nos sirve, podemos convertirlo a uno que si nos sirva:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">numeros</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;perro&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">numeros_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">as.numeric</span><span style="color:#908caa">(</span><span style="color:#ea9a97">numeros</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># convertir a números</span>
+</span></span></code></pre></div><pre><code>Warning: NAs introduced by coercion
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">numeros_2</span>
+</span></span></code></pre></div><pre><code>[1]  1  2  3  4 NA
+</code></pre>
+<p>Notamos que R nos entrega una alerta! dice que hay <code>NA</code> introducidos por coerción. Los valores <code>NA</code> son también llamados valores <em>perdidos,</em> y significa que es un elemento de un vector que no contiene nada. En este caso, el último elemento del vector es convertido a un dato perdido, porque el texto <em>perro</em> no se corresponde realmente con ningún número.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">is.character</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;texto&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># retorna TRUE si el objeto es un texto</span>
+</span></span></code></pre></div><pre><code>[1] TRUE
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">is.character</span><span style="color:#908caa">(</span><span style="color:#f6c177">11111</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># retorna FALSE si el objeto no es un texto</span>
+</span></span></code></pre></div><pre><code>[1] FALSE
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">is.numeric</span><span style="color:#908caa">(</span><span style="color:#f6c177">4985984</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># retorna TRUE si el objeto es un número</span>
+</span></span></code></pre></div><pre><code>[1] TRUE
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">is.numeric</span><span style="color:#908caa">(</span><span style="color:#f6c177">5555</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] TRUE
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">as.character</span><span style="color:#908caa">(</span><span style="color:#f6c177">4444</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;4444&quot;
+</code></pre>
+<p>Si necesitamos saber qué hace una función, o cómo funciona, podemos escribir en la consola un <code>?</code> seguido por el nombre de la función <code>?as.numeric</code>, o bien, entrar al panel de ayuda de RStudio, que se encuentra en la parte inferior derecha de la pantalla, y buscar la función que queramos aclarar.</p>
+<p>En la ayuda de R aparecen las funciones explicadas, con ejemplos, con detalles de cada uno de sus argumentos, y más.</p>
+
+
+
+
+<h3 id="números-al-azar">Números al azar
+  <a href="#n%c3%bameros-al-azar"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>La función <code>sample()</code> permite obtener una cantidad de elementos al azar desde otro conjunto de elementos. Por ejemplo, obtengamos un número al azar entre uno y 10 millones:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">numeros</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">1</span><span style="color:#908caa">:</span><span style="color:#f6c177">10000000</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">numeros</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] 559632
+</code></pre>
+<p>La función recibe como primer argumento el vector de elementos, y como segundo argumento la cantidad de elementos que queremos obtener al azar.</p>
+<p>Intenta cambiando el segundo argumento para que te entregue cuatro números al azar.</p>
+
+
+
+
+<h3 id="redactar-textos">Redactar textos
+  <a href="#redactar-textos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Otra función básica es <code>paste()</code>, que te permite unir varios elementos en un sólo texto:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">texto_1</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;Hola&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">texto_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;amigues&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">texto_2</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;Hola amigues&quot;
+</code></pre>
+<p>Podemos unir varios elementos, sacados de vectores o calculados con funciones, para generar un texto más complejo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">años</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">1992</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1997</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1986</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1980</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1999</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2010</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1993</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1976</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">edades</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">2024</span> <span style="color:#908caa">-</span> <span style="color:#ea9a97">años</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">promedio</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Entre las&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">length</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;edades analizadas,&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f6c177">&#34;el promedio fue de&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">promedio</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f6c177">&#34;y la edad máxima fue de&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;años.&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;Entre las 8 edades analizadas, el promedio fue de 32.375 y la edad máxima fue de 48 años.&quot;
+</code></pre>
+<p>Podemos usar esta función combinada con <code>sample()</code> para obtener un muestreo aleatorio de cualquier tipo de elementos, lo que puede servir para hacer algunas cosas entretenidas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">animales</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;gato&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;mapache&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;castor&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pollo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ratón&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pudú&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;el animal más lindo es el&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animales</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code>[1] &quot;el animal más lindo es el pollo&quot;
+</code></pre>
+
+
+
+
+<h3 id="redondear-datos">Redondear datos
+  <a href="#redondear-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>En el ejemplo anterior, obtuvimos que el promedio de edades era 32.375. Si queremos redondear este número, podemos abusar la función <code>round()</code>, cuyo primer argumento es el número o números que queremos redondear, y el segundo es la cantidad de decimales:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">round</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">digits</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] 32.4
+</code></pre>
+
+
+
+
+<h3 id="condicionales">Condicionales
+  <a href="#condicionales"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Una función condicional permite hacer algo si se cumple o no una condición. Esto que puede sonar sencillo puede resultar tremendamente útil.</p>
+<p>En la función <code>ifelse()</code>, el primer argumento es una comparación, y luego hay que especificar dos argumentos más: el primero es lo que queremos si la comparación es <em>verdadera</em>, y lo segundo es lo que queremos si la comparación es <em>falsa</em>. La expresión <em>&ldquo;if else&rdquo;</em> significa en castellano &ldquo;si pasa esto, entonces haz esto&rdquo;. En una sentencia <em>if else,</em> se define una o más condiciones que queremos que se cumplan para ejecutar un código y, si esa condición no se cumple, ejecutamos otro código (o no ejecutamos nada).</p>
+<p>Por ejemplo, evaluamos si un número es mayor a 5, y si es así, retornamos la palabra <em>alto,</em> y si no, retornamos la palabra <em>bajo</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">numero</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ifelse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">numero</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">yes</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;alto&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">no</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;bajo&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;alto&quot;
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">numero</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">3</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ifelse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">numero</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">yes</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;alto&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">no</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;bajo&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;bajo&quot;
+</code></pre>
+<p>Tenemos un vector de la cantidad de dulces que comieron unas personas. Si definimos que comer más de 4 dulces es mucho, aplicamos la función <code>ifelse()</code> para categorizar las cantidades de dulces que comieron las personas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">dulces</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#f6c177">6</span><span style="color:#908caa">,</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#f6c177">7</span><span style="color:#908caa">,</span> <span style="color:#f6c177">6</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">dulces_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">ifelse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dulces</span> <span style="color:#908caa">&gt;=</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">yes</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;muchos&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">no</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;normal&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">dulces_2</span>
+</span></span></code></pre></div><pre><code> [1] &quot;normal&quot; &quot;normal&quot; &quot;muchos&quot; &quot;normal&quot; &quot;muchos&quot; &quot;muchos&quot; &quot;muchos&quot; &quot;muchos&quot;
+ [9] &quot;muchos&quot; &quot;normal&quot; &quot;normal&quot; &quot;normal&quot; &quot;normal&quot; &quot;normal&quot;
+</code></pre>
+<p>Luego, podemos usar una suma condicionada para saber cuántas personas comieron muchos dulces:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sum</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dulces_2</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;muchos&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># cantidad de personas que comieron &#34;muchos&#34; dulces</span>
+</span></span></code></pre></div><pre><code>[1] 6
+</code></pre>
+<p>Con este otro ejemplo, aprenderemos a usar el operador de inclusión, <code>%in%</code>, qué es lo que hace es determinar si un elemento está dentro de otro conjunto de elementos. Creamos un vector de elementos, y un segundo actor que contiene un subgrupo de los elementos. Luego, usamos el operador de inclusión <code>%in%</code> para saber cuál de los primeros elementos están dentro del segundo grupo de elementos. En este caso, tenemos un vector con los colores, y después los colores que yo considero que son más lindos, y queremos saber cuál es están dentro de este grupo de colores más lindos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colores</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;rojo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;verde&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;azul&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;rosado&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;amarillo&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>             <span style="color:#f6c177">&#34;morado&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;naranjo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;gris&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;lavanda&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;celeste&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">lindos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;morado&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;rosado&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">colores</span> <span style="color:#908caa">%in%</span> <span style="color:#ea9a97">lindos</span>
+</span></span></code></pre></div><pre><code> [1] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE
+</code></pre>
+<p>Luego, aplicaremos el mismo principio, pero dentro de un <code>if_else()</code>, para asignarle la categoría lindo o feo a cada uno de los colores:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">opinión</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">ifelse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">colores</span> <span style="color:#908caa">%in%</span> <span style="color:#ea9a97">lindos</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                  <span style="color:#ea9a97">yes</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;lindos&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#ea9a97">no</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;feos&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">opinión</span>
+</span></span></code></pre></div><pre><code> [1] &quot;feos&quot;   &quot;feos&quot;   &quot;feos&quot;   &quot;lindos&quot; &quot;feos&quot;   &quot;lindos&quot; &quot;feos&quot;   &quot;feos&quot;  
+ [9] &quot;feos&quot;   &quot;feos&quot;  
+</code></pre>
+<p>Finalmente, podemos hacer una tabla con los resultados, o una suma condicionada, para saber cuántos colores caen en cada categoría:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">table</span><span style="color:#908caa">(</span><span style="color:#ea9a97">opinión</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>opinión
+  feos lindos 
+     8      2 
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Hay&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sum</span><span style="color:#908caa">(</span><span style="color:#ea9a97">opinión</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;feos&#34;</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;colores feos,&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f6c177">&#34;y&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sum</span><span style="color:#908caa">(</span><span style="color:#ea9a97">opinión</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;lindos&#34;</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;colores lindos&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;Hay 8 colores feos, y 2 colores lindos&quot;
+</code></pre>
+<hr>
+<p>Si bien en estas instrucciones no aprendimos a analizar datos, si considero que comprender estos principios es algo fundamental para poder pasar al análisis de datos teniendo dudas recurrentes despejadas y una familiaridad con elementos básicos del lenguaje que es necesaria. Por ejemplo, saber lo que es un vector, o entender las particularidades de los tipos o clases, ahorra caer en los errores más recurrentes de personas que entran a R a trabajar directamente con tablas de datos sin entender qué está pasando internamente.</p>
+<p>El entender cómo funcionan estas pequeñas herramientas, y familiarizarse con su uso nos facilitará bastante la aplicación del lenguaje al procesamiento de tablas, bases de datos, y otras situaciones en las que podemos aplicar R para ayudarnos y para producir resultados.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Si ejecutamos una línea incompleta, puede ser que la consola de R quede esperando que terminemos la expresión o que la completemos, y esto puede ser muy confuso para usuarios principiantes. Por ejemplo, si ejecutamos <code>1 +</code>, la consola va a quedar esperando que le demos el número que está esperando que venga, y cualquier otra cosa que le entreguemos va a intentar sumársela a la operación anterior que quedó inconclusa.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="http://localhost:4321/blog/r_introduccion/por_que_r/">&larr; ¿Por qué usar R?</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/r_introduccion/r_intermedio/">Introducción al lenguaje de programación R: nivel intermedio &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+
+<aside class="page-sidebar" role="complementary">
+                         
+ 
+
+
+                       
+ 
+
+
+
+
+
+
+
+
+
+
+
+  <img src="/blog/r_introduccion/sidebar-featured.png" class="db ma0">
+
+
+<div class="blog-info ph4 pt4 pb4 pb0-l">
+  
+
+  <h1 class="f3">Introducción a R</h1>
+  <p class="f6 lh-copy measure"><p>Contenido para principiantes en R. Serie de posts y tutoriales del nivel más básico, para quienes quieran adentrarse por primera vez en el análisis de datos con R.</p>
+<p>Si tienes alguna duda con R, no entiendes alguno de los contenidos, o necesitas apoyo personalizado, puedes 
+<a href="/contact/">contactarme.</a></p>
+</p>
+  <p class="f7 measure lh-copy i mh0-l">Escrito por Bastián Olea Herrera</p>
+
+
+  
+
+</div>
+
+
+                         
+ 
+
+
+
+<div class="flex items-start sticky ph4 pb4">
+  <div class="w-two-thirds w-50-l ph0">
+    
+    <h2 class="mt3 mb3 f5 fw7 ttu tracked"><a class="no-underline dim" href="/blog/r_introduccion/">Publicaciones de la serie</a></h2>
+    <nav id="SeriesTableOfContents">
+        <ul>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/instalar_r/"><a href="http://localhost:4321/blog/r_introduccion/instalar_r/">Primer paso: instalar R</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/por_que_r/"><a href="http://localhost:4321/blog/r_introduccion/por_que_r/">¿Por qué usar R?</a></li>
+        
+          
+          <li class="active" hugo-nav="/blog/r_introduccion/r_basico/"><a href="http://localhost:4321/blog/r_introduccion/r_basico/">Introducción al lenguaje de programación R</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/r_intermedio/"><a href="http://localhost:4321/blog/r_introduccion/r_intermedio/">Introducción al lenguaje de programación R: nivel intermedio</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_censo/"><a href="http://localhost:4321/blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_campamentos/"><a href="http://localhost:4321/blog/r_introduccion/tutorial_dplyr_campamentos/">Tutorial: introducción a {dplyr} usando datos de campamentos</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shiny_1/"><a href="http://localhost:4321/blog/r_introduccion/tutorial_shiny_1/">Tutorial: crea una aplicación Shiny básica</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shinyapps/"><a href="http://localhost:4321/blog/r_introduccion/tutorial_shinyapps/">Tutorial: publicar una app Shiny en shinyapps.io</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/recursos_r/"><a href="http://localhost:4321/blog/r_introduccion/recursos_r/">Recursos sobre R</a></li>
+        
+        </ul>
+      </nav>
+  </div>
+  <details open id="PageTableOfContents">
+    <summary><h2 class="mv0 f5 fw7 ttu tracked dib">Índice</h2></summary>
+    <div class="pl2 pr0 mh0">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introducción-a-r">Introducción a R</a>
+      <ul>
+        <li><a href="#instalación">Instalación</a></li>
+        <li><a href="#scripts">Scripts</a></li>
+      </ul>
+    </li>
+    <li><a href="#primeras-operaciones-en-r">Primeras operaciones en R</a>
+      <ul>
+        <li><a href="#tipos-de-datos">Tipos de datos</a></li>
+        <li><a href="#operaciones-matemáticas">Operaciones matemáticas</a></li>
+        <li><a href="#comparaciones">Comparaciones</a></li>
+        <li><a href="#asignaciones">Asignaciones</a></li>
+        <li><a href="#ejemplos">Ejemplos</a></li>
+      </ul>
+    </li>
+    <li><a href="#vectores">Vectores</a>
+      <ul>
+        <li><a href="#tipos-de-datos-en-vectores">Tipos de datos en vectores</a></li>
+        <li><a href="#ejemplos-1">Ejemplos</a></li>
+      </ul>
+    </li>
+    <li><a href="#funciones">Funciones</a>
+      <ul>
+        <li><a href="#números-al-azar">Números al azar</a></li>
+        <li><a href="#redactar-textos">Redactar textos</a></li>
+        <li><a href="#redondear-datos">Redondear datos</a></li>
+        <li><a href="#condicionales">Condicionales</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </details>
+  
+</div>
+</aside>
+
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2024 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastimapache.bsky.social" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.threads.net/@raccunnie" title="threads" target="_blank" rel="me noopener">
+      <i class="fab fa-threads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

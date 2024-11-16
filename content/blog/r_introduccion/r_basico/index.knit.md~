@@ -1,0 +1,310 @@
+---
+title: Introducción al lenguaje de programación R
+author: Bastián Olea Herrera
+date: '2024-11-16'
+format: hugo-md
+weight: 1
+series: "Introducción a R"
+slug: []
+categories: ["Tutoriales"]
+tags: []
+lang: es
+excerpt: Instrucciones paso a paso para aprender los aspectos más básicos del lenguaje R. Dirigida a personas sin ningún conocimiento del lenguaje. Si quieres aprender R desde cero, esta publicación es para ti.
+execute: 
+  error: true
+---
+
+
+
+
+## Introducción a R
+
+Esta guía contiene instrucciones paso a paso para aprender los aspectos más básicos del lenguaje R.
+
+Si sigues estas instrucciones de principio a fin, aprenderás a: trabajar con el programa RStudio, a gestionar tus scripts para el análisis, a realizar las primeras operaciones matemáticas, a comprender los distintos tipos de datos que existen en R, y a manejar las operaciones fundamentales para todo análisis posterior, ya sea básico o avanzado: objetos, comparaciones, asignaciones, vectores, y funciones.
+
+Entender estos aspectos básicos del lenguaje es fundamental para que, en un futuro cercano, puedas utilizar R para analizar datos, crear visualizaciones, generar reportes, desarrollar aplicaciones, y mucho más.
+
+La idea de esta guía es aproximarnos a los principios más básicos de R, en partes pequeñas y con ejemplos simples, para poder entenderlos más fácilmente. Una vez que entendamos estos principios básicos, veremos que son aplicables a bases de datos de cientos o millones de observaciones simultáneamente, sin demasiada diferencia.
+
+
+### Instalación
+
+Para **instalar R**, el lenguaje de programación, y además RStudio, el programa que te ayuda a trabajar con el lenguaje, dirígete a este post donde doy todas las instrucciones: [Primer paso: Instalar R](/blog/r_introduccion/instalar_r/)
+
+Una vez que [hayamos instalado R y R Studio](/blog/r_introduccion/instalar_r/), abrimos RStudio.
+
+El programa debía haberse más o menos así:
+
+![](rstudio.png)
+
+Vemos que el estudio tiene cuatro paneles. De izquierda a derecha, y de arriba a abajo, los paneles principales son:
+
+1. _Panel de scripts:_ aquí tenemos nuestros archivos de texto con nuestro código. Podemos tener varias pestañas de distintos archivos de texto. 
+2. _Panel de entorno:_ acá veremos los objetos que vayamos creando, que pueden ser números, texto, tablas de datos, funciones, gráficos y otros.
+3. _Panel de consola:_ en la consola se imprimen los resultados que arroja R a partir del código que ejecutamos en los scripts. También podemos ejecutar código directamente en la consola.
+4. _Panel de archivos:_ en este panel podemos navegar los archivos y carpetas de nuestro proyecto y/o computador.
+
+
+### Scripts
+
+Al trabajar en R, realizamos nuestros análisis y pruebas mediante scripts. Los **scripts** son archivos de texto que terminan en `.R`. En estos archivos de texto escribimos nuestro código, intentando tener una instrucción por línea. Dentro del script, ejecutamos las instrucciones línea por línea, poniendo el cursor de texto en la línea que deseamos ejecutar, y presionando el botón _"Run"_ (arriba a la derecha en el panel de scripts), o bien, presionando las teclas `comando + enter` en Mac y `control + enter` en Windows.
+
+Al ejecutar una línea o instrucción, el comando se va a enviar a la consola, que es el panel de abajo donde se muestran las operaciones realizadas, y la consola va a retornar la respuesta o resultado. 
+
+La **consola** es la forma directa de interactuar con el lenguaje R. En ella, las instrucciones se escriben, un comando a la vez, y se presiona _enter_ para enviar los comandos. La consola va a responder un resultado efímero, que sirve para que lo puedas revisar de forma rápida, pero no queda registrado en ninguna parte.
+
+Si escribimos nuestros comandos en scripts, los comandos van a quedar guardados en texto para que los puedas volver a ejecutar, revisar, etc. Una particularidad de los scripts, es que si una línea contiene un signo gato `#`, todo lo que esté después del gato se transformará un **comentario.** Esto significa que lo que esté después del signo no se ejecuta, y por lo tanto, puedes escribir lo que quieras. Es muy recomendable que a lo largo de tu script vayas dejando comentarios, iniciando una línea con el signo gato, para ir dejando registro de las cosas que estás haciendo, ideas al respecto, correcciones, preguntas, y aclaraciones, debido a que es muy fácil confundirse o olvidarse de lo que se está haciendo.
+
+
+----
+
+## Primeras operaciones en R
+
+Ahora que tenemos nuestro R y RStudio preparados, empezaremos a utilizar R para entender sus aspectos más básicos. La idea es que vayas copiando estos códigos y los vayas ejecutando uno a uno, para ver y entender cómo funciona.
+
+### Tipos de datos 
+
+Un _dato_ es una unidad mínima de información. Puede ser un número, una palabra, o incluso puede ser nada. Esto es lo que se denomina el _tipo_ de un dato, y el tipo de un dato determina, en cierto modo, lo que podemos hacer con un dato.
+
+Los tipos principales son:
+
+_Numéricos:_
+
+
+
+``` r
+1
+```
+
+```
+## [1] 1
+```
+
+``` r
+2
+```
+
+```
+## [1] 2
+```
+
+``` r
+3.1
+```
+
+```
+## [1] 3.1
+```
+
+
+
+Con los datos numéricos se pueden realizar todo tipo de operaciones matemáticas y transformaciones numéricas. 
+
+_Caracter_ o _texto:_
+
+
+
+``` r
+"hola"
+```
+
+```
+## [1] "hola"
+```
+
+
+
+Los textos van entre comillas, y pueden contener cualquier caracter dentro. 
+
+_Lógicos:_
+
+
+
+``` r
+TRUE
+```
+
+```
+## [1] TRUE
+```
+
+``` r
+FALSE
+```
+
+```
+## [1] FALSE
+```
+
+
+
+Los datos de tipo lógico son una forma de representar una condición verdadera o falsa.
+
+En el lenguaje R, todos los datos son también denominados _objetos_, porque son elementos que contienen algo dentro de sí, aunque en lo que hemos visto hasta ahora, el objeto y su contenido son equivalentes (`1` es igual a `1`). 
+
+
+### Operaciones matemáticas 
+
+
+
+
+
+``` r
+2 + 2 # suma
+```
+
+```
+## [1] 4
+```
+
+``` r
+50 * 100 # multiplicación
+```
+
+```
+## [1] 5000
+```
+
+``` r
+4556-000 # resta
+```
+
+```
+## [1] 4556
+```
+
+``` r
+6565 / 89 # división
+```
+
+```
+## [1] 73.76404
+```
+
+``` r
+10^4 # potencias
+```
+
+```
+## [1] 10000
+```
+
+
+
+Si escribimos estas operaciones en un script, podemos ejecutar estas instrucciones en cualquier orden y cuando deseemos.
+
+Si intentamos sumar dos datos de tipo carácter, obtenemos un error, que dice que estamos usando un dato que no es numérico. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

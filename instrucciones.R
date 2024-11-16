@@ -8,11 +8,11 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Prueba", 
+blogdown::new_post(title = "Introducción al lenguaje de programación R", 
                    subdir = "blog/",
-                   file = "blog/pruebas/index.md",
+                   file = "blog/r_introduccion/r_basico/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos", "procesamiento de datos", "lubridate"),
+                   tags = c(),
                    categories = c() 
 )
 

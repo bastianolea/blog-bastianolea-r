@@ -1,0 +1,432 @@
+En esta clase vimos: vectores, funciones, tipos de datos, 
+instalación de paquetes, carga de datos desde excel, y dplyr
+
+## Vectores 
+Los vectores son secuencias de elementos
+Creamos los vectores usando la función "c", separando los valores por comas
+
+
+
+
+
+```{r}
+c(1, 2, 3, 4, 5, 6, 7, 8)
+```
+
+
+
+
+Asignamos a un objeto el vector de números
+
+
+
+
+```{r}
+edades <- c(25, 27, 30, 45, 37, 28, 46, 54)
+```
+
+
+
+
+Podemos realizar operaciones sobre los vectores, donde el cálculo se aplica a cada elemento
+
+
+
+
+```{r}
+edades - 40
+
+edades > 30
+
+edades == 30
+
+edades[3] #acceder a uno de los elementos del vector, ene ste caso al tercero
+```
+
+
+
+
+podemos crear secuencias de números con el operador ":"
+
+
+
+
+```{r}
+1:9
+
+1980:2024
+
+1:1000000
+
+2024:2020
+
+años <- 2000:2024
+
+años
+
+length(años) #largo del vector, es decir, su cantidad de elementos
+
+length(1:454958946)
+
+edades
+```
+
+
+
+
+## Funciones 
+Las funciones son pequeños programas que se aplican a nuestros objetos o vectores
+
+
+
+
+```{r}
+mean(edades) #promedio
+min(edades) #mínimo
+max(edades) #máximo
+median(edades) #mediana
+
+edades <- c(62, 57, 67, 98, 34, 56, 23, 45, 65, 43, 21, 12, 23, 12, 13, 14, 15)
+length(edades)
+```
+
+
+
+
+valor promedio de un vector
+
+
+
+
+```{r}
+promedio <- mean(edades)
+```
+
+
+
+
+aplicar comparación a un vector
+
+
+
+
+```{r}
+edades > promedio
+```
+
+
+
+
+seleccionar elementos de un vector
+
+
+
+
+```{r}
+edades[1]
+edades[13]
+edades[17]
+edades[length(edades)] #seleccionar el ultimo elemento de un vector, usando la función que nos da el largo del vector, es decir, la posición del ultimo valor
+```
+
+
+
+
+
+## Tipos de datos en vectores 
+Cuando creamos un vector de distintos tipos de datos, R va a reducirlo por defecto a un solo tipo
+
+
+
+
+```{r}
+prueba <- c(1, 2, 3, 4, "cinco") #en este caso, transforma todo a caracter
+```
+
+
+
+
+funciones para confirmar el tipo de un objeto
+
+
+
+
+```{r}
+is.numeric(prueba)
+is.character(prueba)
+class(prueba)
+class(1)
+
+vector <- c(1, 2, 3, 4, 5)
+class(vector)
+```
+
+
+
+
+convertir un objeto a otro tipo
+
+
+
+
+```{r}
+vector_texto <- as.character(vector)
+
+vector_texto
+class(vector_texto)
+as.numeric(vector_texto) #esta función transforma las cosas en números
+?as.numeric
+
+as.numeric(c(1, 2, 3, 4, "cinco"))
+
+class(c(1, 2, 3, 4, 5))
+
+decimales <- c(1, 2, 3, 4, 5) - 0.1
+
+class(decimales)
+
+typeof(decimales)
+
+typeof(1L)
+```
+
+
+
+
+
+## Instalar un paquete 
+
+es necesario instalarlos una sola vez
+install.packages("readxl")
+install.packages("tidyverse")
+
+hay que cargar los paquetes cada vez que los queramos usar
+
+
+
+
+```{r}
+library(readxl)
+library(tidyverse)
+```
+
+
+
+
+cargar datos desde excel usando el nombre del archivo
+
+
+
+
+```{r}
+censo <- read_excel("censo_proyeccion_2024.xlsx")
+```
+
+
+
+
+ver los datos de dataframe o tabla
+
+
+
+
+```{r}
+censo
+```
+
+
+
+
+imprimir más filas del dataframe
+
+
+
+
+```{r}
+print(censo, n = 23)
+```
+
+
+
+
+confirmar que las columnas del dataframe son en realidad vectores
+
+
+
+
+```{r}
+censo$comuna
+censo$población
+censo$poblacion
+```
+
+
+
+
+aplicar funciones a las columnas del dataframe
+
+
+
+
+```{r}
+sum(censo$población)
+min(censo$población)
+```
+
+
+
+
+
+
+## dplyr 
+Librería que nos permite manejar datos
+
+
+
+
+```{r}
+library(dplyr)
+```
+
+
+
+
+##3 Seleccionar 
+
+
+
+
+```{r}
+censo %>% # control + shift + M
+    select(comuna, población)
+```
+
+
+
+
+
+### Resumir 
+
+
+
+
+```{r}
+censo %>% 
+    summarize(min(población))
+```
+
+
+
+
+Ordenar
+
+
+
+
+```{r}
+censo %>%
+    arrange(población) %>%
+    select(comuna, población)
+
+censo %>% 
+    filter(población > 100000) %>% 
+    arrange(población)
+
+censo %>% 
+    filter(población > 100000) %>% 
+    arrange(desc(población))
+```
+
+
+
+
+### Renombrar 
+
+
+
+
+```{r}
+censo %>% 
+    rename(p = población)
+```
+
+
+
+
+ver filas específicas del dataframe
+
+
+
+
+```{r}
+censo %>% 
+    slice(200:220)
+```
+
+
+
+
+#### Filtrar 
+
+
+
+
+```{r}
+censo %>% 
+    filter(población > 300000)
+
+censo %>% 
+    filter(población < 1000)
+
+censo %>% 
+    filter(población > 1000)
+
+
+censo %>% 
+    filter(población == min(población))
+
+censo %>% 
+    filter(población == max(población))
+
+censo %>% 
+    filter(comuna == "La Florida")
+
+censo %>% 
+    filter(población == 407297)
+
+censo %>% 
+    filter(población == min(población))
+```
+
+
+
+
+
+
+#### Filtrar usando objetos 
+
+
+
+
+```{r}
+min_pob <- 25000
+max_pob <- 30000
+
+censo %>% 
+    filter(población > min_pob,
+           población < max_pob)
+
+promedio <- mean(censo$población)
+
+censo %>% 
+    filter(población > promedio)
+
+censo %>% 
+    filter(población > promedio*1.5)
+
+maximo <- max(censo$población)
+
+censo %>% 
+    filter(población >= maximo*0.8)
+```
+
