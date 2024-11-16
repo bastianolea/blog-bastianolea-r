@@ -720,7 +720,7 @@ numeros <- 1:10000000
 sample(numeros, size = 1)
 ```
 
-    [1] 559632
+    [1] 4961700
 
 La función recibe como primer argumento el vector de elementos, y como segundo argumento la cantidad de elementos que queremos obtener al azar.
 
@@ -760,7 +760,7 @@ animales <- c("gato", "mapache", "castor", "pollo", "ratón", "pudú")
 paste("el animal más lindo es el", sample(animales, 1))
 ```
 
-    [1] "el animal más lindo es el pollo"
+    [1] "el animal más lindo es el mapache"
 
 ### Redondear datos
 
@@ -862,8 +862,14 @@ paste("Hay", sum(opinión == "feos"), "colores feos,",
 
 ------------------------------------------------------------------------
 
+## Conclusión
+
 Si bien en estas instrucciones no aprendimos a analizar datos, si considero que comprender estos principios es algo fundamental para poder pasar al análisis de datos teniendo dudas recurrentes despejadas y una familiaridad con elementos básicos del lenguaje que es necesaria. Por ejemplo, saber lo que es un vector, o entender las particularidades de los tipos o clases, ahorra caer en los errores más recurrentes de personas que entran a R a trabajar directamente con tablas de datos sin entender qué está pasando internamente.
 
 El entender cómo funcionan estas pequeñas herramientas, y familiarizarse con su uso nos facilitará bastante la aplicación del lenguaje al procesamiento de tablas, bases de datos, y otras situaciones en las que podemos aplicar R para ayudarnos y para producir resultados.
+
+------------------------------------------------------------------------
+
+*Si entendiste este tutorial y quieres pasar al siguiente nivel, mala suerte porque todavía no lo escribo 😂 pero podrías atreverte a intentar con este otro tutorial en el cual se abarcan herramientas básicas de manipulación de datos: [Tutorial: introducción a {dplyr} con datos de población](../../../../blog/r_introduccion/tutorial_dplyr_censo/)*
 
 [^1]: Si ejecutamos una línea incompleta, puede ser que la consola de R quede esperando que terminemos la expresión o que la completemos, y esto puede ser muy confuso para usuarios principiantes. Por ejemplo, si ejecutamos `1 +`, la consola va a quedar esperando que le demos el número que está esperando que venga, y cualquier otra cosa que le entreguemos va a intentar sumársela a la operación anterior que quedó inconclusa.

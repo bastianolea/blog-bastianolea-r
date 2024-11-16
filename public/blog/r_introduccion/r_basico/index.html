@@ -49,7 +49,7 @@
 Si sigues estas instrucciones de principio a fin, aprenderás a: trabajar con el programa RStudio, a gestionar tus scripts para el análisis, a realizar las primeras operaciones matemáticas, a comprender los distintos tipos de datos que existen en R, y a manejar las operaciones fundamentales para todo análisis posterior, ya sea básico o avanzado: objetos, comparaciones, asignaciones, vectores, y funciones.">
   <meta itemprop="datePublished" content="2024-11-16T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-16T00:00:00+00:00">
-  <meta itemprop="wordCount" content="4399">
+  <meta itemprop="wordCount" content="4446">
   <meta itemprop="keywords" content="Tutoriales,Introducción a R">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -768,7 +768,7 @@ Si sigues estas instrucciones de principio a fin, aprenderás a: trabajar con el
 <p>La función <code>sample()</code> permite obtener una cantidad de elementos al azar desde otro conjunto de elementos. Por ejemplo, obtengamos un número al azar entre uno y 10 millones:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">numeros</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">1</span><span style="color:#908caa">:</span><span style="color:#f6c177">10000000</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">numeros</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><pre><code>[1] 559632
+</span></span></code></pre></div><pre><code>[1] 4961700
 </code></pre>
 <p>La función recibe como primer argumento el vector de elementos, y como segundo argumento la cantidad de elementos que queremos obtener al azar.</p>
 <p>Intenta cambiando el segundo argumento para que te entregue cuatro números al azar.</p>
@@ -802,7 +802,7 @@ Si sigues estas instrucciones de principio a fin, aprenderás a: trabajar con el
 <p>Podemos usar esta función combinada con <code>sample()</code> para obtener un muestreo aleatorio de cualquier tipo de elementos, lo que puede servir para hacer algunas cosas entretenidas:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">animales</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;gato&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;mapache&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;castor&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pollo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ratón&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pudú&#34;</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;el animal más lindo es el&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animales</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><pre><code>[1] &quot;el animal más lindo es el pollo&quot;
+</span></span></code></pre></div><pre><code>[1] &quot;el animal más lindo es el mapache&quot;
 </code></pre>
 
 
@@ -883,8 +883,21 @@ Si sigues estas instrucciones de principio a fin, aprenderás a: trabajar con el
 </span></span></code></pre></div><pre><code>[1] &quot;Hay 8 colores feos, y 2 colores lindos&quot;
 </code></pre>
 <hr>
+
+
+
+
+<h2 id="conclusión">Conclusión
+  <a href="#conclusi%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
 <p>Si bien en estas instrucciones no aprendimos a analizar datos, si considero que comprender estos principios es algo fundamental para poder pasar al análisis de datos teniendo dudas recurrentes despejadas y una familiaridad con elementos básicos del lenguaje que es necesaria. Por ejemplo, saber lo que es un vector, o entender las particularidades de los tipos o clases, ahorra caer en los errores más recurrentes de personas que entran a R a trabajar directamente con tablas de datos sin entender qué está pasando internamente.</p>
 <p>El entender cómo funcionan estas pequeñas herramientas, y familiarizarse con su uso nos facilitará bastante la aplicación del lenguaje al procesamiento de tablas, bases de datos, y otras situaciones en las que podemos aplicar R para ayudarnos y para producir resultados.</p>
+<hr>
+<p><em>Si entendiste este tutorial y quieres pasar al siguiente nivel, mala suerte porque todavía no lo escribo 😂 pero podrías atreverte a intentar con este otro tutorial en el cual se abarcan herramientas básicas de manipulación de datos: 
+<a href="../../../../blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></em></p>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
@@ -1045,6 +1058,7 @@ Si sigues estas instrucciones de principio a fin, aprenderás a: trabajar con el
         <li><a href="#condicionales">Condicionales</a></li>
       </ul>
     </li>
+    <li><a href="#conclusión">Conclusión</a></li>
   </ul>
 </nav>
     </div>
