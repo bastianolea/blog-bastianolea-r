@@ -35,6 +35,8 @@ excerpt: Colección de sitios web y recursos útiles para usuarios de R.
 - [Banco Integrado de Datos (BIDAT) del Ministerio de Desarrollo Social y Familia](https://bidat.midesof.cl/) (Chile)
 - [Banco Central de Chile: base de datos estadísticos](https://si3.bcentral.cl/siete) (Chile)
 - [Estadísticas sociales del Instituto Nacional de Estadísticas (INE)](https://www.ine.gob.cl/estadisticas/) (Chile)
+- [Estadísticas y datos abiertos de salud pública en Chile: Departamento de Estadísticas e Información de Salud (DEIS)](https://deis.minsal.cl/#estadisticas) (Chile)
+- [Datos abiertos del Estado de Chile](https://datos.gob.cl) (Chile)
 - [`{guaguas}`: base de datos de nombres inscritos en Chile](https://rivaquiroga.github.io/guaguas/index.html) (Chile)
 - [Argendata](https://argendata.fund.ar), datos sobre Argentina
 - [Paquete `{datos}`](https://cienciadedatos.github.io/datos/)
