@@ -85,6 +85,15 @@ lubridate::dmy()
 ```
 Una confusión común al trabajar con R ocurre cuando intentan nacer una operación sobre una columna que no permite ese tipo de operaciones. Como sumar números que en realidad son variables de formato texto. Lo mismo pasa con las fechas, que suelen ser expresadas en texto, pero que necesitan ser interpretadas como una fecha para poder realizar operaciones propias de una fecha, como calcular rangos de tiempo, sumar o restar días, extraer meses o años, saber el día de la semana, etc. Con esta función, es tan sencillo como indicar que la fecha viene expresada en _día mes año,_ o si viene como _año mes día,_ usar la variante `ymd()`.
 
+
+### Renombrar todas las columnas
+
+```r
+iris |> 
+  rename_with(~str_trunc(.x, 7, ellipsis = ""), 
+              everything())
+```
+
 ----
 
 ¿Tienes alguna otra función o paquete de R que uses regularmente para limpiar datos? Cuéntame en los comentarios 😊

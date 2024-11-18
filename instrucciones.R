@@ -8,12 +8,12 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Introducción al lenguaje de programación R", 
+blogdown::new_post(title = "Tablas personalizables con {gt}", 
                    subdir = "blog/",
-                   file = "blog/r_introduccion/r_basico/index.md",
+                   file = "blog/gt_tabla_pib_regional/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c(),
-                   categories = c() 
+                   tags = c("tablas", "web scraping"),
+                   categories = c("tutoriales") 
 )
 
 # convertir script a Quarto
