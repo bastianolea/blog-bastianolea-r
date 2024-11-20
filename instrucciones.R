@@ -8,12 +8,12 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Tablas personalizables con {gt}", 
+blogdown::new_post(title = "Web scraping automatizado en R con GitHub Actions", 
                    subdir = "blog/",
-                   file = "blog/gt_tabla_pib_regional/index.qmd",
+                   file = "blog/web_scraping_github_actions/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("tablas", "web scraping"),
-                   categories = c("tutoriales") 
+                   tags = c("web scraping", "git"),
+                   categories = c() 
 )
 
 # convertir script a Quarto

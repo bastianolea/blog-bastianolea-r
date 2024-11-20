@@ -1,0 +1,204 @@
+---
+title: "Tutorial: generar tablas atractivas y personalizables con {gt}"
+author: Bastián Olea Herrera
+date: '2024-11-19'
+slug: []
+draft: false
+format: "hugo-md"
+# format: html
+categories:
+  - tutoriales
+tags:
+  - tablas
+  - web scraping
+  - Chile
+editor_options: 
+  chunk_output_type: console
+execute: 
+  message: false
+  warning: false
+excerpt: El paquete de R `{gt}` genera tablas para presentar tus datos. Produce tablas atractivas con muy pocas líneas de código, y al mismo tiempo ofrece una alta capacidad de personalización de las tablas. En este artículo te mostraré tres ejemplos de creación de distintas tablas basadas en datos reales.
+---
+
+
+
+
+
+
+[El paquete de R `{gt}`](https://gt.rstudio.com) (llamado así por generar _great tables_) permite producir tablas atractivas con R para presentar tus datos. Sus cualidades principales son que produce **resultados atractivos con muy pocas líneas de código**, pero al mismo tiempo ofrece una **alta capacidad de personalización**, teniendo opciones para personalizar prácticamente todos los aspectos de la tabla.
+
+Otro beneficio de usar este paquete es que contiene funciones que hacen muy fácil darle el **formato correcto a las variables numéricas,** como porcentajes, números grandes, cifras en dinero, etc., Y además, ofrece funciones para darle estilos personalizados a las columnas o celdas de tu tabla de forma programática. Esto permite generar ciertas reglas para que las **celdas cambien de colores dependiendo de su valor**, ciertas cifras **cambian su tipo de letra bajo determinadas circunstancias**, y mucho más.
+
+En este artículo te mostraré tres ejemplos de creación de distintas tablas basadas en datos reales:
+
+1. Tabla de **estimación de pobreza comunal**, con estilo condicional de celdas y columnas con colorización en base a datos
+2. Tabla de **resultados electorales**, con colorización de celdas de variables categóricas en base a una segunda variable categórica
+3. Tabla de **Producto Interno Bruto regional**, con colorización de múltiples columnas numéricas de forma simultánea, y estilo de celdas condicional
+
+----
+
+
+## Tabla de estimación de pobreza por comunas
+
+El primer ejemplo de tabla se basará en los datos de [estimaciones de pobreza comunal del año 2022, producidos por el Ministerio de Desarrollo Social](https://bidat.midesof.cl/directorio/Pobreza%20comunal/estimaciones-de-pobreza-comunal-2022) de Chile.
+
+El primer paso será [obtener los datos oficiales.](https://bidat.midesof.cl/directorio/Pobreza%20comunal/estimaciones-de-pobreza-comunal-2022) Por conveniencia, tengo la tabla con los datos originales pre-procesada [en un repositorio sobre datos de pobreza en Chile](https://github.com/bastianolea/pobreza_chile), por lo que es posible importar los datos limpios en una sola línea de código:
+
+
+
+
+``` r
+pobreza <- readr::read_csv2("https://raw.githubusercontent.com/bastianolea/pobreza_chile/refs/heads/main/pobreza_comunal/datos_procesados/pobreza_comunal.csv")
+
+pobreza
+```
+
+```
+## # A tibble: 345 × 8
+##    codigo region     nombre_comuna poblacion pobreza_n pobreza_p limite_inferior
+##     <dbl> <chr>      <chr>             <dbl>     <dbl>     <dbl>           <dbl>
+##  1   1101 Tarapacá   Iquique          229674    41967.     0.183          0.162 
+##  2   1107 Tarapacá   Alto Hospicio    138527    45162.     0.326          0.295 
+##  3   1401 Tarapacá   Pozo Almonte      18290     4563.     0.250          0.199 
+##  4   1402 Tarapacá   Camiña             1380      308.     0.223          0.138 
+##  5   1403 Tarapacá   Colchane           1575      473.     0.300          0.187 
+##  6   1404 Tarapacá   Huara              3072     1185.     0.386          0.319 
+##  7   1405 Tarapacá   Pica               6184     1040.     0.168          0.119 
+##  8   2101 Antofagas… Antofagasta      438942    73103.     0.167          0.141 
+##  9   2102 Antofagas… Mejillones        15502     3078.     0.199          0.127 
+## 10   2103 Antofagas… Sierra Gorda       1790      295.     0.165          0.0743
+## # ℹ 335 more rows
+## # ℹ 1 more variable: limite_superior <dbl>
+```
+
+
+
+Podemos ver que los datos corresponden a 345 filas con información de las comunas, su población, y las cifras de pobreza en números absolutos y porcentaje. 
+
+Para el ejemplo, primero obtendremos 7 filas al azar y seleccionaremos solamente las columnas que nos interesan. Teniendo cualquier tabla de datos en R, si le agregamos la función `gt()` crearemos una tabla `{gt}` con las configuraciones por defecto:
+
+
+
+
+``` r
+library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+``` r
+library(gt)
+
+set.seed(1917)
+
+tabla_pobreza_1 <- pobreza |> 
+  slice_sample(n = 7) |> 
+  select(region, contains("comuna"), poblacion, starts_with("pobreza")) |> 
+  gt()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
