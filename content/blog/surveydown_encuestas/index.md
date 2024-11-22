@@ -16,7 +16,7 @@ Con el paquete [`{surveydown}`](https://surveydown.org) es muy fácil crear una 
 
 La gracia de crear tu propia encuesta es que puedes personalizarla según tus necesidades, pero también es que no necesitas depender de un servicio para generar la encuesta, ni tampoco tener que pagar para poder crearla o publicarla. Por el contrario, podemos utilizar tecnologías gratuitas y de código abierto para crear nuestras encuestas, almacenar sus resultados y analizarlos.
 
-El paquete [`{surveydown}`](https://surveydown.org) combina el uso de [Quarto](https://quarto.org/docs/computations/r.html) y [Shiny](https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/) para crear encuestas fáciles de diseñar, y con altas capacidades de personalización.
+El paquete [`{surveydown}`](https://surveydown.org) combina el uso de [Quarto](https://quarto.org/docs/computations/r.html) y [Shiny](https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/) para crear encuestas fáciles de diseñar, y con altas capacidades de personalización. [Aquí te dejo una encuesta de prueba para que veas cómo son!](https://bastianoleah.shinyapps.io/encuesta_animales)
 
 El diseño de la encuesta, con todas sus preguntas, títulos, textos, páginas y botones, se hace por medio de un **documento [Quarto](https://quarto.org/docs/computations/r.html)**, donde literalmente vas poniendo todo el contenido que quieres que tenga tu encuesta, especificando los saltos de página de la encuesta, y listo.
 
@@ -135,7 +135,7 @@ Si quieres probar cómo va quedando tu encuesta, puedes ejecutar la aplicación 
 
 ![](surveydown_2.png)
 
-En [este repositorio](https://github.com/bastianolea/encuesta_animales) te dejo el código de una encuesta básica, de tres preguntas, con gráficos que visualizan las respuestas de la encuesta al terminar de responderla.
+En [este repositorio](https://github.com/bastianolea/encuesta_animales) te dejo el código de [una encuesta básica](https://bastianoleah.shinyapps.io/encuesta_animales), de tres preguntas, con gráficos que visualizan las respuestas de la encuesta al terminar de responderla. Puedes usarla como guía al momento de diseñar tu propia encuesta.
 
 Sin embargo, para que tu encuesta funcione, tienes que **configurar la base de datos** primero. Veremos eso a continuación, pero si de todas maneras quieres probar tu encuesta antes de configurar la base de datos, en la aplicación Shiny debes configurar la conexión a la base de datos del siguiente modo:
 
@@ -238,7 +238,7 @@ Personalmente, creé una encuesta de evaluación anónima para las alumnas y alu
 ![Página final de la encuesta](surveydown_4.jpg)
 _Gráficos al final de la encuesta, actualizados en tiempo real_
 
-[En este repositorio](https://github.com/bastianolea/encuesta_animales) te dejo el código de una encuesta que también muestra gráficos en tiempo real con las respuestas al finalizar.
+[En este repositorio](https://github.com/bastianolea/encuesta_animales) te dejo el código de una encuesta que también muestra gráficos en tiempo real con las respuestas al finalizar, y [en este enlace puedes ver la misma encuesta en funcionamiento](https://bastianoleah.shinyapps.io/encuesta_animales) y responderla.
 
 ----
 
