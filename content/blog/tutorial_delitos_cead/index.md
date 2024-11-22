@@ -9,7 +9,8 @@ categories:
 tags:
   - web scraping
   - chile
-  - fuentes de datos
+  - datos
+  - ciencias sociales
 format: hugo-md
 lang: es
 editor_options:

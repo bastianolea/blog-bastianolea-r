@@ -1,6 +1,8 @@
 
 ## Blog R Bastián Olea Herrera
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2901311c-9a8e-44cb-9dd1-97dfb23dff4c/deploy-status)](https://app.netlify.com/sites/bastianoleah/deploys)
+
 Repositorio de mi blog de análisis de datos en R y portafolio de aplicaciones Shiny: https://bastianolea.rbind.io/
 
 El blog es creado con [Hugo](https://gohugo.io), un generador de sitios web estáticos de código abierto y gratuito. Hugo se puede usar a través de R usando `{blogdown}` y el tema [Hugo Apéro](https://hugo-apero.netlify.app), y así puedes crear páginas y publicaciones usando Quarto o RMarkdown.

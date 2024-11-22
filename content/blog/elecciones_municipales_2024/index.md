@@ -9,7 +9,7 @@ tags:
   - visualización de datos
   - gráficos
   - tablas
-  - fuentes de datos
+  - datos
   - Chile
 lang: es
 excerpt: Con motivo de las elecciones municipales, estuve generando algunas visualizaciones ”en tiempo real” de los resultados de las elecciones de alcaldías. Los datos de conteo de votos los fui obteniendo minuto a minuto mediante web scraping con `{RSelenium}`, que permite programar un navegador web para que interactúe con un sitio como si fuera humano. Finalmente desarrollé un sistema que, con un solo comando, ejecutaba el scraping, la limpieza y procesamiento de los datos, y retornaba tablas y gráficos listos para compartir.

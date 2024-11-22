@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Crea encuestas en R usando {surveydown} | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Crea encuestas en R usando {surveydown} | Blog">
+<meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/surveydown_encuestas/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+    
+    
+  
+  <meta itemprop="name" content="Crea encuestas en R usando {surveydown}">
+  <meta itemprop="description" content="Con el paquete {surveydown} es muy fácil crear una encuesta con R, creando tus propias preguntas personalizadas, y almacenando todas las respuestas de tus encuestados/as en una base de datos.
+La gracia de crear tu propia encuesta es que puedes personalizarla según tus necesidades, pero también es que no necesitas depender de un servicio para generar la encuesta, ni tampoco tener que pagar para poder crearla o publicarla. Por el contrario, podemos utilizar tecnologías gratuitas y de código abierto para crear nuestras encuestas, almacenar sus resultados y analizarlos.">
+  <meta itemprop="datePublished" content="2024-11-21T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-11-21T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2274">
+  <meta itemprop="keywords" content="Quarto,Shiny,Ciencias sociales,Datos">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.c4fbf76e54adf7e7a1073b995dfaf4f393e11c67c30cfd5b19d29824f2cee0f0.css" integrity="sha256-xPv3blSt9&#43;ehBzuZXfr085PhHGfDDP1bGdKYJPLO4PA=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.bebab142e3ad4c47834f81e426b8adcd5b747151cc6f7d8358a68b4a30c7ff48.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      <div class="dib v-mid">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastimapache.bsky.social" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.threads.net/@raccunnie" title="threads" target="_blank" rel="me noopener">
+      <i class="fab fa-threads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Crea encuestas en R usando {surveydown}</h1>
+        
+        
+        <p class="f7 db mv0 ttu">21/11/2024</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/quarto">quarto</a>  <a href="http://localhost:4321/tags/shiny">shiny</a>  <a href="http://localhost:4321/tags/ciencias-sociales">ciencias sociales</a>  <a href="http://localhost:4321/tags/datos">datos</a> </dd></em>
+  </dl>
+
+
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>Con el paquete 
+<a href="https://surveydown.org" target="_blank" rel="noopener"><code>{surveydown}</code></a> es muy fácil crear una encuesta con R, creando tus propias preguntas personalizadas, y almacenando todas las respuestas de tus encuestados/as en una base de datos.</p>
+<p>La gracia de crear tu propia encuesta es que puedes personalizarla según tus necesidades, pero también es que no necesitas depender de un servicio para generar la encuesta, ni tampoco tener que pagar para poder crearla o publicarla. Por el contrario, podemos utilizar tecnologías gratuitas y de código abierto para crear nuestras encuestas, almacenar sus resultados y analizarlos.</p>
+<p>El paquete 
+<a href="https://surveydown.org" target="_blank" rel="noopener"><code>{surveydown}</code></a> combina el uso de 
+<a href="https://quarto.org/docs/computations/r.html" target="_blank" rel="noopener">Quarto</a> y 
+<a href="https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/" target="_blank" rel="noopener">Shiny</a> para crear encuestas fáciles de diseñar, y con altas capacidades de personalización.</p>
+<p>El diseño de la encuesta, con todas sus preguntas, títulos, textos, páginas y botones, se hace por medio de un <strong>documento 
+<a href="https://quarto.org/docs/computations/r.html" target="_blank" rel="noopener">Quarto</a></strong>, donde literalmente vas poniendo todo el contenido que quieres que tenga tu encuesta, especificando los saltos de página de la encuesta, y listo.</p>
+<p>El funcionamiento interno de la encuesta es resuelto por <code>{surveydown}</code>, y no tenemos que realizar nada de configuración ni programación por nuestro lado. Todo funciona de forma inmediata (la encuesta, la interacción del usuario y la base de datos) por medio de una <strong>aplicación Shiny</strong>. Lo único que tenemos que proveer es la <strong>conexión a la base de datos</strong> donde se van a ir guardando las respuestas, y de la cual también vamos a poder obtener los resultados cuando queramos.</p>
+
+
+
+
+<h2 id="crear-una-encuesta">Crear una encuesta
+  <a href="#crear-una-encuesta"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para crear nuestra encuesta, podemos usar la función <code>surveydown::sd_create_survey(&quot;ruta/de/la/encuesta/&quot;)</code> para que el paquete <code>{surveydown}</code> cree un nuevo proyecto de R con una plantilla de encuesta lista para editar.</p>
+<p>Otra alternativa es clonar<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> una 
+<a href="https://surveydown.org/demos" target="_blank" rel="noopener">encuesta de demostración disponible la página de <code>{surveydown}</code></a>. El beneficio de esta alternativa es que puedes probar la encuesta antes, para ver cómo quedaría, y si te sirve, la clonas en tu equipo para poder editarla.</p>
+<p>Cuando creamos nuestra primera encuesta, obtenemos un proyecto de R con dos archivos principales:</p>
+<ul>
+<li><code>survey.qmd</code>: la encuesta, en un documento Quarto, donde diseñas todo el contenido de la encuesta, desde subtítulos, textos de introducción, títulos para las preguntas, las preguntas en sí misma, y otros textos que quieras agregar entremedio de la encuesta.</li>
+<li><code>app.R</code>: la aplicación Shiny donde va a aparecer tu encuesta, y que posibilita que las respuestas vayan guardándose en una base de datos. En esta aplicación de Shiny no hay mucho que hacer, porque todo el contenido visible y usable de la encuesta está en el documento Quarto <code>survey.qmd</code>. El rol de la aplicación Shiny es hacer la gestión de que la encuesta funcione y sea interactiva, y que las respuestas que ingresamos quedan registradas en la base de datos. Pero también, al ser una aplicación Shiny, podemos hacer cosas avanzadas con nuestra encuesta, como por ejemplo ir mostrando resultados en tiempo real, visualizaciones de nuestros resultados que se actualizan automáticamente, y más.</li>
+</ul>
+
+
+
+
+<h2 id="diseñar-la-encuesta">Diseñar la encuesta
+  <a href="#dise%c3%b1ar-la-encuesta"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Estando en el proyecto de R de nuestra nueva encuesta, abrimos el documento Quarto <code>survey.qmd</code>, y en él encontraremos una encuesta que viene por defecto.</p>
+<p>Mirando este documento vemos que las páginas de la encuesta van delimitadas por cercos <code>:::</code>, y que dentro de estos cercos va todo el contenido que queramos poner en cada página, como títulos, textos y preguntas.</p>
+<pre tabindex="0"><code class="language-quarto" data-lang="quarto">::: {#bienvenida .sd-page}
+
+# Encuesta
+
+Texto de _introducción_ 
+
+:::
+</code></pre>
+
+
+
+<h3 id="crear-preguntas">Crear preguntas
+  <a href="#crear-preguntas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Dentro de los cercos que delimitan cada página, cada pregunta  dela encuesta va en el documento como un bloque de código R, que en su interior contiene la función <code>sd_question()</code>. Con esta función se crean las preguntas de nuestra encuesta, y en sus argumentos tenemos todas las opciones para personalizarlas.</p>
+<p>En el sitio de <code>{surveydown}</code> existe una 
+<a href="https://surveydown.org/question-types" target="_blank" rel="noopener">documentación con todos los tipos de preguntas</a>, para que veas cómo se ven y cómo se crean. También existe una 
+<a href="https://surveydown.org/demos" target="_blank" rel="noopener">aplicación de prueba que te muestra todos los tipos de preguntas</a> en una encuesta real.</p>
+<p><img src="/blog/surveydown_encuestas/surveydown_1.png"></p>
+<p>Aquí te dejo algunos ejemplos de preguntas básicas que puedes incluir en tu encuesta:</p>
+
+
+
+
+<h4 id="_preguntas-de-selección-múltiple_"><em>Preguntas de selección múltiple</em>
+  <a href="#_preguntas-de-selecci%c3%b3n-m%c3%baltiple_"></a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sd_question</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">type</span>  <span style="color:#908caa">=</span> <span style="color:#f6c177">&#39;mc_buttons&#39;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">id</span>    <span style="color:#908caa">=</span> <span style="color:#f6c177">&#39;animal&#39;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;¿Cuál es tu animal favorito?&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">option</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Perro&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Gato&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Mapache&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+
+
+
+<h4 id="_pregunta-de-ingreso-de-números_"><em>Pregunta de ingreso de números</em>
+  <a href="#_pregunta-de-ingreso-de-n%c3%bameros_"></a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sd_question</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">type</span>  <span style="color:#908caa">=</span> <span style="color:#f6c177">&#39;numeric&#39;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">id</span>    <span style="color:#908caa">=</span> <span style="color:#f6c177">&#39;edad&#39;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;¿Cuál es tu edad?&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+
+
+
+<h4 id="_pregunta-de-ingreso-de-texto_"><em>Pregunta de ingreso de texto</em>
+  <a href="#_pregunta-de-ingreso-de-texto_"></a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sd_question</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">type</span>  <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;text&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">id</span>    <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;temas&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Escribe tus comentarios aquí&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">placeholder</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;(opcional)&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+
+
+
+<h4 id="_pregunta-de-selección-múltiple-con-selección-de-más-de-una-respuesta_"><em>Pregunta de selección múltiple con selección de más de una respuesta</em>
+  <a href="#_pregunta-de-selecci%c3%b3n-m%c3%baltiple-con-selecci%c3%b3n-de-m%c3%a1s-de-una-respuesta_"></a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sd_question</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">type</span>  <span style="color:#908caa">=</span> <span style="color:#f6c177">&#39;mc_multiple_buttons&#39;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">id</span>    <span style="color:#908caa">=</span> <span style="color:#f6c177">&#39;genero&#39;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;¿Con qué género te identificas?&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">option</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Femenino&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;No binario/Otros&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Masculino&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Prefiero no responder&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Al finalizar cada página de tu encuesta, tienes que agregar el botón de siguiente, para que los usuarios/as puedan avanzar a la siguiente página:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sd_next</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Siguiente&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>En la página final de tu encuesta puedes poner un texto de agradecimiento y más información, y especificar el botón para terminar la encuesta:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sd_close</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Terminar&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Si quieres probar cómo va quedando tu encuesta, puedes ejecutar la aplicación Shiny desde el archivo <code>app.R</code>, presionando el botón <em>Run.</em></p>
+<p><img src="/blog/surveydown_encuestas/surveydown_2.png"></p>
+<p>Sin embargo, para que tu encuesta funcione, tienes que <strong>configurar la base de datos</strong> primero. Veremos eso a continuación, pero si de todas maneras quieres probar tu encuesta antes de configurar la base de datos, en la aplicación Shiny debes configurar la conexión a la base de datos del siguiente modo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">db</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sd_database</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">ignore</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>De esta forma, la aplicación funcionará sin una base de datos, almacenando los datos localmente en tu proyecto (en un archivo .csv) para que puedas probarla.</p>
+
+
+
+
+<h2 id="configurar-la-base-de-datos">Configurar la base de datos
+  <a href="#configurar-la-base-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para que las preguntas que respondan tus usuarios/as queden registradas, es necesario especificar un método de recolección de los datos que guarde las respuestas en una base de datos centralizada. Pero una de las limitaciones de las aplicaciones Shiny, particularmente las publicadas en shinyapps.io, es que no pueden almacenar datos persistentes, sino que los datos creados durante el uso de las apps son eliminados al terminar la sesión. Por lo tanto, hay que crear una base de datos <em>remota</em> donde las respuestas de cada persona sean registradas en cada interacción con la encuesta, y que luego podamos consultar para obtener los resultados.</p>
+<p>Esto no es tan difícil de hacer como suena. En la documentación de <code>{surveydown}</code> hay 
+<a href="https://surveydown.org/store-data" target="_blank" rel="noopener">instrucciones detalladas para crear una base de datos para tu encuesta</a>, pero acá de te dejo un resumen:</p>
+
+
+
+
+<h4 id="paso-1-crea-una-cuenta-en-supabase">Paso 1: crea una cuenta en Supabase
+  <a href="#paso-1-crea-una-cuenta-en-supabase"></a>
+</h4>
+<p>Lo primero es averiguar dónde podemos crear una base de datos remota y gratuita. En la 
+<a href="https://surveydown.org/store-data" target="_blank" rel="noopener">documentación</a> de <code>{surveydown}</code> recomiendan usar 
+<a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a>. Supabase es un proveedor abierto y gratuito de bases de datos Postgres. Crea una cuenta ahí, y sigue las instrucciones para tener tu primer proyecto, el cual cuenta con una base de datos. En tu base de datos podrás tener tablas donde se almacenarán las respuestas de tu encuesta. En una misma base de datos pueden haber múltiples tablas, una tabla para cada encuesta distinta que crees.</p>
+
+
+
+
+<h4 id="paso-dos-crear-la-base-de-datos">Paso dos: crear la base de datos
+  <a href="#paso-dos-crear-la-base-de-datos"></a>
+</h4>
+<p>Al crear tu cuenta, se te pedirá crear un <em>proyecto.</em> En este proyecto habrá una base de datos donde se almacenarán los datos de respuesta de tu encuesta, en una tabla específica. Aquí lo importante es que tienes que <strong>definir una contraseña segura</strong>, que será la contraseña que uses para que tu encuesta pueda escribir sus resultados en la base, y también para que tú puedas obtener los resultados desde la base.</p>
+
+
+
+
+<h4 id="paso-tres-obtener-parámetros-de-la-base-de-datos">Paso tres: obtener parámetros de la base de datos
+  <a href="#paso-tres-obtener-par%c3%a1metros-de-la-base-de-datos"></a>
+</h4>
+<p>Luego de crear la base, necesitas obtener ciertos datos de tu base para poder hacer la conexión entre tu encuesta y la base. En Supabase, ve a <em>Project Settings</em> (abajo a la izquierda), luego en el menú <em>Configuration</em> elige <em>Database.</em> En esta sección aparecerán los parámetros de conexión en <em>Connection parameters.</em></p>
+
+
+
+
+<h4 id="paso-cuatro-configurar-la-base-de-datos-en-tu-proyecto-de-r">Paso cuatro: configurar la base de datos en tu proyecto de R
+  <a href="#paso-cuatro-configurar-la-base-de-datos-en-tu-proyecto-de-r"></a>
+</h4>
+<p>Para que tu encuesta se conecte a la base de datos, debes proveer a tu encuesta con los parámetros de conexión. Los parámetros de configuración de tu base de datos se ingresan en el archivo de tu aplicación Shiny de la encuesta. Abre <code>app.R</code>, y en la función <code>sd_database()</code> que está al principio del script, pega la información que tienes en Supabase:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">db</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sd_database</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">host</span>   <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">dbname</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">port</span>   <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">user</span>   <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">table</span>  <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;nombre_de_tu_tabla&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>El nombre de la tabla puede ser cualquiera, y dependiendo del nombre que pongas es la tabla donde sea almacenar la respuesta. Si luego creas una nueva encuesta, y pones un nombre de tabla distinto, las respuestas de esta nueva encuesta aparecerá en una tabla separada. Basta con especificar el nombre de una tabla nueva para que la tabla nueva se cree, no es necesario crearla antes en otro lugar.</p>
+
+
+
+
+<h4 id="paso-cinco-autenticar-la-base-de-datos-en-tu-proyecto-de-r">Paso cinco: autenticar la base de datos en tu proyecto de R
+  <a href="#paso-cinco-autenticar-la-base-de-datos-en-tu-proyecto-de-r"></a>
+</h4>
+<p>El paso final es darle el permiso a tu proyecto de R para poder leer y escribir la base de datos. Esto se hace autenticando la contraseña de tu base de datos en tu proyecto de R.</p>
+<p>Si bien en el paso anterior entregamos los demás parámetros de configuración de tu base de datos, la contraseña no se puede escribir en el script, porque eso haría que la contraseña sea visible para cualquier persona que pueda ver el código de tu encuesta (por ejemplo, si alguien usa tu computador, si subes tu encuesta a GitHub, o si compartes el código con alguien).</p>
+<p>Para garantizar la seguridad de tu base de datos, <strong>la contraseña se entrega por medio de la consola de R</strong>, y queda registrada en un archivo invisible dentro de tu proyecto (<code>.Renviron</code>), que no se subirá a GitHub (si es que decides subir tu encuesta a GitHub).</p>
+<p>En la consola de tu sesión de R, ejecuta la siguiente función con tu contraseña adentro para autenticar tu encuesta con la base de datos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sd_set_password</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;contraseña&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>¡Y listo! Ahora cada respuesta que se marque en tu encuesta quedará registrada automáticamente en la base de datos.</p>
+
+
+
+
+<h2 id="probar-la-encuesta">Probar la encuesta
+  <a href="#probar-la-encuesta"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para ejecutar tu encuesta, tienes que abrir el script de la aplicación Shiny, <code>app.R</code>, y ejecutar la app con el botón <em>Run.</em> Tu encuesta se abrirá una nueva ventana y podrás ponerla a prueba, o responderla.</p>
+<p>Todas las respuestas que ingreses quedarán registradas en la base de datos de Supabase, incluso cuando la ejecutes localmenet. En el sitio web de Supabase, dentro de tu proyecto de la encuesta, puedes acceder a <em>Table editor</em> para revisar la tabla que contiene las respuestas, y revisar las respuestas en una planilla interactiva.</p>
+
+
+
+
+<h2 id="subir-tu-encuesta-y-compartirla">Subir tu encuesta y compartirla
+  <a href="#subir-tu-encuesta-y-compartirla"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>El último paso es <strong>publicar tu encuesta</strong> y compartirla con otras personas para que la respondan. La forma más sencilla de hacer esto es publicar la aplicación en 
+<a href="https://www.shinyapps.io" target="_blank" rel="noopener">shinyapps.io</a>. 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_shinyapps/" target="_blank" rel="noopener">En este post te doy todas las instrucciones para que puedas publicar tu aplicación gratuitamente a shinyapps.io</a>. Para publicar la encuesta como una aplicación en 
+<a href="https://www.shinyapps.io" target="_blank" rel="noopener">shinyapps.io</a>, abre el script <code>app.R</code> y presiona el botón azul de <em>Publicar</em> (en la esquina superior derecha del panel de script), y publícala a como si de cualquier otra aplicación se tratase. Una vez publicada, tendrás un enlace que puedes compartir con otras personas.</p>
+<p>Todas las respuestas quedarán registradas en tu base de datos, incluso desde la aplicación publicada, porque la app contiene la autenticación que hiciste a la base de datos, así que tiene <em>permiso</em> para escribir en la tabla remota.</p>
+
+
+
+
+<h2 id="obtener-resultados-de-la-encuesta">Obtener resultados de la encuesta
+  <a href="#obtener-resultados-de-la-encuesta"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para obtener los resultados de tu encuesta, simplemente en un nuevo script ingresas la configuración de tu base de datos para conectarte a ella, igual como lo hiciste antes en la encuesta misma, y luego usa la función <code>sd_get_data()</code> para obtener los datos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">db</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sd_database</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">host</span>   <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;my_host&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">dbname</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;my_dbname&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">port</span>   <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;my_port&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">user</span>   <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;my_user&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">table</span>  <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;my_table&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">data</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sd_get_data</span><span style="color:#908caa">(</span><span style="color:#ea9a97">db</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Vale decir que la obtención de los datos remotos tienes que hacerla desde el mismo proyecto de R donde creaste y configuraste la contraseña de tu base de datos. De lo contrario, vas a tener que volver a registrar la contraseña de tu base de datos con <code>sd_set_password()</code> en el proyecto que quieras conectar a tu base de datos.</p>
+<p>Una vez establecida la conexión con la base de datos, si vuelves a ejecutar la función <code>sd_get_data()</code> obtendrás los datos actualizados.</p>
+<hr>
+
+
+
+
+<h2 id="conclusión">Conclusión
+  <a href="#conclusi%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Siguiendo esta instrucciones, en unos minutos podrás tener una encuesta sencilla, personalizable, y totalmente gratis, que puedes publicar online y enviarla para empezar a recolectar datos. En el proceso, también habrás aprendido a crear y conectarte a una base de datos SQL, una herramienta crucial y que abre muchas posibilidades en el mundo del análisis de datos y el desarrollo de aplicaciones Shiny.</p>
+<p>Personalmente, creé una encuesta de evaluación anónima para las alumnas y alumnos de mis 
+<a href="/clases/">cursos de R</a>, y otra encuesta de bienvenida a nuevos alumnxs de mis cursos, donde rellenaron sus datos de caracterización, respondieron sobre sus conocimientos previos de R y sus expectativas del curso, y al final de la encuesta <strong>los resultados se visualizaban en tiempo real</strong>, actualizándose cada cinco segundos, y así todas y todos podíamos ver gráficos que describían a los participantes del curso a medida que respondían! 😍</p>
+<p><img alt="Página final de la encuesta" src="/blog/surveydown_encuestas/surveydown_4.jpg">
+<em>Gráficos al final de la encuesta, actualizados en tiempo real</em></p>
+<hr>
+<p>Si este tutorial te sirvió, por favor considera hacerme una pequeña donación para poder tomarme un cafecito mientras escribo el siguiente tutorial 🥺</p>
+<div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Para clonar un repositorio de GitHub, entras al repositorio, presionas el botón verde que dice <em>Code</em>, copias el enlace que te entrega, y en RStudio creas un nuevo proyecto a partir de control de versiones, pegas ahí el enlace del repositorio GitHub, y específicas donde quieres guardar tu proyecto clonado.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">November 21, 2024</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">11 minute read, 2274 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categorías:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/categories/tutoriales">Tutoriales</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/quarto">quarto</a>  <a href="http://localhost:4321/tags/shiny">shiny</a>  <a href="http://localhost:4321/tags/ciencias-sociales">ciencias sociales</a>  <a href="http://localhost:4321/tags/datos">datos</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/portafolio_trabajos_r/">Portafolio de trabajos previos en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/casen_introduccion/">Cargar y explorar datos de la encuesta Casen en R, usando factor de expansión</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/r_introduccion/tutorial_shiny_1/">Tutorial: crea una aplicación Shiny básica</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/tutorial_gt/">Tutorial: generar tablas atractivas y personalizables con {gt} &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2024 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastimapache.bsky.social" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.threads.net/@raccunnie" title="threads" target="_blank" rel="me noopener">
+      <i class="fab fa-threads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

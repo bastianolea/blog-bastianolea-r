@@ -8,11 +8,11 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Web scraping automatizado en R con GitHub Actions", 
+blogdown::new_post(title = "Crea encuestas en R usando {surveydown}", 
                    subdir = "blog/",
-                   file = "blog/web_scraping_github_actions/index.qmd",
+                   file = "blog/surveydown_encuestas/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("web scraping", "git"),
+                   tags = c("quarto", "shiny", "ciencias sociales"),
                    categories = c() 
 )
 

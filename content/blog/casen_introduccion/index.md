@@ -10,6 +10,8 @@ tags:
   - dplyr
   - chile
   - estadística
+  - ciencias sociales
+  - datos
 ---
 
 

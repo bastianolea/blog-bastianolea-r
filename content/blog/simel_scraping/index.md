@@ -5,8 +5,9 @@ format: hugo-md
 date: 2024-11-01
 tags:
   - web scraping
-  - fuentes de datos
+  - datos
   - Chile
+  - ciencias sociales
 lang: es
 excerpt: Repositorio de código para obtener todos los datos de SIMEL de manera automática mediante web scraping, usando `{RSelenium}`.
 links:
