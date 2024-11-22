@@ -22,6 +22,15 @@ El diseño de la encuesta, con todas sus preguntas, títulos, textos, páginas y
 
 El funcionamiento interno de la encuesta es resuelto por `{surveydown}`, y no tenemos que realizar nada de configuración ni programación por nuestro lado. Todo funciona de forma inmediata (la encuesta, la interacción del usuario y la base de datos) por medio de una **aplicación Shiny**. Lo único que tenemos que proveer es la **conexión a la base de datos** donde se van a ir guardando las respuestas, y de la cual también vamos a poder obtener los resultados cuando queramos.
 
+<div style="padding:18px;padding-bottom:1px;padding-top:1px;background-color:#493365;color:#E9DDEE;border-radius:6px;margin:20px;margin-top:40px;margin-left:40px;margin-right:40px;font-size:100%;">
+
+Aquí les dejo una encuesta de prueba, hecha siguiendo este tutorial, para ver quién gana: ¿gatos 🐈 o perros 🐕? [**Responde aquí**](https://bastianoleah.shinyapps.io/encuesta_animales)
+
+</div>
+
+<br></br>
+
+
 
 ## Crear una encuesta
 
@@ -126,6 +135,8 @@ Si quieres probar cómo va quedando tu encuesta, puedes ejecutar la aplicación 
 
 ![](surveydown_2.png)
 
+En [este repositorio](https://github.com/bastianolea/encuesta_animales) te dejo el código de una encuesta básica, de tres preguntas, con gráficos que visualizan las respuestas de la encuesta al terminar de responderla.
+
 Sin embargo, para que tu encuesta funcione, tienes que **configurar la base de datos** primero. Veremos eso a continuación, pero si de todas maneras quieres probar tu encuesta antes de configurar la base de datos, en la aplicación Shiny debes configurar la conexión a la base de datos del siguiente modo:
 
 ```r
@@ -226,6 +237,8 @@ Personalmente, creé una encuesta de evaluación anónima para las alumnas y alu
 
 ![Página final de la encuesta](surveydown_4.jpg)
 _Gráficos al final de la encuesta, actualizados en tiempo real_
+
+[En este repositorio](https://github.com/bastianolea/encuesta_animales) te dejo el código de una encuesta que también muestra gráficos en tiempo real con las respuestas al finalizar.
 
 ----
 

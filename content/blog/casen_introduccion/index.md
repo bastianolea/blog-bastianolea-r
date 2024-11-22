@@ -8,7 +8,7 @@ categories:
   - Tutoriales
 tags:
   - dplyr
-  - chile
+  - Chile
   - estadística
   - ciencias sociales
   - datos
