@@ -10,7 +10,8 @@ intro: |
   Bastián Olea Herrera, sociólogo, 31 años, ubicado en La Florida, Santiago de Chile. 
   - **Magíster en Sociología** (2019) (Pontificia Universidad Católica de Chile),
   - Licenciado en Sociología y Bachiller en Ciencias Sociales (2016) (Universidad Alberto Hurtado),
-  - dos diplomados en las áreas de la ciencia de datos (PUC), y la estética y los estudios de género (PUC).
+  - Diplomado en ciencia de datos (Pontificia Universidad Católica de Chile), 
+  - Diplomado en Estética, feminismo y crítica (Pontificia Universidad Católica de Chile).
   
   Especialización en sociología del cuerpo, sociología del género y ciencia de datos (mediante el lenguaje de programación estadística R).
   

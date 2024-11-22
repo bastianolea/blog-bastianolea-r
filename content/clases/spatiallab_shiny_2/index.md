@@ -5,22 +5,20 @@ author: Bastián Olea Herrera
 date: "2024-11-21T19:00:00.000Z"
 date_end: "2024-12-12T21:00:00.000Z"
 draft: false
-excerpt: Curso online de cuatro sesiones, donde aprenderás desde cero a desarrollar apps para visualizar, explorar y presentar tus datos. ¡Inscripciones abiertas!
+excerpt: Curso online de cuatro sesiones, donde aprenderás desde cero a desarrollar apps para visualizar, explorar y presentar tus datos. Inscripciones cerradas.
 layout: single
 location: Online
+links:
+- icon: github
+  icon_pack: fab
+  name: código y contenidos
+  url: https://github.com/bastianolea/curso_shiny_2_spatialLab
 ---
-
-**¡Inscripciones abiertas!** [**Inscríbete aquí**](https://spatiallab.cl/cursos-1/ola/services/2da-version-curso-desarrollo-de-aplicaciones-web-interactivas-usando-r-y-shiny)
 
 ![](curso_desarrollo_apps_2_1-featured.jpeg)
 
 Debido al gran interés, se realizará una segunda versión del curso Desarrollo de aplicaciones web interactivas usando R y Shiny dictado por Bastián Olea Herrera, Magíster en Sociología.  [SÓLO 25 CUPOS]  
-
 El curso consta de 8 horas cronológicas, divididas en cuatro sesiones de dos horas de duración. Todos los jueves a las 19:00 hrs (GMT-3), desde el 21 de noviembre hasta el 12 de diciembre.  
-
-Curso completo: $68.000 pesos chilenos (78 USD). Una vez realizada la reserva, te llegará un correo con las opciones de pago que ofrecemos. 
-
-IMPORTANTE: El pago asegura el cupo de la clase y la reserva caduca en 48 horas. Si no has realizado el pago dentro de las 48 horas, tu cupo se eliminará y pasará a otra persona.  Para dudas y consultas, enviar un correo a contacto@spatiallab.cl 
 
 Este curso es ideal para aquellas personas que busquen generar aplicaciones interactivas en su red de trabajo y sea accesible al público.
 
@@ -33,4 +31,4 @@ _Temario:_
 3. Personalizar apariencia de una aplicación web [05 de diciembre]  
 4. Publicación de la aplicación web para volverla accesible al público [12 de diciembre]
 
-Dictado por  Bastián Olea Herrera, Magister en sociología
+Dictado por Bastián Olea Herrera, Magíster en sociología
