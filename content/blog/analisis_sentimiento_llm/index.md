@@ -9,6 +9,7 @@ draft: true
 tags:
   - análisis de texto
   - inteligencia artificial
+  - ciencias sociales
 ---
 
 
