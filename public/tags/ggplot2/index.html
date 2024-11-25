@@ -45,8 +45,8 @@
   
   <meta itemprop="name" content="Ggplot2">
   <meta itemprop="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
-  <meta itemprop="datePublished" content="2024-11-08T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-11-08T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2024-11-23T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-11-23T00:00:00+00:00">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
@@ -61,7 +61,7 @@
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
   
   
-  <script src="/main.min.bebab142e3ad4c47834f81e426b8adcd5b747151cc6f7d8358a68b4a30c7ff48.js" type="text/javascript"></script>
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
 </head>
 <body>
       <div class="grid-container">
@@ -237,6 +237,64 @@
     <p class="f6 f5-ns measure lh-copy tc center"></p>
   </section>
   <section class="blog-content mw7 center">
+  
+    
+                               
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/tutorial_mapa_chile/" class="db">Crea un mapa de Chile y visualiza datos comunales, regionales y georeferenciados en R</a></h1>
+      
+    </header>
+      
+      <p class="lh-copy mb4"><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sf</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>El paquete 
+<a href="https://pacha.dev/chilemapas/" target="_blank" rel="noopener"><code>{chilemapas}</code></a>, desarrollado por 
+<a href="https://pacha.dev" target="_blank" rel="noopener">Mauricio Vargas</a>, ofrece una colección de mapas terrestres de Chile con topología simplificada. Simplemente llamando el objeto <code>mapa_comunas</code> obtenemos un dataframe con la información geográfica de cada comuna del país.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_comunas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">::</span><span style="color:#ea9a97">mapa_comunas</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_comunas</span>
+</span></span></code></pre></div><pre><code># A tibble: 345 × 4
+   codigo_comuna codigo_provincia codigo_region                         geometry
+   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;                       &lt;MULTIPOLYGON [°]&gt;
+ 1 01401         014              01            (((-68.86081 -21.28512, -68.921…
+ 2 01403         014              01            (((-68.65113 -19.77188, -68.811…
+ 3 01405         014              01            (((-68.65113 -19.77188, -68.635…
+ 4 01402         014              01            (((-69.31789 -19.13651, -69.271…
+ 5 01404         014              01            (((-69.39615 -19.06125, -69.400…
+ 6 01107         011              01            (((-70.1095 -20.35131, -70.1243…
+ 7 01101         011              01            (((-70.09894 -20.08504, -70.102…
+ 8 02104         021              02            (((-68.98863 -25.38016, -68.987…
+ 9 02101         021              02            (((-70.60654 -23.43054, -70.601…
+10 02201         022              02            (((-67.94302 -22.38175, -67.955…
+# ℹ 335 more rows
+</code></pre>
+<p>En este dataframe, la columna <code>geometry</code> representa los polígonos de cada comuna. Esta información ya es suficiente para visualizar el mapa con R usando <code>{ggplot2}</code> y 
+<a href="https://r-spatial.github.io/sf/" target="_blank" rel="noopener"><code>{sf}</code>, un paquete para trabajar con datos espaciales</a>.</p></p>
+    <footer>
+      
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/mapas">mapas</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ciencias-sociales">ciencias sociales</a> </dd></em>
+        </dl>
+        
+        
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
   
     
                                

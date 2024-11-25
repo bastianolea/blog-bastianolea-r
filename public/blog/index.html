@@ -46,8 +46,8 @@
   
   <meta itemprop="name" content="Análisis de datos en R">
   <meta itemprop="description" content="Publicaciones periodicas sobre el uso de R para análisis de datos, incluyendo tutoriales, reseñas, tips o consejos, novedades, y más.">
-  <meta itemprop="datePublished" content="2024-11-21T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-11-21T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2024-11-23T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-11-23T00:00:00+00:00">
   <meta itemprop="wordCount" content="56">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -63,7 +63,7 @@
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
   
   
-  <script src="/main.min.bebab142e3ad4c47834f81e426b8adcd5b747151cc6f7d8358a68b4a30c7ff48.js" type="text/javascript"></script>
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
 </head>
 <body>
       <div class="grid-container list-sidebar">
@@ -247,6 +247,64 @@
   
   <div class="measure-wide center mb4 mb5-l">
     <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/tutorial_mapa_chile/" class="db">Crea un mapa de Chile y visualiza datos comunales, regionales y georeferenciados en R</a></h1>
+      
+    </header>
+      
+      <p class="lh-copy mb4"><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sf</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>El paquete 
+<a href="https://pacha.dev/chilemapas/" target="_blank" rel="noopener"><code>{chilemapas}</code></a>, desarrollado por 
+<a href="https://pacha.dev" target="_blank" rel="noopener">Mauricio Vargas</a>, ofrece una colección de mapas terrestres de Chile con topología simplificada. Simplemente llamando el objeto <code>mapa_comunas</code> obtenemos un dataframe con la información geográfica de cada comuna del país.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_comunas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">::</span><span style="color:#ea9a97">mapa_comunas</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_comunas</span>
+</span></span></code></pre></div><pre><code># A tibble: 345 × 4
+   codigo_comuna codigo_provincia codigo_region                         geometry
+   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;                       &lt;MULTIPOLYGON [°]&gt;
+ 1 01401         014              01            (((-68.86081 -21.28512, -68.921…
+ 2 01403         014              01            (((-68.65113 -19.77188, -68.811…
+ 3 01405         014              01            (((-68.65113 -19.77188, -68.635…
+ 4 01402         014              01            (((-69.31789 -19.13651, -69.271…
+ 5 01404         014              01            (((-69.39615 -19.06125, -69.400…
+ 6 01107         011              01            (((-70.1095 -20.35131, -70.1243…
+ 7 01101         011              01            (((-70.09894 -20.08504, -70.102…
+ 8 02104         021              02            (((-68.98863 -25.38016, -68.987…
+ 9 02101         021              02            (((-70.60654 -23.43054, -70.601…
+10 02201         022              02            (((-67.94302 -22.38175, -67.955…
+# ℹ 335 more rows
+</code></pre>
+<p>En este dataframe, la columna <code>geometry</code> representa los polígonos de cada comuna. Esta información ya es suficiente para visualizar el mapa con R usando <code>{ggplot2}</code> y 
+<a href="https://r-spatial.github.io/sf/" target="_blank" rel="noopener"><code>{sf}</code>, un paquete para trabajar con datos espaciales</a>.</p></p>
+    <footer>
+      
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/mapas">mapas</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ciencias-sociales">ciencias sociales</a> </dd></em>
+        </dl>
+        
+        
+      
+      <p class="f7 db mv2">23/11/2024</p>
+      
+    </footer>
+  </div>
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
       <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/surveydown_encuestas/" class="db">Crea encuestas en R usando {surveydown}</a></h1>
       
     </header>
@@ -379,7 +437,7 @@
   
   <div class="measure-wide center mb4 mb5-l">
     <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/analisis_sentimiento_llm/" class="db">Análisis de sentimiento usando modelos de lenguaje (LLM) en R</a></h1>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/analisis_sentimiento_llm/" class="db">Análisis de sentimiento usando modelos de lenguaje (LLM) locales en R</a></h1>
       
     </header>
       
@@ -620,7 +678,7 @@
       
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/an%C3%A1lisis-de-texto">análisis de texto</a> </dd></em>
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/an%C3%A1lisis-de-texto">análisis de texto</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ciencias-sociales">ciencias sociales</a> </dd></em>
         </dl>
         
         
@@ -769,13 +827,13 @@
       
     </header>
       
-      <p class="lh-copy mb4">Colección de sitios web y recursos útiles para usuarios de R.</p>
+      <p class="lh-copy mb4">Colección de sitios web y recursos útiles para usuarios de R. Incluye sitios desde donde obtener datos, blogs de usuarios de R, sitios útiles para visualización de datos, y más.</p>
     <footer>
       
         
         
       
-      
+      <p class="f7 db mv2">8/11/2024</p>
       
     </footer>
   </div>
@@ -877,57 +935,6 @@ Tomé el dataframe <code>iris</code>, configuré algunos elementos aleatorios en
         
       
       <p class="f7 db mv2">8/11/2024</p>
-      
-    </footer>
-  </div>
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/hugo_blog_nuevo/" class="db">Post sobre mi nuevo blog (este mismo)</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Post explicativo de cómo hice éste sitio web usando el tema Hugo Apéro. Describo los beneficios de Hugo, las dificultades que tuve para entender, y comentarios acerca de la importancia de tener un espacio web fuera de las grandes empresas que monopolizan la internet. La totalidad del código de este sitio web 
-<a href="https://github.com/bastianolea/blog-r" target="_blank" rel="noopener">está disponible en el repositorio <code>blog-r</code> en mi GitHub.</a></p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/quarto">quarto</a> </dd></em>
-        </dl>
-        
-        
-      
-      <p class="f7 db mv2">7/11/2024</p>
-      
-        <p class="db pt1">
-        
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-      
-  <a class="btn-links mr2 ba dib" href="https://github.com/bastianolea/blog-bastianolea-r" target="_blank" rel="noopener"><i class="fab fa-github fa-lg fa-fw mr2"></i>código</a>
-
-
-        </p>
       
     </footer>
   </div>

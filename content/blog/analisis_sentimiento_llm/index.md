@@ -1,5 +1,5 @@
 ---
-title: Análisis de sentimiento usando modelos de lenguaje (LLM) en R
+title: Análisis de sentimiento usando modelos de lenguaje (LLM) locales en R
 author: Bastián Olea Herrera
 date: '2024-11-18'
 slug: []
@@ -9,7 +9,6 @@ draft: true
 tags:
   - análisis de texto
   - inteligencia artificial
-  - ciencias sociales
 ---
 
 
@@ -24,3 +23,16 @@ Algunos ejemplos son:
 - Comparar si textos sobre un mismo tema son expuestos de forma distinta por distintos autores o fuentes
 
 Por ejemplo, tenemos un conjunto de Artículos de prensa o noticias, cada uno con fecha y el medio de comunicación del que proviene. Si hacemos una selección de noticias sobre un tema específico, podríamos analizar cómo cambia el sentimiento dominante con el que se plantea la temática en distintos momentos del tiempo, o si dos medios de comunicación representan recurrentemente una misma temática bajo distinto sentimiento.
+
+------------------------------------------------------------------------
+
+Si este tutorial te sirvió, por favor considera hacerme una pequeña donación para poder tomarme un cafecito mientras escribo el siguiente tutorial 🥺
+
+<div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>

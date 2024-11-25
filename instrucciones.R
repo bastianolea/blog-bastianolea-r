@@ -8,12 +8,12 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Crea encuestas en R usando {surveydown}", 
+blogdown::new_post(title = "Crea un mapa de Chile en R y visualiza datos comunales, regionales y georeferenciados", 
                    subdir = "blog/",
-                   file = "blog/surveydown_encuestas/index.qmd",
+                   file = "blog/tutorial_mapa_chile/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("quarto", "shiny", "ciencias sociales"),
-                   categories = c() 
+                   tags = c("mapas", "ggplot2", "gráficos", "ciencias sociales"),
+                   categories = c("tutoriales") 
 )
 
 # convertir script a Quarto
