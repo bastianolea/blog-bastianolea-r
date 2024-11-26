@@ -1,7 +1,7 @@
 ---
 title: Portafolio de trabajos previos en R
 author: Bastián Olea Herrera
-date: '2024-11-12'
+date: '2024-11-26'
 slug: []
 categories: []
 tags:
@@ -19,6 +19,25 @@ En esta página mantengo muestras de algunos proyectos que he realizado como ana
 Todo lo descrito ha sido programado íntegramente por mi, como parte de distintos equipos de trabajo.
 
 ----
+
+## Visualizador de resultados de encuesta de opinión sobre China
+_Núcleo Milenio sobre los Impactos de China en América Latina_
+
+![](iclac/visualizador_encuesta_iclac.jpg)
+
+Desarrollo de una aplicación web que visualiza los resultados de la _Encuesta de opinión pública: ¿Qué piensan los chilenos sobre China?,_ para el [Núcleo Milenio sobre los Impactos de China en América Latina (ICLAC)](https://iclac.cl/).
+
+La aplicación entrega más de 20 gráficos con distintos elementos de interactividad para presentar los resultados principales de la encuesta, y en la parte inferior de la página se encuentra un visualizador personalizado donde las y los usuarios pueden elegir cualquier pregunta de la encuesta y aplicarle filtros, desagregación, cruces de variables, visualización histórica, y más.
+
+El sistema está diseñado para recibir nuevas encuestas que se agregan al visualizador existente sin problemas, mediante un proceso de limpieza y procesamiento de los datos automatizado.
+
+
+_Nota: en la imagen se ve el visualizador en dos columnas, dado que es muy largo_
+
+Puedes [acceder al visualizador de la encuesta aquí.](https://iclac.cl/monitor-de-opinion-publica/)
+
+----
+
 
 ## Índice de Saturación de Destinos Turísticos
 _Pontificia Universidad Católica de Chile_
@@ -40,7 +59,9 @@ Proyecto FONDEF Índice de Saturación de Destinos Turísticos. Programación de
 _DataUC_ (Facultad de Matemáticas PUC), Pontificia Universidad Católica de Chile
 
 ![](transbank/movilidad_google_1.jpg)
-![](transbank/movilidad_google_2.jpg)
+
+Desarrollo de una plataforma de visualización de datos que accedía a los datos periódicamente actualizados de movilidad de Google, para visualizar la información aplicada a Chile, por región y provincia. Además, relacionaba estos datos con los datos en tiempo real de coronavirus en Chile, junto a la información sobre el estado de cuarentena de las comunas correspondientes.
+
 _Aplicaciones web desarrolladas con R y Shiny con gráficos ggplot2_
 
 
@@ -71,6 +92,7 @@ _DataUC_ (Facultad de Matemáticas PUC), Pontificia Universidad Católica de Chi
 ![](transbank/transbank_índice_transacciones.jpg)
 _Aplicaciones web desarrolladas con R y Shiny con gráficos ggplot2_
 
+Plataforma de visualización de datos que producía un índice de movilidad a partir del procesamiento algorítmico de cientos de millones de observaciones correspondientes a las transacciones de tarjetas de débito y crédito Transbank. Los datos de transacciones eran preprocesados con algoritmos de anonimización de datos.
 
 ----
 

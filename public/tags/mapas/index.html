@@ -45,8 +45,8 @@
   
   <meta itemprop="name" content="Mapas">
   <meta itemprop="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
-  <meta itemprop="datePublished" content="2024-11-23T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-11-23T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2024-11-25T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-11-25T00:00:00+00:00">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
@@ -143,21 +143,6 @@
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
-      <i class="fab fa-twitter fa-lg fa-fw"></i>
-    </a>
-  
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-    
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
       <i class="fab fa-bluesky fa-lg fa-fw"></i>
     </a>
@@ -173,8 +158,38 @@
     
       
     
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
       <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
     </a>
   
     
@@ -248,37 +263,11 @@
   
   <div class="measure-wide center mb4 mb5-l">
     <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/tutorial_mapa_chile/" class="db">Crea un mapa de Chile y visualiza datos comunales, regionales y georeferenciados en R</a></h1>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/tutorial_mapa_chile/" class="db">Crea un mapa de Chile y visualiza datos comunales y regionales con mapas en R</a></h1>
       
     </header>
       
-      <p class="lh-copy mb4"><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sf</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>El paquete 
-<a href="https://pacha.dev/chilemapas/" target="_blank" rel="noopener"><code>{chilemapas}</code></a>, desarrollado por 
-<a href="https://pacha.dev" target="_blank" rel="noopener">Mauricio Vargas</a>, ofrece una colección de mapas terrestres de Chile con topología simplificada. Simplemente llamando el objeto <code>mapa_comunas</code> obtenemos un dataframe con la información geográfica de cada comuna del país.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_comunas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">::</span><span style="color:#ea9a97">mapa_comunas</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_comunas</span>
-</span></span></code></pre></div><pre><code># A tibble: 345 × 4
-   codigo_comuna codigo_provincia codigo_region                         geometry
-   &lt;chr&gt;         &lt;chr&gt;            &lt;chr&gt;                       &lt;MULTIPOLYGON [°]&gt;
- 1 01401         014              01            (((-68.86081 -21.28512, -68.921…
- 2 01403         014              01            (((-68.65113 -19.77188, -68.811…
- 3 01405         014              01            (((-68.65113 -19.77188, -68.635…
- 4 01402         014              01            (((-69.31789 -19.13651, -69.271…
- 5 01404         014              01            (((-69.39615 -19.06125, -69.400…
- 6 01107         011              01            (((-70.1095 -20.35131, -70.1243…
- 7 01101         011              01            (((-70.09894 -20.08504, -70.102…
- 8 02104         021              02            (((-68.98863 -25.38016, -68.987…
- 9 02101         021              02            (((-70.60654 -23.43054, -70.601…
-10 02201         022              02            (((-67.94302 -22.38175, -67.955…
-# ℹ 335 more rows
-</code></pre>
-<p>En este dataframe, la columna <code>geometry</code> representa los polígonos de cada comuna. Esta información ya es suficiente para visualizar el mapa con R usando <code>{ggplot2}</code> y 
-<a href="https://r-spatial.github.io/sf/" target="_blank" rel="noopener"><code>{sf}</code>, un paquete para trabajar con datos espaciales</a>.</p></p>
+      <p class="lh-copy mb4">Visualizar datos geográficamente es una herramienta de comunicación y análisis de datos muy potente. En este tutorial te explico cómo obtener mapas comunales y regionales de Chile en R, y cómo crear un gráficos que visualizan variables numéricas en las comunas y regiones del país. En pocos pasos puedes transformar tus datos territoriales en visualizaciones mucho más densas e informativas.</p>
     <footer>
       
         
@@ -440,21 +429,6 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
-      <i class="fab fa-twitter fa-lg fa-fw"></i>
-    </a>
-  
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-    
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
       <i class="fab fa-bluesky fa-lg fa-fw"></i>
     </a>
@@ -470,8 +444,38 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
       
     
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
       <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
     </a>
   
     
