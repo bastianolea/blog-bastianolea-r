@@ -572,3 +572,18 @@ Los resultados de los tres métodos difieren, especialmente los del primer méto
 1.  El primer método *no debe usarse nunca,* pues no aplica correctamente la metodología de la encuesta, y sus resultados difieren de la realidad.
 2.  El segundo método, usando `tidyr::uncount()`, si bien puede parecer más conveniente y rápido de aplicar, obtiene resultados tiene un peor desempeño al obtener los resultados, y consume una *muy alta* cantidad de memoria para calcular resultados a nivel nacional, o incluso regiones o comunas de gran población. En computadores con menos de 24 GB de memoria, probablemente no pueda ser posible calcular estadísticos a nivel nacional sin realizar pasos intermediarios para disminuir el consumo de memoria (como separar el cálculo por regiones y luego realizar las sumas entre ellas).
 3.  Entre los tres métodos, el más correcto de utilizar es el tercero, usando el paquete `{srvyr}`. Además de entregar los resultados con mayor eficiencia y velocidad, aplica correctamente la metodología de muestreo especificada por la encuesta, por lo que también es el método más exacto.
+
+
+------------------------------------------------------------------------
+
+
+Si este tutorial te sirvió, por favor considera hacerme una pequeña donación para poder tomarme un cafecito mientras escribo el siguiente tutorial 🥺
+
+<div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
