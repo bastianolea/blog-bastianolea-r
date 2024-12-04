@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Aplicando una regresión lineal en la vida diaria: predecir kilómetros por recorrer en bicicleta | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Se me ocurrió aplicar estadísticas a una duda cotidiana: si se tiene un historial de kilómetros recorridos, ¿cómo podemos predecir los kilómetros que se recorrerán en el futuro? En este post aplicamos una regresión lineal en R para averiguarlo.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Aplicando una regresión lineal en la vida diaria: predecir kilómetros por recorrer en bicicleta | Blog">
+<meta property="og:description" content="Se me ocurrió aplicar estadísticas a una duda cotidiana: si se tiene un historial de kilómetros recorridos, ¿cómo podemos predecir los kilómetros que se recorrerán en el futuro? En este post aplicamos una regresión lineal en R para averiguarlo." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/regresion_ciclismo/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+    
+    
+  
+  <meta itemprop="name" content="Aplicando una regresión lineal en la vida diaria: predecir kilómetros por recorrer en bicicleta">
+  <meta itemprop="description" content="No soy una persona muy cercana a la estadística, pero el día de hoy por primera vez se me ocurrió aplicar una regresión lineal para responder una pregunta de mi vida cotidiana.
+Resulta que un compañero del ultraciclismo, el destacado ciclista Andrés Arias, preguntó en su Instagram si alguien podía predecir cuántos kilómetros va a recorrer este 2024 durante el desafío Rapha Festive 500, un desafío del que participamos muchos ciclistas, que consiste en recorrer 500 km en bicicleta entre el 24 y el 31 de diciembre1.">
+  <meta itemprop="datePublished" content="2024-12-03T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-12-03T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1233">
+  <meta itemprop="keywords" content="Estadística,Ggplot2">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.c4fbf76e54adf7e7a1073b995dfaf4f393e11c67c30cfd5b19d29824f2cee0f0.css" integrity="sha256-xPv3blSt9&#43;ehBzuZXfr085PhHGfDDP1bGdKYJPLO4PA=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      <div class="dib v-mid">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Aplicando una regresión lineal en la vida diaria: predecir kilómetros por recorrer en bicicleta</h1>
+        
+        
+        <p class="f7 db mv0 ttu">3/12/2024</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/estad%C3%ADstica">estadística</a>  <a href="http://localhost:4321/tags/ggplot2">ggplot2</a> </dd></em>
+  </dl>
+
+
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>No soy una persona muy cercana a la estadística, pero el día de hoy por primera vez se me ocurrió aplicar una regresión lineal para responder una pregunta de mi vida cotidiana.</p>
+<p>Resulta que un compañero del ultraciclismo, el 
+<a href="https://www.instagram.com/aenederrese/" target="_blank" rel="noopener">destacado ciclista Andrés Arias</a>, preguntó en su Instagram si alguien podía predecir cuántos kilómetros va a recorrer este 2024 durante el desafío 
+<a href="https://content.rapha.cc/us/en/story/festive500" target="_blank" rel="noopener">Rapha Festive 500</a>, un desafío del que participamos muchos ciclistas, que consiste en recorrer 500 km en bicicleta entre el 24 y el 31 de diciembre<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>La pregunta la hizo Andrés luego de comentar cuánto había recorrido para el desafío en los años anteriores: 530 kilómetros en 2021, 930 kms en 2022, y 1.260 en 2023. Naturalmente noté que existía una cierta progresión lineal entre estas cifras, así que me levanté del sillón y abrí R para hacer una prueba 🤔</p>
+<p>Lo primero fue anotar estas cifras en una tabla de datos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">kms_año</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tribble</span><span style="color:#908caa">(</span><span style="color:#908caa">~</span><span style="color:#ea9a97">año</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">kms</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">2021</span><span style="color:#908caa">,</span> <span style="color:#f6c177">530</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">2022</span><span style="color:#908caa">,</span> <span style="color:#f6c177">930</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">2023</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1260</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Luego visualizar los datos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico_1</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">kms_año</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">año</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">kms</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_line</span><span style="color:#908caa">(</span><span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.4</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.7</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_x_continuous</span><span style="color:#908caa">(</span><span style="color:#ea9a97">breaks</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">kms_año</span><span style="color:#908caa">$</span><span style="color:#ea9a97">año</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">panel.grid.major.x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_line</span><span style="color:#908caa">())</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico_1</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png" width="768" />
+<p>Efectivamente, la cantidad de kilómetros recorridos para este desafío en cada año ha aumentado de una manera casi lineal.</p>
+<p>Mi idea fue crear un <strong>modelo de regresión lineal</strong> para ajustar estos datos a una recta que, al extenderla, nos permita <strong>predecir cuántos kilómetros serían recorridos en los siguientes años</strong>, si la tendencia se mantiene.</p>
+<p>Ajustamos un modelo de regresión lineal, por medio del cual queremos predecir los kilómetros a partir de los años, dado que intuimos que un aumento en los años conlleva también un aumento en los kilómetros.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># crear modelo lineal</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">modelo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">with</span><span style="color:#908caa">(</span><span style="color:#ea9a97">kms_año</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">lm</span><span style="color:#908caa">(</span><span style="color:#ea9a97">kms</span> <span style="color:#908caa">~</span> <span style="color:#ea9a97">año</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># crear predicción</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">prediccion</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">predict</span><span style="color:#908caa">(</span><span style="color:#ea9a97">modelo</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">prediccion</span>
+</span></span></code></pre></div><pre><code>        1         2         3 
+ 541.6667  906.6667 1271.6667 
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># visualizar modelo</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico_1</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_line</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">prediccion</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;purple3&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1.4</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">linetype</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;dashed&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.4</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">prediccion</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;purple3&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.7</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">panel.grid.major.x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_line</span><span style="color:#908caa">())</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="768" />
+<p>La primera predicción que obtenemos es una predicción de los datos que ya conocemos, pero a partir de la recta ajusta por el modelo. Es decir, son los valores que corresponden a cada punto en el tiempo de acuerdo a la línea de regresión proyectada. Estos valores se asemejan mucho a los valores reales, pero al ser un modelo, no son exactamente iguales, ya que corresponden a una simplificación de la realidad.</p>
+<p>En términos simples, un modelo de regresión lineal crea o <em>ajusta</em> una recta que busca cruzar todos los puntos de los datos de la manera más cercana a ellos posible. Por lo tanto, el gráfico anterior compara los datos reales con los datos representados por el modelo, que en el fondo son resumidos por una sola recta.</p>
+<p>A partir de esta recta, podemos <strong>predecir</strong> los valores que corresponderían a observaciones futuras (en este caso, los kilómetros recorridos en los años siguientes) asumiendo que los valores futuros seguirán ubicándose dentro de esta misma recta que predijo bastante bien los valores reales.</p>
+<p>Lo que haremos será crear nuevos datos, en este caso nuevos años, que no estén contemplados dentro de los datos originales, que llegaban solamente hasta 2023.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># crear nuevas observaciones para predecir</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">predecir</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tibble</span><span style="color:#908caa">(</span><span style="color:#ea9a97">año</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2021</span><span style="color:#908caa">:</span><span style="color:#f6c177">2026</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Luego usamos el modelo para predecir los valores que tendrían estos nuevos datos (al extender a recta hacia los nuevos años).</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># predecir las nuevas observaciones en base al modelo ajustado</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">prediccion</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">predict</span><span style="color:#908caa">(</span><span style="color:#ea9a97">modelo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">newdata</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">predecir</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">prediccion</span>
+</span></span></code></pre></div><pre><code>        1         2         3         4         5         6 
+ 541.6667  906.6667 1271.6667 1636.6667 2001.6667 2366.6667 
+</code></pre>
+<p>Finalmente reunimos estos resultados en una nueva tabla de datos que contiene los años y los kilómetros predichos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">predicho</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">bind_cols</span><span style="color:#908caa">(</span><span style="color:#ea9a97">predecir</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                      <span style="color:#ea9a97">kms_pred</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">prediccion</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">predicho</span>
+</span></span></code></pre></div><pre><code># A tibble: 6 × 2
+    año kms_pred
+  &lt;int&gt;    &lt;dbl&gt;
+1  2021     542.
+2  2022     907.
+3  2023    1272.
+4  2024    1637.
+5  2025    2002.
+6  2026    2367.
+</code></pre>
+<p>Teniendo estas predicciones, el último paso es unir las predicciones con los datos reales, y ponernos a analizar los resultados:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># unir datos predichos (que tienen más años) con los datos reales</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">kms_año_pred</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">left_join</span><span style="color:#908caa">(</span><span style="color:#ea9a97">predicho</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">kms_año</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">by</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">join_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">año</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">kms_año_pred</span>
+</span></span></code></pre></div><pre><code># A tibble: 6 × 3
+    año kms_pred   kms
+  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;
+1  2021     542.   530
+2  2022     907.   930
+3  2023    1272.  1260
+4  2024    1637.    NA
+5  2025    2002.    NA
+6  2026    2367.    NA
+</code></pre>
+<p>Para visualizar los resultados, transformamos los datos a <em>formato largo</em>, para que en vez de tener dos columnas (los kilómetros reales y predichos) tengamos una sola columna con todos los valores, y una segunda columna que distinga los valores entre kilómetros reales y kilómetros predichos. Además, creamos una columna con los datos formateados de una manera más legible.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tidyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">kms_año_pred_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">kms_año_pred</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># transformar a largo o a tidy</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">pivot_longer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">kms</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">kms_pred</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">values_to</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;valor&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">names_to</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;tipo&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># recodificar categorías</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">recode</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;kms&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;kms reales&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;kms_pred&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;predicción&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># crear etiquetas</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">etiqueta</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">round</span><span style="color:#908caa">(</span><span style="color:#ea9a97">valor</span><span style="color:#908caa">,</span> <span style="color:#f6c177">0</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">etiqueta</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">format</span><span style="color:#908caa">(</span><span style="color:#ea9a97">etiqueta</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">big.mark</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;.&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">trim</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">etiqueta</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#ea9a97">etiqueta</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;kms&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">kms_año_pred_2</span>
+</span></span></code></pre></div><pre><code># A tibble: 12 × 4
+     año tipo       valor etiqueta 
+   &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    
+ 1  2021 kms reales  530  530 kms  
+ 2  2022 kms reales  930  930 kms  
+ 3  2023 kms reales 1260  1.260 kms
+ 4  2024 kms reales   NA  NA kms   
+ 5  2025 kms reales   NA  NA kms   
+ 6  2026 kms reales   NA  NA kms   
+ 7  2021 predicción  542. 542 kms  
+ 8  2022 predicción  907. 907 kms  
+ 9  2023 predicción 1272. 1.272 kms
+10  2024 predicción 1637. 1.637 kms
+11  2025 predicción 2002. 2.002 kms
+12  2026 predicción 2367. 2.367 kms
+</code></pre>
+<p>Creamos un gráfico para analizar visualmente los resultados de nuestra predicción:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">kms_año_pred_2</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">año</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">valor</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">tipo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">linetype</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">tipo</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_line</span><span style="color:#908caa">(</span><span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.7</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.8</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">año</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">2024</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">*</span><span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">show.legend</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">F</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">tipo</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;predicción&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">año</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">2023</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">etiqueta</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">hjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nudge_x</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nudge_y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-50</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">show.legend</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">F</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">tipo</span> <span style="color:#908caa">!=</span> <span style="color:#f6c177">&#34;predicción&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">año</span> <span style="color:#908caa">&lt;=</span> <span style="color:#f6c177">2023</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">etiqueta</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">hjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nudge_x</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nudge_y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-50</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">show.legend</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">F</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_color_manual</span><span style="color:#908caa">(</span><span style="color:#ea9a97">values</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;kms reales&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;black&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                                <span style="color:#f6c177">&#34;predicción&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;red2&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_y_continuous</span><span style="color:#908caa">(</span><span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#ea9a97">format</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">big.mark</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;.&#34;</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;kms&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_x_continuous</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">expansion</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">0.05</span><span style="color:#908caa">,</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">)))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">guides</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_legend</span><span style="color:#908caa">(</span><span style="color:#ea9a97">position</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;inside&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;kms&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">linetype</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">panel.grid.major.x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_line</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">legend.position.inside</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">.9</span><span style="color:#908caa">,</span> <span style="color:#f6c177">.2</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="768" />
+<p>Considerando los tres años de datos que tenemos de los recorridos en bicicleta de Andrés Arias durante el desafío Rapha Festive 500, podríamos predecir que este año Andrés va a recorrer 1.637 kilómetros entre el 24 y el 31 de diciembre, bajo el supuesto de que cada año Andrés ha aumentado sus kilómetros de forma lineal.</p>
+<p>Ahora, esto choca un poco con la realidad, porque el hecho de algo aumente periódicamente no significa que en el siguiente periodo el aumento vaya a ser necesariamente el mismo que antes. Mucho menos cuando estamos hablando de datos que tienen que ver con procesos humanos. Pero de todas maneras fue un ejercicio entretenido 😊</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Sí, es enfermizo, y sí, nuestras familias nos odian.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">December 3, 2024</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">6 minute read, 1233 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/estad%C3%ADstica">estadística</a>  <a href="http://localhost:4321/tags/ggplot2">ggplot2</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/tutorial_mapa_chile/">Crea un mapa de Chile y visualiza datos comunales y regionales con mapas en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/casen_introduccion/">Cargar y explorar datos de la encuesta Casen en R, usando factor de expansión</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ggplot_nubes/">¿Arte? Nubes aleatorias en {ggplot2}</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/portafolio_trabajos_r/">Portafolio de trabajos previos en R &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2024 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

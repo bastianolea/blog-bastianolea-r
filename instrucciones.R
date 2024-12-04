@@ -8,12 +8,12 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Crea un mapa de Chile en R y visualiza datos comunales, regionales y georeferenciados", 
+blogdown::new_post(title = "Aplicando una regresión lineal en la vida diaria: predecir kilómetros por recorrer en bicicleta", 
                    subdir = "blog/",
-                   file = "blog/tutorial_mapa_chile/index.qmd",
+                   file = "blog/regresion_ciclismo/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("mapas", "ggplot2", "gráficos", "ciencias sociales"),
-                   categories = c("tutoriales") 
+                   tags = c("estadística"),
+                   categories = c() 
 )
 
 # convertir script a Quarto
