@@ -8,11 +8,11 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Aplicando una regresión lineal en la vida diaria: predecir kilómetros por recorrer en bicicleta", 
+blogdown::new_post(title = "Crea tu propio asistente de programación con inteligencia artificial usando el paquete {pal}", 
                    subdir = "blog/",
-                   file = "blog/regresion_ciclismo/index.qmd",
+                   file = "blog/pal_asistentes_llm/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("estadística"),
+                   tags = c("consejos", "inteligencia artificial"),
                    categories = c() 
 )
 

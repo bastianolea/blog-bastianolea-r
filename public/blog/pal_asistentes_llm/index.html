@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Crea tu propio asistente de programación en R con inteligencia artificial usando el paquete {pal} | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="El paquete {pal} te permite crear asistentes para programar en R, potenciados por modelos de lenguaje (LLM). La utilidad de estos asistentes es que pueden ayudarte a realizar tareas rápidamente a partir de tu código de R, o incluso a partir de un texto que describa lo que quieres hacer. En este post te enseño a crear dos asistentes para tareas que realizo frecuentemente: describir lo que hace un código de R, y traducir una instrucción a código de {dplyr}">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Crea tu propio asistente de programación en R con inteligencia artificial usando el paquete {pal} | Blog">
+<meta property="og:description" content="El paquete {pal} te permite crear asistentes para programar en R, potenciados por modelos de lenguaje (LLM). La utilidad de estos asistentes es que pueden ayudarte a realizar tareas rápidamente a partir de tu código de R, o incluso a partir de un texto que describa lo que quieres hacer. En este post te enseño a crear dos asistentes para tareas que realizo frecuentemente: describir lo que hace un código de R, y traducir una instrucción a código de {dplyr}" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/pal_asistentes_llm/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+    
+    
+  
+  <meta itemprop="name" content="Crea tu propio asistente de programación en R con inteligencia artificial usando el paquete {pal}">
+  <meta itemprop="description" content="El paquete {pal} te permite crear asistentes para programar en R, potenciados por modelos de lenguaje (LLM). La utilidad de estos asistentes es que pueden ayudarte a realizar tareas rápidamente a partir de tu código de R, o incluso a partir de un texto que describa lo que quieres hacer.
+En este post te enseño a crear y usar asistentes de {pal} para dos tareas que realizo frecuentemente: describir lo que hace un código de R, y traducir una instrucción a código de {dplyr}.">
+  <meta itemprop="datePublished" content="2024-12-10T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-12-10T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1788">
+  <meta itemprop="keywords" content="Consejos,Inteligencia artificial">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.c4fbf76e54adf7e7a1073b995dfaf4f393e11c67c30cfd5b19d29824f2cee0f0.css" integrity="sha256-xPv3blSt9&#43;ehBzuZXfr085PhHGfDDP1bGdKYJPLO4PA=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      <div class="dib v-mid">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Crea tu propio asistente de programación en R con inteligencia artificial usando el paquete {pal}</h1>
+        
+        
+        <p class="f7 db mv0 ttu">10/12/2024</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/consejos">consejos</a>  <a href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a> </dd></em>
+  </dl>
+
+
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>El paquete 
+<a href="https://simonpcouch.github.io/pal/" target="_blank" rel="noopener"><code>{pal}</code></a> te permite crear <em>asistentes</em> para programar en R, potenciados por modelos de lenguaje (LLM). La utilidad de estos asistentes es que pueden ayudarte a realizar tareas rápidamente a partir de tu código de R, o incluso a partir de un texto que describa lo que quieres hacer.</p>
+<p>En este post te enseño a crear y usar asistentes de <code>{pal}</code> para dos tareas que realizo frecuentemente: <strong>describir lo que hace un código de R</strong>, y <strong>traducir una instrucción a código de <code>{dplyr}</code></strong>.</p>
+<p>La idea principal es que puedes seleccionar tu código o texto en R, y presionar una combinación de teclas para elegir tu asistente. Dependiendo del tipo de asistente, se agregará código arriba o abajo de lo que seleccionaste, o bien, se va a reemplazar lo que seleccionaste por lo que haga el asistente.</p>
+
+
+
+
+<h2 id="instalar-un-modelo-de-lenguaje-local-desde-r">Instalar un modelo de lenguaje local desde R
+  <a href="#instalar-un-modelo-de-lenguaje-local-desde-r"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Como este paquete depende de el uso de un modelo de lenguaje para funcionar, necesitas tener instalado un modelo de lenguaje en tu equipo, o tener una suscripción a un modelo de lenguaje en la nube. Personalmente prefiero usar un modelo de lenguaje local: 
+<a href="https://ollama.com/library/llama3.1" target="_blank" rel="noopener">Llama 3.1</a> con 8 billones de parámetros. Para instalar un modelo localmente en tu equipo desde R, primero tienes que 
+<a href="https://ollama.com" target="_blank" rel="noopener">instalar Ollama en tu equipo</a>, abrir la aplicación, y luego 
+<a href="https://hauselin.github.io/ollama-r/" target="_blank" rel="noopener">instalar el paquete de R {ollamar}</a> para descargar un modelo de lenguaje local desde R.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>Si no tienes un modelo instalado, usa este comando para descargar e instalar un modelo desde R:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ollamar</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">pull</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;llama3.1:8b&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Es necesario tener la aplicación Ollama abierta en tu computadora, dado que ésta aplicación es la que le entrega el modelo de lenguaje a R.</p>
+
+
+
+
+<h2 id="crear-asistentes-de-ia-locales">Crear asistentes de IA locales
+  <a href="#crear-asistentes-de-ia-locales"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Una vez que tengamos nuestro modelo LLM instalado, debemos indicarle a <code>{pal}</code> que queremos usarlo. Si tienes una suscripción a un modelo de lenguaje en la nube como Claude o ChatGPT, 
+<a href="https://simonpcouch.github.io/pal/articles/pal.html" target="_blank" rel="noopener">puedes configurarlo en este paso.</a> Como tenemos un modelo local, le indicamos que usaremos Ollama y el nombre de nuestro modelo instalado:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">options</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">.pal_fn</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;chat_ollama&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">.pal_args</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">list</span><span style="color:#908caa">(</span><span style="color:#ea9a97">model</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;llama3.1:8b&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Ahora viene lo entretenido. Los asistentes tienen un <em>rol</em>, una <em>interfaz</em> y un <em>contenido.</em> Para crear nuestro asistente, en la función <code>prompt_new()</code> tenemos que darle un rol (que sería como el nombre de asistente), y especificar la interfaz; es decir, cómo queremos que intervenga el código que le entreguemos. Esto puede ser agregando su intervención antes del código seleccionado (<code>prefix</code>), después del código seleccionado (<code>suffix</code>), o reemplazando el código seleccionado por su aporte (<code>replace</code>).</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pal</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">prompt_new</span><span style="color:#908caa">(</span><span style="color:#ea9a97">role</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;nombre_de_asistente&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">interface</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;prefix&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Cuando ejecutas esta función se creará tu asistente y se abrirá un nuevo archivo <code>.md</code>, que contiene las <strong>instrucciones</strong> que usará tu asistente para ayudarte. Éste será el <em>contenido</em> de tu asistente. El archivo contiene unas instrucciones por defecto que puedes modificar, o puedes escribir tus propias instrucciones. Lo importante es que estas instrucciones sean claras, breves, y que ojalá incluyan un ejemplo de qué es lo que esperas como respuesta.</p>
+<p>Luego de modificar este archivo, tienes que ejecutar la función <code>directory_load()</code> para que <code>{pal}</code> actualice tus asistentes. Para volver a editar tu asistente puedes usar la función <code>prompt_edit(&quot;nombre_de_tu_asistente&quot;)</code>, pero luego de editarlo debes volver a ejecutar <code>directory_load()</code>.</p>
+
+
+
+
+<h2 id="crear-un-asistente-de-explicación-de-código-de-r">Crear un asistente de explicación de código de R
+  <a href="#crear-un-asistente-de-explicaci%c3%b3n-de-c%c3%b3digo-de-r"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Primero voy a <strong>crear un asistente que me ayude a explicar código de R</strong>. La utilidad de esta asistente para mí sería que me ayude a agregar comentarios a los scripts que entrego a mis estudiantes de R, de manera que les sea más fácil entender lo que hace cada parte de los scripts.</p>
+<p>Defino el nombre de mi asistente y su interacción con el código seleccionado:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">prompt_new</span><span style="color:#908caa">(</span><span style="color:#ea9a97">role</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;explicar&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">interface</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;prefix&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Luego se abre el archivo para definir el contenido del asistente. Luego de un par de pruebas, ingresé las siguientes instrucciones o <em>prompts</em>:</p>
+<pre tabindex="0"><code>Eres un asistente experto en ciencia de datos, diseñado para ayudar a usuarios de R a entender lo que hace un código de R. 
+El código que debes explicar proviene principalmente de paquetes de R del Tidyverse, como dplyr, tidyr, stringr y otros.
+
+Tu tarea es explicar el código de forma breve y clara, explicando lo que hace cada función, pero sin extenderte demasiado.
+
+Responde sólo en español y en minúsculas, anteponiendo un signo # a tu respuesta, para que tu respuesta sea un párrafo de comentario de R. 
+Inserta un salto de línea cada 64 caracteres.
+Responde sólo con la explicación del código, sin saltos de línea al rededor de la respuesta.
+
+Por ejemplo, si recibes el siguiente código de R:
+
+iris |&gt; 
+  group_by(Species) |&gt; 
+  summarize(n = mean(Sepal.Length)) |&gt; 
+  arrange(desc(n))
+
+Responde con una explicación breve, como la siguiente:
+
+# agrupa los datos del dataframe iris según la variable Species usando la función group_by(), luego calcula
+# el promedio de la variable Sepal.Length usando la función mean() dentro de summarize(), y 
+# finalmente ordena las filas resultantes de mayor menor usando la función arrange() y desc()
+</code></pre><p>Cómo puedes ver, se trata de unas pocas instrucciones breves que definen claramente lo que espero de la asistente, junto a un ejemplo muy esquemático del resultado esperado.</p>
+<p>El último paso para integrar a los asistentes a tu flujo de trabajo es especificar un <strong>atajo de teclado para invocar a tu asistente.</strong> En RStudio, si entras al menú <em>Tools</em> y eliges la opción <em>Modify Keyboard Shortcuts,</em> puede buscar <em>Pal</em> para especificar un atajo de teclado. En mi caso usé <code>comando + shift + P</code>. Si no quieres un atajo de teclado, en el menú <em>Addins</em> de RStudio puedes invocar <em>Pal.</em></p>
+<p>En el siguiente video vemos la funcionalidad en acción:</p>
+<ol>
+<li>Selecciona el código que necesites</li>
+<li>Presiona el atajo de teclado</li>
+<li>Elige el asistente que quieras usar y presiona <em>Enter</em></li>
+<li>Espera a que el modelo de lenguaje inserte el texto</li>
+</ol>
+<p><video src="explicar_pal.mov" width="100%" autoplay loop></video></p>
+<p>Vemos cómo el asistente escribe una explicación del código que le entregué 🥳</p>
+<p>A continuación (¡y para que vean que funciona bien!) les muestro tres ejemplos donde seleccioné código de R y usé el asistente para que escriba una explicación del código:</p>
+<p><em>Ejemplo 1:</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># lee una hoja de excel llamada &#34;Datos Histograma&#34; desde la ruta indicada usando read_excel() de readxl,</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># lo convierte a minúsculas con clean_names(), crea un nuevo campo &#34;tmax&#34; que reemplaza los valores nulos</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># por 17.8 y finalmente selecciona solo las columnas que no son tmax, eliminando tmedia</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos_1</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">readxl</span><span style="color:#908caa">::</span><span style="color:#ea9a97">read_excel</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Datos Histograma.xlsx&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">janitor</span><span style="color:#908caa">::</span><span style="color:#ea9a97">clean_names</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tmax</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">replace_na</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tmax</span><span style="color:#908caa">,</span> <span style="color:#f6c177">17.8</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#908caa">-</span><span style="color:#ea9a97">tmedia</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p><em>Ejemplo 2:</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># crea un nuevo dataframe llamado kms_año con variables año y kms a través de tribble(), luego </span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># crea un modelo lineal usando la función lm() que relacionará kms con año, finalmente guarda las predicciones </span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># del modelo en una nueva columna del mismo dataframe llamada pred1 utilizando predict()</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># el modelo busca la relación entre los años y el kilometraje</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">kms_año</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tribble</span><span style="color:#908caa">(</span><span style="color:#908caa">~</span><span style="color:#ea9a97">año</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">kms</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">2021</span><span style="color:#908caa">,</span> <span style="color:#f6c177">530</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">2022</span><span style="color:#908caa">,</span> <span style="color:#f6c177">930</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">2023</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1260</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># crear modelo lineal</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">model</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">lm</span><span style="color:#908caa">(</span><span style="color:#ea9a97">kms</span> <span style="color:#908caa">~</span> <span style="color:#ea9a97">año</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">kms_año</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># crear predicción</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">kms_año</span><span style="color:#908caa">$</span><span style="color:#ea9a97">pred1</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">predict</span><span style="color:#908caa">(</span><span style="color:#ea9a97">model</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p><em>Ejemplo 3:</em></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># selecciona las columnas titulo e id del dataframe metadatos usando la función select() ,</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># luego filtra los datos para incluir solo aquellas filas en las que se encuentre la cadena &#34;microemprend&#34; </span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># en la variable titulo según la detección de expresión regular definida por str_detect(),</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># repite el proceso de filtro pero buscando ahora esta vez la cadena &#34;sexo&#34;,</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># por último extrae la columna id del dataframe resultante usando la función pull()</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">metadatos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">titulo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">id</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">titulo</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;microemprend&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">titulo</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;sexo&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">pull</span><span style="color:#908caa">(</span><span style="color:#ea9a97">id</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Cómo se ven los ejemplos, el asistente entrega explicaciones bastante buenas, que con mínimos retoques resultarían útiles para orientar a usuarios principiantes de R. También podría servir para otros usuarios de R que reciban código y no lo entiendan.</p>
+<p>Si quieres instalar este asistente en tu equipo, ejecuta el siguiente código en tu consola de R:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">pal</span><span style="color:#908caa">::</span><span style="color:#ea9a97">prompt_new</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;explicar&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;prefix&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">contents</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;https://gist.github.com/bastianolea/b190b3be7477c1c48a5b06cbe7e8d441&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><hr>
+
+
+
+
+<h2 id="crear-un-asistente-de-programación-en-dplyr">Crear un asistente de programación en {dplyr}
+  <a href="#crear-un-asistente-de-programaci%c3%b3n-en-dplyr"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>El segundo asistente de programación que voy a crear va a ser uno que <strong>traduzca una descripción de código escrita en lenguaje natural a código de <code>{dplyr}</code></strong>. Es decir, un asistente que haga lo contrario al asistente anterior: le voy a dar una explicación de un código, y el asistente va a generar el código necesario.</p>
+<p>Para poner a prueba la utilidad de esta herramienta y su facilidad de uso, la instrucción que le voy a dar al asistente para que funcione va a ser simplemente la misma instrucción que le di a la asistente de explicación de código, pero al revés; es decir, le voy a pedir que sea un asistente que programe en R con <code>{dplyr}</code>, y el ejemplo que le voy a dar de su funcionamiento va a ser el mismo ejemplo que le di al  asistente anterior, pero primero la explicación del código, y después el código.</p>
+<p>La instrucción quedaría así:</p>
+<pre tabindex="0"><code>Eres un asistente experto en ciencia de datos, diseñado para ayudar a programar en R usando principalmente el paquete dplyr. El código que debes escribir proviene principalmente de paquetes de R del Tidyverse, como dplyr, tidyr, stringr y otros.
+
+Tu tarea es convertir la instrucción escrita en código de R usando dplyr.
+
+Responde sólo con el código de dplyr necesario para cumplir con la instrucción, sin comentarios ni explicaciones.
+
+Por ejemplo, si recibes la siguiente instrucción:
+
+agrupa los datos del dataframe iris según la variable Species, luego calcula el promedio de 
+la variable Sepal.Length, y finalmente ordena las filas resultantes de mayor menor
+
+Responde con el siguiente código de R y dplyr:
+
+iris |&gt; 
+  group_by(Species) |&gt; 
+  summarize(n = mean(Sepal.Length)) |&gt; 
+  arrange(desc(n))
+</code></pre><p>El siguiente video retrata el funcionamiento de este nuevo asistente, y vemos que sus resultados son correctos y útiles:</p>
+<p><video src="dplyr_pal.mov" width="100%" autoplay loop></video></p>
+<p>Cómo podemos ver, el asistente escribe rápidamente código de <code>{dplyr}</code> a partir de la descripción que le dimos. Esto podría ser muy útil para usuarios principiantes que tengan una idea de lo que quieren hacer pero no sepan exactamente cómo hacerlo, o para usuarios avanzados que están cansados de escribir y quieren que una pobre máquina trabaje por ellos.</p>
+<p>Si quieres instalar este asistente en tu equipo, ejecuta el siguiente código en tu consola de R:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">pal</span><span style="color:#908caa">::</span><span style="color:#ea9a97">prompt_new</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;dplyr&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;suffix&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">contents</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;https://gist.github.com/bastianolea/a0be6c6b4471cf8e69bc1b7f30d8101a&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><hr>
+<p>Éstos son sólo dos usos básicos que se le podría dar a este paquete para ayudarnos a desarrollar en R. Se podrían crear muchos más, como asistentes que expliquen los resultados de técnicas estadísticas, 
+<a href="https://github.com/frankiethull/ggpal2" target="_blank" rel="noopener">asistentes que produzcan visualizaciones de datos</a>, y muchas otras aplicaciones de modelos de lenguaje a la programación.</p>
+<p>Si se te ocurren más ideas o ya probaste este paquete, ¡déjame un comentario!</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Si tu computador no es muy poderoso, te recomiendo instalar <code>llama3.2:1b</code> (más liviano) o <code>llama3.2:3b</code> (un poco mejor), pero si tienes suficiente memoria y tarjeta de video, puedes instalar <code>llama3.1:8b</code>.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">December 10, 2024</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">9 minute read, 1788 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/consejos">consejos</a>  <a href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/analisis_sentimiento_llm/">Análisis de sentimiento usando modelos de lenguaje (LLM) locales en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/limpieza_tips/">Tips para limpieza de datos en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/pruebas/">Prueba</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/regresion_ciclismo/">Aplicando una regresión lineal en la vida diaria: predecir kilómetros por recorrer en bicicleta &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2024 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

@@ -34,7 +34,7 @@ El sistema está diseñado para recibir nuevas encuestas que se agregan al visua
 
 _Nota: en la imagen se ve el visualizador en dos columnas, dado que es muy largo_
 
-Puedes [acceder al visualizador de la encuesta aquí.](https://bastianoleah.shinyapps.io/iclac_encuesta)
+Puedes [acceder al visualizador de la encuesta aquí.](https://iclac.cl/monitor-de-opinion-publica/)
 
 ----
 
