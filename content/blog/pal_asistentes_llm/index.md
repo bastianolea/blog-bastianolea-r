@@ -4,7 +4,8 @@ author: Bastián Olea Herrera
 date: '2024-12-10'
 draft: false
 slug: []
-categories: []
+categories:
+  - Tutoriales 
 tags:
   - consejos
   - inteligencia artificial
@@ -34,6 +35,13 @@ Es necesario tener la aplicación Ollama abierta en tu computadora, dado que és
 
 
 ## Crear asistentes de IA locales
+
+El primer paso para crear los asistentes de programación es instalar el paquete [`{pal}`]:
+
+```r
+# install.packages("pak")
+pak::pak("simonpcouch/pal")
+```
 
 Una vez que tengamos nuestro modelo LLM instalado, debemos indicarle a `{pal}` que queremos usarlo. Si tienes una suscripción a un modelo de lenguaje en la nube como Claude o ChatGPT, [puedes configurarlo en este paso.](https://simonpcouch.github.io/pal/articles/pal.html) Como tenemos un modelo local, le indicamos que usaremos Ollama y el nombre de nuestro modelo instalado:
 
