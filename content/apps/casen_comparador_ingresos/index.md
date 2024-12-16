@@ -18,7 +18,7 @@ links:
 - icon: github
   icon_pack: fab
   name: código
-  url: https://github.com/bastianolea
+  url: https://github.com/bastianolea/casen_comparador_ingresos
 ---
 
 [Aplicación web](https://bastianoleah.shinyapps.io/casen_comparador_ingresos) para generar gráficos de densidad que representan los ingresos de la población de cualquier comuna del país, o de varias comunas a la vez, para poder comparar las realidades económicas de sus habitantes.
