@@ -20,9 +20,22 @@ links:
   url: https://github.com/bastianolea/temperaturas_chile
 ---
 
-Consulta datos históricos de temperaturas extremas en el país, desde 1970 hasta 2024, y visualiza los cambios históricos en las temperaturas producto de la crisis climática.
+[Visualizador de datos de temperaturas extremas en el país.]((https://bastianoleah.shinyapps.io/temperaturas_chile/)) Permite consultar rápidamente datos históricos para obtener gráficos que revelan los cambios en temperaturas a través del tiempo en nuestro país. El objetivo es visibilizar los efectos del cambio climático por medio de los datos.
+
+En esta plataforma puedes visualizar datos históricos sobre temperaturas extremas del país, cuyo objetivo es visibilizar los efectos del cambio climático por medio de los datos.
+
+Los datos se obtienen desde el Portal de Datos Abiertos del Estado de Chile mediante web scrapping. El proyecto unifica todas las fuentes de datos separadas en una sola base de datos de temperaturas, los cuales son utilizados en la plataforma de visualización interactiva. 
+
+Los datos son obtenidos desde fuentes oficiales, y abarcan aproximadamente desde 1970 a 2024.
+
+Este repositorio obtiene datos desde el [Portal de Datos Abiertos del Estado de Chile](https://datos.gob.cl/dataset/?q=temperatura) mediante web scrapping, unifica todas las fuentes de datos separadas en una sola base de datos de temperaturas, y produce visualizaciones y una [plataforma de visualización interactiva.](https://bastianoleah.shinyapps.io/temperaturas_chile/)
+
 
 [Accede al visualizador de datos por este enlace.](https://bastianoleah.shinyapps.io/temperaturas_chile/)
+
+El producto principal de este código es una base de datos de temperaturas extremas en Chile, por estación meteorológica y por día, desde 1970 a 2024 [disponible convenientemente en un solo archivo `.csv`](https://github.com/bastianolea/temperaturas_chile/blob/main/datos/procesados/temperaturas_chile_unificadas.csv) (también disponible [en `.rds`](https://github.com/bastianolea/temperaturas_chile/blob/main/datos/procesados/temperaturas_chile_unificadas.rds) y [en formato `.parquet`](https://github.com/bastianolea/temperaturas_chile/blob/main/temperaturas_chile/temperaturas.parquet))
+
+----
 
 Este proyecto parte por dos razones: porque quería reutilizar los datos publicados en la plataforma de Datos Abiertos del Estado (muy recomendable, pero también requiere de muchas mejoras), y porque genuinamente tenía curiosidad sobre la evolución en las temperaturas que estamos viviendo. 
 
