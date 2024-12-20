@@ -8,11 +8,12 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Crea tu propio asistente de programación con inteligencia artificial usando el paquete {pal}", 
+blogdown::new_post(title = "Procesando datos de texto en masa usando modelos de lenguaje (LLM)", 
                    subdir = "blog/",
-                   file = "blog/pal_asistentes_llm/index.qmd",
+                   # file = "blog/pal_asistentes_llm/index.qmd",
+                   file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos", "inteligencia artificial"),
+                   tags = c("inteligencia artificial"),
                    categories = c() 
 )
 

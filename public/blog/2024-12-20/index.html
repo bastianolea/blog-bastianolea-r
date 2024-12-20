@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.136.5">
-<title>Análisis de sentimiento usando modelos de lenguaje (LLM) locales en R | Blog</title>
+<title>Procesando datos de texto en masa usando modelos de lenguaje (LLM) | Blog</title>
 
 
 <meta property="twitter:site" content="@bastimapache">
@@ -28,10 +28,10 @@
 
 
 <meta property="og:site_name" content="Blog">
-<meta property="og:title" content="Análisis de sentimiento usando modelos de lenguaje (LLM) locales en R | Blog">
+<meta property="og:title" content="Procesando datos de texto en masa usando modelos de lenguaje (LLM) | Blog">
 <meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:4321/blog/analisis_sentimiento_llm/" />
+<meta property="og:url" content="http://localhost:4321/blog/2024-12-20/" />
 <meta property="og:locale" content="es-ES">
 
 
@@ -44,12 +44,13 @@
     
     
   
-  <meta itemprop="name" content="Análisis de sentimiento usando modelos de lenguaje (LLM) locales en R">
-  <meta itemprop="description" content="El análisis de sentimientos es una técnica de análisis de texto que aplica distintos algoritmos para poder clasificar textos de distinta longitud y complejidad en un conjunto preestablecido de categorías relacionadas al sentimiento de dichos textos. Con el sentimiento de los textos nos referimos a la información subjetiva que entregan estos textos, así como los afectos que producen. Las categorías del análisis del sentimiento suelen ser positivo, neutro y negativo, u otras más complejas, como agrado (agradable/desagradable), activación (activo/pasivo), y otros.">
-  <meta itemprop="datePublished" content="2024-11-18T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-11-18T00:00:00+00:00">
-  <meta itemprop="wordCount" content="267">
-  <meta itemprop="keywords" content="Análisis de texto,Inteligencia artificial">
+  <meta itemprop="name" content="Procesando datos de texto en masa usando modelos de lenguaje (LLM)">
+  <meta itemprop="description" content="Anoche dejé el computador procesando 5000 noticias por 8 horas usando un modelo de lenguaje (LLM) local en R para obtener clasificación, resumen y sentimiento de cada texto.
+Esto porque tengo una base de datos de más de 600 mil noticias chilenas, con su texto completo, y quiero empezar a sacarle más provecho. Por ejemplo, saber si noticias que hablan de ciertos temas son positivas o negativas (sentimiento), o simplemente clasificar de manera automatizada las noticias para separar las de política y economía de las de deportes y farándula.">
+  <meta itemprop="datePublished" content="2024-12-20T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-12-20T00:00:00+00:00">
+  <meta itemprop="wordCount" content="500">
+  <meta itemprop="keywords" content="Inteligencia artificial">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
@@ -250,15 +251,15 @@
   <section class="page-content mw7 center">
     <article class="post-content pa0 ph4-l">
       <header class="post-header">
-        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Análisis de sentimiento usando modelos de lenguaje (LLM) locales en R</h1>
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Procesando datos de texto en masa usando modelos de lenguaje (LLM)</h1>
         
         
-        <p class="f7 db mv0 ttu">18/11/2024</p>
+        <p class="f7 db mv0 ttu">20/12/2024</p>
         
         
         
   <dl class="f6 lh-copy">
-    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/an%C3%A1lisis-de-texto">análisis de texto</a>  <a href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a> </dd></em>
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a> </dd></em>
   </dl>
 
 
@@ -267,51 +268,74 @@
 
       </header>
       <section class="post-body pt5 pb4">
-        <p>El análisis de sentimientos es una técnica de análisis de texto que aplica distintos algoritmos para poder clasificar textos de distinta longitud y complejidad en un conjunto preestablecido de categorías relacionadas al sentimiento de dichos textos. Con el sentimiento de los textos nos referimos a la información subjetiva que entregan estos textos, así como los afectos que producen. Las categorías del análisis del sentimiento suelen ser positivo, neutro y negativo, u otras más complejas, como agrado (agradable/desagradable), activación (activo/pasivo), y otros.</p>
-<p>En otras palabras, la aplicación de un análisis de sentimiento un conjunto de textos nos permitiría clasificar estos textos en categorías como positivo, neutro y negativo, y a partir de eso poder realizar otros análisis.</p>
-<p>Algunos ejemplos son:</p>
-<ul>
-<li>Correlacionar si los textos de distintos autores difieren en sus sentimientos,</li>
-<li>Analizar si textos sobre determinadas temáticas se correlacionan con sentimientos específicos,</li>
-<li>Estudiar si ciertos temas son tratados de una forma específica por ciertos autores, y de una forma distinta por otros</li>
-<li>Comparar si textos sobre un mismo tema son expuestos de forma distinta por distintos autores o fuentes</li>
-</ul>
-<p>Por ejemplo, tenemos un conjunto de Artículos de prensa o noticias, cada uno con fecha y el medio de comunicación del que proviene. Si hacemos una selección de noticias sobre un tema específico, podríamos analizar cómo cambia el sentimiento dominante con el que se plantea la temática en distintos momentos del tiempo, o si dos medios de comunicación representan recurrentemente una misma temática bajo distinto sentimiento.</p>
-<hr>
-<p>Si este tutorial te sirvió, por favor considera hacerme una pequeña donación para poder tomarme un cafecito mientras escribo el siguiente tutorial 🥺</p>
-<div style = "height: 18px;">
+        <p>Anoche dejé el computador procesando 5000 noticias por 8 horas usando un modelo de lenguaje (LLM) local en R para obtener clasificación, resumen y sentimiento de cada texto.</p>
+<p>Esto porque tengo una 
+<a href="https://github.com/bastianolea/prensa_chile" target="_blank" rel="noopener">base de datos de más de 600 mil noticias chilenas</a>, con su texto completo, y quiero empezar a sacarle más provecho. Por ejemplo, saber si noticias que hablan de ciertos temas son positivas o negativas (sentimiento), o simplemente clasificar de manera automatizada las noticias para separar las de política y economía de las de deportes y farándula.</p>
+<p>Para la inferencia usé el modelo Llama 3.1 de 8B, a través de Ollama y el paquete de R 
+<a href="https://mlverse.github.io/mall/" target="_blank" rel="noopener">{mall}</a>. Hice 
+<a href="https://github.com/bastianolea/prensa_chile/tree/main/procesamiento" target="_blank" rel="noopener">un script para cada tipo de inferencia</a>, y están estructurados para cargar los resultados existentes de su mismo proceso, excluir los textos que ya fueron procesados, y empezar a procesar una muestra aleatoria de una cierta cantidad de nuevos textos. La cantidad aleatoria está definida por el tiempo estimado que va a tomar en procesarlas. Se demora aproximadamente una hora en procesar 1000 noticias, pero esto depende de qué tanto texto tenga la noticia, y del tipo de inferencia que se está realizando; por ejemplo, los resúmenes de texto tardan más que el análisis de sentimiento.</p>
+<p>El proceso en sí mismo se ve más o menos así:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sentimientos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">map</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos_limpios_split</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                    <span style="color:#ea9a97">\</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dato</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#ea9a97">inicio</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">now</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#ea9a97">message</span><span style="color:#908caa">(</span><span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;procesando&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">dato</span><span style="color:#908caa">$</span><span style="color:#ea9a97">id</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>                      
+</span></span><span style="display:flex;"><span>                      <span style="color:#6e6a86"># obtener sentimiento</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#ea9a97">sentimiento</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">dato</span><span style="color:#908caa">$</span><span style="color:#ea9a97">texto</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">llm_vec_sentiment</span><span style="color:#908caa">(</span><span style="color:#ea9a97">options</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;positivo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;neutral&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;negativo&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>                      
+</span></span><span style="display:flex;"><span>                      <span style="color:#6e6a86"># reintentar 1 vez</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">is.na</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sentimiento</span><span style="color:#908caa">))</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#ea9a97">sentimiento</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">dato</span><span style="color:#908caa">$</span><span style="color:#ea9a97">texto</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">llm_vec_sentiment</span><span style="color:#908caa">(</span><span style="color:#ea9a97">options</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;positivo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;neutral&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;negativo&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#908caa">}</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#ea9a97">final</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">now</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>                      
+</span></span><span style="display:flex;"><span>                      <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">is.na</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sentimiento</span><span style="color:#908caa">))</span> <span style="color:#3e8fb0">return</span><span style="color:#908caa">(</span><span style="color:#3e8fb0">NULL</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>                      
+</span></span><span style="display:flex;"><span>                      <span style="color:#6e6a86"># resultado</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#ea9a97">resultado</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tibble</span><span style="color:#908caa">(</span><span style="color:#ea9a97">id</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">dato</span><span style="color:#908caa">$</span><span style="color:#ea9a97">id</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                                          <span style="color:#ea9a97">sentimiento</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                                          <span style="color:#ea9a97">tiempo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">final</span> <span style="color:#908caa">-</span> <span style="color:#ea9a97">inicio</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                                          <span style="color:#ea9a97">n_palabras</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">dato</span><span style="color:#908caa">$</span><span style="color:#ea9a97">n_palabras</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>                      
+</span></span><span style="display:flex;"><span>                      <span style="color:#3e8fb0">return</span><span style="color:#908caa">(</span><span style="color:#ea9a97">resultado</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#908caa">});</span> <span style="color:#ea9a97">beep</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Se trata de un loop a partir de una lista de dataframes de una fila, cada elemento de la lista conteniendo los datos de cada noticia. Dentro de la alteración se extrae el sentimiento, se clasifica o se genera un resumen con una función del paquete {mall}. Luego, en caso de que la inferencia haya fallado (los modelos de lenguaje no son deterministas, por lo que pueden falla la tarea o entregar resultados inesperados de vez en cuando), se reintenta una vez, y al final se entregan los resultados con una variable que representa el tiempo que tardó el procesamiento.</p>
+<p>También hice gráficos para monitorear el avance, y si bien no es rápido (4 segundos promedio por noticia), confirmé que el computador no se sobrecalienta (tuvo un desempeño parejo luego de 8 horas). También se nota cómo los textos más largos tardan más en obtener resultados.</p>
+<p><img src="/blog/2024-12-20/plot_a.png"></p>
+<p><img src="/blog/2024-12-20/plot_b.png"></p>
+<p><img src="/blog/2024-12-20/plot_c.png"></p>
+<p>Digo que el computador no se sobrecalienta, porque tengo un MacBook Air M3, que si bien tiene un GPU poderoso, no tiene ventiladores 😰 así que tuve miedo de que el desempeño bajara por la temperatura. Mi solución: dejarlo frente a un ventilador 😂</p>
+<div style = "max-width: 300px; margin: auto;">
+<p><img src="/blog/2024-12-20/IMG_8022.jpeg"></p>
 </div>
-<div>
-  <div style="display: flex;
-  justify-content: center;
-  align-items: center;">
-    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
-  </div>
+<p>Voy a dejarlo unas noches más procesando, y con estos nuevos datos voy a poder actualizar mi 
+<a href="https://github.com/bastianolea/prensa_chile" target="_blank" rel="noopener">aplicación de análisis de prensa</a> para ponerle cosas más interesantes 🥰</p>
 
         
         <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
     <dt class="fw7">Fecha de publicación:</dt>
-    <dd class="fw5 ml0">November 18, 2024</dd>
+    <dd class="fw5 ml0">December 20, 2024</dd>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">2 minute read, 267 words</dd>
+    <dd class="fw5 ml0">3 minute read, 500 words</dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/an%C3%A1lisis-de-texto">análisis de texto</a>  <a href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/2024-12-20/">Procesando datos de texto en masa usando modelos de lenguaje (LLM)</a></dd>
-    
     <dd class="fw5 ml0"><a href="/blog/pal_asistentes_llm/">Crea tu propio asistente de programación en R con inteligencia artificial usando el paquete {pal}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/analisis_sentimiento_llm/">Análisis de sentimiento usando modelos de lenguaje (LLM) locales en R</a></dd>
     
     <dd class="fw5 ml0"><a href="/blog/genero_nombres_llm/">Predecir género a partir de nombres usando un modelo de lenguaje en R</a></dd>
     
@@ -323,13 +347,10 @@
         <div class="post-pagination dt w-100 mt4 mb2">
   
   
-    <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4321/blog/tutorial_gt/">&larr; Tutorial: generar tablas atractivas y personalizables con {gt}</a>
-  
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4321/blog/reportes_github_pages/">Reportes y páginas web online con GitHub Pages, R y Quarto &rarr;</a>
+    href="http://localhost:4321/blog/pal_asistentes_llm/">Crea tu propio asistente de programación en R con inteligencia artificial usando el paquete {pal} &rarr;</a>
   
 </div>
 
