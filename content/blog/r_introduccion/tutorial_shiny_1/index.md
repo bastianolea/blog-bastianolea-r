@@ -5,7 +5,6 @@ author: Bastián Olea Herrera
 date: '2024-11-08'
 draft: false
 weight: 20
-series: Introducción a R
 categories:
   - Tutoriales
 tags:

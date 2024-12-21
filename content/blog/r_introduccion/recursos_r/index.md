@@ -6,6 +6,7 @@ date: '2024-11-08'
 slug: []
 categories: []
 tags: []
+weight: 99
 excerpt: Colección de sitios web y recursos útiles para usuarios de R. Incluye sitios desde donde obtener datos, blogs de usuarios de R, sitios útiles para visualización de datos, y más.
 ---
 

@@ -3,7 +3,7 @@
 <main class="page-main pa4 {{ .Kind }}" role="main">
   <section class="blog-content mw7 center">
     <!-- con este se cambia el orden de los posts, pero cambia tambien en la pagina de blog -->
-    {{ $paginator := .Paginate (where .RegularPagesRecursive "Type" "blog").ByDate.Reverse }} <!-- .ByDate.Reverse -->
+    {{ $paginator := .Paginate (where .RegularPagesRecursive "Type" "blog").ByWeight }} <!-- .ByDate.Reverse -->
       {{ range $paginator.Pages }}
         {{ .Scratch.Set "$root" $caller }}
         {{ partial "shared/summary" . }}
@@ -11,7 +11,7 @@
     {{ partial "shared/list-pagination.html" . }}
   </section>
 </main>
-<aside class="page-sidebar" role="complementary">
+<!-- <aside class="page-sidebar" role="complementary">
   {{ partial "shared/sidebar-scaffold.html" . }}
-</aside>
+</aside> -->
 {{ end }}

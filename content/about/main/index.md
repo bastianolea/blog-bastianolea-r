@@ -15,7 +15,7 @@ intro: |
   
   Especialización en sociología del cuerpo, sociología del género y ciencia de datos (mediante el lenguaje de programación estadística R).
   
-  Actualmente me dedico al análisis de datos, específicamente a la programación y desarrollo de aplicaciones web interactivas para visualizar e interpretar datos estadísticos y sociales para clientes tales como universidades, empresas y consultoras. También me mantengo estudiando en las áreas de los estudios de género, la sociología del cuerpo, la teoría queer y la filosofía feminista.
+  Actualmente me dedico al análisis de datos, específicamente a la programación y desarrollo de aplicaciones web interactivas para visualizar e interpretar datos estadísticos y sociales para clientes tales como universidades, empresas y consultoras. Puedes ver [aquí las aplicaciones de datos sociales abiertos](/apps/) que he desarrollado, y [en este enlace tengo un portafolio de algunos trabajos que he desarrollado profesionalmente](https://bastianolea.rbind.io/blog/portafolio_trabajos_r/) en el pasado. También me mantengo estudiando en las áreas de los estudios de género, la sociología del cuerpo, la teoría queer y la filosofía feminista.
   
   En este blog comparto documentos, tutoriales y recursos sobre el lenguaje de programación estadística R. Puedes contactarme si tienes alguna pregunta o comentario, o si necesitas apoyo con tu investigación o tesis.
 

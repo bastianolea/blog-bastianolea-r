@@ -49,7 +49,7 @@
 Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y gratuito. Hugo se puede usar a través de R usando {blogdown} y el tema Hugo Apéro, creado por Alison Hill, y así puedes crear páginas y publicaciones usando Quarto o RMarkdown. De ese modo resulta muy fácil integrar las cosas que hagas con R en tu sitio, compartiendo el código en los posts.">
   <meta itemprop="datePublished" content="2024-11-07T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-07T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1573">
+  <meta itemprop="wordCount" content="1960">
   <meta itemprop="keywords" content="Quarto">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -503,6 +503,21 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
 <li>Lo mismo que en el paso anterior, solamente que en el archivo <code>themes/hugo-apero/layouts/partials/shared/summary.html</code>, que es el que controla los &ldquo;resúmenes&rdquo; de cada post que aparecen en la 
 <a href="/blog/">lista de publicaciones del blog.</a> En este caso le saqué la palabra &ldquo;Tags&rdquo;.</li>
 </ul>
+
+
+
+
+<h4 id="ordenar-una-serie-de-posts-por-peso-mientras-el-resto-del-blog-se-ordene-por-fecha">Ordenar una serie de posts por peso, mientras el resto del blog se ordene por fecha
+  <a href="#ordenar-una-serie-de-posts-por-peso-mientras-el-resto-del-blog-se-ordene-por-fecha"></a>
+</h4>
+<ul>
+<li>Las publicaciones normales de mi blog se ordenan por fecha, con los más nuevos arriba, que es el orden por defecto. Pero en otras categorías del blog, como la serie de 
+<a href="/blog/r_introduccion/">posts introductorios a R</a>, quiero que se ordenen por <em>peso</em>; es decir, por una forma de ordenamiento arbitraria dado que las distintas publicaciones tienen un orden de lectura desde lo más básico a lo más avanzado, independiente de la fecha de publicación. Recordemos que una serie de posts no es más que una carpeta en <code>content/blog</code> dentro de la cual hay más posts; en este caso, una carpeta llamada <code>r_introduccion</code> donde están todas las publicaciones dentro de dicha serie, junto a un <em>front matter</em> que hace que todas esas publicaciones sean parte de la serie &ldquo;Introducción a R&rdquo;.</li>
+<li>Lo primero es entender cómo se construyen las listas de publicaciones en Hugo. Los archivos dentro de la carpeta <code>themes/hugo-apero/layouts/</code> son los que definen la construcción de cada página del sitio. Entre ellas, en <code>themes/hugo-apero/layouts/blog/</code>, los archivos que empiezan con <code>list</code> define en la construcción de las listas de publicaciones. Cada lista usa un <em>layout</em> predefinido para construirse. Por ejemplo, y por defecto, en <code>content/blog/_index.md</code> se define que el blog se construye con <code>layout: list-sidebar</code>; es decir, el archivo <code>themes/hugo-apero/layouts/list-sidebar.html</code> construye la lista de publicaciones del blog.</li>
+<li>Comprendiendo lo anterior, si quiero tener una lista de publicaciones distinta, como la serie de posts introductorios a R ordenados por peso y no por fecha, tengo que crear un nuevo <em>layout</em> y definir el <em>front matter</em> (<code>_index.md</code>) de esa serie de publicaciones para que use el nuevo <em>layout</em>.</li>
+<li>En este <em>layout</em>, definimos que las publicaciones se ordenen por peso cambiando la siguiente línea: <code>{{ $paginator := .Paginate (where .RegularPagesRecursive &quot;Type&quot; &quot;blog&quot;).ByWeight }}</code>. Originalmente decía <code>.ByDate.Reverse</code>; es decir, por fecha con más nuevos arriba. En el <em>front matter</em> de la serie de posts definimos que el <em>layout</em> sea <code>layout: list-sidebar-weight</code>, para que use el ordenamiento distinto.</li>
+<li>Y listo, ahora tienes dos <em>layouts</em> para construir páginas de listas de posts, una ordenada por fecha y otra por peso, entonces el blog se ordena por fecha, pero la serie de posts que necesites puede ordenarse por peso si especificas que use el layout distinto al por defecto.</li>
+</ul>
 <hr>
 
 
@@ -572,7 +587,7 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">8 minute read, 1573 words</dd>
+    <dd class="fw5 ml0">10 minute read, 1960 words</dd>
   </dl>
   
   

@@ -94,20 +94,6 @@ _Aplicaciones web desarrolladas con R y Shiny con gráficos ggplot2_
 
 Plataforma de visualización de datos que producía un índice de movilidad a partir del procesamiento algorítmico de cientos de millones de observaciones correspondientes a las transacciones de tarjetas de débito y crédito Transbank. Los datos de transacciones eran preprocesados con algoritmos de anonimización de datos.
 
-----
-
-
-## Visualizador Covid 19 Chile
-_DataUC_ (Facultad de Matemáticas PUC), Pontificia Universidad Católica de Chile
-
-Análisis y visualización de datos utilizando el lenguaje de programación estadística R. Obtención automatizada de datos web (web scraping). Desarrollo de plataformas web interactivas de visualización de datos con R Shiny.
-
-![](covid/covid-19_chile.jpg)
-_Aplicación web desarrollada con R y Shiny con gráficos ggplot2, además de una API en plumber_
-
-![](covid/covid-19_chile_2.JPG)
-![](covid/covid-19_chile_1.JPG)
-![](covid/covid-19_chile_3.JPG)
 
 
 ----
@@ -130,9 +116,10 @@ _[Aplicación web](/apps/cep_graficador/) desarrollada con R y Shiny con gráfic
 _DataUC_ (Facultad de Matemáticas PUC), Pontificia Universidad Católica de Chile
 Recopilación, limpieza y análisis de datos estadísticos de relevancia social.
 
-![](tarapaca/tarapaca_intelligence_2.png)
-![](tarapaca/tarapaca_intelligence_3.png)
+![](tarapaca/pantallazos_datauc_tarapaca_intelligence.png)
+
 _Visualizaciones de datos en R usando ggplot2, a partir de datos sociales procesados con R_
+
 
 
 ----
@@ -147,6 +134,23 @@ Aplicación web desarrollada con R y Shiny a partir del cálculo de un índice e
 
 
 ----
+
+
+## Visualizador Covid 19 Chile
+_DataUC_ (Facultad de Matemáticas PUC), Pontificia Universidad Católica de Chile
+
+Análisis y visualización de datos utilizando el lenguaje de programación estadística R. Obtención automatizada de datos web (web scraping). Desarrollo de plataformas web interactivas de visualización de datos con R Shiny.
+
+![](covid/covid-19_chile.jpg)
+_Aplicación web desarrollada con R y Shiny con gráficos ggplot2, además de una API en plumber_
+
+![](covid/covid-19_chile_2.JPG)
+![](covid/covid-19_chile_1.JPG)
+![](covid/covid-19_chile_3.JPG)
+
+
+----
+
 
 
 ## DataEmprende

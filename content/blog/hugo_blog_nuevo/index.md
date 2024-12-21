@@ -124,6 +124,14 @@ Algunas dificultades que tuve con el blog, y cómo las resolví:
 #### Hacer que se vean las etiquetas de cada post en la lista de posts del blog
   - Lo mismo que en el paso anterior, solamente que en el archivo `themes/hugo-apero/layouts/partials/shared/summary.html`, que es el que controla los "resúmenes" de cada post que aparecen en la [lista de publicaciones del blog.](/blog/) En este caso le saqué la palabra "Tags".
 
+
+#### Ordenar una serie de posts por peso, mientras el resto del blog se ordene por fecha
+  - Las publicaciones normales de mi blog se ordenan por fecha, con los más nuevos arriba, que es el orden por defecto. Pero en otras categorías del blog, como la serie de [posts introductorios a R](/blog/r_introduccion/), quiero que se ordenen por _peso_; es decir, por una forma de ordenamiento arbitraria dado que las distintas publicaciones tienen un orden de lectura desde lo más básico a lo más avanzado, independiente de la fecha de publicación. Recordemos que una serie de posts no es más que una carpeta en `content/blog` dentro de la cual hay más posts; en este caso, una carpeta llamada `r_introduccion` donde están todas las publicaciones dentro de dicha serie, junto a un _front matter_ que hace que todas esas publicaciones sean parte de la serie "Introducción a R".
+  - Lo primero es entender cómo se construyen las listas de publicaciones en Hugo. Los archivos dentro de la carpeta `themes/hugo-apero/layouts/` son los que definen la construcción de cada página del sitio. Entre ellas, en `themes/hugo-apero/layouts/blog/`, los archivos que empiezan con `list` define en la construcción de las listas de publicaciones. Cada lista usa un _layout_ predefinido para construirse. Por ejemplo, y por defecto, en `content/blog/_index.md` se define que el blog se construye con `layout: list-sidebar`; es decir, el archivo `themes/hugo-apero/layouts/list-sidebar.html` construye la lista de publicaciones del blog.
+  - Comprendiendo lo anterior, si quiero tener una lista de publicaciones distinta, como la serie de posts introductorios a R ordenados por peso y no por fecha, tengo que crear un nuevo _layout_ y definir el _front matter_ (`_index.md`) de esa serie de publicaciones para que use el nuevo _layout_.
+  - En este _layout_, definimos que las publicaciones se ordenen por peso cambiando la siguiente línea: `{{ $paginator := .Paginate (where .RegularPagesRecursive "Type" "blog").ByWeight }}`. Originalmente decía `.ByDate.Reverse`; es decir, por fecha con más nuevos arriba. En el _front matter_ de la serie de posts definimos que el _layout_ sea `layout: list-sidebar-weight`, para que use el ordenamiento distinto.
+  - Y listo, ahora tienes dos _layouts_ para construir páginas de listas de posts, una ordenada por fecha y otra por peso, entonces el blog se ordena por fecha, pero la serie de posts que necesites puede ordenarse por peso si especificas que use el layout distinto al por defecto.
+
 ----
 
 ### Consejos
