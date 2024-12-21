@@ -45,10 +45,10 @@
     
   
   <meta itemprop="name" content="Análisis de sentimiento usando modelos de lenguaje (LLM) locales en R">
-  <meta itemprop="description" content="El análisis de sentimientos es una técnica de análisis de texto que aplica distintos algoritmos para poder clasificar textos de distinta longitud y complejidad en un conjunto preestablecido de categorías relacionadas al sentimiento de dichos textos. Con el sentimiento de los textos nos referimos a la información subjetiva que entregan estos textos, así como los afectos que producen. Las categorías del análisis del sentimiento suelen ser positivo, neutro y negativo, u otras más complejas, como agrado (agradable/desagradable), activación (activo/pasivo), y otros.">
-  <meta itemprop="datePublished" content="2024-11-18T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-11-18T00:00:00+00:00">
-  <meta itemprop="wordCount" content="267">
+  <meta itemprop="description" content="El análisis de sentimientos es una técnica de análisis de texto donde se aplican distintos algoritmos para poder clasificar textos de distinta longitud y complejidad en un conjunto preestablecido de categorías relacionadas al sentimiento de dichos textos. Con el sentimiento de los textos nos referimos a la información subjetiva que entregan estos textos, así como los afectos que producen. Por ejemplo, “odio a mi gato” versus “mi gatita es tan tierna” son dos textos que expresan distintos niveles de negatividad/positividad, agresividad, ternura, etcétera. Las categorías del análisis del sentimiento suelen ser positivo, neutro y negativo, u otras más complejas, como agrado (agradable/desagradable), activación (activo/pasivo), entre otros.">
+  <meta itemprop="datePublished" content="2024-12-22T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-12-22T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1862">
   <meta itemprop="keywords" content="Análisis de texto,Inteligencia artificial">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -254,7 +254,7 @@
         <h1 class="f1 lh-solid measure-narrow mb3 fw4">Análisis de sentimiento usando modelos de lenguaje (LLM) locales en R</h1>
         
         
-        <p class="f7 db mv0 ttu">18/11/2024</p>
+        <p class="f7 db mv0 ttu">22/12/2024</p>
         
         
         
@@ -268,16 +268,156 @@
 
       </header>
       <section class="post-body pt5 pb4">
-        <p>El análisis de sentimientos es una técnica de análisis de texto que aplica distintos algoritmos para poder clasificar textos de distinta longitud y complejidad en un conjunto preestablecido de categorías relacionadas al sentimiento de dichos textos. Con el sentimiento de los textos nos referimos a la información subjetiva que entregan estos textos, así como los afectos que producen. Las categorías del análisis del sentimiento suelen ser positivo, neutro y negativo, u otras más complejas, como agrado (agradable/desagradable), activación (activo/pasivo), y otros.</p>
-<p>En otras palabras, la aplicación de un análisis de sentimiento un conjunto de textos nos permitiría clasificar estos textos en categorías como positivo, neutro y negativo, y a partir de eso poder realizar otros análisis.</p>
-<p>Algunos ejemplos son:</p>
+        <p>El análisis de sentimientos es una técnica de análisis de texto donde se aplican distintos algoritmos para poder clasificar textos de distinta longitud y complejidad en un conjunto preestablecido de categorías relacionadas al sentimiento de dichos textos. Con el <em>sentimiento</em> de los textos nos referimos a la información subjetiva que entregan estos textos, así como los afectos que producen. Por ejemplo, &ldquo;odio a mi gato&rdquo; versus &ldquo;mi gatita es tan tierna&rdquo; son dos textos que expresan distintos niveles de negatividad/positividad, agresividad, ternura, etcétera. Las categorías del análisis del sentimiento suelen ser <em>positivo, neutro</em> y <em>negativo,</em> u otras más complejas, como agrado (agradable/desagradable), activación (activo/pasivo), entre otros.</p>
+<p>En otras palabras, la aplicación de un análisis de sentimiento a un conjunto de textos nos permitiría clasificar estos textos en categorías como positivo, neutro y negativo, en base a la forma en que describen el tema del que tratan, o bien, cualidades de las palabras que se usen dentro del texto.</p>
+<p>El análisis de sentimiento usualmente es un medio para poder contar con nueva información que nos permita desarrollar nuevos análisis. En este sentido, la nueva variable de sentimiento resulta útil de ser cruzada con otras variables acerca del texto, tales como variables que identifiquen la autoría del texto, su fuente, quien enuncia el texto, de qué trata el texto, etc.</p>
+<p>Algunos usos del análisis de sentimiento son:</p>
 <ul>
+<li>Evaluar si los textos dentro de un conjunto de textos o <em>corpus</em> son positivos o negativos,</li>
 <li>Correlacionar si los textos de distintos autores difieren en sus sentimientos,</li>
 <li>Analizar si textos sobre determinadas temáticas se correlacionan con sentimientos específicos,</li>
 <li>Estudiar si ciertos temas son tratados de una forma específica por ciertos autores, y de una forma distinta por otros</li>
 <li>Comparar si textos sobre un mismo tema son expuestos de forma distinta por distintos autores o fuentes</li>
 </ul>
-<p>Por ejemplo, tenemos un conjunto de Artículos de prensa o noticias, cada uno con fecha y el medio de comunicación del que proviene. Si hacemos una selección de noticias sobre un tema específico, podríamos analizar cómo cambia el sentimiento dominante con el que se plantea la temática en distintos momentos del tiempo, o si dos medios de comunicación representan recurrentemente una misma temática bajo distinto sentimiento.</p>
+<p>Pensemos en el ejemplo de un conjunto de artículos de prensa o noticias, cada uno con fecha y el medio de comunicación del que proviene. Si hacemos una selección de noticias sobre un tema específico, podríamos analizar cómo cambia el sentimiento dominante con el que se plantea la temática en distintos momentos del tiempo, o si dos medios de comunicación representan una misma temática bajo distinto sentimiento.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">readr</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Probemos haciendo un análisis de sentimiento a partir de un corpus de textos de noticias chilenas publicadas el año 2024. Los datos son obtenidos de 
+<a href="https://github.com/bastianolea/prensa_chile" target="_blank" rel="noopener">este repositorio de obtención automatizada de textos de noticias de prensa escrita chilena.</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># dirección web donde se encuentran los datos</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">url_datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/datos/prensa_datos_muestra.csv&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># lectura de los datos ubicados en internet</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">noticias</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_csv2</span><span style="color:#908caa">(</span><span style="color:#ea9a97">url_datos</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># extracción de una marcha aleatoria de 20 noticias</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">noticias</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">20</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>En el código anterior, identificamos la ubicación de los datos que usaremos de prueba, que corresponden a un conjunto de 3000 noticias públicas del año 2024, y cargamos los datos directamente desde internet. Como se trata de una prueba, reduciremos la cantidad de noticias a tan sólo 20:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra</span>
+</span></span></code></pre></div><pre><code># A tibble: 20 × 4
+   titulo                                               cuerpo fuente fecha     
+   &lt;chr&gt;                                                &lt;chr&gt;  &lt;chr&gt;  &lt;date&gt;    
+ 1 &quot;Sismo de 7,3 de magnitud con epicentro en San Pedr… &quot;El m… La Na… 2024-07-18
+ 2 &quot;Mirar, inclinar y tocar: Las recomendaciones del B… &quot;Aton… Emol   2024-09-13
+ 3 &quot;Frío y lluvia en la zona central: El pronóstico de… &quot;El p… Megan… 2024-04-26
+ 4 &quot;Comisión de Minería y Energía de la Cámara aprueba… &quot;De m… D. Fi… 2024-11-06
+ 5 &quot;Nuevo líder de Salesforce Chile entrega detalles d… &quot;En f… D. Fi… 2024-09-30
+ 6 &quot;Carabineros incauta 84 máquinas de azar y detiene … &quot;Los … La Na… 2024-04-05
+ 7 &quot;Este martes se estrena la nueva temporada de Indec… &quot;Este… Megan… 2024-08-13
+ 8 &quot;Trabajo activa subsidio al empleo en zonas afectad… &quot;El s… D. Fi… 2024-02-20
+ 9 &quot;José Piñera aparece en misa fúnebre de su hermano … &quot;El e… Megan… 2024-02-09
+10 &quot;Hombre de 41 años es asesinado en Viña: fue atacad… &quot;El p… La Na… 2024-09-17
+11 &quot;Canto de ballenas jorobadas enviada al espacio ins… &quot;Desd… El De… 2024-05-06
+12 &quot;Juan Pablo Hermosilla adelanta que entregará chats… &quot;Juan… El Dí… 2024-10-23
+13 &quot;Eclipse Solar 2024: revisa la fecha y ciudades de … &quot;El m… El Mo… 2024-10-01
+14 &quot;Lluvia en Santiago: ¿Hasta cuándo precipitará inte… &quot;En l… Megan… 2024-06-21
+15 &quot;OLCA y alza de la luz: “El sistema energético está… &quot;En u… El Ci… 2024-07-06
+16 &quot;Caso Pío Nono: fiscalía busca evitar ir a juicio t… &quot;Qué … Ex-An… 2024-01-24
+17 &quot;“Le mintió a Chile”: Diputado Guzmán presentó ante… &quot;El d… CNN C… 2024-11-18
+18 &quot;PDI confirma detención de \&quot;Perro Elvis\&quot; por pres… &quot;Dura… 24 Ho… 2024-08-31
+19 &quot;Otra de Maduro: El controvertido mandatario boliva… &quot;Vene… Publi… 2024-08-09
+20 &quot;“Ha sido un día difícil”: ministra Tohá confirma q… &quot;“Ha … Publi… 2024-10-17
+</code></pre>
+<p>Los datos tienen una columna con el título, otra con el cuerpo de la noticia, y finalmente la fuente de la noticia y su fecha de publicación.</p>
+
+
+
+
+<h2 id="configuración-del-modelo-de-lenguaje-local">Configuración del modelo de lenguaje local
+  <a href="#configuraci%c3%b3n-del-modelo-de-lenguaje-local"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para poder usar modelos LLM localmente con R, 
+<a href="https://ollama.com/" target="_blank" rel="noopener">tenemos que instalar Ollama</a> en nuestro equipo, que es la aplicación que nos permite obtener y usar modelos de lenguaje locales, y ejecutar la aplicación en nuestro computador. Ollama tiene que estar abierto para poder proveer del modelo a nuestra sesión de R.</p>
+<p>Luego, ya sea desde Ollama o desde R, tenemos que instalar un modelo de lenguaje. Desde R, es tan simple como ejecutar: <code>ollamar::pull(&quot;llama3.2:1b&quot;)</code>, definiendo el 
+<a href="https://ollama.com/search" target="_blank" rel="noopener">modelo</a> que queremos instalar. Al elegir un modelo, debes considerar las capacidades de tu computador para ejecutar los modelos, y que el tamaño del modelo es directamente proporcional con la calidad de sus respuestas<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>Una vez tengas Ollama abierto en tu computador, y un modelo previamente instalado, puedes proceder a usarlo en R en el siguiente paso.</p>
+
+
+
+
+<h2 id="extracción-de-sentimiento-a-partir-del-texto">Extracción de sentimiento a partir del texto
+  <a href="#extracci%c3%b3n-de-sentimiento-a-partir-del-texto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para realizar el análisis de sentimiento, utilizaremos la ayuda de un modelo de lenguaje de gran tamaño (LLM), los cuales están entrenados para este tipo de tareas. Cargamos 
+<a href="https://mlverse.github.io/mall/#get-started" target="_blank" rel="noopener">el paquete {mall} para uso de LLMs en R</a>, y {beepr} para anunciar con una campanita cuando se termine el procesamiento, porque puede tardar unos minutos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mall</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">beepr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># ollamar::pull(&#34;llama3.1:8b&#34;) # instalar modelo</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">llm_use</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;ollama&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;llama3.1:8b&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># cargar modelo</span>
+</span></span></code></pre></div><p>La 
+<a href="https://mlverse.github.io/mall/#sentiment" target="_blank" rel="noopener">función <code>llm_sentiment()</code> del paquete {mall}</a> facilita la extracción del sentimiento a partir del texto. Tan sólo es necesario indicar la columna que contiene el texto, y las categorías de sentimiento que deseamos obtener. Por medio del siguiente código, se alimenta al modelo de lenguaje con cada uno de los textos, y se le pide obtener como respuesta si el texto es positivo, neutro o negativo.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_sentimiento</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">noticias_muestra</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">llm_sentiment</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cuerpo</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">pred_name</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;sentimiento&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">options</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;positivo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;neutro&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;negativo&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">beep</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>En mi computador personal, este proceso en total tomó 88 segundos, lo que significa que tarda aproximadamente cuatro segundos por cada texto que el modelo analiza y clasifica. Esto depende de las capacidades gráficas de tu computador, y del largo del texto. Las noticias suelen tener como mínimo varios cientos de palabras, lo que hace que el proceso sean un poco más lento.</p>
+<p>A continuación, vemos los resultados del análisis de sentimiento:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_sentimiento</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sentimiento</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">titulo</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 20 × 2
+   sentimiento titulo                                                           
+   &lt;chr&gt;       &lt;chr&gt;                                                            
+ 1 neutro      &quot;Sismo de 7,3 de magnitud con epicentro en San Pedro de Atacama …
+ 2 positivo    &quot;Mirar, inclinar y tocar: Las recomendaciones del Banco Central …
+ 3 negativo    &quot;Frío y lluvia en la zona central: El pronóstico de Alejandro Se…
+ 4 positivo    &quot;Comisión de Minería y Energía de la Cámara aprueba en particula…
+ 5 positivo    &quot;Nuevo líder de Salesforce Chile entrega detalles de los súper a…
+ 6 negativo    &quot;Carabineros incauta 84 máquinas de azar y detiene a 3 personas …
+ 7 positivo    &quot;Este martes se estrena la nueva temporada de Indecisos: Candida…
+ 8 positivo    &quot;Trabajo activa subsidio al empleo en zonas afectadas por los in…
+ 9 negativo    &quot;José Piñera aparece en misa fúnebre de su hermano Sebastián: Le…
+10 negativo    &quot;Hombre de 41 años es asesinado en Viña: fue atacado con “un obj…
+11 positivo    &quot;Canto de ballenas jorobadas enviada al espacio inspira obra de …
+12 positivo    &quot;Juan Pablo Hermosilla adelanta que entregará chats de su herman…
+13 positivo    &quot;Eclipse Solar 2024: revisa la fecha y ciudades de Chile en las …
+14 negativo    &quot;Lluvia en Santiago: ¿Hasta cuándo precipitará intensamente en l…
+15 negativo    &quot;OLCA y alza de la luz: “El sistema energético está centrado en …
+16 negativo    &quot;Caso Pío Nono: fiscalía busca evitar ir a juicio tras revés par…
+17 negativo    &quot;“Le mintió a Chile”: Diputado Guzmán presentó antecedentes a Co…
+18 negativo    &quot;PDI confirma detención de \&quot;Perro Elvis\&quot; por presunta responsa…
+19 negativo    &quot;Otra de Maduro: El controvertido mandatario bolivariano ordena …
+20 negativo    &quot;“Ha sido un día difícil”: ministra Tohá confirma que Presidente…
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_sentimiento</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sentimiento</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">table</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><pre><code>sentimiento
+negativo   neutro positivo 
+      11        1        8 
+</code></pre>
+
+
+
+
+<h3 id="conclusión">Conclusión
+  <a href="#conclusi%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Revisando los resultados a la rápida, vemos que una noticia sobre un sismo es aparentemente <strong>neutra</strong>, probablemente por la forma en que esté redactada. Noticias sobre la aprobación de un proyecto de ley, la presentación de nuevas tecnologías, o beneficios para personas afectadas por incendios, son interpretadas como <strong>positivas</strong>. Por último, noticias sobre frentes de mal tiempo, operaciones policiales, funerales, crímenes y asesinatos son interpretadas como <strong>negativas</strong>. También, vemos que una noticia donde una ministra interpreta una jornada como difícil también es negativa, y otra donde se critica al mandatario de un país por sus actos también.</p>
+<p>En este sentido, el desempeño de aplicar el modelo de lenguaje para obtener el sentimiento de los textos parece satisfactorio. De forma automatizada, y sin intervención ni supervisión humana, hemos obtenido valiosa información que resume un aspecto del significado codificado en los textos.</p>
+<p>A partir de esta nueva variable, podemos proceder, por ejemplo, a detectar noticias que contienen ciertos conceptos, y analizar si dicha temática se trata mayormente de forma positiva o negativa. O si está positividad o negatividad varía a través de las distintas fuentes de información, momentos en el tiempo, u otras particularidades del texto.</p>
+
+
+
+
+<h3 id="consideraciones">Consideraciones
+  <a href="#consideraciones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Los resultados siempre van a depender de la calidad de los datos que alimentes al modelo. También es necesario considerar que, debido a que los modelos de lenguaje no son deterministas, los resultados siempre pueden variar. En otras palabras, si analiza el sentimiento de un mismo texto múltiples veces, puede que los resultados sean levemente distintos. Teniendo esto en consideración, es importante ser críticos al momento de recibir resultados de un modelo de lenguaje o de cualquier otra herramienta de inteligencia artificial, y también considerar estos resultados como convenientes intentos de aproximación a la realidad: por un lado, los modelos de lenguaje facilitan muchas tareas, pero por otro, nunca podemos fiarnos 100% de sus resultados, sobre todo cuando estamos tratando con temáticas complejas como son el significado expresado por textos que reflejan facetas complejas de la realidad social y política.</p>
 <hr>
 <p>Si este tutorial te sirvió, por favor considera hacerme una pequeña donación para poder tomarme un cafecito mientras escribo el siguiente tutorial 🥺</p>
 <div style = "height: 18px;">
@@ -288,16 +428,29 @@
   align-items: center;">
     <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
   </div>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Si tu computador es muy básico (tiene poca memoria RAM), recomiendo instalar Llama 3.2 1B. Si tiene al menos 8GB de memoria, recomiendo Llama 3.2 3B. Si tienes suficiente memoria (más de 8GB), recomiendo Llama 3.1 8B.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
 
         
         <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
     <dt class="fw7">Fecha de publicación:</dt>
-    <dd class="fw5 ml0">November 18, 2024</dd>
+    <dd class="fw5 ml0">December 22, 2024</dd>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">2 minute read, 267 words</dd>
+    <dd class="fw5 ml0">9 minute read, 1862 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categorías:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/categories/tutoriales">tutoriales</a> </dd>
   </dl>
   
   
@@ -314,7 +467,7 @@
     
     <dd class="fw5 ml0"><a href="/blog/pal_asistentes_llm/">Crea tu propio asistente de programación en R con inteligencia artificial usando el paquete {pal}</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/genero_nombres_llm/">Predecir género a partir de nombres usando un modelo de lenguaje en R</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/resumir_texto_llm/">Resumir textos usando modelos de lenguaje (LLM) locales en R</a></dd>
     
   </dl>
 </details>
@@ -324,13 +477,10 @@
         <div class="post-pagination dt w-100 mt4 mb2">
   
   
-    <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4321/blog/tutorial_gt/">&larr; Tutorial: generar tablas atractivas y personalizables con {gt}</a>
-  
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4321/blog/reportes_github_pages/">Reportes y páginas web online con GitHub Pages, R y Quarto &rarr;</a>
+    href="http://localhost:4321/blog/2024-12-21/">Novedades: app de temperaturas extremas, actualizaciones de otras apps &rarr;</a>
   
 </div>
 

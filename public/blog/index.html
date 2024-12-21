@@ -47,7 +47,7 @@
   <meta itemprop="name" content="Análisis de datos en R">
   <meta itemprop="description" content="Publicaciones periodicas sobre el uso de R para análisis de datos, incluyendo tutoriales, reseñas, tips o consejos, novedades, y más.">
   <meta itemprop="datePublished" content="2024-12-21T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-12-21T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-12-22T00:00:00+00:00">
   <meta itemprop="wordCount" content="56">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -264,6 +264,38 @@
   
   <div class="measure-wide center mb4 mb5-l">
     <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/analisis_sentimiento_llm/" class="db">Análisis de sentimiento usando modelos de lenguaje (LLM) locales en R</a></h1>
+      
+    </header>
+      
+      <p class="lh-copy mb4">El análisis de sentimientos es una técnica de análisis de texto donde se aplican distintos algoritmos para poder clasificar textos de distinta longitud y complejidad en un conjunto preestablecido de categorías relacionadas al sentimiento de dichos textos. Con el <em>sentimiento</em> de los textos nos referimos a la información subjetiva que entregan estos textos, así como los afectos que producen. Por ejemplo, &ldquo;odio a mi gato&rdquo; versus &ldquo;mi gatita es tan tierna&rdquo; son dos textos que expresan distintos niveles de negatividad/positividad, agresividad, ternura, etcétera. Las categorías del análisis del sentimiento suelen ser <em>positivo, neutro</em> y <em>negativo,</em> u otras más complejas, como agrado (agradable/desagradable), activación (activo/pasivo), entre otros.</p>
+    <footer>
+      
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/an%C3%A1lisis-de-texto">análisis de texto</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a> </dd></em>
+        </dl>
+        
+        
+      
+      <p class="f7 db mv2">22/12/2024</p>
+      
+    </footer>
+  </div>
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
       <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/2024-12-21/" class="db">Novedades: app de temperaturas extremas, actualizaciones de otras apps</a></h1>
       
     </header>
@@ -350,6 +382,61 @@
         
       
       <p class="f7 db mv2">10/12/2024</p>
+      
+    </footer>
+  </div>
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/resumir_texto_llm/" class="db">Resumir textos usando modelos de lenguaje (LLM) locales en R</a></h1>
+      
+    </header>
+      
+      <p class="lh-copy mb4"><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">readr</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">url_datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/datos/prensa_datos_muestra.csv&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">noticias</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_csv2</span><span style="color:#908caa">(</span><span style="color:#ea9a97">url_datos</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">noticias</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">20</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mall</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">beepr</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">llm_use</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;ollama&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;llama3.1:8b&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra_resumen</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">noticias_muestra</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">llm_summarize</span><span style="color:#908caa">(</span><span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#ea9a97">titulo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">cuerpo</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">str_trunc</span><span style="color:#908caa">(</span><span style="color:#f6c177">3000</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">side</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;center&#34;</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">max_words</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">25</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">pred_name</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;resumen&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">additional_prompt</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Redacta el resumen de la idea principal de la noticia en español, y en un solo párrafo.&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">beep</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>2.7 minutos</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra_resumen</span>
+</span></span></code></pre></div></p>
+    <footer>
+      
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/an%C3%A1lisis-de-texto">análisis de texto</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a> </dd></em>
+        </dl>
+        
+        
+      
+      <p class="f7 db mv2">6/12/2024</p>
       
     </footer>
   </div>
@@ -573,38 +660,6 @@
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/quarto">Quarto</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/git">git</a> </dd></em>
-        </dl>
-        
-        
-      
-      <p class="f7 db mv2">18/11/2024</p>
-      
-    </footer>
-  </div>
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/analisis_sentimiento_llm/" class="db">Análisis de sentimiento usando modelos de lenguaje (LLM) locales en R</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">El análisis de sentimientos es una técnica de análisis de texto que aplica distintos algoritmos para poder clasificar textos de distinta longitud y complejidad en un conjunto preestablecido de categorías relacionadas al sentimiento de dichos textos. Con el sentimiento de los textos nos referimos a la información subjetiva que entregan estos textos, así como los afectos que producen. Las categorías del análisis del sentimiento suelen ser positivo, neutro y negativo, u otras más complejas, como agrado (agradable/desagradable), activación (activo/pasivo), y otros.</p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/an%C3%A1lisis-de-texto">análisis de texto</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a> </dd></em>
         </dl>
         
         
@@ -896,40 +951,6 @@
         
       
       <p class="f7 db mv2">10/11/2024</p>
-      
-    </footer>
-  </div>
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/r_introduccion/tutorial_dplyr_campamentos/" class="db">Tutorial: introducción a {dplyr} usando datos de campamentos</a></h1>
-      
-      <h2 class="f5"><i class="fas fa-stream fa-fw pr1"></i><small class="f5 ttu tracked">Series: </small><a class="link i dim" href="/blog/r_introduccion/">Introducción a R</a></h2>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Tutorial de introducción al paquete <code>{dplyr}</code> para la exploración y análisis de datos con R. Está dirigido a principiantes. En este tutorial veremos cómo explorar un conjunto de datos sociohabitacionales, y a crear nuevas variables.</p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/dplyr">dplyr</a> </dd></em>
-        </dl>
-        
-        
-      
-      <p class="f7 db mv2">9/11/2024</p>
       
     </footer>
   </div>

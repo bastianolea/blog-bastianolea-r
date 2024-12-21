@@ -14,6 +14,8 @@ editor_options:
   chunk_output_type: console
 ---
 
+
+
 El análisis de sentimientos es una técnica de análisis de texto donde se aplican distintos algoritmos para poder clasificar textos de distinta longitud y complejidad en un conjunto preestablecido de categorías relacionadas al sentimiento de dichos textos. Con el _sentimiento_ de los textos nos referimos a la información subjetiva que entregan estos textos, así como los afectos que producen. Por ejemplo, “odio a mi gato” versus “mi gatita es tan tierna” son dos textos que expresan distintos niveles de negatividad/positividad, agresividad, ternura, etcétera.  Las categorías del análisis del sentimiento suelen ser _positivo, neutro_ y _negativo,_ u otras más complejas, como agrado (agradable/desagradable), activación (activo/pasivo), entre otros.
 
 En otras palabras, la aplicación de un análisis de sentimiento a un conjunto de textos nos permitiría clasificar estos textos en categorías como positivo, neutro y negativo, en base a la forma en que describen el tema del que tratan, o bien, cualidades de las palabras que se usen dentro del texto.
@@ -29,13 +31,19 @@ Algunos usos del análisis de sentimiento son:
 
 Pensemos en el ejemplo de un conjunto de artículos de prensa o noticias, cada uno con fecha y el medio de comunicación del que proviene. Si hacemos una selección de noticias sobre un tema específico, podríamos analizar cómo cambia el sentimiento dominante con el que se plantea la temática en distintos momentos del tiempo, o si dos medios de comunicación representan una misma temática bajo distinto sentimiento.
 
+
+
 ```{r}
 #| message: false
 library(dplyr)
 library(readr)
 ```
 
+
+
 Probemos haciendo un análisis de sentimiento a partir de un corpus de textos de noticias chilenas publicadas el año 2024. Los datos son obtenidos de [este repositorio de obtención automatizada de textos de noticias de prensa escrita chilena.](https://github.com/bastianolea/prensa_chile)
+
+
 
 ```{r}
 #| eval: false
@@ -63,11 +71,17 @@ noticias_muestra <- read_rds("muestra.rds")
 ```
 
 
+
+
 En el código anterior, identificamos la ubicación de los datos que usaremos de prueba, que corresponden a un conjunto de 3000 noticias públicas del año 2024, y cargamos los datos directamente desde internet. Como se trata de una prueba, reduciremos la cantidad de noticias a tan sólo 20:
+
+
 
 ```{r}
 noticias_muestra
 ```
+
+
 
 Los datos tienen una columna con el título, otra con el cuerpo de la noticia, y finalmente la fuente de la noticia y su fecha de publicación.
 
@@ -84,6 +98,8 @@ Una vez tengas Ollama abierto en tu computador, y un modelo previamente instalad
 ## Extracción de sentimiento a partir del texto
 Para realizar el análisis de sentimiento, utilizaremos la ayuda de un modelo de lenguaje de gran tamaño (LLM), los cuales están entrenados para este tipo de tareas. Cargamos [el paquete {mall} para uso de LLMs en R](https://mlverse.github.io/mall/#get-started), y {beepr} para anunciar con una campanita cuando se termine el procesamiento, porque puede tardar unos minutos.
 
+
+
 ```{r}
 #| eval: false
 library(mall)
@@ -93,7 +109,11 @@ library(beepr)
 llm_use("ollama", "llama3.1:8b") # cargar modelo
 ```
 
+
+
 La [función `llm_sentiment()` del paquete {mall}](https://mlverse.github.io/mall/#sentiment) facilita la extracción del sentimiento a partir del texto. Tan sólo es necesario indicar la columna que contiene el texto, y las categorías de sentimiento que deseamos obtener. Por medio del siguiente código, se alimenta al modelo de lenguaje con cada uno de los textos, y se le pide obtener como respuesta si el texto es positivo, neutro o negativo. 
+
+
 
 ```{r procesar}
 #| eval: false
@@ -117,9 +137,13 @@ noticias_sentimiento |> write_rds("content/blog/analisis_sentimiento_llm/resulta
 noticias_sentimiento <- read_rds("resultados.rds")
 ```
 
+
+
 En mi computador personal, este proceso en total tomó 88 segundos, lo que significa que tarda aproximadamente cuatro segundos por cada texto que el modelo analiza y clasifica. Esto depende de las capacidades gráficas de tu computador, y del largo del texto. Las noticias suelen tener como mínimo varios cientos de palabras, lo que hace que el proceso sean un poco más lento.
 
 A continuación, vemos los resultados del análisis de sentimiento:
+
+
 ```{r}
 noticias_sentimiento |> 
   select(sentimiento, titulo)
@@ -128,6 +152,8 @@ noticias_sentimiento |>
   select(sentimiento) |> 
   table()
 ```
+
+
 
 
 ### Conclusión
@@ -147,6 +173,8 @@ Los resultados siempre van a depender de la calidad de los datos que alimentes a
 
 
 Si este tutorial te sirvió, por favor considera hacerme una pequeña donación para poder tomarme un cafecito mientras escribo el siguiente tutorial 🥺
+
+
 
 ```{=html}
 <div style = "height: 18px;">

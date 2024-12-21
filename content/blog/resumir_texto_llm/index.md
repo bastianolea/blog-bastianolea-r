@@ -3,26 +3,26 @@ title: Resumir textos usando modelos de lenguaje (LLM) locales en R
 author: Bastián Olea Herrera
 date: '2024-12-06'
 slug: []
-categories: 
+categories:
   - tutoriales
 tags:
   - análisis de texto
   - inteligencia artificial
-format: "hugo-md"
+format: hugo-md
 draft: true
-editor_options: 
+editor_options:
   chunk_output_type: console
-execute: 
+execute:
   eval: false
 ---
 
 
-```{r}
+``` r
 library(dplyr)
 library(readr)
 ```
 
-```{r}
+``` r
 url_datos <- "https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/datos/prensa_datos_muestra.csv"
 
 noticias <- read_csv2(url_datos)
@@ -33,15 +33,13 @@ noticias_muestra <- noticias |>
 noticias_muestra
 ```
 
-
-
-```{r}
+``` r
 library(mall)
 library(stringr)
 library(beepr)
 ```
 
-```{r}
+``` r
 llm_use("ollama", "llama3.1:8b")
 
 noticias_muestra_resumen <- noticias_muestra |> 
@@ -54,7 +52,6 @@ beep()
 
 2.7 minutos
 
-```{r}
+``` r
 noticias_muestra_resumen
 ```
-
