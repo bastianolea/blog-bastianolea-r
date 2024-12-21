@@ -49,7 +49,7 @@
 Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y gratuito. Hugo se puede usar a través de R usando {blogdown} y el tema Hugo Apéro, creado por Alison Hill, y así puedes crear páginas y publicaciones usando Quarto o RMarkdown. De ese modo resulta muy fácil integrar las cosas que hagas con R en tu sitio, compartiendo el código en los posts.">
   <meta itemprop="datePublished" content="2024-11-07T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-07T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1960">
+  <meta itemprop="wordCount" content="2055">
   <meta itemprop="keywords" content="Quarto">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -115,7 +115,8 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
       <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
       
       
-      <div class="dib v-mid">
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
         <div class="social-icon-links" aria-hidden="true">
   
   
@@ -518,6 +519,16 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
 <li>En este <em>layout</em>, definimos que las publicaciones se ordenen por peso cambiando la siguiente línea: <code>{{ $paginator := .Paginate (where .RegularPagesRecursive &quot;Type&quot; &quot;blog&quot;).ByWeight }}</code>. Originalmente decía <code>.ByDate.Reverse</code>; es decir, por fecha con más nuevos arriba. En el <em>front matter</em> de la serie de posts definimos que el <em>layout</em> sea <code>layout: list-sidebar-weight</code>, para que use el ordenamiento distinto.</li>
 <li>Y listo, ahora tienes dos <em>layouts</em> para construir páginas de listas de posts, una ordenada por fecha y otra por peso, entonces el blog se ordena por fecha, pero la serie de posts que necesites puede ordenarse por peso si especificas que use el layout distinto al por defecto.</li>
 </ul>
+
+
+
+
+<h4 id="separar-logos-de-redes-sociales-de-los-ítems-del-menu-superior">Separar logos de redes sociales de los ítems del menu superior
+  <a href="#separar-logos-de-redes-sociales-de-los-%c3%adtems-del-menu-superior"></a>
+</h4>
+<ul>
+<li>Encontraba que los logos de redes sociales estaban muy pegados a el menú de páginas superior del blog, porque cuando uno ponía el Mouse encima de un ítem, el subrayado del ítem se ponía encima de los logos de redes sociales. El archivo <code>themes/hugo-apero/layouts/partials/header.html</code> construye el <em>header</em> de todo el sitio, así que bastó con agregar un poco de css antes de <code>{{ partial &quot;shared/social-links.html&quot; . }}</code> para darle un poco más de espacio al rededor de los iconos y que se viera mejor.</li>
+</ul>
 <hr>
 
 
@@ -587,7 +598,7 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">10 minute read, 1960 words</dd>
+    <dd class="fw5 ml0">10 minute read, 2055 words</dd>
   </dl>
   
   

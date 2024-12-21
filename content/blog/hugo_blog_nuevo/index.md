@@ -132,6 +132,11 @@ Algunas dificultades que tuve con el blog, y cómo las resolví:
   - En este _layout_, definimos que las publicaciones se ordenen por peso cambiando la siguiente línea: `{{ $paginator := .Paginate (where .RegularPagesRecursive "Type" "blog").ByWeight }}`. Originalmente decía `.ByDate.Reverse`; es decir, por fecha con más nuevos arriba. En el _front matter_ de la serie de posts definimos que el _layout_ sea `layout: list-sidebar-weight`, para que use el ordenamiento distinto.
   - Y listo, ahora tienes dos _layouts_ para construir páginas de listas de posts, una ordenada por fecha y otra por peso, entonces el blog se ordena por fecha, pero la serie de posts que necesites puede ordenarse por peso si especificas que use el layout distinto al por defecto.
 
+
+#### Separar logos de redes sociales de los ítems del menu superior
+  - Encontraba que los logos de redes sociales estaban muy pegados a el menú de páginas superior del blog, porque cuando uno ponía el Mouse encima de un ítem, el subrayado del ítem se ponía encima de los logos de redes sociales. El archivo `themes/hugo-apero/layouts/partials/header.html` construye el _header_ de todo el sitio, así que bastó con agregar un poco de css antes de `{{ partial "shared/social-links.html" . }}` para darle un poco más de espacio al rededor de los iconos y que se viera mejor. 
+  
+  
 ----
 
 ### Consejos
