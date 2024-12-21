@@ -5,6 +5,7 @@ format: hugo-md
 date: 2024-11-07
 tags:
   - quarto
+  - blog
 lang: es
 excerpt: >-
   Post explicativo de cómo hice éste sitio web usando el tema Hugo Apéro. Describo los beneficios de Hugo, las dificultades que tuve para entender, y comentarios acerca de la importancia de tener un espacio web fuera de las grandes empresas que monopolizan la internet. La totalidad del código de este sitio web [está disponible en el repositorio `blog-r` en mi GitHub.](https://github.com/bastianolea/blog-r)
