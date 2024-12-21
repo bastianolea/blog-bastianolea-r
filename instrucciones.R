@@ -8,12 +8,12 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Procesando datos de texto en masa usando modelos de lenguaje (LLM)", 
+blogdown::new_post(title = "Novedades: app de temperaturas extremas, actualizaciones de otras apps", 
                    subdir = "blog/",
-                   # file = "blog/pal_asistentes_llm/index.qmd",
-                   file = paste0("blog/", lubridate::today(), "/index.qmd"),
+                   # file = "blog/pal_asistentes_llm/index.qmd", # para posts con slug o url
+                   file = paste0("blog/", lubridate::today(), "/index.md"), #para posts menos interesantes
                    author = "Bastián Olea Herrera",
-                   tags = c("inteligencia artificial"),
+                   tags = c("blog"),
                    categories = c() 
 )
 

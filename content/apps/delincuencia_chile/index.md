@@ -38,12 +38,25 @@ El objetivo de esta plataforma es transparentar datos objetivos de la delincuenc
 
 Los datos se obtuvieron directamente desde CEAD haciendo uso de [técnicas de web scraping en R, detalladas en este tutorial.](https://bastianolea.github.io/tutorial_r_datos_delincuencia/). En este repositorio, el script `obtener_datos_delincuencia.R` realiza el scraping del sitio web de CEAD para los años y comunas que se le indique, y guarda los datos crudos (las tablas en formato html). Luego, el script `procesar_datos_delincuencia.R` carga estos datos crudos y los transforma a tablas, las limpia, y guarda los datos en formato `parquet` para lectura rápida, y en formato `csv` para compatibilidad. No se puede guardar en formato Excel porque tiene más de un millón de filas.
 
+Los datos limpios están disponibles en la carpeta `datos_procesados`.
+
+
 ### Descargar datos
-La base de datos de delitos denunciados en Chile del Centro de Estudio y Análisis del Delito (CEAD), obtenida, ordenada y limpiada mediante el código de este repositorio, se encuentra disponible en formato CSV [en este enlace.](https://github.com/bastianolea/delincuencia_chile/blob/main/datos_procesados/cead_delincuencia_chile.csv)
+
+La base de datos de delitos denunciados en Chile del Centro de Estudio y Análisis del Delito (CEAD), obtenida, ordenada y limpiada mediante el código de este repositorio, se encuentra disponible en formato `.parquet` [en este enlace.](https://github.com/bastianolea/delincuencia_chile/blob/main/datos_procesados/cead_delincuencia_chile.parquet)
+
+**Nota:** los datos ya no están disponibles en formato `.csv`, porque la cantidad de observaciones aumentó y el archivo resultante pesaba más de 100 megas. En comparación, el formato `.parquet`, que es más eficiente y rápido, pesa sólo 1.1MB.
+
 
 ![Visualizador de datos de delincuencia en Chile](pantallazo_delincuencia_chile_b.jpg)
 
 ## Actualizaciones
+
+**Actualización 17/12/2024:**
+- Datos actualizados hasta septiembre de 2024 (máximo disponible en CEAD a la fecha)
+- Optimización de aplicación para que use tipografías locales en vez de cargarlas desde Google Fonts
+- Se vuelve a usar el paquete `arrow` para cargar los datos, porque es más rápido que `nanoparquet`.
+- Correcciones mínimas.
 
 **Actualización 03/07/2024:**
 

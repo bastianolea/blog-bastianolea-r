@@ -49,7 +49,7 @@
 Según el CEAD, cada dato de delito se compone por: denuncias formales que la ciudadanía realiza en alguna unidad policial posterior a la ocurrencia del delito, más los delitos de los que la policía toma conocimiento al efectuar una detención en flagrancia, es decir, mientras ocurre el ilícito.">
   <meta itemprop="datePublished" content="2024-07-10T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-07-10T00:00:00+00:00">
-  <meta itemprop="wordCount" content="477">
+  <meta itemprop="wordCount" content="574">
   <meta itemprop="image" content="http://localhost:4321/apps/delincuencia_chile/delincuencia_chile-featured.png">
   <meta itemprop="keywords" content="Aplicaciones">
   
@@ -116,7 +116,8 @@ Según el CEAD, cada dato de delito se compone por: denuncias formales que la ci
       <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
       
       
-      <div class="dib v-mid">
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
         <div class="social-icon-links" aria-hidden="true">
   
   
@@ -317,6 +318,7 @@ Según el CEAD, cada dato de delito se compone por: denuncias formales que la ci
 </h2>
 <p>Los datos se obtuvieron directamente desde CEAD haciendo uso de 
 <a href="https://bastianolea.github.io/tutorial_r_datos_delincuencia/" target="_blank" rel="noopener">técnicas de web scraping en R, detalladas en este tutorial.</a>. En este repositorio, el script <code>obtener_datos_delincuencia.R</code> realiza el scraping del sitio web de CEAD para los años y comunas que se le indique, y guarda los datos crudos (las tablas en formato html). Luego, el script <code>procesar_datos_delincuencia.R</code> carga estos datos crudos y los transforma a tablas, las limpia, y guarda los datos en formato <code>parquet</code> para lectura rápida, y en formato <code>csv</code> para compatibilidad. No se puede guardar en formato Excel porque tiene más de un millón de filas.</p>
+<p>Los datos limpios están disponibles en la carpeta <code>datos_procesados</code>.</p>
 
 
 
@@ -327,8 +329,9 @@ Según el CEAD, cada dato de delito se compone por: denuncias formales que la ci
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
-<p>La base de datos de delitos denunciados en Chile del Centro de Estudio y Análisis del Delito (CEAD), obtenida, ordenada y limpiada mediante el código de este repositorio, se encuentra disponible en formato CSV 
-<a href="https://github.com/bastianolea/delincuencia_chile/blob/main/datos_procesados/cead_delincuencia_chile.csv" target="_blank" rel="noopener">en este enlace.</a></p>
+<p>La base de datos de delitos denunciados en Chile del Centro de Estudio y Análisis del Delito (CEAD), obtenida, ordenada y limpiada mediante el código de este repositorio, se encuentra disponible en formato <code>.parquet</code> 
+<a href="https://github.com/bastianolea/delincuencia_chile/blob/main/datos_procesados/cead_delincuencia_chile.parquet" target="_blank" rel="noopener">en este enlace.</a></p>
+<p><strong>Nota:</strong> los datos ya no están disponibles en formato <code>.csv</code>, porque la cantidad de observaciones aumentó y el archivo resultante pesaba más de 100 megas. En comparación, el formato <code>.parquet</code>, que es más eficiente y rápido, pesa sólo 1.1MB.</p>
 <p><img alt="Visualizador de datos de delincuencia en Chile" src="/apps/delincuencia_chile/pantallazo_delincuencia_chile_b.jpg"></p>
 
 
@@ -340,6 +343,13 @@ Según el CEAD, cada dato de delito se compone por: denuncias formales que la ci
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
+<p><strong>Actualización 17/12/2024:</strong></p>
+<ul>
+<li>Datos actualizados hasta septiembre de 2024 (máximo disponible en CEAD a la fecha)</li>
+<li>Optimización de aplicación para que use tipografías locales en vez de cargarlas desde Google Fonts</li>
+<li>Se vuelve a usar el paquete <code>arrow</code> para cargar los datos, porque es más rápido que <code>nanoparquet</code>.</li>
+<li>Correcciones mínimas.</li>
+</ul>
 <p><strong>Actualización 03/07/2024:</strong></p>
 <ul>
 <li>Datos actualizados hasta marzo de 2024 (máximo disponible en CEAD a la fecha)</li>
@@ -431,7 +441,7 @@ Según el CEAD, cada dato de delito se compone por: denuncias formales que la ci
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">3 minute read, 477 words</dd>
+    <dd class="fw5 ml0">3 minute read, 574 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">

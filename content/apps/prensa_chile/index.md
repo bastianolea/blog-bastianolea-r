@@ -41,28 +41,22 @@ Actualmente, el corpus de noticias obtenido supera las 590.000 noticias individu
 
 [Accede a la aplicación en este enlace](https://bastianoleah.shinyapps.io/prensa_chile/)
 
-<a href = "https://bastianoleah.shinyapps.io/prensa_chile/">
-<img src="pantallazos/analisis_prensa_chile_semanal.jpg" height="900px" />
-</a>
+<div style = "max-width: 400px;">
 
 ![](pantallazos/p1.png)
 ![](pantallazos/p2b.png)
 ![](pantallazos/p3.png)
 ![](pantallazos/p2c.png)
 ![](pantallazos/p4.png)
-![](pantallazos/p5b.png)
+![](pantallazos/p5b.jpg)
+
+</div>
 
 ----
 
-## Principales hallazgos
+## Datos
+Los datos obtenidos mediante este repositorio van sumando más de 600 mil noticias. Los datos, por su peso, no están disponibles de forma pública. Sin embargo, [puedes acceder a una muestra de 3.000 noticias del año 2024, seleccionadas al azar, en la carpeta `datos` de este repositorio.](https://github.com/bastianolea/prensa_chile) Esta seleccion de datos contiene texto de titulares, cuerpo de noticia, fuente y fecha.
 
-![Resultados preliminares: conceptos más frecuentes en noticias por semana](noticias_semana_2024-09-30.jpg)
-
-![Resultados preliminares: noticias sobre delincuencia versus estadísticas de delitos reportados](prensa_delincuencia_vs_reporte3b.jpg)
-
-_próximamente..._
-
-----
 
 ## Estructura del código
 
