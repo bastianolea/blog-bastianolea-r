@@ -8,7 +8,7 @@ series: Introducción a R
 categories:
   - Tutoriales
 tags:
-  - Shiny
+  - shiny
 lang: es
 excerpt: ¿Desarrollaste una aplicación con Shiny, y quieres compartirla con el mundo? shinyapps.io es, en mi experiencia, el servicio más sencillo de usar para poder hacer públicas tus aplicaciones Shiny. Este post contiene instrucciones paso a paso para que publiques y compartas tus aplicaciones.
 ---

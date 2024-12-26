@@ -1,0 +1,160 @@
+---
+title: 'Tutorial: web scraping de sitios web con R'
+author: Bastián Olea Herrera
+date: '2024-12-23'
+draft: true
+format: 
+  hugo-md:
+    output-file: "index"
+    output-ext:  "md"
+slug: []
+categories:
+  - tutoriales
+tags:
+  - web scraping
+  - datos
+---
+
+
+Se denomina web scraping a un conjunto de técnicas para **obtener datos desde páginas web**. Esto significa poder transformar la información que vemos en distintos sitios de internet en datos que podamos utilizar. 
+
+Se utiliza web scraping cuando un sitio web presenta información, cifras, datos, números, o cualquier otro elemento que podría ser analizable, sin embargo el sitio no entrega esta información en algún formato de datos fácilmente accesible, como sería enlace de descarga de la información, una API para obtener los datos, o alguna forma de exportar la información presentada en la web. Cuándo nos enfrentamos a una situación como esta, tenemos que recurrir a otras herramientas para transformar lo que vemos en el sitio en datos analizables.
+
+En este tutorial, aprenderemos a utilizar dos técnicas de web scraping en R, que nos permitirán **extraer cualquier información que veamos en un sitio web**, y traerla a nuestro entorno de R para poder procesarla como deseemos.
+
+## Web scraping con {rvest}
+
+La primera opción a la hora de ser web scraping con R es el paquete {rvest} (_harvest,_ o _cosechar_ en español). Este paquete, parte del Tidyverse, suele ser la opción más sencilla, más popular y mejor documentada. 
+
+**Tutorial de Web Scraping en R utilizando el paquete rvest**
+
+**Introducción**
+
+El web scraping es un proceso de extracción de datos de las páginas web. En este tutorial, te mostraré cómo realizar web scraping en R utilizando el paquete rvest. El rvest es una herramienta popular para la extracción de datos de las páginas web en R.
+
+**Requisitos previos**
+
+Antes de comenzar con este tutorial, necesitarás tener instalado R y el paquete rvest. Puedes instalar R desde su sitio oficial: <https://www.r-project.org/>. Una vez que tengas R instalado, puedes instalar el paquete rvest utilizando la siguiente línea de código:
+```r
+install.packages("rvest")
+```
+Luego, cargamos el paquete rvest en nuestra sesión de R:
+```r
+library(rvest)
+```
+**Parte 1: Extracción de datos**
+
+La primera parte de este tutorial se enfocará en la extracción de datos desde una página web. Vamos a utilizar la página web del sitio Stack Overflow como ejemplo.
+
+### 1.1. Instalación y configuración
+
+Primero, necesitamos instalar las herramientas necesarias para realizar el web scraping. En este caso, solo necesitaremos el paquete rvest.
+```r
+# Instala el paquete rvest si no está instalado
+install.packages("rvest")
+```
+Luego, cargamos el paquete rvest en nuestra sesión de R:
+```r
+library(rvest)
+```
+### 1.2. Extracción de datos
+
+Ahora que tenemos todo listo, podemos proceder a la extracción de datos. Vamos a utilizar la función `read_html()` para leer la página web del sitio Stack Overflow.
+```r
+# URL de la página web
+url <- "https://stackoverflow.com/"
+
+# Lee la página web con read_html()
+pagina_web <- read_html(url)
+```
+La función `read_html()` devuelve un objeto HTML que podemos utilizar para extraer los datos.
+
+### 1.3. Extracción de etiquetas
+
+Para extraer los datos, necesitaremos identificar las etiquetas HTML que contienen la información deseada. En este caso, queremos extraer los títulos de los artículos.
+```r
+# Selecciona los títulos con css()
+titulos <- pagina_web %>% 
+  html_nodes("h2")
+
+# Extrae el texto de cada título con text()
+titulos_texto <- titulos %>% 
+  html_text()
+```
+La función `html_nodes()` devuelve un vector con los nodos HTML seleccionados, y la función `html_text()` devuelve un vector con el texto contenido en esos nodos.
+
+### 1.4. Extracción de atributos
+
+Además de los datos contenidos en las etiquetas, también podemos extraer los atributos de cada nodo.
+```r
+# Selecciona los enlaces con css()
+enlaces <- pagina_web %>% 
+  html_nodes("a")
+
+# Extrae el texto del enlace y su URL con html_text() y attr()
+enlaces_texto_url <- enlaces %>% 
+  map(~ c(html_text(.), attr(.,"href")))
+```
+La función `map()` aplica la función pasada como argumento a cada elemento de un vector, devolviendo un vector con los resultados.
+
+### 1.5. Limpiar y procesar los datos
+
+Después de extraer los datos, es posible que necesitemos limpiarlos o procesarlos antes de utilizarlos.
+```r
+# Elimina las filas vacías
+titulos_texto <- titulos_texto[nchar(titulos_texto) > 0]
+```
+**Parte 2: Manipulación y análisis de datos**
+
+La segunda parte de este tutorial se enfocará en la manipulación y el análisis de los datos extraídos.
+
+### 2.1. Unir tablas
+
+Si tienes varias tablas en una página web, puedes unirlas utilizando la función `html_table()`.
+```r
+# Selecciona las tablas con css()
+tablas <- pagina_web %>% 
+  html_nodes("table")
+
+# Une las tablas con rbind()
+tablas_unidas <- tablas %>% 
+  map_df(html_table)
+```
+La función `map_df()` aplica la función pasada como argumento a cada elemento de un vector, devolviendo un data.frame con los resultados.
+
+### 2.2. Procesar datos
+
+Después de extraer y unir las tablas, es posible que necesitemos procesar los datos antes de analizarlos.
+```r
+# Elimina las filas vacías
+tablas_unidas <- tablas_unidas[nrow(tablas_unidas) > 0]
+```
+### 2.3. Gráficos
+
+Puedes utilizar paquetes como ggplot2 para crear gráficos con tus datos.
+```r
+library(ggplot2)
+
+# Crea un gráfico de barras con ggplot()
+ggplot(tablas_unidas, aes(x = "variable", y = "valor")) + 
+  geom_bar(stat = "identity")
+```
+**Conclusión**
+
+En este tutorial, hemos visto cómo realizar web scraping en R utilizando el paquete rvest. Hemos aprendido a extraer datos de una página web, unir tablas, procesar los datos y crear gráficos con ggplot2.
+
+**Ejercicios prácticos**
+
+1. Extrae la lista de artículos del sitio Stack Overflow.
+2. Unir las tablas de la página web del sitio Wikipedia.
+3. Crea un gráfico de barras que muestre la cantidad de veces que se utiliza cada palabra en los títulos de los artículos del sitio Stack Overflow.
+
+**Referencias**
+
+1. RStudio Team (2022). rvest: Extract data from HTML tables and XML documents.
+2. Wickham, H., & Grolemund, G. (2016). R for Data Science: Importing, Tidying, and Visualizing Data with ggplot2. O'Reilly Media.
+
+**Recursos adicionales**
+
+1. Documentación del paquete rvest: <https://cran.r-project.org/web/packages/rvest/rvest.pdf>
+2. Tutoriales de web scraping en R: <https://www.datacamp.com/tutorial/r-web-scraping-tutorial>

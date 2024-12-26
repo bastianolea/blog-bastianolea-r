@@ -8,19 +8,19 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Novedades: app de temperaturas extremas, actualizaciones de otras apps", 
+blogdown::new_post(title = "Haciendo que un loop muy largo termine sin cancelarlo", 
                    subdir = "blog/",
-                   # file = "blog/pal_asistentes_llm/index.qmd", # para posts con slug o url
+                   # file = "blog/tutorial_web_scraping/index.qmd", # para posts con slug o url
                    file = paste0("blog/", lubridate::today(), "/index.md"), #para posts menos interesantes
                    author = "Bastián Olea Herrera",
-                   tags = c("blog"),
+                   tags = c("consejos", "curiosidades", "blog"),
                    categories = c() 
 )
 
 # convertir script a Quarto
 convertr::r_to_qmd(
-  input_dir = "~/Documents/Clases R/Clases particulares/Luciano/reporte_gestion/dias_habiles.R",
-  output_dir = "content/blog/contar_dias_habiles/codigo.qmd"
+  input_dir = "~/R/blog-r/content/blog/recodificacion_stringr/recodificar.R",
+  output_dir = "content/blog/recodificacion_stringr/recodificar.qmd"
 )
 
 # ver en github
