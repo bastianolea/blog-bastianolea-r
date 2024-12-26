@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.136.5">
-<title>Convertir un script de R con comentarios a un documento Quarto | Blog</title>
+<title>Haciendo que un loop muy largo termine sin cancelarlo | Blog</title>
 
 
 <meta property="twitter:site" content="@bastimapache">
@@ -28,10 +28,10 @@
 
 
 <meta property="og:site_name" content="Blog">
-<meta property="og:title" content="Convertir un script de R con comentarios a un documento Quarto | Blog">
+<meta property="og:title" content="Haciendo que un loop muy largo termine sin cancelarlo | Blog">
 <meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:4321/blog/convertr/" />
+<meta property="og:url" content="http://localhost:4321/blog/2024-12-26/" />
 <meta property="og:locale" content="es-ES">
 
 
@@ -44,13 +44,12 @@
     
     
   
-  <meta itemprop="name" content="Convertir un script de R con comentarios a un documento Quarto">
-  <meta itemprop="description" content="Cuando trabajo con R, siempre intento dejar comentarios sobre de las cosas que estoy haciendo, tanto antes como después de cada bloque de código. Así, le hago un favor a mi yo del futuro, dejando una cierta documentación de las cosas que estuve haciendo, los objetivos que tenía, y otras aclaraciones sobre los procesos realizados.
-A esta combinación de bloques de código y párrafos de textos se le llama programación literaria, o literate programming.">
-  <meta itemprop="datePublished" content="2024-11-10T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-11-10T00:00:00+00:00">
-  <meta itemprop="wordCount" content="239">
-  <meta itemprop="keywords" content="Consejos,Quarto">
+  <meta itemprop="name" content="Haciendo que un loop muy largo termine sin cancelarlo">
+  <meta itemprop="description" content="Me encuentro en la tarea de tener que procesar cientos de miles de datos, lo cual demorará varios cientos de horas, por lo que necesito que dejar mi computador trabajando durante las noches, por varios días. La idea es que, cada noche, el computador procese de la mayor cantidad de datos posibles, los resultados se guarden, y a la siguiente noche el proceso se repita con datos nuevos, hasta que en algunos días logre procesar todos los cientos de miles de datos que necesito.">
+  <meta itemprop="datePublished" content="2024-12-26T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-12-26T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1054">
+  <meta itemprop="keywords" content="Consejos,Curiosidades,Blog,Purrr">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
@@ -252,83 +251,74 @@ A esta combinación de bloques de código y párrafos de textos se le llama prog
   <section class="page-content mw7 center">
     <article class="post-content pa0 ph4-l">
       <header class="post-header">
-        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Convertir un script de R con comentarios a un documento Quarto</h1>
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Haciendo que un loop muy largo termine sin cancelarlo</h1>
         
         
-        <p class="f7 db mv0 ttu">10/11/2024</p>
+        <p class="f7 db mv0 ttu">26/12/2024</p>
         
         
         
   <dl class="f6 lh-copy">
-    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/consejos">consejos</a>  <a href="http://localhost:4321/tags/quarto">Quarto</a> </dd></em>
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/consejos">consejos</a>  <a href="http://localhost:4321/tags/curiosidades">curiosidades</a>  <a href="http://localhost:4321/tags/blog">blog</a>  <a href="http://localhost:4321/tags/purrr">purrr</a> </dd></em>
   </dl>
 
 
         
       
-      <div class="ph0 pt5">
-        
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-      
-  <a class="btn-links mr2 ba dib" href="https://github.com/martinasladek/convertr" target="_blank" rel="noopener"><i class="fab fa-r-project fa-lg fa-fw mr2"></i>paquete</a>
-
-
-      </div>
-      
 
       </header>
       <section class="post-body pt5 pb4">
-        <p>Cuando trabajo con R, siempre intento dejar comentarios sobre de las cosas que estoy haciendo, tanto antes como después de cada bloque de código. Así, le hago un favor a mi <em>yo</em> del futuro, dejando una cierta documentación de las cosas que estuve haciendo, los objetivos que tenía, y otras aclaraciones sobre los procesos realizados.</p>
-<p>A esta combinación de bloques de código y párrafos de textos se le llama 
-<a href="https://es.wikipedia.org/wiki/Programaci%c3%b3n_literaria" target="_blank" rel="noopener">programación literaria</a>, o <em>literate programming.</em></p>
-<p>Otra buena forma de poder documentar tu código, que no sea dejando comentarios en el script, es programar directamente en un 
-<a href="https://quarto.org/docs/get-started/hello/rstudio.html" target="_blank" rel="noopener"><em>notebook</em> o documento Quarto</a>, que combina párrafos de texto enriquecido y titulares con bloques de código.</p>
-<p>Sin embargo, yo no acostumbro mucho a empezar mis análisis desde un documento Quarto, sino que desde scripts de R. Entonces, cuando quise transformar mis script de R a documentos Quarto para poder publicarlos en este blog, me encontré con el fastidio de tener que convertir todos los comentarios a texto, y tener que introducir <em>todos</em> los bloques de código dentro de bloques (<em>chunks</em>).</p>
+        <p>Me encuentro en la tarea de tener que 
+<a href="/blog/2024-12-20/">procesar cientos de miles de datos</a>, lo cual demorará varios cientos de horas, por lo que necesito que dejar mi computador trabajando durante las noches, por varios días. La idea es que, cada noche, el computador procese de la mayor cantidad de datos posibles, los resultados se guarden, y a la siguiente noche el proceso se repita con datos nuevos, hasta que en algunos días logre procesar todos los cientos de miles de datos que necesito.</p>
 <p>
-<a href="https://github.com/martinasladek/convertr" target="_blank" rel="noopener">El paquete <code>{convertr}</code></a> permite convertir scripts R a documentos Quarto, y documentos Quarto a scripts de R:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># instalación</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">devtools</span><span style="color:#908caa">::</span><span style="color:#ea9a97">install_github</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;martinasladek/convertr&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">convertr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">r_to_qmd</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">input_dir</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;path/to/some_R_script.R&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">output_dir</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;path/to/new_converted_qmd_file.qmd&#34;</span>
+<a href="/blog/2024-12-20/">El proceso en sí mismo</a> consiste en utilizar modelos de lenguaje (LLM) para extraer sentimiento, clasificación y resumen de cada unidad de los datos, que corresponden a textos de entre 100 a 5000 caracteres. Este procesamiento utiliza el 100% de mi tarjeta de video, por lo que el computador alcanzar altas temperaturas, así que prefiero hacer este cálculo mientras no estoy usándolo para otras cosas.</p>
+<p>Como cada unidad de datos tiene una identificación única, cada noche lo que hago es extraer una muestra aleatoria del conjunto total de datos, excluyendo los datos cuyo id único ya fue procesado anteriormente. De esa manera no se repite el procesamiento de datos que ya fueron procesados.</p>
+<p>Las primeras noches, lo que hice fue darle al loop una muestra aleatoria de un tamaño específico. El tamaño de esta muestra dependía del tiempo promedio de ejecución de cada paso del loop, multiplicado por <em>x</em>, para que el tiempo total de ejecución durara un poco menos de ocho horas, de modo que cuando amaneciera, el proceso ya haya terminado y yo pudiera usar mi computador normalmente.</p>
+<p>Pero luego vino la navidad 🎄 y yo iba a salir de mi casa sin saber en cuántas horas iba a volver. Así que no sabía cuántos datos darle al loop. Si le daba muy pocos, el computador podía terminar antes de que yo volviera, y hubieran sido muchas horas de procesamiento perdido, pero si le daba muchos datos, yo podía llegar a la casa y encontrarme con mi computador inutilizable por estar trabajando al 100% en un proceso que aún no terminaba.</p>
+<p>Lo ideal sería poder iniciar el proceso, que el computador se ponga a calcular, y que eventualmente yo pueda detener el proceso y obtener los resultados que se alcanzaron a calcular durante ese tiempo.  Pero si detienes un proceso en R, el proceso termina sin asignar su resultado. Entonces no puedo llegar y tener el proceso.</p>
+<p>Esto podría evitarse si, en vez de que el proceso con <code>purrr::map()</code> asigne sus resultados finales a un objeto de R, se use <code>purrr::walk()</code> para que cada paso del proceso guarde su resultado individual como un archivo por separado, y luego en otro momento se unan todos los resultados individuales. Esto lo he hecho antes con buenos resultados, pero esta vez simplemente no quería hacerlo así.</p>
+<p>La solución sería ser que el proceso <em>termine desde adentro</em>; es decir, que algo dentro del proceso haga que éste termine cuando yo se lo pida. En un loop normal, esto se haría con el uso de un <code>if</code> con un <code>stop()</code> dentro, lo cual detendría las siguientes iteraciones. Pero el problema seguiría siendo el cómo hacerle saber al loop, desde afuera, que tiene que terminarse. Por otro lado, los loops del paquete <code>{purrr}</code> no tienen un equivalente a <code>stop()</code>, dado que no tendría sentido bajo la lógica de la programación funcional. Pero lo que sí puedan hacer los loops de <code>{purrr}</code> es retornar <code>NULL</code> con antelación, como una forma de saltarse el paso. Por lo tanto, la forma de hacer que el loop &ldquo;termine&rdquo; sería haciéndole que retorne nulo para todos los siguientes pasos. El loop en sí no terminaría, pero las iteraciones que retornen nulo ocuparían un tiempo de procesamiento negligible, haciendo que las miles de operaciones restantes terminen en fracción de segundo. Entonces faltaría la forma de hacer que, desde fuera, el loop supiera que tiene que empezar a saltarse todas las operaciones y retornar nulo.</p>
+<p>La solución que encontré fue crear un archivo de texto que tuviera cualquier texto, pero cuando eventualmente el texto dijera algo como &ldquo;stop&rdquo;, el loop retornara nulo. La forma de que el loop supiera lo que contiene archivo de texto sería simplemente agregar un paso al principio de del loop que lea el archivo de texto. En la lectura del archivo, habría que confirmar si dice o no la palabra mágica, y si la dice, retornar <code>NULL</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">read.delim</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;stop.txt&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">header</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">)</span><span style="color:#ea9a97">[[1]]</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;stop&#34;</span><span style="color:#908caa">)</span> <span style="color:#3e8fb0">return</span><span style="color:#908caa">(</span><span style="color:#3e8fb0">NULL</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>No encontré una forma más elegante de leer un texto y obtener su resultado como un vector limpio, porque las funciones de lectura que probé asumen que esperas un dataframe y no solamente un texto, pero es suficientemente conciso.</p>
+<p>Entonces, si el loop está ejecutándose, pero yo llego y edito el archivo de texto para que diga la palabra mágica, <strong>el loop empezará a retornar nulo</strong>, y terminará a la brevedad.</p>
+<p>Una medición de rendimiento sencilla me indica que la lectura del archivo de texto se tarda tan solo 61 millonésimas de segundo y apenas 16KB de memoria, por lo que la lectura del archivo de texto en cada paso no afectaría virtualmente en nada al rendimiento del proceso:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">bench</span><span style="color:#908caa">::</span><span style="color:#ea9a97">mark</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">read.delim</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;stop.txt&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">header</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">)</span><span style="color:#ea9a97">[[1]]</span>
 </span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>Usando la función anterior, puedo convertir automáticamente mis scripts de R con comentarios a documentos Quarto, donde los comentarios sean párrafos de texto y cada bloque de código se ubica en un <em>chunk</em> individual. ¡Muy conveniente!</p>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86">#   expression              min median `itr/sec` mem_alloc `gc/sec` n_itr  n_gc total_time result memory     time       gc      </span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86">#   &lt;bch:expr&gt;           &lt;bch:&gt; &lt;bch:&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;   &lt;bch:tm&gt; &lt;list&gt; &lt;list&gt;     &lt;list&gt;     &lt;list&gt;  </span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># 1 &#34;read.delim(\&#34;stop.… 58.1µs 61.7µs    15342.      16KB     44.7  6868    20      448ms &lt;chr&gt;  &lt;Rprofmem&gt; &lt;bench_tm&gt; &lt;tibble&gt;</span>
+</span></span></code></pre></div><p>Esta técnica dio resultado, porque ahora puedo dejar el proceso andando con una cantidad muy alta de de casos seleccionados al azar, y cuando cambio el archivo de texto para señalar que ya quiero que se termine el loop, todos los miles de pasos restantes que aún no eran procesados simplemente retornan nulo y terminan de forma instantánea, permitiendo que el loop termine correctamente y sus resultados se guarden. De esta forma no tengo que estar estimando cuántos datos voy a calcular, sino que simplemente dejo calculando y hago terminar el proceso cuando yo lo necesite.</p>
+<p>Así que, durante las 24 horas que estuve fuera de casa por la navidad, el proceso alcanzó a calcular 15 mil textos, luego detuve el proceso, trabajé, y la noche siguiente a la navidad volví a dejarlo calculando y alcanzó a procesar 8 mil textos más 🥰</p>
 
         
         <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
     <dt class="fw7">Fecha de publicación:</dt>
-    <dd class="fw5 ml0">November 10, 2024</dd>
+    <dd class="fw5 ml0">December 26, 2024</dd>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">2 minute read, 239 words</dd>
+    <dd class="fw5 ml0">5 minute read, 1054 words</dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/consejos">consejos</a>  <a href="http://localhost:4321/tags/quarto">Quarto</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/consejos">consejos</a>  <a href="http://localhost:4321/tags/curiosidades">curiosidades</a>  <a href="http://localhost:4321/tags/blog">blog</a>  <a href="http://localhost:4321/tags/purrr">purrr</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/2024-12-26/">Haciendo que un loop muy largo termine sin cancelarlo</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/2024-12-21/">Novedades: app de temperaturas extremas, actualizaciones de otras apps</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/2024-12-20/">Procesando datos de texto en masa usando modelos de lenguaje (LLM)</a></dd>
     
     <dd class="fw5 ml0"><a href="/blog/pal_asistentes_llm/">Crea tu propio asistente de programación en R con inteligencia artificial usando el paquete {pal}</a></dd>
-    
-    <dd class="fw5 ml0"><a href="/blog/reportes_github_pages/">Reportes y páginas web online con GitHub Pages, R y Quarto</a></dd>
     
   </dl>
 </details>
@@ -338,13 +328,10 @@ A esta combinación de bloques de código y párrafos de textos se le llama prog
         <div class="post-pagination dt w-100 mt4 mb2">
   
   
-    <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4321/blog/casen_introduccion/">&larr; Cargar y explorar datos de la encuesta Casen en R, usando factor de expansión</a>
-  
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4321/blog/ggplot_nubes/">¿Arte? Nubes aleatorias en {ggplot2} &rarr;</a>
+    href="http://localhost:4321/blog/tutorial_web_scraping/">Tutorial: web scraping de sitios web con R &rarr;</a>
   
 </div>
 

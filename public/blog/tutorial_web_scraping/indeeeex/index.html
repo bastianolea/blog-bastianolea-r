@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.136.5">
-<title>Convertir un script de R con comentarios a un documento Quarto | Blog</title>
+<title>Tutorial: web scraping de sitios web con R | Blog</title>
 
 
 <meta property="twitter:site" content="@bastimapache">
@@ -28,10 +28,10 @@
 
 
 <meta property="og:site_name" content="Blog">
-<meta property="og:title" content="Convertir un script de R con comentarios a un documento Quarto | Blog">
+<meta property="og:title" content="Tutorial: web scraping de sitios web con R | Blog">
 <meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:4321/blog/convertr/" />
+<meta property="og:url" content="http://localhost:4321/blog/tutorial_web_scraping/indeeeex/" />
 <meta property="og:locale" content="es-ES">
 
 
@@ -44,13 +44,13 @@
     
     
   
-  <meta itemprop="name" content="Convertir un script de R con comentarios a un documento Quarto">
-  <meta itemprop="description" content="Cuando trabajo con R, siempre intento dejar comentarios sobre de las cosas que estoy haciendo, tanto antes como después de cada bloque de código. Así, le hago un favor a mi yo del futuro, dejando una cierta documentación de las cosas que estuve haciendo, los objetivos que tenía, y otras aclaraciones sobre los procesos realizados.
-A esta combinación de bloques de código y párrafos de textos se le llama programación literaria, o literate programming.">
-  <meta itemprop="datePublished" content="2024-11-10T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-11-10T00:00:00+00:00">
-  <meta itemprop="wordCount" content="239">
-  <meta itemprop="keywords" content="Consejos,Quarto">
+  <meta itemprop="name" content="Tutorial: web scraping de sitios web con R">
+  <meta itemprop="description" content="Se denomina web scraping a un conjunto de técnicas para obtener datos desde páginas web. Esto significa poder transformar la información que vemos en distintos sitios de internet en datos que podamos utilizar.
+Se utiliza web scraping cuando un sitio web presenta información, cifras, datos, números, o cualquier otro elemento que podría ser analizable, sin embargo el sitio no entrega esta información en algún formato de datos fácilmente accesible, como sería enlace de descarga de la información, una API para obtener los datos, o alguna forma de exportar la información presentada en la web. Cuándo nos enfrentamos a una situación como esta, tenemos que recurrir a otras herramientas para transformar lo que vemos en el sitio en datos analizables.">
+  <meta itemprop="datePublished" content="2024-12-23T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2024-12-23T00:00:00+00:00">
+  <meta itemprop="wordCount" content="169">
+  <meta itemprop="keywords" content="Web scraping,Datos">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
@@ -252,83 +252,98 @@ A esta combinación de bloques de código y párrafos de textos se le llama prog
   <section class="page-content mw7 center">
     <article class="post-content pa0 ph4-l">
       <header class="post-header">
-        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Convertir un script de R con comentarios a un documento Quarto</h1>
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Tutorial: web scraping de sitios web con R</h1>
         
         
-        <p class="f7 db mv0 ttu">10/11/2024</p>
+        <p class="f7 db mv0 ttu">23/12/2024</p>
         
         
         
   <dl class="f6 lh-copy">
-    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/consejos">consejos</a>  <a href="http://localhost:4321/tags/quarto">Quarto</a> </dd></em>
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/web-scraping">web scraping</a>  <a href="http://localhost:4321/tags/datos">datos</a> </dd></em>
   </dl>
 
 
         
       
-      <div class="ph0 pt5">
-        
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-      
-  <a class="btn-links mr2 ba dib" href="https://github.com/martinasladek/convertr" target="_blank" rel="noopener"><i class="fab fa-r-project fa-lg fa-fw mr2"></i>paquete</a>
-
-
-      </div>
-      
 
       </header>
       <section class="post-body pt5 pb4">
-        <p>Cuando trabajo con R, siempre intento dejar comentarios sobre de las cosas que estoy haciendo, tanto antes como después de cada bloque de código. Así, le hago un favor a mi <em>yo</em> del futuro, dejando una cierta documentación de las cosas que estuve haciendo, los objetivos que tenía, y otras aclaraciones sobre los procesos realizados.</p>
-<p>A esta combinación de bloques de código y párrafos de textos se le llama 
-<a href="https://es.wikipedia.org/wiki/Programaci%c3%b3n_literaria" target="_blank" rel="noopener">programación literaria</a>, o <em>literate programming.</em></p>
-<p>Otra buena forma de poder documentar tu código, que no sea dejando comentarios en el script, es programar directamente en un 
-<a href="https://quarto.org/docs/get-started/hello/rstudio.html" target="_blank" rel="noopener"><em>notebook</em> o documento Quarto</a>, que combina párrafos de texto enriquecido y titulares con bloques de código.</p>
-<p>Sin embargo, yo no acostumbro mucho a empezar mis análisis desde un documento Quarto, sino que desde scripts de R. Entonces, cuando quise transformar mis script de R a documentos Quarto para poder publicarlos en este blog, me encontré con el fastidio de tener que convertir todos los comentarios a texto, y tener que introducir <em>todos</em> los bloques de código dentro de bloques (<em>chunks</em>).</p>
-<p>
-<a href="https://github.com/martinasladek/convertr" target="_blank" rel="noopener">El paquete <code>{convertr}</code></a> permite convertir scripts R a documentos Quarto, y documentos Quarto a scripts de R:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># instalación</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">devtools</span><span style="color:#908caa">::</span><span style="color:#ea9a97">install_github</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;martinasladek/convertr&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">convertr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">r_to_qmd</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">input_dir</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;path/to/some_R_script.R&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">output_dir</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;path/to/new_converted_qmd_file.qmd&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>Usando la función anterior, puedo convertir automáticamente mis scripts de R con comentarios a documentos Quarto, donde los comentarios sean párrafos de texto y cada bloque de código se ubica en un <em>chunk</em> individual. ¡Muy conveniente!</p>
+        <p>Se denomina web scraping a un conjunto de técnicas para <strong>obtener datos desde páginas web</strong>. Esto significa poder transformar la información que vemos en distintos sitios de internet en datos que podamos utilizar.</p>
+<p>Se utiliza web scraping cuando un sitio web presenta información, cifras, datos, números, o cualquier otro elemento que podría ser analizable, sin embargo el sitio no entrega esta información en algún formato de datos fácilmente accesible, como sería enlace de descarga de la información, una API para obtener los datos, o alguna forma de exportar la información presentada en la web. Cuándo nos enfrentamos a una situación como esta, tenemos que recurrir a otras herramientas para transformar lo que vemos en el sitio en datos analizables.</p>
+<p>En este tutorial, aprenderemos a utilizar dos técnicas de web scraping en R, que nos permitirán <strong>extraer cualquier información que veamos en un sitio web</strong>, y traerla a nuestro entorno de R para poder procesarla como deseemos.</p>
+
+
+
+
+<h2 id="web-scraping-con-rvest">Web scraping con {rvest}
+  <a href="#web-scraping-con-rvest"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+
+
+
+
+<h3 id="obtener-tablas">Obtener tablas
+  <a href="#obtener-tablas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+
+
+
+
+<h2 id="web-scraping-con-rselenium">Web scraping con {RSelenium}
+  <a href="#web-scraping-con-rselenium"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+
+
+
+
+<h3 id="obtener-sitios-dinámicos">Obtener sitios dinámicos
+  <a href="#obtener-sitios-din%c3%a1micos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
 
         
         <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
     <dt class="fw7">Fecha de publicación:</dt>
-    <dd class="fw5 ml0">November 10, 2024</dd>
+    <dd class="fw5 ml0">December 23, 2024</dd>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">2 minute read, 239 words</dd>
+    <dd class="fw5 ml0">1 minute read, 169 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categorías:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/categories/tutoriales">tutoriales</a> </dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/consejos">consejos</a>  <a href="http://localhost:4321/tags/quarto">Quarto</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/web-scraping">web scraping</a>  <a href="http://localhost:4321/tags/datos">datos</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/2024-12-26/">Haciendo que un loop muy largo termine sin cancelarlo</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/tutorial_web_scraping/">Tutorial: web scraping de sitios web con R</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/pal_asistentes_llm/">Crea tu propio asistente de programación en R con inteligencia artificial usando el paquete {pal}</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/surveydown_encuestas/">Crea encuestas en R usando {surveydown}</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/reportes_github_pages/">Reportes y páginas web online con GitHub Pages, R y Quarto</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/tutorial_gt/">Tutorial: generar tablas atractivas y personalizables con {gt}</a></dd>
     
   </dl>
 </details>
@@ -338,13 +353,10 @@ A esta combinación de bloques de código y párrafos de textos se le llama prog
         <div class="post-pagination dt w-100 mt4 mb2">
   
   
-    <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4321/blog/casen_introduccion/">&larr; Cargar y explorar datos de la encuesta Casen en R, usando factor de expansión</a>
-  
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4321/blog/ggplot_nubes/">¿Arte? Nubes aleatorias en {ggplot2} &rarr;</a>
+    href="http://localhost:4321/blog/tutorial_web_scraping/">Tutorial: web scraping de sitios web con R &rarr;</a>
   
 </div>
 
