@@ -51,4 +51,6 @@ bench::mark(
 
 Esta técnica dio resultado, porque ahora puedo dejar el proceso andando con una cantidad muy alta de de casos seleccionados al azar, y cuando cambio el archivo de texto para señalar que ya quiero que se termine el loop, todos los miles de pasos restantes que aún no eran procesados simplemente retornan nulo y terminan de forma instantánea, permitiendo que el loop termine correctamente y sus resultados se guarden. De esta forma no tengo que estar estimando cuántos datos voy a calcular, sino que simplemente dejo calculando y hago terminar el proceso cuando yo lo necesite. 
 
+<video src="loop_stop.mov" width="100%" autoplay loop></video>
+
 Así que, durante las 24 horas que estuve fuera de casa por la navidad, el proceso alcanzó a calcular 15 mil textos, luego detuve el proceso, trabajé, y la noche siguiente a la navidad volví a dejarlo calculando y alcanzó a procesar 8 mil textos más 🥰
