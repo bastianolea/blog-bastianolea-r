@@ -291,6 +291,7 @@
 </span></span><span style="display:flex;"><span><span style="color:#6e6a86">#   &lt;bch:expr&gt;           &lt;bch:&gt; &lt;bch:&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;   &lt;bch:tm&gt; &lt;list&gt; &lt;list&gt;     &lt;list&gt;     &lt;list&gt;  </span>
 </span></span><span style="display:flex;"><span><span style="color:#6e6a86"># 1 &#34;read.delim(\&#34;stop.… 58.1µs 61.7µs    15342.      16KB     44.7  6868    20      448ms &lt;chr&gt;  &lt;Rprofmem&gt; &lt;bench_tm&gt; &lt;tibble&gt;</span>
 </span></span></code></pre></div><p>Esta técnica dio resultado, porque ahora puedo dejar el proceso andando con una cantidad muy alta de de casos seleccionados al azar, y cuando cambio el archivo de texto para señalar que ya quiero que se termine el loop, todos los miles de pasos restantes que aún no eran procesados simplemente retornan nulo y terminan de forma instantánea, permitiendo que el loop termine correctamente y sus resultados se guarden. De esta forma no tengo que estar estimando cuántos datos voy a calcular, sino que simplemente dejo calculando y hago terminar el proceso cuando yo lo necesite.</p>
+<p><video src="loop_stop.mp4" width="100%" autoplay loop></video></p>
 <p>Así que, durante las 24 horas que estuve fuera de casa por la navidad, el proceso alcanzó a calcular 15 mil textos, luego detuve el proceso, trabajé, y la noche siguiente a la navidad volví a dejarlo calculando y alcanzó a procesar 8 mil textos más 🥰</p>
 
         
