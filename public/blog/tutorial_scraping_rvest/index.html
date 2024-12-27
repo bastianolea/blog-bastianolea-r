@@ -38,9 +38,9 @@
 
 
     
-        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+        <meta property="og:image" content="http://localhost:4321/blog/tutorial_scraping_rvest/scraping_4-featured.jpeg" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+        <meta name="twitter:image" content="http://localhost:4321/blog/tutorial_scraping_rvest/scraping_4-featured.jpeg" >
     
     
   
@@ -49,7 +49,8 @@
 Se usa el web scraping cuando un sitio web presenta información, cifras, datos, números, o cualquier otro elemento que nos pueda servir, pero sin facilitar acceso a los datos, como sería un enlace de descarga, una API para obtener los datos, o alguna forma de exportar la información. En estos casos tenemos que recurrir al scraping para transformar lo que vemos en la web en datos analizables.">
   <meta itemprop="datePublished" content="2024-12-27T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-12-27T00:00:00+00:00">
-  <meta itemprop="wordCount" content="3151">
+  <meta itemprop="wordCount" content="3184">
+  <meta itemprop="image" content="http://localhost:4321/blog/tutorial_scraping_rvest/scraping_4-featured.jpeg">
   <meta itemprop="keywords" content="Web scraping,Datos">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -471,9 +472,11 @@ The following objects are masked from 'package:base':
 <p>Accedemos al sitio web con un navegador web cualquiera, y entramos al inspector web de nuestro navegador. Podemos hacer clic derecho en algún elemento del sitio, y elegir la opción <em>Inspeccionar</em> para abrir el inspector:</p>
 <p><img src="/blog/tutorial_scraping_rvest/scraping_3.jpeg"></p>
 <p>Se abrirá un <strong>inspector web</strong> donde veremos el código de fuente del sitio al lado del sitio mismo. Si movemos nuestro cursor sobre las líneas del código, se destacarán los elementos del sitio web que corresponden a cada línea, o viceversa. De esta forma, podemos encontrar exactamente cuál línea de código se corresponde con el elemento que queremos extraer.</p>
-<p><img src="/blog/tutorial_scraping_rvest/scraping_4.jpeg"></p>
+<p><img src="/blog/tutorial_scraping_rvest/scraping_4-featured.jpeg"></p>
 <p>En este caso, la línea de código de los titulares de cada animal es a una etiqueta <code>span</code>, que corresponde a un contenedor de texto. Por sí sola, esta etiqueta no identifica de manera única a los datos que queremos extraer, por lo tanto, tenemos que encontrar otro identificador dentro de esta etiqueta que nos sirva.</p>
 <p>En la mayoría de los casos, los elementos de un sitio web que comparten un mismo estilo gráfico (tipografía, tamaño de texto, color, etc.) comparten también una <strong>clase CSS</strong>. Una clase CSS es una forma de definir la apariencia de una parte de un sitio web, como un titular, un párrafo de texto, o un botón, definiendo su apariencia en una hoja de estilos CSS a partir del nombre de la clase, para luego aplicar esta misma clase a múltiples elementos del sitio. Por lo tanto, <strong>identificar la clase de un elemento web usualmente nos permite extraer múltiples elementos de un sitio que comparten una misma jerarquía o apariencia.</strong></p>
+<p>En la siguiente imagen se destacan con líneas de colores los elementos del sitio que comparten un estilo y jerarquía, y por ende podemos asumir que comparten una clase en común entre ellos:</p>
+<p><img src="/blog/tutorial_scraping_rvest/scraping_5.jpeg"></p>
 <p>En el caso de este sitio, y como vemos en el código del inspector web de nuestro navegador, todos los títulos de los animales del sitio poseen la clase <code>collection-animal-title</code>. Entonces, podemos usar esa clase para extraer los elementos usando la función <code>html_elements()</code>. Pero hay que tener en consideración que las clases CSS se escriben anteponiéndoles un punto, por lo que usamos <code>&quot;.collection-animal-title&quot;</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">animales</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sitio_animales</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">html_elements</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;.collection-animal-title&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
@@ -609,7 +612,7 @@ The following objects are masked from 'package:base':
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">15 minute read, 3151 words</dd>
+    <dd class="fw5 ml0">15 minute read, 3184 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">

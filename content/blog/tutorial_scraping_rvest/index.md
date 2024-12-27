@@ -254,11 +254,15 @@ Accedemos al sitio web con un navegador web cualquiera, y entramos al inspector 
 
 Se abrirá un **inspector web** donde veremos el código de fuente del sitio al lado del sitio mismo. Si movemos nuestro cursor sobre las líneas del código, se destacarán los elementos del sitio web que corresponden a cada línea, o viceversa. De esta forma, podemos encontrar exactamente cuál línea de código se corresponde con el elemento que queremos extraer.
 
-![](scraping_4.jpeg)
+![](scraping_4-featured.jpeg)
 
 En este caso, la línea de código de los titulares de cada animal es a una etiqueta `span`, que corresponde a un contenedor de texto. Por sí sola, esta etiqueta no identifica de manera única a los datos que queremos extraer, por lo tanto, tenemos que encontrar otro identificador dentro de esta etiqueta que nos sirva.
 
 En la mayoría de los casos, los elementos de un sitio web que comparten un mismo estilo gráfico (tipografía, tamaño de texto, color, etc.) comparten también una **clase CSS**. Una clase CSS es una forma de definir la apariencia de una parte de un sitio web, como un titular, un párrafo de texto, o un botón, definiendo su apariencia en una hoja de estilos CSS a partir del nombre de la clase, para luego aplicar esta misma clase a múltiples elementos del sitio. Por lo tanto, **identificar la clase de un elemento web usualmente nos permite extraer múltiples elementos de un sitio que comparten una misma jerarquía o apariencia.**
+
+En la siguiente imagen se destacan con líneas de colores los elementos del sitio que comparten un estilo y jerarquía, y por ende podemos asumir que comparten una clase en común entre ellos:
+
+![](scraping_5.jpeg)
 
 En el caso de este sitio, y como vemos en el código del inspector web de nuestro navegador, todos los títulos de los animales del sitio poseen la clase `collection-animal-title`. Entonces, podemos usar esa clase para extraer los elementos usando la función `html_elements()`. Pero hay que tener en consideración que las clases CSS se escriben anteponiéndoles un punto, por lo que usamos `".collection-animal-title"`:
 
