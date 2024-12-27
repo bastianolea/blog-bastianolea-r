@@ -1,5 +1,5 @@
 ---
-title: 'Tutorial: web scraping de sitios web con R usando {rvest}'
+title: 'Tutorial: web scraping en R usando {rvest}'
 author: Bastián Olea Herrera
 date: '2024-12-27'
 draft: false
