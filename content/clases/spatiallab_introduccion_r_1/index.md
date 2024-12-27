@@ -12,7 +12,7 @@ location: Online
 
 [**¡Inscripciones abiertas!**](https://spatiallab.cl/cursos-1/ola/services/curso-introduccion-al-analisis-de-datos-con-r-para-principiantes)
 
-![](curso_introduccion_r_1_featured.jpeg)
+![](curso_introduccion_r_1_featured.jpg)
 
 #### ¿Quieres iniciarte en el mundo del análisis de datos? 
 
@@ -39,7 +39,7 @@ Las clases se dividen en cuatro niveles de avance progresivo en la presentación
 
 Este curso es ideal para personas sin conocimientos de programación que quieran adentrarse en el mundo del análisis de datos con R.
 
-![](curso_introduccion_r_2.jpeg)
+![](curso_introduccion_r_2.jpg)
 
 [**Inscríbete aquí**](https://spatiallab.cl/cursos-1/ola/services/curso-introduccion-al-analisis-de-datos-con-r-para-principiantes)
 
@@ -51,9 +51,13 @@ _(4.0 horas)_
 - R base  
 Fechas / 21 – 23 enero 2025 / 18:00 a 20:00 horas (GMT-3)  
 
-Valor Curso:  
+![](curso_introduccion_r_nivel1.jpeg)
+
+Valor curso nivel 1:  
 - $30.000 CLP total / $24.000 CLP (20% descuento pagando antes del 25 de Diciembre 2024) 
 - $38 USD total / $30 USD descuento aplicado (pagando antes del 25 de Diciembre 2024)   
+
+
 
 ### NIVEL 2: Manipulación de bases de datos en R
 _(6.0 horas)_
@@ -62,7 +66,9 @@ _(6.0 horas)_
 
 Fechas / 4 - 6 - 11 febrero 2025 / 18:00 a 20:00 horas (GMT-3)  
 
-Valor Curso:
+![](curso_introduccion_r_nivel2.jpeg)
+
+Valor curso nivel 2:
 - $45.000 CLP total / $36.000 CLP (20% descuento pagando antes del 25 de Diciembre 2024) 
 - $55 USD / $44 USD descuento aplicado (pagando antes del 25 de Diciembre 2024)   
 
@@ -73,7 +79,9 @@ _(4.0 horas)_
 
 Fechas / 18 - 20 marzo 2025 / 18:00 a 20:00 horas (GMT-3)  
 
-Valor Curso: 
+![](curso_introduccion_r_nivel3.jpeg)
+
+Valor curso nivel 3: 
 - $30.000 CLP total / $24.000 CLP (20% descuento pagando antes del 25 de Diciembre 2024)  
 - $38 USD / $30 USD (20 % de descuento pagando antes del 25 de Diciembre 2024)   
 
@@ -84,12 +92,16 @@ _(8.0 horas)_
 
 Fechas / 1 -3 – 8 – 10 abril 2025 / 18:00 a 20:00 horas (GMT-3)  
 
-Valor Curso: 
+![](curso_introduccion_r_nivel4.jpeg)
+
+Valor curso nivel 4: 
 - $68.000 CLP / $54.400 CLP (20% de descuento pagando antes del 25 de Diciembre 2024) 
 - $80 USD / $64 USD (20% descuento pagando antes del 25 de Diciembre 2024)   
+
+----
 
 COSTO TOTAL DEL CURSO: $173.000 CLP / $212 USD / 22 horas sincrónicas en 11 sesiones. 30% de descuento por pago de la totalidad del curso (4 niveles) [$121.600 CLP / $148 USD]
 
 [**Inscríbete aquí**](https://spatiallab.cl/cursos-1/ola/services/curso-introduccion-al-analisis-de-datos-con-r-para-principiantes)
 
-Dictado por Bastián Olea Herrera, Magíster en sociología
+Dictado por Bastián Olea Herrera, Magíster en Sociología PUC, Diplomado en Data Science PUC
