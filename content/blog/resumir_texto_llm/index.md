@@ -8,8 +8,11 @@ categories:
 tags:
   - análisis de texto
   - inteligencia artificial
-format: hugo-md
 draft: true
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
 editor_options:
   chunk_output_type: console
 execute:
