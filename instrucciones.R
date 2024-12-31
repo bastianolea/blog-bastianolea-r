@@ -8,12 +8,12 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Haciendo que un loop muy largo termine sin cancelarlo", 
+blogdown::new_post(title = "Web scraping de noticias: avances de fin de año", 
                    subdir = "blog/",
                    # file = "blog/tutorial_web_scraping/index.qmd", # para posts con slug o url
                    file = paste0("blog/", lubridate::today(), "/index.md"), #para posts menos interesantes
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos", "curiosidades", "blog"),
+                   tags = c("blog"),
                    categories = c() 
 )
 
