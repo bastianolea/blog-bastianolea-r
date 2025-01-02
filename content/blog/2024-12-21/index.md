@@ -6,6 +6,15 @@ slug: []
 categories: []
 tags:
   - blog
+links:
+- icon: link
+  icon_pack: fas
+  name: aplicación
+  url: /apps/temperaturas_chile/
+- icon: github
+  icon_pack: fab
+  name: código
+  url: https://github.com/bastianolea/temperaturas_chile
 ---
 
 Resumen de las actualizaciones recientes de mis trabajos. Recientemente lancé un [visualizador de temperaturas extremas de Chile](https://bastianolea.rbind.io/apps/temperaturas_chile/), que permite ver gráficamente los efectos del calentamiento global medidas por las estaciones meteorológicas del país. Además, actualicé los datos del [visualizador de delincuencia](https://bastianolea.rbind.io/apps/delincuencia_chile/), que ahora tiene datos hasta septiembre de 2024, y también del [visualizador de femicidios](https://bastianolea.rbind.io/apps/femicidios_chile/), que también ahora tiene datos hasta la fecha.
