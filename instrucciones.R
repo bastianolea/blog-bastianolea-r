@@ -8,7 +8,7 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Web scraping de noticias: avances de fin de año", 
+blogdown::new_post(title = "Mención en Infoactivismo en Latinoamérica 2024", 
                    subdir = "blog/",
                    # file = "blog/tutorial_web_scraping/index.qmd", # para posts con slug o url
                    file = paste0("blog/", lubridate::today(), "/index.md"), #para posts menos interesantes

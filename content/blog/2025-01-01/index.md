@@ -7,6 +7,11 @@ categories: []
 tags:
   - blog
 excerpt: "Estoy muy feliz porque la organización [SocialTIC](https://socialtic.org) junto a [infoactivismo.org](https://infoactivismo.org/) me mencionaron como una de las iniciativas de infoactivismo más destacada del año 2024! [_Lo mejor del Infoactivismo 2024_](https://infoactivismo.org/lo-mejor-del-infoactivismo-en-latinoamerica-2024/) es un recuento anual de iniciativas y proyectos dedicados a la justicia y el cambio social apoyadas en tecnologías, datos e información en Latinoamérica."
+links:
+- icon: link
+  icon_pack: fas
+  name: enlace
+  url: https://infoactivismo.org/lo-mejor-del-infoactivismo-en-latinoamerica-2024/
 ---
 
 Estoy muy feliz porque la organización [SocialTIC](https://socialtic.org) junto a [infoactivismo.org](https://infoactivismo.org/) me mencionaron como una de las iniciativas de infoactivismo más destacada del año 2024! 🥳💕

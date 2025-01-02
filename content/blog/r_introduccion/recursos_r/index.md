@@ -21,17 +21,23 @@ excerpt: Colección de sitios web y recursos útiles para usuarios de R. Incluye
 
 
 ## Datos
+- [Datos abiertos del Estado de Chile](https://datos.gob.cl) 🇨🇱
 - [Banco Integrado de Datos (BIDAT) del Ministerio de Desarrollo Social y Familia](https://bidat.midesof.cl/) 🇨🇱
 - [Banco Central de Chile: base de datos estadísticos](https://si3.bcentral.cl/siete) 🇨🇱
 - [Estadísticas sociales del Instituto Nacional de Estadísticas (INE)](https://www.ine.gob.cl/estadisticas/) 🇨🇱
 - [Estadísticas y datos abiertos de salud pública en Chile: Departamento de Estadísticas e Información de Salud (DEIS)](https://deis.minsal.cl/#estadisticas) 🇨🇱
-- [Datos abiertos del Estado de Chile](https://datos.gob.cl) 🇨🇱
 - [`{guaguas}`: base de datos de nombres inscritos en Chile](https://rivaquiroga.github.io/guaguas/index.html) (Chile)
-- [Argendata](https://argendata.fund.ar), datos sobre Argentina
 - [Paquete `{datos}`](https://cienciadedatos.github.io/datos/)
 - [dataverse.harvard.edu](https://dataverse.harvard.edu/)
 - [ourworldindata.org](https://ourworldindata.org/)
 - [statista.com](https://es.statista.com/)
+
+
+## Iniciativas sobre datos en Latinoamérica
+- [Argendata](https://argendata.fund.ar), datos sobre Argentina
+- [infoactivismo.org](https://infoactivismo.org/), sitio sobre activismo de datos, tecnología e información en Latinoamérica
+- [Vivir sin violencia](https://www.vivirsinviolencia.org), datos abiertos sobre violencia de género y contra el colectivo LGBTIQ+
+- [Abriendo Datos](https://www.abriendodatos.org), fundación chilena que promueve una cultura de datos abiertos
 
 
 ## Obtener ayuda sobre R
@@ -40,6 +46,7 @@ excerpt: Colección de sitios web y recursos útiles para usuarios de R. Incluye
 
 
 ## Recursos sobre Shiny
+- [Shiny Assistant](https://shiny.posit.co/blog/posts/shiny-assistant/), asistente de inteligencia artificial para desarrollar, corregir y revisar aplicaciones Shiny
 - [Galería de Shiny Widgets](http://shinyapps.dreamrs.fr/shinyWidgets/), paquete que ofrece muchas inputs nuevos para Shiny
 - [Extensiones de Shiny](https://github.com/nanxstats/awesome-shiny-extensions), colección de paquetes que extienden Shiny
 - [Documentación de `{bslib}`](https://rstudio.github.io/bslib/index.html), paquete para construir interfaces en Shiny
@@ -74,17 +81,15 @@ excerpt: Colección de sitios web y recursos útiles para usuarios de R. Incluye
 
 ## Paletas de colores
 Sitios para encontrar combinaciones de colores para tus gráficos o aplicaciones
+- [HTML Color Picker](https://www.w3schools.com/colors/colors_picker.asp)
 - [Pigment](https://pigment.shapefactory.co), paletas de colores
 - [2 Color Combinations](https://2colors.colorion.co), pares de colores
 - [Realtime Colors](https://www.realtimecolors.com), simulador de interfaz web con paletas de colores
+- [Color Buddy](https://color-buddy.netlify.app/)
 
 
 ## Formación
 - [SpatialLab](https://spatiallab.cl), cursos de R y más
 - [DataCamp](https://www.datacamp.com), cursos asíncronos interactivos para aprender R
 - [Hazla con Datos](https://hazlacondatos.com)
-
-
-## Organizaciones
-- [Abriendo Datos](https://www.abriendodatos.org)
 
