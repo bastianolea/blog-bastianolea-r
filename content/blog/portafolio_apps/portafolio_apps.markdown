@@ -32,6 +32,10 @@ Otra versión más detallada de este portafolio está disponible en este enlace:
     ##     intersect, setdiff, setequal, union
 
 <div style="margin:auto;margin:auto;">
+<div>
+<br/>
+<br/>
+</div>
 <div style="background-color:#f0e1f7;max-width:400px;margin:auto;border-radius:7px;padding:22px;margin-bottom:28px;padding-bottom:8px;">
 <a href="/apps/temperaturas_chile/">
 <h3 style="margin-top:0px;text-align:center;">Temperaturas extremas en Chile</h3>
