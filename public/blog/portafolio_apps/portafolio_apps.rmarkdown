@@ -20,6 +20,8 @@ excerpt: Portafolio de una selección de las aplicaciones públicas de visualiza
 
 Portafolio de una selección de las aplicaciones públicas de visualización de datos que he desarrollado. Se trata de pequeñas aplicaciones web diseñadas para hacer más accesibles y comprensibles ciertos conjuntos de datos sobre temáticas sociales, políticas y socioeconómicas. Todas estas aplicaciones web fueron desarrolladas con R, y tanto el código de fuente como sus datos están disponibles de manera pública y abierta.
 
+Otra versión más detallada de este portafolio está disponible en este enlace: [https://bastianolea.github.io/shiny_apps/](https://bastianolea.github.io/shiny_apps/)
+
 
 
 ```{r scraping}
@@ -28,7 +30,6 @@ Portafolio de una selección de las aplicaciones públicas de visualización de 
 #| echo: false
 library(rvest)
 library(stringr)
-
 
 sitio <- read_html("https://bastianolea.rbind.io/apps/")
 
@@ -126,8 +127,12 @@ ui <- map(resultado_split, \(app) {
 #| echo: false
 #| output: asis
 
+
+
 div(style = css(margin = "auto",
                 margin = "auto"),
+    div(#style = css(height = "34px"),
+        br(), br(), br()),
     tagList(ui)
 )
 ```
