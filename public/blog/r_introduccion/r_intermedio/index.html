@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.136.5">
-<title>Introducción al lenguaje de programación R: nivel intermedio | Blog</title>
+<title>Principios de R para el análisis de datos | Blog</title>
 
 
 <meta property="twitter:site" content="@bastimapache">
@@ -24,12 +24,12 @@
   
     
   
-<meta name="description" content="Instrucciones paso a paso para aprender los aspectos más básicos del lenguaje R. Dirigida a personas sin ningún conocimiento del lenguaje. Si quieres aprender R desde cero, esta publicación es para ti.">
+<meta name="description" content="Prueba">
 
 
 <meta property="og:site_name" content="Blog">
-<meta property="og:title" content="Introducción al lenguaje de programación R: nivel intermedio | Blog">
-<meta property="og:description" content="Instrucciones paso a paso para aprender los aspectos más básicos del lenguaje R. Dirigida a personas sin ningún conocimiento del lenguaje. Si quieres aprender R desde cero, esta publicación es para ti." />
+<meta property="og:title" content="Principios de R para el análisis de datos | Blog">
+<meta property="og:description" content="Prueba" />
 <meta property="og:type" content="page" />
 <meta property="og:url" content="http://localhost:4321/blog/r_introduccion/r_intermedio/" />
 <meta property="og:locale" content="es-ES">
@@ -44,12 +44,12 @@
     
     
   
-  <meta itemprop="name" content="Introducción al lenguaje de programación R: nivel intermedio">
-  <meta itemprop="description" content="Proyectos Antes de iniciar el análisis, creamos un Proyecto de R. Un proyecto es una carpeta donde guardamos todos los scripts y archivos que vamos a necesitar. Se caracteriza por un archivo que termina en .Rproj, que marca nuestro espacio de trabajo: una carpeta específica reúne todas las piezas de nuestro análisis.">
+  <meta itemprop="name" content="Principios de R para el análisis de datos">
+  <meta itemprop="description" content="Introducción Esta es la segunda guía introductoria para aprender el lenguaje de programación R. En la guía anterior vimos los principios más fundamentales del lenguaje R, para familiarizarnos con R y entender su funcionamiento básico. En esta segunda guía veremos cómo utilizar R para analizar datos de manera básica y sencilla, por medio del uso del paquete {dplyr}.">
   <meta itemprop="datePublished" content="2024-11-16T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-16T00:00:00+00:00">
-  <meta itemprop="wordCount" content="136">
-  <meta itemprop="keywords" content="Tutoriales,Introducción a R">
+  <meta itemprop="wordCount" content="608">
+  <meta itemprop="keywords" content="Dplyr">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
@@ -252,7 +252,7 @@
   <section class="page-content mw7 center">
     <article class="post-content pa0 pl3-l">
       <header class="post-header">
-        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Introducción al lenguaje de programación R: nivel intermedio</h1>
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Principios de R para el análisis de datos</h1>
         
         <p class="f6 measure lh-copy mv1">Por Bastián Olea Herrera en <a href="http://localhost:4321/categories/tutoriales">Tutoriales</a> </p>
         <p class="f7 db mv0 ttu">16/11/2024</p>
@@ -262,19 +262,188 @@
 
 
 
+<h2 id="introducción">Introducción
+  <a href="#introducci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Esta es la segunda guía introductoria para aprender el lenguaje de programación R. 
+<a href="../../../../blog/r_introduccion/r_basico/">En la guía anterior vimos los principios más fundamentales del lenguaje R</a>, para familiarizarnos con R y entender su funcionamiento básico. En esta segunda guía veremos cómo utilizar R para analizar datos de manera básica y sencilla, por medio del uso del paquete <code>{dplyr}</code>.</p>
+
+
+
+
+<h1 id="cambiar-todo-esto-para-que-sea-no-solo-de-dplyr">cambiar todo esto para que sea no solo de dplyr
+  <a href="#cambiar-todo-esto-para-que-sea-no-solo-de-dplyr"></a>
+</h1>
+
+
+
+
 <h3 id="proyectos">Proyectos
   <a href="#proyectos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
-<p>Antes de iniciar el análisis, creamos un Proyecto de R.
-Un proyecto es una carpeta donde guardamos todos los scripts y archivos que vamos a necesitar. Se caracteriza por un archivo que termina en <code>.Rproj</code>, que marca nuestro espacio de trabajo: una carpeta específica reúne todas las piezas de nuestro análisis.</p>
-<p><img src=".png"></p>
+<p>Antes de hacer cualquier trabajo que involucre datos con R, se recomienda 
+<a href="../../../../blog/r_introduccion/proyectos/">crear un <em>Proyecto</em> de RStudio</a>. Un proyecto es una forma de definir la carpeta específica donde vamos a guardar todos los scripts y archivos que vamos a necesitar. Se caracteriza por un archivo que termina en <code>.Rproj</code>, que marca nuestro espacio de trabajo: una carpeta reúne todas las piezas de nuestro análisis.</p>
+<p>Para crear un proyecto nuevo, elegimos la opción <em>New Project&hellip;</em> en el menú <em>File</em>, o apretamos el ícono del cubo celeste ubicado en la esquina superior derecha de RStudio y elegimos la primera opción.</p>
 <p>Una vez que creamos el proyecto, podemos abrir nuestro proyecto haciendo doble clic en el archivo que termina en &ldquo;.Rproj&rdquo;, seleccionando en RStudio el menú <em>File</em> y el ítem <em>Open Project&hellip;</em> o <em>Recent Projects</em>, o en la esquina superior derecha de RStudio, donde aparece un icono celeste que contiene los proyectos recientes.</p>
-<p>Es muy importante que, antes de usar R, te asegures de qué estás dentro del proyecto correcto.</p>
+<p>Es muy importante que, antes de empezar a trabajar con R, te asegures de que estás dentro del proyecto correcto. 
+<a href="../../../../blog/r_introduccion/proyectos/">Para más información sobre los proyectos de RStudio, revisa esta guía.</a></p>
 <p>Deberíamos encontrarnos con una ventana de RStudio con un script nuevo, listo para recibir instrucciones.</p>
-<p><img src=".png"></p>
+
+
+
+
+<h3 id="instalación">Instalación
+  <a href="#instalaci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Para usar el paquete <code>{dplyr}</code>, así como cualquier otro paquete de R que no venga instalado por defecto, tenemos que instalarlo desde internet. La instalación de los paquetes en R se facilita por la función <code>install.packages()</code>, que se conecta a un servidor centralizado donde todos los paquetes son revisados y verificados manualmente por revisores humanos, para garantizar que sean seguros de usar y funcionales.</p>
+<p>Instalamos <code>{dplyr}</code> con el siguiente comando:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;dplyr&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+
+
+
+<h3 id="datos">Datos
+  <a href="#datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+
+
+
+
+<h2 id="dplyr">{dplyr}
+  <a href="#dplyr"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<img src = dplyr.png style = "float: left; max-width: 128px; margin-right: 20px;">
+<p>La herramienta que utilizaremos para explorar, manipular, y transformar datos será 
+<a href="https://dplyr.tidyverse.org/articles/dplyr.html" target="_blank" rel="noopener">el paquete <code>{dplyr}</code></a>. Este paquete, parte central del 
+<a href="https://www.tidyverse.org" target="_blank" rel="noopener">conjunto <em>Tidyverse</em> de herramientas para el análisis de datos con R</a>, es uno de los más usados por la comunidad de R por su facilidad de uso. Se caracteriza porque casi todas sus funciones son escritas por medio de <em>verbos</em>, lo que hace que su sintaxis sea muy legible, ya que cada función se corresponde con una acción que estamos realizando sobre nuestros datos. Otra de sus características es el uso del operador de conexión o <em>pipe</em>, qué es un operador de R que nos permite encadenar instrucciones de forma secuencial. Su uso hace que las instrucciones se ordenen de izquierda a derecha y de arriba hacia abajo, mejorando mucho más la legibilidad del código.</p>
+
+
+
+
+<h3 id="seleccionar-----">Seleccionar &mdash;-
+  <a href="#seleccionar-----"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>censo %&gt;% # control + shift + M
+select(comuna, población)</p>
+
+
+
+
+<h2 id="resumir-----">Resumir &mdash;-
+  <a href="#resumir-----"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>censo %&gt;%
+summarize(min(población))</p>
+
+
+
+
+<h2 id="ordenar">Ordenar
+  <a href="#ordenar"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>censo %&gt;%
+arrange(población) %&gt;%
+select(comuna, población)</p>
+<p>censo %&gt;%
+filter(población &gt; 100000) %&gt;%
+arrange(población)</p>
+<p>censo %&gt;%
+filter(población &gt; 100000) %&gt;%
+arrange(desc(población))</p>
+
+
+
+
+<h2 id="renombrar-----">Renombrar &mdash;-
+  <a href="#renombrar-----"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>censo %&gt;%
+rename(p = población)</p>
+
+
+
+
+<h1 id="ver-filas-específicas-del-dataframe">ver filas específicas del dataframe
+  <a href="#ver-filas-espec%c3%adficas-del-dataframe"></a>
+</h1>
+<p>censo %&gt;%
+slice(200:220)</p>
+
+
+
+
+<h3 id="filtrar-----">Filtrar &mdash;-
+  <a href="#filtrar-----"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>censo %&gt;%
+filter(población &gt; 300000)</p>
+<p>censo %&gt;%
+filter(población &lt; 1000)</p>
+<p>censo %&gt;%
+filter(población &gt; 1000)</p>
+<p>censo %&gt;%
+filter(población == min(población))</p>
+<p>censo %&gt;%
+filter(población == max(población))</p>
+<p>censo %&gt;%
+filter(comuna == &ldquo;La Florida&rdquo;)</p>
+<p>censo %&gt;%
+filter(población == 407297)</p>
+<p>censo %&gt;%
+filter(población == min(población))</p>
+
+
+
+
+<h3 id="filtrar-usando-objetos-----">Filtrar usando objetos &mdash;-
+  <a href="#filtrar-usando-objetos-----"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>min_pob &lt;- 25000
+max_pob &lt;- 30000</p>
+<p>censo %&gt;%
+filter(población &gt; min_pob,
+población &lt; max_pob)</p>
+<p>promedio &lt;- mean(censo$población)</p>
+<p>censo %&gt;%
+filter(población &gt; promedio)</p>
+<p>censo %&gt;%
+filter(población &gt; promedio*1.5)</p>
+<p>maximo &lt;- max(censo$población)</p>
+<p>censo %&gt;%
+filter(población &gt;= maximo*0.8)</p>
 
       </section>
       <footer class="post-footer">
@@ -373,7 +542,7 @@ Un proyecto es una carpeta donde guardamos todos los scripts y archivos que vamo
           <li class="" hugo-nav="/blog/r_introduccion/r_basico/"><a href="http://localhost:4321/blog/r_introduccion/r_basico/">Introducción al lenguaje de programación R</a></li>
         
           
-          <li class="active" hugo-nav="/blog/r_introduccion/r_intermedio/"><a href="http://localhost:4321/blog/r_introduccion/r_intermedio/">Introducción al lenguaje de programación R: nivel intermedio</a></li>
+          <li class="active" hugo-nav="/blog/r_introduccion/r_intermedio/"><a href="http://localhost:4321/blog/r_introduccion/r_intermedio/">Principios de R para el análisis de datos</a></li>
         
           
           <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_censo/"><a href="http://localhost:4321/blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></li>
@@ -390,9 +559,49 @@ Un proyecto es una carpeta donde guardamos todos los scripts y archivos que vamo
           
           <li class="" hugo-nav="/blog/r_introduccion/recursos_r/"><a href="http://localhost:4321/blog/r_introduccion/recursos_r/">Recursos, blogs y otros sitios sobre R</a></li>
         
+          
+          <li class="" hugo-nav="/blog/r_introduccion/proyectos/"><a href="http://localhost:4321/blog/r_introduccion/proyectos/">Usar proyectos de RStudio para administrar el trabajo de análisis de datos</a></li>
+        
         </ul>
       </nav>
   </div>
+  <details open id="PageTableOfContents">
+    <summary><h2 class="mv0 f5 fw7 ttu tracked dib">Índice</h2></summary>
+    <div class="pl2 pr0 mh0">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introducción">Introducción</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#proyectos">Proyectos</a></li>
+        <li><a href="#instalación">Instalación</a></li>
+        <li><a href="#datos">Datos</a></li>
+      </ul>
+    </li>
+    <li><a href="#dplyr">{dplyr}</a>
+      <ul>
+        <li><a href="#seleccionar-----">Seleccionar &mdash;-</a></li>
+      </ul>
+    </li>
+    <li><a href="#resumir-----">Resumir &mdash;-</a></li>
+    <li><a href="#ordenar">Ordenar</a></li>
+    <li><a href="#renombrar-----">Renombrar &mdash;-</a></li>
+  </ul>
+
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#filtrar-----">Filtrar &mdash;-</a></li>
+        <li><a href="#filtrar-usando-objetos-----">Filtrar usando objetos &mdash;-</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </details>
   
 </div>
 </aside>
