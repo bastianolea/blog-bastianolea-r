@@ -1,0 +1,134 @@
+---
+title: Portafolio de aplicaciones en R
+author: Bastián Olea Herrera
+date: '2025-01-06'
+format: 
+  hugo-md:
+    output-file: "index"
+    output-ext:  "md"
+slug: []
+categories: []
+tags:
+  - shiny
+  - visualización de datos
+editor_options: 
+  chunk_output_type: console
+excerpt: Portafolio de una selección de las aplicaciones públicas de visualización de datos que he desarrollado. Se trata de pequeñas aplicaciones web diseñadas para hacer más accesibles y comprensibles ciertos conjuntos de datos sobre temáticas sociales, políticas y socioeconómicas. Todas estas aplicaciones web fueron desarrolladas con R, y tanto el código de fuente como sus datos están disponibles de manera pública y abierta.
+---
+
+Portafolio de una selección de las aplicaciones públicas de visualización de datos que he desarrollado. Se trata de pequeñas aplicaciones web diseñadas para hacer más accesibles y comprensibles ciertos conjuntos de datos sobre temáticas sociales, políticas y socioeconómicas. Todas estas aplicaciones web fueron desarrolladas con R, y tanto el código de fuente como sus datos están disponibles de manera pública y abierta.
+
+Otra versión más detallada de este portafolio está disponible en este enlace: [https://bastianolea.github.io/shiny_apps/](https://bastianolea.github.io/shiny_apps/)
+
+```{r scraping}
+#| cache: true
+#| output: false
+#| echo: false
+library(rvest)
+library(stringr)
+
+sitio <- read_html("https://bastianolea.rbind.io/apps/")
+
+titulares <- sitio |> 
+  html_elements(".page-main") |> 
+  html_elements("h1")
+
+titulos <- titulares |> 
+  html_text()
+
+enlaces <- titulares |> 
+  html_elements("a") |> 
+  html_attr("href")
+
+textos <- sitio |> 
+  html_elements(".page-main") |> 
+  html_elements(".ph0") |> 
+  html_elements(".lh-copy") |> 
+  html_text()
+
+imagenes <- sitio |> 
+  html_elements(".page-main") |> 
+  html_elements(".aspect-ratio") |> 
+  html_attr("style") |> 
+  str_extract("http.*png") |> 
+  str_remove("https://bastianoleah.netlify.app")
+
+pantallazo <- str_extract(enlaces, "(?<=apps).*") |> 
+  str_remove_all("\\/") |> 
+  paste0(".jpg")
+```
+
+```{r unir}
+#| output: false
+#| echo: false
+library(dplyr)
+
+resultado <- tibble(titulos,
+                    enlaces,
+                    textos,
+                    imagenes,
+                    pantallazo)
+```
+
+```{r}
+#| output: false
+#| echo: false
+
+library(purrr)
+library(shiny)
+library(htmltools)
+
+resultado_split <- resultado |> 
+  mutate(orden = row_number()) |> 
+  group_by(orden) |> 
+  group_split()
+
+ui <- map(resultado_split, \(app) {
+  # app <- resultado |> slice(1)
+  
+  div(style = css(background_color = "#f0e1f7", 
+                  max_width = "400px",
+                  margin = "auto",
+                  border_radius = "7px",
+                  padding = "22px", margin_bottom = "28px",
+                  padding_bottom = "8px"),
+      
+      # título
+      tags$a(h3(app$titulos, 
+                style = css(margin_top = "0px", text_align = "center")),
+             href = app$enlaces),
+      
+      # imagen
+      div(style = css(margin = "auto", max_width = "128px",
+                      margin_top = "-6px"),
+          tags$a(
+            img(src = app$imagenes),
+            href = app$enlaces)
+      ),
+      
+      # texto
+      p(app$textos),
+      
+      # pantallazo
+      tags$a(
+        img(src = app$pantallazo,
+            style = css(border_radius = "8px",
+                        margin_bottom = "7px")),
+        href = app$enlaces)
+  )
+})
+```
+
+```{r ui}
+#| echo: false
+#| output: asis
+
+div(style = css(margin = "auto",
+                margin = "auto"),
+    tagList(ui)
+)
+```
+
+
+
+
