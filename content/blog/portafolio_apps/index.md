@@ -34,6 +34,20 @@ Otra versión más detallada de este portafolio está disponible en este enlace:
 <br/>
 </div>
 <div style="background-color:#f0e1f7;max-width:400px;margin:auto;border-radius:7px;padding:22px;margin-bottom:28px;padding-bottom:8px;">
+<a href="/apps/palestina/">
+<h3 style="margin-top:0px;text-align:center;">Genocidio en Palestina</h3>
+</a>
+<div style="margin:auto;max-width:128px;margin-top:-6px;">
+<a href="/apps/palestina/">
+<img src="/apps/palestina/palestina-featured.png"/>
+</a>
+</div>
+<p>Visualizador de datos que busca reflejar el horror de la guerra y el exterminio que se están llevando a cabo en el territorio palestino por obra de Israel y sus aliados. Los datos provienen de Palestine Datasets y de Armed Conflict Location &amp; Event Data, organizaciones que están documentando datos sobre identificación de víctimas y registro de sucesos de relevancia política en la región.</p>
+<a href="/apps/palestina/">
+<img src="palestina.jpg" style="border-radius:8px;margin-bottom:7px;"/>
+</a>
+</div>
+<div style="background-color:#f0e1f7;max-width:400px;margin:auto;border-radius:7px;padding:22px;margin-bottom:28px;padding-bottom:8px;">
 <a href="/apps/temperaturas_chile/">
 <h3 style="margin-top:0px;text-align:center;">Temperaturas extremas en Chile</h3>
 </a>
