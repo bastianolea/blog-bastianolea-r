@@ -30,7 +30,11 @@ El objetivo de esta plataforma es transparentar datos objetivos de la delincuenc
 [La aplicación web está disponible en shinyapps.io](https://bastianoleah.shinyapps.io/delincuencia_chile), o bien, puedes clonar este repositorio en tu equipo para usarla por medio de RStudio.
 
 
-![Visualizador de datos de delincuencia en Chile](pantallazo_delincuencia_chile_a.jpg)
+<img style = "border-radius: 7px; width: 100%; max-width: 400px;
+    margin-bottom: 8px;
+    display: block; margin: auto;"
+    src = "pantallazo_delincuencia_chile_a.jpg"
+    alt = "Visualizador de datos de delincuencia en Chile">
 
 
 
@@ -48,7 +52,11 @@ La base de datos de delitos denunciados en Chile del Centro de Estudio y Anális
 **Nota:** los datos ya no están disponibles en formato `.csv`, porque la cantidad de observaciones aumentó y el archivo resultante pesaba más de 100 megas. En comparación, el formato `.parquet`, que es más eficiente y rápido, pesa sólo 1.1MB.
 
 
-![Visualizador de datos de delincuencia en Chile](pantallazo_delincuencia_chile_b.jpg)
+<img style = "border-radius: 7px; width: 100%; max-width: 400px;
+    margin-bottom: 8px;
+    display: block; margin: auto;"
+    src = "pantallazo_delincuencia_chile_b.jpg"
+    alt = "Visualizador de datos de delincuencia en Chile">
 
 ## Actualizaciones
 
@@ -65,29 +73,6 @@ La base de datos de delitos denunciados en Chile del Centro de Estudio y Anális
 - Los datos ahora representan _casos policiales_ en vez de solo _denuncias._ Los casos policiales "consideran las denuncias de delitos que realiza la comunidad en las unidades policiales, más las detenciones que realizan las policías ante la ocurrencia de delitos flagrantes".
 - Se cambia el paquete que carga los datos a `nanoparquet`, que tiene menos dependencias que `arrow`
 - Se flexibiliza el código de la app para que se adapte a las fechas que vienen en los datos, para facilitar actualizaciones futuras
-
-
-## Gráficos
-### Comparación de delitos reportados entre 2019 y 2023
-
-#### Delitos en Estación Central, comparación 2019 y 2023
-![](graficos/grafico_comparativo_tasa_estación_central_2019_2023.png)
-
-#### Delitos en La Florida, comparación 2019 y 2023
-![](graficos/grafico_comparativo_tasa_la_florida_2019_2023.png)
-
-#### Delitos en Providencia, comparación 2019 y 2023
-![](graficos/grafico_comparativo_tasa_providencia_2019_2023.png)
-
-#### Delitos en Puente Alto, comparación 2019 y 2023
-![](graficos/grafico_comparativo_tasa_puente_alto_2019_2023.png)
-
-#### Delitos en Santiago, comparación 2019 y 2023
-![](graficos/grafico_comparativo_tasa_santiago_2019_2023.png)
-
-#### Delitos en Ñuñoa, comparación 2019 y 2023
-![](graficos/grafico_comparativo_tasa_ñuñoa_2019_2023.png)
-
 
 
 ----

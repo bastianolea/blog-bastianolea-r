@@ -45,9 +45,14 @@ Lo otro que quería hacer eran estos gráficos radiales que muestran múltiples 
 
 Nunca había explorado ni visualizado datos de clima, así que acepto cualquier crítica️! 🥰 
 
-![](temperaturas_chile_a.jpeg)
+<img style = "border-radius: 7px; width: 100%; max-width: 400px; 
+display: block; margin: auto;"
+src = "temperaturas_chile_a.jpeg">
 
-![](temperaturas_chile_b.jpeg)
+<img style = "border-radius: 7px; width: 100%; max-width: 400px; 
+display: block; margin: auto;"
+src = "temperaturas_chile_b.jpeg">
+
 
 ## Obtención de los datos
 
