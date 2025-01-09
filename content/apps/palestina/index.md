@@ -1,5 +1,5 @@
 ---
-title: Guerra en Palestina
+title: Genocidio en Palestina
 subtitle: Visualizador sobre cifras de la masacre que Israel está llevando a cabo en Palestina y la franja de Gaza
 categories:
 - Aplicaciones
@@ -21,7 +21,7 @@ links:
 ---
 
 
-[Visualizador de datos](https://bastianoleah.shinyapps.io/palestina) que busca reflejar el horror de la guerra y el exterminio que se están llevando a cabo en el territorio palestino por obra de Israel y sus aliados. Los datos provienen de Palestine Datasets y de Armed Conflict Location & Event Data, organizaciones que están documentando datos sobre identificación de víctimas y registro de sucesos de relevancia política en la región.
+[Visualizador de datos](https://bastianoleah.shinyapps.io/palestina) que busca reflejar el horror de la guerra y el exterminio que se están llevando a cabo en el territorio palestino por obra de Israel y sus aliados. Los datos provienen de [Palestine Datasets](https://data.techforpalestine.org/) y de [Armed Conflict Location & Event Data](https://acleddata.com/), organizaciones que están documentando datos sobre identificación de víctimas y registro de sucesos de relevancia política en la región.
 
 [Accede al visualizador de datos por este enlace.](https://bastianoleah.shinyapps.io/palestina)
 
