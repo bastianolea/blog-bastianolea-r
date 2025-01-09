@@ -29,8 +29,11 @@ Proyecto de ciencia de datos desarrollado en R para analizar texto de noticias c
 
 Actualmente, el corpus de noticias obtenido supera las 800.000 noticias individuales, las cuales suman un total de 140 millones (!) de palabras, abarcando más de 30 fuentes periodísticas distintas.
 
-![Gráfico resumen de resultados del scraping de prensa](datos_prensa_scraping_2024-12-31.png)
-
+<img style = "border-radius: 7px; width: 100%;
+    margin-bottom: 8px;
+    display: block; margin: auto;"
+    src = "datos_prensa_scraping_2024-12-31.png"
+    alt = "Gráfico resumen de resultados del scraping de prensa">
 
 ----
 
@@ -42,16 +45,38 @@ Actualmente, el corpus de noticias obtenido supera las 800.000 noticias individu
 
 [Accede a la aplicación en este enlace](https://bastianoleah.shinyapps.io/prensa_chile/)
 
-<div style = "max-width: 400px;">
 
-![](pantallazos/p1.png)
-![](pantallazos/p2b.png)
-![](pantallazos/p3.png)
-![](pantallazos/p2c.png)
-![](pantallazos/p4.png)
-![](pantallazos/p5b.jpg)
+<img style = "border-radius: 7px; width: 100%; max-width: 400px;
+    margin-bottom: 8px;
+    display: block; margin: auto;"
+    src = "pantallazos/p1.png">
+    
+<img style = "border-radius: 7px; width: 100%; max-width: 400px;
+    margin-bottom: 8px;
+    display: block; margin: auto;"
+    src = "pantallazos/p2b.png">
+    
+<img style = "border-radius: 7px; width: 100%; max-width: 400px;
+    margin-bottom: 8px;
+    display: block; margin: auto;"
+    src = "pantallazos/p3.png">
+    
+<img style = "border-radius: 7px; width: 100%; max-width: 400px;
+    margin-bottom: 8px;
+    display: block; margin: auto;"
+    src = "pantallazos/p2c.png">
+    
+<img style = "border-radius: 7px; width: 100%; max-width: 400px;
+    margin-bottom: 8px;
+    display: block; margin: auto;"
+    src = "pantallazos/p4.png">
+    
+<img style = "border-radius: 7px; width: 100%; max-width: 400px;
+    margin-bottom: 8px;
+    display: block; margin: auto;"
+    src = "pantallazos/p5b.jpg">
+    
 
-</div>
 
 ----
 

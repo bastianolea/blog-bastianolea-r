@@ -35,13 +35,19 @@ El desarrollo tuvo un foco en la personalización de la apariencia de la aplicac
 
 Otro detalle que me gustó implementar, y que me gustaría hacer en su propia sección o app, es la de los nombres de víctimas que aparecen secuencialmente (es tan sólo un loop donde cada nombre tiene un retardo mayor que el anterior para su animación de entrada). En general no me gusta el uso de animaciones, porque implementar una animación te va llevando a tener que implementar animaciones en todo, pero en este caso daba un ritmo solemne a datos sensibles.
 
-Trabajar con datos sensibles siempre tiene un peso, en mi experiencia. Me cuesta digerir lo que veo, y me pesa el corazón. Varias veces tan sólo dictar los textos de la app me hizo nudos en la garganta. Pero creo que es importante intentar visibilizar estos temas, en memoria de las víctimas, y como ungranito de arena. 
+Trabajar con datos sensibles siempre tiene un peso, en mi experiencia. Me cuesta digerir lo que veo, y me pesa el corazón. Varias veces tan sólo dictar los textos de la app me hizo nudos en la garganta. Pero creo que es importante intentar visibilizar estos temas, en memoria de las víctimas, y como un granito de arena. 
 
 ----
 
-![](palestina_a.jpg)
+<img style = "border-radius: 7px; width: 100%; max-width: 400px; 
+display: block; margin: auto;"
+src = "palestina_a.jpg">
 
-![](palestina_b.jpg)
+<img style = "border-radius: 7px; width: 100%; max-width: 400px; 
+display: block; margin: auto;"
+src = "palestina_b.jpg">
+
+----
 
 ## Fuentes
 - Palestine Datasets: https://data.techforpalestine.org/docs/killed-in-gaza/
