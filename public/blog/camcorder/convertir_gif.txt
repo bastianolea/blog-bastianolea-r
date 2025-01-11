@@ -1,0 +1,17 @@
+ffmpeg -y -i input.mp4 -filter_complex "fps=5,scale=480:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=32[p];[s1][p]paletteuse=dither=bayer" output.gif
+
+
+ffmpeg -y -i 2025_01_11_01_24_41.gif -filter_complex "fps=5,scale=800:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=64[p];[s1][p]paletteuse=dither=bayer" camcorder1.gif
+
+magick 2025_01_11_01_24_41.gif -fuzz 30% -layers Optimize result.gif
+
+# achicar video
+ffmpeg -f gif -i 2025_01_11_01_24_41.gif -c libwebp -vf scale=800:-1 -loop 0 camcorder1.webp
+
+# recortar video
+ffmpeg -f gif -i 2025_01_11_01_21_05.gif -c libwebp -vf crop=850:1280 -loop 0 camcorder3.webp
+
+ffmpeg -f gif -i 2025_01_11_01_22_24.gif -c libwebp -vf crop=1280:1134 -loop 0 camcorder2.webp
+
+# recortar y luego achicar:
+ffmpeg -f gif -i 2025_01_11_01_22_24.gif -c libwebp -vf "crop=1280:1134,scale=800:-1" -loop 0 camcorder2b.webp

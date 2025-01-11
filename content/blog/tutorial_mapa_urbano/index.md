@@ -7,7 +7,8 @@ categories:
 tags:
   - mapas
   - chile
-  - gráficos
+  - visualización de datos
+  - ggplot2
 format: hugo-md
 lang: es
 editor_options:

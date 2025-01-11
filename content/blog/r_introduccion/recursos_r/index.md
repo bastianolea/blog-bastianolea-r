@@ -12,12 +12,35 @@ excerpt: Colección de sitios web y recursos útiles para usuarios de R. Incluye
 ---
 
 ## Blogs sobre R
-- [RWorks](https://rworks.dev/), blog de curatoría de funcionalidades y paquetes de R
 - [Blog R-Bloggers](https://www.r-bloggers.com/), blog que reúne cientos de posts desde blogs de usuarios y desarrolladores de R
-- [Big Book of R](https://www.bigbookofr.com/index.html#live-stats), colección de cientos de libros sobre R, organizada por temas
 - [R Weekly](https://rweekly.org), curatoría de noticias y posts sobre R
+- [Big Book of R](https://www.bigbookofr.com/index.html#live-stats), colección de cientos de libros sobre R, organizada por temas
+- [RWorks](https://rworks.dev/), blog de curatoría de funcionalidades y paquetes de R
 - [Blog de Tidyverse](https://www.tidyverse.org/blog/)
 - [R Universe](https://r-universe.dev/search)
+
+
+## Usuarios de R destacados
+- [Julia Silge](https://juliasilge.com) (análisis de texto, machine learning)
+- [Josiah Parry](https://josiahparry.com) (geoespacial, Rust)
+- [Danielle Navarro](https://blog.djnavarro.net) (data scientist, arte generativo)
+- [Nicola Rennie](https://nrennie.rbind.io) (visualización, salud)
+- [Yihui Xie](https://yihui.org/en/) (RMarkdown, `{knitr}`)
+- [Albert Rapp](https://albert-rapp.de/blog) (tips y tutoriales)
+- [Mauricio "Pacha" Vargas](https://pacha.dev/blog/) 🇨🇱 (estadística, econometría)
+- [Riva Quiroga](https://rivaquiroga.cl/ahora/) 🇨🇱 (humanidades computacionales, lingüística)
+- [Bruno Rodrigues](https://www.brodrigues.co) (reproducibilidad)
+- [Luis D. Verde Arregoitia](https://luisdva.github.io) (biólogo)
+- [Rosana Ferrero](https://x.com/RosanaFerrero)
+- [Joachim Schork](https://statisticsglobe.com)
+- [Kennedy Mwavu](https://x.com/kennedymwavu)
+
+
+## Iniciativas sobre datos en Latinoamérica
+- [Argendata](https://argendata.fund.ar), datos sobre Argentina
+- [infoactivismo.org](https://infoactivismo.org/), sitio sobre activismo de datos, tecnología e información en Latinoamérica
+- [Vivir sin violencia](https://www.vivirsinviolencia.org), datos abiertos sobre violencia de género y contra el colectivo LGBTIQ+
+- [Abriendo Datos](https://www.abriendodatos.org), fundación chilena que promueve una cultura de datos abiertos
 
 
 ## Datos
@@ -33,13 +56,6 @@ excerpt: Colección de sitios web y recursos útiles para usuarios de R. Incluye
 - [statista.com](https://es.statista.com/)
 
 
-## Iniciativas sobre datos en Latinoamérica
-- [Argendata](https://argendata.fund.ar), datos sobre Argentina
-- [infoactivismo.org](https://infoactivismo.org/), sitio sobre activismo de datos, tecnología e información en Latinoamérica
-- [Vivir sin violencia](https://www.vivirsinviolencia.org), datos abiertos sobre violencia de género y contra el colectivo LGBTIQ+
-- [Abriendo Datos](https://www.abriendodatos.org), fundación chilena que promueve una cultura de datos abiertos
-
-
 ## Obtener ayuda sobre R
 - [StackOverflow](https://stackoverflow.com/collectives/r-language), sitio web dedicado a preguntas y respuestas
 - [Comunidad de R en Reddit](https://www.reddit.com/r/rstats), donde también se pueden hacer consultas
@@ -52,21 +68,13 @@ excerpt: Colección de sitios web y recursos útiles para usuarios de R. Incluye
 - [Documentación de `{bslib}`](https://rstudio.github.io/bslib/index.html), paquete para construir interfaces en Shiny
 
 
-## Usuarios de R destacados
-- [Julia Silge](https://juliasilge.com) (análisis de texto, machine learning)
-- [Josiah Parry](https://josiahparry.com) (geoespacial, Rust)
-- [Nicola Rennie](https://nrennie.rbind.io) (visualización, salud)
-- [Yihui Xie](https://yihui.org/en/) (RMarkdown, `{knitr}`)
-- [Albert Rapp](https://albert-rapp.de/blog)
-- [Mauricio "Pacha" Vargas](https://pacha.dev/blog/) 🇨🇱
-- [Riva Quiroga](https://rivaquiroga.cl/ahora/) 🇨🇱
-- [Isabella Velásquez](https://ivelasq.rbind.io) 
-- [Bruno Rodrigues](https://www.brodrigues.co)
-
-
-## Comunidades R en Chile 🇨🇱
+## Comunidades de R en Chile 🇨🇱
 - [RLadies Santiago](https://www.meetup.com/rladies-scl/), grupo por la diversidad de género en la comunidad R
 - [RLadies Chile](https://linktr.ee/rladieschile) 
+
+
+## Comunidades de R en Latinoamérica
+[Escuela de Datos](https://escueladedatos.online)
 
 
 ## Gráficos
