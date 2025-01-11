@@ -12,6 +12,7 @@ tags:
   - ggplot2
   - gráficos
   - ciencias sociales
+  - visualización de datos
 editor_options:
   chunk_output_type: inline
 execute:

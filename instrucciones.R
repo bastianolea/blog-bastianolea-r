@@ -8,12 +8,13 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Portafolio de aplicaciones en R", 
+blogdown::new_post(title = "Graba el proceso de tus visualizaciones de datos con {camcorder}", 
                    subdir = "blog/",
-                   file = "blog/portafolio_apps/portafolio_apps.qmd", # para posts con slug o url
+                   # file = "blog/portafolio_apps/portafolio_apps.qmd", # para posts con slug o url
+                   file = "blog/camcorder/index.md", # para posts con slug o url
                    # file = paste0("blog/", lubridate::today(), "/index.md"), #para posts menos interesantes
                    author = "Bastián Olea Herrera",
-                   tags = c("shiny", "visualización de datos"),
+                   tags = c("curiosidades", "visualización de datos"),
                    categories = c() 
 )
 

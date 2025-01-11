@@ -7,7 +7,7 @@ slug: []
 categories: []
 tags:
   - ggplot2
-  - gráficos
+  - visualización de datos
   - curiosidades
 draft: false
 excerpt: >-
