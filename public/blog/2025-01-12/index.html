@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Configura RStudio para que cambie al modo oscuro o claro automáticamente según la hora del día | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="La idea de usar un tema oscuro en una pantalla no es que se vea más bonito y profesional todo de negro, sino ayudarte a reducir el contraste de la pantalla con respecto al espacio en el que estás trabajando. Para resolver esto, sólo se necesitan dos paquetes y una pequeña configuración.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Configura RStudio para que cambie al modo oscuro o claro automáticamente según la hora del día | Blog">
+<meta property="og:description" content="La idea de usar un tema oscuro en una pantalla no es que se vea más bonito y profesional todo de negro, sino ayudarte a reducir el contraste de la pantalla con respecto al espacio en el que estás trabajando. Para resolver esto, sólo se necesitan dos paquetes y una pequeña configuración." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/2025-01-12/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+    
+    
+  
+  <meta itemprop="name" content="Configura RStudio para que cambie al modo oscuro o claro automáticamente según la hora del día">
+  <meta itemprop="description" content="En la eterna batalla entre usuarios de tema oscuro y tema claro, yo lamentablemente soy del bando correcto: tema oscuro durante la noche, y tema claro durante el día.
+La idea de usar un tema oscuro en una pantalla no es que se vea más bonito y profesional todo de negro, sino ayudarte a reducir el contraste de la pantalla con respecto al espacio en el que estás trabajando. En este sentido, si estás en un espacio bien iluminado, deberías usar un tema claro, para no forzar a vista a tener que adaptarse entre un entorno brillante y una pantalla oscura. Si estás en un espacio oscuro, o de iluminación baja, deberías usar un tema oscuro para adecuarte a la iluminación a tu alrededor, junto con ajustar el brillo de tu pantalla.">
+  <meta itemprop="datePublished" content="2025-01-12T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-01-12T00:00:00+00:00">
+  <meta itemprop="wordCount" content="578">
+  <meta itemprop="keywords" content="Consejos,Temas">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.c4fbf76e54adf7e7a1073b995dfaf4f393e11c67c30cfd5b19d29824f2cee0f0.css" integrity="sha256-xPv3blSt9&#43;ehBzuZXfr085PhHGfDDP1bGdKYJPLO4PA=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Configura RStudio para que cambie al modo oscuro o claro automáticamente según la hora del día</h1>
+        
+        
+        <p class="f7 db mv0 ttu">12/1/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/consejos">consejos</a>  <a href="http://localhost:4321/tags/temas">temas</a> </dd></em>
+  </dl>
+
+
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <div style = "display: flex; justify-content: center; width: 100%; margin-bottom: 40px;">
+<img style = "width: 50%;" src="/blog/tema_morado/tema_oscuro.png">
+<img style = "width: 50%;" src="/blog/tema_morado/tema_claro.png">
+</div>
+<p>En la eterna batalla entre usuarios de tema oscuro y tema claro, yo lamentablemente soy del bando correcto: <strong>tema oscuro durante la noche, y tema claro durante el día.</strong></p>
+<p>La idea de usar un tema oscuro en una pantalla no es que se vea más bonito y profesional todo de negro, sino ayudarte a <strong>reducir el contraste de la pantalla con respecto al espacio en el que estás trabajando.</strong> En este sentido, si estás en un espacio bien iluminado, deberías usar un tema claro, para no forzar a vista a tener que adaptarse entre un entorno brillante y una pantalla oscura. Si estás en un espacio oscuro, o de iluminación baja, deberías usar un tema oscuro para adecuarte a la iluminación a tu alrededor, junto con ajustar el brillo de tu pantalla.</p>
+<p>La mayoría de los sistemas operativos modernos cambian automáticamente entre el tema claro u oscuro dependiendo de la hora del día, asumiendo que durante la noche tendremos menor iluminación. Además, la mayoría de las pantallas adaptan su brillo automáticamente a la iluminación ambiente, reduciéndola en espacios oscuros. Un paso extra de cuidado de la vista e higiene del sueño es el cambio de los colores de la pantalla a un tinte cálido durante la noche, activado por defecto en sistemas operativos macOS y iOS.</p>
+<p>Pero RStudio no se adapta solito al tema de tu computador, principalmente porque los temas son configurados por el/la usuario/a. Para resolver esto, se necesitan dos paquetes y una pequeña configuración:</p>
+<ol>
+<li>
+<a href="https://usethis.r-lib.org" target="_blank" rel="noopener">Instala {usethis}</a>, un paquete que facilita varias operaciones convenientes en R y asociadas al desarrollo con R,</li>
+<li>
+<a href="https://www.garrickadenbuie.com/project/rsthemes/" target="_blank" rel="noopener">Instala {rsthemes}</a>, un paquete que contiene temas para RStudio y varias utilidades relacionadas a los temas, como la habilidad de cambiarlos por medio de funciones, usar temas aleatorios, y más.</li>
+<li>En tu consola de R, ejecuta <code>usethis::edit_r_profile()</code>, lo que hará que se abra tu archivo <code>.Rprofile</code>. Este script es un archivo especial, que se ejecuta automáticamente cada vez que inicies una sesión en R, por lo que puedes incluir en él ciertas configuraciones que siempre tengas que ejecutar, como la que incluiremos a continuación.</li>
+<li>Incluye el siguiente código en tu <code>.Rprofile</code>:</li>
+</ol>
+<div style = "margin-left: 40px;">
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># especificar temas para modo claro y oscuro</span>
+</span></span><span style="display:flex;"><span><span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">interactive</span><span style="color:#908caa">()</span> <span style="color:#908caa">&amp;&amp;</span> <span style="color:#ea9a97">requireNamespace</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;rsthemes&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">quietly</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">))</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rsthemes</span><span style="color:#908caa">::</span><span style="color:#ea9a97">set_theme_light</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Basti Purple Light&#34;</span><span style="color:#908caa">)</span>  <span style="color:#6e6a86"># tema claro</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rsthemes</span><span style="color:#908caa">::</span><span style="color:#ea9a97">set_theme_dark</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Basti Purple Dark&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># tema oscuro</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># cambiar al tema dependiendo de la hora al iniciar una sesión en RStudio</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">setHook</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;rstudio.sessionInit&#34;</span><span style="color:#908caa">,</span> <span style="color:#3e8fb0">function</span><span style="color:#908caa">(</span><span style="color:#ea9a97">isNewSession</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">rsthemes</span><span style="color:#908caa">::</span><span style="color:#ea9a97">use_theme_auto</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dark_start</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;21:00&#34;</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># hora del tema oscuro</span>
+</span></span><span style="display:flex;"><span>                             <span style="color:#ea9a97">dark_end</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;6:00&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86">#hora del tema claro</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">},</span> <span style="color:#ea9a97">action</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;append&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span></code></pre></div></div>
+<ol start="5">
+<li>Dentro de este bloque de código, tienes que configurar cuatro cosas: el <strong>nombre del tema claro</strong> que quieres usar durante el día, y el <strong>nombre del tema oscuro</strong> que quieres usar durante la noche, junto con la <strong>hora del día</strong> a la que quieres que se active automáticamente el modo oscuro, y la hora del día a la que quieres que se active el modo claro.</li>
+</ol>
+<p>En mi caso, estoy usando 
+<a href="/blog/tema_morado/">dos temas de RStudio morados</a> que creé yo, basados en una paleta de colores morada y rosada. En 
+<a href="/blog/tema_morado/">este post</a> explico cómo descargarlos e instalarlos en tu RStudio.</p>
+<p>Ahora, cada vez que abras una nueva sesión de RStudio (o reinicies tu sesión), el tema de RStudio se ajustará automáticamente al tema que elegiste para el día o la noche!</p>
+<p><em>Recuerda cuidar tus ojos mientras programas mirando a la distancia con regularidad y configurando el brillo de tu pantalla para que sea similar al brillo de tu habitación!</em></p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">January 12, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">3 minute read, 578 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/consejos">consejos</a>  <a href="http://localhost:4321/tags/temas">temas</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/r_introduccion/proyectos/">Usar proyectos de RStudio para administrar el trabajo de análisis de datos</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/2024-12-26/">Haciendo que un loop muy largo termine sin cancelarlo</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/pal_asistentes_llm/">Crea tu propio asistente de programación en R con inteligencia artificial usando el paquete {pal}</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/camcorder/">Graba el proceso de tus visualizaciones de datos con {camcorder} &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
