@@ -8,13 +8,13 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Graba el proceso de tus visualizaciones de datos con {camcorder}", 
+blogdown::new_post(title = "Configura RStudio para que cambie al modo oscuro o claro automáticamente según la hora del día", 
                    subdir = "blog/",
                    # file = "blog/portafolio_apps/portafolio_apps.qmd", # para posts con slug o url
-                   file = "blog/camcorder/index.md", # para posts con slug o url
-                   # file = paste0("blog/", lubridate::today(), "/index.md"), #para posts menos interesantes
+                   # file = "blog/camcorder/index.md", # para posts con slug o url
+                   file = paste0("blog/", lubridate::today(), "/index.md"), #para posts menos interesantes
                    author = "Bastián Olea Herrera",
-                   tags = c("curiosidades", "visualización de datos"),
+                   tags = c("consejos", "temas"),
                    categories = c() 
 )
 
