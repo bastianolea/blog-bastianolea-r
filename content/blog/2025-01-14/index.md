@@ -10,6 +10,12 @@ tags:
   - inteligencia artificial
   - visualización de datos
   - shiny
+excerpt: "Nuevo gráfico de análisis de sentimiento: elige un tema y revisa si las noticias recientes fueron mayormente positivas o negativas. Compara cómo distintos medios abordan las temáticas. Para agregar esta funcionalidad a la app tuve que [desarrollar un proceso automatizado de análisis de datos usando modelos extensos de lenguaje (LLM)](/blog/analisis_sentimiento_llm/). Luego de que se obtienen las noticias por web scraping, se deja ejecutando el modelo de lenguaje sobre las noticias recientes para analizar el sentimiento del texto, clasificar la noticia en temáticas, y producir un resumen de su contenido."
+links:
+- icon: link
+  icon_pack: fas
+  name: aplicación
+  url: /apps/prensa_chile/
 ---
 
 ### Actualización de app análisis de prensa 🗞️
