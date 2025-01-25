@@ -10,6 +10,10 @@ links:
   icon_pack: fab
   name: ver video
   url: https://youtu.be/46Hlm7hfKsQ
+- icon: link
+  icon_pack: fas
+  name: aplicación
+  url: /apps/corrupcion_chile
 ---
 
 Exposición en la **Universidad Internacional de la Municipalidad de Rancagua**, instancia organizada por el **Programa de Gobierno Local Abierto** (GOBLA) de la Municipalidad de Rancagua.
