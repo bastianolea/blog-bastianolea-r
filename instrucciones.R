@@ -8,13 +8,13 @@ blogdown::stop_server()
 blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
-blogdown::new_post(title = "Actualización de app Análisis de prensa: visualización de análisis de sentimiento de noticias recientes", 
+blogdown::new_post(title = "Video: Presentación de Visualizador de datos de Corrupción en Chile", 
                    subdir = "blog/",
                    # file = "blog/portafolio_apps/portafolio_apps.qmd", # para posts con slug o url
-                   # file = "blog/camcorder/index.md", # para posts con slug o url
-                   file = paste0("blog/", lubridate::today(), "/index.md"), #para posts menos interesantes
+                   file = "blog/unim/presentacion_visualizador_datos_corrupcion/index.md", # para posts con slug o url
+                   # file = paste0("blog/", lubridate::today(), "/index.md"), #para posts menos interesantes
                    author = "Bastián Olea Herrera",
-                   tags = c("web scraping", "inteligencia artificial", "visualización de datos", "shiny"),
+                   # tags = c("web scraping", "inteligencia artificial", "visualización de datos", "shiny"),
                    categories = c() 
 )
 
