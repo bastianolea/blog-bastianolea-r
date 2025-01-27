@@ -27,7 +27,7 @@ Las _Clases Magistrales_ de la UNIM promueven la participación activa de las y 
 
 ## Diapositivas
 
-{{< imagen "diapositivas/corrupcion_001.jpeg">}}
+{{< imagen "diapositivas/corrupcion_001_featured.jpeg">}}
  
 {{< imagen "diapositivas/corrupcion_002.jpeg">}}
 

@@ -137,6 +137,16 @@ Algunas dificultades que tuve con el blog, y cómo las resolví:
 #### Separar logos de redes sociales de los ítems del menu superior
   - Encontraba que los logos de redes sociales estaban muy pegados a el menú de páginas superior del blog, porque cuando uno ponía el Mouse encima de un ítem, el subrayado del ítem se ponía encima de los logos de redes sociales. El archivo `themes/hugo-apero/layouts/partials/header.html` construye el _header_ de todo el sitio, así que bastó con agregar un poco de css antes de `{{ partial "shared/social-links.html" . }}` para darle un poco más de espacio al rededor de los iconos y que se viera mejor. 
   
+#### Crear _shortcodes_
+  - Los _shortcodes_ son atajos que puedes usar para insertar elementos en las publicaciones de tu blog. Como me gusta que las imágenes aparezcan con esquinas redondeadas y centradas en la página, en vez de aplicar este estilo CSS a cada imagen manualmente, creé un _shortcode_ que simplemente entrega la etiqueta de imagen HTML con el estilo deseado, sin necesidad de escribir HTML.
+  
+  El código en los posts queda así: `{{</* imagen "imagen.jpeg"*/>}}`, y funciona porque en la carpeta `layouts/shortcodes/` tengo un archivo HTML llamado igual que el _shortcode_ (`imagen.html`), que contiene el siguiente código:
+  
+  ```html
+  <img src="{{.Get 0}}" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  ```
+  
+  Donde `{{.Get 0}}` es el lugar donde se entrega el texto que se pone en el _shortcode_ la ruta de la imagen). Entonces, crear _shortcodes_ te permite reutilizar código para construir tu sitio; en este caso, el código para dar estilo a las imágenes, o por ejemplo para poner botones bonitos en el sitio.
   
 ----
 
