@@ -30,7 +30,7 @@ Las _Jornadas de Buenas Prácticas_ de la UNIM son un espacio de formación dond
 
 ## Diapositivas
 
-{{< imagen "diapositivas/taller_001.jpeg">}}
+{{< imagen "diapositivas/taller_001_featured.jpeg">}}
 {{< imagen "diapositivas/taller_002.jpeg">}}
 {{< imagen "diapositivas/taller_003.jpeg">}}
 {{< imagen "diapositivas/taller_004.jpeg">}}

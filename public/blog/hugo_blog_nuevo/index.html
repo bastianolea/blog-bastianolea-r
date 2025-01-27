@@ -49,7 +49,7 @@
 Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y gratuito. Hugo se puede usar a través de R usando {blogdown} y el tema Hugo Apéro, creado por Alison Hill, y así puedes crear páginas y publicaciones usando Quarto o RMarkdown. De ese modo resulta muy fácil integrar las cosas que hagas con R en tu sitio, compartiendo el código en los posts.">
   <meta itemprop="datePublished" content="2024-11-07T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-07T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2055">
+  <meta itemprop="wordCount" content="2222">
   <meta itemprop="keywords" content="Quarto,Blog">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -529,6 +529,19 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
 <ul>
 <li>Encontraba que los logos de redes sociales estaban muy pegados a el menú de páginas superior del blog, porque cuando uno ponía el Mouse encima de un ítem, el subrayado del ítem se ponía encima de los logos de redes sociales. El archivo <code>themes/hugo-apero/layouts/partials/header.html</code> construye el <em>header</em> de todo el sitio, así que bastó con agregar un poco de css antes de <code>{{ partial &quot;shared/social-links.html&quot; . }}</code> para darle un poco más de espacio al rededor de los iconos y que se viera mejor.</li>
 </ul>
+
+
+
+
+<h4 id="crear-_shortcodes_">Crear <em>shortcodes</em>
+  <a href="#crear-_shortcodes_"></a>
+</h4>
+<ul>
+<li>Los <em>shortcodes</em> son atajos que puedes usar para insertar elementos en las publicaciones de tu blog. Como me gusta que las imágenes aparezcan con esquinas redondeadas y centradas en la página, en vez de aplicar este estilo CSS a cada imagen manualmente, creé un <em>shortcode</em> que simplemente entrega la etiqueta de imagen HTML con el estilo deseado, sin necesidad de escribir HTML.</li>
+</ul>
+<p>El código en los posts queda así: <code>{{&lt; imagen &quot;imagen.jpeg&quot;&gt;}}</code>, y funciona porque en la carpeta <code>layouts/shortcodes/</code> tengo un archivo HTML llamado igual que el <em>shortcode</em> (<code>imagen.html</code>), que contiene el siguiente código:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-html" data-lang="html"><span style="display:flex;"><span><span style="color:#908caa">&lt;</span><span style="color:#ea9a97">img</span> <span style="color:#ea9a97">src</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;{{.Get 0}}&#34;</span> <span style="color:#ea9a97">style</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;&#34;</span><span style="color:#908caa">&gt;</span>
+</span></span></code></pre></div><p>Donde <code>{{.Get 0}}</code> es el lugar donde se entrega el texto que se pone en el <em>shortcode</em> la ruta de la imagen). Entonces, crear <em>shortcodes</em> te permite reutilizar código para construir tu sitio; en este caso, el código para dar estilo a las imágenes, o por ejemplo para poner botones bonitos en el sitio.</p>
 <hr>
 
 
@@ -598,7 +611,7 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">10 minute read, 2055 words</dd>
+    <dd class="fw5 ml0">11 minute read, 2222 words</dd>
   </dl>
   
   
@@ -611,11 +624,11 @@ Lo creé usando Hugo, un generador de sitios web estáticos de código abierto y
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
+    <dd class="fw5 ml0"><a href="/blog/unim/presentacion_visualizador_datos_corrupcion/">Video: Presentación de Visualizador de datos de Corrupción en Chile</a></dd>
+    
     <dd class="fw5 ml0"><a href="/blog/2025-01-01/">Mención en Infoactivismo en Latinoamérica 2024</a></dd>
     
     <dd class="fw5 ml0"><a href="/blog/2024-12-31/">Web scraping de noticias: avances de fin de año</a></dd>
-    
-    <dd class="fw5 ml0"><a href="/blog/2024-12-26/">Haciendo que un loop muy largo termine sin cancelarlo</a></dd>
     
   </dl>
 </details>
