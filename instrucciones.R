@@ -1,11 +1,6 @@
-# https://hugo-apero-docs.netlify.app/start/setup/
-# https://app.netlify.com/
-# https://bastianoleah.netlify.app
-
 # previsualizar sitio
 blogdown::serve_site()
 blogdown::stop_server()
-blogdown::stop_server(); blogdown::serve_site() # reiniciar
 
 # crear un post
 blogdown::new_post(title = "Video: Presentación de Visualizador de datos de Corrupción en Chile", 
@@ -17,6 +12,9 @@ blogdown::new_post(title = "Video: Presentación de Visualizador de datos de Cor
                    # tags = c("web scraping", "inteligencia artificial", "visualización de datos", "shiny"),
                    categories = c() 
 )
+
+# páginas
+"content/blog/r_introduccion/recursos_r/index.md"
 
 # convertir script a Quarto
 convertr::r_to_qmd(
@@ -30,14 +28,3 @@ usethis::browse_github()
 # configurar netlifly
 # blogdown::config_netlify()
 blogdown::check_netlify()
-
-# los colores se cambian en assets/tema-morado-hex.scss
-
-# obtener dominio rbind https://github.com/rbind/support/issues/new
-
-# carpetas
-# blog: content/blog
-# proyectos: content/project
-
-
-# agregar más paginas: https://hugo-apero-docs.netlify.app/start/section-config/?panelset=project-%25F0%259F%2593%25B7&panelset1=list-sidebar-%25F0%259F%2593%25B7
