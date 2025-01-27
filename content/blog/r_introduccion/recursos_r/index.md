@@ -34,6 +34,7 @@ excerpt: Colección de sitios web y recursos útiles para usuarios de R. Incluye
 - [Rosana Ferrero](https://x.com/RosanaFerrero)
 - [Joachim Schork](https://statisticsglobe.com)
 - [Kennedy Mwavu](https://x.com/kennedymwavu)
+- [Rony Rodríguez-Ramírez](https://rrmaximiliano.github.io) 🇳🇮
 
 
 ## Iniciativas sobre datos en Latinoamérica
