@@ -10,7 +10,7 @@ layout: single
 location: Online
 ---
 
-[**¡Inscripciones abiertas!**](https://spatiallab.cl/cursos-1/ola/services/curso-introduccion-al-analisis-de-datos-con-r-para-principiantes)
+[**¡Inscripciones abiertas!**](mailto:contacto@spatiallab.cl)
 
 {{<imagen "curso_introduccion_r_1_featured.jpg">}}
 
@@ -29,7 +29,7 @@ Tenemos un **descuento de 20%** si te inscribes antes del 31 de diciembre, y un 
 3. **Nivel 3:** _visualización de datos con R,_ para poder explorar nuestra información de manera visual, pero también para poder presentar resultados de manera atractiva y clara
 4. **Nivel 4:** _generación de productos con R,_ ya sean aplicaciones interactivas que expongan nuestros datos en la web, o reportes automatizados que nos ayudarán a llevar nuestro código a formatos entregables de manera eficiente.
 
-Toda la información la puedes encontrar aquí: https://spatiallab.cl/cursos-1/ola/services/curso-introduccion-al-analisis-de-datos-con-r-para-principiantes
+Toda la información la puedes encontrar aquí: mailto:contacto@spatiallab.cl
 
 ----
 
@@ -41,7 +41,7 @@ Este curso es ideal para personas sin conocimientos de programación que quieran
 
 {{<imagen "curso_introduccion_r_2.jpg">}}
 
-[**Inscríbete aquí**](https://spatiallab.cl/cursos-1/ola/services/curso-introduccion-al-analisis-de-datos-con-r-para-principiantes)
+[**Inscríbete aquí**](mailto:contacto@spatiallab.cl)
 
 ----
 
@@ -110,6 +110,6 @@ Valor curso nivel 4:
 
 COSTO TOTAL DEL CURSO: $173.000 CLP / $212 USD / 22 horas sincrónicas en 11 sesiones. 30% de descuento por pago de la totalidad del curso (4 niveles) [$121.600 CLP / $148 USD]
 
-[**Inscríbete aquí**](https://spatiallab.cl/cursos-1/ola/services/curso-introduccion-al-analisis-de-datos-con-r-para-principiantes)
+[**Inscríbete aquí**](mailto:contacto@spatiallab.cl)
 
 Dictado por Bastián Olea Herrera, Magíster en Sociología PUC, Diplomado en Data Science PUC
