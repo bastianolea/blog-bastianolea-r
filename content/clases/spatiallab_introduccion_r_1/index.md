@@ -2,7 +2,7 @@
 title: Introducción al Análisis de Datos con R para principiantes
 subtitle: Dirigido a principiantes y personas sin conocimiento previo de R
 author: Bastián Olea Herrera
-date: "2025-01-21T18:00:00.000Z"
+date: "2025-01-21T18:30:00.000Z"
 date_end: "2024-12-12T20:30:00.000Z"
 draft: false
 excerpt: Curso online con cuatro niveles, en el cual puedes aprender R desde cero, sin conocimientos previos, y adentrarte en los siguientes niveles dependiendo de tus necesidades, o bien, tomar los niveles superiores para mejorar tus habilidades básicas de R. Inscripciones abiertas.
@@ -12,7 +12,7 @@ location: Online
 
 [**¡Inscripciones abiertas!**](https://spatiallab.cl/cursos-1/ola/services/curso-introduccion-al-analisis-de-datos-con-r-para-principiantes)
 
-[![](curso_introduccion_r_1_featured.jpg)](https://spatiallab.cl/cursos-1/ola/services/curso-introduccion-al-analisis-de-datos-con-r-para-principiantes)
+{{<imagen "curso_introduccion_r_1_featured.jpg">}}
 
 #### ¿Quieres iniciarte en el mundo del análisis de datos? 
 
@@ -39,64 +39,72 @@ Las clases se dividen en cuatro niveles de avance progresivo en la presentación
 
 Este curso es ideal para personas sin conocimientos de programación que quieran adentrarse en el mundo del análisis de datos con R.
 
-[![](curso_introduccion_r_2.jpg)](https://spatiallab.cl/cursos-1/ola/services/curso-introduccion-al-analisis-de-datos-con-r-para-principiantes)
+{{<imagen "curso_introduccion_r_2.jpg">}}
 
 [**Inscríbete aquí**](https://spatiallab.cl/cursos-1/ola/services/curso-introduccion-al-analisis-de-datos-con-r-para-principiantes)
 
 ----
 
-### NIVEL 1: Introducción al lenguaje R
+### ~~NIVEL 1: Introducción al lenguaje R~~
 _(4.0 horas)_ 
 - Introducción a R desde cero 
 - R base  
-Fechas / 21 – 23 enero 2025 / 18:00 a 20:00 horas (GMT-3)  
 
-![](curso_introduccion_r_nivel1.jpeg)
+**Fechas:** 21 – 23 enero 2025 / 18:30 a 20:30 horas (GMT-3)  
+
+{{<boton "CÓDIGO Y CONTENIDOS" "https://github.com/bastianolea/curso_intro_R_nivel1_spatialLab">}}
+
+{{<imagen "curso_introduccion_r_nivel1.jpeg">}}
 
 Valor curso nivel 1:  
-- $30.000 CLP total / $24.000 CLP (20% descuento pagando antes del 25 de Diciembre 2024) 
-- $38 USD total / $30 USD descuento aplicado (pagando antes del 25 de Diciembre 2024)   
+- ~~$30.000 CLP total / $24.000 CLP (20% descuento pagando antes del 25 de Diciembre 2024)~~ 
+- ~~$38 USD total / $30 USD descuento aplicado (pagando antes del 25 de Diciembre 2024)~~   
 
 
+----
 
 ### NIVEL 2: Manipulación de bases de datos en R
 _(6.0 horas)_
 - Introducción al manejo de datos en R (dplyr)
 - Introducción a la limpieza de datos en R (dplyr, tidyr, stringr)
 
-Fechas / 4 - 6 - 11 febrero 2025 / 18:00 a 20:00 horas (GMT-3)  
+**Fechas:** 4 - 6 - 11 febrero 2025 / 18:30 a 20:30 horas (GMT-3)  
 
-![](curso_introduccion_r_nivel2.jpeg)
+{{<imagen "curso_introduccion_r_nivel2.jpeg">}}
 
 Valor curso nivel 2:
-- $45.000 CLP total / $36.000 CLP (20% descuento pagando antes del 25 de Diciembre 2024) 
-- $55 USD / $44 USD descuento aplicado (pagando antes del 25 de Diciembre 2024)   
+- $45.000 CLP total / $36.000 CLP ~~(20% descuento pagando antes del 25 de Diciembre 2024)~~ 
+- $55 USD / $44 USD ~~(20% de descuento pagando antes del 25 de Diciembre 2024)~~   
+
+----
 
 ### NIVEL 3: Visualización de datos en R 
 _(4.0 horas)_
 - Introducción a la visualización de datos en R (ggplot2)
 - Introducción a la generación de tablas con R (gt)  
 
-Fechas / 18 - 20 marzo 2025 / 18:00 a 20:00 horas (GMT-3)  
+**Fechas:** 18 - 20 marzo 2025 / 18:30 a 20:30 horas (GMT-3)  
 
-![](curso_introduccion_r_nivel3.jpeg)
+{{<imagen "curso_introduccion_r_nivel3.jpeg">}}
 
 Valor curso nivel 3: 
-- $30.000 CLP total / $24.000 CLP (20% descuento pagando antes del 25 de Diciembre 2024)  
-- $38 USD / $30 USD (20 % de descuento pagando antes del 25 de Diciembre 2024)   
+- $30.000 CLP total / $24.000 CLP ~~(20% descuento pagando antes del 25 de Diciembre 2024)~~  
+- $38 USD / $30 USD ~~(20 % de descuento pagando antes del 25 de Diciembre 2024)~~   
+
+----
 
 ### NIVEL 4: Reportes en R
 _(8.0 horas)_
 - Introducción a la generación de reportes con R (Quarto)
 - Introducción al desarrollo de apps con R (Shiny)
 
-Fechas / 1 -3 – 8 – 10 abril 2025 / 18:00 a 20:00 horas (GMT-3)  
+**Fechas:** 1 -3 – 8 – 10 abril 2025 / 18:30 a 20:30 horas (GMT-3)  
 
-![](curso_introduccion_r_nivel4.jpeg)
+{{<imagen "curso_introduccion_r_nivel4.jpeg">}}
 
 Valor curso nivel 4: 
-- $68.000 CLP / $54.400 CLP (20% de descuento pagando antes del 25 de Diciembre 2024) 
-- $80 USD / $64 USD (20% descuento pagando antes del 25 de Diciembre 2024)   
+- $68.000 CLP / $54.400 CLP ~~(20% de descuento pagando antes del 25 de Diciembre 2024)~~ 
+- $80 USD / $64 USD ~~(20% descuento pagando antes del 25 de Diciembre 2024)~~
 
 ----
 
