@@ -3,10 +3,10 @@ title: 'Recodificación de datos categóricos con {stringr}'
 author: Bastián Olea Herrera
 date: '2024-12-23'
 draft: true
-format:
+format: 
   hugo-md:
-    output-file: index
-    output-ext: md
+    output-file: "index"
+    output-ext:  "md"
 slug: []
 categories:
   - tutoriales
@@ -16,57 +16,94 @@ tags:
   - stringr
   - procesamiento de datos
   - datos
-execute:
+execute: 
   eval: false
 ---
 
 
+
+
 library(dplyr)
 library(readxl)
-library(stringr) \# para trabajar con textos
+library(stringr) # para trabajar con textos
 
 cargar datos
 
-``` r
+
+
+
+```{r}
 datos <- read_excel("MATERIAS_R.xlsx") |> 
   rename(materia = 1, 
          submateria = 2)
 ```
 
+
+
+
 conteo exploratorio de la columna
 
-``` r
+
+
+
+```{r}
 datos |> 
   count(materia, sort = TRUE)
 ```
 
+
+
+
 crear una columna
 
-``` r
+
+
+
+```{r}
 datos |> 
   count(materia, sort = TRUE) |> 
   mutate(id = 1)
 ```
 
+
+
+
+
 detectar si en un texto está presente otro texto
 
-``` r
+
+
+
+```{r}
 str_detect("un texto acá muy feo", "feo") # sí (TRUE)
 
 str_detect("un texto acá muy bonito", "feo") #no (FALSE)
 ```
 
+
+
+
+
 nueva columna detectando si está presente un texto en una columna
 
-``` r
+
+
+
+```{r}
 datos |> 
   count(materia, sort = TRUE) |> 
   mutate(ley_19886 = str_detect(materia, "19.886"))
 ```
 
+
+
+
 lo mismo, pero con ifelse, para explicitar la condición verdadera y la falsa
 
-``` r
+
+
+
+```{r}
 datos |> 
   count(materia, sort = TRUE) |> 
   mutate(ley_19886 = ifelse(str_detect(materia, "19.886"), 
@@ -74,9 +111,15 @@ datos |>
                             no = "Otros"))
 ```
 
+
+
+
 crear columna con coincidencia múltiple
 
-``` r
+
+
+
+```{r}
 datos |> 
   count(materia, sort = TRUE) |> 
   mutate(tipo = case_when(str_detect(materia, "licitación privada") ~ "Licitación Privada",
@@ -85,9 +128,16 @@ datos |>
   count(tipo) # contar cuántas observaciones coinciden
 ```
 
+
+
+
+
 crear columna con coincidencia múltiple, pero primero pasando a minúscula la columna materia
 
-``` r
+
+
+
+```{r}
 datos |> 
   count(materia, sort = TRUE) |> 
   mutate(tipo = case_when(str_detect(str_to_lower(materia), "licitación privada") ~ "Licitación Privada",
@@ -96,10 +146,16 @@ datos |>
   count(tipo) # contar cuántas observaciones coinciden
 ```
 
+
+
+
 escribir distintas formas de coincidir cada texto a una misma categoría
 (por ejemplo, los tildes o plurales)
 
-``` r
+
+
+
+```{r}
 datos |> 
   count(materia, sort = TRUE) |> 
   mutate(tipo = case_when(str_detect(str_to_lower(materia), "licitación privada") ~ "Licitación Privada",
@@ -110,9 +166,15 @@ datos |>
                           str_detect(str_to_lower(materia), "trato directo") ~ "Trato directo"))
 ```
 
+
+
+
 usar regex para coincidir en una misma regla palabras con leves diferencias
 
-``` r
+
+
+
+```{r}
 str_detect(c("hola", "holo", "holi"), "hol(a|i)")
 datos |> 
   count(materia, sort = TRUE) |> 
@@ -123,10 +185,16 @@ datos |>
   count(tipo)
 ```
 
+
+
+
 usar el operador punto de regex para coincidir con cualquier letra en la posición del punto
 (por ejemplo, "." equivaldría a "a" o "á" o "o")
 
-``` r
+
+
+
+```{r}
 str_detect(c("hola", "holo", "holi"), "hol.")
 datos |> 
   count(materia, sort = TRUE) |> 
@@ -137,10 +205,16 @@ datos |>
   count(tipo)
 ```
 
+
+
+
 usar el operador ".*" de regex para indicar cualquier cantidad de caracteres entre el texto inicial y el final
 (por ejemplo "ho.*la" coincide "hola" y "hooooooola" o "ho8787897la" o "hola hola")
 
-``` r
+
+
+
+```{r}
 str_detect(c("hola", "hooooooola", "ho8787897la", "hola hola"), "ho.*la")
 datos |> 
   count(materia, sort = TRUE) |> 
@@ -150,9 +224,15 @@ datos |>
   )
 ```
 
+
+
+
 buscar casos que aún no tengan coincidencia
 
-``` r
+
+
+
+```{r}
 datos |> 
   count(materia, sort = TRUE) |> 
   mutate(tipo = case_when(str_detect(str_to_lower(materia), "lic.*privada") ~ "Licitación Privada",
@@ -170,9 +250,15 @@ datos |>
   filter(is.na(tipo))
 ```
 
+
+
+
 crear la columna con coincidencias desde mas de una columna
 
-``` r
+
+
+
+```{r}
 datos |> 
   mutate(tipo = case_when(
     # materia
@@ -187,19 +273,31 @@ datos |>
   count(submateria, tipo, sort = TRUE)
 ```
 
-usar el operador "\$" de regex para buscar algo que solo aparezca al final de la línea
 
-``` r
+
+
+usar el operador "$" de regex para buscar algo que solo aparezca al final de la línea
+
+
+
+
+```{r}
 str_detect("director", "directo$")
 str_detect(c("directo trato", "directorio", "director de", "trato directo"), "directo$")
 str_detect("directo", "directo$")
 str_detect("director de asuntos", "directo$")
 ```
 
+
+
+
 coincidir usando una condición que tiene que cumplirse y otra que no tenga que cumplirse
 así coincidimos por un criterio pero excluimos por otro, simultáneamente
 
-``` r
+
+
+
+```{r}
 tibble(tipo = c("contrato de personal",
                 "contratación directa",
                 "contrato directo")) |> 
@@ -207,9 +305,15 @@ tibble(tipo = c("contrato de personal",
                            .default = "No"))
 ```
 
+
+
+
 crear otra columna más, de tipo lógico (TRUE/FALSE)
 
-``` r
+
+
+
+```{r}
 datos |> 
   mutate(tipo = case_when(
     # materia
@@ -229,9 +333,15 @@ datos |>
   filter(contratacion_publica) # si es TRUE/FALSE, al filtrar se subentiende que es TRUE
 ```
 
+
+
+
 coincidir usando límites de palabras (word boundary)
 
-``` r
+
+
+
+```{r}
 tibble(tipo = c("Trato directo",
                 "TD",
                 "KADSHTDJSDKS",
@@ -242,9 +352,15 @@ tibble(tipo = c("Trato directo",
                            .default = "No"))
 ```
 
+
+
+
 guardar un resultado como objeto
 
-``` r
+
+
+
+```{r}
 datos_2 <- datos |> 
   mutate(tipo = case_when(
     # materia
@@ -267,3 +383,4 @@ datos_3 |>
   rowwise() |> 
   mutate(concat = sample(399999:322999, 1))
 ```
+

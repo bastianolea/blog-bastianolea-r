@@ -24,12 +24,12 @@
   
     
   
-<meta name="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
+<meta name="description" content="Los modelos de lenguaje (LLM) son herramientas muy útiles para analizar texto, y usarlos en tus análisis de datos con R es sencillo. En este tutorial, te enseño a utilizar modelos de lenguaje locales, instalados en tu propio computador, para obtener resúmenes de textos.">
 
 
 <meta property="og:site_name" content="Blog">
 <meta property="og:title" content="Resumir textos usando modelos de lenguaje (LLM) locales en R | Blog">
-<meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
+<meta property="og:description" content="Los modelos de lenguaje (LLM) son herramientas muy útiles para analizar texto, y usarlos en tus análisis de datos con R es sencillo. En este tutorial, te enseño a utilizar modelos de lenguaje locales, instalados en tu propio computador, para obtener resúmenes de textos." />
 <meta property="og:type" content="page" />
 <meta property="og:url" content="http://localhost:4321/blog/resumir_texto_llm/" />
 <meta property="og:locale" content="es-ES">
@@ -45,11 +45,10 @@
     
   
   <meta itemprop="name" content="Resumir textos usando modelos de lenguaje (LLM) locales en R">
-  <meta itemprop="description" content="library(dplyr) library(readr) url_datos &lt;- &#34;https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/datos/prensa_datos_muestra.csv&#34; noticias &lt;- read_csv2(url_datos) noticias_muestra &lt;- noticias |&gt; slice_sample(n = 20) noticias_muestra library(mall) library(stringr) library(beepr) llm_use(&#34;ollama&#34;, &#34;llama3.1:8b&#34;) noticias_muestra_resumen &lt;- noticias_muestra |&gt; llm_summarize(paste(titulo, cuerpo) |&gt; str_trunc(3000, side = &#34;center&#34;), max_words = 25, pred_name = &#34;resumen&#34;, additional_prompt = &#34;Redacta el resumen de la idea principal de la noticia en español, y en un solo párrafo.&#34;) beep() 2.7 minutos
-noticias_muestra_resumen">
-  <meta itemprop="datePublished" content="2024-12-06T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-12-06T00:00:00+00:00">
-  <meta itemprop="wordCount" content="61">
+  <meta itemprop="description" content="Los modelos de lenguaje (LLM) son herramientas muy útiles para analizar texto, y usarlos en tus análisis de datos con R es sencillo. Previamente en este blog ya he explicado cómo usar LLMs para análisis de sentimiento y otros usos. En este tutorial, te enseño a utilizar modelos de lenguaje locales, instalados en tu propio computador, para obtener resúmenes de textos. Esto puede servir por si estás analizando una base de datos de texto que contenga textos de extensión larga, para los cuales sería conveniente tener una versión más breve. Por ejemplo, al analizar resultados de web scraping, conjuntos de datos periodísticos o de noticias, datos de entrevistas, respuestas abiertas en encuestas, etc.">
+  <meta itemprop="datePublished" content="2025-02-08T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-02-08T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1280">
   <meta itemprop="keywords" content="Análisis de texto,Inteligencia artificial">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -255,7 +254,7 @@ noticias_muestra_resumen">
         <h1 class="f1 lh-solid measure-narrow mb3 fw4">Resumir textos usando modelos de lenguaje (LLM) locales en R</h1>
         
         
-        <p class="f7 db mv0 ttu">6/12/2024</p>
+        <p class="f7 db mv0 ttu">8/2/2025</p>
         
         
         
@@ -269,39 +268,171 @@ noticias_muestra_resumen">
 
       </header>
       <section class="post-body pt5 pb4">
-        <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+        <p>Los modelos de lenguaje (LLM) son herramientas muy útiles para analizar texto, y usarlos en tus análisis de datos con R es sencillo. Previamente en este blog ya he explicado cómo usar LLMs para 
+<a href="../../../blog/analisis_sentimiento_llm/">análisis de sentimiento</a> y 
+<a href="../../../tags/inteligencia-artificial/">otros usos</a>. En este tutorial, te enseño a utilizar modelos de lenguaje locales, instalados en tu propio computador, para obtener resúmenes de textos. Esto puede servir por si estás analizando una base de datos de texto que contenga textos de extensión larga, para los cuales sería conveniente tener una versión más breve. Por ejemplo, al analizar resultados de 
+<a href="../../../tags/web-scraping/">web scraping</a>, conjuntos de 
+<a href="../../../blog/2024-12-31/">datos periodísticos o de noticias</a>, datos de entrevistas, respuestas abiertas en encuestas, etc.</p>
+<p>Primero, obtendremos un corpus de textos de noticias chilenas publicadas el año 2024, en forma de un dataframe con columnas con el título, cuerpo, fuente y fecha de las noticias. Los datos son obtenidos de 
+<a href="https://github.com/bastianolea/prensa_chile" target="_blank" rel="noopener">este repositorio de obtención automatizada de textos de noticias de prensa escrita chilena.</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">readr</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">url_datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/datos/prensa_datos_muestra.csv&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">url_datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/datos/prensa_datos_muestra.csv&#34;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">noticias</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_csv2</span><span style="color:#908caa">(</span><span style="color:#ea9a97">url_datos</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Exploremos rápidamente los datos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">set.seed</span><span style="color:#908caa">(</span><span style="color:#f6c177">1234</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">noticias</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">20</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mall</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">beepr</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">llm_use</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;ollama&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;llama3.1:8b&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">head</span><span style="color:#908caa">(</span><span style="color:#ea9a97">noticias_muestra</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 6 × 4
+  titulo                                                cuerpo fuente fecha     
+  &lt;chr&gt;                                                 &lt;chr&gt;  &lt;chr&gt;  &lt;date&gt;    
+1 “Ciclón extratropical”: los registros de su paso por… &quot;En l… The C… 2024-06-02
+2 Actividades con Boric, Vallejo y Bachelet: Los gesto… &quot;ATON… Emol   2024-08-10
+3 Choque mortal entre bus y auto en Los Ríos: Un condu… &quot;Un m… Megan… 2024-04-07
+4 Capturan a asaltante solitaria que robó más de $4 mi… &quot;En m… Emol   2024-06-13
+5 Debido a la extracción de litio: Investigación revel… &quot;Univ… Emol   2024-08-23
+6 Cámara acoge renuncia de Ricardo Cifuentes (DC), qui… &quot;El 2… D. Fi… 2024-04-08
+</code></pre>
+<p>Confirmemos cómo llega el texto de las noticias:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># extraer una fila</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">pull</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cuerpo</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># extraer variable como vector</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">str_trunc</span><span style="color:#908caa">(</span><span style="color:#f6c177">800</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># recortar textos muy largos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">str_wrap</span><span style="color:#908caa">(</span><span style="color:#f6c177">70</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># insertar saltos de línea cada x caracteres</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">cat</span><span style="color:#908caa">()</span> <span style="color:#6e6a86"># imprimir</span>
+</span></span></code></pre></div><pre><code>En las últimas semanas se ha mencionado repetidamente el concepto
+de “ciclón extratropical” para referirse al evento meteorológico que
+afectará a Chile. El nombre por sí solo suena a un fenómeno climático
+poderoso y fuera de lo común, pero según especialistas, el país ya ha
+enfrentado este tipo de eventos anteriormente. El concepto de ciclón
+extratropical hace referencia a un sistema frontal con baja presión,
+y es esta baja presión la que le da el nombre de ciclón. El evento
+marcará la primera semana de junio y el sistema ya está ubicado en
+aguas abiertas del Pacífico Sur. Según reporta el sitio especializado
+MeteoRed, el ciclón extratropical destaca por su extraordinaria
+extensión según las imágenes satelitales. Aún es incierta la
+proyección de lluvias para la Región Metropolitana esta...
+</code></pre>
+<p>Revisemos el promedio de palabras de cada noticia:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># calcular cantidad de palabras</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palabras</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">str_split</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cuerpo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">pattern</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34; &#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">lengths</span><span style="color:#908caa">())</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># calcular cantidad de caracteres</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">caracteres</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">nchar</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cuerpo</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarize</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palabras</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palabras</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">caracteres</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">caracteres</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 2
+  palabras caracteres
+     &lt;dbl&gt;      &lt;dbl&gt;
+1     368.      2283.
+</code></pre>
+<p>Cómo podemos ver, cada noticia tiene en promedio cerca de 400 palabras o más de 2000 caracteres. Usaremos un modelo de lenguaje para crear una nueva variable que contenga una versión resumida del texto de las noticias, para agilizar su comprensión.</p>
+<p>Pero primero, tenemos que elegir e instalar un modelo de lenguaje local.</p>
+
+
+
+
+<h2 id="configuración-del-modelo-de-lenguaje-local">Configuración del modelo de lenguaje local
+  <a href="#configuraci%c3%b3n-del-modelo-de-lenguaje-local"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para poder usar modelos LLM localmente con R, 
+<a href="https://ollama.com/" target="_blank" rel="noopener">tenemos que instalar Ollama</a> en nuestro equipo, que es la aplicación que nos permite obtener y usar modelos de lenguaje locales. Ollama tiene que estar abierto para poder proveer del modelo de lenguaje a nuestra sesión de R.</p>
+<p>Luego, ya sea desde Ollama o desde R, tenemos que instalar un modelo de lenguaje.</p>
+<p>Para instalar un modelo de lenguaje desde R, es tan simple como ejecutar: <code>ollamar::pull(&quot;llama3.2:3b&quot;)</code>, definiendo entre comillas el 
+<a href="https://ollama.com/search" target="_blank" rel="noopener">modelo</a> que queremos instalar. Al elegir un modelo, debes considerar las capacidades de tu computador para ejecutar los modelos, y que el tamaño del modelo es directamente proporcional con la calidad de sus respuestas<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>Para instalar un modelo desde ollama, en la línea de comandos o Terminal de tu equipo, ejecuta <code>ollama pull llama3.2:3b</code> y el modelo se descargará en tu equipo.</p>
+<p>Una vez que tengas Ollama abierto en tu computador, y un modelo previamente instalado, puedes proceder a usarlo en R en el siguiente paso.</p>
+
+
+
+
+<h2 id="generar-resúmenes-de-texto">Generar resúmenes de texto
+  <a href="#generar-res%c3%bamenes-de-texto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>El primer paso para trabajar con modelos de lenguaje extensos con datos tabulares R es cargar el paquete {mall}, y especificar qué modelo queremos usar:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mall</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># paquete para usar LLM en dataframes de R</span>
 </span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">llm_use</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;ollama&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;llama3.2:3b&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># indicar qué modelo usaremos</span>
+</span></span></code></pre></div><pre><code>── mall session object 
+
+Backend: ollama
+LLM session: model:llama3.2:3b
+R session:
+cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpKUwMJd/_mall_cache3f0d7b12e2d7
+</code></pre>
+<p>Posteriormente, podemos utilizar todas las funciones que empiezan con <code>llm_</code> para aplicar funciones que utilizan los modelos de lenguaje sobre cada observación de la columna que especifiquemos. En este caso, para producir resúmenes de texto, usamos la función <code>llm_summarize()</code>, la cual contiene un <em>prompt</em> diseñado para resumir textos hacia la cantidad de palabras que solicitemos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># crear columna de resumen de los textos</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra_resumen</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">noticias_muestra</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">llm_summarize</span><span style="color:#908caa">(</span><span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#ea9a97">titulo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">cuerpo</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">str_trunc</span><span style="color:#908caa">(</span><span style="color:#f6c177">3000</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">side</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;center&#34;</span><span style="color:#908caa">),</span> 
-</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">max_words</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">25</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">pred_name</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;resumen&#34;</span><span style="color:#908caa">,</span> 
-</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">additional_prompt</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Redacta el resumen de la idea principal de la noticia en español, y en un solo párrafo.&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">beep</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><p>2.7 minutos</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra_resumen</span>
-</span></span></code></pre></div>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">llm_summarize</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cuerpo</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># columna con el texto original</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">max_words</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">20</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># cantidad de palabras del resumen</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">pred_name</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;resumen&#34;</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># nombre de la columna resultante</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">additional_prompt</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;en español&#34;</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>El proceso puede tardar unos minutos, dado que el modelo tiene que consumir el texto, realizar las relaciones entre todas las palabras, y generar la inferencia que produce el texto de salida. En mi computador, el procesamiento de 20 noticias se demoró un poco menos de 1 minuto, pero este tiempo puede variar en base al equipo que tengas y la cantidad de texto de cada elemento.</p>
+<p>Si los textos son demasiado largos, se puede usar una función como <code>str_trunc(texto, side = &quot;center&quot;, width = 3000)</code> para truncar textos demasiado largos cortando el texto sobrante desde el medio del texto.</p>
+<p>Exploremos los resultados obtenidos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra_resumen</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">resumen</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># calcular cantidad de palabras</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palabras</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">str_split</span><span style="color:#908caa">(</span><span style="color:#ea9a97">resumen</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">pattern</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34; &#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">lengths</span><span style="color:#908caa">())</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># calcular cantidad de caracteres</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">caracteres</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">nchar</span><span style="color:#908caa">(</span><span style="color:#ea9a97">resumen</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarize</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palabras_prom</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palabras</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">palabras_min</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">min</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palabras</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">palabras_max</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palabras</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">caracteres_prom</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">caracteres</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 4
+  palabras_prom palabras_min palabras_max caracteres_prom
+          &lt;dbl&gt;        &lt;int&gt;        &lt;int&gt;           &lt;dbl&gt;
+1          18.2            9           27            112.
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra_resumen</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">pull</span><span style="color:#908caa">(</span><span style="color:#ea9a97">resumen</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;el ciclón extratropical llega a chile en la primera semana de junio con posibles efectos en lluvias y vientos fuertes.&quot;
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra_resumen</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice</span><span style="color:#908caa">(</span><span style="color:#f6c177">4</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">pull</span><span style="color:#908caa">(</span><span style="color:#ea9a97">resumen</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;la mujer fue detenida y capturada en su vivienda gracias a un trabajo policial rápido y el seguimiento del recorrido del robo&quot;
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra_resumen</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice</span><span style="color:#908caa">(</span><span style="color:#f6c177">3</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">pull</span><span style="color:#908caa">(</span><span style="color:#ea9a97">resumen</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;un bus y un automóvil colisionaron en la ruta t-202, dejando 1 muerto y 15 personas heridas.&quot;
+</code></pre>
+<p>Podemos ver que los nuevos textos mantienen coherencia con los textos originales, y en promedio consiste de resúmenes de 17 palabras, con un máximo de 21 palabras. Considerando que le pedimos al modelo que el máximo de palabra fueran 20, esto no hace recordar que los modelos de lenguaje no son deterministas, por lo tanto las instrucciones que les demos no reflejarán en un 100% los resultados que esperamos, y los resultados obtenidos nunca serán en un 100% consistentes, siempre habiendo un posible factor de azar y alucinación.</p>
+<p>Si los resúmenes aparecen incorrectos, o salen en inglés, se puede usar el argumento <code>additional_prompt</code> de <code>llm_summarize()</code> para indicarle al modelo explícitamente que quieres resultados en español, o siguiendo alguna otra instrucción.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Si tu computador es muy básico (tiene poca memoria RAM), recomiendo instalar Llama 3.2 1B. Si tiene al menos 8GB de memoria, recomiendo Llama 3.2 3B. Si tienes suficiente memoria (más de 8GB), recomiendo Llama 3.1 8B.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
         
         <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
     <dt class="fw7">Fecha de publicación:</dt>
-    <dd class="fw5 ml0">December 6, 2024</dd>
+    <dd class="fw5 ml0">February 8, 2025</dd>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">1 minute read, 61 words</dd>
+    <dd class="fw5 ml0">7 minute read, 1280 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -333,13 +464,10 @@ noticias_muestra_resumen">
         <div class="post-pagination dt w-100 mt4 mb2">
   
   
-    <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4321/blog/pal_asistentes_llm/">&larr; Crea tu propio asistente de programación en R con inteligencia artificial usando el paquete {pal}</a>
-  
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4321/blog/regresion_ciclismo/">Aplicando una regresión lineal en la vida diaria: predecir kilómetros por recorrer en bicicleta &rarr;</a>
+    href="http://localhost:4321/blog/tutorial_github/">Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub &rarr;</a>
   
 </div>
 
