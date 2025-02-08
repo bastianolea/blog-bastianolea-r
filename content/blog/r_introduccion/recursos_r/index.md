@@ -35,6 +35,7 @@ excerpt: Colección de sitios web y recursos útiles para usuarios de R. Incluye
 - [Joachim Schork](https://statisticsglobe.com)
 - [Kennedy Mwavu](https://x.com/kennedymwavu)
 - [Rony Rodríguez-Ramírez](https://rrmaximiliano.github.io) 🇳🇮
+- [Deepali Kank](https://deepalikank.in) (visualizaciones de datos)
 
 
 ## Iniciativas sobre datos en Latinoamérica
