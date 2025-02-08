@@ -297,6 +297,60 @@
   
   <div class="measure-wide center mb4 mb5-l">
     <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/recodificacion_stringr/" class="db">Recodificación de datos categóricos con {stringr}</a></h1>
+      
+    </header>
+      
+      <p class="lh-copy mb4"><p>library(dplyr)
+library(readxl)
+library(stringr) # para trabajar con textos</p>
+<p>cargar datos</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_excel</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;MATERIAS_R.xlsx&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rename</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">submateria</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>conteo exploratorio de la columna</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>crear una columna</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">id</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>detectar si en un texto está presente otro texto</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;un texto acá muy feo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;feo&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># sí (TRUE)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;un texto acá muy bonito&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;feo&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86">#no (FALSE)</span>
+</span></span></code></pre></div><p>nueva columna detectando si está presente un texto en una columna</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ley_19886</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;19.886&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><p>lo mismo, pero con ifelse, para explicitar la condición verdadera y la falsa</p></p>
+    <footer>
+      
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/dplyr">dplyr</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/stringr">stringr</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/datos">datos</a> </dd></em>
+        </dl>
+        
+        
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+  
+    
+                               
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
       <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/limpieza_tips/" class="db">Tips para limpieza de datos en R</a></h1>
       
     </header>
