@@ -10,20 +10,26 @@ tags:
   - Git
   - Consejos
 lang: es
-excerpt: En este tutorial se entregan los pasos para empezar a usar Git con tus proyectos de R, meddiante la creación de repositorios Git. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas y colaborar en un mismo proyecto.
+excerpt: En este tutorial se entregan los pasos para empezar a usar Git con tus proyectos de R. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas, descargar el código de otros, y colaborar en un mismo proyecto.
 ---
 
-En este tutorial se entregan los pasos para empezar a usar Git con tus proyectos de R, meddiante la creación de repositorios Git. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas y colaborar en un mismo proyecto.
+{{< imagen "titulo_github-featured.png" >}}
+
+<br>
+<br>
+
+En este tutorial aprenderás a empezar a usar Git con tus proyectos de R, mediante la creación de repositorios. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas, descargar el código de otros, y colaborar en un mismo proyecto.
 
 
-### Diferencia entre Git y GitHub
+### Git y GitHub
 
-Lo primero es entender bien qué software y que servicios vamos a usar. [git es un software de código abierto ampliamente usado](https://git-scm.com), que instalas en tu computador para llevar un control de las versiones de tu código local. Por otro lado, [GitHub es una plataforma online](https://github.com) donde las personas pueden subir sus repositorios de Git, permitiendo a otros acceder a sus código, y contribuir a los repositorios, entre muchas otras funcionalidades.
+Lo primero es entender bien el software y servicios que vamos a usar. [Git es un software de código abierto ampliamente usado](https://git-scm.com), que instalas en tu computador para llevar un control de las versiones de tu código local. Por otro lado, [GitHub es una plataforma online](https://github.com) donde las personas pueden subir sus repositorios de Git, permitiendo a otros acceder a su código, y contribuir a los repositorios, entre muchas otras funcionalidades.
 
 
 En este tutorial aprenderemos a realizar las tres tareas más comunes del uso de Git/GitHub en R:
 1. Clonar un repositorio remoto
 2. Crear un repositorio local
+3. Configurar R para conectarte a GitHub
 3. Subir un repositorio a GitHub
 
 
@@ -44,7 +50,7 @@ Para clonar un repositorio de GitHub a tu computador, y así tener todo el códi
 
 El primer paso es navegar al repositorio que te interesa, y encontrar el botón verde que dice _Code_, en el tendrás que copiar un enlace justo arriba del texto que dice _clone using the web URL_.
 
-{{< imagen "tutorial_github_1-featured.png" >}}
+{{< imagen "tutorial_github_1.png" >}}
 
 ### Crea un proyecto de R a partir del repositorio
 

@@ -24,12 +24,12 @@
   
     
   
-<meta name="description" content="En este tutorial se entregan los pasos para empezar a usar Git con tus proyectos de R, meddiante la creación de repositorios Git. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas y colaborar en un mismo proyecto.">
+<meta name="description" content="En este tutorial se entregan los pasos para empezar a usar Git con tus proyectos de R. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas, descargar el código de otros, y colaborar en un mismo proyecto.">
 
 
 <meta property="og:site_name" content="Blog">
 <meta property="og:title" content="Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub | Blog">
-<meta property="og:description" content="En este tutorial se entregan los pasos para empezar a usar Git con tus proyectos de R, meddiante la creación de repositorios Git. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas y colaborar en un mismo proyecto." />
+<meta property="og:description" content="En este tutorial se entregan los pasos para empezar a usar Git con tus proyectos de R. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas, descargar el código de otros, y colaborar en un mismo proyecto." />
 <meta property="og:type" content="page" />
 <meta property="og:url" content="http://localhost:4321/blog/tutorial_github/" />
 <meta property="og:locale" content="es-ES">
@@ -38,19 +38,18 @@
 
 
     
-        <meta property="og:image" content="http://localhost:4321/blog/tutorial_github/tutorial_github_1-featured.png" >
+        <meta property="og:image" content="http://localhost:4321/blog/tutorial_github/titulo_github-featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:4321/blog/tutorial_github/tutorial_github_1-featured.png" >
+        <meta name="twitter:image" content="http://localhost:4321/blog/tutorial_github/titulo_github-featured.png" >
     
     
   
   <meta itemprop="name" content="Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub">
-  <meta itemprop="description" content="En este tutorial se entregan los pasos para empezar a usar Git con tus proyectos de R, meddiante la creación de repositorios Git. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas y colaborar en un mismo proyecto.
-Diferencia entre Git y GitHub Lo primero es entender bien qué software y que servicios vamos a usar. git es un software de código abierto ampliamente usado, que instalas en tu computador para llevar un control de las versiones de tu código local. Por otro lado, GitHub es una plataforma online donde las personas pueden subir sus repositorios de Git, permitiendo a otros acceder a sus código, y contribuir a los repositorios, entre muchas otras funcionalidades.">
+  <meta itemprop="description" content="En este tutorial aprenderás a empezar a usar Git con tus proyectos de R, mediante la creación de repositorios. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas, descargar el código de otros, y colaborar en un mismo proyecto.">
   <meta itemprop="datePublished" content="2025-02-07T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-02-07T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1608">
-  <meta itemprop="image" content="http://localhost:4321/blog/tutorial_github/tutorial_github_1-featured.png">
+  <meta itemprop="wordCount" content="1613">
+  <meta itemprop="image" content="http://localhost:4321/blog/tutorial_github/titulo_github-featured.png">
   <meta itemprop="keywords" content="Git,Consejos">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -270,24 +269,28 @@ Diferencia entre Git y GitHub Lo primero es entender bien qué software y que se
 
       </header>
       <section class="post-body pt5 pb4">
-        <p>En este tutorial se entregan los pasos para empezar a usar Git con tus proyectos de R, meddiante la creación de repositorios Git. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas y colaborar en un mismo proyecto.</p>
+        <img src="titulo_github-featured.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<br>
+<br>
+<p>En este tutorial aprenderás a empezar a usar Git con tus proyectos de R, mediante la creación de repositorios. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas, descargar el código de otros, y colaborar en un mismo proyecto.</p>
 
 
 
 
-<h3 id="diferencia-entre-git-y-github">Diferencia entre Git y GitHub
-  <a href="#diferencia-entre-git-y-github"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h3 id="git-y-github">Git y GitHub
+  <a href="#git-y-github"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
-<p>Lo primero es entender bien qué software y que servicios vamos a usar. 
-<a href="https://git-scm.com" target="_blank" rel="noopener">git es un software de código abierto ampliamente usado</a>, que instalas en tu computador para llevar un control de las versiones de tu código local. Por otro lado, 
-<a href="https://github.com" target="_blank" rel="noopener">GitHub es una plataforma online</a> donde las personas pueden subir sus repositorios de Git, permitiendo a otros acceder a sus código, y contribuir a los repositorios, entre muchas otras funcionalidades.</p>
+<p>Lo primero es entender bien el software y servicios que vamos a usar. 
+<a href="https://git-scm.com" target="_blank" rel="noopener">Git es un software de código abierto ampliamente usado</a>, que instalas en tu computador para llevar un control de las versiones de tu código local. Por otro lado, 
+<a href="https://github.com" target="_blank" rel="noopener">GitHub es una plataforma online</a> donde las personas pueden subir sus repositorios de Git, permitiendo a otros acceder a su código, y contribuir a los repositorios, entre muchas otras funcionalidades.</p>
 <p>En este tutorial aprenderemos a realizar las tres tareas más comunes del uso de Git/GitHub en R:</p>
 <ol>
 <li>Clonar un repositorio remoto</li>
 <li>Crear un repositorio local</li>
+<li>Configurar R para conectarte a GitHub</li>
 <li>Subir un repositorio a GitHub</li>
 </ol>
 <hr>
@@ -318,7 +321,7 @@ Diferencia entre Git y GitHub Lo primero es entender bien qué software y que se
     </svg></a>
 </h3>
 <p>El primer paso es navegar al repositorio que te interesa, y encontrar el botón verde que dice <em>Code</em>, en el tendrás que copiar un enlace justo arriba del texto que dice <em>clone using the web URL</em>.</p>
-<img src="tutorial_github_1-featured.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<img src="tutorial_github_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
 
 
 
@@ -495,7 +498,7 @@ Diferencia entre Git y GitHub Lo primero es entender bien qué software y que se
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">8 minute read, 1608 words</dd>
+    <dd class="fw5 ml0">8 minute read, 1613 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
