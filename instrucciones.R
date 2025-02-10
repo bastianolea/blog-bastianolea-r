@@ -3,13 +3,11 @@ blogdown::serve_site()
 blogdown::stop_server()
 
 # crear un post
-blogdown::new_post(title = "Video: Presentación de Visualizador de datos de Corrupción en Chile", 
-                   subdir = "blog/",
-                   # file = "blog/portafolio_apps/portafolio_apps.qmd", # para posts con slug o url
-                   file = "blog/unim/presentacion_visualizador_datos_corrupcion/index.md", # para posts con slug o url
+blogdown::new_post(title = "Repositorio de datos sociales", 
+                   file = "blog/portafolio_apps/portafolio_apps.qmd", # para posts con slug o url
                    # file = paste0("blog/", lubridate::today(), "/index.md"), #para posts menos interesantes
                    author = "Bastián Olea Herrera",
-                   # tags = c("web scraping", "inteligencia artificial", "visualización de datos", "shiny"),
+                   tags = c("blog", "datos", "tablas"),
                    categories = c() 
 )
 
