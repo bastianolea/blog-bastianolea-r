@@ -9,9 +9,11 @@ subtitle: Sesiones personalizadas de temática libre. ¡Inscripciones abiertas!
 title: Clases particulares de R
 ---
 
-**Inscripciones abiertas.**
+~~**Inscripciones abiertas.**~~ 
 
-[**Contáctame para agendar una clase particular**](/contact/), indicando tu experiencia con R (puede ser aprender desde cero), los temas que te interesan, y/o el proyecto que desees realizar.
+**Actualmente no estoy impartiendo clases particulares! Lo siento 😔**
+
+~~[**Contáctame para agendar una clase particular**](/contact/), indicando tu experiencia con R (puede ser aprender desde cero), los temas que te interesan, y/o el proyecto que desees realizar.~~
 
 ![](clases_r_particulares-featured.jpg)
 
@@ -103,4 +105,4 @@ Temas avanzados:
 - Automatización de reportes
 - Desarrollo de aplicaciones interactivas
 
-[**Contáctame para agendar una clase particular**](/contact/)
+~~[**Contáctame para agendar una clase particular**](/contact/)~~
