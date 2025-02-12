@@ -63,12 +63,14 @@ Valor curso nivel 1:
 
 ----
 
-### NIVEL 2: Manipulación de bases de datos en R
+### ~~NIVEL 2: Manipulación de bases de datos en R~~
 _(6.0 horas)_
 - Introducción al manejo de datos en R (dplyr)
 - Introducción a la limpieza de datos en R (dplyr, tidyr, stringr)
 
 **Fechas:** 4 - 6 - 11 febrero 2025 / 18:30 a 20:30 horas (GMT-3)  
+
+{{<boton "CÓDIGO Y CONTENIDOS" "https://github.com/bastianolea/curso_intro_R_nivel2_spatialLab">}}
 
 {{<imagen "curso_introduccion_r_nivel2.jpeg">}}
 
