@@ -111,7 +111,7 @@ Para poder usar modelos LLM localmente con R, [tenemos que instalar Ollama](http
 
 Luego, ya sea desde Ollama o desde R, tenemos que instalar un modelo de lenguaje.
 
-Para instalar un modelo de lenguaje desde R, es tan simple como ejecutar: `ollamar::pull("llama3.2:3b")`, definiendo entre comillas el [modelo](https://ollama.com/search) que queremos instalar. Al elegir un modelo, debes considerar las capacidades de tu computador para ejecutar los modelos, y que el tamaño del modelo es directamente proporcional con la calidad de sus respuestas[^1].
+Para instalar un modelo de lenguaje desde R, es tan simple como ejecutar: `ollamar::pull("llama3.2:3b")`, definiendo entre comillas el [modelo que hayamos elegido](https://ollama.com/search) para instalar. Al elegir un modelo, debes considerar las capacidades de tu computador para ejecutar los modelos, y que el tamaño del modelo es directamente proporcional con la calidad de sus respuestas[^1].
 
 Para instalar un modelo desde ollama, en la línea de comandos o Terminal de tu equipo, ejecuta `ollama pull llama3.2:3b` y el modelo se descargará en tu equipo.
 
@@ -132,7 +132,7 @@ llm_use("ollama", "llama3.2:3b") # indicar qué modelo usaremos
     Backend: ollama
     LLM session: model:llama3.2:3b
     R session:
-    cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpKUwMJd/_mall_cache3f0d7b12e2d7
+    cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpI1xMRn/_mall_cache8da8ff9738f
 
 Posteriormente, podemos utilizar todas las funciones que empiezan con `llm_` para aplicar funciones que utilizan los modelos de lenguaje sobre cada observación de la columna que especifiquemos. En este caso, para producir resúmenes de texto, usamos la función `llm_summarize()`, la cual contiene un *prompt* diseñado para resumir textos hacia la cantidad de palabras que solicitemos.
 
@@ -168,7 +168,7 @@ noticias_muestra_resumen |>
     # A tibble: 1 × 4
       palabras_prom palabras_min palabras_max caracteres_prom
               <dbl>        <int>        <int>           <dbl>
-    1          18.2            9           27            112.
+    1          18.4           16           23            114.
 
 ``` r
 noticias_muestra_resumen |> 
@@ -176,7 +176,7 @@ noticias_muestra_resumen |>
   pull(resumen)
 ```
 
-    [1] "el ciclón extratropical llega a chile en la primera semana de junio con posibles efectos en lluvias y vientos fuertes."
+    [1] "el ciclón extratropical llega a chile en la primera semana de junio con lluvias intenses en algunas regiones"
 
 ``` r
 noticias_muestra_resumen |> 
@@ -184,7 +184,7 @@ noticias_muestra_resumen |>
   pull(resumen)
 ```
 
-    [1] "la mujer fue detenida y capturada en su vivienda gracias a un trabajo policial rápido y el seguimiento del recorrido del robo"
+    [1] "la mujer detenida es sospechosa de un robo en una sucursal bancaria de la zona sur de antofagasta con más de $4 millones."
 
 ``` r
 noticias_muestra_resumen |> 
@@ -192,7 +192,7 @@ noticias_muestra_resumen |>
   pull(resumen)
 ```
 
-    [1] "un bus y un automóvil colisionaron en la ruta t-202, dejando 1 muerto y 15 personas heridas."
+    [1] "un bus y un automóvil chocaron, dejando un fallecido y 15 personas heridas en la ruta t-202."
 
 Podemos ver que los nuevos textos mantienen coherencia con los textos originales, y en promedio consiste de resúmenes de 17 palabras, con un máximo de 21 palabras. Considerando que le pedimos al modelo que el máximo de palabra fueran 20, esto no hace recordar que los modelos de lenguaje no son deterministas, por lo tanto las instrucciones que les demos no reflejarán en un 100% los resultados que esperamos, y los resultados obtenidos nunca serán en un 100% consistentes, siempre habiendo un posible factor de azar y alucinación.
 

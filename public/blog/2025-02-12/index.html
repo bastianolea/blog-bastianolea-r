@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4602&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Cargar archivos csv más rápido en R con Arrow | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Cargar archivos csv más rápido en R con Arrow | Blog">
+<meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4602/blog/2025-02-12/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4602/blog/sidebar-listing.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4602/blog/sidebar-listing.png" >
+    
+    
+  
+  <meta itemprop="name" content="Cargar archivos csv más rápido en R con Arrow">
+  <meta itemprop="description" content="Los archivos csv (comma-separated values, valores separados por comas) suelen ser el formato más básico para guardar datos. Los beneficios que tienen los csv con respecto a compatibilidad y accesibilidad son a su vez la causa de sus desventajas: son más pesados porque sus datos no se guardan comprimidos, y suelen ser más lentos de cargar, porque los datos no vienen codificados de una forma optimizada.
+Sin embargo, usualmente grandes bases de datos son guardadas en archivos csv, con varios millones de filas, lo que puede hacer que la carga de un archivo dure entre varios segundos a minutos.">
+  <meta itemprop="datePublished" content="2025-02-12T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-02-12T00:00:00+00:00">
+  <meta itemprop="wordCount" content="619">
+  <meta itemprop="keywords" content="Consejos,Datos">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.c4fbf76e54adf7e7a1073b995dfaf4f393e11c67c30cfd5b19d29824f2cee0f0.css" integrity="sha256-xPv3blSt9&#43;ehBzuZXfr085PhHGfDDP1bGdKYJPLO4PA=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4602/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Cargar archivos csv más rápido en R con Arrow</h1>
+        
+        
+        <p class="f7 db mv0 ttu">12/2/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4602/tags/consejos">consejos</a>  <a href="http://localhost:4602/tags/datos">datos</a> </dd></em>
+  </dl>
+
+
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>Los archivos <code>csv</code> (<em>comma-separated values,</em> valores separados por comas) suelen ser el formato más básico para guardar datos. Los beneficios que tienen los csv con respecto a compatibilidad y accesibilidad son a su vez la causa de sus desventajas: son más pesados porque sus datos no se guardan comprimidos, y suelen ser <strong>más lentos de cargar</strong>, porque los datos no vienen codificados de una forma optimizada.</p>
+<p>Sin embargo, usualmente grandes bases de datos son guardadas en archivos csv, con varios millones de filas, lo que puede hacer que la carga de un archivo dure entre varios segundos a <strong>minutos</strong>.</p>
+<p>Hagamos una comparación cargando un archivo csv de 2,5 GB<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, con más de 16 millones de filas y 12 columnas, por medio de 3 funciones: <code>read.csv()</code> de R base, <code>read_csv</code> de 
+<a href="https://readr.tidyverse.org" target="_blank" rel="noopener">{readr}</a>, y <code>read_csv_arrow</code> de 
+<a href="https://arrow.apache.org/docs/r/" target="_blank" rel="noopener">{arrow}</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">readr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">arrow</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tictoc</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># para medir el tiempo que tardan</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">archivo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;~/Downloads/Beneficiarios Fonasa 2023.csv&#34;</span> <span style="color:#6e6a86"># ruta de la base</span>
+</span></span></code></pre></div>
+
+
+
+<h2 id="1-readcsv">1. <code>read.csv()</code>
+  <a href="#1-readcsv"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Esta función viene por defecto en R, y es la que peor desempeño tiene, además de cargar los datos en un dataframe tradicional en lugar de un 
+<a href="https://tibble.tidyverse.org" target="_blank" rel="noopener">tibble</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tic</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read.csv</span><span style="color:#908caa">(</span><span style="color:#ea9a97">archivo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">encoding</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;latin1&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">toc</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><pre><code>48.875 sec elapsed
+</code></pre>
+<p>La carga del archivo demora casi un minuto con este método por defecto.</p>
+
+
+
+
+<h2 id="2-readrread_csv">2. <code>readr::read_csv()</code>
+  <a href="#2-readrread_csv"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>El paquete {readr} es muy versátil para leer y escribir datos con un desempeño aceptable y una sintaxis consistente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tic</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">readr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">read_csv</span><span style="color:#908caa">(</span><span style="color:#ea9a97">archivo</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#ea9a97">locale</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">locale</span><span style="color:#908caa">(</span><span style="color:#ea9a97">encoding</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;latin1&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#ea9a97">show_col_types</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">F</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">toc</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><pre><code>25.183 sec elapsed
+</code></pre>
+<p>Usando este método de carga, obtenemos resultados casi tres veces más rápido que con el método de R por defecto! Además, obtenemos los datos en un cómodo y moderno <code>tibble</code>. Pero todavía puede ser más rápido&hellip;</p>
+
+
+
+
+<h2 id="3-arrowread_csv_arrow">3. <code>arrow::read_csv_arrow()</code>
+  <a href="#3-arrowread_csv_arrow"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Los desarrolladores de la 
+<a href="https://arrow.apache.org" target="_blank" rel="noopener">tecnología Arrow</a>, principalmente conocida por el excelente 
+<a href="https://arrow.apache.org/docs/r/articles/arrow.html#reading-and-writing-data" target="_blank" rel="noopener">formato de datos columnares <code>.parquet</code></a> (que supera a cualquier otro en velocidad de lectura y eficiencia de almacenamiento), ofrecen una 
+<a href="https://arrow.apache.org/docs/r/reference/read_delim_arrow.html" target="_blank" rel="noopener">función optimizada</a> para la lectura de archivos csv:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tic</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">arrow</span><span style="color:#908caa">::</span><span style="color:#ea9a97">read_csv_arrow</span><span style="color:#908caa">(</span><span style="color:#ea9a97">archivo</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                               <span style="color:#ea9a97">read_options</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">csv_read_options</span><span style="color:#908caa">(</span><span style="color:#ea9a97">encoding</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;latin1&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">toc</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><pre><code>8.094 sec elapsed
+</code></pre>
+<p>¡Sólo 7 segundos! Confirmamos que el paquete {arrow} ofrece un lector optimizado de archivos csv que supera en velocidad a cualquier otro que podamos usar en R.</p>
+
+
+
+
+<h2 id="conclusiones">Conclusiones
+  <a href="#conclusiones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Realicemos un <em>benchmark</em> para contar con los datos claros sobre el veredicto final:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">resultado</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">bench</span><span style="color:#908caa">::</span><span style="color:#ea9a97">mark</span><span style="color:#908caa">(</span><span style="color:#ea9a97">check</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">iterations</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#ea9a97">base</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">read.csv</span><span style="color:#908caa">(</span><span style="color:#ea9a97">archivo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">encoding</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;latin1&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#ea9a97">readr</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">readr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">read_csv</span><span style="color:#908caa">(</span><span style="color:#ea9a97">archivo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">locale</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">locale</span><span style="color:#908caa">(</span><span style="color:#ea9a97">encoding</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;latin1&#34;</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">show_col_types</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">F</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#ea9a97">arrow</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">arrow</span><span style="color:#908caa">::</span><span style="color:#ea9a97">read_csv_arrow</span><span style="color:#908caa">(</span><span style="color:#ea9a97">archivo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">read_options</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">csv_read_options</span><span style="color:#908caa">(</span><span style="color:#ea9a97">encoding</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;latin1&#34;</span><span style="color:#908caa">)),</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">resultado</span>
+</span></span></code></pre></div><pre><code># A tibble: 3 × 6
+  expression      min   median `itr/sec` mem_alloc `gc/sec`
+  &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
+1 base            47s      47s    0.0213    5.71GB    0.170
+2 readr         32.1s    32.1s    0.0311    1.45GB    0    
+3 arrow         12.6s    12.6s    0.0791  123.83MB    0    
+</code></pre>
+<p>En el resultado final de este experimento, cargar un archivo csv con <code>arrow::read_csv_arrow()</code> resulta casi el doble de rápido que cargarlo con <code>readr::read_csv()</code>, y más de cinco veces más rápido que cargarlo con el típico <code>read.csv()</code>!</p>
+<p>Si revisamos la columna <code>mem_alloc</code>, también podemos confirmar que, además de ser más rápido, ocupa muchísima menos memoria para llevar a cabo la carga: mientras R base consume casi 6 GB de memoria, Arrow lo logra con ~120 MB!</p>
+<p>En el análisis de datos, si bien la conveniencia es un factor primordial (código más sencillo, legible y fácil de escribir nos permite generar resultados mucho más rápido), siempre es posible replantearnos la forma en que trabajamos para pensar alternativas más optimizadas y veloces, si es que el volumen de datos con los que trabajamos lo amerita.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Se trata de una base de datos de beneficiarios del Fondo Nacional de Salud de Chile (Fonasa), disponible 
+<a href="https://datosabiertos.fonasa.cl/dimensiones-beneficiarios/" target="_blank" rel="noopener">en su sitio web de datos abiertos</a>. Una versión agregada de los datos está 
+<a href="https://github.com/bastianolea/fonasa_beneficiarios?tab=readme-ov-file" target="_blank" rel="noopener">disponible en mi GitHub.</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">February 12, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">3 minute read, 619 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4602/tags/consejos">consejos</a>  <a href="http://localhost:4602/tags/datos">datos</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/datos_sociales/">Repositorio de datos sociales</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/unim/taller_ciencia_de_datos_gestion_municipal/">Video: Taller Aplicación de la Ciencia de Datos en la Gestión Municipal</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/2025-01-12/">Configura RStudio para que cambie al modo oscuro o claro automáticamente según la hora del día</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4602/blog/datos_sociales/">Repositorio de datos sociales &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

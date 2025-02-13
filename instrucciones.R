@@ -3,11 +3,11 @@ blogdown::serve_site()
 blogdown::stop_server()
 
 # crear un post
-blogdown::new_post(title = "Repositorio de datos sociales", 
-                   file = "blog/portafolio_apps/portafolio_apps.qmd", # para posts con slug o url
-                   # file = paste0("blog/", lubridate::today(), "/index.md"), #para posts menos interesantes
+blogdown::new_post(title = "Cargar archivos .csv más rápido con Arrow", 
+                   # file = "blog/portafolio_apps/portafolio_apps.qmd", # para posts con slug o url
+                   file = paste0("blog/", lubridate::today(), "/index.md"), #para posts menos interesantes
                    author = "Bastián Olea Herrera",
-                   tags = c("blog", "datos", "tablas"),
+                   tags = c("consejos", "datos"),
                    categories = c() 
 )
 

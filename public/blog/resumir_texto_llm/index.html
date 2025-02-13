@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4602&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -31,16 +31,16 @@
 <meta property="og:title" content="Resumir textos usando modelos de lenguaje (LLM) locales en R | Blog">
 <meta property="og:description" content="Los modelos de lenguaje (LLM) son herramientas muy útiles para analizar texto, y usarlos en tus análisis de datos con R es sencillo. En este tutorial, te enseño a utilizar modelos de lenguaje locales, instalados en tu propio computador, para obtener resúmenes de textos." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:4321/blog/resumir_texto_llm/" />
+<meta property="og:url" content="http://localhost:4602/blog/resumir_texto_llm/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+        <meta property="og:image" content="http://localhost:4602/blog/sidebar-listing.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.png" >
+        <meta name="twitter:image" content="http://localhost:4602/blog/sidebar-listing.png" >
     
     
   
@@ -48,7 +48,7 @@
   <meta itemprop="description" content="Los modelos de lenguaje (LLM) son herramientas muy útiles para analizar texto, y usarlos en tus análisis de datos con R es sencillo. Previamente en este blog ya he explicado cómo usar LLMs para análisis de sentimiento y otros usos. En este tutorial, te enseño a utilizar modelos de lenguaje locales, instalados en tu propio computador, para obtener resúmenes de textos. Esto puede servir por si estás analizando una base de datos de texto que contenga textos de extensión larga, para los cuales sería conveniente tener una versión más breve. Por ejemplo, al analizar resultados de web scraping, conjuntos de datos periodísticos o de noticias, datos de entrevistas, respuestas abiertas en encuestas, etc.">
   <meta itemprop="datePublished" content="2025-02-08T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-02-08T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1280">
+  <meta itemprop="wordCount" content="1281">
   <meta itemprop="keywords" content="Análisis de texto,Inteligencia artificial">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -68,7 +68,7 @@
       <div class="grid-container">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4602/" title="Home">
       <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -264,7 +264,7 @@
         
         
   <dl class="f6 lh-copy">
-    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/an%C3%A1lisis-de-texto">análisis de texto</a>  <a href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a> </dd></em>
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4602/tags/an%C3%A1lisis-de-texto">análisis de texto</a>  <a href="http://localhost:4602/tags/inteligencia-artificial">inteligencia artificial</a> </dd></em>
   </dl>
 
 
@@ -353,7 +353,7 @@ proyección de lluvias para la Región Metropolitana esta...
 <a href="https://ollama.com/" target="_blank" rel="noopener">tenemos que instalar Ollama</a> en nuestro equipo, que es la aplicación que nos permite obtener y usar modelos de lenguaje locales. Ollama tiene que estar abierto para poder proveer del modelo de lenguaje a nuestra sesión de R.</p>
 <p>Luego, ya sea desde Ollama o desde R, tenemos que instalar un modelo de lenguaje.</p>
 <p>Para instalar un modelo de lenguaje desde R, es tan simple como ejecutar: <code>ollamar::pull(&quot;llama3.2:3b&quot;)</code>, definiendo entre comillas el 
-<a href="https://ollama.com/search" target="_blank" rel="noopener">modelo</a> que queremos instalar. Al elegir un modelo, debes considerar las capacidades de tu computador para ejecutar los modelos, y que el tamaño del modelo es directamente proporcional con la calidad de sus respuestas<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<a href="https://ollama.com/search" target="_blank" rel="noopener">modelo que hayamos elegido</a> para instalar. Al elegir un modelo, debes considerar las capacidades de tu computador para ejecutar los modelos, y que el tamaño del modelo es directamente proporcional con la calidad de sus respuestas<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
 <p>Para instalar un modelo desde ollama, en la línea de comandos o Terminal de tu equipo, ejecuta <code>ollama pull llama3.2:3b</code> y el modelo se descargará en tu equipo.</p>
 <p>Una vez que tengas Ollama abierto en tu computador, y un modelo previamente instalado, puedes proceder a usarlo en R en el siguiente paso.</p>
 
@@ -375,7 +375,7 @@ proyección de lluvias para la Región Metropolitana esta...
 Backend: ollama
 LLM session: model:llama3.2:3b
 R session:
-cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpKUwMJd/_mall_cache3f0d7b12e2d7
+cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpI1xMRn/_mall_cache8da8ff9738f
 </code></pre>
 <p>Posteriormente, podemos utilizar todas las funciones que empiezan con <code>llm_</code> para aplicar funciones que utilizan los modelos de lenguaje sobre cada observación de la columna que especifiquemos. En este caso, para producir resúmenes de texto, usamos la función <code>llm_summarize()</code>, la cual contiene un <em>prompt</em> diseñado para resumir textos hacia la cantidad de palabras que solicitemos.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># crear columna de resumen de los textos</span>
@@ -401,22 +401,22 @@ cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpKUwMJd/_mall_
 </span></span></code></pre></div><pre><code># A tibble: 1 × 4
   palabras_prom palabras_min palabras_max caracteres_prom
           &lt;dbl&gt;        &lt;int&gt;        &lt;int&gt;           &lt;dbl&gt;
-1          18.2            9           27            112.
+1          18.4           16           23            114.
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra_resumen</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">pull</span><span style="color:#908caa">(</span><span style="color:#ea9a97">resumen</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><pre><code>[1] &quot;el ciclón extratropical llega a chile en la primera semana de junio con posibles efectos en lluvias y vientos fuertes.&quot;
+</span></span></code></pre></div><pre><code>[1] &quot;el ciclón extratropical llega a chile en la primera semana de junio con lluvias intenses en algunas regiones&quot;
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra_resumen</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice</span><span style="color:#908caa">(</span><span style="color:#f6c177">4</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">pull</span><span style="color:#908caa">(</span><span style="color:#ea9a97">resumen</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><pre><code>[1] &quot;la mujer fue detenida y capturada en su vivienda gracias a un trabajo policial rápido y el seguimiento del recorrido del robo&quot;
+</span></span></code></pre></div><pre><code>[1] &quot;la mujer detenida es sospechosa de un robo en una sucursal bancaria de la zona sur de antofagasta con más de $4 millones.&quot;
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">noticias_muestra_resumen</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice</span><span style="color:#908caa">(</span><span style="color:#f6c177">3</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">pull</span><span style="color:#908caa">(</span><span style="color:#ea9a97">resumen</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><pre><code>[1] &quot;un bus y un automóvil colisionaron en la ruta t-202, dejando 1 muerto y 15 personas heridas.&quot;
+</span></span></code></pre></div><pre><code>[1] &quot;un bus y un automóvil chocaron, dejando un fallecido y 15 personas heridas en la ruta t-202.&quot;
 </code></pre>
 <p>Podemos ver que los nuevos textos mantienen coherencia con los textos originales, y en promedio consiste de resúmenes de 17 palabras, con un máximo de 21 palabras. Considerando que le pedimos al modelo que el máximo de palabra fueran 20, esto no hace recordar que los modelos de lenguaje no son deterministas, por lo tanto las instrucciones que les demos no reflejarán en un 100% los resultados que esperamos, y los resultados obtenidos nunca serán en un 100% consistentes, siempre habiendo un posible factor de azar y alucinación.</p>
 <p>Si los resúmenes aparecen incorrectos, o salen en inglés, se puede usar el argumento <code>additional_prompt</code> de <code>llm_summarize()</code> para indicarle al modelo explícitamente que quieres resultados en español, o siguiendo alguna otra instrucción.</p>
@@ -437,19 +437,19 @@ cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpKUwMJd/_mall_
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">7 minute read, 1280 words</dd>
+    <dd class="fw5 ml0">7 minute read, 1281 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Categorías:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4321/categories/tutoriales">tutoriales</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4602/categories/tutoriales">tutoriales</a> </dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/an%C3%A1lisis-de-texto">análisis de texto</a>  <a href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4602/tags/an%C3%A1lisis-de-texto">análisis de texto</a>  <a href="http://localhost:4602/tags/inteligencia-artificial">inteligencia artificial</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -470,12 +470,12 @@ cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpKUwMJd/_mall_
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4321/blog/datos_sociales/">&larr; Repositorio de datos sociales</a>
+    href="http://localhost:4602/blog/datos_sociales/">&larr; Repositorio de datos sociales</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4321/blog/tutorial_github/">Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub &rarr;</a>
+    href="http://localhost:4602/blog/tutorial_github/">Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub &rarr;</a>
   
 </div>
 
