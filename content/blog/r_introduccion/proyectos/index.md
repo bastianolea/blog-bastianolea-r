@@ -9,7 +9,6 @@ tags:
   - consejos
 ---
 
-
 ### Proyectos
 Antes de hacer cualquier trabajo que involucre datos con R, se recomienda crear un _Proyecto_ de RStudio. Un proyecto es una forma de definir la carpeta específica donde vamos a guardar todos los scripts y archivos que vamos a necesitar. Se caracteriza por un archivo que termina en `.Rproj`, que marca nuestro espacio de trabajo: una carpeta reúne todas las piezas de nuestro análisis.
 
