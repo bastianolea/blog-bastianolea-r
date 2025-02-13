@@ -22,9 +22,11 @@ excerpt: "Los modelos de lenguaje (LLM) son herramientas muy útiles para analiz
 
 
 
+
 Los modelos de lenguaje (LLM) son herramientas muy útiles para analizar texto, y usarlos en tus análisis de datos con R es sencillo. Previamente en este blog ya he explicado cómo usar LLMs para [análisis de sentimiento](/blog/analisis_sentimiento_llm/) y [otros usos](/tags/inteligencia-artificial/). En este tutorial, te enseño a utilizar modelos de lenguaje locales, instalados en tu propio computador, para obtener resúmenes de textos. Esto puede servir por si estás analizando una base de datos de texto que contenga textos de extensión larga, para los cuales sería conveniente tener una versión más breve. Por ejemplo, al analizar resultados de [web scraping](/tags/web-scraping/), conjuntos de [datos periodísticos o de noticias](/blog/2024-12-31/), datos de entrevistas, respuestas abiertas en encuestas, etc.
 
 Primero, obtendremos un corpus de textos de noticias chilenas publicadas el año 2024, en forma de un dataframe con columnas con el título, cuerpo, fuente y fecha de las noticias. Los datos son obtenidos de [este repositorio de obtención automatizada de textos de noticias de prensa escrita chilena.](https://github.com/bastianolea/prensa_chile)
+
 
 
 
@@ -41,7 +43,9 @@ noticias <- read_csv2(url_datos)
 
 
 
+
 Exploremos rápidamente los datos:
+
 
 
 
@@ -69,7 +73,9 @@ head(noticias_muestra)
 
 
 
+
 Confirmemos cómo llega el texto de las noticias:
+
 
 
 
@@ -100,7 +106,9 @@ noticias_muestra |>
 
 
 
+
 Revisemos el promedio de palabras de cada noticia:
+
 
 
 
@@ -123,6 +131,7 @@ noticias_muestra |>
 
 
 
+
 Cómo podemos ver, cada noticia tiene en promedio cerca de 400 palabras o más de 2000 caracteres. Usaremos un modelo de lenguaje para crear una nueva variable que contenga una versión resumida del texto de las noticias, para agilizar su comprensión.
 
 Pero primero, tenemos que elegir e instalar un modelo de lenguaje local.
@@ -133,7 +142,7 @@ Para poder usar modelos LLM localmente con R, [tenemos que instalar Ollama](http
 
 Luego, ya sea desde Ollama o desde R, tenemos que instalar un modelo de lenguaje. 
 
-Para instalar un modelo de lenguaje desde R, es tan simple como ejecutar: `ollamar::pull("llama3.2:3b")`, definiendo entre comillas el [modelo](https://ollama.com/search) que queremos instalar. Al elegir un modelo, debes considerar las capacidades de tu computador para ejecutar los modelos, y que el tamaño del modelo es directamente proporcional con la calidad de sus respuestas[^1].
+Para instalar un modelo de lenguaje desde R, es tan simple como ejecutar: `ollamar::pull("llama3.2:3b")`, definiendo entre comillas el [modelo que hayamos elegido](https://ollama.com/search) para instalar. Al elegir un modelo, debes considerar las capacidades de tu computador para ejecutar los modelos, y que el tamaño del modelo es directamente proporcional con la calidad de sus respuestas[^1].
 
 Para instalar un modelo desde ollama, en la línea de comandos o Terminal de tu equipo, ejecuta `ollama pull llama3.2:3b` y el modelo se descargará en tu equipo.
 
@@ -145,6 +154,7 @@ Una vez que tengas Ollama abierto en tu computador, y un modelo previamente inst
 ## Generar resúmenes de texto
 
 El primer paso para trabajar con modelos de lenguaje extensos con datos tabulares R es cargar el paquete {mall}, y especificar qué modelo queremos usar:
+
 
 
 
@@ -167,12 +177,14 @@ llm_use("ollama", "llama3.2:3b") # indicar qué modelo usaremos
 ## Backend: ollama
 ## LLM session: model:llama3.2:3b
 ## R session:
-## cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//Rtmp0RyEAq/_mall_cache3f1aa7fa020
+## cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpUc10LP/_mall_cache8dfb550351a
 ```
 
 
 
+
 Posteriormente, podemos utilizar todas las funciones que empiezan con `llm_` para aplicar funciones que utilizan los modelos de lenguaje sobre cada observación de la columna que especifiquemos. En este caso, para producir resúmenes de texto, usamos la función `llm_summarize()`, la cual contiene un _prompt_ diseñado para resumir textos hacia la cantidad de palabras que solicitemos.
+
 
 
 
@@ -189,11 +201,13 @@ noticias_muestra_resumen <- noticias_muestra |>
 
 
 
+
 El proceso puede tardar unos minutos, dado que el modelo tiene que consumir el texto, realizar las relaciones entre todas las palabras, y generar la inferencia que produce el texto de salida. En mi computador, el procesamiento de 20 noticias se demoró un poco menos de 1 minuto, pero este tiempo puede variar en base al equipo que tengas y la cantidad de texto de cada elemento.
 
 Si los textos son demasiado largos, se puede usar una función como `str_trunc(texto, side = "center", width = 3000)` para truncar textos demasiado largos cortando el texto sobrante desde el medio del texto.
 
 Exploremos los resultados obtenidos:
+
 
 
 
@@ -215,7 +229,7 @@ noticias_muestra_resumen |>
 ## # A tibble: 1 × 4
 ##   palabras_prom palabras_min palabras_max caracteres_prom
 ##           <dbl>        <int>        <int>           <dbl>
-## 1          16.8           10           21            105.
+## 1          18.6           13           27            117.
 ```
 
 
@@ -226,7 +240,7 @@ noticias_muestra_resumen |>
 ```
 
 ```
-## [1] "chile se enfrenta a un ciclón extratropical con lluvias intensas y vientos fuertes en varias regiones del país"
+## [1] "el ciclón extratropical chileno marca su primer avance en aguas abiertas del pacífico sur con intensas lluvias."
 ```
 
 ``` r
@@ -236,7 +250,7 @@ noticias_muestra_resumen |>
 ```
 
 ```
-## [1] "los carabineros detuvieron a una mujer que había asaltado una sucursal bancaria en antofagasta y robó más de $4 millones."
+## [1] "\"carabineros del os9 detuvieron a una mujer que asaltó una sucursal bancaria en antofagasta y recuperaron más de $4 millones\""
 ```
 
 ``` r
@@ -246,8 +260,9 @@ noticias_muestra_resumen |>
 ```
 
 ```
-## [1] "un bus y un automóvil colisionaron en la ruta t-202, dejando un fallecido y 15 personas heridas."
+## [1] "un bus y un automóvil colisionaron en ruta t-202, dejando 1 fallecido y 15 personas heridas."
 ```
+
 
 
 
