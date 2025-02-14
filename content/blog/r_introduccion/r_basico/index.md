@@ -2,7 +2,10 @@
 title: Introducción al lenguaje de programación R
 author: Bastián Olea Herrera
 date: '2024-11-16'
-format: hugo-md
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
 weight: 3
 series: Introducción a R
 slug: []
@@ -720,7 +723,7 @@ numeros <- 1:10000000
 sample(numeros, size = 1)
 ```
 
-    [1] 4407528
+    [1] 2294198
 
 La función recibe como primer argumento el vector de elementos, y como segundo argumento la cantidad de elementos que queremos obtener al azar.
 
@@ -760,7 +763,7 @@ animales <- c("gato", "mapache", "castor", "pollo", "ratón", "pudú")
 paste("el animal más lindo es el", sample(animales, 1))
 ```
 
-    [1] "el animal más lindo es el pudú"
+    [1] "el animal más lindo es el gato"
 
 ### Redondear datos
 

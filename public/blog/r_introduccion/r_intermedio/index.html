@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4602&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=6013&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.136.5">
-<title>Principios de R para el análisis de datos | Blog</title>
+<title>Herramientas básicas para programar con R | Blog</title>
 
 
 <meta property="twitter:site" content="@bastimapache">
@@ -28,27 +28,27 @@
 
 
 <meta property="og:site_name" content="Blog">
-<meta property="og:title" content="Principios de R para el análisis de datos | Blog">
+<meta property="og:title" content="Herramientas básicas para programar con R | Blog">
 <meta property="og:description" content="Prueba" />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:4602/blog/r_introduccion/r_intermedio/" />
+<meta property="og:url" content="http://localhost:6013/blog/r_introduccion/r_intermedio/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:4602/blog/r_introduccion/sidebar-featured.png" >
+        <meta property="og:image" content="http://localhost:6013/blog/r_introduccion/sidebar-featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:4602/blog/r_introduccion/sidebar-featured.png" >
+        <meta name="twitter:image" content="http://localhost:6013/blog/r_introduccion/sidebar-featured.png" >
     
     
   
-  <meta itemprop="name" content="Principios de R para el análisis de datos">
-  <meta itemprop="description" content="Introducción Esta es la segunda guía introductoria para aprender el lenguaje de programación R. En la guía anterior vimos los principios más fundamentales del lenguaje R, para familiarizarnos con R y entender su funcionamiento básico. En esta segunda guía veremos cómo utilizar R para analizar datos de manera básica y sencilla, por medio del uso del paquete {dplyr}.">
+  <meta itemprop="name" content="Herramientas básicas para programar con R">
+  <meta itemprop="description" content="Introducción Esta es la segunda guía introductoria para aprender el lenguaje de programación R. En la guía anterior vimos los principios más fundamentales del lenguaje R, para familiarizarnos con R y entender su funcionamiento básico. En esta segunda guía, seguiremos puliendo nuestros aprendizajes para poder abordar más posibilidades.">
   <meta itemprop="datePublished" content="2024-11-16T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-16T00:00:00+00:00">
-  <meta itemprop="wordCount" content="608">
+  <meta itemprop="wordCount" content="909">
   <meta itemprop="keywords" content="Dplyr">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -68,7 +68,7 @@
       <div class="grid-container single-series">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4602/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:6013/" title="Home">
       <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -257,9 +257,9 @@
   <section class="page-content mw7 center">
     <article class="post-content pa0 pl3-l">
       <header class="post-header">
-        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Principios de R para el análisis de datos</h1>
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Herramientas básicas para programar con R</h1>
         
-        <p class="f6 measure lh-copy mv1">Por Bastián Olea Herrera en <a href="http://localhost:4602/categories/tutoriales">Tutoriales</a> </p>
+        <p class="f6 measure lh-copy mv1">Por Bastián Olea Herrera en <a href="http://localhost:6013/categories/tutoriales">Tutoriales</a> </p>
         <p class="f7 db mv0 ttu">16/11/2024</p>
       </header>
       <section class="post-body pt5 pb4">
@@ -274,194 +274,231 @@
     </svg></a>
 </h2>
 <p>Esta es la segunda guía introductoria para aprender el lenguaje de programación R. 
-<a href="../../../../blog/r_introduccion/r_basico/">En la guía anterior vimos los principios más fundamentales del lenguaje R</a>, para familiarizarnos con R y entender su funcionamiento básico. En esta segunda guía veremos cómo utilizar R para analizar datos de manera básica y sencilla, por medio del uso del paquete <code>{dplyr}</code>.</p>
+<a href="../../../../blog/r_introduccion/r_basico/">En la guía anterior vimos los principios más fundamentales del lenguaje R</a>, para familiarizarnos con R y entender su funcionamiento básico. En esta segunda guía, seguiremos puliendo nuestros aprendizajes para poder abordar más posibilidades.</p>
 
 
 
 
-<h1 id="cambiar-todo-esto-para-que-sea-no-solo-de-dplyr">cambiar todo esto para que sea no solo de dplyr
-  <a href="#cambiar-todo-esto-para-que-sea-no-solo-de-dplyr"></a>
-</h1>
-
-
-
-
-<h3 id="proyectos">Proyectos
-  <a href="#proyectos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h3 id="vectores">Vectores
+  <a href="#vectores"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
-<p>Antes de hacer cualquier trabajo que involucre datos con R, se recomienda 
-<a href="../../../../blog/r_introduccion/proyectos/">crear un <em>Proyecto</em> de RStudio</a>. Un proyecto es una forma de definir la carpeta específica donde vamos a guardar todos los scripts y archivos que vamos a necesitar. Se caracteriza por un archivo que termina en <code>.Rproj</code>, que marca nuestro espacio de trabajo: una carpeta reúne todas las piezas de nuestro análisis.</p>
-<p>Para crear un proyecto nuevo, elegimos la opción <em>New Project&hellip;</em> en el menú <em>File</em>, o apretamos el ícono del cubo celeste ubicado en la esquina superior derecha de RStudio y elegimos la primera opción.</p>
-<p>Una vez que creamos el proyecto, podemos abrir nuestro proyecto haciendo doble clic en el archivo que termina en &ldquo;.Rproj&rdquo;, seleccionando en RStudio el menú <em>File</em> y el ítem <em>Open Project&hellip;</em> o <em>Recent Projects</em>, o en la esquina superior derecha de RStudio, donde aparece un icono celeste que contiene los proyectos recientes.</p>
-<p>Es muy importante que, antes de empezar a trabajar con R, te asegures de que estás dentro del proyecto correcto. 
-<a href="../../../../blog/r_introduccion/proyectos/">Para más información sobre los proyectos de RStudio, revisa esta guía.</a></p>
-<p>Deberíamos encontrarnos con una ventana de RStudio con un script nuevo, listo para recibir instrucciones.</p>
-
-
-
-
-<h3 id="instalación">Instalación
-  <a href="#instalaci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h3>
-<p>Para usar el paquete <code>{dplyr}</code>, así como cualquier otro paquete de R que no venga instalado por defecto, tenemos que instalarlo desde internet. La instalación de los paquetes en R se facilita por la función <code>install.packages()</code>, que se conecta a un servidor centralizado donde todos los paquetes son revisados y verificados manualmente por revisores humanos, para garantizar que sean seguros de usar y funcionales.</p>
-<p>Instalamos <code>{dplyr}</code> con el siguiente comando:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;dplyr&#34;</span><span style="color:#908caa">)</span>
+<p>Repasemos brevemente lo que vimos en la guía anterior recordemos que los vectores son la unidad de datos básicas en R, que equivalen a una secuencia de observaciones de un mismo tipo. Creemos un vector con números al azar:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">edades</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">30</span><span style="color:#908caa">,</span> <span style="color:#f6c177">40</span><span style="color:#908caa">,</span> <span style="color:#f6c177">50</span><span style="color:#908caa">,</span> <span style="color:#f6c177">55</span><span style="color:#908caa">,</span> <span style="color:#f6c177">45</span><span style="color:#908caa">,</span> <span style="color:#f6c177">46</span><span style="color:#908caa">,</span> <span style="color:#f6c177">47</span><span style="color:#908caa">,</span> <span style="color:#f6c177">23</span><span style="color:#908caa">,</span> <span style="color:#f6c177">25</span><span style="color:#908caa">,</span> <span style="color:#f6c177">74</span><span style="color:#908caa">,</span> <span style="color:#f6c177">63</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">edades</span>
+</span></span></code></pre></div><p>Usando la función <code>length()</code> sobre el objeto que creamos, podemos obtener la cantidad de elementos que tiene:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">length</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div>
 
 
 
-<h3 id="datos">Datos
-  <a href="#datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h3>
+<h4 id="secuencias">Secuencias
+  <a href="#secuencias"></a>
+</h4>
+<p>Podemos utilizar la función <code>seq()</code> para crear una secuencia de números entre dos números, definiendo en el argumento <code>from</code> el número inicial, en <code>to</code> el número final, y en <code>by</code> el salto entre cada cifra:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">seq</span><span style="color:#908caa">(</span><span style="color:#ea9a97">from</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">to</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">100</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">by</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>El resultado es un vector que empieza desde el 10 y va hasta el 100, de 5 en 5.</p>
+<p>Creemos un vector del 1 al 2, avanzando en 0,1:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">seq</span><span style="color:#908caa">(</span><span style="color:#ea9a97">from</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">to</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">by</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Recordemos que también podemos usar funciones para definir los argumentos de cualquier otra función. En este caso, en vez de escribir los números que queremos para el inicio del final de la secuencia, podemos usar números que se obtienen desde aplicar una función a un vector:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">seq</span><span style="color:#908caa">(</span><span style="color:#ea9a97">from</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">min</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">to</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">by</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Esta función puede ser útil, por ejemplo, para crear una secuencia de años:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">años</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">seq</span><span style="color:#908caa">(</span><span style="color:#f6c177">1900</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2020</span><span style="color:#908caa">,</span> <span style="color:#f6c177">10</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
 
 
 
-
-<h2 id="dplyr">{dplyr}
-  <a href="#dplyr"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h2>
-<img src = dplyr.png style = "float: left; max-width: 128px; margin-right: 20px;">
-<p>La herramienta que utilizaremos para explorar, manipular, y transformar datos será 
-<a href="https://dplyr.tidyverse.org/articles/dplyr.html" target="_blank" rel="noopener">el paquete <code>{dplyr}</code></a>. Este paquete, parte central del 
-<a href="https://www.tidyverse.org" target="_blank" rel="noopener">conjunto <em>Tidyverse</em> de herramientas para el análisis de datos con R</a>, es uno de los más usados por la comunidad de R por su facilidad de uso. Se caracteriza porque casi todas sus funciones son escritas por medio de <em>verbos</em>, lo que hace que su sintaxis sea muy legible, ya que cada función se corresponde con una acción que estamos realizando sobre nuestros datos. Otra de sus características es el uso del operador de conexión o <em>pipe</em>, qué es un operador de R que nos permite encadenar instrucciones de forma secuencial. Su uso hace que las instrucciones se ordenen de izquierda a derecha y de arriba hacia abajo, mejorando mucho más la legibilidad del código.</p>
-
-
-
-
-<h3 id="seleccionar-----">Seleccionar &mdash;-
-  <a href="#seleccionar-----"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h3>
-<p>censo %&gt;% # control + shift + M
-select(comuna, población)</p>
-
-
-
-
-<h2 id="resumir-----">Resumir &mdash;-
-  <a href="#resumir-----"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="crear-funciones">Crear funciones
+  <a href="#crear-funciones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>censo %&gt;%
-summarize(min(población))</p>
 
 
 
 
-<h2 id="ordenar">Ordenar
-  <a href="#ordenar"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="crear-funciones-1">crear funciones
+  <a href="#crear-funciones-1"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>censo %&gt;%
-arrange(población) %&gt;%
-select(comuna, población)</p>
-<p>censo %&gt;%
-filter(población &gt; 100000) %&gt;%
-arrange(población)</p>
-<p>censo %&gt;%
-filter(población &gt; 100000) %&gt;%
-arrange(desc(población))</p>
+<p>definimos el nombre, los argumentos, y en el cuerpo definimos la operación</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">multiplicar_mil</span> <span style="color:#908caa">&lt;-</span> <span style="color:#3e8fb0">function</span><span style="color:#908caa">(</span><span style="color:#ea9a97">algo</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">algo</span> <span style="color:#908caa">*</span> <span style="color:#f6c177">1000</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span></code></pre></div><p>apliquemos la función creada</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">multiplicar_mil</span><span style="color:#908caa">(</span><span style="color:#f6c177">4</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">multiplicar_mil</span><span style="color:#908caa">(</span><span style="color:#f6c177">23212</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">multiplicar_mil</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>crear otra función</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">personas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;basti&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;paula&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;catherine&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;luis&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;natalia&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;raul&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">saludar</span> <span style="color:#908caa">&lt;-</span> <span style="color:#3e8fb0">function</span><span style="color:#908caa">(</span><span style="color:#ea9a97">persona</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;¡hola &#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">persona</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;!&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sep</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">saludar</span><span style="color:#908caa">(</span><span style="color:#ea9a97">personas</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>otra versión más compleja de la función anterior</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">saludar</span> <span style="color:#908caa">&lt;-</span> <span style="color:#3e8fb0">function</span><span style="color:#908caa">(</span><span style="color:#ea9a97">persona</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># pasar el nombre a mayúsculas</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">nombre_mayuscula</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">toupper</span><span style="color:#908caa">(</span><span style="color:#ea9a97">persona</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># crear un saludo uniendo el texto con el argumento</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">saludo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;¡hola &#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombre_mayuscula</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;!&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#ea9a97">sep</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># agregar un animal al azar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">saludo_animal</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#ea9a97">saludo</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;tu animal va a ser&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                         <span style="color:#ea9a97">sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animales</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">length</span><span style="color:#908caa">(</span><span style="color:#ea9a97">persona</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">saludo_animal</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">saludar</span><span style="color:#908caa">(</span><span style="color:#ea9a97">personas</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
 
 
 
-
-<h2 id="renombrar-----">Renombrar &mdash;-
-  <a href="#renombrar-----"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="flujo-de-control-con-if-else">flujo de control con if else
+  <a href="#flujo-de-control-con-if-else"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>censo %&gt;%
-rename(p = población)</p>
+<p>esta técnica permite crear condicionalidad en la ejecución del código
+usando una comparación, se decide si el código se ejecutará o no
+el código sólo se ejecuta si la comparación retorna TRUE</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">basura</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">7000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">basura</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">basura</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">900</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># limpiar el dato porque viene en kilos en vez de toneladas</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">basura</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">basura</span> <span style="color:#908caa">/</span><span style="color:#f6c177">1000</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">message</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;el valor es mayor a 900, por lo que será dividido en 1000&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">basura</span>
+</span></span></code></pre></div><p>en este ejemplo, creamos un flujo de control donde un dato se divide sólo
+si se cumple un cierto criterio</p>
+<p>probemos cambiando el dato, esta vez agregando un mensaje que también confirma
+si la condición no se cumple</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">basura</span> <span style="color:#908caa">&lt;-</span>  <span style="color:#f6c177">6</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">basura</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">900</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># limpiar el dato porque viene en kilos en vez de toneladas</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">basura</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">basura</span> <span style="color:#908caa">/</span><span style="color:#f6c177">1000</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">message</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;valor anómalo: el valor es mayor a 900, por lo que será dividido en 1000&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span> <span style="color:#3e8fb0">else</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">message</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;valor normal&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span></code></pre></div><p>en el apartado &ldquo;else&rdquo; podemos especificar código que se ejecutará si la
+condición es FALSE, o bien, podemos omitir el apartado &ldquo;else&rdquo; para que sólo
+se ejecute el código si la condición es TRUE</p>
 
 
 
 
-<h1 id="ver-filas-específicas-del-dataframe">ver filas específicas del dataframe
-  <a href="#ver-filas-espec%c3%adficas-del-dataframe"></a>
-</h1>
-<p>censo %&gt;%
-slice(200:220)</p>
-
-
-
-
-<h3 id="filtrar-----">Filtrar &mdash;-
-  <a href="#filtrar-----"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="iteraciones">iteraciones
+  <a href="#iteraciones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
-<p>censo %&gt;%
-filter(población &gt; 300000)</p>
-<p>censo %&gt;%
-filter(población &lt; 1000)</p>
-<p>censo %&gt;%
-filter(población &gt; 1000)</p>
-<p>censo %&gt;%
-filter(población == min(población))</p>
-<p>censo %&gt;%
-filter(población == max(población))</p>
-<p>censo %&gt;%
-filter(comuna == &ldquo;La Florida&rdquo;)</p>
-<p>censo %&gt;%
-filter(población == 407297)</p>
-<p>censo %&gt;%
-filter(población == min(población))</p>
-
-
-
-
-<h3 id="filtrar-usando-objetos-----">Filtrar usando objetos &mdash;-
-  <a href="#filtrar-usando-objetos-----"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h3>
-<p>min_pob &lt;- 25000
-max_pob &lt;- 30000</p>
-<p>censo %&gt;%
-filter(población &gt; min_pob,
-población &lt; max_pob)</p>
-<p>promedio &lt;- mean(censo$población)</p>
-<p>censo %&gt;%
-filter(población &gt; promedio)</p>
-<p>censo %&gt;%
-filter(población &gt; promedio*1.5)</p>
-<p>maximo &lt;- max(censo$población)</p>
-<p>censo %&gt;%
-filter(población &gt;= maximo*0.8)</p>
-
+</h2>
+<p>en una iteración, se realiza una operación multiples veces en base al vector que entregues</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">pasos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">10</span><span style="color:#908caa">:</span><span style="color:#f6c177">20</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#3e8fb0">for</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">i</span> <span style="color:#3e8fb0">in</span> <span style="color:#ea9a97">pasos</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">texto</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;este es el paso:&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">i</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">print</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span></code></pre></div><p>en este caso tenemos un vector de 10 números, por lo que el código especificado
+se aplica a cada uno de los números, usando el objeto &ldquo;i&rdquo; como si fuera el objeto
+que contiene el valor de cada paso (10, 11, 12, etc.)</p>
+<p>en una iteración, podemos controlar el flujo del código con if else</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#3e8fb0">for</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">persona</span> <span style="color:#3e8fb0">in</span> <span style="color:#ea9a97">personas</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">saludo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;hola&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">persona</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">persona</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;susana&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">saludo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;chao&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">persona</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">}</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">print</span><span style="color:#908caa">(</span><span style="color:#ea9a97">saludo</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span></code></pre></div><p>en este caso, ponemos una excepción para que, en un paso específico,
+el comportamiento sea distinto</p>
+<p>en este ejemplo, controlamos el flujo del código para que hayan múltiples condiciones
+y para cada condición se haga algo distinto</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#3e8fb0">for</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">persona</span> <span style="color:#3e8fb0">in</span> <span style="color:#ea9a97">personas</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">persona</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;susana&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">saludo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;holaaaa susanaaa!&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">}</span> <span style="color:#3e8fb0">else</span> <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">persona</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;catherine&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">saludo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;excelente pregunta, catherine&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">}</span> <span style="color:#3e8fb0">else</span> <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">persona</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;basti&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">saludo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;serpiente&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;perro&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;gato&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;rata&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;gallina&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pez&#34;</span><span style="color:#908caa">),</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">}</span> <span style="color:#3e8fb0">else</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">saludo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;hola&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">persona</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">}</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">print</span><span style="color:#908caa">(</span><span style="color:#ea9a97">saludo</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span></code></pre></div><p>por cada paso, el objeto &ldquo;persona&rdquo; asume el valor del elemento correspondiente del vector &ldquo;personas&rdquo;,
+y avanza por el código probando si &ldquo;persona&rdquo; coincide con alguna de las condiciones dadas,
+y al final, si no cayó en ninguna de las comparaciones específicas, realiza una operación general para
+todos los demás casos</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">animo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;feliz&#34;</span>
+</span></span></code></pre></div><p>animo &lt;- &ldquo;enojado&rdquo;
+animo &lt;- &ldquo;triste&rdquo;</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#3e8fb0">for</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">persona</span> <span style="color:#3e8fb0">in</span> <span style="color:#ea9a97">personas</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">persona</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;susana&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">animo</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;feliz&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">saludo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;holaaaa susanaaa!&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>    <span style="color:#908caa">}</span> <span style="color:#3e8fb0">else</span> <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">animo</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;enojado&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">saludo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;hola po susana&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#908caa">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">}</span> <span style="color:#3e8fb0">else</span> <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">persona</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;catherine&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>  
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">saludo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;excelente pregunta catherine&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">}</span> <span style="color:#3e8fb0">else</span> <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">persona</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;basti&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">saludo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animales</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">}</span> <span style="color:#3e8fb0">else</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">saludo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;hola&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">persona</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">}</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">print</span><span style="color:#908caa">(</span><span style="color:#ea9a97">saludo</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span></code></pre></div>
       </section>
       <footer class="post-footer">
         <div class="post-pagination dt w-100 mt4 mb2">
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4602/blog/r_introduccion/r_basico/">&larr; Introducción al lenguaje de programación R</a>
+    href="http://localhost:6013/blog/r_introduccion/r_basico/">&larr; Introducción al lenguaje de programación R</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4602/blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población &rarr;</a>
+    href="http://localhost:6013/blog/r_introduccion/intro_datos/">Usando R para trabajar con datos &rarr;</a>
   
 </div>
 
@@ -538,34 +575,43 @@ filter(población &gt;= maximo*0.8)</p>
         <ul>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/instalar_r/"><a href="http://localhost:4602/blog/r_introduccion/instalar_r/">Primer paso: instalar R</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/instalar_r/"><a href="http://localhost:6013/blog/r_introduccion/instalar_r/">Primer paso: instalar R</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/por_que_r/"><a href="http://localhost:4602/blog/r_introduccion/por_que_r/">¿Por qué usar R?</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/por_que_r/"><a href="http://localhost:6013/blog/r_introduccion/por_que_r/">¿Por qué usar R?</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/r_basico/"><a href="http://localhost:4602/blog/r_introduccion/r_basico/">Introducción al lenguaje de programación R</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/r_basico/"><a href="http://localhost:6013/blog/r_introduccion/r_basico/">Introducción al lenguaje de programación R</a></li>
         
           
-          <li class="active" hugo-nav="/blog/r_introduccion/r_intermedio/"><a href="http://localhost:4602/blog/r_introduccion/r_intermedio/">Principios de R para el análisis de datos</a></li>
+          <li class="active" hugo-nav="/blog/r_introduccion/r_intermedio/"><a href="http://localhost:6013/blog/r_introduccion/r_intermedio/">Herramientas básicas para programar con R</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_censo/"><a href="http://localhost:4602/blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/intro_datos/"><a href="http://localhost:6013/blog/r_introduccion/intro_datos/">Usando R para trabajar con datos</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_campamentos/"><a href="http://localhost:4602/blog/r_introduccion/tutorial_dplyr_campamentos/">Tutorial: introducción a {dplyr} usando datos de campamentos</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/dplyr_intro/"><a href="http://localhost:6013/blog/r_introduccion/dplyr_intro/">Introducción al manejo de datos con {dplyr}</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shiny_1/"><a href="http://localhost:4602/blog/r_introduccion/tutorial_shiny_1/">Tutorial: crea una aplicación Shiny básica</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/proyectos/"><a href="http://localhost:6013/blog/r_introduccion/proyectos/">Administrar los análisis de datos en Proyectos de RStudio</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shinyapps/"><a href="http://localhost:4602/blog/r_introduccion/tutorial_shinyapps/">Tutorial: publicar una app Shiny en shinyapps.io</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/dplyr_intermedio/"><a href="http://localhost:6013/blog/r_introduccion/dplyr_intermedio/">Manejo y transformación de datos nivel intermedio con {dplyr}</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/recursos_r/"><a href="http://localhost:4602/blog/r_introduccion/recursos_r/">Recursos, blogs y otros sitios sobre R</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_censo/"><a href="http://localhost:6013/blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/proyectos/"><a href="http://localhost:4602/blog/r_introduccion/proyectos/">Usar proyectos de RStudio para administrar el trabajo de análisis de datos</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_campamentos/"><a href="http://localhost:6013/blog/r_introduccion/tutorial_dplyr_campamentos/">Tutorial: introducción a {dplyr} usando datos de campamentos</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shiny_1/"><a href="http://localhost:6013/blog/r_introduccion/tutorial_shiny_1/">Tutorial: crea una aplicación Shiny básica</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shinyapps/"><a href="http://localhost:6013/blog/r_introduccion/tutorial_shinyapps/">Tutorial: publicar una app Shiny en shinyapps.io</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/recursos_r/"><a href="http://localhost:6013/blog/r_introduccion/recursos_r/">Recursos, blogs y otros sitios sobre R</a></li>
         
         </ul>
       </nav>
@@ -575,34 +621,15 @@ filter(población &gt;= maximo*0.8)</p>
     <div class="pl2 pr0 mh0">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#introducción">Introducción</a></li>
-  </ul>
-
-  <ul>
-    <li>
+    <li><a href="#introducción">Introducción</a>
       <ul>
-        <li><a href="#proyectos">Proyectos</a></li>
-        <li><a href="#instalación">Instalación</a></li>
-        <li><a href="#datos">Datos</a></li>
+        <li><a href="#vectores">Vectores</a></li>
       </ul>
     </li>
-    <li><a href="#dplyr">{dplyr}</a>
-      <ul>
-        <li><a href="#seleccionar-----">Seleccionar &mdash;-</a></li>
-      </ul>
-    </li>
-    <li><a href="#resumir-----">Resumir &mdash;-</a></li>
-    <li><a href="#ordenar">Ordenar</a></li>
-    <li><a href="#renombrar-----">Renombrar &mdash;-</a></li>
-  </ul>
-
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#filtrar-----">Filtrar &mdash;-</a></li>
-        <li><a href="#filtrar-usando-objetos-----">Filtrar usando objetos &mdash;-</a></li>
-      </ul>
-    </li>
+    <li><a href="#crear-funciones">Crear funciones</a></li>
+    <li><a href="#crear-funciones-1">crear funciones</a></li>
+    <li><a href="#flujo-de-control-con-if-else">flujo de control con if else</a></li>
+    <li><a href="#iteraciones">iteraciones</a></li>
   </ul>
 </nav>
     </div>
