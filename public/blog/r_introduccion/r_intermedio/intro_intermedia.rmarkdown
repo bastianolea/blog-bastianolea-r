@@ -1,0 +1,344 @@
+---
+title: "Herramientas básicas para programar con R"
+author: Bastián Olea Herrera
+date: '2024-11-16'
+format: 
+  hugo-md:
+    output-file: "index"
+    output-ext:  "md"
+weight: 4
+draft: true
+series: "Introducción a R"
+slug: []
+categories: ["Tutoriales"]
+tags:
+  - dplyr
+lang: es
+excerpt: Prueba
+execute: 
+  error: true
+  eval: false
+---
+
+
+
+
+## Introducción
+
+Esta es la segunda guía introductoria para aprender el lenguaje de programación R. [En la guía anterior vimos los principios más fundamentales del lenguaje R](/blog/r_introduccion/r_basico/), para familiarizarnos con R y entender su funcionamiento básico. En esta segunda guía, seguiremos puliendo nuestros aprendizajes para poder abordar más posibilidades.
+
+
+
+### Vectores
+
+Repasemos brevemente lo que vimos en la guía anterior recordemos que los vectores son la unidad de datos básicas en R, que equivalen a una secuencia de observaciones de un mismo tipo. Creemos un vector con números al azar:
+
+
+
+```{r}
+edades <- c(30, 40, 50, 55, 45, 46, 47, 23, 25, 74, 63)
+edades
+```
+
+
+
+Usando la función `length()` sobre el objeto que creamos, podemos obtener la cantidad de elementos que tiene:
+
+
+
+```{r}
+length(edades)
+```
+
+
+
+
+#### Secuencias
+
+Podemos utilizar la función `seq()` para crear una secuencia de números entre dos números, definiendo en el argumento `from` el número inicial, en `to` el número final, y en `by` el salto entre cada cifra:
+
+
+
+```{r}
+seq(from = 10, to = 100, by = 5)
+```
+
+
+El resultado es un vector que empieza desde el 10 y va hasta el 100, de 5 en 5.
+
+Creemos un vector del 1 al 2, avanzando en 0,1:
+
+
+
+```{r}
+seq(from = 1, to = 2, by = 0.1)
+```
+
+
+
+Recordemos que también podemos usar funciones para definir los argumentos de cualquier otra función. En este caso, en vez de escribir los números que queremos para el inicio del final de la secuencia, podemos usar números que se obtienen desde aplicar una función a un vector:
+
+
+
+```{r}
+seq(from = min(edades), to = max(edades), by = 10)
+```
+
+
+
+Esta función puede ser útil, por ejemplo, para crear una secuencia de años:
+
+
+
+```{r}
+años <- seq(1900, 2020, 10)
+```
+
+
+
+
+## Crear funciones
+
+
+## crear funciones 
+definimos el nombre, los argumentos, y en el cuerpo definimos la operación
+
+
+
+```{r}
+multiplicar_mil <- function(algo) {
+  algo * 1000
+}
+```
+
+
+
+apliquemos la función creada
+
+
+
+```{r}
+multiplicar_mil(4)
+
+multiplicar_mil(23212)
+
+multiplicar_mil(edades)
+```
+
+
+
+
+crear otra función
+
+
+
+```{r}
+personas <- c("basti", "paula", "catherine", "luis", "natalia", "raul")
+
+
+saludar <- function(persona) {
+  paste("¡hola ", persona, "!", sep = "")
+}
+
+saludar(personas)
+```
+
+
+
+
+otra versión más compleja de la función anterior
+
+
+
+```{r}
+saludar <- function(persona) {
+  # pasar el nombre a mayúsculas
+  nombre_mayuscula <- toupper(persona)
+  
+  # crear un saludo uniendo el texto con el argumento
+  saludo <- paste("¡hola ", nombre_mayuscula, "!",
+                  sep = "")
+  
+  # agregar un animal al azar
+  saludo_animal <- paste(saludo, "tu animal va a ser", 
+                         sample(animales, length(persona))
+  )
+  
+  saludo_animal
+}
+
+saludar(personas)
+```
+
+
+
+
+## flujo de control con if else 
+esta técnica permite crear condicionalidad en la ejecución del código
+usando una comparación, se decide si el código se ejecutará o no
+el código sólo se ejecuta si la comparación retorna TRUE
+
+
+
+
+```{r}
+basura <- 7000
+
+basura
+
+if (basura > 900) {
+  # limpiar el dato porque viene en kilos en vez de toneladas
+  basura <- basura /1000
+  message("el valor es mayor a 900, por lo que será dividido en 1000")
+} 
+
+basura
+```
+
+
+en este ejemplo, creamos un flujo de control donde un dato se divide sólo
+si se cumple un cierto criterio
+
+probemos cambiando el dato, esta vez agregando un mensaje que también confirma
+si la condición no se cumple
+
+
+
+```{r}
+basura <-  6
+
+if (basura > 900) {
+  # limpiar el dato porque viene en kilos en vez de toneladas
+  basura <- basura /1000
+  message("valor anómalo: el valor es mayor a 900, por lo que será dividido en 1000")
+} else {
+  message("valor normal")
+}
+```
+
+
+
+en el apartado "else" podemos especificar código que se ejecutará si la
+condición es FALSE, o bien, podemos omitir el apartado "else" para que sólo
+se ejecute el código si la condición es TRUE
+
+
+
+
+
+
+## iteraciones 
+en una iteración, se realiza una operación multiples veces en base al vector que entregues
+
+
+
+```{r}
+pasos <- 10:20
+
+for (i in pasos) {
+  texto <- paste("este es el paso:", i)
+  
+  print(texto)
+}
+```
+
+
+en este caso tenemos un vector de 10 números, por lo que el código especificado
+se aplica a cada uno de los números, usando el objeto "i" como si fuera el objeto 
+que contiene el valor de cada paso (10, 11, 12, etc.)
+
+
+en una iteración, podemos controlar el flujo del código con if else
+
+
+
+```{r}
+for (persona in personas) {
+  
+  saludo <- paste("hola", persona)
+  
+  if (persona == "susana") {
+    saludo <- paste("chao", persona)
+  }
+  
+  print(saludo)
+}
+```
+
+
+en este caso, ponemos una excepción para que, en un paso específico, 
+el comportamiento sea distinto
+
+
+en este ejemplo, controlamos el flujo del código para que hayan múltiples condiciones
+y para cada condición se haga algo distinto
+
+
+
+```{r}
+for (persona in personas) {
+  
+  if (persona == "susana") {
+    saludo <- paste("holaaaa susanaaa!")
+    
+  } else if (persona == "catherine") {  
+    saludo <- paste("excelente pregunta, catherine")
+    
+  } else if (persona == "basti") {
+    saludo <- sample(c("serpiente", "perro", "gato", "rata", "gallina", "pez"), 1)
+    
+  } else {
+    saludo <- paste("hola", persona)
+  }
+  
+  print(saludo)
+}
+```
+
+
+por cada paso, el objeto "persona" asume el valor del elemento correspondiente del vector "personas",
+y avanza por el código probando si "persona" coincide con alguna de las condiciones dadas,
+y al final, si no cayó en ninguna de las comparaciones específicas, realiza una operación general para
+todos los demás casos
+
+
+
+
+
+```{r}
+animo <- "feliz"
+```
+
+
+animo <- "enojado"
+animo <- "triste"
+
+
+
+
+```{r}
+for (persona in personas) {
+  
+  if (persona == "susana") {
+    
+    if (animo == "feliz") {
+      saludo <- paste("holaaaa susanaaa!")
+      
+    } else if (animo == "enojado") {
+      saludo <- paste("hola po susana")
+    }
+    
+  } else if (persona == "catherine") {  
+    saludo <- paste("excelente pregunta catherine")
+    
+  } else if (persona == "basti") {
+    saludo <- sample(animales, 1)
+    
+  } else {
+    saludo <- paste("hola", persona)
+  }
+  
+  print(saludo)
+}
+```
+

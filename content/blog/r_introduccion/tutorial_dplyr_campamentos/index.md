@@ -3,7 +3,7 @@ title: 'Tutorial: introducción a {dplyr} usando datos de campamentos'
 author: Bastián Olea Herrera
 date: '2024-11-09'
 draft: false
-weight: 5
+weight: 15
 format: hugo-md
 slug: []
 categories:

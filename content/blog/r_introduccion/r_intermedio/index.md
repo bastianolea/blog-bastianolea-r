@@ -1,5 +1,5 @@
 ---
-title: Principios de R para el análisis de datos
+title: Herramientas básicas para programar con R
 author: Bastián Olea Herrera
 date: '2024-11-16'
 format:
@@ -18,123 +18,249 @@ lang: es
 excerpt: Prueba
 execute:
   error: true
+  eval: false
 ---
 
 
 ## Introducción
 
-Esta es la segunda guía introductoria para aprender el lenguaje de programación R. [En la guía anterior vimos los principios más fundamentales del lenguaje R](../../../../blog/r_introduccion/r_basico/), para familiarizarnos con R y entender su funcionamiento básico. En esta segunda guía veremos cómo utilizar R para analizar datos de manera básica y sencilla, por medio del uso del paquete `{dplyr}`.
+Esta es la segunda guía introductoria para aprender el lenguaje de programación R. [En la guía anterior vimos los principios más fundamentales del lenguaje R](../../../../blog/r_introduccion/r_basico/), para familiarizarnos con R y entender su funcionamiento básico. En esta segunda guía, seguiremos puliendo nuestros aprendizajes para poder abordar más posibilidades.
 
-# cambiar todo esto para que sea no solo de dplyr
+### Vectores
 
-### Proyectos
-
-Antes de hacer cualquier trabajo que involucre datos con R, se recomienda [crear un *Proyecto* de RStudio](../../../../blog/r_introduccion/proyectos/). Un proyecto es una forma de definir la carpeta específica donde vamos a guardar todos los scripts y archivos que vamos a necesitar. Se caracteriza por un archivo que termina en `.Rproj`, que marca nuestro espacio de trabajo: una carpeta reúne todas las piezas de nuestro análisis.
-
-Para crear un proyecto nuevo, elegimos la opción *New Project...* en el menú *File*, o apretamos el ícono del cubo celeste ubicado en la esquina superior derecha de RStudio y elegimos la primera opción.
-
-Una vez que creamos el proyecto, podemos abrir nuestro proyecto haciendo doble clic en el archivo que termina en ".Rproj", seleccionando en RStudio el menú *File* y el ítem *Open Project...* o *Recent Projects*, o en la esquina superior derecha de RStudio, donde aparece un icono celeste que contiene los proyectos recientes.
-
-Es muy importante que, antes de empezar a trabajar con R, te asegures de que estás dentro del proyecto correcto. [Para más información sobre los proyectos de RStudio, revisa esta guía.](../../../../blog/r_introduccion/proyectos/)
-
-Deberíamos encontrarnos con una ventana de RStudio con un script nuevo, listo para recibir instrucciones.
-
-### Instalación
-
-Para usar el paquete `{dplyr}`, así como cualquier otro paquete de R que no venga instalado por defecto, tenemos que instalarlo desde internet. La instalación de los paquetes en R se facilita por la función `install.packages()`, que se conecta a un servidor centralizado donde todos los paquetes son revisados y verificados manualmente por revisores humanos, para garantizar que sean seguros de usar y funcionales.
-
-Instalamos `{dplyr}` con el siguiente comando:
+Repasemos brevemente lo que vimos en la guía anterior recordemos que los vectores son la unidad de datos básicas en R, que equivalen a una secuencia de observaciones de un mismo tipo. Creemos un vector con números al azar:
 
 ``` r
-install.packages("dplyr")
+edades <- c(30, 40, 50, 55, 45, 46, 47, 23, 25, 74, 63)
+edades
 ```
 
-### Datos
+Usando la función `length()` sobre el objeto que creamos, podemos obtener la cantidad de elementos que tiene:
 
-## {dplyr}
+``` r
+length(edades)
+```
 
-<img src = dplyr.png style = "float: left; max-width: 128px; margin-right: 20px;">
+#### Secuencias
 
-La herramienta que utilizaremos para explorar, manipular, y transformar datos será [el paquete `{dplyr}`](https://dplyr.tidyverse.org/articles/dplyr.html). Este paquete, parte central del [conjunto *Tidyverse* de herramientas para el análisis de datos con R](https://www.tidyverse.org), es uno de los más usados por la comunidad de R por su facilidad de uso. Se caracteriza porque casi todas sus funciones son escritas por medio de *verbos*, lo que hace que su sintaxis sea muy legible, ya que cada función se corresponde con una acción que estamos realizando sobre nuestros datos. Otra de sus características es el uso del operador de conexión o *pipe*, qué es un operador de R que nos permite encadenar instrucciones de forma secuencial. Su uso hace que las instrucciones se ordenen de izquierda a derecha y de arriba hacia abajo, mejorando mucho más la legibilidad del código.
+Podemos utilizar la función `seq()` para crear una secuencia de números entre dos números, definiendo en el argumento `from` el número inicial, en `to` el número final, y en `by` el salto entre cada cifra:
 
-### Seleccionar ----
+``` r
+seq(from = 10, to = 100, by = 5)
+```
 
-censo %\>% \# control + shift + M
-select(comuna, población)
+El resultado es un vector que empieza desde el 10 y va hasta el 100, de 5 en 5.
 
-## Resumir ----
+Creemos un vector del 1 al 2, avanzando en 0,1:
 
-censo %\>%
-summarize(min(población))
+``` r
+seq(from = 1, to = 2, by = 0.1)
+```
 
-## Ordenar
+Recordemos que también podemos usar funciones para definir los argumentos de cualquier otra función. En este caso, en vez de escribir los números que queremos para el inicio del final de la secuencia, podemos usar números que se obtienen desde aplicar una función a un vector:
 
-censo %\>%
-arrange(población) %\>%
-select(comuna, población)
+``` r
+seq(from = min(edades), to = max(edades), by = 10)
+```
 
-censo %\>%
-filter(población \> 100000) %\>%
-arrange(población)
+Esta función puede ser útil, por ejemplo, para crear una secuencia de años:
 
-censo %\>%
-filter(población \> 100000) %\>%
-arrange(desc(población))
+``` r
+años <- seq(1900, 2020, 10)
+```
 
-## Renombrar ----
+## Crear funciones
 
-censo %\>%
-rename(p = población)
+## crear funciones
 
-# ver filas específicas del dataframe
+definimos el nombre, los argumentos, y en el cuerpo definimos la operación
 
-censo %\>%
-slice(200:220)
+``` r
+multiplicar_mil <- function(algo) {
+  algo * 1000
+}
+```
 
-### Filtrar ----
+apliquemos la función creada
 
-censo %\>%
-filter(población \> 300000)
+``` r
+multiplicar_mil(4)
 
-censo %\>%
-filter(población \< 1000)
+multiplicar_mil(23212)
 
-censo %\>%
-filter(población \> 1000)
+multiplicar_mil(edades)
+```
 
-censo %\>%
-filter(población == min(población))
+crear otra función
 
-censo %\>%
-filter(población == max(población))
+``` r
+personas <- c("basti", "paula", "catherine", "luis", "natalia", "raul")
 
-censo %\>%
-filter(comuna == "La Florida")
 
-censo %\>%
-filter(población == 407297)
+saludar <- function(persona) {
+  paste("¡hola ", persona, "!", sep = "")
+}
 
-censo %\>%
-filter(población == min(población))
+saludar(personas)
+```
 
-### Filtrar usando objetos ----
+otra versión más compleja de la función anterior
 
-min_pob \<- 25000
-max_pob \<- 30000
+``` r
+saludar <- function(persona) {
+  # pasar el nombre a mayúsculas
+  nombre_mayuscula <- toupper(persona)
+  
+  # crear un saludo uniendo el texto con el argumento
+  saludo <- paste("¡hola ", nombre_mayuscula, "!",
+                  sep = "")
+  
+  # agregar un animal al azar
+  saludo_animal <- paste(saludo, "tu animal va a ser", 
+                         sample(animales, length(persona))
+  )
+  
+  saludo_animal
+}
 
-censo %\>%
-filter(población \> min_pob,
-población \< max_pob)
+saludar(personas)
+```
 
-promedio \<- mean(censo\$población)
+## flujo de control con if else
 
-censo %\>%
-filter(población \> promedio)
+esta técnica permite crear condicionalidad en la ejecución del código
+usando una comparación, se decide si el código se ejecutará o no
+el código sólo se ejecuta si la comparación retorna TRUE
 
-censo %\>%
-filter(población \> promedio\*1.5)
+``` r
+basura <- 7000
 
-maximo \<- max(censo\$población)
+basura
 
-censo %\>%
-filter(población \>= maximo\*0.8)
+if (basura > 900) {
+  # limpiar el dato porque viene en kilos en vez de toneladas
+  basura <- basura /1000
+  message("el valor es mayor a 900, por lo que será dividido en 1000")
+} 
+
+basura
+```
+
+en este ejemplo, creamos un flujo de control donde un dato se divide sólo
+si se cumple un cierto criterio
+
+probemos cambiando el dato, esta vez agregando un mensaje que también confirma
+si la condición no se cumple
+
+``` r
+basura <-  6
+
+if (basura > 900) {
+  # limpiar el dato porque viene en kilos en vez de toneladas
+  basura <- basura /1000
+  message("valor anómalo: el valor es mayor a 900, por lo que será dividido en 1000")
+} else {
+  message("valor normal")
+}
+```
+
+en el apartado "else" podemos especificar código que se ejecutará si la
+condición es FALSE, o bien, podemos omitir el apartado "else" para que sólo
+se ejecute el código si la condición es TRUE
+
+## iteraciones
+
+en una iteración, se realiza una operación multiples veces en base al vector que entregues
+
+``` r
+pasos <- 10:20
+
+for (i in pasos) {
+  texto <- paste("este es el paso:", i)
+  
+  print(texto)
+}
+```
+
+en este caso tenemos un vector de 10 números, por lo que el código especificado
+se aplica a cada uno de los números, usando el objeto "i" como si fuera el objeto
+que contiene el valor de cada paso (10, 11, 12, etc.)
+
+en una iteración, podemos controlar el flujo del código con if else
+
+``` r
+for (persona in personas) {
+  
+  saludo <- paste("hola", persona)
+  
+  if (persona == "susana") {
+    saludo <- paste("chao", persona)
+  }
+  
+  print(saludo)
+}
+```
+
+en este caso, ponemos una excepción para que, en un paso específico,
+el comportamiento sea distinto
+
+en este ejemplo, controlamos el flujo del código para que hayan múltiples condiciones
+y para cada condición se haga algo distinto
+
+``` r
+for (persona in personas) {
+  
+  if (persona == "susana") {
+    saludo <- paste("holaaaa susanaaa!")
+    
+  } else if (persona == "catherine") {  
+    saludo <- paste("excelente pregunta, catherine")
+    
+  } else if (persona == "basti") {
+    saludo <- sample(c("serpiente", "perro", "gato", "rata", "gallina", "pez"), 1)
+    
+  } else {
+    saludo <- paste("hola", persona)
+  }
+  
+  print(saludo)
+}
+```
+
+por cada paso, el objeto "persona" asume el valor del elemento correspondiente del vector "personas",
+y avanza por el código probando si "persona" coincide con alguna de las condiciones dadas,
+y al final, si no cayó en ninguna de las comparaciones específicas, realiza una operación general para
+todos los demás casos
+
+``` r
+animo <- "feliz"
+```
+
+animo \<- "enojado"
+animo \<- "triste"
+
+``` r
+for (persona in personas) {
+  
+  if (persona == "susana") {
+    
+    if (animo == "feliz") {
+      saludo <- paste("holaaaa susanaaa!")
+      
+    } else if (animo == "enojado") {
+      saludo <- paste("hola po susana")
+    }
+    
+  } else if (persona == "catherine") {  
+    saludo <- paste("excelente pregunta catherine")
+    
+  } else if (persona == "basti") {
+    saludo <- sample(animales, 1)
+    
+  } else {
+    saludo <- paste("hola", persona)
+  }
+  
+  print(saludo)
+}
+```

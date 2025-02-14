@@ -16,8 +16,8 @@ blogdown::new_post(title = "Cargar archivos .csv más rápido con Arrow",
 
 # convertir script a Quarto
 convertr::r_to_qmd(
-  input_dir = "~/R/blog-r/content/blog/recodificacion_stringr/recodificar.R",
-  output_dir = "content/blog/recodificacion_stringr/recodificar.qmd"
+  input_dir = "~/R/blog-r/content/blog/r_introduccion/r_intermedio/codigo.R",
+  output_dir = "content/blog/r_introduccion/r_intermedio/codigo2.qmd"
 )
 
 # ver en github
