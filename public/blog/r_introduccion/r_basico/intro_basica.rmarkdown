@@ -10,13 +10,13 @@ weight: 3
 series: "Introducción a R"
 slug: []
 categories: ["Tutoriales"]
-tags: []
+tags:
+  - funciones
 lang: es
 excerpt: Instrucciones paso a paso para aprender los aspectos más básicos del lenguaje R. Dirigida a personas sin ningún conocimiento del lenguaje. Si quieres aprender R desde cero, esta publicación es para ti.
 execute: 
   error: true
 ---
-
 
 
 
@@ -76,7 +76,6 @@ Los tipos principales son:
 _Numéricos:_
 
 
-
 ```{r}
 #| output: false
 1
@@ -86,11 +85,9 @@ _Numéricos:_
 
 
 
-
 Con los datos numéricos se pueden realizar todo tipo de operaciones matemáticas y transformaciones numéricas. 
 
 _Caracter_ o _texto:_
-
 
 
 ```{r}
@@ -100,11 +97,9 @@ _Caracter_ o _texto:_
 
 
 
-
 Los textos van entre comillas, y pueden contener cualquier caracter dentro. 
 
 _Lógicos:_
-
 
 
 ```{r}
@@ -112,7 +107,6 @@ _Lógicos:_
 TRUE
 FALSE
 ```
-
 
 
 
@@ -129,16 +123,13 @@ A lo largo de este tutorial, vamos a ir viendo bloques de código, seguidos de s
 
 
 
-
 ```{r}
 2 + 2 # suma
 ```
 
 
 
-
 En estos dos bloques, el primero es la operación que hicimos, y el segundo es el resultado que entrega a la consola de R; en este caso, el resultado de 2 + 2.
-
 
 
 
@@ -152,7 +143,6 @@ En estos dos bloques, el primero es la operación que hicimos, y el segundo es e
 
 
 
-
 Si escribimos estas operaciones en un script, podemos ejecutar las instrucciones en cualquier orden y cuando deseemos. Sólo debemos ir poniendo el cursor de texto en la línea que queramos y ejecutarla. O bien, podemos seleccionar varias líneas y ejecutarlas todas al mismo tiempo, teniendo cuidado de seleccionar las operaciones completas[^1].
 
 [^1]: Si ejecutamos una línea incompleta, puede ser que la consola de R quede esperando que terminemos la expresión o que la completemos, y esto puede ser muy confuso para usuarios principiantes. Por ejemplo, si ejecutamos `1 +`, la consola va a quedar esperando que le demos el número que está esperando que venga, y cualquier otra cosa que le entreguemos va a intentar sumársela a la operación anterior que quedó inconclusa.
@@ -161,11 +151,9 @@ Como el tipo de los datos determina las operaciones que podemos realizar, veremo
 
 
 
-
 ```{r}
 "1" + "1"
 ```
-
 
 
 
@@ -186,16 +174,13 @@ Por ejemplo: ¿es 1 igual a 1?
 
 
 
-
 ```{r}
 1 == 1
 ```
 
 
 
-
 La _igualdad_ se escribe `==`, y se usa para evaluar si dos cifras son iguales. En este caso, la comparación entre 1 y 1 retorna `TRUE` (verdadero), porque 1 es igual a 1.
-
 
 
 
@@ -205,11 +190,9 @@ La _igualdad_ se escribe `==`, y se usa para evaluar si dos cifras son iguales. 
 
 
 
-
 1 no es igual a 2, por lo que la comparación retorna `FALSE` (falso).
 
 La operación inversa la igualdad es la _desigualdad_: evaluar si un dato es distinto de otro.
-
 
 
 
@@ -219,9 +202,7 @@ La operación inversa la igualdad es la _desigualdad_: evaluar si un dato es dis
 
 
 
-
 40 es distinto a 30, por lo que la comparación retorna `FALSE`. Si evaluamos si dos cifras iguales son distintas, lógicamente la respuesta va a ser verdadero (`TRUE`).
-
 
 
 
@@ -231,9 +212,7 @@ La operación inversa la igualdad es la _desigualdad_: evaluar si un dato es dis
 
 
 
-
 Los operadores _mayor que_ (`>`) y _menor que_ (`<`) retorno si una cifra es mayor o menor, respectivamente.
-
 
 
 
@@ -244,9 +223,7 @@ Los operadores _mayor que_ (`>`) y _menor que_ (`<`) retorno si una cifra es may
 
 
 
-
 También existen los operadores mayor o igual, y menor o igual:
-
 
 
 
@@ -255,7 +232,6 @@ También existen los operadores mayor o igual, y menor o igual:
 50 >= 40
 4 <= 5
 ```
-
 
 
 
@@ -276,11 +252,9 @@ _Crear objeto:_
 
 
 
-
 ```{r}
 año <- 1993
 ```
-
 
 
 
@@ -290,18 +264,15 @@ Para ver los contenidos del objeto, simplemente lo llamamos por su nombre:
 
 
 
-
 ```{r}
 año
 ```
 
 
 
-
 Al crear un objeto, aparece en el panel de entorno o _Environment,_ en el panel superior derecho de RStudio.
 
 Podemos usar los objetos para realizar operaciones matemáticas, porque llamar a un objeto, es reutiliza el dato que está dentro de ese objeto:
-
 
 
 
@@ -312,9 +283,7 @@ año + 10
 
 
 
-
 Podemos crear un nuevo objeto a partir de un cálculo, escribiendo un cálculo y asignándolo a un nuevo objeto:
-
 
 
 
@@ -322,7 +291,6 @@ Podemos crear un nuevo objeto a partir de un cálculo, escribiendo un cálculo y
 edad <- 2024 - año
 edad
 ```
-
 
 
 
@@ -339,7 +307,6 @@ Primero, definimos varios datos. Cuando un dato hace referencia a un aspecto rea
 
 
 
-
 ```{r}
 presupuesto <- 100000
 pizza <- 12000
@@ -348,9 +315,7 @@ bebida <- 2500
 
 
 
-
 Restamos todos los objetos para ver cuánto queda de presupuesto:
-
 
 
 
@@ -360,9 +325,7 @@ presupuesto - pizza - bebida
 
 
 
-
 También podemos usar paréntesis para ordenar nuestras operaciones:
-
 
 
 
@@ -373,10 +336,8 @@ presupuesto - (pizza + bebida)
 
 
 
-
 #### Ejemplo 2
 Repetimos la creación de un presupuesto al definir nuestras variables:
-
 
 
 
@@ -388,9 +349,7 @@ bebida <- 2500
 
 
 
-
 El objeto `pizza` representa el precio de una sola pizza. Pero en este ejemplo, necesitamos comprar varias pizzas, así que crearemos un objeto nuevo a partir de una operación:
-
 
 
 
@@ -401,9 +360,7 @@ pizzas_totales
 
 
 
-
 También tenemos que considerar la compra de bebidas:
-
 
 
 ```{r}
@@ -413,9 +370,7 @@ bebidas_totales
 
 
 
-
 Ahora hacemos el cálculo del presupuesto considerando los dos objetos nuevos que creamos, y guardamos el resultado en otro objeto:
-
 
 
 
@@ -426,9 +381,7 @@ total
 
 
 
-
 Restamos el total de las compras con el presupuesto disponible:
-
 
 
 ```{r}
@@ -437,16 +390,13 @@ restante <- presupuesto - total
 
 
 
-
 Ahora revisamos el resultado:
-
 
 
 
 ```{r}
 restante
 ```
-
 
 
 
@@ -475,18 +425,15 @@ Podemos crear un vector de forma manual con la función `c()`:
 
 
 
-
 ```{r}
 c(1, 2, 3, 4, 5, 6, 7, 8)
 ```
 
 
 
-
 En este bloque de código hemos creado un vector, una secuencia de valores que tiene ocho elementos.
 
 En un vector podemos almacenar datos arbitrarios, siempre y cuando sean todos del mismo tipo.
-
 
 
 
@@ -498,9 +445,7 @@ c("a", "b", "c", "d")
 
 
 
-
 Si queremos crear un vector que contenga una secuencia continua de números, podemos usar el operador `:` entre el número de inicio y el número final de la secuencia:
-
 
 
 
@@ -512,9 +457,7 @@ Si queremos crear un vector que contenga una secuencia continua de números, pod
 
 
 
-
 Podemos realizar **operaciones** sobre los vectores, dado que son secuencias de datos, y la operación se va a aplicar a todos sus elementos:
-
 
 
 
@@ -526,9 +469,7 @@ c(31, 32, 56, 74) - 2024
 
 
 
-
 También podemos hacer **comparaciones** sobre los elementos de un vector:
-
 
 
 
@@ -539,9 +480,7 @@ c("sí", "no", "sí", "sí") == "no"
 
 
 
-
 Pero el potencial de los vectores es cuando están asignados a un objeto. Asignamos a un objeto el vector de números:
-
 
 
 
@@ -551,9 +490,7 @@ edades <- c(25, 27, 30, 45, 37, 28, 46, 54)
 
 
 
-
 Teniendo un objeto que contiene una secuencia de datos, ahora podemos realizar operaciones escritas de una forma más abstracta o resumida, y que se empiezan a acercar a casos de uso reales.
-
 
 
 
@@ -564,9 +501,7 @@ edades == 30
 ```
 
 
-
 Para acceder para acceder a uno de los valores específicos de un vector, usamos las sintaxis de corchetes. Dentro de corchetes ponemos el elemento o elementos del vector que queremos extraer.
-
 
 
 
@@ -579,7 +514,6 @@ edades[1:3]
 
 
 
-
 ### Tipos de datos en vectores 
 Por definición, los valores de los vectores en R son todos de un mismo tipo. Esto se debe a que queremos realizar operaciones sobre los factores, y como las operaciones dependen del tipo de cada dato (no podrmos sumar letras), garantizar que los vectores sean de un mismo tipo permite que siempre podamos realizar operaciones en todas sus elementos.
 
@@ -587,11 +521,9 @@ Cuando creamos un vector de distintos tipos de datos, R va a reducirlo por defec
 
 
 
-
 ```{r}
 c(1, 2, 3, 4, "cinco")
 ```
-
 
 
 
@@ -604,7 +536,6 @@ Si notamos la salida de la consola, podemos ver que los números aparecen envuel
 Un vector con años de nacimiento, y luego restamos el año actual al vector, para obtener las edades actuales de las personas que nacieron en esos años.
 
 
-
 ```{r}
 años <- c(1992, 1997, 1986, 1980, 1999)
 edades <- 2024 - años
@@ -613,9 +544,7 @@ edades
 
 
 
-
 Si el objeto resultante le sumamos 10, podemos obtener las edades que tendrían estas personas 10 años después.
-
 
 
 ```{r}
@@ -625,11 +554,9 @@ edades_en_10_años
 
 
 
-
 #### Ejemplo 2
 
 Tenemos un vector con precios de productos, y un objeto que contiene un determinado valor, que sería el presupuesto que tenemos. Queremos saber qué productos son más baratos que el presupuesto. Entonces, comparamos los elementos del vector `precios` con el `presupuesto`:
-
 
 
 ```{r}
@@ -640,18 +567,15 @@ precios < presupuesto
 
 
 
-
 El resultado es un vector de valores lógicos que indican si que el precio es menor o no que el presupuesto.
 
 Podemos usar ese resultado para filtrar el vector `precios`, porque cada valor verdadero o falso se corresponde con el valor de la misma posición en el vector original. Es decir, el primer elemento del vector `precios` es menor al `presupuesto`, el segundo no, el tercero sí, etc. Así podemos obtener exactamente los datos que cumplen la condición:
 
 
 
-
 ```{r}
 precios[precios < presupuesto]
 ```
-
 
 
 
@@ -669,7 +593,6 @@ Una función es simplemente un programa dentro del cual se entregan ciertos argu
 
 
 
-
 ```{r}
 #| eval: false
 funcion(argumento_1, argumento_2, ...)
@@ -677,11 +600,9 @@ funcion(argumento_1, argumento_2, ...)
 
 
 
-
 Dependiendo de lo que haga la función, dentro de ella podemos poner uno o varios vectores, un vector con algunas opciones definidas, u objetos más complejos que veremos adelante.
 
 Una función sencilla es la función `mean()`, que calcula el promedio de los valores de un vector:
-
 
 
 
@@ -702,9 +623,7 @@ mean(edades)
 
 
 
-
 Como R es un lenguaje principalmente estadístico, hay varias funciones matemáticas que operan sobre vectores de números:
-
 
 
 
@@ -717,9 +636,7 @@ sum(edades) # suma
 ```
 
 
-
 También hay funciones que no realizan cálculos sobre los datos, sino que nos dicen otra cosa sobre ellos:
-
 
 
 
@@ -729,9 +646,7 @@ length(edades)
 
 
 
-
 Algo que podría ser importante de confirmar, como hemos visto, sería el tipo de un vector. Para esto, existen varias funciones:
-
 
 
 
@@ -741,9 +656,7 @@ class(edades)
 
 
 
-
 La función permite saber la clase de un objeto, que es una propiedad de los objetos relacionada a su tipo. En este caso retorna _numeric,_ porque se trata de números, pero en realidad el tipo es otro:
-
 
 
 
@@ -753,11 +666,9 @@ typeof(edades)
 
 
 
-
 Esto ocurre porque los números pueden ser de distintos tipos: hay números enteros (_integer_), números decimales (_double_), entre otros, y tienen características distintas. Pero es suficiente con saber si es o no numérico para la mayoría de los casos.
 
 Otras funciones permiten consultar si un objeto es de un tipo específico:
-
 
 
 ```{r}
@@ -767,9 +678,7 @@ is.character(edades)
 
 
 
-
 Si tenemos un vector de un tipo que no nos sirve, podemos convertirlo a uno que si nos sirva:
-
 
 
 
@@ -781,9 +690,7 @@ numeros_2
 
 
 
-
 Notamos que R nos entrega una alerta! dice que hay `NA` introducidos por coerción. Los valores `NA` son también llamados valores _perdidos,_ y significa que es un elemento de un vector que no contiene nada. En este caso, el último elemento del vector es convertido a un dato perdido, porque el texto _perro_ no se corresponde realmente con ningún número.
-
 
 
 
@@ -801,7 +708,6 @@ as.character(4444)
 
 
 
-
 Si necesitamos saber qué hace una función, o cómo funciona, podemos escribir en la consola un `?` seguido por el nombre de la función `?as.numeric`, o bien, entrar al panel de ayuda de RStudio, que se encuentra en la parte inferior derecha de la pantalla, y buscar la función que queramos aclarar.
 
 En la ayuda de R aparecen las funciones explicadas, con ejemplos, con detalles de cada uno de sus argumentos, y más.
@@ -813,12 +719,10 @@ La función `sample()` permite obtener una cantidad de elementos al azar desde o
 
 
 
-
 ```{r}
 numeros <- 1:10000000
 sample(numeros, size = 1)
 ```
-
 
 
 
@@ -833,17 +737,14 @@ Podemos utilizar la función `seq()` para crear una secuencia de números entre 
 
 
 
-
 ```{r}
 seq(from = 10, to = 100, by = 5)
 ```
 
 
-
 El resultado es un vector que empieza desde el 10 y va hasta el 100, de 5 en 5.
 
 Creemos un vector del 1 al 2, avanzando en 0,1:
-
 
 
 
@@ -853,9 +754,7 @@ seq(from = 1, to = 2, by = 0.1)
 
 
 
-
 Recordemos que también podemos usar funciones para definir los argumentos de cualquier otra función. En este caso, en vez de escribir los números que queremos para el inicio del final de la secuencia, podemos usar números que se obtienen desde aplicar una función a un vector:
-
 
 
 
@@ -865,9 +764,7 @@ seq(from = min(edades), to = max(edades), by = 10)
 
 
 
-
 Esta función puede ser útil, por ejemplo, para crear una secuencia de años:
-
 
 
 
@@ -878,11 +775,9 @@ años <- seq(1900, 2020, 10)
 
 
 
-
 ### Redactar textos
 
 Otra función básica es `paste()`, que te permite unir varios elementos en un sólo texto:
-
 
 
 
@@ -894,9 +789,7 @@ paste(texto_1, texto_2)
 
 
 
-
 Podemos unir varios elementos, sacados de vectores o calculados con funciones, para generar un texto más complejo:
-
 
 
 
@@ -913,9 +806,7 @@ paste("Entre las", length(edades), "edades analizadas,",
 
 
 
-
 Podemos usar esta función combinada con `sample()` para obtener un muestreo aleatorio de cualquier tipo de elementos, lo que puede servir para hacer algunas cosas entretenidas:
-
 
 
 
@@ -927,18 +818,15 @@ paste("el animal más lindo es el", sample(animales, 1))
 
 
 
-
 ### Redondear datos
 
 En el ejemplo anterior, obtuvimos que el promedio de edades era `r mean(edades)`. Si queremos redondear este número, podemos abusar la función `round()`, cuyo primer argumento es el número o números que queremos redondear, y el segundo es la cantidad de decimales:
 
 
 
-
 ```{r}
 round(mean(edades), digits = 1)
 ```
-
 
 
 
@@ -950,7 +838,6 @@ Una función condicional permite hacer algo si se cumple o no una condición. Es
 En la función `ifelse()`, el primer argumento es una comparación, y luego hay que especificar dos argumentos más: el primero es lo que queremos si la comparación es _verdadera_, y lo segundo es lo que queremos si la comparación es _falsa_. La expresión _"if else"_ significa en castellano "si pasa esto, entonces haz esto". En una sentencia _if else,_ se define una o más condiciones que queremos que se cumplan para ejecutar un código y, si esa condición no se cumple, ejecutamos otro código (o no ejecutamos nada).
 
 Por ejemplo, evaluamos si un número es mayor a 5, y si es así, retornamos la palabra _alto,_ y si no, retornamos la palabra _bajo_:
-
 
 
 ```{r}
@@ -965,9 +852,7 @@ ifelse(numero > 5,
 
 
 
-
 Tenemos un vector de la cantidad de dulces que comieron unas personas. Si definimos que comer más de 4 dulces es mucho, aplicamos la función `ifelse()` para categorizar las cantidades de dulces que comieron las personas:
-
 
 
 ```{r}
@@ -981,9 +866,7 @@ dulces_2
 
 
 
-
 Luego, podemos usar una suma condicionada para saber cuántas personas comieron muchos dulces:
-
 
 
 ```{r}
@@ -992,9 +875,7 @@ sum(dulces_2 == "muchos") # cantidad de personas que comieron "muchos" dulces
 
 
 
-
 Con este otro ejemplo, aprenderemos a usar el operador de inclusión, `%in%`, qué es lo que hace es determinar si un elemento está dentro de otro conjunto de elementos. Creamos un vector de elementos, y un segundo actor que contiene un subgrupo de los elementos. Luego, usamos el operador de inclusión `%in%` para saber cuál de los primeros elementos están dentro del segundo grupo de elementos. En este caso, tenemos un vector con los colores, y después los colores que yo considero que son más lindos, y queremos saber cuál es están dentro de este grupo de colores más lindos:
-
 
 
 
@@ -1008,9 +889,7 @@ colores %in% lindos
 
 
 
-
 Luego, aplicaremos el mismo principio, pero dentro de un `if_else()`, para asignarle la categoría lindo o feo a cada uno de los colores:
-
 
 
 
@@ -1024,9 +903,7 @@ opinión
 
 
 
-
 Finalmente, podemos hacer una tabla con los resultados, o una suma condicionada, para saber cuántos colores caen en cada categoría:
-
 
 
 ```{r} 
@@ -1035,7 +912,6 @@ table(opinión)
 paste("Hay", sum(opinión == "feos"), "colores feos,",
       "y", sum(opinión == "lindos"), "colores lindos")
 ```
-
 
 
 
@@ -1050,21 +926,12 @@ El entender cómo funcionan estas pequeñas herramientas, y familiarizarse con s
 ----
 
 
-_Si entendiste este tutorial y quieres pasar al siguiente nivel, mala suerte porque todavía no lo escribo 😂 pero podrías atreverte a intentar con este otro tutorial en el cual se abarcan herramientas básicas de manipulación de datos:  [Tutorial: introducción a {dplyr} con datos de población](/blog/r_introduccion/tutorial_dplyr_censo/)_
+_Si entendiste este tutorial y quieres pasar al siguiente nivel, revisa [**Herramientas básicas para programar con R**](/blog/r_introduccion/r_intermedio) para aprender cómo aplicar lo que aprendiste dentro de flujos de procesamiento de datos más complejos. Luego podrías atreverte a intentar con este otro tutorial, en el cual se abarcan herramientas básicas de manipulación de datos: [**Introducción a {dplyr} con datos de población**](/blog/r_introduccion/tutorial_dplyr_censo/)._
 
 
 Si este tutorial te sirvió, por favor considera hacerme una donación, al menos para poder tomarme un cafecito 🥺
 
 
 
+{{< cafecito >}}
 
-```{=html}
-<div style = "height: 18px;">
-</div>
-<div>
-  <div style="display: flex;
-  justify-content: center;
-  align-items: center;">
-    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
-  </div>
-```
