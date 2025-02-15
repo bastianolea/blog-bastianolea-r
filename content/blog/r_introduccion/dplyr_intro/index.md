@@ -6,7 +6,7 @@ format:
   hugo-md:
     output-file: index
     output-ext: md
-weight: 6
+weight: 7
 draft: true
 series: Introducción a R
 slug: []

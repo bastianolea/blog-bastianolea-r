@@ -723,11 +723,45 @@ numeros <- 1:10000000
 sample(numeros, size = 1)
 ```
 
-    [1] 2294198
+    [1] 7029213
 
 La función recibe como primer argumento el vector de elementos, y como segundo argumento la cantidad de elementos que queremos obtener al azar.
 
 Intenta cambiando el segundo argumento para que te entregue cuatro números al azar.
+
+### Secuencias
+
+Podemos utilizar la función `seq()` para crear una secuencia de números entre dos números, definiendo en el argumento `from` el número inicial, en `to` el número final, y en `by` el salto entre cada cifra:
+
+``` r
+seq(from = 10, to = 100, by = 5)
+```
+
+     [1]  10  15  20  25  30  35  40  45  50  55  60  65  70  75  80  85  90  95 100
+
+El resultado es un vector que empieza desde el 10 y va hasta el 100, de 5 en 5.
+
+Creemos un vector del 1 al 2, avanzando en 0,1:
+
+``` r
+seq(from = 1, to = 2, by = 0.1)
+```
+
+     [1] 1.0 1.1 1.2 1.3 1.4 1.5 1.6 1.7 1.8 1.9 2.0
+
+Recordemos que también podemos usar funciones para definir los argumentos de cualquier otra función. En este caso, en vez de escribir los números que queremos para el inicio del final de la secuencia, podemos usar números que se obtienen desde aplicar una función a un vector:
+
+``` r
+seq(from = min(edades), to = max(edades), by = 10)
+```
+
+    [1] 14 24 34 44
+
+Esta función puede ser útil, por ejemplo, para crear una secuencia de años:
+
+``` r
+años <- seq(1900, 2020, 10)
+```
 
 ### Redactar textos
 
@@ -763,7 +797,7 @@ animales <- c("gato", "mapache", "castor", "pollo", "ratón", "pudú")
 paste("el animal más lindo es el", sample(animales, 1))
 ```
 
-    [1] "el animal más lindo es el gato"
+    [1] "el animal más lindo es el castor"
 
 ### Redondear datos
 

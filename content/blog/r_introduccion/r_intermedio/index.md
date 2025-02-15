@@ -26,52 +26,11 @@ execute:
 
 Esta es la segunda guía introductoria para aprender el lenguaje de programación R. [En la guía anterior vimos los principios más fundamentales del lenguaje R](../../../../blog/r_introduccion/r_basico/), para familiarizarnos con R y entender su funcionamiento básico. En esta segunda guía, seguiremos puliendo nuestros aprendizajes para poder abordar más posibilidades.
 
-### Vectores
-
-Repasemos brevemente lo que vimos en la guía anterior recordemos que los vectores son la unidad de datos básicas en R, que equivalen a una secuencia de observaciones de un mismo tipo. Creemos un vector con números al azar:
-
-``` r
-edades <- c(30, 40, 50, 55, 45, 46, 47, 23, 25, 74, 63)
-edades
-```
-
-Usando la función `length()` sobre el objeto que creamos, podemos obtener la cantidad de elementos que tiene:
-
-``` r
-length(edades)
-```
-
-#### Secuencias
-
-Podemos utilizar la función `seq()` para crear una secuencia de números entre dos números, definiendo en el argumento `from` el número inicial, en `to` el número final, y en `by` el salto entre cada cifra:
-
-``` r
-seq(from = 10, to = 100, by = 5)
-```
-
-El resultado es un vector que empieza desde el 10 y va hasta el 100, de 5 en 5.
-
-Creemos un vector del 1 al 2, avanzando en 0,1:
-
-``` r
-seq(from = 1, to = 2, by = 0.1)
-```
-
-Recordemos que también podemos usar funciones para definir los argumentos de cualquier otra función. En este caso, en vez de escribir los números que queremos para el inicio del final de la secuencia, podemos usar números que se obtienen desde aplicar una función a un vector:
-
-``` r
-seq(from = min(edades), to = max(edades), by = 10)
-```
-
-Esta función puede ser útil, por ejemplo, para crear una secuencia de años:
-
-``` r
-años <- seq(1900, 2020, 10)
-```
+-   hacer lo que necesitamos
+-   condicionar lo que queremos que ocurra
+-   hacer lo que necesitamos repetidamente
 
 ## Crear funciones
-
-## crear funciones
 
 definimos el nombre, los argumentos, y en el cuerpo definimos la operación
 

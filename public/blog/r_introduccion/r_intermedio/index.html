@@ -48,7 +48,7 @@
   <meta itemprop="description" content="Introducción Esta es la segunda guía introductoria para aprender el lenguaje de programación R. En la guía anterior vimos los principios más fundamentales del lenguaje R, para familiarizarnos con R y entender su funcionamiento básico. En esta segunda guía, seguiremos puliendo nuestros aprendizajes para poder abordar más posibilidades.">
   <meta itemprop="datePublished" content="2024-11-16T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-16T00:00:00+00:00">
-  <meta itemprop="wordCount" content="909">
+  <meta itemprop="wordCount" content="694">
   <meta itemprop="keywords" content="Dplyr">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -56,7 +56,7 @@
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.c4fbf76e54adf7e7a1073b995dfaf4f393e11c67c30cfd5b19d29824f2cee0f0.css" integrity="sha256-xPv3blSt9&#43;ehBzuZXfr085PhHGfDDP1bGdKYJPLO4PA=" media="screen">
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
   
   
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -275,53 +275,17 @@
 </h2>
 <p>Esta es la segunda guía introductoria para aprender el lenguaje de programación R. 
 <a href="../../../../blog/r_introduccion/r_basico/">En la guía anterior vimos los principios más fundamentales del lenguaje R</a>, para familiarizarnos con R y entender su funcionamiento básico. En esta segunda guía, seguiremos puliendo nuestros aprendizajes para poder abordar más posibilidades.</p>
+<ul>
+<li>hacer lo que necesitamos</li>
+<li>condicionar lo que queremos que ocurra</li>
+<li>hacer lo que necesitamos repetidamente</li>
+</ul>
 
-
-
-
-<h3 id="vectores">Vectores
-  <a href="#vectores"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h3>
-<p>Repasemos brevemente lo que vimos en la guía anterior recordemos que los vectores son la unidad de datos básicas en R, que equivalen a una secuencia de observaciones de un mismo tipo. Creemos un vector con números al azar:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">edades</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">30</span><span style="color:#908caa">,</span> <span style="color:#f6c177">40</span><span style="color:#908caa">,</span> <span style="color:#f6c177">50</span><span style="color:#908caa">,</span> <span style="color:#f6c177">55</span><span style="color:#908caa">,</span> <span style="color:#f6c177">45</span><span style="color:#908caa">,</span> <span style="color:#f6c177">46</span><span style="color:#908caa">,</span> <span style="color:#f6c177">47</span><span style="color:#908caa">,</span> <span style="color:#f6c177">23</span><span style="color:#908caa">,</span> <span style="color:#f6c177">25</span><span style="color:#908caa">,</span> <span style="color:#f6c177">74</span><span style="color:#908caa">,</span> <span style="color:#f6c177">63</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">edades</span>
-</span></span></code></pre></div><p>Usando la función <code>length()</code> sobre el objeto que creamos, podemos obtener la cantidad de elementos que tiene:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">length</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div>
-
-
-
-<h4 id="secuencias">Secuencias
-  <a href="#secuencias"></a>
-</h4>
-<p>Podemos utilizar la función <code>seq()</code> para crear una secuencia de números entre dos números, definiendo en el argumento <code>from</code> el número inicial, en <code>to</code> el número final, y en <code>by</code> el salto entre cada cifra:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">seq</span><span style="color:#908caa">(</span><span style="color:#ea9a97">from</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">to</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">100</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">by</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>El resultado es un vector que empieza desde el 10 y va hasta el 100, de 5 en 5.</p>
-<p>Creemos un vector del 1 al 2, avanzando en 0,1:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">seq</span><span style="color:#908caa">(</span><span style="color:#ea9a97">from</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">to</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">by</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>Recordemos que también podemos usar funciones para definir los argumentos de cualquier otra función. En este caso, en vez de escribir los números que queremos para el inicio del final de la secuencia, podemos usar números que se obtienen desde aplicar una función a un vector:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">seq</span><span style="color:#908caa">(</span><span style="color:#ea9a97">from</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">min</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">to</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edades</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">by</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>Esta función puede ser útil, por ejemplo, para crear una secuencia de años:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">años</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">seq</span><span style="color:#908caa">(</span><span style="color:#f6c177">1900</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2020</span><span style="color:#908caa">,</span> <span style="color:#f6c177">10</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div>
 
 
 
 <h2 id="crear-funciones">Crear funciones
   <a href="#crear-funciones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h2>
-
-
-
-
-<h2 id="crear-funciones-1">crear funciones
-  <a href="#crear-funciones-1"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
@@ -590,10 +554,10 @@ animo &lt;- &ldquo;triste&rdquo;</p>
           <li class="" hugo-nav="/blog/r_introduccion/intro_datos/"><a href="http://localhost:6013/blog/r_introduccion/intro_datos/">Usando R para trabajar con datos</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/dplyr_intro/"><a href="http://localhost:6013/blog/r_introduccion/dplyr_intro/">Introducción al manejo de datos con {dplyr}</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/proyectos/"><a href="http://localhost:6013/blog/r_introduccion/proyectos/">Administrar los análisis de datos en Proyectos de RStudio</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/proyectos/"><a href="http://localhost:6013/blog/r_introduccion/proyectos/">Administrar los análisis de datos en Proyectos de RStudio</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/dplyr_intro/"><a href="http://localhost:6013/blog/r_introduccion/dplyr_intro/">Introducción al manejo de datos con {dplyr}</a></li>
         
           
           <li class="" hugo-nav="/blog/r_introduccion/dplyr_intermedio/"><a href="http://localhost:6013/blog/r_introduccion/dplyr_intermedio/">Manejo y transformación de datos nivel intermedio con {dplyr}</a></li>
@@ -621,13 +585,8 @@ animo &lt;- &ldquo;triste&rdquo;</p>
     <div class="pl2 pr0 mh0">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#introducción">Introducción</a>
-      <ul>
-        <li><a href="#vectores">Vectores</a></li>
-      </ul>
-    </li>
+    <li><a href="#introducción">Introducción</a></li>
     <li><a href="#crear-funciones">Crear funciones</a></li>
-    <li><a href="#crear-funciones-1">crear funciones</a></li>
     <li><a href="#flujo-de-control-con-if-else">flujo de control con if else</a></li>
     <li><a href="#iteraciones">iteraciones</a></li>
   </ul>

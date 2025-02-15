@@ -26,55 +26,17 @@ execute:
 Esta es la segunda guía introductoria para aprender el lenguaje de programación R. [En la guía anterior vimos los principios más fundamentales del lenguaje R](/blog/r_introduccion/r_basico/), para familiarizarnos con R y entender su funcionamiento básico. En esta segunda guía, seguiremos puliendo nuestros aprendizajes para poder abordar más posibilidades.
 
 
-
-### Vectores
-
-Repasemos brevemente lo que vimos en la guía anterior recordemos que los vectores son la unidad de datos básicas en R, que equivalen a una secuencia de observaciones de un mismo tipo. Creemos un vector con números al azar:
-
-```{r}
-edades <- c(30, 40, 50, 55, 45, 46, 47, 23, 25, 74, 63)
-edades
-```
-
-Usando la función `length()` sobre el objeto que creamos, podemos obtener la cantidad de elementos que tiene:
-
-```{r}
-length(edades)
-```
-
-
-#### Secuencias
-
-Podemos utilizar la función `seq()` para crear una secuencia de números entre dos números, definiendo en el argumento `from` el número inicial, en `to` el número final, y en `by` el salto entre cada cifra:
-
-```{r}
-seq(from = 10, to = 100, by = 5)
-```
-El resultado es un vector que empieza desde el 10 y va hasta el 100, de 5 en 5.
-
-Creemos un vector del 1 al 2, avanzando en 0,1:
-
-```{r}
-seq(from = 1, to = 2, by = 0.1)
-```
-
-Recordemos que también podemos usar funciones para definir los argumentos de cualquier otra función. En este caso, en vez de escribir los números que queremos para el inicio del final de la secuencia, podemos usar números que se obtienen desde aplicar una función a un vector:
-
-```{r}
-seq(from = min(edades), to = max(edades), by = 10)
-```
-
-Esta función puede ser útil, por ejemplo, para crear una secuencia de años:
-
-```{r}
-años <- seq(1900, 2020, 10)
-```
-
+- hacer lo que necesitamos
+- condicionar lo que queremos que ocurra
+- hacer lo que necesitamos repetidamente
 
 ## Crear funciones
+La creación de funciones nos abre las puertas a todo el mundo nuevo en el uso de R para analizar nuestros datos, dado que, una vez que te familiarizas con la creación de funciones, ya no depende solamente de las herramientas existentes, sino que empiezas a hacer tú quien crea nuevas herramientas adaptadas a tus propias necesidades.
+
+La anterior tiene el enorme beneficio de permitirte personalizar las herramientas que utilices para analizar datos a tu forma de trabajo, a las especificidades de tus datos, y a las particularidades del proceso que estés llevando a cabo. Quizás el aspecto más satisfactorio de la creación de funciones sea poder englobar un proceso largo y complejo en una función llamada `procesar_datos()`, o poder generar un gráfico detallado y atractivo tan sólo con llamar `graficar()`! 
 
 
-## crear funciones 
+ 
 definimos el nombre, los argumentos, y en el cuerpo definimos la operación
 
 ```{r}
@@ -131,10 +93,12 @@ saludar(personas)
 ```
 
 
-## flujo de control con if else 
-esta técnica permite crear condicionalidad en la ejecución del código
-usando una comparación, se decide si el código se ejecutará o no
-el código sólo se ejecuta si la comparación retorna TRUE
+## Control de flujo
+Las estructuras de control de flujo son el conjunto de reglas que hacen que, dentro de un proceso de análisis de datos, se realicen (o no) ciertas acciones si es que condiciones específicas se cumplen, o bien, que no ocurran ciertas cosas si es que las condiciones no lo permiten. En otras palabras, es una forma de hacer que tu proceso de análisis de datos adquiera fluidez, al definir momentos en los que el flujo del procesamiento es determinado por una condición que tú defines. 
+
+Por ejemplo: si los datos llegan en cierto estado, o con ciertas particularidades, realizar un paso extra de limpieza. Si dentro de los datos existen observaciones de ciertas características, visualizar los datos de una manera específica. Si a la tabla de datos le falta una comuna columna, crearla. Si una columna viene en un tipo que no es el esperado, convertirla al apropiado. Si ocurre un error o el resultado no es aceptable, realizar la operación de nuevo de una forma alternativa.
+
+En la práctica, esta técnica permite crear condicionalidad en la ejecución del código usando una comparación, cuyo resultado (`TRUE`/`FALSE`) decide si el código siguiente se ejecutará o no. El código dentro de la condición sólo se ejecuta si la comparación retorna `TRUE`.
 
 
 ```{r}
@@ -172,12 +136,26 @@ en el apartado "else" podemos especificar código que se ejecutará si la
 condición es FALSE, o bien, podemos omitir el apartado "else" para que sólo
 se ejecute el código si la condición es TRUE
 
+El control de flujo resulta particularmente útil para crear funciones más complejas. Dentro de las funciones puedes crear condicionales que realizan operaciones específicas dependiendo de lo que se le entregue a la función. 
+
+```{r}
+
+```
+
+
+También puedes crear nuevos argumentos en tu función, con los que puedes hacer que tu función trabaje de forma distinta dependiendo de lo que le especifiques.
+
+```{r}
+
+```
 
 
 
 
 
-## iteraciones 
+## Iteraciones 
+Las alteraciones son operaciones programáticas extremadamente poderosas. Permiten generalizar tu código, en el sentido que una operación u operaciones que definas pueden aplicarse repetidas veces sobre distintos conjuntos de datos, con un alto grado de libertad en el proceso.
+
 en una iteración, se realiza una operación multiples veces en base al vector que entregues
 
 ```{r}
