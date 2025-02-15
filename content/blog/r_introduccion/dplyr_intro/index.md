@@ -54,6 +54,12 @@ install.packages("dplyr")
 
 La herramienta que utilizaremos para explorar, manipular, y transformar datos será [el paquete `{dplyr}`](https://dplyr.tidyverse.org/articles/dplyr.html). Este paquete, parte central del [conjunto *Tidyverse* de herramientas para el análisis de datos con R](https://www.tidyverse.org), es uno de los más usados por la comunidad de R por su facilidad de uso. Se caracteriza porque casi todas sus funciones son escritas por medio de *verbos*, lo que hace que su sintaxis sea muy legible, ya que cada función se corresponde con una acción que estamos realizando sobre nuestros datos. Otra de sus características es el uso del operador de conexión o *pipe*, qué es un operador de R que nos permite encadenar instrucciones de forma secuencial. Su uso hace que las instrucciones se ordenen de izquierda a derecha y de arriba hacia abajo, mejorando mucho más la legibilidad del código.
 
+crear dataframes a mano
+con vectores
+con tibble
+con tribble
+con bind_cols
+
 ### Seleccionar ----
 
 censo %\>% \# control + shift + M

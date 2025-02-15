@@ -11,7 +11,8 @@ series: Introducción a R
 slug: []
 categories:
   - Tutoriales
-tags: []
+tags:
+  - funciones
 lang: es
 excerpt: >-
   Instrucciones paso a paso para aprender los aspectos más básicos del lenguaje
@@ -723,7 +724,7 @@ numeros <- 1:10000000
 sample(numeros, size = 1)
 ```
 
-    [1] 7029213
+    [1] 6407203
 
 La función recibe como primer argumento el vector de elementos, y como segundo argumento la cantidad de elementos que queremos obtener al azar.
 
@@ -797,7 +798,7 @@ animales <- c("gato", "mapache", "castor", "pollo", "ratón", "pudú")
 paste("el animal más lindo es el", sample(animales, 1))
 ```
 
-    [1] "el animal más lindo es el castor"
+    [1] "el animal más lindo es el gato"
 
 ### Redondear datos
 
@@ -907,17 +908,10 @@ El entender cómo funcionan estas pequeñas herramientas, y familiarizarse con s
 
 ------------------------------------------------------------------------
 
-*Si entendiste este tutorial y quieres pasar al siguiente nivel, mala suerte porque todavía no lo escribo 😂 pero podrías atreverte a intentar con este otro tutorial en el cual se abarcan herramientas básicas de manipulación de datos: [Tutorial: introducción a {dplyr} con datos de población](../../../../blog/r_introduccion/tutorial_dplyr_censo/)*
+*Si entendiste este tutorial y quieres pasar al siguiente nivel, revisa [**Herramientas básicas para programar con R**](../../../../blog/r_introduccion/r_intermedio) para aprender cómo aplicar lo que aprendiste dentro de flujos de procesamiento de datos más complejos. Luego podrías atreverte a intentar con este otro tutorial, en el cual se abarcan herramientas básicas de manipulación de datos: [**Introducción a {dplyr} con datos de población**](../../../../blog/r_introduccion/tutorial_dplyr_censo/).*
 
 Si este tutorial te sirvió, por favor considera hacerme una donación, al menos para poder tomarme un cafecito 🥺
 
-<div style = "height: 18px;">
-</div>
-<div>
-  <div style="display: flex;
-  justify-content: center;
-  align-items: center;">
-    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
-  </div>
+{{< cafecito  >}}
 
 [^1]: Si ejecutamos una línea incompleta, puede ser que la consola de R quede esperando que terminemos la expresión o que la completemos, y esto puede ser muy confuso para usuarios principiantes. Por ejemplo, si ejecutamos `1 +`, la consola va a quedar esperando que le demos el número que está esperando que venga, y cualquier otra cosa que le entreguemos va a intentar sumársela a la operación anterior que quedó inconclusa.
