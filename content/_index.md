@@ -8,7 +8,7 @@ description: 'Este sitio contiene todo tipo de recursos sobre programación con 
 
 image_left: true
 images:
-- img/collage_vertical.png
+- img/collage_vertical.jpg
 
 show_action_link: true
 show_social_links: true

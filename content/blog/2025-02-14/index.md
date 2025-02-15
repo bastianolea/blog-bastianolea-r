@@ -9,6 +9,13 @@ tags:
   - dplyr
   - limpieza de datos
   - datos perdidos
+excerpt: >-
+  ¿Te ha pasado que tienes una tabla con datos perdidos, y otra tabla con una
+  columna que coincide con la primera tabla, que además cuenta con datos que
+  quieres usar para rellenar las observaciones perdidas? Antes pensaba que esto
+  se resolvía con `left_join()` y algún ajuste para reemplazar los perdidos con
+  los datos anexados. Pero ayer conocí una función que resuelve este problema de
+  inmediato: `rows_update()`!
 ---
 
 
