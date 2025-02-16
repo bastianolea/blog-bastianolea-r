@@ -1,5 +1,5 @@
 ---
-title: Administrar los análisis de datos en Proyectos de RStudio
+title: Organizar el trabajo en Proyectos de RStudio
 author: Bastián Olea Herrera
 date: '2025-01-04'
 slug: []
