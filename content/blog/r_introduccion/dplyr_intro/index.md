@@ -7,34 +7,43 @@ format:
     output-file: index
     output-ext: md
 weight: 7
-draft: true
+draft: false
 series: Introducción a R
 slug: []
 categories:
   - Tutoriales
 tags:
   - dplyr
+  - consejos
+  - datos
 lang: es
-excerpt: Prueba
+excerpt: >-
+  Luego de haber aprendido las funcionalidades básicas del lenguaje y R, y
+  habernos familiarizado con herramientas un poco más avanzadas de la
+  programación en este lenguaje, ahora podemos aplicar estos aprendizajes a los
+  datos. Aprenderemos a explorar, comprender, y navegar tablas de datos, tanto
+  en la forma nativa de trabajar con R, como con la ayuda del paquete {dplyr}.
 execute:
   error: true
-  eval: false
+  eval: true
+editor_options:
+  chunk_output_type: console
 ---
 
 
-# cambiar todo esto para que sea no solo de dplyr
+Luego de haber aprendido las funcionalidades básicas del lenguaje y R, y habernos familiarizado con herramientas un poco más avanzadas de la programación en este lenguaje, ahora podemos aplicar estos aprendizajes a los datos. Aprenderemos a explorar, comprender, y navegar tablas de datos, tanto en la forma nativa de trabajar con R, como con la ayuda del paquete {dplyr}.
 
-### Proyectos
+## {dplyr}
 
-Antes de hacer cualquier trabajo que involucre datos con R, se recomienda [crear un *Proyecto* de RStudio](../../../../blog/r_introduccion/proyectos/). Un proyecto es una forma de definir la carpeta específica donde vamos a guardar todos los scripts y archivos que vamos a necesitar. Se caracteriza por un archivo que termina en `.Rproj`, que marca nuestro espacio de trabajo: una carpeta reúne todas las piezas de nuestro análisis.
+<img src = dplyr.png style = "float: left; max-width: 128px; margin-right: 20px;">
 
-Para crear un proyecto nuevo, elegimos la opción *New Project...* en el menú *File*, o apretamos el ícono del cubo celeste ubicado en la esquina superior derecha de RStudio y elegimos la primera opción.
+La herramienta que utilizaremos para explorar, manipular, y transformar datos será [el paquete `{dplyr}`](https://dplyr.tidyverse.org/articles/dplyr.html). Este paquete, parte central del [conjunto *Tidyverse* de herramientas para el análisis de datos con R](https://www.tidyverse.org), es uno de los más usados por la comunidad de R por su facilidad de uso.
 
-Una vez que creamos el proyecto, podemos abrir nuestro proyecto haciendo doble clic en el archivo que termina en ".Rproj", seleccionando en RStudio el menú *File* y el ítem *Open Project...* o *Recent Projects*, o en la esquina superior derecha de RStudio, donde aparece un icono celeste que contiene los proyectos recientes.
+Se caracteriza porque casi todas sus funciones son escritas por medio de *verbos*, lo que hace que su sintaxis sea muy legible, ya que cada función se corresponde con una acción que estamos realizando sobre nuestros datos.
 
-Es muy importante que, antes de empezar a trabajar con R, te asegures de que estás dentro del proyecto correcto. [Para más información sobre los proyectos de RStudio, revisa esta guía.](../../../../blog/r_introduccion/proyectos/)
+##### Nota sobre el uso de {dplyr}
 
-Deberíamos encontrarnos con una ventana de RStudio con un script nuevo, listo para recibir instrucciones.
+Probablemente el 98% de las cosas que necesitemos hacer con tablas de datos en R puedan hacerse por medio de {dplyr} y otros paquetes adyacentes a él. En mi opinión esto es bueno, porque creo que {dplyr} hace todo más sencillo, ordenado y fácil de interpretar. Sin embargo, creo que también es importante entender cómo se realizan las operaciones básicas sobre los datos con R base. Esto porque un entendimiento ---aunque sea básico--- de R base nos va a ayudar a comprender mejor el funcionamiento del lenguaje, y nos puede sacar de posibles problemas que encontremos. Es por esto que en este tutorial iremos viendo cómo realizar las operaciones básicas de manipulación de datos primero con R base y luego con {dplyr}.
 
 ### Instalación
 
@@ -46,98 +55,371 @@ Instalamos `{dplyr}` con el siguiente comando:
 install.packages("dplyr")
 ```
 
-### Datos
+Así como cuando instalamos una aplicación en nuestro celular o computador, solamente necesitamos instalar el paquete una vez. Pero cuando queramos usar el paquete, debemos **cargarlo**, que sería equivalente a abrir una aplicación ya instalada en tu celular o computador.
 
-## {dplyr}
+Para cargar un paquete se utiliza la función `library()`:
 
-<img src = dplyr.png style = "float: left; max-width: 128px; margin-right: 20px;">
+``` r
+library("dplyr")
+```
 
-La herramienta que utilizaremos para explorar, manipular, y transformar datos será [el paquete `{dplyr}`](https://dplyr.tidyverse.org/articles/dplyr.html). Este paquete, parte central del [conjunto *Tidyverse* de herramientas para el análisis de datos con R](https://www.tidyverse.org), es uno de los más usados por la comunidad de R por su facilidad de uso. Se caracteriza porque casi todas sus funciones son escritas por medio de *verbos*, lo que hace que su sintaxis sea muy legible, ya que cada función se corresponde con una acción que estamos realizando sobre nuestros datos. Otra de sus características es el uso del operador de conexión o *pipe*, qué es un operador de R que nos permite encadenar instrucciones de forma secuencial. Su uso hace que las instrucciones se ordenen de izquierda a derecha y de arriba hacia abajo, mejorando mucho más la legibilidad del código.
 
-crear dataframes a mano
-con vectores
-con tibble
-con tribble
-con bind_cols
+    Attaching package: 'dplyr'
 
-### Seleccionar ----
+    The following objects are masked from 'package:stats':
 
-censo %\>% \# control + shift + M
-select(comuna, población)
+        filter, lag
 
-## Resumir ----
+    The following objects are masked from 'package:base':
 
-censo %\>%
-summarize(min(población))
+        intersect, setdiff, setequal, union
 
-## Ordenar
+Después de cargar un paquete puede ser que aparezcan mensajes en la consola, pero en general podemos ignorarlos.
 
-censo %\>%
-arrange(población) %\>%
-select(comuna, población)
+## Datos
 
-censo %\>%
-filter(población \> 100000) %\>%
-arrange(población)
+Las tablas de datos, también conocidas como *dataframes*, son formas de almacenar información por medio de filas y columnas. Usualmente, las filas corresponden a observaciones, y las columnas corresponden a variables, pero no siempre esto se cumple. Otra característica de las tablas o *dataframes* es que son rectangulares: todas las columnas tienen la misma cantidad de filas.
 
-censo %\>%
-filter(población \> 100000) %\>%
-arrange(desc(población))
+Usemos {dplyr} para tener nuestra primera aproximación a los datos en tablas construyendo una tabla. Cómo planteamos en el primer tutorial, las tablas de datos en R son construidas a partir de vectores, o dicho de otra forma, las columnas de las tablas son vectores.
 
-## Renombrar ----
+### Crear una tabla
 
-censo %\>%
-rename(p = población)
+Creemos unos vectores y luego hagamos una tabla a partir de ellos:
 
-# ver filas específicas del dataframe
+``` r
+animal <- c("gato", "paloma", "rana", "pollo", "mapache", "serpiente")
 
-censo %\>%
-slice(200:220)
+tipo <- c("mamífero", "ave", "anfibio", "ave", "mamífero", "reptil")
 
-### Filtrar ----
+patas <- c(4, 2, 4, 2, 4, 0)
+```
 
-censo %\>%
-filter(población \> 300000)
+Creamos tres vectores, que serán las columnas de nuestra tabla. Confirmemos que tienen el mismo largo:
 
-censo %\>%
-filter(población \< 1000)
+``` r
+# confirmar que los tres casos se cumplen
+all(length(animal) == 6,
+    length(tipo) == 6,
+    length(patas) == 6)
+```
 
-censo %\>%
-filter(población \> 1000)
+    [1] TRUE
 
-censo %\>%
-filter(población == min(población))
+Ahora, usemos los vectores para crear una tabla con {dplyr}:
 
-censo %\>%
-filter(población == max(población))
+``` r
+# crear una tabla con los vectores
+tabla <- tibble(animal,
+                tipo,
+                patas)
 
-censo %\>%
-filter(comuna == "La Florida")
+tabla
+```
 
-censo %\>%
-filter(población == 407297)
+    # A tibble: 6 × 3
+      animal    tipo     patas
+      <chr>     <chr>    <dbl>
+    1 gato      mamífero     4
+    2 paloma    ave          2
+    3 rana      anfibio      4
+    4 pollo     ave          2
+    5 mapache   mamífero     4
+    6 serpiente reptil       0
 
-censo %\>%
-filter(población == min(población))
+Esta es la salida en la consola que tienen los *dataframes* creados con {dplyr}. En ella, podemos ver en la primera fila de texto en largo y ancho de la tabla (número de filas y columnas). Luego vemos los **nombres** de las tres columnas, y debajo de ellos vemos el **tipo** de cada columna (caracter, caracter y numérico). Las siguientes filas corresponden a los datos mismos de la tabla.
 
-### Filtrar usando objetos ----
+### Explorar una tabla
 
-min_pob \<- 25000
-max_pob \<- 30000
+Exploremos un poco las características de una tabla o *dataframe*:
 
-censo %\>%
-filter(población \> min_pob,
-población \< max_pob)
+``` r
+class(tabla)
+```
 
-promedio \<- mean(censo\$población)
+    [1] "tbl_df"     "tbl"        "data.frame"
 
-censo %\>%
-filter(población \> promedio)
+Las tablas creadas con {dplyr} son de la clase `"tbl_df"`, que hace referencia a *tibble,* el tipo específico de tablas de datos de este paquete, que son más amigables y fáciles de leer.
 
-censo %\>%
-filter(población \> promedio\*1.5)
+``` r
+length(tabla)
+```
 
-maximo \<- max(censo\$población)
+    [1] 3
 
-censo %\>%
-filter(población \>= maximo\*0.8)
+Se consultamos el largo del objeto con `length()`, obtenemos el número de columnas. Si queremos saber el número de filas, usamos `nrow()`:
+
+``` r
+nrow(tabla)
+```
+
+    [1] 6
+
+Si queremos saber los nombres de las columnas de una tabla, podemos usar `names()`, o bien, la función `glimpse()`, que nos entrega un conveniente *vistazo* de los datos de nuestra tabla:
+
+``` r
+names(tabla)
+```
+
+    [1] "animal" "tipo"   "patas" 
+
+``` r
+glimpse(tabla)
+```
+
+    Rows: 6
+    Columns: 3
+    $ animal <chr> "gato", "paloma", "rana", "pollo", "mapache", "serpiente"
+    $ tipo   <chr> "mamífero", "ave", "anfibio", "ave", "mamífero", "reptil"
+    $ patas  <dbl> 4, 2, 4, 2, 4, 0
+
+### Seleccionar datos
+
+Recordemos que podemos extraer subconjuntos de los vectores usando los corchetes `[]`:
+
+``` r
+animal[5]
+```
+
+    [1] "mapache"
+
+``` r
+animal[4:5]
+```
+
+    [1] "pollo"   "mapache"
+
+``` r
+animal[c(1, 2, 4)]
+```
+
+    [1] "gato"   "paloma" "pollo" 
+
+Con los vectores es sencillo, porque un vector es una unidad de datos unidimensional, donde con un número podemos seleccionar cualquiera de los elementos contenidos en el vector.
+
+Las tablas de datos no son unidimensionales, sino **bidimensionales**, dado que tienen filas y columnas. Entonces, para poder extraer elementos de distintas posiciones de una tabla, dentro de los corchetes habrá que indicar sus filas y/o columnas. Tenemos que indicar ya no sólo uno, sino dos argumentos: el primero refiere a las **filas**, y el segundo a las **columnas**.
+
+``` r
+tabla[2, 3]
+```
+
+    # A tibble: 1 × 1
+      patas
+      <dbl>
+    1     2
+
+En este caso, extrajimos la observación que se encuentra en la fila `2` y en la columna `3`.
+
+#### Filas
+
+Para extraer una fila de una tabla, dentro de los corchetes debemos indicar la posición de la fila, separado por una coma, y dejar en blanco el segundo argumento, que sería la selección de columnas.
+
+``` r
+tabla[1, ]
+```
+
+    # A tibble: 1 × 3
+      animal tipo     patas
+      <chr>  <chr>    <dbl>
+    1 gato   mamífero     4
+
+Indicando sólo el número de fila `1` y dejando en blanco la ubicación de la columna, seleccionamos la fila 1 entera.
+
+También podemos usar la función `slice()` para extraer una fila de una tabla:
+
+``` r
+slice(tabla, 5)
+```
+
+    # A tibble: 1 × 3
+      animal  tipo     patas
+      <chr>   <chr>    <dbl>
+    1 mapache mamífero     4
+
+#### Columnas
+
+Para extraer una columna, debemos indicar su posición en el segundo argumento dentro de los corchetes, dejando el primero vacío:
+
+``` r
+tabla[, 1]
+```
+
+    # A tibble: 6 × 1
+      animal   
+      <chr>    
+    1 gato     
+    2 paloma   
+    3 rana     
+    4 pollo    
+    5 mapache  
+    6 serpiente
+
+También podemos indicar el nombre de la columna, entre comillas, para seleccionarla:
+
+``` r
+tabla[, "animal"]
+```
+
+    # A tibble: 6 × 1
+      animal   
+      <chr>    
+    1 gato     
+    2 paloma   
+    3 rana     
+    4 pollo    
+    5 mapache  
+    6 serpiente
+
+Puede para ser extraño dejar la coma por sí sola dentro del corchete, así que en su lugar podemos usar la función `select()` para seleccionar columnas:
+
+``` r
+select(tabla, 1)
+```
+
+    # A tibble: 6 × 1
+      animal   
+      <chr>    
+    1 gato     
+    2 paloma   
+    3 rana     
+    4 pollo    
+    5 mapache  
+    6 serpiente
+
+``` r
+select(tabla, "tipo")
+```
+
+    # A tibble: 6 × 1
+      tipo    
+      <chr>   
+    1 mamífero
+    2 ave     
+    3 anfibio 
+    4 ave     
+    5 mamífero
+    6 reptil  
+
+Otra forma de extraer una columna de una tabla de datos es *abrir* la tabla usando el operador `$`. Al escribir el nombre de la tabla de datos seguido del operador `$`, RStudio sugerirá los nombres de las columnas para que puedas extraerlas:
+
+{{< imagen "dplyr_1.png" >}}
+
+``` r
+tabla$animal
+```
+
+    [1] "gato"      "paloma"    "rana"      "pollo"     "mapache"   "serpiente"
+
+A usar el operador `$` para extraer columnas, se obtiene el vector que se usó para crear la columna, así que recibimos los datos en forma de vector.
+
+### Crear columnas
+
+Si queremos agregar una nueva columna a nuestro *dataframe*, tenemos que hacer una mezcla entre la extracción de columnas con el operador `$` y la asignación de nuevos objetos:
+
+Si intentamos extraer una columna que no existe, recibimos un error:
+
+``` r
+tabla$habitat
+```
+
+    Warning: Unknown or uninitialised column: `habitat`.
+
+    NULL
+
+Sin embargo, si creamos un vector encima de esta columna que aún no existe, ésta se crea:
+
+``` r
+tabla$habitat <- c("urbano", "urbano", "rural", "rural", "urbano", "rural")
+
+tabla
+```
+
+    # A tibble: 6 × 4
+      animal    tipo     patas habitat
+      <chr>     <chr>    <dbl> <chr>  
+    1 gato      mamífero     4 urbano 
+    2 paloma    ave          2 urbano 
+    3 rana      anfibio      4 rural  
+    4 pollo     ave          2 rural  
+    5 mapache   mamífero     4 urbano 
+    6 serpiente reptil       0 rural  
+
+En otras palabras, para crear una nueva columna simplemente especificamos su nombre como parte de la tabla existente, y asignamos los datos que queremos que se contengan en esta nueva columna.
+
+Otra forma de crear columnas es con la función `mutate()`, que nos permite crear o modificar columnas existentes:
+
+``` r
+mutate(tabla, cola = c("sí", "sí", "no", "no", "sí", "toda"))
+```
+
+    # A tibble: 6 × 5
+      animal    tipo     patas habitat cola 
+      <chr>     <chr>    <dbl> <chr>   <chr>
+    1 gato      mamífero     4 urbano  sí   
+    2 paloma    ave          2 urbano  sí   
+    3 rana      anfibio      4 rural   no   
+    4 pollo     ave          2 rural   no   
+    5 mapache   mamífero     4 urbano  sí   
+    6 serpiente reptil       0 rural   toda 
+
+La diferencia es que con `mutate()` solamente estamos previsualizando el cambio, dado que no hemos asignado nada. Si queremos que la columna realmente se guarde en el *dataframe*, debemos asignar el resultado a un objeto nuevo, o sobreescribir el actual.
+
+### Filtrar datos
+
+``` r
+tabla[tabla$animal == "mapache", ]
+```
+
+    # A tibble: 1 × 4
+      animal  tipo     patas habitat
+      <chr>   <chr>    <dbl> <chr>  
+    1 mapache mamífero     4 urbano 
+
+``` r
+tabla[tabla$patas > 2, ]
+```
+
+    # A tibble: 3 × 4
+      animal  tipo     patas habitat
+      <chr>   <chr>    <dbl> <chr>  
+    1 gato    mamífero     4 urbano 
+    2 rana    anfibio      4 rural  
+    3 mapache mamífero     4 urbano 
+
+``` r
+subset(tabla, patas > 2)
+```
+
+    # A tibble: 3 × 4
+      animal  tipo     patas habitat
+      <chr>   <chr>    <dbl> <chr>  
+    1 gato    mamífero     4 urbano 
+    2 rana    anfibio      4 rural  
+    3 mapache mamífero     4 urbano 
+
+``` r
+subset(tabla, animal == "mapache")
+```
+
+    # A tibble: 1 × 4
+      animal  tipo     patas habitat
+      <chr>   <chr>    <dbl> <chr>  
+    1 mapache mamífero     4 urbano 
+
+``` r
+tribble(~días,    ~n, ~caso,
+        "jueves",  0,  1,
+        "viernes", 4,  0,
+        "sábado",  2,  1,
+        )
+```
+
+    # A tibble: 3 × 3
+      días        n  caso
+      <chr>   <dbl> <dbl>
+    1 jueves      0     1
+    2 viernes     4     0
+    3 sábado      2     1
+
+*En construcción...*
+
+{{< cafecito  >}}

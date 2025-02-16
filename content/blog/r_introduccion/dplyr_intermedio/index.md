@@ -1,5 +1,5 @@
 ---
-title: 'Manejo y transformación de datos nivel intermedio con {dplyr}'
+title: 'Manejo y transformación de datos nivel intermedio con {dplyr} y {tidyr}'
 author: Bastián Olea Herrera
 date: '2025-02-13'
 format:
@@ -22,3 +22,12 @@ execute:
 ---
 
 
+separate
+
+unite
+
+pivot_longer
+
+pivot_wider
+
+left_join
