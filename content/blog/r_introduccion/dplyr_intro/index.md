@@ -235,6 +235,17 @@ slice(tabla, 5)
       <chr>   <chr>    <dbl>
     1 mapache mamífero     4
 
+Si queremos extraer la última fila de una tabla, podemos combinar `slice()` con la función `nrow()` que nos entrega la cantidad de filas de una tabla, resultando en extraer la fila que corresponde con el número de filas; es decir, la última:
+
+``` r
+slice(tabla, nrow(tabla))
+```
+
+    # A tibble: 1 × 3
+      animal    tipo   patas
+      <chr>     <chr>  <dbl>
+    1 serpiente reptil     0
+
 #### Columnas
 
 Para extraer una columna, debemos indicar su posición en el segundo argumento dentro de los corchetes, dejando el primero vacío:
@@ -311,6 +322,14 @@ tabla$animal
 
 A usar el operador `$` para extraer columnas, se obtiene el vector que se usó para crear la columna, así que recibimos los datos en forma de vector.
 
+La misma extracción de una columna como vector puede hacerse con la función `pull()` de {dplyr}, donde se entrega la tabla y la columna, y se obtiene la columna como vector:
+
+``` r
+pull(tabla, animal)
+```
+
+    [1] "gato"      "paloma"    "rana"      "pollo"     "mapache"   "serpiente"
+
 ### Crear columnas
 
 Si queremos agregar una nueva columna a nuestro *dataframe*, tenemos que hacer una mezcla entre la extracción de columnas con el operador `$` y la asignación de nuevos objetos:
@@ -361,49 +380,313 @@ mutate(tabla, cola = c("sí", "sí", "no", "no", "sí", "toda"))
     5 mapache   mamífero     4 urbano  sí   
     6 serpiente reptil       0 rural   toda 
 
-La diferencia es que con `mutate()` solamente estamos previsualizando el cambio, dado que no hemos asignado nada. Si queremos que la columna realmente se guarde en el *dataframe*, debemos asignar el resultado a un objeto nuevo, o sobreescribir el actual.
+La diferencia es que con `mutate()` solamente estamos previsualizando el cambio, dado que no hemos asignado nada. Si queremos que la columna realmente se guarde en el *dataframe*, debemos asignar el resultado a un objeto nuevo, o sobreescribir el actual:
+
+``` r
+# sobreescribir la tabla con la columna nueva
+tabla <- mutate(tabla, cola = c("sí", "sí", "no", "no", "sí", "toda"))
+```
 
 ### Filtrar datos
 
+Una de las tareas más recurrentes que vamos a hacer con tablas de datos, sobre todo cuando son muy grandes, es filtrar la información. El filtrado de datos funciona a partir de **comparaciones**, dado que al filtrar estamos especificando un criterio que deben cumplir los valores para mantenerse en la tabla, y todos los valores que no cumplan este criterio serán removidos.
+
+Entonces, para filtrar datos, escribimos una comparación que coincida (retorne `TRUE`) con los valores que deseamos recibir.
+
+Supongamos que queremos ver solamente las observaciones donde el valor de la variable `patas` sea mayor que 2. Primero, planteemos la comparación:
+
 ``` r
-tabla[tabla$animal == "mapache", ]
+# extraer los valores de la columna `patas`
+tabla$patas 
 ```
 
-    # A tibble: 1 × 4
-      animal  tipo     patas habitat
-      <chr>   <chr>    <dbl> <chr>  
-    1 mapache mamífero     4 urbano 
+    [1] 4 2 4 2 4 0
+
+``` r
+# comparar los valores con el número 2
+tabla$patas > 2
+```
+
+    [1]  TRUE FALSE  TRUE FALSE  TRUE FALSE
+
+A partir de las comparaciones, recibimos una secuencia de valores lógicos (`TRUE`/`FALSE`) que indican si cada elemento del vector cumplió o no con la comparación planteada. Entonces, en principio, queremos mantener solamente las observaciones que retornaron `TRUE`.
+
+Recordemos que para filtrar filas de una tabla, dentro de los corchetes especificamos en la primera posición las filas que queremos extraer.
+
+``` r
+tabla[1, ]
+```
+
+    # A tibble: 1 × 5
+      animal tipo     patas habitat cola 
+      <chr>  <chr>    <dbl> <chr>   <chr>
+    1 gato   mamífero     4 urbano  sí   
+
+Esto, sumado a lo anterior, son los principios que usaremos para filtrar las filas de una tabla de datos:
 
 ``` r
 tabla[tabla$patas > 2, ]
 ```
 
-    # A tibble: 3 × 4
-      animal  tipo     patas habitat
-      <chr>   <chr>    <dbl> <chr>  
-    1 gato    mamífero     4 urbano 
-    2 rana    anfibio      4 rural  
-    3 mapache mamífero     4 urbano 
+    # A tibble: 3 × 5
+      animal  tipo     patas habitat cola 
+      <chr>   <chr>    <dbl> <chr>   <chr>
+    1 gato    mamífero     4 urbano  sí   
+    2 rana    anfibio      4 rural   no   
+    3 mapache mamífero     4 urbano  sí   
+
+Usamos la comparación que retorna verdaderos y falsos dentro de los corchetes para seleccionar las filas de la tabla. Entonces, como el vector de la comparación entre el mismo largo que las filas de la tabla, en cada posición de la comparación que se obtuvo `TRUE`, se muestra la fila correspondiente, y si se obtuvo `FALSE`, se omite.
+
+Otros ejemplos de filtrado:
 
 ``` r
-subset(tabla, patas > 2)
+tabla$animal == "mapache"
 ```
 
-    # A tibble: 3 × 4
-      animal  tipo     patas habitat
-      <chr>   <chr>    <dbl> <chr>  
-    1 gato    mamífero     4 urbano 
-    2 rana    anfibio      4 rural  
-    3 mapache mamífero     4 urbano 
+    [1] FALSE FALSE FALSE FALSE  TRUE FALSE
 
 ``` r
-subset(tabla, animal == "mapache")
+tabla[tabla$animal == "mapache", ]
 ```
 
-    # A tibble: 1 × 4
-      animal  tipo     patas habitat
-      <chr>   <chr>    <dbl> <chr>  
-    1 mapache mamífero     4 urbano 
+    # A tibble: 1 × 5
+      animal  tipo     patas habitat cola 
+      <chr>   <chr>    <dbl> <chr>   <chr>
+    1 mapache mamífero     4 urbano  sí   
+
+Una segunda opción es usar la función `subset()` de R base para filtrar tablas:
+
+``` r
+subset(tabla, patas < 3)
+```
+
+    # A tibble: 3 × 5
+      animal    tipo   patas habitat cola 
+      <chr>     <chr>  <dbl> <chr>   <chr>
+    1 paloma    ave        2 urbano  sí   
+    2 pollo     ave        2 rural   no   
+    3 serpiente reptil     0 rural   toda 
+
+``` r
+subset(tabla, animal == "pollo")
+```
+
+    # A tibble: 1 × 5
+      animal tipo  patas habitat cola 
+      <chr>  <chr> <dbl> <chr>   <chr>
+    1 pollo  ave       2 rural   no   
+
+La alternativa de {dplyr}, `filter()`, es similar a `subset()`, pero tiene otras conveniencias que aprenderemos más adelante:
+
+``` r
+filter(tabla, tipo != "ave")
+```
+
+    # A tibble: 4 × 5
+      animal    tipo     patas habitat cola 
+      <chr>     <chr>    <dbl> <chr>   <chr>
+    1 gato      mamífero     4 urbano  sí   
+    2 rana      anfibio      4 rural   no   
+    3 mapache   mamífero     4 urbano  sí   
+    4 serpiente reptil       0 rural   toda 
+
+``` r
+filter(tabla, animal %in% c("mapache", "gato"))
+```
+
+    # A tibble: 2 × 5
+      animal  tipo     patas habitat cola 
+      <chr>   <chr>    <dbl> <chr>   <chr>
+    1 gato    mamífero     4 urbano  sí   
+    2 mapache mamífero     4 urbano  sí   
+
+### Renombrar columnas
+
+Para cambiar el nombre de una de las columnas, hay varias formas.
+
+Una forma, quizás más rudimentaria, sería crear una columna nueva con el nombre que deseamos, a partir de una columna existente, para luego eliminar la columna original:
+
+``` r
+# columna original
+tabla$habitat
+```
+
+    [1] "urbano" "urbano" "rural"  "rural"  "urbano" "rural" 
+
+``` r
+# crear columna nueva a partir de la original
+tabla$zona <- tabla$habitat
+
+# eliminar la columna original
+tabla$habitat <- NULL
+
+# revisar cambios
+names(tabla)
+```
+
+    [1] "animal" "tipo"   "patas"  "cola"   "zona"  
+
+Éste procedimiento es similar al que vimos para crear nuevas columnas, ya que implica crear una columna que no existe aún (`zona`), a partir de un valor, en este caso, una columna de la misma tabla (`tabla$habitat`). De esta forma, duplicamos la columna, para luego **eliminar** la columna original al asignarle el valor nulo, `NULL`.
+
+Otra forma de renombrar columnas, aunque un poco confusa, es usando la función `names()`, que nos entrega los nombres de las columnas:
+
+``` r
+# obtener columnas
+names(tabla)
+```
+
+    [1] "animal" "tipo"   "patas"  "cola"   "zona"  
+
+Al obtener los nombres de las columnas, realizamos una selección de la columna que queremos, usando los corchetes. Luego habría que asignar el nombre nuevo a la columna que sleeccionamos:
+
+``` r
+# seleccionar columna a renombrar
+names(tabla)[names(tabla) == "patas"]
+```
+
+    [1] "patas"
+
+``` r
+# asignar nuevo nombre a la columna seleccionada
+names(tabla)[names(tabla) == "patas"] <- "piernas"
+
+# ver cambios
+names(tabla)
+```
+
+    [1] "animal"  "tipo"    "piernas" "cola"    "zona"   
+
+Finalmente, la alternativa que entrega {dplyr} para renombrar columnas es la función `rename()`, a la cual se le entrega la tabla, y luego se le entrega el nombre nuevo de la columna, el signo `=` y el nombre original:
+
+``` r
+tabla <- rename(tabla, nombre = animal)
+
+# ver cambios
+names(tabla)
+```
+
+    [1] "nombre"  "tipo"    "piernas" "cola"    "zona"   
+
+### Ordenar observaciones
+
+Otra operación común con tallas de datos es ordenar una tabla según una variable numérica, para que las observaciones estén en orden decreciente o ascendente.
+
+Primero, si queremos ordenar un vector, podemos usar la función `sort()` para obtener los valores del vector de menor a mayor:
+
+``` r
+sort(tabla$piernas)
+```
+
+    [1] 0 2 2 4 4 4
+
+En cierto sentido, ordenar una tabla es la misma operación que extraer filas de una tabla, solamente extraemos las filas de la tabla en el orden que deseamos. Por ejemplo:
+
+``` r
+tabla
+```
+
+    # A tibble: 6 × 5
+      nombre    tipo     piernas cola  zona  
+      <chr>     <chr>      <dbl> <chr> <chr> 
+    1 gato      mamífero       4 sí    urbano
+    2 paloma    ave            2 sí    urbano
+    3 rana      anfibio        4 no    rural 
+    4 pollo     ave            2 no    rural 
+    5 mapache   mamífero       4 sí    urbano
+    6 serpiente reptil         0 toda  rural 
+
+``` r
+# extraer filas de la tabla en un orden específico
+tabla[c(6, 4, 4), ]
+```
+
+    # A tibble: 3 × 5
+      nombre    tipo   piernas cola  zona 
+      <chr>     <chr>    <dbl> <chr> <chr>
+    1 serpiente reptil       0 toda  rural
+    2 pollo     ave          2 no    rural
+    3 pollo     ave          2 no    rural
+
+En este ejemplo, extrajimos tres filas de la tabla, pero la extracción que hacemos es específicamente de la fila que tiene valor 0 en la variable `piernas`, y luego las dos filas que tienen valor 2.
+
+Como memos, en este caso no nos serviría la función `sort()`. Porque para ordenar una tabla no necesitamos los *valores ordenados* del vector, sino las **posiciones** de los valores del vector ordenadas de manera que podamos mover las filas de una tabla. Para eso nos sirve la función `order()`:
+
+``` r
+# posiciones de los elementos ordenados
+order(tabla$piernas)
+```
+
+    [1] 6 2 4 1 3 5
+
+Esta función si no se entrega la posición de los elementos del vector o de la columna en el orden de menor a mayor, y con estas posiciones podemos reordenar las filas de la tabla:
+
+``` r
+# ordenar de menor a mayor
+tabla[order(tabla$piernas), ]
+```
+
+    # A tibble: 6 × 5
+      nombre    tipo     piernas cola  zona  
+      <chr>     <chr>      <dbl> <chr> <chr> 
+    1 serpiente reptil         0 toda  rural 
+    2 paloma    ave            2 sí    urbano
+    3 pollo     ave            2 no    rural 
+    4 gato      mamífero       4 sí    urbano
+    5 rana      anfibio        4 no    rural 
+    6 mapache   mamífero       4 sí    urbano
+
+``` r
+# ordenar de mayor a menor
+tabla[order(tabla$piernas, decreasing = TRUE), ]
+```
+
+    # A tibble: 6 × 5
+      nombre    tipo     piernas cola  zona  
+      <chr>     <chr>      <dbl> <chr> <chr> 
+    1 gato      mamífero       4 sí    urbano
+    2 rana      anfibio        4 no    rural 
+    3 mapache   mamífero       4 sí    urbano
+    4 paloma    ave            2 sí    urbano
+    5 pollo     ave            2 no    rural 
+    6 serpiente reptil         0 toda  rural 
+
+La función `arrange()` de {dplyr} nos permite ordenar una tabla tan sólo entregándole la columna por la cual queremos ordenar:
+
+``` r
+arrange(tabla, piernas)
+```
+
+    # A tibble: 6 × 5
+      nombre    tipo     piernas cola  zona  
+      <chr>     <chr>      <dbl> <chr> <chr> 
+    1 serpiente reptil         0 toda  rural 
+    2 paloma    ave            2 sí    urbano
+    3 pollo     ave            2 no    rural 
+    4 gato      mamífero       4 sí    urbano
+    5 rana      anfibio        4 no    rural 
+    6 mapache   mamífero       4 sí    urbano
+
+¡Mucho más sencillo! Si deseamos ordenar en orden descendiente (mayor a menor), debemos meter la columna dentro de la función `desc()` (por *descending*):
+
+``` r
+arrange(tabla, desc(piernas))
+```
+
+    # A tibble: 6 × 5
+      nombre    tipo     piernas cola  zona  
+      <chr>     <chr>      <dbl> <chr> <chr> 
+    1 gato      mamífero       4 sí    urbano
+    2 rana      anfibio        4 no    rural 
+    3 mapache   mamífero       4 sí    urbano
+    4 paloma    ave            2 sí    urbano
+    5 pollo     ave            2 no    rural 
+    6 serpiente reptil         0 toda  rural 
+
+## Bonus
+
+### Crear tablas manualmente
+
+Si queremos crear una tabla de datos de prueba, para explorar estos aprendizajes, o bien porque nuestros datos son muy poquitos, podemos usar la función `tribble()` para escribir la tabla como si la estuviéramos haciendo en una aplicación de planillas de cálculo:
 
 ``` r
 tribble(~días,    ~n, ~caso,
@@ -420,6 +703,12 @@ tribble(~días,    ~n, ~caso,
     2 viernes     4     0
     3 sábado      2     1
 
-*En construcción...*
+Simplemente escribe los nombres de las columnas con una colita de chancho antes (`~`) en la primera fila, y hacia abajo puedes ir rellenando los valores de cada columna.
+
+------------------------------------------------------------------------
+
+En ese tutorial nuevamente aprendimos herramientas básicas de R, esta vez orientadas a trabajar con datos en forma de tabla. Para esto, combinamos varios de los aprendizajes anteriores que habíamos aplicado a vectores, para reutilizarlos en esta nueva forma de organizar la información. Con los conocimientos obtenidos hasta ahora, ya sería posible llevar a cabo la mayor parte de las operaciones necesarias para la exploración de datos!
+
+Ahora puedes pasar a los siguientes tutoriales, donde practicaremos estos aprendizajes en conjunto de datos reales: con [datos de proyecciones de población provenientes del Censo](../../../../blog/r_introduccion/tutorial_dplyr_censo/), y con [datos de un catastro de asentamientos de viviendas rudimentarias](../../../../blog/r_introduccion/tutorial_dplyr_campamentos/)
 
 {{< cafecito  >}}

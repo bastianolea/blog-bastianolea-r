@@ -3,7 +3,7 @@ title: 'Tutorial: introducción a {dplyr} usando datos de campamentos'
 author: Bastián Olea Herrera
 date: '2024-11-09'
 draft: false
-weight: 5
+weight: 15
 format: hugo-md
 slug: []
 categories:
@@ -36,7 +36,7 @@ install.packages("dplyr") # manipulación de datos
 
 # Cargar datos
 
-Puedes [descargar el archivo `campamentos_chile_2024.xlsx` que usaremos en este tutorial desde este enlace](https://raw.githubusercontent.com/bastianolea/blog-r/refs/heads/master/content/blog/r_introduccion/tutorial_dplyr_campamentos/campamentos_chile_2024.xlsx). Los datos se obtuvieron desde [este repositorio.](https://github.com/bastianolea/campamentos_chile)
+Puedes [**descargar** el archivo `campamentos_chile_2024.xlsx` que usaremos en este tutorial desde este enlace](https://raw.githubusercontent.com/bastianolea/blog-r/refs/heads/master/content/blog/r_introduccion/tutorial_dplyr_campamentos/campamentos_chile_2024.xlsx). Los datos se obtuvieron desde [este repositorio.](https://github.com/bastianolea/campamentos_chile)
 
 Cargamos los datos desde Excel usando el nombre del archivo como argumento a la función `read_excel()`:
 
@@ -1122,20 +1122,20 @@ gt(tabla_ancha) |>
             style = cell_text(style = "italic"))
 ```
 
-<div id="cyimjsgbkx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#cyimjsgbkx table {
+<div id="anmzsvvvjb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#anmzsvvvjb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#cyimjsgbkx thead, #cyimjsgbkx tbody, #cyimjsgbkx tfoot, #cyimjsgbkx tr, #cyimjsgbkx td, #cyimjsgbkx th {
+&#10;#anmzsvvvjb thead, #anmzsvvvjb tbody, #anmzsvvvjb tfoot, #anmzsvvvjb tr, #anmzsvvvjb td, #anmzsvvvjb th {
   border-style: none;
 }
-&#10;#cyimjsgbkx p {
+&#10;#anmzsvvvjb p {
   margin: 0;
   padding: 0;
 }
-&#10;#cyimjsgbkx .gt_table {
+&#10;#anmzsvvvjb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1160,11 +1160,11 @@ gt(tabla_ancha) |>
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#cyimjsgbkx .gt_caption {
+&#10;#anmzsvvvjb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#cyimjsgbkx .gt_title {
+&#10;#anmzsvvvjb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1175,7 +1175,7 @@ gt(tabla_ancha) |>
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#cyimjsgbkx .gt_subtitle {
+&#10;#anmzsvvvjb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1186,7 +1186,7 @@ gt(tabla_ancha) |>
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#cyimjsgbkx .gt_heading {
+&#10;#anmzsvvvjb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1197,12 +1197,12 @@ gt(tabla_ancha) |>
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#cyimjsgbkx .gt_bottom_border {
+&#10;#anmzsvvvjb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#cyimjsgbkx .gt_col_headings {
+&#10;#anmzsvvvjb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1216,7 +1216,7 @@ gt(tabla_ancha) |>
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#cyimjsgbkx .gt_col_heading {
+&#10;#anmzsvvvjb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1235,7 +1235,7 @@ gt(tabla_ancha) |>
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#cyimjsgbkx .gt_column_spanner_outer {
+&#10;#anmzsvvvjb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1246,13 +1246,13 @@ gt(tabla_ancha) |>
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#cyimjsgbkx .gt_column_spanner_outer:first-child {
+&#10;#anmzsvvvjb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#cyimjsgbkx .gt_column_spanner_outer:last-child {
+&#10;#anmzsvvvjb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#cyimjsgbkx .gt_column_spanner {
+&#10;#anmzsvvvjb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1263,10 +1263,10 @@ gt(tabla_ancha) |>
   display: inline-block;
   width: 100%;
 }
-&#10;#cyimjsgbkx .gt_spanner_row {
+&#10;#anmzsvvvjb .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#cyimjsgbkx .gt_group_heading {
+&#10;#anmzsvvvjb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1291,7 +1291,7 @@ gt(tabla_ancha) |>
   vertical-align: middle;
   text-align: left;
 }
-&#10;#cyimjsgbkx .gt_empty_group_heading {
+&#10;#anmzsvvvjb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1305,13 +1305,13 @@ gt(tabla_ancha) |>
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#cyimjsgbkx .gt_from_md > :first-child {
+&#10;#anmzsvvvjb .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#cyimjsgbkx .gt_from_md > :last-child {
+&#10;#anmzsvvvjb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#cyimjsgbkx .gt_row {
+&#10;#anmzsvvvjb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1329,7 +1329,7 @@ gt(tabla_ancha) |>
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#cyimjsgbkx .gt_stub {
+&#10;#anmzsvvvjb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1341,7 +1341,7 @@ gt(tabla_ancha) |>
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#cyimjsgbkx .gt_stub_row_group {
+&#10;#anmzsvvvjb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1354,13 +1354,13 @@ gt(tabla_ancha) |>
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#cyimjsgbkx .gt_row_group_first td {
+&#10;#anmzsvvvjb .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#cyimjsgbkx .gt_row_group_first th {
+&#10;#anmzsvvvjb .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#cyimjsgbkx .gt_summary_row {
+&#10;#anmzsvvvjb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1369,14 +1369,14 @@ gt(tabla_ancha) |>
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#cyimjsgbkx .gt_first_summary_row {
+&#10;#anmzsvvvjb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#cyimjsgbkx .gt_first_summary_row.thick {
+&#10;#anmzsvvvjb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#cyimjsgbkx .gt_last_summary_row {
+&#10;#anmzsvvvjb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1385,7 +1385,7 @@ gt(tabla_ancha) |>
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#cyimjsgbkx .gt_grand_summary_row {
+&#10;#anmzsvvvjb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1394,7 +1394,7 @@ gt(tabla_ancha) |>
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#cyimjsgbkx .gt_first_grand_summary_row {
+&#10;#anmzsvvvjb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1403,7 +1403,7 @@ gt(tabla_ancha) |>
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#cyimjsgbkx .gt_last_grand_summary_row_top {
+&#10;#anmzsvvvjb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1412,10 +1412,10 @@ gt(tabla_ancha) |>
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#cyimjsgbkx .gt_striped {
+&#10;#anmzsvvvjb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#cyimjsgbkx .gt_table_body {
+&#10;#anmzsvvvjb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1423,7 +1423,7 @@ gt(tabla_ancha) |>
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#cyimjsgbkx .gt_footnotes {
+&#10;#anmzsvvvjb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1436,7 +1436,7 @@ gt(tabla_ancha) |>
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#cyimjsgbkx .gt_footnote {
+&#10;#anmzsvvvjb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1444,7 +1444,7 @@ gt(tabla_ancha) |>
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#cyimjsgbkx .gt_sourcenotes {
+&#10;#anmzsvvvjb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1457,64 +1457,64 @@ gt(tabla_ancha) |>
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#cyimjsgbkx .gt_sourcenote {
+&#10;#anmzsvvvjb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#cyimjsgbkx .gt_left {
+&#10;#anmzsvvvjb .gt_left {
   text-align: left;
 }
-&#10;#cyimjsgbkx .gt_center {
+&#10;#anmzsvvvjb .gt_center {
   text-align: center;
 }
-&#10;#cyimjsgbkx .gt_right {
+&#10;#anmzsvvvjb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#cyimjsgbkx .gt_font_normal {
+&#10;#anmzsvvvjb .gt_font_normal {
   font-weight: normal;
 }
-&#10;#cyimjsgbkx .gt_font_bold {
+&#10;#anmzsvvvjb .gt_font_bold {
   font-weight: bold;
 }
-&#10;#cyimjsgbkx .gt_font_italic {
+&#10;#anmzsvvvjb .gt_font_italic {
   font-style: italic;
 }
-&#10;#cyimjsgbkx .gt_super {
+&#10;#anmzsvvvjb .gt_super {
   font-size: 65%;
 }
-&#10;#cyimjsgbkx .gt_footnote_marks {
+&#10;#anmzsvvvjb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#cyimjsgbkx .gt_asterisk {
+&#10;#anmzsvvvjb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#cyimjsgbkx .gt_indent_1 {
+&#10;#anmzsvvvjb .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#cyimjsgbkx .gt_indent_2 {
+&#10;#anmzsvvvjb .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#cyimjsgbkx .gt_indent_3 {
+&#10;#anmzsvvvjb .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#cyimjsgbkx .gt_indent_4 {
+&#10;#anmzsvvvjb .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#cyimjsgbkx .gt_indent_5 {
+&#10;#anmzsvvvjb .gt_indent_5 {
   text-indent: 25px;
 }
-&#10;#cyimjsgbkx .katex-display {
+&#10;#anmzsvvvjb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
-&#10;#cyimjsgbkx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+&#10;#anmzsvvvjb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1524,7 +1524,7 @@ gt(tabla_ancha) |>
       <td colspan="4" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Campamentos según tamaño</td>
     </tr>
     &#10;    <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="Región">Región</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="region">Región</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="chico">chico</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="mediano">mediano</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="grande">grande</th>
@@ -1617,10 +1617,10 @@ Si este tutorial te sirvió, por favor considera hacerme una donación! Cualquie
 
 <div style = "height: 18px;">
 </div>
-  <div>
-    <div style="display: flex;
-    justify-content: center;
-    align-items: center;">
-      <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
-    </div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
   </div>
+</div>

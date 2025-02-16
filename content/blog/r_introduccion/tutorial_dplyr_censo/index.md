@@ -49,7 +49,7 @@ library(readxl) # carga de archivos Excel
 
 ## Cargar datos
 
-Antes que nada, debemos descargar el archivo que usaremos para el tutorial: [clic aquí para descargar el archivo Excel `censo_proyeccion_2024.xlsx`](https://raw.githubusercontent.com/bastianolea/censo_proyecciones_poblacion/refs/heads/main/datos_procesados/censo_proyeccion_2024.xlsx)
+Antes que nada, debemos **descargar** el archivo que usaremos para el tutorial: [clic aquí para descargar el archivo Excel `censo_proyeccion_2024.xlsx`](https://raw.githubusercontent.com/bastianolea/blog-r/refs/heads/master/content/blog/r_introduccion/tutorial_dplyr_censo/censo_proyeccion_2024.xlsx)
 
 Importamos los datos que usaremos con la funcion `read_excel()`, cuyo argumento es el nombre del archivo. Asignamos el resultado a un objeto, y así tenemos nuetros datos de Excel cargados en R:
 
@@ -508,13 +508,13 @@ censo |>
 ```
 
     # A tibble: 5 × 1
-      comuna    
-      <chr>     
-    1 Quellón   
-    2 Los Sauces
-    3 Arauco    
-    4 Requínoa  
-    5 Angol     
+      comuna      
+      <chr>       
+    1 Vitacura    
+    2 San Gregorio
+    3 Peñaflor    
+    4 Putaendo    
+    5 San Joaquín 
 
 ## Selección de filas por grupos
 
