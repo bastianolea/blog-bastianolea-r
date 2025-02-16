@@ -50,7 +50,7 @@ En este tutorial veremos:
 carga de datos de Excel seleccionar columnas ordenar tablas de datos seleccionar filas de una tabla de datos filtrar datos Los datos usados en este tutorial son las Proyecciones de población para 2024 de Chile, calculadas por el Instituto Nacional de Estadísticas (INE). La obtención, procesamiento y visualización de estos datos puede encontrarse en este repositorio, junto a una aplicación web desarrollada en R para visualizar los datos.">
   <meta itemprop="datePublished" content="2024-11-08T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-08T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2564">
+  <meta itemprop="wordCount" content="2565">
   <meta itemprop="keywords" content="Dplyr">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -307,8 +307,8 @@ carga de datos de Excel seleccionar columnas ordenar tablas de datos seleccionar
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>Antes que nada, debemos descargar el archivo que usaremos para el tutorial: 
-<a href="https://raw.githubusercontent.com/bastianolea/censo_proyecciones_poblacion/refs/heads/main/datos_procesados/censo_proyeccion_2024.xlsx" target="_blank" rel="noopener">clic aquí para descargar el archivo Excel <code>censo_proyeccion_2024.xlsx</code></a></p>
+<p>Antes que nada, debemos <strong>descargar</strong> el archivo que usaremos para el tutorial: 
+<a href="https://raw.githubusercontent.com/bastianolea/blog-r/refs/heads/master/content/blog/r_introduccion/tutorial_dplyr_censo/censo_proyeccion_2024.xlsx" target="_blank" rel="noopener">clic aquí para descargar el archivo Excel <code>censo_proyeccion_2024.xlsx</code></a></p>
 <p>Importamos los datos que usaremos con la funcion <code>read_excel()</code>, cuyo argumento es el nombre del archivo. Asignamos el resultado a un objeto, y así tenemos nuetros datos de Excel cargados en R:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_excel</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;censo_proyeccion_2024.xlsx&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># cargar</span>
 </span></span><span style="display:flex;"><span>
@@ -712,13 +712,13 @@ carga de datos de Excel seleccionar columnas ordenar tablas de datos seleccionar
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comuna</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><pre><code># A tibble: 5 × 1
-  comuna    
-  &lt;chr&gt;     
-1 Quellón   
-2 Los Sauces
-3 Arauco    
-4 Requínoa  
-5 Angol     
+  comuna      
+  &lt;chr&gt;       
+1 Vitacura    
+2 San Gregorio
+3 Peñaflor    
+4 Putaendo    
+5 San Joaquín 
 </code></pre>
 
 
@@ -775,7 +775,7 @@ carga de datos de Excel seleccionar columnas ordenar tablas de datos seleccionar
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:3302/blog/r_introduccion/dplyr_intermedio/">&larr; Manejo y transformación de datos nivel intermedio con {dplyr}</a>
+    href="http://localhost:3302/blog/r_introduccion/dplyr_intermedio/">&larr; Manejo y transformación de datos con {dplyr} y {tidyr}</a>
   
   
   
@@ -871,16 +871,13 @@ carga de datos de Excel seleccionar columnas ordenar tablas de datos seleccionar
           <li class="" hugo-nav="/blog/r_introduccion/r_intermedio/"><a href="http://localhost:3302/blog/r_introduccion/r_intermedio/">Herramientas básicas para programar con R</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/intro_datos/"><a href="http://localhost:3302/blog/r_introduccion/intro_datos/">Usando R para trabajar con datos</a></li>
-        
-          
           <li class="" hugo-nav="/blog/r_introduccion/proyectos/"><a href="http://localhost:3302/blog/r_introduccion/proyectos/">Administrar los análisis de datos en Proyectos de RStudio</a></li>
         
           
           <li class="" hugo-nav="/blog/r_introduccion/dplyr_intro/"><a href="http://localhost:3302/blog/r_introduccion/dplyr_intro/">Introducción al manejo de datos con {dplyr}</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/dplyr_intermedio/"><a href="http://localhost:3302/blog/r_introduccion/dplyr_intermedio/">Manejo y transformación de datos nivel intermedio con {dplyr}</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/dplyr_intermedio/"><a href="http://localhost:3302/blog/r_introduccion/dplyr_intermedio/">Manejo y transformación de datos con {dplyr} y {tidyr}</a></li>
         
           
           <li class="active" hugo-nav="/blog/r_introduccion/tutorial_dplyr_censo/"><a href="http://localhost:3302/blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></li>

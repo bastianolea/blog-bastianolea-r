@@ -49,7 +49,7 @@
 {dplyr} La herramienta que utilizaremos para explorar, manipular, y transformar datos será el paquete {dplyr}. Este paquete, parte central del conjunto Tidyverse de herramientas para el análisis de datos con R, es uno de los más usados por la comunidad de R por su facilidad de uso.">
   <meta itemprop="datePublished" content="2025-02-13T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-02-13T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1786">
+  <meta itemprop="wordCount" content="3396">
   <meta itemprop="keywords" content="Dplyr,Consejos,Datos">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -452,6 +452,13 @@ $ patas  &lt;dbl&gt; 4, 2, 4, 2, 4, 0
   &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt;
 1 mapache mamífero     4
 </code></pre>
+<p>Si queremos extraer la última fila de una tabla, podemos combinar <code>slice()</code> con la función <code>nrow()</code> que nos entrega la cantidad de filas de una tabla, resultando en extraer la fila que corresponde con el número de filas; es decir, la última:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">slice</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nrow</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 3
+  animal    tipo   patas
+  &lt;chr&gt;     &lt;chr&gt;  &lt;dbl&gt;
+1 serpiente reptil     0
+</code></pre>
 
 
 
@@ -512,6 +519,10 @@ $ patas  &lt;dbl&gt; 4, 2, 4, 2, 4, 0
 </span></span></code></pre></div><pre><code>[1] &quot;gato&quot;      &quot;paloma&quot;    &quot;rana&quot;      &quot;pollo&quot;     &quot;mapache&quot;   &quot;serpiente&quot;
 </code></pre>
 <p>A usar el operador <code>$</code> para extraer columnas, se obtiene el vector que se usó para crear la columna, así que recibimos los datos en forma de vector.</p>
+<p>La misma extracción de una columna como vector puede hacerse con la función <code>pull()</code> de {dplyr}, donde se entrega la tabla y la columna, y se obtiene la columna como vector:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">pull</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">animal</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;gato&quot;      &quot;paloma&quot;    &quot;rana&quot;      &quot;pollo&quot;     &quot;mapache&quot;   &quot;serpiente&quot;
+</code></pre>
 
 
 
@@ -556,8 +567,10 @@ NULL
 5 mapache   mamífero     4 urbano  sí   
 6 serpiente reptil       0 rural   toda 
 </code></pre>
-<p>La diferencia es que con <code>mutate()</code> solamente estamos previsualizando el cambio, dado que no hemos asignado nada. Si queremos que la columna realmente se guarde en el <em>dataframe</em>, debemos asignar el resultado a un objeto nuevo, o sobreescribir el actual.</p>
-
+<p>La diferencia es que con <code>mutate()</code> solamente estamos previsualizando el cambio, dado que no hemos asignado nada. Si queremos que la columna realmente se guarde en el <em>dataframe</em>, debemos asignar el resultado a un objeto nuevo, o sobreescribir el actual:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># sobreescribir la tabla con la columna nueva</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tabla</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">cola</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;sí&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;sí&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;no&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;no&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;sí&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;toda&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div>
 
 
 
@@ -567,34 +580,240 @@ NULL
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tabla[tabla</span><span style="color:#908caa">$</span><span style="color:#ea9a97">animal</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;mapache&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">]</span>
-</span></span></code></pre></div><pre><code># A tibble: 1 × 4
-  animal  tipo     patas habitat
-  &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  
-1 mapache mamífero     4 urbano 
+<p>Una de las tareas más recurrentes que vamos a hacer con tablas de datos, sobre todo cuando son muy grandes, es filtrar la información. El filtrado de datos funciona a partir de <strong>comparaciones</strong>, dado que al filtrar estamos especificando un criterio que deben cumplir los valores para mantenerse en la tabla, y todos los valores que no cumplan este criterio serán removidos.</p>
+<p>Entonces, para filtrar datos, escribimos una comparación que coincida (retorne <code>TRUE</code>) con los valores que deseamos recibir.</p>
+<p>Supongamos que queremos ver solamente las observaciones donde el valor de la variable <code>patas</code> sea mayor que 2. Primero, planteemos la comparación:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># extraer los valores de la columna `patas`</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">$</span><span style="color:#ea9a97">patas</span> 
+</span></span></code></pre></div><pre><code>[1] 4 2 4 2 4 0
 </code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># comparar los valores con el número 2</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">$</span><span style="color:#ea9a97">patas</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">2</span>
+</span></span></code></pre></div><pre><code>[1]  TRUE FALSE  TRUE FALSE  TRUE FALSE
+</code></pre>
+<p>A partir de las comparaciones, recibimos una secuencia de valores lógicos (<code>TRUE</code>/<code>FALSE</code>) que indican si cada elemento del vector cumplió o no con la comparación planteada. Entonces, en principio, queremos mantener solamente las observaciones que retornaron <code>TRUE</code>.</p>
+<p>Recordemos que para filtrar filas de una tabla, dentro de los corchetes especificamos en la primera posición las filas que queremos extraer.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tabla[1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">]</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 5
+  animal tipo     patas habitat cola 
+  &lt;chr&gt;  &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;
+1 gato   mamífero     4 urbano  sí   
+</code></pre>
+<p>Esto, sumado a lo anterior, son los principios que usaremos para filtrar las filas de una tabla de datos:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tabla[tabla</span><span style="color:#908caa">$</span><span style="color:#ea9a97">patas</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">]</span>
-</span></span></code></pre></div><pre><code># A tibble: 3 × 4
-  animal  tipo     patas habitat
-  &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  
-1 gato    mamífero     4 urbano 
-2 rana    anfibio      4 rural  
-3 mapache mamífero     4 urbano 
+</span></span></code></pre></div><pre><code># A tibble: 3 × 5
+  animal  tipo     patas habitat cola 
+  &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;
+1 gato    mamífero     4 urbano  sí   
+2 rana    anfibio      4 rural   no   
+3 mapache mamífero     4 urbano  sí   
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">subset</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">patas</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><pre><code># A tibble: 3 × 4
-  animal  tipo     patas habitat
-  &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  
-1 gato    mamífero     4 urbano 
-2 rana    anfibio      4 rural  
-3 mapache mamífero     4 urbano 
+<p>Usamos la comparación que retorna verdaderos y falsos dentro de los corchetes para seleccionar las filas de la tabla. Entonces, como el vector de la comparación entre el mismo largo que las filas de la tabla, en cada posición de la comparación que se obtuvo <code>TRUE</code>, se muestra la fila correspondiente, y si se obtuvo <code>FALSE</code>, se omite.</p>
+<p>Otros ejemplos de filtrado:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">$</span><span style="color:#ea9a97">animal</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;mapache&#34;</span>
+</span></span></code></pre></div><pre><code>[1] FALSE FALSE FALSE FALSE  TRUE FALSE
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">subset</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">animal</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;mapache&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><pre><code># A tibble: 1 × 4
-  animal  tipo     patas habitat
-  &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  
-1 mapache mamífero     4 urbano 
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tabla[tabla</span><span style="color:#908caa">$</span><span style="color:#ea9a97">animal</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;mapache&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">]</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 5
+  animal  tipo     patas habitat cola 
+  &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;
+1 mapache mamífero     4 urbano  sí   
 </code></pre>
+<p>Una segunda opción es usar la función <code>subset()</code> de R base para filtrar tablas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">subset</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">patas</span> <span style="color:#908caa">&lt;</span> <span style="color:#f6c177">3</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 3 × 5
+  animal    tipo   patas habitat cola 
+  &lt;chr&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;
+1 paloma    ave        2 urbano  sí   
+2 pollo     ave        2 rural   no   
+3 serpiente reptil     0 rural   toda 
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">subset</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">animal</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;pollo&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 5
+  animal tipo  patas habitat cola 
+  &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;
+1 pollo  ave       2 rural   no   
+</code></pre>
+<p>La alternativa de {dplyr}, <code>filter()</code>, es similar a <code>subset()</code>, pero tiene otras conveniencias que aprenderemos más adelante:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">tipo</span> <span style="color:#908caa">!=</span> <span style="color:#f6c177">&#34;ave&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 4 × 5
+  animal    tipo     patas habitat cola 
+  &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;
+1 gato      mamífero     4 urbano  sí   
+2 rana      anfibio      4 rural   no   
+3 mapache   mamífero     4 urbano  sí   
+4 serpiente reptil       0 rural   toda 
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">animal</span> <span style="color:#908caa">%in%</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;mapache&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;gato&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 2 × 5
+  animal  tipo     patas habitat cola 
+  &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;
+1 gato    mamífero     4 urbano  sí   
+2 mapache mamífero     4 urbano  sí   
+</code></pre>
+
+
+
+
+<h3 id="renombrar-columnas">Renombrar columnas
+  <a href="#renombrar-columnas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Para cambiar el nombre de una de las columnas, hay varias formas.</p>
+<p>Una forma, quizás más rudimentaria, sería crear una columna nueva con el nombre que deseamos, a partir de una columna existente, para luego eliminar la columna original:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># columna original</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">$</span><span style="color:#ea9a97">habitat</span>
+</span></span></code></pre></div><pre><code>[1] &quot;urbano&quot; &quot;urbano&quot; &quot;rural&quot;  &quot;rural&quot;  &quot;urbano&quot; &quot;rural&quot; 
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># crear columna nueva a partir de la original</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">$</span><span style="color:#ea9a97">zona</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tabla</span><span style="color:#908caa">$</span><span style="color:#ea9a97">habitat</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># eliminar la columna original</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">$</span><span style="color:#ea9a97">habitat</span> <span style="color:#908caa">&lt;-</span> <span style="color:#3e8fb0">NULL</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># revisar cambios</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">names</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;animal&quot; &quot;tipo&quot;   &quot;patas&quot;  &quot;cola&quot;   &quot;zona&quot;  
+</code></pre>
+<p>Éste procedimiento es similar al que vimos para crear nuevas columnas, ya que implica crear una columna que no existe aún (<code>zona</code>), a partir de un valor, en este caso, una columna de la misma tabla (<code>tabla$habitat</code>). De esta forma, duplicamos la columna, para luego <strong>eliminar</strong> la columna original al asignarle el valor nulo, <code>NULL</code>.</p>
+<p>Otra forma de renombrar columnas, aunque un poco confusa, es usando la función <code>names()</code>, que nos entrega los nombres de las columnas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># obtener columnas</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">names</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;animal&quot; &quot;tipo&quot;   &quot;patas&quot;  &quot;cola&quot;   &quot;zona&quot;  
+</code></pre>
+<p>Al obtener los nombres de las columnas, realizamos una selección de la columna que queremos, usando los corchetes. Luego habría que asignar el nombre nuevo a la columna que sleeccionamos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># seleccionar columna a renombrar</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">names</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">)</span><span style="color:#ea9a97">[names</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">)</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;patas&#34;</span><span style="color:#ea9a97">]</span>
+</span></span></code></pre></div><pre><code>[1] &quot;patas&quot;
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># asignar nuevo nombre a la columna seleccionada</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">names</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">)</span><span style="color:#ea9a97">[names</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">)</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;patas&#34;</span><span style="color:#ea9a97">]</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;piernas&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># ver cambios</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">names</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;animal&quot;  &quot;tipo&quot;    &quot;piernas&quot; &quot;cola&quot;    &quot;zona&quot;   
+</code></pre>
+<p>Finalmente, la alternativa que entrega {dplyr} para renombrar columnas es la función <code>rename()</code>, a la cual se le entrega la tabla, y luego se le entrega el nombre nuevo de la columna, el signo <code>=</code> y el nombre original:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tabla</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">rename</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombre</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">animal</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># ver cambios</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">names</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;nombre&quot;  &quot;tipo&quot;    &quot;piernas&quot; &quot;cola&quot;    &quot;zona&quot;   
+</code></pre>
+
+
+
+
+<h3 id="ordenar-observaciones">Ordenar observaciones
+  <a href="#ordenar-observaciones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Otra operación común con tallas de datos es ordenar una tabla según una variable numérica, para que las observaciones estén en orden decreciente o ascendente.</p>
+<p>Primero, si queremos ordenar un vector, podemos usar la función <code>sort()</code> para obtener los valores del vector de menor a mayor:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sort</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">$</span><span style="color:#ea9a97">piernas</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] 0 2 2 4 4 4
+</code></pre>
+<p>En cierto sentido, ordenar una tabla es la misma operación que extraer filas de una tabla, solamente extraemos las filas de la tabla en el orden que deseamos. Por ejemplo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tabla</span>
+</span></span></code></pre></div><pre><code># A tibble: 6 × 5
+  nombre    tipo     piernas cola  zona  
+  &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 gato      mamífero       4 sí    urbano
+2 paloma    ave            2 sí    urbano
+3 rana      anfibio        4 no    rural 
+4 pollo     ave            2 no    rural 
+5 mapache   mamífero       4 sí    urbano
+6 serpiente reptil         0 toda  rural 
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># extraer filas de la tabla en un orden específico</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tabla</span><span style="color:#ea9a97">[c</span><span style="color:#908caa">(</span><span style="color:#f6c177">6</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">]</span>
+</span></span></code></pre></div><pre><code># A tibble: 3 × 5
+  nombre    tipo   piernas cola  zona 
+  &lt;chr&gt;     &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;
+1 serpiente reptil       0 toda  rural
+2 pollo     ave          2 no    rural
+3 pollo     ave          2 no    rural
+</code></pre>
+<p>En este ejemplo, extrajimos tres filas de la tabla, pero la extracción que hacemos es específicamente de la fila que tiene valor 0 en la variable <code>piernas</code>, y luego las dos filas que tienen valor 2.</p>
+<p>Como memos, en este caso no nos serviría la función <code>sort()</code>. Porque para ordenar una tabla no necesitamos los <em>valores ordenados</em> del vector, sino las <strong>posiciones</strong> de los valores del vector ordenadas de manera que podamos mover las filas de una tabla. Para eso nos sirve la función <code>order()</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># posiciones de los elementos ordenados</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">order</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">$</span><span style="color:#ea9a97">piernas</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] 6 2 4 1 3 5
+</code></pre>
+<p>Esta función si no se entrega la posición de los elementos del vector o de la columna en el orden de menor a mayor, y con estas posiciones podemos reordenar las filas de la tabla:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># ordenar de menor a mayor</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tabla</span><span style="color:#ea9a97">[order</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">$</span><span style="color:#ea9a97">piernas</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">]</span>
+</span></span></code></pre></div><pre><code># A tibble: 6 × 5
+  nombre    tipo     piernas cola  zona  
+  &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 serpiente reptil         0 toda  rural 
+2 paloma    ave            2 sí    urbano
+3 pollo     ave            2 no    rural 
+4 gato      mamífero       4 sí    urbano
+5 rana      anfibio        4 no    rural 
+6 mapache   mamífero       4 sí    urbano
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># ordenar de mayor a menor</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tabla</span><span style="color:#ea9a97">[order</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">$</span><span style="color:#ea9a97">piernas</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">decreasing</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">]</span>
+</span></span></code></pre></div><pre><code># A tibble: 6 × 5
+  nombre    tipo     piernas cola  zona  
+  &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 gato      mamífero       4 sí    urbano
+2 rana      anfibio        4 no    rural 
+3 mapache   mamífero       4 sí    urbano
+4 paloma    ave            2 sí    urbano
+5 pollo     ave            2 no    rural 
+6 serpiente reptil         0 toda  rural 
+</code></pre>
+<p>La función <code>arrange()</code> de {dplyr} nos permite ordenar una tabla tan sólo entregándole la columna por la cual queremos ordenar:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">piernas</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 6 × 5
+  nombre    tipo     piernas cola  zona  
+  &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 serpiente reptil         0 toda  rural 
+2 paloma    ave            2 sí    urbano
+3 pollo     ave            2 no    rural 
+4 gato      mamífero       4 sí    urbano
+5 rana      anfibio        4 no    rural 
+6 mapache   mamífero       4 sí    urbano
+</code></pre>
+<p>¡Mucho más sencillo! Si deseamos ordenar en orden descendiente (mayor a menor), debemos meter la columna dentro de la función <code>desc()</code> (por <em>descending</em>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">desc</span><span style="color:#908caa">(</span><span style="color:#ea9a97">piernas</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 6 × 5
+  nombre    tipo     piernas cola  zona  
+  &lt;chr&gt;     &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+1 gato      mamífero       4 sí    urbano
+2 rana      anfibio        4 no    rural 
+3 mapache   mamífero       4 sí    urbano
+4 paloma    ave            2 sí    urbano
+5 pollo     ave            2 no    rural 
+6 serpiente reptil         0 toda  rural 
+</code></pre>
+
+
+
+
+<h2 id="bonus">Bonus
+  <a href="#bonus"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+
+
+
+
+<h3 id="crear-tablas-manualmente">Crear tablas manualmente
+  <a href="#crear-tablas-manualmente"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Si queremos crear una tabla de datos de prueba, para explorar estos aprendizajes, o bien porque nuestros datos son muy poquitos, podemos usar la función <code>tribble()</code> para escribir la tabla como si la estuviéramos haciendo en una aplicación de planillas de cálculo:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tribble</span><span style="color:#908caa">(</span><span style="color:#908caa">~</span><span style="color:#ea9a97">días</span><span style="color:#908caa">,</span>    <span style="color:#908caa">~</span><span style="color:#ea9a97">n</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">caso</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#f6c177">&#34;jueves&#34;</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">0</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">1</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#f6c177">&#34;viernes&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">0</span><span style="color:#908caa">,</span>
@@ -607,7 +826,12 @@ NULL
 2 viernes     4     0
 3 sábado      2     1
 </code></pre>
-<p><em>En construcción&hellip;</em></p>
+<p>Simplemente escribe los nombres de las columnas con una colita de chancho antes (<code>~</code>) en la primera fila, y hacia abajo puedes ir rellenando los valores de cada columna.</p>
+<hr>
+<p>En ese tutorial nuevamente aprendimos herramientas básicas de R, esta vez orientadas a trabajar con datos en forma de tabla. Para esto, combinamos varios de los aprendizajes anteriores que habíamos aplicado a vectores, para reutilizarlos en esta nueva forma de organizar la información. Con los conocimientos obtenidos hasta ahora, ya sería posible llevar a cabo la mayor parte de las operaciones necesarias para la exploración de datos!</p>
+<p>Ahora puedes pasar a los siguientes tutoriales, donde practicaremos estos aprendizajes en conjunto de datos reales: con 
+<a href="../../../../blog/r_introduccion/tutorial_dplyr_censo/">datos de proyecciones de población provenientes del Censo</a>, y con 
+<a href="../../../../blog/r_introduccion/tutorial_dplyr_campamentos/">datos de un catastro de asentamientos de viviendas rudimentarias</a></p>
 <div style = "height: 18px;">
 </div>
 <div>
@@ -628,7 +852,7 @@ NULL
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:3302/blog/r_introduccion/dplyr_intermedio/">Manejo y transformación de datos nivel intermedio con {dplyr} y {tidyr} &rarr;</a>
+    href="http://localhost:3302/blog/r_introduccion/dplyr_intermedio/">Manejo y transformación de datos con {dplyr} y {tidyr} &rarr;</a>
   
 </div>
 
@@ -719,16 +943,13 @@ NULL
           <li class="" hugo-nav="/blog/r_introduccion/r_intermedio/"><a href="http://localhost:3302/blog/r_introduccion/r_intermedio/">Herramientas básicas para programar con R</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/intro_datos/"><a href="http://localhost:3302/blog/r_introduccion/intro_datos/">Usando R para trabajar con datos</a></li>
-        
-          
           <li class="" hugo-nav="/blog/r_introduccion/proyectos/"><a href="http://localhost:3302/blog/r_introduccion/proyectos/">Administrar los análisis de datos en Proyectos de RStudio</a></li>
         
           
           <li class="active" hugo-nav="/blog/r_introduccion/dplyr_intro/"><a href="http://localhost:3302/blog/r_introduccion/dplyr_intro/">Introducción al manejo de datos con {dplyr}</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/dplyr_intermedio/"><a href="http://localhost:3302/blog/r_introduccion/dplyr_intermedio/">Manejo y transformación de datos nivel intermedio con {dplyr} y {tidyr}</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/dplyr_intermedio/"><a href="http://localhost:3302/blog/r_introduccion/dplyr_intermedio/">Manejo y transformación de datos con {dplyr} y {tidyr}</a></li>
         
           
           <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_censo/"><a href="http://localhost:3302/blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></li>
@@ -766,6 +987,13 @@ NULL
         <li><a href="#seleccionar-datos">Seleccionar datos</a></li>
         <li><a href="#crear-columnas">Crear columnas</a></li>
         <li><a href="#filtrar-datos">Filtrar datos</a></li>
+        <li><a href="#renombrar-columnas">Renombrar columnas</a></li>
+        <li><a href="#ordenar-observaciones">Ordenar observaciones</a></li>
+      </ul>
+    </li>
+    <li><a href="#bonus">Bonus</a>
+      <ul>
+        <li><a href="#crear-tablas-manualmente">Crear tablas manualmente</a></li>
       </ul>
     </li>
   </ul>
