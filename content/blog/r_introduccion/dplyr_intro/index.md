@@ -1,7 +1,7 @@
 ---
 title: 'Introducción al manejo de datos con {dplyr}'
 author: Bastián Olea Herrera
-date: '2025-02-13'
+date: '2025-02-15'
 format:
   hugo-md:
     output-file: index
