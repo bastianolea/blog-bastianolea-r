@@ -53,7 +53,7 @@ Primero, como en cualquier otra instancia de desarrollo con R, debes crear un nu
 
 En el menú _File,_ elige _New Project_ y crea un proyecto en una nueva carpeta, con el título de tu aplicación.
 
-![](tutorial_shiny_1.png)
+{{< imagen "tutorial_shiny_1.png">}}
 
 ### Crear el script 
 
@@ -109,7 +109,7 @@ Al incluir esta línea en nuestro script, RStudio detectará que se trata de una
 
 <div style="text-align: center; margin:auto; max-width: 400px;">
 
-![](tutorial_shiny_2.png)
+{{< imagen "tutorial_shiny_2.png">}}
 
 </div>
 
@@ -133,7 +133,7 @@ shinyApp(ui, server)
 
 Tenemos un script que carga los paquetes que usamos, crea una interfaz (`ui`), define un servidor (`server`), y une ambos al final para poder ejecutarla. Presiona el botón _Run App_ y tu aplicación Shiny debería abrirse en una nueva ventana y mostrarse. ¡Lo logramos!
 
-![](tutorial_shiny_3.png)
+{{< imagen "tutorial_shiny_3.png">}}
 
 ----
 
@@ -172,7 +172,7 @@ Luego de agregar el input al `ui` de tu app, puedes volver a ejecutarla para ver
 
 <div style="text-align: center; margin:auto; max-width: 500px;">
 
-![](tutorial_shiny_4.png)
+{{< imagen "tutorial_shiny_4.png">}}
 
 </div>
 
@@ -306,7 +306,7 @@ Ejecutamos la app, y vemos que ahora tenemos dos inputs, los cuales se usan en u
 
 <div style="text-align: center; margin:auto; max-width: 560px;">
 
-![](tutorial_shiny_5.png)
+{{< imagen "tutorial_shiny_5.png">}}
 
 </div>
 
@@ -320,3 +320,5 @@ El siguiente paso es compartirla con los demás! Para eso, puedes seguir el tuto
 Si tienes cualquier consulta, necesitas apoyo con tu aplicación Shiny, o deseas que te ayude a desarrollar un proyecto, no dudes en [contactarme](/contact/).
 
 [Revisa mis clases para ver los cursos anteriores de Shiny](/clases/) que he impartido, los cuales contienen código y ejemplos de aplicaciones.
+
+{{<cafecito>}}
