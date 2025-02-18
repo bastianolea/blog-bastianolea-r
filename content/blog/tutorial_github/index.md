@@ -147,6 +147,9 @@ Puedes compartir el enlace a este repositorio para que otras personas puedan ver
 
 Recuerda que los repositorios en GitHub son por defecto **públicos y visibles** para las demás personas. Si necesitas respaldar, almacenar o compartir código y o datos privados, crea un repositorio privado con el comando `usethis::use_github(private = TRUE)`. En un repositorio privado, solamente tus computadoras autorizadas y personas que tú autorices podrán acceder a tu código. 
 
+
+---- 
+
 Si te sirvió este tutorial, por favor considera hacerme una pequeña donación para poder tomarme un cafecito mientras escribo el siguiente tutorial 🥺
 
 {{<cafecito>}}
