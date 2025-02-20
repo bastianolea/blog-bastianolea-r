@@ -17,7 +17,7 @@ excerpt: >-
 ---
 
 
-Este post es una introducción al paquete `{dplyr}` para la exploración y análisis de datos con R. Está dirigido a principiantes de R. Si es primera vez que usas R, te recomiendo revisar primero [este breve tutorial inicial de R.](../../../../blog/r_introduccion/r_basico/).
+Este post es una introducción al paquete `{dplyr}` para la exploración y análisis de datos con R. Está dirigido a principiantes de R. Si es primera vez que usas R, te recomiendo revisar primero [este breve tutorial inicial de R.](/blog/r_introduccion/r_basico/).
 
 *En este tutorial veremos:*
 - carga de datos de Excel
