@@ -1,14 +1,20 @@
 ---
 title: Predecir género a partir de nombres usando un modelo de lenguaje en R
 author: Bastián Olea Herrera
-date: '2024-11-11'
+date: '2025-02-19'
 slug: []
 categories: []
 tags:
   - procesamiento de datos
   - inteligencia artificial
   - análisis de texto
-  - ciencias sociales
+excerpt: >-
+  Aprende a usar modelos extensos de lenguaje (LLM) para clasificar datos con un
+  caso de uso real, donde se necesita asumir el género de las personas a partir
+  de sus nombres para poder realizar análisis con perspectiva de género. Aplicar
+  inteligencia artificial en R para este tipo de tareas es puede ahorrarte
+  muchísimo tiempo, y dependiendo de como ajustes los datos y el _prompt_ puede
+  entregar buenos resultados.
 ---
 
 
@@ -100,23 +106,23 @@ resultados_1 |> select(genero, nombres) |> slice_sample(n = 15)
 ```
 
     # A tibble: 15 × 2
-       genero    nombres                         
-       <chr>     <chr>                           
-     1 masculino Juan Jesus Herrera Fuentes      
-     2 masculino Efrain Oporto Torres            
-     3 masculino Dino Lotito Flores              
-     4 masculino Maria Marjorie Jopia Herrera    
-     5 masculino Jorge Contanzo Bravo            
-     6 masculino Cristobal Sanchez Carvallo      
-     7 masculino Humberto Garcia Diaz            
-     8 masculino Gustavo Diego Marquez Cadagan   
-     9 masculino Maximiliano Radonich Radonich   
-    10 masculino Luis Reinaldo Pradenas Moran    
-    11 masculino Nelson Fernando Lazcano Silva   
-    12 masculino Bernardo Cornejo Ceron          
-    13 masculino Rodrigo Esteban Castro Sepulveda
-    14 masculino Juan Pablo Gomez Ramirez        
-    15 masculino Kether Bautista Gomez Pasten    
+       genero    nombres                        
+       <chr>     <chr>                          
+     1 masculino Claudio Alejandro Muñoz Seguel 
+     2 masculino Leonardo Francisco Gomez Valdes
+     3 masculino Patricio Andres Labra Quiroz   
+     4 masculino Ricardo Vargas Valenzuela      
+     5 femenino  Claudia Andrea Valdes Vasquez  
+     6 masculino Fernando Alberto Ruhl Perez    
+     7 masculino Ariel Espinoza Cerpa           
+     8 masculino Jose Rafael Saavedra Ibacache  
+     9 masculino Gustavo Jara Bertin            
+    10 masculino Raul Alfonso Medina Fernández  
+    11 femenino  Gabriela Mercedes Vera Martínez
+    12 femenino  Sandra Ines Bastias Bilbao     
+    13 femenino  Marcela Andrea Cubillos Hevia  
+    14 masculino Juan Carlos Melendez Santelices
+    15 femenino  Carolina Corti Badia           
 
 Para la segunda prueba, intentamos entregarle al modelo *solamente los nombres*, excluyendo segundos nombres y apellidos, bajo el supuesto de que el primer nombre es el mejor predictor del género, mientras que los apellidos no son un predictor del género.
 
@@ -130,13 +136,13 @@ candidatos |>
 ```
 
     # A tibble: 5 × 2
-      nombre  nombres                       
-      <chr>   <chr>                         
-    1 Marcelo Marcelo Patricio Bersano Reyes
-    2 Americo Americo Guajardo Oyarce       
-    3 Jorge   Jorge Westermeier Estrada     
-    4 Omar    Omar Vera Castro              
-    5 Camilo  Camilo Riffo Quintana         
+      nombre  nombres                        
+      <chr>   <chr>                          
+    1 Daniela Daniela Natalie Molina Sandoval
+    2 Juan    Juan Ibarra Mella              
+    3 Daniel  Daniel Parra Calabrano         
+    4 Juan    Juan Manuel Riffo Ortiz        
+    5 Felipe  Felipe Andres Barril Riquelme  
 
 Realizamos la segunda prueba de clasificación, esta vez solamente con el primer nombre:
 
@@ -218,4 +224,19 @@ resultados_2 |>
 
 Revisando los nombres, al parecer las predicciones son bastante buenas, pero al hacer más pruebas nos damos cuenta de que no es 100% infalible, ya que se equivoca en algunos nombres como *Aracelli, Edita, Elizabeth,* o *Josselyn.* si se requiere aumentar la calidad de la predicción, podría [instalarse un modelo de lenguaje más grande.](https://ollama.com/library)
 
+Otra alternativa para mejorar el desempeño de la clasificación (es decir, que sea más certer) es agregarle al *prompt* más contexto sobre lo que se busca obtener, así como una alternativa para que el modelo clasifique términos que no sabe dónde clasificar:
+
+``` r
+resultados_3 <- candidatos |> 
+  mutate(nombre = stringr::str_extract(nombres, "\\w+")) |> # extraer nombres
+  llm_classify(nombre,
+               labels = c("masculino", "femenino", "desconocido"),
+               pred_name = "genero", 
+               additional_prompt = "obtener el género desde nombres de personas")
+```
+
+En el argumento `additional_prompt` podemos especifiacr una instrucción extra para el modelo, lo que a veces es suficiente para que el modelo tenga contexto extra para poder clasificar correctamente. En mi experiencia, esto mejora considerablemente la calidad de las respuestas, y reduce la incertidumbre en algunos casos.
+
 En conclusión, se trata de una herramienta muy fácil de implementar, que también es capaz de ahorrarnos bastante tiempo, por ejemplo, en el desarrollo de un algoritmo que detecte el nombre a partir de ciertas estructuras en la composición de cada uno, o bien, en tener que contrastar los nombres con alguna base de datos ya existente de nombres con un género asignado (si es que existe).
+
+{{< cafecito  >}}
