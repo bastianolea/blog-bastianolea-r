@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Simplificar la geometría de los polígonos de un mapa en R | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Un problema común al visualizar datos georeferenciados o mapas coropléticos (con colores en las zonas geográficas que se corresponden con los datos) yace en que usamos mapas que tienen geometrías o características geográficas mucho más detalladas de lo que necesitamos. Este exceso de detalle puede jugarle en contra a la visualización que estamos intentando crear, ya sea porque dificulta la interpretación, o complejiza visualmente el gráfico. En esta guía aprenderemos a simplificar mapas en R para producir visualizaciones con el nivel apropiado de detalle, y hacer más rápida la generación de mapas.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Simplificar la geometría de los polígonos de un mapa en R | Blog">
+<meta property="og:description" content="Un problema común al visualizar datos georeferenciados o mapas coropléticos (con colores en las zonas geográficas que se corresponden con los datos) yace en que usamos mapas que tienen geometrías o características geográficas mucho más detalladas de lo que necesitamos. Este exceso de detalle puede jugarle en contra a la visualización que estamos intentando crear, ya sea porque dificulta la interpretación, o complejiza visualmente el gráfico. En esta guía aprenderemos a simplificar mapas en R para producir visualizaciones con el nivel apropiado de detalle, y hacer más rápida la generación de mapas." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/simplificar_mapas/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.jpg" >
+    
+    
+  
+  <meta itemprop="name" content="Simplificar la geometría de los polígonos de un mapa en R">
+  <meta itemprop="description" content="Un problema común al visualizar datos georeferenciados o mapas coropléticos (con colores en las zonas geográficas que se corresponden con los datos) yace en que usamos mapas que tienen geometrías o características geográficas mucho más detalladas de lo que necesitamos. Este exceso de detalle puede jugarle en contra a la visualización que estamos intentando crear, ya sea porque dificulta la interpretación, o complejiza visualmente el gráfico.
+Otro problema de trabajar con mapas muy detallados es que la velocidad con la que se generan se ve impactada debido al detalle, lo que resulta inconveniente dado que al visualizar datos usualmente nos encontramos iterando decenas de veces una misma visualización hasta que se vea como queremos.">
+  <meta itemprop="datePublished" content="2025-02-27T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-02-27T00:00:00+00:00">
+  <meta itemprop="wordCount" content="835">
+  <meta itemprop="keywords" content="Mapas,Visualización de datos">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Simplificar la geometría de los polígonos de un mapa en R</h1>
+        
+        
+        <p class="f7 db mv0 ttu">27/2/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/mapas">mapas</a>  <a href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a> </dd></em>
+  </dl>
+
+
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>Un problema común al visualizar datos georeferenciados o mapas coropléticos (con colores en las zonas geográficas que se corresponden con los datos) yace en que usamos mapas que tienen geometrías o características geográficas mucho más detalladas de lo que necesitamos. Este exceso de detalle puede jugarle en contra a la visualización que estamos intentando crear, ya sea porque dificulta la interpretación, o complejiza visualmente el gráfico.</p>
+<p>Otro problema de trabajar con mapas muy detallados es que la velocidad con la que se generan se ve impactada debido al detalle, lo que resulta inconveniente dado que al visualizar datos usualmente nos encontramos iterando decenas de veces una misma visualización hasta que se vea como queremos.</p>
+<p>Esto puede ocurrir cuando mapas desde Shapes u otras fuentes cuyo objetivo es representar fidedignamente los territorios; pero al visualizar datos generalmente necesitamos visualizaciones que no requieren exactitud milimétrica en sus polígonos.</p>
+<p>Generemos un mapa de regiones de Chile, usando las geometrías del paquete {chilemapas}:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sf</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># generar mapa de regiones</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_regiones</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">::</span><span style="color:#ea9a97">mapa_comunas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_set_geometry</span><span style="color:#908caa">(</span><span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">::</span><span style="color:#ea9a97">mapa_comunas</span><span style="color:#908caa">$</span><span style="color:#ea9a97">geometry</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">codigo_comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">codigo_region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">geometry</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarize</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_union</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">.by</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">codigo_region</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_regiones</span>
+</span></span></code></pre></div><pre><code>Simple feature collection with 16 features and 1 field
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: -109.4499 ymin: -56.52511 xmax: -66.41617 ymax: -17.49778
+Geodetic CRS:  SIRGAS 2000
+# A tibble: 16 × 2
+   codigo_region                                                        geometry
+   &lt;chr&gt;                                                          &lt;GEOMETRY [°]&gt;
+ 1 01            POLYGON ((-69.93023 -21.4246, -69.92376 -21.42622, -69.91932 -…
+ 2 02            MULTIPOLYGON (((-68.0676 -24.32856, -67.91698 -24.26902, -67.8…
+ 3 03            MULTIPOLYGON (((-71.58497 -29.02456, -71.58844 -29.02838, -71.…
+ 4 04            MULTIPOLYGON (((-70.54551 -31.30742, -70.53877 -31.30074, -70.…
+ 5 05            MULTIPOLYGON (((-71.33832 -33.45237, -71.33763 -33.44836, -71.…
+ 6 06            POLYGON ((-71.5477 -34.87458, -71.54211 -34.87581, -71.53566 -…
+ 7 07            POLYGON ((-70.41724 -35.63022, -70.41108 -35.6302, -70.40146 -…
+ 8 08            MULTIPOLYGON (((-73.53466 -36.97378, -73.53245 -36.97829, -73.…
+ 9 09            MULTIPOLYGON (((-73.35306 -38.73343, -73.35396 -38.72799, -73.…
+10 10            MULTIPOLYGON (((-73.1691 -41.87755, -73.16135 -41.87781, -73.1…
+11 11            MULTIPOLYGON (((-75.41754 -48.73857, -75.43249 -48.74372, -75.…
+12 12            MULTIPOLYGON (((-70.35563 -52.94478, -70.34688 -52.93971, -70.…
+13 13            POLYGON ((-70.47405 -33.8624, -70.47327 -33.86269, -70.46068 -…
+14 14            MULTIPOLYGON (((-73.39503 -39.88698, -73.39672 -39.89339, -73.…
+15 15            POLYGON ((-69.07223 -19.02723, -69.06394 -19.02607, -69.04748 …
+16 16            POLYGON ((-72.38553 -36.91169, -72.37685 -36.91617, -72.37034 …
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_regiones</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png" width="768" />
+<p>Vemos que en la zona sur del país, el detalle del mapa es tal, que los cientos de islas se vuelven en manchas grises debido a sus bordes demasiado detallados.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_regiones</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-80</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-65</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-42</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-56</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="768" />
+<p>Podemos usar el paquete {rmapshaper} para simplificar las geometrías del mapa, bajando así el nivel de detalle de la visualización resultante:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_regiones_simple</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_regiones</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># simplificar geometrías</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">rmapshaper</span><span style="color:#908caa">::</span><span style="color:#ea9a97">ms_simplify</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">keep</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.05</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_regiones_simple</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_regiones_simple</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-80</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-65</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-42</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-56</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-2.png" width="768" />
+<p>En la función <code>ms_simplify()</code>, el valor del argumento <code>keep</code> define la calidad resultante del mapa. Si el valor es menor, el mapa tendrá menos detalle.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_regiones</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">rmapshaper</span><span style="color:#908caa">::</span><span style="color:#ea9a97">ms_simplify</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">keep</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.01</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-80</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-65</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-42</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-56</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="768" />
+<p>En la función <code>ms_simplify()</code>, el valor del argumento <code>keep</code> define la calidad resultante del mapa. Si el valor es menor, el mapa tendrá menos detalle.</p>
+<p>En estos tres mapas comparamos las diferencias entre el mapa original, con detalle al <code>0.1</code>, y con detalle al <code>0.05</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">normal</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_regiones</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># mutate(geometry = rmapshaper::ms_simplify(geometry, keep = 0.1)) |&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-80</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-65</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-42</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-56</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">medio</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_regiones</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">rmapshaper</span><span style="color:#908caa">::</span><span style="color:#ea9a97">ms_simplify</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">keep</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-80</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-65</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-42</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-56</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">bajo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_regiones</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">rmapshaper</span><span style="color:#908caa">::</span><span style="color:#ea9a97">ms_simplify</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">keep</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.05</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-80</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-65</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-42</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-56</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">patchwork</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">normal</span> <span style="color:#908caa">+</span> <span style="color:#ea9a97">medio</span> <span style="color:#908caa">+</span> <span style="color:#ea9a97">bajo</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.png" width="768" />
+<p>Con respecto a la velocidad de generación de los mapas, realizamos una prueba de rendimiento que compare la velocidad de guardado de dos mapas, uno normal y uno simplificado:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">bench</span><span style="color:#908caa">::</span><span style="color:#ea9a97">mark</span><span style="color:#908caa">(</span><span style="color:#ea9a97">iterations</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">20</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">check</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">normal</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">ggsave</span><span style="color:#908caa">(</span><span style="color:#ea9a97">plot</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mapa_regiones</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span> <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(),</span> <span style="color:#ea9a97">filename</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;a.jpg&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">simple</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">ggsave</span><span style="color:#908caa">(</span><span style="color:#ea9a97">plot</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mapa_regiones_simple</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span> <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(),</span> <span style="color:#ea9a97">filename</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;b.jpg&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 2 × 6
+  expression      min   median `itr/sec` mem_alloc `gc/sec`
+  &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;
+1 normal      143.7ms  150.1ms      6.47   29.31MB     10.4
+2 simple       75.2ms   78.8ms     12.6     2.46MB     11.4
+</code></pre>
+<p>Según la prueba, el mapa simplificado se genera aproximadamente el doble de rápido.</p>
+<p>También podemos compara el uso de memoria de ambos objetos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">object.size</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa_regiones</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">print</span><span style="color:#908caa">(</span><span style="color:#ea9a97">units</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;auto&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>2.1 Mb
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">object.size</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa_regiones_simple</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">print</span><span style="color:#908caa">(</span><span style="color:#ea9a97">units</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;auto&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>178.2 Kb
+</code></pre>
+<p>El mapa simplificado consume un 10% de memoria con respecto al mapa original.</p>
+<hr>
+<p>Si te interesa el tema de los mapas, en otros tutoriales hemos visto cómo 
+<a href="../../../blog/tutorial_mapa_chile/">hacer mapas de Chile con R, tanto comunales como regionales</a>, así como también de la 
+<a href="../../../blog/tutorial_mapa_urbano/">zona urbana de la Región Metropolitana</a>. Además aprendimos cómo agregar 
+<a href="../../../blog/tutorial_mapas_osm/">características espaciales como calles y autopistas</a> obtenidas desde Open Street Map.</p>
+<div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">February 27, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">4 minute read, 835 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categorías:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/categories/"></a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/mapas">mapas</a>  <a href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/unim/presentacion_visualizador_datos_corrupcion/">Video: Presentación de Visualizador de datos de Corrupción en Chile</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/2025-01-14/">Actualización de app Análisis de prensa: visualización de análisis de sentimiento de noticias recientes</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/camcorder/">Graba el proceso de tus visualizaciones de datos con {camcorder}</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/genero_nombres_llm/">Predecir género a partir de nombres usando un modelo de lenguaje en R &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
