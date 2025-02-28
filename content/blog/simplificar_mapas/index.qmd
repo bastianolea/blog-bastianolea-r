@@ -16,16 +16,17 @@ execute:
   message: false
   warning: false
   error: false
+excerpt: "Un problema común al visualizar datos georeferenciados o mapas coropléticos (con colores en las zonas geográficas que se corresponden con los datos) yace en que usamos mapas que tienen geometrías o características geográficas mucho más detalladas de lo que necesitamos. Este exceso de detalle puede jugarle en contra a la visualización que estamos intentando crear, ya sea porque dificulta la interpretación, o complejiza visualmente el gráfico. En esta guía aprenderemos a simplificar mapas en R para producir visualizaciones con el nivel apropiado de detalle, y hacer más rápida la generación de mapas."
 ---
 
-Un problema común al visualizar datos georeferenciados o mapas coropléticos (con colores en las zonas geográficas que se corresponden con los datos) yace en que usamos mapas que tienen geometrías o características geográficas mucho más detalladas de lo que necesitamos.
+Un problema común al visualizar datos georeferenciados o mapas coropléticos (con colores en las zonas geográficas que se corresponden con los datos) yace en que usamos mapas que tienen geometrías o características geográficas mucho más detalladas de lo que necesitamos. Este exceso de detalle puede jugarle en contra a la visualización que estamos intentando crear, ya sea porque dificulta la interpretación, o complejiza visualmente el gráfico.
 
-Esto puede deberse a uqe obtenemos mapas desde Shapes u otras fuentes cuyo objetivo es representar fidedignamente los territorios; pero al visualizar datos generalmente producimos visualizaciones que no necesitan exactitud milimétrica en sus polígonos. 
+Otro problema de trabajar con mapas muy detallados es que la velocidad con la que se generan se ve impactada debido al detalle, lo que resulta inconveniente dado que al visualizar datos usualmente nos encontramos iterando decenas de veces una misma visualización hasta que se vea como queremos. 
 
-El problema de trabajar con mapas muy detallados es que la velocidad con la que se generan se ve impactada debido al detalle, lo que resulta inconveniente dado que al visualizar datos usualmente nos encontramos iterando decenas de veces una misma visualización hasta que se vea como queremos. 
-
+Esto puede ocurrir cuando mapas desde Shapes u otras fuentes cuyo objetivo es representar fidedignamente los territorios; pero al visualizar datos generalmente necesitamos visualizaciones que no requieren exactitud milimétrica en sus polígonos. 
 
 Generemos un mapa de regiones de Chile, usando las geometrías del paquete {chilemapas}:
+
 ```{r}
 library(dplyr)
 library(sf)
@@ -94,6 +95,7 @@ En la función `ms_simplify()`, el valor del argumento `keep` define la calidad 
 
 En estos tres mapas comparamos las diferencias entre el mapa original, con detalle al `0.1`, y con detalle al `0.05`:
 ```{r}
+
 normal <- mapa_regiones |> 
   # mutate(geometry = rmapshaper::ms_simplify(geometry, keep = 0.1)) |>
   ggplot() +
@@ -131,7 +133,8 @@ bench::mark(iterations = 20, check = FALSE,
             simple = ggsave(plot = mapa_regiones_simple |> ggplot() + geom_sf(), filename = "b.jpg")
 )
 ```
-Según la prueba, el mapa simplificado se genera 2.4 veces más rápido.
+
+Según la prueba, el mapa simplificado se genera aproximadamente el doble de rápido.
 
 También podemos compara el uso de memoria de ambos objetos:
 
@@ -141,7 +144,7 @@ object.size(mapa_regiones) |> print(units = "auto")
 object.size(mapa_regiones_simple) |> print(units = "auto")
 ```
 
-El mapa simplificado consume un 1% de memoria con respecto al mapa original.
+El mapa simplificado consume un 10% de memoria con respecto al mapa original.
 
 
 ----
