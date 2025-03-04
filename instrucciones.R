@@ -14,8 +14,8 @@ blogdown::new_post(title = "Rellenar datos perdidos usando otro dataframe",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Cargar archivos .csv más rápido con Arrow", 
-                   file = "blog/tutorial_titulo/tutorial.qmd",
+blogdown::new_post(title = "Mapa de Chile Horizontal", 
+                   file = "blog/mapa_chile_horizontal/mapa_chile_horizontal.qmd",
                    author = "Bastián Olea Herrera",
                    tags = c("dplyr", "procesamiento de datos"),
                    categories = c("tutoriales") 
