@@ -1,0 +1,137 @@
+---
+title: Mapa de Chile Horizontal
+author: Bastián Olea Herrera
+format:
+  hugo-md:
+    output-file: "index"
+    output-ext: "md"
+date: '2025-03-03'
+slug: []
+categories: []
+tags:
+  - mapas
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r}
+library(sf)
+library(chilemapas)
+library(ggplot2)
+library(dplyr)
+```
+
+```{r}
+# obtener mapa
+mapa_region <- chilemapas::generar_regiones() |>
+  # simplificar geometrías
+  mutate(geometry = rmapshaper::ms_simplify(geometry, keep = 0.05))
+
+mapa_region
+
+# mapa_proyectado <- mapa_region |> 
+#   st_set_geometry(mapa_region$geometry)
+# # proyección sirgas 2000 (crs 4674)
+```
+
+```{r}
+mapa_region |> 
+  ggplot(aes()) +
+  geom_sf() +
+  coord_sf(xlim = c(-80, -62))
+```
+
+```{r}
+library(readr)
+
+# obtener datos
+datos <- read_csv2("https://github.com/bastianolea/economia_chile/raw/main/app/datos/pib_regional.csv")
+
+# limpiar datos
+datos_2 <- datos |> 
+  group_by(serie) |> 
+  slice_max(año) |> 
+  slice_max(mes) |> 
+  select(nombre_region = serie, valor, año, trimestre, mes)
+
+# crear tabla de regiones
+regiones <- tribble(~codigo_region, ~nombre_region,
+                    "01", "Región de Arica y Parinacota",
+                    "02", "Región de Tarapacá",
+                    "03", "Región de Antofagasta",
+                    "04", "Región de Atacama",
+                    "05", "Región de Coquimbo",
+                    "06", "Región de Valparaíso",
+                    "07", "Región Metropolitana de Santiago",
+                    "08", "Región del Libertador General Bernardo OHiggins",
+                    "09", "Región del Maule",
+                    "10", "Región de Ñuble",
+                    "11", "Región del Biobío",
+                    "12", "Región de La Araucanía",
+                    "13", "Región de Los Ríos",
+                    "14", "Región de Los Lagos",
+                    "15", "Región de Aysén del General Carlos Ibáñez del Campo",
+                    "16", "Región de Magallanes y de la Antártica Chilena")
+
+# agregar regiones y datos al mapa
+mapa_datos <- mapa_region |> 
+  left_join(regiones) |> 
+  left_join(datos_2, by = join_by(nombre_region))
+```
+
+```{r}
+mapa_datos |> 
+  ggplot() +
+  aes(fill = valor) +
+  geom_sf() +
+  coord_sf(xlim = c(-80, -62)) +
+  scale_fill_distiller(type = "seq", palette = 12,
+                       labels = scales::label_comma(big.mark = ".")) +
+  theme_classic()
+```
+
+
+
+```{r}
+# rotar mapa de Chile ----
+
+# https://gist.github.com/ryanpeek/99c6935ae51429761f5f73cf3b027da2
+# rotate function (see here: https://r-spatial.github.io/sf/articles/sf3.html#affine-transformations
+# se multiplica la geometría por una matriz de rotación, porque como es un mapa está en espacio euclideano
+# https://en.wikipedia.org/wiki/Rotation_matrix
+# rotate <- function(a) matrix(c(cos(a), sin(a), -sin(a), cos(a)), 2, 2) #debiese definirse así, pero sale deformado
+
+# 1. Reprojectar a CRS proyectado (EPSG:5361 para Chile)
+mapa_proyectado <- st_transform(mapa_datos, 5361)
+
+# 2. Matriz de rotación 90° izquierda (sin escalar)
+rotacion <- matrix(c(0, -1, 1, 0), 2, 2)
+
+# 3. Aplicar rotación al mapa proyectado
+mapa_rotado <- mapa_proyectado |> 
+  mutate(geometry = geometry * rotacion)
+
+# Visualizar
+mapa_rotado |> 
+  ggplot() +
+  aes(fill = valor) +
+  geom_sf(color = "white") +
+  scale_y_continuous(labels = scales::label_number()) +
+  coord_sf(ylim = c(800000, -200000)) +
+  labs(title = "Mapa de Chile horizontal",
+       subtitle = "A mimir") +
+  scale_fill_distiller(type = "seq", palette = 12,
+                       labels = scales::label_comma(big.mark = ".")) +
+  guides(fill = guide_legend(position = "bottom")) +
+  theme_classic() +
+  theme(axis.text = element_blank(),
+        axis.line = element_blank(),
+        axis.ticks = element_blank())
+
+# Reproyección (EPSG:5361): Transformamos el mapa a un sistema de coordenadas proyectadas (Lambert Conic para Chile), donde las unidades son metros.
+# Matriz de rotación pura: Usamos una matriz estándar para rotación de 90° sin escalar (0.85 en tu código original causaba distorsión).
+# Aplicar rotación: La rotación se realiza sobre coordenadas métricas, evitando deformaciones.
+# Si el mapa aparece desplazado, calcula el centroide y rota alrededor de este usando transformaciones afines. Pero con este código, la proporción y forma del mapa se mantendrán correctas.
+```
+

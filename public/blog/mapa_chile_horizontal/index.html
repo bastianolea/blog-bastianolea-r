@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.136.5">
-<title>Mapas | Blog</title>
+<title>Mapa de Chile Horizontal | Blog</title>
 
 
 <meta property="twitter:site" content="@bastimapache">
@@ -28,31 +28,32 @@
 
 
 <meta property="og:site_name" content="Blog">
-<meta property="og:title" content="Mapas | Blog">
+<meta property="og:title" content="Mapa de Chile Horizontal | Blog">
 <meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://localhost:4321/tags/mapas/" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/mapa_chile_horizontal/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:4321/img/collage_horizontal_morado.jpg" >
+        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.jpg" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:4321/img/collage_horizontal_morado.jpg" >
+        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.jpg" >
+    
     
   
-  <meta itemprop="name" content="Mapas">
-  <meta itemprop="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
+  <meta itemprop="name" content="Mapa de Chile Horizontal">
+  <meta itemprop="description" content="library(sf) Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE library(chilemapas) La documentacion del paquete y ejemplos de uso se encuentran en https://pacha.dev/chilemapas/. Visita https://buymeacoffee.com/pacha/ si deseas donar para contribuir al desarrollo de este software. library(ggplot2) library(dplyr) Attaching package: &#39;dplyr&#39; The following objects are masked from &#39;package:stats&#39;: filter, lag The following objects are masked from &#39;package:base&#39;: intersect, setdiff, setequal, union # obtener mapa mapa_region &lt;- chilemapas::generar_regiones() |&gt; # agregar etiquetas de nombres left_join(chilemapas::codigos_territoriales |&gt; select(nombre_region, codigo_region) |&gt; distinct()) |&gt; # simplificar geometrías mutate(geometry = rmapshaper::ms_simplify(geometry, keep = 0.05)) Joining with `by = join_by(codigo_region)` mapa_region Simple feature collection with 16 features and 2 fields Geometry type: GEOMETRY Dimension: XY Bounding box: xmin: -109.4499 ymin: -55.90564 xmax: -66.42766 ymax: -17.49778 Geodetic CRS: SIRGAS 2000 # A tibble: 16 × 3 codigo_region geometry nombre_region * &lt;chr&gt; &lt;GEOMETRY [°]&gt; &lt;chr&gt; 1 01 POLYGON ((-69.8277 -21.43974, -69.76408 -21.4205… Tarapaca 2 02 POLYGON ((-70.65729 -26.061, -70.61916 -26.061, … Antofagasta 3 03 POLYGON ((-70.65729 -26.061, -70.65284 -26.13138… Atacama 4 04 POLYGON ((-71.49029 -29.18023, -71.43958 -29.253… Coquimbo 5 05 MULTIPOLYGON (((-71.53671 -32.17856, -71.51582 -… Valparaiso 6 06 POLYGON ((-71.35858 -34.82726, -71.28045 -34.791… Libertador G… 7 07 POLYGON ((-72.10308 -36.13219, -72.09964 -36.125… Maule 8 08 MULTIPOLYGON (((-71.64118 -38.30825, -71.63324 -… Biobio 9 09 POLYGON ((-73.50881 -38.48375, -73.50329 -38.593… La Araucania 10 10 MULTIPOLYGON (((-74.13783 -42.21779, -74.17136 -… Los Lagos 11 11 MULTIPOLYGON (((-74.42907 -44.89151, -74.45496 -… Aysen del Ge… 12 12 MULTIPOLYGON (((-73.96809 -48.71665, -74.03006 -… Magallanes y… 13 13 POLYGON ((-70.47653 -33.86032, -70.47327 -33.862… Metropolitan… 14 14 MULTIPOLYGON (((-71.88244 -40.56879, -71.85858 -… Los Rios 15 15 POLYGON ((-68.95687 -18.94477, -68.91604 -18.890… Arica y Pari… 16 16 POLYGON ((-72.88606 -36.44326, -72.80998 -36.459… Nuble mapa_proyectado &lt;- mapa_region |&gt; st_set_geometry(mapa_region$geometry) # proyección sirgas 2000 (crs 4674) mapa_proyectado |&gt; ggplot(aes()) &#43; geom_sf() &#43; guides(fill = guide_none()) &#43; coord_sf(xlim = c(-80, -62)) # rotar mapa de Chile ---- # https://gist.github.com/ryanpeek/99c6935ae51429761f5f73cf3b027da2 # rotate function (see here: https://r-spatial.github.io/sf/articles/sf3.html#affine-transformations # se multiplica la geometría por una matriz de rotación, porque como es un mapa está en espacio euclideano # https://en.wikipedia.org/wiki/Rotation_matrix # rotate &lt;- function(a) matrix(c(cos(a), sin(a), -sin(a), cos(a)), 2, 2) #debiese definirse así, pero sale deformado # 1. Reprojectar a CRS proyectado (EPSG:5361 para Chile) mapa_proyectado &lt;- st_transform(mapa_region, 5361) # 2. Matriz de rotación 90° izquierda (sin escalar) rotacion &lt;- matrix(c(0, -1, 1, 0), 2, 2) # 3. Aplicar rotación al mapa proyectado mapa_rotado &lt;- mapa_proyectado |&gt; mutate(geometry = geometry * rotacion) # Visualizar mapa_rotado |&gt; ggplot() &#43; geom_sf() &#43; scale_y_continuous(labels = scales::label_number()) &#43; coord_sf(ylim = c(800000, -200000)) &#43; labs(title = &#34;Mapa de Chile horizontal&#34;, subtitle = &#34;A mimir&#34;) &#43; theme(plot.margin = unit(rep(.2, 4), &#34;cm&#34;)) # Reproyección (EPSG:5361): Transformamos el mapa a un sistema de coordenadas proyectadas (Lambert Conic para Chile), donde las unidades son metros. # Matriz de rotación pura: Usamos una matriz estándar para rotación de 90° sin escalar (0.85 en tu código original causaba distorsión). # Aplicar rotación: La rotación se realiza sobre coordenadas métricas, evitando deformaciones. # Si el mapa aparece desplazado, calcula el centroide y rota alrededor de este usando transformaciones afines. Pero con este código, la proporción y forma del mapa se mantendrán correctas.">
   <meta itemprop="datePublished" content="2025-03-03T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-03-03T00:00:00+00:00">
+  <meta itemprop="wordCount" content="516">
+  <meta itemprop="keywords" content="Mapas">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="false" type="image/x-icon">
   <link rel="icon" href="false" type="image/x-icon">
-  
-    <link rel="alternate" type="application/rss+xml" href="http://localhost:4321/tags/mapas/index.xml" title="Blog" />
   
   
   <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
@@ -75,7 +76,7 @@
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
       
         
         
@@ -95,7 +96,7 @@
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 active" href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
       
         
         
@@ -251,29 +252,28 @@
   </nav>
 </header>
 
-
 <main class="page-main pa4" role="main">
-  <section class="blog-intro mw7 center mb5">
-    <h1 class="f2 f1-ns fw4 lh-solid tc center i">Mapas</h1>
-    <p class="f6 f5-ns measure lh-copy tc center"></p>
-  </section>
-  <section class="blog-content mw7 center">
-  
-    
-                               
-     
-     
-<article class="mv4 mv5-l bb">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Mapa de Chile Horizontal</h1>
+        
+        
+        <p class="f7 db mv0 ttu">3/3/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/mapas">mapas</a> </dd></em>
+  </dl>
 
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/mapa_chile_horizontal/" class="db">Mapa de Chile Horizontal</a></h1>
+
+        
       
-    </header>
-      
-      <p class="lh-copy mb4"><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sf</span><span style="color:#908caa">)</span>
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sf</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><pre><code>Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">)</span>
@@ -283,13 +283,15 @@ Visita https://buymeacoffee.com/pacha/ si deseas donar para contribuir al desarr
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><pre><code>Attaching package: 'dplyr'
-<p>The following objects are masked from &lsquo;package:stats&rsquo;:</p>
-<pre><code>filter, lag
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
 </code></pre>
-<p>The following objects are masked from &lsquo;package:base&rsquo;:</p>
-<pre><code>intersect, setdiff, setequal, union
-</code></pre>
-<p></code></pre></p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># obtener mapa</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_region</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">::</span><span style="color:#ea9a97">generar_regiones</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># agregar etiquetas de nombres</span>
@@ -365,189 +367,69 @@ Geodetic CRS:  SIRGAS 2000
 </span></span><span style="display:flex;"><span><span style="color:#6e6a86"># Matriz de rotación pura: Usamos una matriz estándar para rotación de 90° sin escalar (0.85 en tu código original causaba distorsión).</span>
 </span></span><span style="display:flex;"><span><span style="color:#6e6a86"># Aplicar rotación: La rotación se realiza sobre coordenadas métricas, evitando deformaciones.</span>
 </span></span><span style="display:flex;"><span><span style="color:#6e6a86"># Si el mapa aparece desplazado, calcula el centroide y rota alrededor de este usando transformaciones afines. Pero con este código, la proporción y forma del mapa se mantendrán correctas.</span>
-</span></span></code></pre></div></p>
-    <footer>
-      
+</span></span></code></pre></div>
         
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/mapas">mapas</a> </dd></em>
-        </dl>
-        
-        
-      
-      
-      
-    </footer>
-  </div>
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">March 3, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">3 minute read, 516 words</dd>
+  </dl>
   
-</article>
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/mapas">mapas</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/simplificar_mapas/">Simplificar la geometría de los polígonos de un mapa en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/portafolio_trabajos_r/">Portafolio de trabajos previos en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/tutorial_mapa_chile/">Crea un mapa de Chile y visualiza datos comunales y regionales con mapas en R</a></dd>
+    
+  </dl>
+</details>
 
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/simplificar_mapas/">Simplificar la geometría de los polígonos de un mapa en R &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
   
     
-                               
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/simplificar_mapas/" class="db">Simplificar la geometría de los polígonos de un mapa en R</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Un problema común al visualizar datos georeferenciados o mapas coropléticos (con colores en las zonas geográficas que se corresponden con los datos) yace en que usamos mapas que tienen geometrías o características geográficas mucho más detalladas de lo que necesitamos. Este exceso de detalle puede jugarle en contra a la visualización que estamos intentando crear, ya sea porque dificulta la interpretación, o complejiza visualmente el gráfico. En esta guía aprenderemos a simplificar mapas en R para producir visualizaciones con el nivel apropiado de detalle, y hacer más rápida la generación de mapas.</p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/mapas">mapas</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a> </dd></em>
-        </dl>
-        
-        
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-  
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
     
-                               
-     
-     
-<article class="mv4 mv5-l bb">
+  
+</div>
 
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/portafolio_trabajos_r/" class="db">Portafolio de trabajos previos en R</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Muestras de algunos proyectos que he realizado como analista de datos y desarrollador de R, y que consisten principalmente en aplicaciones web para la visualización y exploración de datos usando el lenguaje de programación R, la suite de paquetes para ciencia de datos Tidyverse, y el paquete de desarrollo de aplicaciones web Shiny.</p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/aplicaciones">aplicaciones</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/shiny">shiny</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/tablas">tablas</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/mapas">mapas</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/quarto">quarto</a> </dd></em>
-        </dl>
-        
-        
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-  
     
-                               
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/tutorial_mapa_chile/" class="db">Crea un mapa de Chile y visualiza datos comunales y regionales con mapas en R</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Visualizar datos geográficamente es una herramienta de comunicación y análisis de datos muy potente. En este tutorial te explico cómo obtener mapas comunales y regionales de Chile en R, y cómo crear un gráficos que visualizan variables numéricas en las comunas y regiones del país. En pocos pasos puedes transformar tus datos territoriales en visualizaciones mucho más densas e informativas.</p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/mapas">mapas</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ciencias-sociales">ciencias sociales</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a> </dd></em>
-        </dl>
-        
-        
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-  
-    
-                               
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/tutorial_mapas_osm/" class="db">Tutorial: Mapa en {ggplot2} con calles desde Open Street Map</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4"><p>En este tutorial crearemos un mapa de una región de Chile, y sobre el polígono geográfico aplicaremos otros elementos geográficos como calles, avenidas y carreteras, obtenidos desde Open Street Map (proveedor de mapas online abierto y comunitario).</p>
-<p>Esto puede servir para crear visualizaciones de datos espaciales minimalistas que de todos modos entreguen elementos urbanos de referencia para que les usuaries puedan ubicarse mejor espacialmente.</p>
-<p>Usaremos <code>{dplyr}</code> para manipular los datos, el paquete <code>{ggplot2}</code> para visualización de datos, <code>{sf}</code> para tratamiento de elementos espaciales, <code>{rnaturalearth}</code> para obtener mapas de cualquier país o región del mundo, y <code>{osmdata}</code> para obtener datos estaciales desde Open Street Map (OSM) por medio de su API pública.</p></p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/mapas">mapas</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/chile">chile</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a> </dd></em>
-        </dl>
-        
-        
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-  
-    
-                               
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/tutorial_mapa_urbano/" class="db">Tutorial: Mapa de la zona urbana de la Región Metropolitana de Santiago en R</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4"><p>Este tutorial de R te explicará paso a paso a cómo obtener mapas de todo Chile usando el paquete 
-<a href="https://github.com/pachadotdev/chilemapas" target="_blank" rel="noopener"><code>{chilemapas}</code> desarrollado por Mauricio Vargas</a>, y hacer gráficos con estos mapas usando <code>{ggplot2}</code>.</p>
-<p>En la primera parte veremos cómo <strong>obtener los mapas</strong> y cómo <strong>visualizar datos comunales</strong> usando mapas en R.</p>
-<p>Luego, nos enfrentaremos a un problema común que se tiene al graficar un mapa de la Región Metropolitana de Santiago, que tiene que ver con la diferencia entre los límites comunales reales de cada comuna y los <strong>límites urbanos</strong> de las comunas. Es la diferencia entre tener un mapa de la RM que abarque sectores rurales como Paine y que llegue hasta Argentina, o un mapa que demarque la zona urbana de Santiago, aproximadamente correspondiente a la zona que atravieza el anillo Vespucio.</p></p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/mapas">mapas</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/chile">chile</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a> </dd></em>
-        </dl>
-        
-        
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-  
   </section>
 </main>
 <footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
