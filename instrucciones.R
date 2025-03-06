@@ -14,11 +14,11 @@ blogdown::new_post(title = "Rellenar datos perdidos usando otro dataframe",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Mapa de Chile Horizontal", 
-                   file = "blog/mapa_chile_horizontal/mapa_chile_horizontal.qmd",
+blogdown::new_post(title = "Creando colores con R", 
+                   file = "blog/colores/colores.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("dplyr", "procesamiento de datos"),
-                   categories = c("tutoriales") 
+                   tags = c("visualización de datos", "gráficos", "ggplot2"),
+                   categories = c() 
 )
 # format: 
 #   hugo-md:
