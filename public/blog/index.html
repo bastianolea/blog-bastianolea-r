@@ -46,8 +46,8 @@
   
   <meta itemprop="name" content="Análisis de datos en R">
   <meta itemprop="description" content="Publicaciones periodicas sobre el uso de R para análisis de datos, incluyendo tutoriales, reseñas, tips o consejos, novedades, y más.">
-  <meta itemprop="datePublished" content="2025-03-03T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-03-03T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2025-03-06T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-03-06T00:00:00+00:00">
   <meta itemprop="wordCount" content="56">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -269,113 +269,54 @@
   
   <div class="measure-wide center mb4 mb5-l">
     <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/mapa_chile_horizontal/" class="db">Mapa de Chile Horizontal</a></h1>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/colores/" class="db">Creación y personalización de paletas de colores en R</a></h1>
       
     </header>
       
-      <p class="lh-copy mb4"><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sf</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><pre><code>Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE
-</code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><pre><code>La documentacion del paquete y ejemplos de uso se encuentran en https://pacha.dev/chilemapas/.
-Visita https://buymeacoffee.com/pacha/ si deseas donar para contribuir al desarrollo de este software.
-</code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><pre><code>Attaching package: 'dplyr'
-<p>The following objects are masked from &lsquo;package:stats&rsquo;:</p>
-<pre><code>filter, lag
-</code></pre>
-<p>The following objects are masked from &lsquo;package:base&rsquo;:</p>
-<pre><code>intersect, setdiff, setequal, union
-</code></pre>
-<p></code></pre></p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># obtener mapa</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_region</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">::</span><span style="color:#ea9a97">generar_regiones</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># agregar etiquetas de nombres</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">left_join</span><span style="color:#908caa">(</span><span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">::</span><span style="color:#ea9a97">codigos_territoriales</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre_region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">codigo_region</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">distinct</span><span style="color:#908caa">())</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># simplificar geometrías</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">rmapshaper</span><span style="color:#908caa">::</span><span style="color:#ea9a97">ms_simplify</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">keep</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.05</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><pre><code>Joining with `by = join_by(codigo_region)`
-</code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_region</span>
-</span></span></code></pre></div><pre><code>Simple feature collection with 16 features and 2 fields
-Geometry type: GEOMETRY
-Dimension:     XY
-Bounding box:  xmin: -109.4499 ymin: -55.90564 xmax: -66.42766 ymax: -17.49778
-Geodetic CRS:  SIRGAS 2000
-# A tibble: 16 × 3
-   codigo_region                                          geometry nombre_region
- * &lt;chr&gt;                                            &lt;GEOMETRY [°]&gt; &lt;chr&gt;        
- 1 01            POLYGON ((-69.8277 -21.43974, -69.76408 -21.4205… Tarapaca     
- 2 02            POLYGON ((-70.65729 -26.061, -70.61916 -26.061, … Antofagasta  
- 3 03            POLYGON ((-70.65729 -26.061, -70.65284 -26.13138… Atacama      
- 4 04            POLYGON ((-71.49029 -29.18023, -71.43958 -29.253… Coquimbo     
- 5 05            MULTIPOLYGON (((-71.53671 -32.17856, -71.51582 -… Valparaiso   
- 6 06            POLYGON ((-71.35858 -34.82726, -71.28045 -34.791… Libertador G…
- 7 07            POLYGON ((-72.10308 -36.13219, -72.09964 -36.125… Maule        
- 8 08            MULTIPOLYGON (((-71.64118 -38.30825, -71.63324 -… Biobio       
- 9 09            POLYGON ((-73.50881 -38.48375, -73.50329 -38.593… La Araucania 
-10 10            MULTIPOLYGON (((-74.13783 -42.21779, -74.17136 -… Los Lagos    
-11 11            MULTIPOLYGON (((-74.42907 -44.89151, -74.45496 -… Aysen del Ge…
-12 12            MULTIPOLYGON (((-73.96809 -48.71665, -74.03006 -… Magallanes y…
-13 13            POLYGON ((-70.47653 -33.86032, -70.47327 -33.862… Metropolitan…
-14 14            MULTIPOLYGON (((-71.88244 -40.56879, -71.85858 -… Los Rios     
-15 15            POLYGON ((-68.95687 -18.94477, -68.91604 -18.890… Arica y Pari…
-16 16            POLYGON ((-72.88606 -36.44326, -72.80998 -36.459… Nuble        
-</code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_proyectado</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_region</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_set_geometry</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa_region</span><span style="color:#908caa">$</span><span style="color:#ea9a97">geometry</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># proyección sirgas 2000 (crs 4674)</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_proyectado</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">())</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">guides</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_none</span><span style="color:#908caa">())</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-80</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-62</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><img src="mapa_chile_horizontal.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="768" />
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># rotar mapa de Chile ----</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># https://gist.github.com/ryanpeek/99c6935ae51429761f5f73cf3b027da2</span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># rotate function (see here: https://r-spatial.github.io/sf/articles/sf3.html#affine-transformations</span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># se multiplica la geometría por una matriz de rotación, porque como es un mapa está en espacio euclideano</span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># https://en.wikipedia.org/wiki/Rotation_matrix</span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># rotate &lt;- function(a) matrix(c(cos(a), sin(a), -sin(a), cos(a)), 2, 2) #debiese definirse así, pero sale deformado</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># 1. Reprojectar a CRS proyectado (EPSG:5361 para Chile)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_proyectado</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">st_transform</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa_region</span><span style="color:#908caa">,</span> <span style="color:#f6c177">5361</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># 2. Matriz de rotación 90° izquierda (sin escalar)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">rotacion</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">matrix</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">0</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">0</span><span style="color:#908caa">),</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># 3. Aplicar rotación al mapa proyectado</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_rotado</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_proyectado</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">geometry</span> <span style="color:#908caa">*</span> <span style="color:#ea9a97">rotacion</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># Visualizar</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_rotado</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_y_continuous</span><span style="color:#908caa">(</span><span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">scales</span><span style="color:#908caa">::</span><span style="color:#ea9a97">label_number</span><span style="color:#908caa">())</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">800000</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-200000</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">title</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Mapa de Chile horizontal&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">subtitle</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;A mimir&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">plot.margin</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">unit</span><span style="color:#908caa">(</span><span style="color:#ea9a97">rep</span><span style="color:#908caa">(</span><span style="color:#f6c177">.2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;cm&#34;</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><img src="mapa_chile_horizontal.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png" width="768" />
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># Reproyección (EPSG:5361): Transformamos el mapa a un sistema de coordenadas proyectadas (Lambert Conic para Chile), donde las unidades son metros.</span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># Matriz de rotación pura: Usamos una matriz estándar para rotación de 90° sin escalar (0.85 en tu código original causaba distorsión).</span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># Aplicar rotación: La rotación se realiza sobre coordenadas métricas, evitando deformaciones.</span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># Si el mapa aparece desplazado, calcula el centroide y rota alrededor de este usando transformaciones afines. Pero con este código, la proporción y forma del mapa se mantendrán correctas.</span>
-</span></span></code></pre></div></p>
+      <p class="lh-copy mb4"><p>El uso del color es clave para comunicar, y el ecosistema de R tiene varios trucos convenientes para ayudarnos a usar el color de mejores formas.</p>
+<p>El primer consejo que usaremos a lo largo de este post es la función <code>swatch()</code> del paquete {shades}, que genera una paleta a partir de un vector de colores, lo que nos ayudará a visualizar nuestros colores más fácil. También usaremos {colorspace}, otro paquete conveniente para trabajar con color.</p></p>
     <footer>
       
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/mapas">mapas</a> </dd></em>
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a> </dd></em>
         </dl>
         
         
       
-      <p class="f7 db mv2">3/3/2025</p>
+      <p class="f7 db mv2">6/3/2025</p>
+      
+    </footer>
+  </div>
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/mapa_chile_horizontal/" class="db">Rotar un mapa de Chile en R para que quede horizontal</a></h1>
+      
+    </header>
+      
+      <p class="lh-copy mb4">Visualizar un mapa de Chile puede ser complicado debido a su largo. Muchas veces cuesta ubicar correctamente el mapa por el espacio vertical que requiere. Pero en ciertos casos puede ser conveniente visualizar a Chile <em>de lado</em>, para aprovechar el espacio horizontal. En esta guía veremos cómo rotar un mapa de Chile 90° hacia la izquierda en R para que quede acostado.</p>
+    <footer>
+      
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/mapas">mapas</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a> </dd></em>
+        </dl>
+        
+        
+      
+      <p class="f7 db mv2">4/3/2025</p>
       
     </footer>
   </div>
@@ -1069,40 +1010,6 @@ Geodetic CRS:  SIRGAS 2000
         
       
       <p class="f7 db mv2">6/1/2025</p>
-      
-    </footer>
-  </div>
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/r_introduccion/proyectos/" class="db">Organizar el trabajo en Proyectos de RStudio</a></h1>
-      
-      <h2 class="f5"><i class="fas fa-stream fa-fw pr1"></i><small class="f5 ttu tracked">Series: </small><a class="link i dim" href="/blog/r_introduccion/">Introducción a R</a></h2>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Antes de hacer cualquier trabajo que involucre datos con R, es recomendable crear un <em>Proyecto</em> de RStudio. Ésta es una forma de definir la carpeta específica donde vamos a guardar todos los scripts y archivos que vamos a necesitar, lo cual previene muchos problemas, simplifica la carga y guardado de datos, y ordena nuestro trabajo.</p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/consejos">consejos</a> </dd></em>
-        </dl>
-        
-        
-      
-      <p class="f7 db mv2">4/1/2025</p>
       
     </footer>
   </div>

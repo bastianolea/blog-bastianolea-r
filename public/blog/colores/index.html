@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Creación y personalización de paletas de colores en R | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Creación y personalización de paletas de colores en R | Blog">
+<meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/colores/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.jpg" >
+    
+    
+  
+  <meta itemprop="name" content="Creación y personalización de paletas de colores en R">
+  <meta itemprop="description" content="El uso del color es clave para comunicar, y el ecosistema de R tiene varios trucos convenientes para ayudarnos a usar el color de mejores formas.
+El primer consejo que usaremos a lo largo de este post es la función swatch() del paquete {shades}, que genera una paleta a partir de un vector de colores, lo que nos ayudará a visualizar nuestros colores más fácil. También usaremos {colorspace}, otro paquete conveniente para trabajar con color.">
+  <meta itemprop="datePublished" content="2025-03-06T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-03-06T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1236">
+  <meta itemprop="keywords" content="Visualización de datos,Gráficos,Ggplot2">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Creación y personalización de paletas de colores en R</h1>
+        
+        
+        <p class="f7 db mv0 ttu">6/3/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a href="http://localhost:4321/tags/ggplot2">ggplot2</a> </dd></em>
+  </dl>
+
+
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>El uso del color es clave para comunicar, y el ecosistema de R tiene varios trucos convenientes para ayudarnos a usar el color de mejores formas.</p>
+<p>El primer consejo que usaremos a lo largo de este post es la función <code>swatch()</code> del paquete {shades}, que genera una paleta a partir de un vector de colores, lo que nos ayudará a visualizar nuestros colores más fácil. También usaremos {colorspace}, otro paquete conveniente para trabajar con color.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">shades</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Attaching package: 'colorspace'
+
+The following object is masked from 'package:shades':
+
+    coords
+</code></pre>
+
+
+
+
+<h2 id="extender-paletas-de-colores">Extender paletas de colores
+  <a href="#extender-paletas-de-colores"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Si tienes un vector de colores y necesitas alargarlo para tener más colores basados en la paleta original, la función <code>colorRampPalette()</code> crea una función a partir del vector de colores, cuyo argumento es el número de colores que necesites obtener a partir de la paleta original:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">paleta</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;#f4b43f&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;#ec6a2d&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;#cc3b7b&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;#705ce6&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;#668cf6&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">paleta</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorRampPalette</span><span style="color:#908caa">(</span><span style="color:#ea9a97">paleta</span><span style="color:#908caa">)(</span><span style="color:#f6c177">12</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-2.png" width="768" />
+<p>También podemos usar esta función para crear con facilidad una paleta secuencial entre dos o más colores:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colores</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;#df65b2&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;#fae55f&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">colorRampPalette</span><span style="color:#908caa">(</span><span style="color:#ea9a97">colores</span><span style="color:#908caa">)(</span><span style="color:#f6c177">8</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="768" />
+
+
+
+
+<h2 id="paletas-de-colores">Paletas de colores
+  <a href="#paletas-de-colores"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Varios paquetes de R contienen sus propias paletas de colores prediseñadas.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">RColorBrewer</span><span style="color:#908caa">::</span><span style="color:#ea9a97">display.brewer.all</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png" width="864" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">hcl_palettes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">plot</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="1152" />
+<p>Encuentro una lista que compila todas las paletas de colores de la comunidad de R 
+<a href="https://github.com/EmilHvitfeldt/r-color-palettes" target="_blank" rel="noopener">en este repositorio.</a></p>
+
+
+
+
+<h2 id="paletas-secuenciales">Paletas secuenciales
+  <a href="#paletas-secuenciales"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Las paletas secuenciales consiste en un degradado entre dos o más colores. Suelen usarse para representar una variable continua o numérica, cuyo valor va cambiando de forma cuantitativa.</p>
+<p>La función <code>sequential_hcl()</code> del paquete {colorspace} permite crear paletas secuenciales</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">sequential_hcl</span><span style="color:#908caa">(</span><span style="color:#f6c177">8</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">h</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">300</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">sequential_hcl</span><span style="color:#908caa">(</span><span style="color:#f6c177">8</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">h</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">300</span><span style="color:#908caa">,</span> <span style="color:#f6c177">100</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-2.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">sequential_hcl</span><span style="color:#908caa">(</span><span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">h</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">260</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                           <span style="color:#ea9a97">c</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">45</span><span style="color:#908caa">,</span> <span style="color:#f6c177">25</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">l</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">25</span><span style="color:#908caa">,</span> <span style="color:#f6c177">85</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">power</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.9</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-3.png" width="768" />
+<p>También se pueden obtener vectores de colores a partir de las paletas existentes que vienen con el paquete {colorspace}:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">sequential_hcl</span><span style="color:#908caa">(</span><span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Red-Blue&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">sequential_hcl</span><span style="color:#908caa">(</span><span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Purple-Orange&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-2.png" width="768" />
+
+
+
+
+<h2 id="paletas-cualitativas">Paletas cualitativas
+  <a href="#paletas-cualitativas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Como su nombre ética, en las paletas cualitativas los colores van saltando para maximizar la diferencia entre ellos. Se utilizan para variables cualitativas, categóricas o discretas, donde cada elemento de una secuencia es independiente de los demás, y el objetivo del uso del color es poder distinguirlos.</p>
+<p>La función <code>rainbow_hcl()</code> de {colorspace} entrega una típica paleta de arcoíris, pero con la posibilidad de modificar sus atributos de color en sus argumentos, tales como las tonalidades (<em>hue</em>) de inicio o final, la intensidad (<em>chroma</em>) de los tonos</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">rainbow_hcl</span><span style="color:#908caa">(</span><span style="color:#f6c177">7</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">c</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">70</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">rainbow_hcl</span><span style="color:#908caa">(</span><span style="color:#f6c177">7</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">c</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">100</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">start</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">190</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">end</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">380</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-2.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">rainbow_hcl</span><span style="color:#908caa">(</span><span style="color:#f6c177">6</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">c</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">60</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">l</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">30</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">start</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">230</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">end</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">370</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-3.png" width="768" />
+<p>Éste tipo de paletas usualmente reúne colores en una escala tipo arcoíris, o bien reúne colores temáticos, distintos entre ellos, pero armónicos entre sí.</p>
+<p>También pueden usarse los nombres de las paredes preexistentes para generar una secuencia cualitativa con ellos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">qualitative_hcl</span><span style="color:#908caa">(</span><span style="color:#f6c177">6</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Cold&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">c</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">80</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">qualitative_hcl</span><span style="color:#908caa">(</span><span style="color:#f6c177">6</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Warm&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">c</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">80</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-2.png" width="768" />
+
+
+
+
+<h2 id="paletas-divergentes">Paletas divergentes
+  <a href="#paletas-divergentes"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Las paletas divergentes se utilizan cuando una variable expresa a dos polos, una una misma magnitud donde los extremos son separados por una brecha central.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">diverging_hcl</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">h</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">200</span><span style="color:#908caa">,</span> <span style="color:#f6c177">300</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">diverging_hcl</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">7</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">h</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">700</span><span style="color:#908caa">,</span> <span style="color:#f6c177">180</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-2.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">diverging_hcl</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">7</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">h</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">700</span><span style="color:#908caa">,</span> <span style="color:#f6c177">180</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">c</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">130</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.7</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-3.png" width="768" />
+
+
+
+
+<h2 id="modificar-colores">Modificar colores
+  <a href="#modificar-colores"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Las funciones del paquete {shades} nos permitan obtener información detallada sobre cada uno de los colores, y usar esta misma información para modificarlos con mucho detalle.</p>
+<p>Por ejemplo, definamos un color, y luego obtengamos el valor de su tonalidad. Recordemos que la tonalidad de los colores se expresan como grados entre 0° y 360°.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">shades</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">color</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;#f65b74&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">swatch</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">hue</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] 350.3226
+</code></pre>
+<p>Obtenemos que, para el color definido, el valor de su tonalidad es 350. Podemos usar esta información para modificar levemente el mismo color y así obtener una variable del mismo color levemente más anaranjada.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">swatch</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">hue</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span><span style="color:#908caa">,</span> <span style="color:#f6c177">370</span><span style="color:#908caa">)))</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.png" width="768" />
+<p>Podemos obtener mismos resultados utilizando el <em>delta</em> de la tonalidad del color; es decir, sumándole restándole una cantidad de grados a el valor de la tonalidad del color mismo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">swatch</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">hue</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">delta</span><span style="color:#908caa">(</span><span style="color:#f6c177">50</span><span style="color:#908caa">))))</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-13-1.png" width="768" />
+<p>Al usar la función <code>delta()</code>, lo que hacemos es pedirle que cambie la tonalidad del color en 50°, volviéndose en un tono amarillo.</p>
+<p>El brillo (<em>brighness</em>) va de cero a uno, mientras que la claridad (<em>loghtness</em>) va de cero a 100.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">color</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">brightness</span><span style="color:#908caa">(</span><span style="color:#f6c177">0.7</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">color</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">lightness</span><span style="color:#908caa">(</span><span style="color:#ea9a97">delta</span><span style="color:#908caa">(</span><span style="color:#f6c177">20</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-2.png" width="768" />
+<p>Por su parte, la saturación aumenta la intensidad del color.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">color</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">saturation</span><span style="color:#908caa">(</span><span style="color:#ea9a97">delta</span><span style="color:#908caa">(</span><span style="color:#f6c177">30</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">swatch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png" width="768" />
+<p>Podemos utilizar la función <code>delta()</code> para crear una sencilla paleta de colores a partir de un mismo color, aumentando y disminuyendo su intensidad (<em>chroma</em>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">swatch</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">chroma</span><span style="color:#908caa">(</span><span style="color:#ea9a97">delta</span><span style="color:#908caa">(</span><span style="color:#f6c177">30</span><span style="color:#908caa">)),</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">color</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">color</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">chroma</span><span style="color:#908caa">(</span><span style="color:#ea9a97">delta</span><span style="color:#908caa">(</span><span style="color:#f6c177">-30</span><span style="color:#908caa">)))</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png" width="768" />
+<p>Podemos combinar estas técnicas para crear una paleta de colores más compleja, construida toda a partir de un solo color al cual se le va aumentando o disminuyendo sus valores de claridad e intensidad. El beneficio de hacerlo de esta manera es que luego basta con cambiar el color principal para obtener una paleta de iguales características, pero basada en una tonalidad distinta.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">color_principal</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#4D4484&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">color_fondo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_principal</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">lightness</span><span style="color:#908caa">(</span><span style="color:#f6c177">13</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">chroma</span><span style="color:#908caa">(</span><span style="color:#f6c177">20</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">color_detalle</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_principal</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">lightness</span><span style="color:#908caa">(</span><span style="color:#f6c177">20</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">chroma</span><span style="color:#908caa">(</span><span style="color:#f6c177">40</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">color_destacado</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_principal</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">lightness</span><span style="color:#908caa">(</span><span style="color:#f6c177">50</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">chroma</span><span style="color:#908caa">(</span><span style="color:#f6c177">65</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">color_texto</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_principal</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">lightness</span><span style="color:#908caa">(</span><span style="color:#f6c177">80</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">swatch</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color_principal</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">color_fondo</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">color_detalle</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">color_destacado</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">color_texto</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">color_principal</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#3170ac&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">color_fondo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_principal</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">lightness</span><span style="color:#908caa">(</span><span style="color:#f6c177">13</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">chroma</span><span style="color:#908caa">(</span><span style="color:#f6c177">20</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">color_detalle</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_principal</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">lightness</span><span style="color:#908caa">(</span><span style="color:#f6c177">20</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">chroma</span><span style="color:#908caa">(</span><span style="color:#f6c177">40</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">color_destacado</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_principal</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">lightness</span><span style="color:#908caa">(</span><span style="color:#f6c177">50</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">chroma</span><span style="color:#908caa">(</span><span style="color:#f6c177">65</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">color_texto</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_principal</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">lightness</span><span style="color:#908caa">(</span><span style="color:#f6c177">80</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">swatch</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color_principal</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">color_fondo</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">color_detalle</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">color_destacado</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">color_texto</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png" width="768" />
+<p>Notar que el código es igual, y sólo se cambió el valor del <code>color_principal</code>. Esta estrategia es muy útil si se están produciendo visualizaciones o aplicaciones que ocupan una paleta de colores monocroma.</p>
+
+
+
+
+<h2 id="mezclar-colores">Mezclar colores
+  <a href="#mezclar-colores"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Las funciones <code>submix()</code> y <code>addmix()</code> del paquete {shades} facilitan el mezclado de colores sustraje ctivo y aditivo, respectivamente. A partir de dos colores, entrega la mezcla de ellos, abriendo muchas posibilidades para la experimentación y creación de nuevos colores:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">swatch</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;#70f1d5&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">submix</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;#70f1d5&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;#fae55f&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f6c177">&#34;#fae55f&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-19-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">swatch</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;#3377f7&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">addmix</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;#3377f7&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;#ec4e3c&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f6c177">&#34;#ec4e3c&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">swatch</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;#f9ce45&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">submix</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;#f9ce45&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;#77d671&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">amount</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.5</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f6c177">&#34;#77d671&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.png" width="768" />
+
+
+
+
+<h2 id="usar-paletas-de-colores-en-ggplot2">Usar paletas de colores en {ggplot2}
+  <a href="#usar-paletas-de-colores-en-ggplot2"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Muchas de estos paquetes incorporan funciones de escalas de colores (<code>scale_color_x()</code>, <code>scale_fill_x()</code>) para aplicar una paleta de color fácilmente a un gráfico creado {ggplot2}.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_bar</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Petal.Width</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Species</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">scale_fill_discrete_qualitative</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Dark 3&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_y_continuous</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">expansion</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">0</span><span style="color:#908caa">,</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">)))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Width</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">Sepal.Length</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Petal.Width</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Petal.Length</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.8</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">scale_color_continuous_sequential</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Sunset&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">na.value</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">guides</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_legend</span><span style="color:#908caa">(</span><span style="color:#ea9a97">override.aes</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">list</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#784FA1&#34;</span><span style="color:#908caa">)),</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_colorsteps</span><span style="color:#908caa">())</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">legend.title</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.title</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">())</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-2.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Petal.Length</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">Sepal.Width</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Petal.Width</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sepal.Length</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.8</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">viridis</span><span style="color:#908caa">::</span><span style="color:#ea9a97">scale_colour_viridis</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;viridis&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">na.value</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">guides</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_legend</span><span style="color:#908caa">(</span><span style="color:#ea9a97">override.aes</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">list</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#88D181&#34;</span><span style="color:#908caa">)),</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_colorsteps</span><span style="color:#908caa">())</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">legend.title</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.title</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">())</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-3.png" width="768" />
+
+
+
+
+<h2 id="avanzado">Avanzado
+  <a href="#avanzado"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>{colorspace} incluye funciones para poder visualizar secuencias de colores en proyecciones del espacio de color HCL (<em>hue, chroma, luminance</em>), lo que nos permite contextualizar las paletas en un espacio perceptual del color basado ene stos tres parámetros.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">hclplot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sequential_hcl</span><span style="color:#908caa">(</span><span style="color:#f6c177">7</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">h</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">260</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">c</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">80</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">l</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">35</span><span style="color:#908caa">,</span> <span style="color:#f6c177">95</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">power</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1.5</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">hclplot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sequential_hcl</span><span style="color:#908caa">(</span><span style="color:#f6c177">7</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">h</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">260</span><span style="color:#908caa">,</span> <span style="color:#f6c177">220</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">c</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">50</span><span style="color:#908caa">,</span> <span style="color:#f6c177">75</span><span style="color:#908caa">,</span> <span style="color:#f6c177">0</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">l</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">30</span><span style="color:#908caa">,</span> <span style="color:#f6c177">95</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">power</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-2.png" width="768" />
+<hr>
+
+
+
+
+<h2 id="fuentes-y-recursos">Fuentes y recursos
+  <a href="#fuentes-y-recursos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<ul>
+<li>
+<a href="https://github.com/EmilHvitfeldt/r-color-palettes" target="_blank" rel="noopener">https://github.com/EmilHvitfeldt/r-color-palettes</a></li>
+<li>
+<a href="https://r-graph-gallery.com/ggplot2-color.html" target="_blank" rel="noopener">https://r-graph-gallery.com/ggplot2-color.html</a></li>
+<li>
+<a href="https://www.datanovia.com/en/blog/top-r-color-palettes-to-know-for-great-data-visualization/" target="_blank" rel="noopener">https://www.datanovia.com/en/blog/top-r-color-palettes-to-know-for-great-data-visualization/</a></li>
+<li>
+<a href="https://jbengler.github.io/tidyplots/articles/Color-schemes.html" target="_blank" rel="noopener">https://jbengler.github.io/tidyplots/articles/Color-schemes.html</a></li>
+</ul>
+<div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">March 6, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">6 minute read, 1236 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a href="http://localhost:4321/tags/ggplot2">ggplot2</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/mapa_chile_horizontal/">Rotar un mapa de Chile en R para que quede horizontal</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/simplificar_mapas/">Simplificar la geometría de los polígonos de un mapa en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/unim/presentacion_visualizador_datos_corrupcion/">Video: Presentación de Visualizador de datos de Corrupción en Chile</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/mapa_chile_horizontal/">Rotar un mapa de Chile en R para que quede horizontal &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
