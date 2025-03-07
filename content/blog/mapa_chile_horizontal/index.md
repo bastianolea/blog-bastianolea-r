@@ -30,7 +30,7 @@ Primero cargamos los paquetes necesarios:
 library(sf) # manejo de datos espaciales
 ```
 
-    Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE
+    Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE
 
 ``` r
 library(chilemapas) # mapas de Chile
