@@ -1,0 +1,89 @@
+---
+title: Unir y combinar gráficos {ggplot2} en R
+author: Bastián Olea Herrera
+date: '2025-03-07'
+draft: false
+format:
+  hugo-md:
+    output-file: "index"
+    output-ext: "md"
+slug: []
+categories: []
+tags:
+  - visualización de datos
+  - gráficos
+  - ggplot2
+editor_options: 
+  chunk_output_type: console
+execute:
+  cache: true
+  message: false
+---
+
+
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(patchwork)
+```
+
+
+
+```{r}
+grafico_a <- iris |> 
+  group_by(Species) |> 
+  summarize(Sepal.Length = mean(Sepal.Length)) |> 
+  ggplot() +
+  aes(x = Sepal.Length, y = Species) +
+  geom_col(fill = "darkslategray3", width = 0.7) +
+  theme_void()
+```
+
+
+
+```{r}
+grafico_b <- iris |> 
+  count(Species) |> 
+  mutate(p = n/sum(n)) |> 
+  ggplot() +
+  aes(x = 1, y = p, fill = Species) +
+  geom_col() +
+  scale_fill_brewer(name = "Set2", type = "qual") +
+  coord_polar(theta = "y") +
+  theme_void() +
+  guides(fill = guide_legend(title = NULL))
+```
+
+```{r}
+grafico_a + grafico_b
+```
+
+
+```{r}
+grafico_a / grafico_b
+```
+
+```{r}
+grafico_c <- iris |> 
+  ggplot() +
+  geom_bar(aes(Petal.Width, fill = Species)) +
+  scale_fill_brewer(name = "Set2", type = "qual") +
+  scale_y_continuous(expand = expansion(c(0, 0.1))) +
+  theme_void() +
+  guides(fill = guide_legend(title = NULL))
+```
+
+```{r}
+((grafico_a + grafico_b) / grafico_c) + 
+  plot_layout(guides = "collect")
+```
+
+
+
+```{r}
+grafico_c + inset_element(grafico_b + guides(fill = guide_none()),
+                          left = .2, right = .5, 
+                          top = .9, bottom = .4)
+```
+
