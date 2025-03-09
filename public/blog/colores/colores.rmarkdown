@@ -1,11 +1,12 @@
 ---
-title: Creando colores con R
+title: Creación y personalización de paletas de colores en R
 author: Bastián Olea Herrera
 date: '2025-03-06'
 format:
   hugo-md:
     output-file: "index"
     output-ext: "md"
+    fig-height: 2
 slug: []
 categories: []
 tags:
@@ -169,6 +170,7 @@ Por ejemplo, definamos un color, y luego obtengamos el valor de su tonalidad. Re
 
 
 ```{r}
+#| fig-height: 4
 library(shades)
 
 color <- "#f65b74"
@@ -184,6 +186,7 @@ Obtenemos que, para el color definido, el valor de su tonalidad es 350. Podemos 
 
 
 ```{r}
+#| fig-height: 3
 swatch(c(color, hue(color, 370)))
 ```
 
@@ -193,18 +196,18 @@ Podemos obtener mismos resultados utilizando el _delta_ de la tonalidad del colo
 
 
 ```{r}
+#| fig-height: 3
 swatch(c(color, hue(color, delta(50))))
 ```
 
 
 Al usar la función `delta()`, lo que hacemos es pedirle que cambie la tonalidad del color en 50°, volviéndose en un tono amarillo.
 
-
-
 El brillo (_brighness_) va de cero a uno, mientras que la claridad (_loghtness_) va de cero a 100.
 
 
 ```{r}
+#| fig-height: 4
 color |> brightness(0.7) |> swatch()
 
 color |> lightness(delta(20)) |> swatch()
@@ -216,6 +219,7 @@ Por su parte, la saturación aumenta la intensidad del color.
 
 
 ```{r}
+#| fig-height: 4
 color |> saturation(delta(30)) |> swatch()
 ```
 
@@ -305,6 +309,7 @@ Muchas de estos paquetes incorporan funciones de escalas de colores (`scale_colo
 
 
 ```{r}
+#| fig-height: 4
 library(ggplot2)
 library(dplyr)
 
@@ -346,6 +351,7 @@ iris |>
 
 
 ```{r}
+#| fig-height: 5
 colorspace::hclplot(sequential_hcl(7, h = 260, c = 80, l = c(35, 95), power = 1.5))
 
 colorspace::hclplot(sequential_hcl(7, h = c(260, 220), c = c(50, 75, 0), l = c(30, 95), power = 1))

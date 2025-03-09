@@ -6,6 +6,7 @@ format:
   hugo-md:
     output-file: "index"
     output-ext: "md"
+    fig-height: 2
 slug: []
 categories: []
 tags:
@@ -129,6 +130,7 @@ Las funciones del paquete {shades} nos permitan obtener información detallada s
 
 Por ejemplo, definamos un color, y luego obtengamos el valor de su tonalidad. Recordemos que la tonalidad de los colores se expresan como grados entre 0° y 360°.
 ```{r}
+#| fig-height: 4
 library(shades)
 
 color <- "#f65b74"
@@ -140,19 +142,20 @@ hue(color)
 
 Obtenemos que, para el color definido, el valor de su tonalidad es 350. Podemos usar esta información para modificar levemente el mismo color y así obtener una variable del mismo color levemente más anaranjada.
 ```{r}
+#| fig-height: 3
 swatch(c(color, hue(color, 370)))
 ```
 
 Podemos obtener mismos resultados utilizando el _delta_ de la tonalidad del color; es decir, sumándole restándole una cantidad de grados a el valor de la tonalidad del color mismo:
 ```{r}
+#| fig-height: 3
 swatch(c(color, hue(color, delta(50))))
 ```
 Al usar la función `delta()`, lo que hacemos es pedirle que cambie la tonalidad del color en 50°, volviéndose en un tono amarillo.
 
-
-
 El brillo (_brighness_) va de cero a uno, mientras que la claridad (_loghtness_) va de cero a 100.
 ```{r}
+#| fig-height: 4
 color |> brightness(0.7) |> swatch()
 
 color |> lightness(delta(20)) |> swatch()
@@ -160,6 +163,7 @@ color |> lightness(delta(20)) |> swatch()
 
 Por su parte, la saturación aumenta la intensidad del color.
 ```{r}
+#| fig-height: 4
 color |> saturation(delta(30)) |> swatch()
 ```
 
@@ -233,6 +237,7 @@ swatch(c("#f9ce45",
 Muchas de estos paquetes incorporan funciones de escalas de colores (`scale_color_x()`, `scale_fill_x()`) para aplicar una paleta de color fácilmente a un gráfico creado {ggplot2}.
 
 ```{r}
+#| fig-height: 4
 library(ggplot2)
 library(dplyr)
 
@@ -270,6 +275,7 @@ iris |>
 
 {colorspace} incluye funciones para poder visualizar secuencias de colores en proyecciones del espacio de color HCL (_hue, chroma, luminance_), lo que nos permite contextualizar las paletas en un espacio perceptual del color basado ene stos tres parámetros.
 ```{r}
+#| fig-height: 5
 colorspace::hclplot(sequential_hcl(7, h = 260, c = 80, l = c(35, 95), power = 1.5))
 
 colorspace::hclplot(sequential_hcl(7, h = c(260, 220), c = c(50, 75, 0), l = c(30, 95), power = 1))

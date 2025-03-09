@@ -6,6 +6,7 @@ format:
   hugo-md:
     output-file: index
     output-ext: md
+    fig-height: 2
 slug: []
 categories: []
 tags:

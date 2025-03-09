@@ -190,3 +190,5 @@ grafico_c +
 ```
 
 <img src="patchwork.markdown_strict_files/figure-markdown_strict/plot10-1.png" width="768" />
+
+{{< cafecito  >}}
