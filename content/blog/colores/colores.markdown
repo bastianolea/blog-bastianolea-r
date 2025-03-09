@@ -6,6 +6,7 @@ format:
   hugo-md:
     output-file: "index"
     output-ext: "md"
+    fig-height: 2
 slug: []
 categories: []
 tags:
@@ -286,8 +287,6 @@ swatch(c(color, hue(color, delta(50))))
 
 
 Al usar la función `delta()`, lo que hacemos es pedirle que cambie la tonalidad del color en 50°, volviéndose en un tono amarillo.
-
-
 
 El brillo (_brighness_) va de cero a uno, mientras que la claridad (_loghtness_) va de cero a 100.
 

@@ -278,3 +278,5 @@ grafico_c +
 
 <img src="/blog/patchwork/patchwork_files/figure-html/plot10-1.png" width="672" />
 
+{{< cafecito >}}
+
