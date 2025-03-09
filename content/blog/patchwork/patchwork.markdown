@@ -1,0 +1,280 @@
+---
+title: Unir y combinar gráficos {ggplot2} en R
+author: Bastián Olea Herrera
+date: '2025-03-08'
+draft: false
+format:
+  hugo-md:
+    output-file: "index"
+    output-ext: "md"
+slug: []
+categories: []
+tags:
+  - visualización de datos
+  - gráficos
+  - ggplot2
+editor_options: 
+  chunk_output_type: inline
+execute:
+  message: false
+  warning: false
+excerpt: El paquete {patchwork} ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas, por medio de la combinación de gráficos en una sola visualización, y la inserción de gráficos dentro de otros.
+---
+
+
+
+El paquete {patchwork} ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas.
+
+
+
+
+``` r
+library(dplyr)
+```
+
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+``` r
+library(ggplot2)
+library(patchwork)
+```
+
+
+
+Primero crearemos dos gráficos de muestra, a partir del dataset `iris`.
+
+
+
+
+``` r
+grafico_a <- iris |> 
+  # calcular promedios por especie
+  group_by(Species) |> 
+  summarize(Sepal.Length = mean(Sepal.Length)) |> 
+  # gráfico
+  ggplot() +
+  aes(x = Sepal.Length, y = Species) +
+  # barras
+  geom_col(fill = "darkslategray3", width = 0.6) +
+  theme_void()
+```
+
+
+``` r
+grafico_b <- iris |> 
+  # conteo por especies
+  count(Species) |> 
+  # porcentaje
+  mutate(p = n/sum(n)) |> 
+  # gráfico
+  ggplot() +
+  aes(x = 1, y = p, fill = Species) +
+  geom_col() +
+  # escala de color
+  scale_fill_brewer(name = "Set2", type = "qual") +
+  # gráfico de torta
+  coord_polar(theta = "y") +
+  theme_void() +
+  guides(fill = guide_legend(title = NULL))
+```
+
+
+### Combinar dos gráficos lado a lado
+Gracias a {patchwork}, unir dos gráficos uno al lado del otro es tan sencillo como ”sumarlos”:
+
+
+
+``` r
+grafico_a + grafico_b
+```
+
+<img src="/blog/patchwork/patchwork_files/figure-html/plot1-1.png" width="672" />
+
+
+
+Si queremos ajustar las proporciones de los gráficos, agregamos la función `plot_layout()` para especificar las proporciones. Haremos que uno de los gráficos sea el doble de ancho que el otro:
+
+
+
+
+``` r
+grafico_a + grafico_b + plot_layout(widths = c(1, 2))
+```
+
+<img src="/blog/patchwork/patchwork_files/figure-html/plot2-1.png" width="672" />
+
+
+
+### Combinar dos gráficos uno arriba del otro
+
+Para combinar dos gráficos en disposición vertical; es decir, uno arriba del otro, bsata con ”dividir” los dos gráficos:
+
+
+
+
+``` r
+grafico_a / grafico_b
+```
+
+<img src="/blog/patchwork/patchwork_files/figure-html/plot3-1.png" width="672" />
+
+
+
+### Combinar más de dos gráficos
+Creemos un tercer gráfico de nuestra para probar la combinación de tres gráficos en uno solo:
+
+
+
+
+``` r
+grafico_c <- iris |> 
+  ggplot() +
+  geom_bar(aes(Petal.Width, fill = Species)) +
+  scale_fill_brewer(name = "Set2", type = "qual") +
+  scale_y_continuous(expand = expansion(c(0, 0.1))) +
+  theme_void() +
+  guides(fill = guide_legend(title = NULL))
+```
+
+
+
+Teniendo dos gráficos, podemos disponerlos uno al lado dle otro, y el tercer gráfico debajo de los dos primeros; es decir, sumar `a` + `b` y luego dividirlos por `c`:
+
+
+
+
+``` r
+(grafico_a + grafico_b) / grafico_c + 
+  plot_layout(guides = "collect")
+```
+
+<img src="/blog/patchwork/patchwork_files/figure-html/plot5-1.png" width="672" />
+
+
+En este caso agregamos una función `plot_layout()` para combinar las leyendas de dos de los gráficos, dado que las leyendas son iguales y sería redundante que cada gráfico las presente por separado.
+
+Para ajustar las proporciones en este caso, podemos primero crear la fila 1 del gráfico final, ajustando su proporción, y luego a esta fila agregarle el gráfico de abajo:
+
+
+
+
+``` r
+fila_1 <- grafico_a + grafico_b + plot_layout(widths = c(3, 1))
+
+fila_1 / grafico_c + plot_layout(guides = "collect")
+```
+
+<img src="/blog/patchwork/patchwork_files/figure-html/plot6-1.png" width="672" />
+
+
+
+
+## Poner un gráfico dentro de otro
+
+
+
+
+``` r
+grafico_d <- iris |> 
+  ggplot() +
+  geom_bar(aes(x = 1), alpha = 0.6) +
+  coord_polar(theta = "y") +
+  theme_void()
+```
+
+
+
+También podemos necesitar insertar un gráfico dentro de otro, quizás porque uno de los gráficos representa un detalle del otro, y como tal puede que sea más conveniente disponerlo dentro del primero.
+
+Para insertar un gráfico dentro de otro, se agrega a un gráfico la función `inset_element()` con el gráfico que queremos insertar. Dentro de esta función hay que definir los argumentos `top`, `bottom`, `left` y `right`, que corresponden al perímetro en el que se ubicará el gráfico insertado.
+
+Para ubicar el gráfico dentro, debemos entender que el límite superior del gráfico corresponde a `top = 1`, y el inferior a `bottom = 0`, mientras que el límite izquierdo es `left = 0` y el derecho es `right = 1`. Si usamos estos argumentos, el gráfico insertado usaría la totalidad del espacio del gráfico base:
+
+
+
+
+``` r
+grafico_c + inset_element(grafico_d,
+                          top = 1, bottom = 0,
+                          left = 0, right = 1)
+```
+
+```
+## Warning in geom_bar(aes(x = 1), alpha = 0.6): All aesthetics have length 1, but the data has 150 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing
+##   a single row.
+```
+
+<img src="/blog/patchwork/patchwork_files/figure-html/plot7-1.png" width="672" />
+
+
+Notemos que las coordenadas corresponden con el _centro_ del área del gráfico, excluyendo el área de la leyenda.
+
+Si ponemos que `top = 0.5`y `right = 0.5`, entonces el borde superior del gráfico insertado estará en la mitad del alto del gráfico base, y el borde derecho en la mitad del ancho; es decir, ubicándolo en la esquina inferior izquierda.
+
+
+
+
+``` r
+grafico_c + inset_element(grafico_d,
+                          top = 0.5, bottom = 0,
+                          left = 0, right = 0.5)
+```
+
+```
+## Warning in geom_bar(aes(x = 1), alpha = 0.6): All aesthetics have length 1, but the data has 150 rows.
+## ℹ Please consider using `annotate()` or provide this layer with data containing
+##   a single row.
+```
+
+<img src="/blog/patchwork/patchwork_files/figure-html/plot8-1.png" width="672" />
+
+
+
+Sabiendo esto, podemos ajustar los argumentos de `inset_element()` para poner el gráfico exactamente donde queremos:
+
+
+
+
+``` r
+grafico_c + inset_element(grafico_b + guides(fill = guide_none()),
+                          top = .9, bottom = .4,
+                          left = .2, right = .5)
+```
+
+<img src="/blog/patchwork/patchwork_files/figure-html/plot9-1.png" width="672" />
+
+
+
+Naturalmente, podríamos combinar este gráfico con un gráfico insertado con otro gráfico más, o con la cantidad que se nos ocurra:
+
+
+
+
+``` r
+grafico_c + 
+  guides(fill = guide_legend(position = "inside", title = NULL)) +
+  theme(legend.position.inside = c(.8, .7)) +
+  inset_element(grafico_b + guides(fill = guide_none()),
+                top = 1, bottom = .4,
+                left = .2, right = .6) +
+  (grafico_a / grafico_a / grafico_a / grafico_a / grafico_a / grafico_a)
+```
+
+<img src="/blog/patchwork/patchwork_files/figure-html/plot10-1.png" width="672" />
+

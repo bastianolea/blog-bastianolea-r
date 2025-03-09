@@ -45,8 +45,8 @@
   
   <meta itemprop="name" content="Tutoriales">
   <meta itemprop="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
-  <meta itemprop="datePublished" content="2025-02-17T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-02-17T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2025-03-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-03-07T00:00:00+00:00">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="false" type="image/x-icon">
@@ -258,6 +258,81 @@
     <p class="f6 f5-ns measure lh-copy tc center"></p>
   </section>
   <section class="blog-content mw7 center">
+  
+    
+                               
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/tutorial_scraping_selenium/" class="db">Tutorial: web scraping con Selenium en R usando {RSelenium}</a></h1>
+      
+    </header>
+      
+      <p class="lh-copy mb4"><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">RSelenium</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">driver</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">rsDriver</span><span style="color:#908caa">(</span><span style="color:#ea9a97">port</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">4570L</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">browser</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;firefox&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">chromever</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">verbose</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">T</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">check</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">T</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">remDr</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">driver[[</span><span style="color:#f6c177">&#34;client&#34;</span><span style="color:#ea9a97">]]</span>
+</span></span></code></pre></div><p>Navegar a un sitio web</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remDr</span><span style="color:#908caa">$</span><span style="color:#ea9a97">navigate</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;http://chileindica.cl/home.php&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Hacer click</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remDr</span><span style="color:#908caa">$</span><span style="color:#ea9a97">findElement</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;xpath&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;/html/body/section/form/div[2]/div[2]/div[4]/a/span&#34;</span><span style="color:#908caa">)</span><span style="color:#908caa">$</span><span style="color:#ea9a97">clickElement</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Obtener código de fuente del sitio</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sitio</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_html</span><span style="color:#908caa">(</span><span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">getPageSource</span><span style="color:#908caa">()</span><span style="color:#ea9a97">[[1]]</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Luego podemos continuar usando {rvest} para realizar el scraping</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sitio</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">html_elements</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;.recursos&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">html_elements</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;a&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Tomar captura de pantalla</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remDr</span><span style="color:#908caa">$</span><span style="color:#ea9a97">screenshot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">file</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#39;test.png&#39;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Descargar archivos</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># obtener enlaces</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">download.file</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla_enlaces</span><span style="color:#908caa">$</span><span style="color:#ea9a97">url</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">destfile</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">paste0</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;datos/&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">tabla_enlaces</span><span style="color:#908caa">$</span><span style="color:#ea9a97">archivos</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><p>Descargar imágenes</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># for parsing the src:</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># Get all the images:</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">images</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">remDr</span><span style="color:#908caa">$</span><span style="color:#ea9a97">findElements</span><span style="color:#908caa">(</span><span style="color:#ea9a97">using</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;tag name&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;img&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># create images directory</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">dir.create</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;images&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#3e8fb0">for</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">image</span> <span style="color:#3e8fb0">in</span> <span style="color:#ea9a97">images</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># get the image src</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">src</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">image</span><span style="color:#908caa">$</span><span style="color:#ea9a97">getElementAttribute</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;src&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># extract the end of the url and hope it is unique. should be good to go based on a quick inspection</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">src_name</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">gsub</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;/&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">str_extract</span><span style="color:#908caa">(</span><span style="color:#ea9a97">src</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;[^/]+/[^/]+.jpg&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># download!</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">download.file</span><span style="color:#908caa">(</span><span style="color:#ea9a97">src</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;./images/&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">src_name</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sep</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span></code></pre></div><p>Obtener dimensiones del navegador</p></p>
+    <footer>
+      
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/web-scraping">web scraping</a> </dd></em>
+        </dl>
+        
+        
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
   
     
                                

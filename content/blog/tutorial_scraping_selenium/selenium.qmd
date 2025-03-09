@@ -2,7 +2,7 @@
 title: 'Tutorial: web scraping con Selenium en R usando {RSelenium}'
 author: Bastián Olea Herrera
 date: '2025-03-07'
-draft: false
+draft: true
 format: 
   hugo-md:
     output-file: "index"
@@ -12,10 +12,16 @@ categories:
   - Tutoriales
 tags:
   - web scraping
+execute: 
+  eval: false
+excerpt: Selenium es una herramienta que permite realizar web scraping avanzado por medio del control programático de un navegador web, lo cual abre infinitas posibilidades al momento de automatizar la obtención de datos e información desde sitios web dinámicos y/o complejos. En este tutorial aprenderemos a usar {RSelenium} para programar scripts de R que automaticen el control de un navegador para interactuar con sitios web y así scrapear datos mas difíciles de obtener.
 ---
 
+Selenium es una herramienta que permite realizar web scraping avanzado por medio del control programático de un navegador web, lo cual abre infinitas posibilidades al momento de automatizar la obtención de datos e información desde sitios web dinámicos y/o complejos. En este tutorial aprenderemos a usar {RSelenium} para programar scripts de R que automaticen el control de un navegador para interactuar con sitios web y así scrapear datos mas difíciles de obtener.
 
 ```{r}
+library(RSelenium)
+
 driver <- rsDriver(port = 4570L, browser = "firefox", chromever = NULL, verbose = T, check = T)
 
 

@@ -1,7 +1,7 @@
 ---
 title: Unir y combinar gráficos {ggplot2} en R
 author: Bastián Olea Herrera
-date: '2025-03-07'
+date: '2025-03-08'
 draft: false
 format:
   hugo-md:
@@ -14,13 +14,14 @@ tags:
   - gráficos
   - ggplot2
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 execute:
-  cache: true
   message: false
+  warning: false
+excerpt: El paquete {patchwork} ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas, por medio de la combinación de gráficos en una sola visualización, y la inserción de gráficos dentro de otros.
 ---
 
-
+El paquete {patchwork} ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas.
 
 ```{r}
 library(dplyr)
@@ -28,15 +29,18 @@ library(ggplot2)
 library(patchwork)
 ```
 
-
+Primero crearemos dos gráficos de muestra, a partir del dataset `iris`.
 
 ```{r}
 grafico_a <- iris |> 
+  # calcular promedios por especie
   group_by(Species) |> 
   summarize(Sepal.Length = mean(Sepal.Length)) |> 
+  # gráfico
   ggplot() +
   aes(x = Sepal.Length, y = Species) +
-  geom_col(fill = "darkslategray3", width = 0.7) +
+  # barras
+  geom_col(fill = "darkslategray3", width = 0.6) +
   theme_void()
 ```
 
@@ -44,27 +48,45 @@ grafico_a <- iris |>
 
 ```{r}
 grafico_b <- iris |> 
+  # conteo por especies
   count(Species) |> 
+  # porcentaje
   mutate(p = n/sum(n)) |> 
+  # gráfico
   ggplot() +
   aes(x = 1, y = p, fill = Species) +
   geom_col() +
+  # escala de color
   scale_fill_brewer(name = "Set2", type = "qual") +
+  # gráfico de torta
   coord_polar(theta = "y") +
   theme_void() +
   guides(fill = guide_legend(title = NULL))
 ```
-
-```{r}
+### Combinar dos gráficos lado a lado
+Gracias a {patchwork}, unir dos gráficos uno al lado del otro es tan sencillo como ”sumarlos”:
+```{r plot1}
 grafico_a + grafico_b
 ```
 
+Si queremos ajustar las proporciones de los gráficos, agregamos la función `plot_layout()` para especificar las proporciones. Haremos que uno de los gráficos sea el doble de ancho que el otro:
 
-```{r}
+```{r plot2}
+grafico_a + grafico_b + plot_layout(widths = c(1, 2))
+```
+
+### Combinar dos gráficos uno arriba del otro
+
+Para combinar dos gráficos en disposición vertical; es decir, uno arriba del otro, bsata con ”dividir” los dos gráficos:
+
+```{r plot3}
 grafico_a / grafico_b
 ```
 
-```{r}
+### Combinar más de dos gráficos
+Creemos un tercer gráfico de nuestra para probar la combinación de tres gráficos en uno solo:
+
+```{r plot4}
 grafico_c <- iris |> 
   ggplot() +
   geom_bar(aes(Petal.Width, fill = Species)) +
@@ -74,16 +96,71 @@ grafico_c <- iris |>
   guides(fill = guide_legend(title = NULL))
 ```
 
-```{r}
-((grafico_a + grafico_b) / grafico_c) + 
+Teniendo dos gráficos, podemos disponerlos uno al lado dle otro, y el tercer gráfico debajo de los dos primeros; es decir, sumar `a` + `b` y luego dividirlos por `c`:
+
+```{r plot5}
+(grafico_a + grafico_b) / grafico_c + 
   plot_layout(guides = "collect")
+```
+En este caso agregamos una función `plot_layout()` para combinar las leyendas de dos de los gráficos, dado que las leyendas son iguales y sería redundante que cada gráfico las presente por separado.
+
+Para ajustar las proporciones en este caso, podemos primero crear la fila 1 del gráfico final, ajustando su proporción, y luego a esta fila agregarle el gráfico de abajo:
+
+```{r plot6}
+fila_1 <- grafico_a + grafico_b + plot_layout(widths = c(3, 1))
+
+fila_1 / grafico_c + plot_layout(guides = "collect")
 ```
 
 
+## Poner un gráfico dentro de otro
 
 ```{r}
+grafico_d <- iris |> 
+  ggplot() +
+  geom_bar(aes(x = 1), alpha = 0.6) +
+  coord_polar(theta = "y") +
+  theme_void()
+```
+
+También podemos necesitar insertar un gráfico dentro de otro, quizás porque uno de los gráficos representa un detalle del otro, y como tal puede que sea más conveniente disponerlo dentro del primero.
+
+Para insertar un gráfico dentro de otro, se agrega a un gráfico la función `inset_element()` con el gráfico que queremos insertar. Dentro de esta función hay que definir los argumentos `top`, `bottom`, `left` y `right`, que corresponden al perímetro en el que se ubicará el gráfico insertado.
+
+Para ubicar el gráfico dentro, debemos entender que el límite superior del gráfico corresponde a `top = 1`, y el inferior a `bottom = 0`, mientras que el límite izquierdo es `left = 0` y el derecho es `right = 1`. Si usamos estos argumentos, el gráfico insertado usaría la totalidad del espacio del gráfico base:
+
+```{r plot7}
+grafico_c + inset_element(grafico_d,
+                          top = 1, bottom = 0,
+                          left = 0, right = 1)
+```
+Notemos que las coordenadas corresponden con el _centro_ del área del gráfico, excluyendo el área de la leyenda.
+
+Si ponemos que `top = 0.5`y `right = 0.5`, entonces el borde superior del gráfico insertado estará en la mitad del alto del gráfico base, y el borde derecho en la mitad del ancho; es decir, ubicándolo en la esquina inferior izquierda.
+
+```{r plot8}
+grafico_c + inset_element(grafico_d,
+                          top = 0.5, bottom = 0,
+                          left = 0, right = 0.5)
+```
+
+Sabiendo esto, podemos ajustar los argumentos de `inset_element()` para poner el gráfico exactamente donde queremos:
+
+```{r plot9}
 grafico_c + inset_element(grafico_b + guides(fill = guide_none()),
-                          left = .2, right = .5, 
-                          top = .9, bottom = .4)
+                          top = .9, bottom = .4,
+                          left = .2, right = .5)
+```
+
+Naturalmente, podríamos combinar este gráfico con un gráfico insertado con otro gráfico más, o con la cantidad que se nos ocurra:
+
+```{r plot10}
+grafico_c + 
+  guides(fill = guide_legend(position = "inside", title = NULL)) +
+  theme(legend.position.inside = c(.8, .7)) +
+  inset_element(grafico_b + guides(fill = guide_none()),
+                top = 1, bottom = .4,
+                left = .2, right = .6) +
+  (grafico_a / grafico_a / grafico_a / grafico_a / grafico_a / grafico_a)
 ```
 
