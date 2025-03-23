@@ -267,3 +267,22 @@ datos_3 |>
   rowwise() |> 
   mutate(concat = sample(399999:322999, 1))
 ```
+
+Unir textos de forma redactada
+
+``` r
+library(glue)
+
+animales <- c("mapache", "gato", "castor")
+
+glue_collapse(animales, sep = ", ", last = " y ")
+```
+
+Agregar artículos a etxtos
+
+``` r
+  nombre_region_de <- nombre_region |>
+    case_match("Metropolitana de Santiago" ~ nombre_region,
+               c("Biobío", "Maule", "Libertador General Bernardo O'Higgins") ~ paste("del", nombre_region),
+               .default = paste("de", nombre_region))
+```
