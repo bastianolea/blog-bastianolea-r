@@ -14,11 +14,11 @@ blogdown::new_post(title = "Rellenar datos perdidos usando otro dataframe",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Creando colores con R", 
-                   file = "blog/colores/colores.qmd",
+blogdown::new_post(title = "Tutorial: visualización de datos con {ggplot2}", 
+                   file = "blog/tutorial_visualizacion_ggplot/tutorial_ggplot.qmd",
                    author = "Bastián Olea Herrera",
                    tags = c("visualización de datos", "gráficos", "ggplot2"),
-                   categories = c() 
+                   categories = c("Tutoriales") 
 )
 # format: 
 #   hugo-md:
@@ -39,8 +39,8 @@ blogdown::new_post(title = "Creando colores con R",
 
 # convertir script a Quarto
 convertr::r_to_qmd(
-  input_dir = "~/Documents/Clases R/Clases SpatialLab/Cursos/curso_intro/nivel_2-datos/clase_2.R",
-  output_dir = "content/blog/r_introduccion/dplyr_intermedio/clase_2.qmd"
+  input_dir = "~/Documents/Clases R/Clases SpatialLab/Cursos/curso_intro/nivel_3-visualizaciones/clase_2.R",
+  output_dir = "content/blog/tutorial_visualizacion_ggplot/clase_2.qmd"
 )
 
 # ver en github
