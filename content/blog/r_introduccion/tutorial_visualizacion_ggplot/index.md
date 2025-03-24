@@ -42,6 +42,8 @@ Otro beneficio de usarlo es propio de el uso de cualquier herramienta programát
 
 *Este tutorial está diseñado para empezar desde lo más básico, e ir avanzando de a poco por distintos tipos de visualizaciones para familiarizarse con el modo de uso de este paquete. A medida que tutorial avanza, se van introduciendo nuevos elementos es la medida que son relevantes y apropiados de introducir. También se van introduciendo distintos conjuntos de datos, y usando paquetes auxiliares que son introducidos secuencialmente. Por estas razones, se recomienda seguir el tutorial en orden.*
 
+⚠️ Si aún no te manejas bien programando en R, te recomiendo revisar primero [este tutorial sobre trabajar con datos usando `{dplyr}`](blog/r_introduccion/dplyr_intro/), o bien, [este tutorial](blog/r_introduccion/r_basico/) y su [segunda parte](blog/r_introduccion/r_intermedio/) para aprender R desde cero.
+
 ------------------------------------------------------------------------
 
 ## Introducción
@@ -67,7 +69,7 @@ Una vez que entendamos estas piezas básicas de la creación de gráficos con `{
 library(ggplot2)
 ```
 
-Vamos a crear un gráfico vacío a partir de una primera capa de datos. Para iniciar la creación de un gráfico, usamos la función `ggplot()`, a la cual le pasamos el conjunto de datos que queremos usar.
+Vamos a crear un **gráfico vacío** a partir de una primera capa de datos. Para iniciar la creación de un gráfico, usamos la función `ggplot()`, a la cual le pasamos el conjunto de datos que queremos usar.
 
 ``` r
 iris |> ggplot()
@@ -79,7 +81,7 @@ ggplot(data = iris) # equivalente a lo anterior
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="768" />
 
-Al llamar la función `ggplot()` se genera un gráfico completamente vacío, ya que aúnno hemos definido las estéticas ni las geometrías de nuestro gráfico.
+Al llamar la función `ggplot()` se genera un gráfico completamente vacío, ya que aún no hemos definido las estéticas ni las geometrías de nuestro gráfico.
 
 A nuestra primera capa de datos le agregaremos una capa de estética, en la cual mapearemos variables a aspectos de la visualización. Los aspectos más básicos de una visualización de datos, y usualmente los que son obligatorios de definir, son las variables mapeadas a los ejes horizontales (`x`) y verticales (`y`) del gráfico.
 
@@ -97,9 +99,9 @@ Con el código anterior hicimos que el eje horizontal se corresponda con la vari
 
 Sin embargo, aún no hay ninguna expresión gráfica directa de los datos en nuestro gráfico, debido a que aún no especificamos una capa de geometría.
 
-## Tipos de gráfico
+## Dispersión
 
-### Dispersión
+Como elegimos columnas numéricas de los datos `iris` para el gráfico, lo que representaremos son la ubicación de las observaciones con respecto a ambas variables. Cuando tenemos dos variables numéricas en los ejes, podemos crear un gráfico de dispersión.
 
 Agreguemos una capa `geom_point()` a nuestro gráfico para que los datos se expresen visualmente como puntos:
 
@@ -134,7 +136,7 @@ iris |>
 
 Los puntos del gráfico adquieren colores en base a una tercera variable, `Species`, permitiéndonos diferenciar grupos de puntos, y en consiguiente extraer más información desde la visualización.
 
-Ahora mapeemos una variable al tamaño de los puntos:
+Ahora, en lugar del color, mapeemos una variable al tamaño de los puntos:
 
 ``` r
 iris |> 
@@ -147,9 +149,29 @@ iris |>
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-1.png" width="768" />
 
+Ahora los valores de la variable `Petal.Length` que mapeamos a la estética `size` harán que los puntos del gráfico cambien de tamaño en relación a los valores de `Petal.Length`.
+
 Dentro de la geometría podemos definir manualmente el color, la transparencia, Y varios otros atributos visuales de todas las geometrías que usemos. En este caso, definimos un color para todos los puntos, y una transparencia que nos permitirá notar cuando existen puntos sobrepuestos (observaciones idénticas).
 
-### Histograma
+Naturalmente, podemos usar variables para controlar tanto el color como el tamaño, y ajustar los argumentos de las geometrías para que se vean como queramos. Como toque final, cambiamos la paleta de colores por una de [ColorBrewer](https://datavizf24.classes.andrewheiss.com/resource/colors.html#colorbrewer):
+
+``` r
+iris |> 
+  ggplot() +
+  aes(x = Sepal.Length, 
+      y = Sepal.Width, 
+      color = Species,
+      size = Petal.Length) + 
+  geom_point(alpha = 0.6, shape = "diamond") +
+  # paleta de colores
+  scale_color_brewer(palette = "Set2") +
+  # tema del gráfico
+  theme_minimal()
+```
+
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
+
+## Histograma
 
 Los gráficos de histograma se usan comúnmente para explorar la distribución de los datos de forma rápida.
 
@@ -160,13 +182,13 @@ iris |> # datos
   geom_histogram() # histograma
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="768" />
 
 Ese tipo de gráficos solamente requiere de una variable. La variable se expresará en el eje horizontal, con la frecuencia de observaciones ascendiendo desde el plano horizontal en correspondencia con la cantidad de casos en cada valor de la variable.
 
 En otras palabras, un histograma nos permite ver cuántas veces se repite cada valor de una variable, y de este modo podemos identificar cómo se distribuyen los datos.
 
-### Densidad
+## Densidad
 
 Al igual que los histogramas, los gráficos de densidad solo requieren de una variable. Los gráficos de densidad expresan la distribución de los datos como una curva, simplificando la visualización.
 
@@ -177,7 +199,7 @@ iris |>
   geom_density()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
 
 Podemos cambiar los argumentos de `geom_density()`, o de cualquier otra función `geom_x()`, para personalizar su apariencia:
 
@@ -188,7 +210,7 @@ iris |>
   geom_density(fill = "black", alpha = 0.6)
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png" width="768" />
 
 Si mapeamos una variable al color del gráfico de densidad, obtendremos múltiples distribuciones de datos para cada grupo en la variable asignada al color.
 
@@ -198,12 +220,17 @@ iris |>
   aes(x = Sepal.Length, 
       fill = Species, # relleno de la figura
       color = Species) + # bordes de la figura
-  geom_density(alpha = 0.6)
+  geom_density(alpha = 0.6) +
+  # tema
+  theme_classic() +
+  scale_color_brewer(palette = "Dark2") +
+  scale_fill_brewer(palette = "Dark2") +
+  coord_cartesian(expand = FALSE)
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.png" width="768" />
 
-Cuándo se visualizan figuras cerradas, como una curva, una barra, o un polígono, existen dos argumentos que corresponden con el color: el relleno (`fill`) de las figuras, y su borde (`color`). Por eso en este ejemplo asignamos la variable `Species` tanto al relleno como al borde.
+Cuándo se visualizan figuras cerradas, como una curva, una barra, o un polígono, existen dos argumentos que corresponden con el color: el relleno (`fill`) de las figuras, y su borde (`color`). Por eso en este ejemplo asignamos la variable `Species` tanto al relleno como al borde. Como toque final, definimos un tema con `theme_classic()`, aplicamos una paleta de colores tanto al relleno como al color, y eliminamos el espaciado extra en los ejes ajustando el argumento `expand` en la capa de coordenadas, `coord_cartesian()`.
 
 ------------------------------------------------------------------------
 
@@ -256,11 +283,11 @@ temp |>
   theme_classic()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png" width="768" />
 
 Dentro de la función `geom_histogram()` especificamos que el borde de las barras sea blanco, y al final del gráfico agregamos una función `theme_x()` para darle una apariencia distinta a la visualización.
 
-### Dispersión
+## Dispersión
 
 Teniendo dos columnas numéricas, podemos crear un gráfico de dispersión que dibuje un puntos que relacionen las mediciones meteorológicas de cada día.
 
@@ -275,11 +302,11 @@ temp |>
   theme_classic()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png" width="768" />
 
 Cada punto representa un día, y su ubicación corresponde a la temperatura máxima y mínima de cada día.
 
-### Cajas o boxplot
+## Cajas o boxplot
 
 Puedes crear un gráfico de caja o *boxplot* del total de las observaciones:
 
@@ -291,7 +318,7 @@ temp |>
   theme_classic()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png" width="288" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png" width="288" />
 
 Solamente definiendo una variable para el eje vertical obtenemos un gráfico que nos presenta un resumen estadístico de las observaciones del conjunto de datos, con líneas que marcan la mediana (al medio de la caja) y los cuartiles del 25% y del 75% (los límites de la caja).
 
@@ -315,7 +342,7 @@ temp_filt |>
   theme_classic()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-19-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png" width="768" />
 
 También podemos volver a mapear la variable del eje horizontal a la estética del color para distinguir aún más las cajas; sin embargo, mapear una variable al color hace que aparezca una leyenda, que en este caso es redundante, por lo que agregamos una capa de leyenda (`guides()`) para omitirla.
 
@@ -334,9 +361,9 @@ temp_filt |>
   scale_color_brewer(palette = "Set2")
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.png" width="768" />
 
-### Dispersión por grupos
+## Dispersión por grupos
 
 Si queremos producir un punto por cada observación a través de las tres estaciones metodologías que filtramos, obtenemos un gráfico como el siguiente:
 
@@ -348,7 +375,7 @@ temp_filt |>
   theme_minimal()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.png" width="768" />
 
 Podemos ver que resulta un gráfico muy poco legible, dado que estamos dibujando 15 mil puntos unos encima de otros. Para solucionarlo, podemos reemplazar `geom_point()` por `geom_jitter()`, que es una geometría que agrega dispersión a los puntos para hacerlos mas visibles:
 
@@ -360,11 +387,11 @@ temp_filt |>
   theme_minimal()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.png" width="768" />
 
 Dentro de los argumentos de `geom_jitter()` podemos especificar la dirección en la que queremos agregar la dispersión aleatoria. Si especificamos `height = 0`, entonces la dispersión no será vertical, y los puntos solamente se moverán horizontalmente, para que la posición vertical de los puntos sea certera y solamente se desplacen hacia los lados para poder verlos individualmente sin que se tapen unos a otros.
 
-### Violín
+## Violín
 
 Los gráficos de violin son básicamente gráficos de densidad, pero espejados o duplicados para producir una silueta similar a la de un violín.
 
@@ -376,7 +403,7 @@ temp_filt |>
   theme_minimal()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-24-1.png" width="768" />
 
 Recordemos que siempre podemos agregar la cantidad de capas que deseemos a nuestros gráficos. Por ejemplo, agregar un boxplot sobre los violines:
 
@@ -390,7 +417,7 @@ temp_filt |>
   theme_minimal()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-24-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-25-1.png" width="768" />
 
 combinar violín con puntos
 
@@ -403,7 +430,7 @@ temp_filt |>
   theme_minimal()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-25-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-26-1.png" width="768" />
 
 Los gráficos que creemos no tienen por qué reducirse a un solo conjunto de datos. Podemos calcular un nuevo conjunto de datos para complementar las visualizaciones que queremos realizar.
 
@@ -430,11 +457,11 @@ temp_filt |>
   theme_minimal()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-27-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-28-1.png" width="768" />
 
 Como las columnas de el segundo conjunto de datos (`temp_median`) se llaman igual a las del primero, `{ggplot2}` detecta las variables mapeadas en la capa de estética y las reutiliza en la segunda capa de geometría, por lo que no es necesario especificar en la capa de `geom_point()` las variables a utilizar. Pero si las variables de un segundo conjunto de datos se llamaran distinto, podríamos especificar dentro de la geometría una nueva estética con la función `aes()` para que se aplique a esa capa en particular.
 
-### Líneas
+## Líneas
 
 Para visualizar los datos como líneas primero procesaremos los datos para obtener promedios mensuales de temperatura:
 
@@ -470,9 +497,9 @@ temp_mensual |>
         legend.key.height = unit(4, "pt"))
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-29-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-30-1.png" width="768" />
 
-### Mosaico
+## Mosaico
 
 Del mismo modo que realizamos un gráfico de dispersión, podemos realizar un gráfico de puntos ordenados si es que las variables numéricas que usaremos en los ejes de coordenadas son consistentes, por ejemplo, en el caso de observaciones medidas diaria o mensualente.
 
@@ -564,7 +591,7 @@ glimpse(pueblos)
     $ poblacion_total <dbl> 232628, 232628, 232628, 232628, 232628, 232628, 232628…
     $ orden_region    <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
 
-### Barras ordenado
+## Barras ordenado
 
 Realicemos una suma de los conteos agrupada por pueblo originario:
 
@@ -597,7 +624,7 @@ pueblos_n |>
   scale_fill_brewer(palette = "Dark2")
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-33-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-34-1.png" width="768" />
 
 Si deseamos ordenar las barras de acuerdo a su valor, lo que tenemos que hacer es ordenar la variable del eje desde el que se originan las barras. En este caso, las barras salen desde el eje *x* de acuerdo al pueblo indígena. Entonces, la variable `pueblo` tendría que ser ordenada de acuerdo a la variable `total`. Para esto, necesitamos que la variable sea un factor, que son el tipo de variables categóricas en R que guardan información acerca de el orden de los niveles o categorías de la variable.
 
@@ -618,11 +645,11 @@ grafico_pueblos_1 <- pueblos_n |>
 grafico_pueblos_1
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-34-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-35-1.png" width="768" />
 
 También agregamos una capa `scale_y_continuous()` para modificar la escala vertical del gráfico y así mostrar correctamente los números grandes con un separador de miles, para mejorar la legibilidad de las cifras. Para lograrlo, usamos la función `label_comma()` del [conveniente paquete `{scales}`.](https://scales.r-lib.org)
 
-### Textos
+## Textos
 
 Para agregar texto a nuestros gráficos debemos introducir la capa de geometría `geom_text()`. Esta geometría requiere de un mapeo específico, `label`, que corresponde a la etiqueta de texto que se mostrará. En `label` debes poner la variable cuyo valor quieres que aparezca como texto:
 
@@ -631,7 +658,7 @@ grafico_pueblos_1 +
   geom_text(aes(label = total))
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-35-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-36-1.png" width="768" />
 
 En primera instancia, se ve terrible. Esto es porque los textos están apareciendo en la coordenada del eje vertical donde terminan las barras; es decir, justo encima del límite de las barras. Para mejorar esto, en la capa de `geom_text()` para especificar la justificación vertical del texto en `vjust`, para que el texto no aparezca centrado en la coordenada *y*, sino que la coordenada *y* sea la altura de base del texto, y el argumento `nudge_y` para sumarle un valor específico a la coordenada *y* del texto, cosa que aparezca levemente distanciado del borde de las barras:
 
@@ -642,7 +669,7 @@ grafico_pueblos_1 +
             nudge_y = 15000)
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-36-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-37-1.png" width="768" />
 
 Cuando ponemos texto en un gráfico, usualmente tenemos que hacer algunos ajustes en consideración de que algunos elementos del gráfico van a ser muy grandes o muy pequeños, y por lo tanto el texto no siempre se va a ver bien. Para solucionar estos problemas podemos usar múltiples capas de texto en lugar de una sola, donde cada capa de texto dibuje los textos para algunos datos, con los ajustes necesarios para dichos casos.
 
@@ -660,11 +687,11 @@ grafico_pueblos_1 +
             vjust = 1, nudge_y = -20000, color = "white")
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-37-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-38-1.png" width="768" />
 
 Hicimos que cada capa dibuje textos distintos filtrando los datos que llegan a cada una de las capas en el argumento `data` de cada geometría. En los argumentos `data` usamos notación lambda para filtrar los datos del gráfico (`~filter(.x)`) sin tener que especificar el conjunto de datos específico. Pero si esto te parece complicado, también se puede lograr el mismo efecto sin `data` usando `ifelse(total > mean(total), total, "")` en `label` para que cada capa escriba el texto que cumple con la condición, E imprima nada si es que no la cumple.
 
-### Anotaciones
+## Anotaciones
 
 Muchas veces queremos agregar un texto o anotación específico en alguna ubicación de nuestro gráfico. Para estos fines existe una capa ed geometría personalizada llamada `annotate()`, que a diferencia del resto de la geometría de `{ggplot2}`, no depende de la especificación estética (`aes()`), sino que sus parámetros son completamente manuales. Entonces, podemos usar `annotate()` para crear un evento puntual en nuestra visualización, y sea escribiendo el texto y sus coordenadas a mano, o sacándolas de un objeto. En este caso, filtraremos la tabla de datos que produce el gráfico para enfocarnos en una sola observación, y usaremos las coordenadas de esta tabla resultante para crear una anotación que añada un texto en un lugar específico del gráfico:
 
@@ -680,7 +707,7 @@ grafico_pueblos_1 +
            label = "***", size = 6, fontface = "bold")
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-38-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-39-1.png" width="768" />
 
 Un segundo ejemplo:
 
@@ -701,9 +728,9 @@ pueblos_n |>
            size = 5, angle = 90, color = "white")
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-39-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-40-1.png" width="768" />
 
-### Barras apiladas
+## Barras apiladas
 
 En un gráfico de barras apiladas, lo que hacemos es separar los datos por colores, y generar una sola barra que esté compuesta por segmentos de colores del tamaño que represente cada grupo. Este tipo de visualización puede ser himnos para mostrar la proporción que ocupa cada sus grupos dentro del total, dado que la información se presenta como un solo todo.
 
@@ -724,7 +751,7 @@ grafico_pueblos_2 <- pueblos_n |>
 grafico_pueblos_2
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-40-1.png" width="672" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-41-1.png" width="672" />
 
 Podemos realizar algunos ajustes al tema del gráfico para ocultar el truco que hicimos para que el gráfico tuviera una sola barra, y aprovechamos de ponerle texto a los valores de cada segmento. El texto lo agregamos con la función `geom_text()`, pero explicitando que la posición de las etiquetas tiene que ser apilada, igual que nuestro gráfico, con `position = position_stack()`. El número `0.5` dentro de `position_stack()` indica que queremos que las cifras aparezcan en medio de su correspondiente segmento, y no al final del mismo.
 
@@ -736,9 +763,9 @@ grafico_pueblos_2 +
         axis.text.y = element_blank())
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-41-1.png" width="672" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-42-1.png" width="672" />
 
-### Torta
+## Torta
 
 Muchas personas dedicadas a las estadísticas o a la ciencia de datos han planteado (buenas) críticas en contra de los gráficos de torta. Para fines de este tutorial, ignoraremos un poco estas críticas, debido a que, a pesar de ser inapropiados para muchas situaciones, siguen siendo gráficos atractivos y muy solicitados en la práctica. Por lo tanto, aprenderemos de todas formas a realizarlos en `{ggplot2}`.
 
@@ -755,7 +782,7 @@ pueblos_n |>
   theme_minimal()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-42-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-43-1.png" width="768" />
 
 A especificar que el eje horizontal del gráfico sea tan sólo el valor `1`, mientras que las observaciones están agrupadas por una variable asignada a la estética `color`, estamos haciendo que todos los datos del gráfico aparezcan uno encima del otro, sin separarse horizontalmente como los ejemplos anteriores.
 
@@ -772,7 +799,7 @@ pueblos_n |>
   coord_polar(theta = "y") # enrollar el gráfico para volverlo circular
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-43-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-44-1.png" width="768" />
 
 Si comparas este gráfico de torta con el gráfico anterior, notarás que el gráfico de torta es exactamente el gráfico de barras, pero en enrollado a partir de su esquina inferior derecha.
 
@@ -791,7 +818,7 @@ pueblos_n |>
             position = position_stack(0.5))
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-44-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-45-1.png" width="768" />
 
 Una variación del gráfico de torta es el gráfico de dona, que no es más que un gráfico de torta con un espacio al medio. Para crear el espacio dentro de la torta, y recordando que los gráficos de tortas son gráficos de barras apiladas, necesitamos agregar espacio en el eje horizontal del gráfico de barras:
 
@@ -805,7 +832,7 @@ pueblos_n |>
   scale_x_continuous(expand = expansion(c(2, 0)))
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-45-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-46-1.png" width="768" />
 
 Logramos agregar un espacio en el eje horizontal del gráfico modificando la escala correspondiente (`scale_x_continuous()`), ajustando en ella al argumento `expand` que controla cuánto espaciado va a haber en cada borde de el eje correspondiente. Por defecto, `{ggplot2}` agrega un pequeño espaciado en cada eje.
 
@@ -825,7 +852,7 @@ pueblos_n |>
             position = position_stack(0.5))
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-46-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-47-1.png" width="768" />
 
 Si cambiamos `coord_polar()` por `coord_radial()` y ajustamos un poco la escala vertical y otros detalles, podemos hacer que los textos sigan en el ángulo de la torta:
 
@@ -846,9 +873,9 @@ pueblos_n |>
             position = position_stack(0.5))
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-47-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-48-1.png" width="768" />
 
-### Facetas
+## Facetas
 
 Se le llama a facetas a la división de un mismo gráfico en múltiples gráficos a partir de una variable determinada. Especificando una variable de agrupación, entonces, podemos generar una visualización que contenga múltiples gráficos del mismo tipo, pero visualizando datos filtrados por la variable seleccionada.
 
@@ -889,7 +916,7 @@ pueblos_n_sexo |>
   theme_void()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-49-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-50-1.png" width="768" />
 
 Al crear una faceta por la variable `pueblo`, que tiene cuatro niveles, obtenemos cuatro gráficos con el mismo código que necesitamos para generar uno solo. ¡Qué ofertón!
 
@@ -904,7 +931,7 @@ library(arrow)
 delinc <- arrow::read_parquet("https://github.com/bastianolea/delincuencia_chile/raw/main/datos_procesados/cead_delincuencia_chile.parquet")
 ```
 
-### Líneas
+## Líneas
 
 La gráficos en línea se usan principalmente para mostrar el cambio o evolución de una variable a través de otra, usualmente a través del tiempo. Usaremos `geom_line()` para visualizar la cantidad total de delitos mensuales desde el año 2018.
 
@@ -920,7 +947,7 @@ delinc |>
   theme_classic()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-51-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-52-1.png" width="768" />
 
 Podemos agregar al mismo tiempo una capa de puntos sobre las líneas para destacar la ubicaciones específica de las observaciones.
 
@@ -942,7 +969,7 @@ delinc |>
   theme_classic()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-52-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-53-1.png" width="768" />
 
 Calculemos una tabla de datos que sume las cantidades de tres delitos en específico a través del tiempo:
 
@@ -967,7 +994,7 @@ delinc_filt |>
   scale_x_date(expand = expansion(0))
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-54-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-55-1.png" width="768" />
 
 Algunas geometrías en `{ggplot2}` son capaces de realizar cálculos estadísticos por nosotros a la hora de visualizar. Uno de los más comunes para explorar tendencias en los datos es agregar líneas de regresión lineal sobre los datos. Agregando una capa de la geometría `geom_smooth()`, se calcularán tres líneas de regresión para cada uno de los grupos que estamos visualizando, debido a que en este caso estamos agrupando nuestra visualización por color.
 
@@ -982,7 +1009,7 @@ delinc_filt |>
   scale_x_date(expand = expansion(0))
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-55-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-56-1.png" width="768" />
 
 Estas líneas de regresión representan trayectorias ajustadas a la posición de todas las observaciones de cada grupo, entregándonos información visual acerca de si los datos representan en general una tendencia a la alza o a la baja.
 
@@ -1002,9 +1029,9 @@ delinc_filt |>
   scale_x_date(expand = expansion(0))
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-56-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-57-1.png" width="768" />
 
-### Barras comparativas
+## Barras comparativas
 
 Los gráficos de barras nos permiten comparar valores de forma muy clara. Pero a veces también queremos comparar valores dentro de los valores que estábamos comparando. Calcularemos la cantidad de tres delitos distintos a través de 10 comunas, para generar un gráfico que nos permita comparar tanto los delitos *entre* las comunas como las cantidades de los delitos distintos *dentro* de cada una de estas comunas.
 
@@ -1063,7 +1090,7 @@ delinc_comuna |>
        caption = "Fuente: Centro de Estudios y Análisis del Delito")
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-58-1.png" width="672" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-59-1.png" width="672" />
 
 Sin embargo, en este gráfico toma preponderancia la cantidad total de delitos en ciertas comunas, dado que resultan muy mayores que en otras. Tenemos una alternativa para realizar esta visualización, que es poner los segmentos de las barras de cada variable del eje vertical lado al lado en vez de apilarlas. Para ello, podemos definir que los segmentos de color de cada barra se ubiquen en la posición `position_dodge()` en lugar de `position_stack()` (la anterior):
 
@@ -1092,11 +1119,11 @@ grafico_delincuencia_1 <- delinc_comuna |>
 grafico_delincuencia_1
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-59-1.png" width="672" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-60-1.png" width="672" />
 
 Con este posicionamiento de las barras obtenemos un gráfico que nos permite comparar cada uno de los subgrupos de cada variable del eje vertical entre sí, dado que ahora los segmentos de colores, en este caso los tipos de delitos, se ubican lateralmente uno con el otro, facilitando la comparación visual.
 
-### Temas
+## Temas
 
 Si queremos modificar elementos específicos de la visualización, usamos la capa `theme()`. Dentro de esta función, podemos individualizar cualquier elemento de la visualización. Para saber cómo se llama cada elemento, puedes empezar escribiendo su ubicación general (`plot`, `panel`, `axis`, `legend`, etc.) y RStudio/Positron debería sugerirte las distintas posibilidades, o bien puedes [entrar a esta guía](https://isabella-b.com/blog/ggplot2-theme-elements-reference/) para encontrar los nombres de cada uno de los elementos.
 
@@ -1116,9 +1143,9 @@ grafico_delincuencia_2 <- grafico_delincuencia_1 +
 grafico_delincuencia_2
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-60-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-61-1.png" width="768" />
 
-### Tipografías
+## Tipografías
 
 Existen muchos métodos distintos para usar tipografías personalizadas en nuestros gráficos de `{ggplot2}`. Debido a que obtener, instalar y activar tipografías suele ser algo complejo, una solución sencilla y compatible es utilizar tipografía web, como las ofrecidas por [Google Fonts.](https://fonts.google.com) puedes navegar a ese sitio y encontrar una tipografía que te interese, y descargarla por medio del paquete `{showtext}`:
 
@@ -1143,7 +1170,7 @@ grafico_delincuencia_2 +
   theme_classic(base_family = "Montserrat")
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-63-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-64-1.png" width="768" />
 
 Vale mencionar que el tipo grafías descargadas por este método solamente estarán disponibles durante la sesión de R, por lo que la próxima vez que quieras usarlas deberán ser descargadas de la misma manera. Si tienes algún problema con esas tipografías, basta con reiniciar la sesión de R para dejar de utilizarlas.
 
@@ -1161,24 +1188,28 @@ Si no específicas un ancho y alto, el gráfico tendrá el ancho y alto de la ve
 
 ------------------------------------------------------------------------
 
-Con esto concluye este tutorial inicial para aprender a visualizar datos en R con `{ggplot2}`. Cómo puedes ver, las naciones principales son pocas, pero es la combinación entre ellas y su uso creativo lo que nos permite crear visualizaciones interesantes!
+Con esto concluye este tutorial inicial para aprender a visualizar datos en R con `{ggplot2}`. Cómo puedes ver, las nociones principales de `{ggplot2}` son pocas, pero es la combinación entre ellas y su uso creativo lo que nos permite crear visualizaciones interesantes!
+
+Si aprendiste con este tutorial, considera hacerme una pequeña donación en el siguiente enlace:
 
 {{< cafecito  >}}
 
 ------------------------------------------------------------------------
 
+Para cerrar, dejo algunos enlaces útiles para ayudarte a usar `{ggplot2}`:
+
 **Paletas de colores**
-- https://datavizf24.classes.andrewheiss.com/resource/colors.html
-- https://bastianolea.rbind.io/blog/colores/
-- viridis: https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#the-color-scales
-- colorbrewer: https://colorbrewer2.org/#type=sequential&scheme=YlGnBu&n=3
-- scico: https://www.data-imaginist.com/posts/2018-05-30-scico-and-the-colour-conundrum/
+- Tutorial sobre el uso de paletas de colores: https://datavizf24.classes.andrewheiss.com/resource/colors.html
+- Guía sobre herramientas para usar color en R: https://bastianolea.rbind.io/blog/colores/
+- Guía para el uso de paletas de colores Viridis: https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#the-color-scales
+- Sitio web con paletas de colores ColorBrewer: https://colorbrewer2.org/#type=sequential&scheme=YlGnBu&n=3
+- Paletas de colores Scico: https://www.data-imaginist.com/posts/2018-05-30-scico-and-the-colour-conundrum/
 
 **Temas**
-- temas ggplot: https://ggplot2.tidyverse.org/reference/ggtheme.html
-- ggthemes: https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/
+- Sobre los temas de `{ggplot2}`: https://ggplot2.tidyverse.org/reference/ggtheme.html
+- Paquete `{ggthemes}` con temas extra: https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/
 
-**Elementos de un gráfico** (para modificar temas):
+**Elementos de los gráficos** (para modificar temas):
 - https://isabella-b.com/blog/ggplot2-theme-elements-reference/
 - https://henrywang.nl/ggplot2-theme-elements-demonstration/
 - https://ggplot2.tidyverse.org/reference/theme

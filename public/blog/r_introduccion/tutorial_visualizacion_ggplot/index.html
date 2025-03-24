@@ -49,7 +49,7 @@
 Otro beneficio de usarlo es propio de el uso de cualquier herramienta programática para generar resultados en el ámbito del análisis de datos: la reusabilidad del código, que nos permite especificar una sola vez el resultado que queremos y luego volver a aplicarlo infinitas veces con distintos datos, datos actualizados, o variaciones de un conjunto de datos, etc.">
   <meta itemprop="datePublished" content="2025-03-21T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-03-21T00:00:00+00:00">
-  <meta itemprop="wordCount" content="7145">
+  <meta itemprop="wordCount" content="7444">
   <meta itemprop="image" content="http://localhost:4321/blog/r_introduccion/tutorial_visualizacion_ggplot/ggplot2-featured.jpg">
   <meta itemprop="keywords" content="Visualización de datos,Gráficos,Ggplot2">
   
@@ -64,7 +64,7 @@ Otro beneficio de usarlo es propio de el uso de cualquier herramienta programát
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
   
   
-  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+  <script src="/main.min.b4209322c59b1eae25ede78491f6cda72009a83aec93caaca074f96f67022fc0.js" type="text/javascript"></script>
 </head>
 <body>
       <div class="grid-container single-series">
@@ -270,6 +270,10 @@ Otro beneficio de usarlo es propio de el uso de cualquier herramienta programát
 <p>Otro beneficio de usarlo es propio de el uso de cualquier herramienta programática para generar resultados en el ámbito del análisis de datos: la reusabilidad del código, que nos permite especificar una sola vez el resultado que queremos y luego volver a aplicarlo infinitas veces con distintos datos, datos actualizados, o variaciones de un conjunto de datos, etc.</p>
 <hr>
 <p><em>Este tutorial está diseñado para empezar desde lo más básico, e ir avanzando de a poco por distintos tipos de visualizaciones para familiarizarse con el modo de uso de este paquete. A medida que tutorial avanza, se van introduciendo nuevos elementos es la medida que son relevantes y apropiados de introducir. También se van introduciendo distintos conjuntos de datos, y usando paquetes auxiliares que son introducidos secuencialmente. Por estas razones, se recomienda seguir el tutorial en orden.</em></p>
+<p>⚠️ Si aún no te manejas bien programando en R, te recomiendo revisar primero 
+<a href="blog/r_introduccion/dplyr_intro/">este tutorial sobre trabajar con datos usando <code>{dplyr}</code></a>, o bien, 
+<a href="blog/r_introduccion/r_basico/">este tutorial</a> y su 
+<a href="blog/r_introduccion/r_intermedio/">segunda parte</a> para aprender R desde cero.</p>
 <hr>
 
 
@@ -296,11 +300,11 @@ Otro beneficio de usarlo es propio de el uso de cualquier herramienta programát
 <p>Una vez que entendamos estas piezas básicas de la creación de gráficos con <code>{ggplot2}</code>, pasemos a generar nuestras primeras visualizaciones.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># install.packages(&#34;ggplot2&#34;)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>Vamos a crear un gráfico vacío a partir de una primera capa de datos. Para iniciar la creación de un gráfico, usamos la función <code>ggplot()</code>, a la cual le pasamos el conjunto de datos que queremos usar.</p>
+</span></span></code></pre></div><p>Vamos a crear un <strong>gráfico vacío</strong> a partir de una primera capa de datos. Para iniciar la creación de un gráfico, usamos la función <code>ggplot()</code>, a la cual le pasamos el conjunto de datos que queremos usar.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">iris</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># equivalente a lo anterior</span>
 </span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="768" />
-<p>Al llamar la función <code>ggplot()</code> se genera un gráfico completamente vacío, ya que aúnno hemos definido las estéticas ni las geometrías de nuestro gráfico.</p>
+<p>Al llamar la función <code>ggplot()</code> se genera un gráfico completamente vacío, ya que aún no hemos definido las estéticas ni las geometrías de nuestro gráfico.</p>
 <p>A nuestra primera capa de datos le agregaremos una capa de estética, en la cual mapearemos variables a aspectos de la visualización. Los aspectos más básicos de una visualización de datos, y usualmente los que son obligatorios de definir, son las variables mapeadas a los ejes horizontales (<code>x</code>) y verticales (<code>y</code>) del gráfico.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># iniciar el gráfico</span>
@@ -314,22 +318,13 @@ Otro beneficio de usarlo es propio de el uso de cualquier herramienta programát
 
 
 
-<h2 id="tipos-de-gráfico">Tipos de gráfico
-  <a href="#tipos-de-gr%c3%a1fico"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h2>
-
-
-
-
-<h3 id="dispersión">Dispersión
+<h2 id="dispersión">Dispersión
   <a href="#dispersi%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
+<p>Como elegimos columnas numéricas de los datos <code>iris</code> para el gráfico, lo que representaremos son la ubicación de las observaciones con respecto a ambas variables. Cuando tenemos dos variables numéricas en los ejes, podemos crear un gráfico de dispersión.</p>
 <p>Agreguemos una capa <code>geom_point()</code> a nuestro gráfico para que los datos se expresen visualmente como puntos:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># iniciar el gráfico</span>
@@ -350,7 +345,7 @@ Otro beneficio de usarlo es propio de el uso de cualquier herramienta programát
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">()</span>
 </span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.png" width="768" />
 <p>Los puntos del gráfico adquieren colores en base a una tercera variable, <code>Species</code>, permitiéndonos diferenciar grupos de puntos, y en consiguiente extraer más información desde la visualización.</p>
-<p>Ahora mapeemos una variable al tamaño de los puntos:</p>
+<p>Ahora, en lugar del color, mapeemos una variable al tamaño de los puntos:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sepal.Length</span><span style="color:#908caa">,</span> 
@@ -358,56 +353,76 @@ Otro beneficio de usarlo es propio de el uso de cualquier herramienta programát
 </span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Petal.Length</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># variable mapeada al tamaño</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;purple2&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.5</span><span style="color:#908caa">)</span> 
 </span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-1.png" width="768" />
+<p>Ahora los valores de la variable <code>Petal.Length</code> que mapeamos a la estética <code>size</code> harán que los puntos del gráfico cambien de tamaño en relación a los valores de <code>Petal.Length</code>.</p>
 <p>Dentro de la geometría podemos definir manualmente el color, la transparencia, Y varios otros atributos visuales de todas las geometrías que usemos. En este caso, definimos un color para todos los puntos, y una transparencia que nos permitirá notar cuando existen puntos sobrepuestos (observaciones idénticas).</p>
+<p>Naturalmente, podemos usar variables para controlar tanto el color como el tamaño, y ajustar los argumentos de las geometrías para que se vean como queramos. Como toque final, cambiamos la paleta de colores por una de 
+<a href="https://datavizf24.classes.andrewheiss.com/resource/colors.html#colorbrewer" target="_blank" rel="noopener">ColorBrewer</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sepal.Length</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sepal.Width</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Species</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Petal.Length</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.6</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">shape</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;diamond&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># paleta de colores</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_color_brewer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Set2&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># tema del gráfico</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
 
 
 
 
-<h3 id="histograma">Histograma
+<h2 id="histograma">Histograma
   <a href="#histograma"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Los gráficos de histograma se usan comúnmente para explorar la distribución de los datos de forma rápida.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># datos</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># iniciar</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sepal.Length</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># variable horizontal</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_histogram</span><span style="color:#908caa">()</span> <span style="color:#6e6a86"># histograma</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="768" />
 <p>Ese tipo de gráficos solamente requiere de una variable. La variable se expresará en el eje horizontal, con la frecuencia de observaciones ascendiendo desde el plano horizontal en correspondencia con la cantidad de casos en cada valor de la variable.</p>
 <p>En otras palabras, un histograma nos permite ver cuántas veces se repite cada valor de una variable, y de este modo podemos identificar cómo se distribuyen los datos.</p>
 
 
 
 
-<h3 id="densidad">Densidad
+<h2 id="densidad">Densidad
   <a href="#densidad"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Al igual que los histogramas, los gráficos de densidad solo requieren de una variable. Los gráficos de densidad expresan la distribución de los datos como una curva, simplificando la visualización.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sepal.Length</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_density</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
 <p>Podemos cambiar los argumentos de <code>geom_density()</code>, o de cualquier otra función <code>geom_x()</code>, para personalizar su apariencia:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sepal.Length</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_density</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;black&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.6</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png" width="768" />
 <p>Si mapeamos una variable al color del gráfico de densidad, obtendremos múltiples distribuciones de datos para cada grupo en la variable asignada al color.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sepal.Length</span><span style="color:#908caa">,</span> 
 </span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Species</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># relleno de la figura</span>
 </span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Species</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># bordes de la figura</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_density</span><span style="color:#908caa">(</span><span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.6</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png" width="768" />
-<p>Cuándo se visualizan figuras cerradas, como una curva, una barra, o un polígono, existen dos argumentos que corresponden con el color: el relleno (<code>fill</code>) de las figuras, y su borde (<code>color</code>). Por eso en este ejemplo asignamos la variable <code>Species</code> tanto al relleno como al borde.</p>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_density</span><span style="color:#908caa">(</span><span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.6</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># tema</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_color_brewer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Dark2&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_fill_brewer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Dark2&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_cartesian</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.png" width="768" />
+<p>Cuándo se visualizan figuras cerradas, como una curva, una barra, o un polígono, existen dos argumentos que corresponden con el color: el relleno (<code>fill</code>) de las figuras, y su borde (<code>color</code>). Por eso en este ejemplo asignamos la variable <code>Species</code> tanto al relleno como al borde. Como toque final, definimos un tema con <code>theme_classic()</code>, aplicamos una paleta de colores tanto al relleno como al color, y eliminamos el espaciado extra en los ejes ajustando el argumento <code>expand</code> en la capa de coordenadas, <code>coord_cartesian()</code>.</p>
 <hr>
 <p>Para seguir aprendiendo veremos algunos ejemplos con conjuntos de datos reales.</p>
 <p>El primer conjunto de datos que utilizaremos es una serie de 
@@ -443,18 +458,18 @@ $ t_med           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_histogram</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># tema</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png" width="768" />
 <p>Dentro de la función <code>geom_histogram()</code> especificamos que el borde de las barras sea blanco, y al final del gráfico agregamos una función <code>theme_x()</code> para darle una apariencia distinta a la visualización.</p>
 
 
 
 
-<h3 id="dispersión-1">Dispersión
+<h2 id="dispersión-1">Dispersión
   <a href="#dispersi%c3%b3n-1"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Teniendo dos columnas numéricas, podemos crear un gráfico de dispersión que dibuje un puntos que relacionen las mediciones meteorológicas de cada día.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">temp</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Carriel Sur, Concepción Ap.&#34;</span><span style="color:#908caa">,</span>
@@ -464,25 +479,25 @@ $ t_med           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.6</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># tema</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png" width="768" />
 <p>Cada punto representa un día, y su ubicación corresponde a la temperatura máxima y mínima de cada día.</p>
 
 
 
 
-<h3 id="cajas-o-boxplot">Cajas o boxplot
+<h2 id="cajas-o-boxplot">Cajas o boxplot
   <a href="#cajas-o-boxplot"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Puedes crear un gráfico de caja o <em>boxplot</em> del total de las observaciones:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">temp</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">t_max</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_boxplot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;grey90&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png" width="288" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png" width="288" />
 <p>Solamente definiendo una variable para el eje vertical obtenemos un gráfico que nos presenta un resumen estadístico de las observaciones del conjunto de datos, con líneas que marcan la mediana (al medio de la caja) y los cuartiles del 25% y del 75% (los límites de la caja).</p>
 <p>Filtremos los datos para tener información de sólo tres estaciones meteorológicas:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">temp_filt</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">temp</span> <span style="color:#908caa">|&gt;</span> 
@@ -496,7 +511,7 @@ $ t_med           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_boxplot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;grey90&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># tema</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-19-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png" width="768" />
 <p>También podemos volver a mapear la variable del eje horizontal a la estética del color para distinguir aún más las cajas; sin embargo, mapear una variable al color hace que aparezca una leyenda, que en este caso es redundante, por lo que agregamos una capa de leyenda (<code>guides()</code>) para omitirla.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">temp_filt</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
@@ -510,49 +525,49 @@ $ t_med           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
 </span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># paletas de colores</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_fill_brewer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Set2&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_color_brewer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Set2&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.png" width="768" />
 
 
 
 
-<h3 id="dispersión-por-grupos">Dispersión por grupos
+<h2 id="dispersión-por-grupos">Dispersión por grupos
   <a href="#dispersi%c3%b3n-por-grupos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Si queremos producir un punto por cada observación a través de las tres estaciones metodologías que filtramos, obtenemos un gráfico como el siguiente:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">temp_filt</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">t_max</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.05</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.png" width="768" />
 <p>Podemos ver que resulta un gráfico muy poco legible, dado que estamos dibujando 15 mil puntos unos encima de otros. Para solucionarlo, podemos reemplazar <code>geom_point()</code> por <code>geom_jitter()</code>, que es una geometría que agrega dispersión a los puntos para hacerlos mas visibles:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">temp_filt</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">t_max</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_jitter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.05</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">height</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.png" width="768" />
 <p>Dentro de los argumentos de <code>geom_jitter()</code> podemos especificar la dirección en la que queremos agregar la dispersión aleatoria. Si especificamos <code>height = 0</code>, entonces la dispersión no será vertical, y los puntos solamente se moverán horizontalmente, para que la posición vertical de los puntos sea certera y solamente se desplacen hacia los lados para poder verlos individualmente sin que se tapen unos a otros.</p>
 
 
 
 
-<h3 id="violín">Violín
+<h2 id="violín">Violín
   <a href="#viol%c3%adn"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Los gráficos de violin son básicamente gráficos de densidad, pero espejados o duplicados para producir una silueta similar a la de un violín.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">temp_filt</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">t_max</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_violin</span><span style="color:#908caa">(</span><span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.5</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;grey90&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-24-1.png" width="768" />
 <p>Recordemos que siempre podemos agregar la cantidad de capas que deseemos a nuestros gráficos. Por ejemplo, agregar un boxplot sobre los violines:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">temp_filt</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
@@ -561,7 +576,7 @@ $ t_med           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_boxplot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">width</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">outliers</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span> 
 </span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.4</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;purple4&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;purple4&#34;</span><span style="color:#908caa">,)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-24-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-25-1.png" width="768" />
 <p>combinar violín con puntos</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">temp_filt</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
@@ -569,7 +584,7 @@ $ t_med           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_jitter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.05</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">height</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_violin</span><span style="color:#908caa">(</span><span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.4</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-25-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-26-1.png" width="768" />
 <p>Los gráficos que creemos no tienen por qué reducirse a un solo conjunto de datos. Podemos calcular un nuevo conjunto de datos para complementar las visualizaciones que queremos realizar.</p>
 <p>Calculemos una tabla que contenga los promedios y las medianas para cada uno de los tres grupos de nuestro conjunto de datos:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># calcular medianas</span>
@@ -586,18 +601,18 @@ $ t_med           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
 </span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">shape</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;diamond&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;purple&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.6</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># tema</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-27-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-28-1.png" width="768" />
 <p>Como las columnas de el segundo conjunto de datos (<code>temp_median</code>) se llaman igual a las del primero, <code>{ggplot2}</code> detecta las variables mapeadas en la capa de estética y las reutiliza en la segunda capa de geometría, por lo que no es necesario especificar en la capa de <code>geom_point()</code> las variables a utilizar. Pero si las variables de un segundo conjunto de datos se llamaran distinto, podríamos especificar dentro de la geometría una nueva estética con la función <code>aes()</code> para que se aplique a esa capa en particular.</p>
 
 
 
 
-<h3 id="líneas">Líneas
+<h2 id="líneas">Líneas
   <a href="#l%c3%adneas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Para visualizar los datos como líneas primero procesaremos los datos para obtener promedios mensuales de temperatura:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lubridate</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># para trabajar con fechas</span>
 </span></span><span style="display:flex;"><span>
@@ -624,17 +639,17 @@ $ t_med           &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">legend.key.width</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">unit</span><span style="color:#908caa">(</span><span style="color:#f6c177">30</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pt&#34;</span><span style="color:#908caa">),</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">legend.key.height</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">unit</span><span style="color:#908caa">(</span><span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pt&#34;</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-29-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-30-1.png" width="768" />
 
 
 
 
-<h3 id="mosaico">Mosaico
+<h2 id="mosaico">Mosaico
   <a href="#mosaico"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Del mismo modo que realizamos un gráfico de dispersión, podemos realizar un gráfico de puntos ordenados si es que las variables numéricas que usaremos en los ejes de coordenadas son consistentes, por ejemplo, en el caso de observaciones medidas diaria o mensualente.</p>
 <p>En el siguiente gráfico mapearemos los valores de las temperaturas por año horizontalmente, y con los meses verticalmente:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">temp</span> <span style="color:#908caa">|&gt;</span> 
@@ -705,12 +720,12 @@ $ orden_region    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 
 
 
-<h3 id="barras-ordenado">Barras ordenado
+<h2 id="barras-ordenado">Barras ordenado
   <a href="#barras-ordenado"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Realicemos una suma de los conteos agrupada por pueblo originario:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">pueblos_n</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">pueblos</span> <span style="color:#908caa">|&gt;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pueblo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">ifelse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pueblo</span> <span style="color:#908caa">%in%</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Mapuche&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Aymara&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Diaguita&#34;</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">pueblo</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Otros&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
@@ -734,7 +749,7 @@ $ orden_region    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># paleta de colores</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_fill_brewer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Dark2&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-33-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-34-1.png" width="768" />
 <p>Si deseamos ordenar las barras de acuerdo a su valor, lo que tenemos que hacer es ordenar la variable del eje desde el que se originan las barras. En este caso, las barras salen desde el eje <em>x</em> de acuerdo al pueblo indígena. Entonces, la variable <code>pueblo</code> tendría que ser ordenada de acuerdo a la variable <code>total</code>. Para esto, necesitamos que la variable sea un factor, que son el tipo de variables categóricas en R que guardan información acerca de el orden de los niveles o categorías de la variable.</p>
 <p>La función <code>fct_reorder()</code> del 
 <a href="https://forcats.tidyverse.org" target="_blank" rel="noopener">paquete <code>{forcats}</code></a> nos permite ordenar variables tipo caracter a partir de una segunda variable numérica:</p>
@@ -750,29 +765,29 @@ $ orden_region    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_y_continuous</span><span style="color:#908caa">(</span><span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">scales</span><span style="color:#908caa">::</span><span style="color:#ea9a97">label_comma</span><span style="color:#908caa">(</span><span style="color:#ea9a97">big.mark</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;.&#34;</span><span style="color:#908caa">))</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico_pueblos_1</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-34-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-35-1.png" width="768" />
 <p>También agregamos una capa <code>scale_y_continuous()</code> para modificar la escala vertical del gráfico y así mostrar correctamente los números grandes con un separador de miles, para mejorar la legibilidad de las cifras. Para lograrlo, usamos la función <code>label_comma()</code> del 
 <a href="https://scales.r-lib.org" target="_blank" rel="noopener">conveniente paquete <code>{scales}</code>.</a></p>
 
 
 
 
-<h3 id="textos">Textos
+<h2 id="textos">Textos
   <a href="#textos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Para agregar texto a nuestros gráficos debemos introducir la capa de geometría <code>geom_text()</code>. Esta geometría requiere de un mapeo específico, <code>label</code>, que corresponde a la etiqueta de texto que se mostrará. En <code>label</code> debes poner la variable cuyo valor quieres que aparezca como texto:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">grafico_pueblos_1</span> <span style="color:#908caa">+</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">total</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-35-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-36-1.png" width="768" />
 <p>En primera instancia, se ve terrible. Esto es porque los textos están apareciendo en la coordenada del eje vertical donde terminan las barras; es decir, justo encima del límite de las barras. Para mejorar esto, en la capa de <code>geom_text()</code> para especificar la justificación vertical del texto en <code>vjust</code>, para que el texto no aparezca centrado en la coordenada <em>y</em>, sino que la coordenada <em>y</em> sea la altura de base del texto, y el argumento <code>nudge_y</code> para sumarle un valor específico a la coordenada <em>y</em> del texto, cosa que aparezca levemente distanciado del borde de las barras:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">grafico_pueblos_1</span> <span style="color:#908caa">+</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">format</span><span style="color:#908caa">(</span><span style="color:#ea9a97">total</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">big.mark</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;.&#34;</span><span style="color:#908caa">)),</span> 
 </span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">vjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">nudge_y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">15000</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-36-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-37-1.png" width="768" />
 <p>Cuando ponemos texto en un gráfico, usualmente tenemos que hacer algunos ajustes en consideración de que algunos elementos del gráfico van a ser muy grandes o muy pequeños, y por lo tanto el texto no siempre se va a ver bien. Para solucionar estos problemas podemos usar múltiples capas de texto en lugar de una sola, donde cada capa de texto dibuje los textos para algunos datos, con los ajustes necesarios para dichos casos.</p>
 <p>En el ejemplo que estamos haciendo, vamos a graficar el texto en dos capas de <code>geom_text()</code>: una capa para las cifras que son mayores al promedio (barras grandes), y otra capa para las que son menores al promedio (barras pequeñas). De esta forma, podemos hacer que los números sobre las Barras grandes aparezcan dentro de la barra y en color blanco, y los números de las barras pequeñas aparezcan encima de las barras y en color negro:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">grafico_pueblos_1</span> <span style="color:#908caa">+</span> 
@@ -784,18 +799,18 @@ $ orden_region    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">total</span> <span style="color:#908caa">&gt;=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">total</span><span style="color:#908caa">)),</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">format</span><span style="color:#908caa">(</span><span style="color:#ea9a97">total</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">big.mark</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;.&#34;</span><span style="color:#908caa">)),</span> 
 </span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">vjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nudge_y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-20000</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-37-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-38-1.png" width="768" />
 <p>Hicimos que cada capa dibuje textos distintos filtrando los datos que llegan a cada una de las capas en el argumento <code>data</code> de cada geometría. En los argumentos <code>data</code> usamos notación lambda para filtrar los datos del gráfico (<code>~filter(.x)</code>) sin tener que especificar el conjunto de datos específico. Pero si esto te parece complicado, también se puede lograr el mismo efecto sin <code>data</code> usando <code>ifelse(total &gt; mean(total), total, &quot;&quot;)</code> en <code>label</code> para que cada capa escriba el texto que cumple con la condición, E imprima nada si es que no la cumple.</p>
 
 
 
 
-<h3 id="anotaciones">Anotaciones
+<h2 id="anotaciones">Anotaciones
   <a href="#anotaciones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Muchas veces queremos agregar un texto o anotación específico en alguna ubicación de nuestro gráfico. Para estos fines existe una capa ed geometría personalizada llamada <code>annotate()</code>, que a diferencia del resto de la geometría de <code>{ggplot2}</code>, no depende de la especificación estética (<code>aes()</code>), sino que sus parámetros son completamente manuales. Entonces, podemos usar <code>annotate()</code> para crear un evento puntual en nuestra visualización, y sea escribiendo el texto y sus coordenadas a mano, o sacándolas de un objeto. En este caso, filtraremos la tabla de datos que produce el gráfico para enfocarnos en una sola observación, y usaremos las coordenadas de esta tabla resultante para crear una anotación que añada un texto en un lugar específico del gráfico:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># filtrar datos del gráfico</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">cifra_pueblos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">pueblos_n</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pueblo</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Aymara&#34;</span><span style="color:#908caa">)</span>
@@ -806,7 +821,7 @@ $ orden_region    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 </span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">cifra_pueblos</span><span style="color:#908caa">$</span><span style="color:#ea9a97">pueblo</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">cifra_pueblos</span><span style="color:#908caa">$</span><span style="color:#ea9a97">total</span> <span style="color:#908caa">+</span> <span style="color:#f6c177">10000</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># agregar separación entre la barra y el texto</span>
 </span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;***&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">6</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fontface</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;bold&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-38-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-39-1.png" width="768" />
 <p>Un segundo ejemplo:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">pueblos_n</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pueblo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">forcats</span><span style="color:#908caa">::</span><span style="color:#ea9a97">fct_reorder</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pueblo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">total</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
@@ -822,17 +837,17 @@ $ orden_region    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 </span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1000000</span><span style="color:#908caa">,</span> 
 </span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Mayoría mapuche&#34;</span><span style="color:#908caa">,</span> 
 </span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">angle</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">90</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-39-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-40-1.png" width="768" />
 
 
 
 
-<h3 id="barras-apiladas">Barras apiladas
+<h2 id="barras-apiladas">Barras apiladas
   <a href="#barras-apiladas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>En un gráfico de barras apiladas, lo que hacemos es separar los datos por colores, y generar una sola barra que esté compuesta por segmentos de colores del tamaño que represente cada grupo. Este tipo de visualización puede ser himnos para mostrar la proporción que ocupa cada sus grupos dentro del total, dado que la información se presenta como un solo todo.</p>
 <p>Para lograr que la información esté en una misma barra, simplemente tenemos que definir alguno de los dos ejes, horizontal o vertical, como un valor fijo, en este caso <code>&quot;grupo&quot;</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">grafico_pueblos_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">pueblos_n</span> <span style="color:#908caa">|&gt;</span> 
@@ -847,24 +862,24 @@ $ orden_region    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">guides</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_legend</span><span style="color:#908caa">(</span><span style="color:#ea9a97">position</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;top&#34;</span><span style="color:#908caa">))</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico_pueblos_2</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-40-1.png" width="672" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-41-1.png" width="672" />
 <p>Podemos realizar algunos ajustes al tema del gráfico para ocultar el truco que hicimos para que el gráfico tuviera una sola barra, y aprovechamos de ponerle texto a los valores de cada segmento. El texto lo agregamos con la función <code>geom_text()</code>, pero explicitando que la posición de las etiquetas tiene que ser apilada, igual que nuestro gráfico, con <code>position = position_stack()</code>. El número <code>0.5</code> dentro de <code>position_stack()</code> indica que queremos que las cifras aparezcan en medio de su correspondiente segmento, y no al final del mismo.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">grafico_pueblos_2</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">format</span><span style="color:#908caa">(</span><span style="color:#ea9a97">total</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">big.mark</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;.&#34;</span><span style="color:#908caa">)),</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">position</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">position_stack</span><span style="color:#908caa">(</span><span style="color:#f6c177">0.5</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">angle</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-90</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">axis.title.y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">(),</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.text.y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">())</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-41-1.png" width="672" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-42-1.png" width="672" />
 
 
 
 
-<h3 id="torta">Torta
+<h2 id="torta">Torta
   <a href="#torta"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Muchas personas dedicadas a las estadísticas o a la ciencia de datos han planteado (buenas) críticas en contra de los gráficos de torta. Para fines de este tutorial, ignoraremos un poco estas críticas, debido a que, a pesar de ser inapropiados para muchas situaciones, siguen siendo gráficos atractivos y muy solicitados en la práctica. Por lo tanto, aprenderemos de todas formas a realizarlos en <code>{ggplot2}</code>.</p>
 <p>En <code>{ggplot2}</code>, un gráfico de torta no es un tipo de visualización completamente distinto a las que ya hemos visto, ya que, técnicamente, un gráfico de torta no es más que una visualización radial o circular de lo mismo que expresa un gráfico de barras. En otras palabras, un gráfico de torta es un gráfico de barras apilado, y luego enrollado desde una de sus esquinas.</p>
 <p>En este sentido, todo gráfico de tortas empieza siendo un gráfico de barras apilado:</p>
@@ -874,7 +889,7 @@ $ orden_region    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_col</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_fill_brewer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Dark2&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-42-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-43-1.png" width="768" />
 <p>A especificar que el eje horizontal del gráfico sea tan sólo el valor <code>1</code>, mientras que las observaciones están agrupadas por una variable asignada a la estética <code>color</code>, estamos haciendo que todos los datos del gráfico aparezcan uno encima del otro, sin separarse horizontalmente como los ejemplos anteriores.</p>
 <p>Una vez que tenemos este gráfico de barras apilado, podemos agregar una capa <code>coord_polar()</code> para cambiar el sistema de coordenadas del gráfico, con el objetivo de que la escala vertical del gráfico deje de ser una línea vertical y se transforme en un círculo:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">pueblos_n</span> <span style="color:#908caa">|&gt;</span> 
@@ -885,7 +900,7 @@ $ orden_region    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_void</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># coordenadas circulares</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_polar</span><span style="color:#908caa">(</span><span style="color:#ea9a97">theta</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;y&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># enrollar el gráfico para volverlo circular</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-43-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-44-1.png" width="768" />
 <p>Si comparas este gráfico de torta con el gráfico anterior, notarás que el gráfico de torta es exactamente el gráfico de barras, pero en enrollado a partir de su esquina inferior derecha.</p>
 <p>Para agregar etiquetas de texto a nuestro gráfico de torta, el proceso es el mismo que para agregar a un gráfico de barras apiladas; es decir, necesitamos agregar una capa <code>geom_text()</code> que especifique que los textos también deben apilarse con <code>position = position_stack()</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">pueblos_n</span> <span style="color:#908caa">|&gt;</span> 
@@ -898,7 +913,7 @@ $ orden_region    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 </span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># texto</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">format</span><span style="color:#908caa">(</span><span style="color:#ea9a97">total</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">big.mark</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;.&#34;</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1.3</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">position</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">position_stack</span><span style="color:#908caa">(</span><span style="color:#f6c177">0.5</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-44-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-45-1.png" width="768" />
 <p>Una variación del gráfico de torta es el gráfico de dona, que no es más que un gráfico de torta con un espacio al medio. Para crear el espacio dentro de la torta, y recordando que los gráficos de tortas son gráficos de barras apiladas, necesitamos agregar espacio en el eje horizontal del gráfico de barras:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">pueblos_n</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
@@ -907,7 +922,7 @@ $ orden_region    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_fill_brewer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Dark2&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># agregar espacio en el eje</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_x_continuous</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">expansion</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">0</span><span style="color:#908caa">)))</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-45-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-46-1.png" width="768" />
 <p>Logramos agregar un espacio en el eje horizontal del gráfico modificando la escala correspondiente (<code>scale_x_continuous()</code>), ajustando en ella al argumento <code>expand</code> que controla cuánto espaciado va a haber en cada borde de el eje correspondiente. Por defecto, <code>{ggplot2}</code> agrega un pequeño espaciado en cada eje.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">pueblos_n</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
@@ -922,7 +937,7 @@ $ orden_region    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 </span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># texto</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">format</span><span style="color:#908caa">(</span><span style="color:#ea9a97">total</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">big.mark</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;.&#34;</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">position</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">position_stack</span><span style="color:#908caa">(</span><span style="color:#f6c177">0.5</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-46-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-47-1.png" width="768" />
 <p>Si cambiamos <code>coord_polar()</code> por <code>coord_radial()</code> y ajustamos un poco la escala vertical y otros detalles, podemos hacer que los textos sigan en el ángulo de la torta:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">pueblos_n</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
@@ -938,17 +953,17 @@ $ orden_region    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 </span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># texto</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">scales</span><span style="color:#908caa">::</span><span style="color:#ea9a97">comma</span><span style="color:#908caa">(</span><span style="color:#ea9a97">total</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">big.mark</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;.&#34;</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1.7</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;black&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">position</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">position_stack</span><span style="color:#908caa">(</span><span style="color:#f6c177">0.5</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-47-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-48-1.png" width="768" />
 
 
 
 
-<h3 id="facetas">Facetas
+<h2 id="facetas">Facetas
   <a href="#facetas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Se le llama a facetas a la división de un mismo gráfico en múltiples gráficos a partir de una variable determinada. Especificando una variable de agrupación, entonces, podemos generar una visualización que contenga múltiples gráficos del mismo tipo, pero visualizando datos filtrados por la variable seleccionada.</p>
 <p>Primero calculemos un conjunto de datos agrupados por dos variables:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">pueblos_n_sexo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">pueblos</span> <span style="color:#908caa">|&gt;</span> 
@@ -979,7 +994,7 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_fill_brewer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Dark2&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">facet_wrap</span><span style="color:#908caa">(</span><span style="color:#908caa">~</span><span style="color:#ea9a97">pueblo</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_void</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-49-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-50-1.png" width="768" />
 <p>Al crear una faceta por la variable <code>pueblo</code>, que tiene cuatro niveles, obtenemos cuatro gráficos con el mismo código que necesitamos para generar uno solo. ¡Qué ofertón!</p>
 <hr>
 <p>La tercera parte de tutorial continuaremos con un último conjunto de datos. Se trata de una base con más de 1 millón de filas que contiene la frecuencia de múltiples tipos de delitos, desagregados por el tipo de delito, ubicación geográfica, y año. Puedes descargar los datos 
@@ -993,12 +1008,12 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
 
 
 
-<h3 id="líneas-1">Líneas
+<h2 id="líneas-1">Líneas
   <a href="#l%c3%adneas-1"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>La gráficos en línea se usan principalmente para mostrar el cambio o evolución de una variable a través de otra, usualmente a través del tiempo. Usaremos <code>geom_line()</code> para visualizar la cantidad total de delitos mensuales desde el año 2018.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">delinc</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">delito</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Robos con violencia o intimidación&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
@@ -1009,7 +1024,7 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_line</span><span style="color:#908caa">(</span><span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.4</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-51-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-52-1.png" width="768" />
 <p>Podemos agregar al mismo tiempo una capa de puntos sobre las líneas para destacar la ubicaciones específica de las observaciones.</p>
 <p>Recordemos que también podemos usar cualquier variable para darle color a cualquier geometría; por ejemplo, crear una variable que indique si la observación aumenta o disminuye con respecto al caso anterior, y pintar los puntos siguiendo estos cambios:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">delinc</span> <span style="color:#908caa">|&gt;</span> 
@@ -1025,7 +1040,7 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_color_manual</span><span style="color:#908caa">(</span><span style="color:#ea9a97">values</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;aumento&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;indianred3&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;disminución&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;darkolivegreen3&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">guides</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_legend</span><span style="color:#908caa">(</span><span style="color:#ea9a97">override.aes</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">list</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)))</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-52-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-53-1.png" width="768" />
 <p>Calculemos una tabla de datos que sume las cantidades de tres delitos en específico a través del tiempo:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">delinc_filt</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">delinc</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">delito</span> <span style="color:#908caa">%in%</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Robos con violencia o intimidación&#34;</span><span style="color:#908caa">,</span>
@@ -1041,7 +1056,7 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_color_brewer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Accent&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_x_date</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">expansion</span><span style="color:#908caa">(</span><span style="color:#f6c177">0</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-54-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-55-1.png" width="768" />
 <p>Algunas geometrías en <code>{ggplot2}</code> son capaces de realizar cálculos estadísticos por nosotros a la hora de visualizar. Uno de los más comunes para explorar tendencias en los datos es agregar líneas de regresión lineal sobre los datos. Agregando una capa de la geometría <code>geom_smooth()</code>, se calcularán tres líneas de regresión para cada uno de los grupos que estamos visualizando, debido a que en este caso estamos agrupando nuestra visualización por color.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">delinc_filt</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
@@ -1051,7 +1066,7 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_color_brewer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Accent&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_x_date</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">expansion</span><span style="color:#908caa">(</span><span style="color:#f6c177">0</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-55-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-56-1.png" width="768" />
 <p>Estas líneas de regresión representan trayectorias ajustadas a la posición de todas las observaciones de cada grupo, entregándonos información visual acerca de si los datos representan en general una tendencia a la alza o a la baja.</p>
 <p>Otra forma de complementar la información en nuestros gráficos es agregar líneas que marquen puntos importantes en una de las escalas. Esto suele ser útil cuando estamos presentando información graficada en torno al tiempo, para marcar por ejemplo alguna fecha clave. En este caso, marcaremos una barra vertical con respecto a la escala del tiempo que indique el inicio del último gobierno, usando <code>geom_vline()</code> (<code>v</code> por <em>vertical</em>). Además, usaremos <code>annotate()</code> para crear una etiqueta que indique a qué corresponde la barra que agregamos:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">delinc_filt</span> <span style="color:#908caa">|&gt;</span> 
@@ -1065,17 +1080,17 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_color_brewer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Accent&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_x_date</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">expansion</span><span style="color:#908caa">(</span><span style="color:#f6c177">0</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-56-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-57-1.png" width="768" />
 
 
 
 
-<h3 id="barras-comparativas">Barras comparativas
+<h2 id="barras-comparativas">Barras comparativas
   <a href="#barras-comparativas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Los gráficos de barras nos permiten comparar valores de forma muy clara. Pero a veces también queremos comparar valores dentro de los valores que estábamos comparando. Calcularemos la cantidad de tres delitos distintos a través de 10 comunas, para generar un gráfico que nos permita comparar tanto los delitos <em>entre</em> las comunas como las cantidades de los delitos distintos <em>dentro</em> de cada una de estas comunas.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># obtener top 10 comunas segun cantidad de delitos</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">comunas_delinc</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">delinc</span> <span style="color:#908caa">|&gt;</span> 
@@ -1125,7 +1140,7 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
 </span></span><span style="display:flex;"><span>                             <span style="color:#ea9a97">nrow</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># en dos columnas</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">subtitle</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Total de delitos denunciados en el año 2023, por comunas&#34;</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">caption</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Fuente: Centro de Estudios y Análisis del Delito&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-58-1.png" width="672" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-59-1.png" width="672" />
 <p>Sin embargo, en este gráfico toma preponderancia la cantidad total de delitos en ciertas comunas, dado que resultan muy mayores que en otras. Tenemos una alternativa para realizar esta visualización, que es poner los segmentos de las barras de cada variable del eje vertical lado al lado en vez de apilarlas. Para ello, podemos definir que los segmentos de color de cada barra se ubiquen en la posición <code>position_dodge()</code> en lugar de <code>position_stack()</code> (la anterior):</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">grafico_delincuencia_1</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">delinc_comuna</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
@@ -1149,18 +1164,18 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
 </span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">caption</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Fuente: Centro de Estudios y Análisis del Delito&#34;</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico_delincuencia_1</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-59-1.png" width="672" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-60-1.png" width="672" />
 <p>Con este posicionamiento de las barras obtenemos un gráfico que nos permite comparar cada uno de los subgrupos de cada variable del eje vertical entre sí, dado que ahora los segmentos de colores, en este caso los tipos de delitos, se ubican lateralmente uno con el otro, facilitando la comparación visual.</p>
 
 
 
 
-<h3 id="temas">Temas
+<h2 id="temas">Temas
   <a href="#temas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Si queremos modificar elementos específicos de la visualización, usamos la capa <code>theme()</code>. Dentro de esta función, podemos individualizar cualquier elemento de la visualización. Para saber cómo se llama cada elemento, puedes empezar escribiendo su ubicación general (<code>plot</code>, <code>panel</code>, <code>axis</code>, <code>legend</code>, etc.) y RStudio/Positron debería sugerirte las distintas posibilidades, o bien puedes 
 <a href="https://isabella-b.com/blog/ggplot2-theme-elements-reference/" target="_blank" rel="noopener">entrar a esta guía</a> para encontrar los nombres de cada uno de los elementos.</p>
 <p>En este caso, definiremos la tipografía general del gráfico al incluirla en el llamado a <code>theme_classic()</code>, y dentro de la especificación del tema (<code>theme()</code>) modificaremos la apariencia del subtítulo, de las líneas en el panel del gráfico correspondientes al eje horizontal, eliminaremos el título del eje vertical y las rayitas de los ejes, y especificaremos el tipo de letra del texto del eje vertical.</p>
@@ -1175,17 +1190,17 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
 </span></span><span style="display:flex;"><span>                                   <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">11</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">lineheight</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.8</span><span style="color:#908caa">))</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico_delincuencia_2</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-60-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-61-1.png" width="768" />
 
 
 
 
-<h3 id="tipografías">Tipografías
+<h2 id="tipografías">Tipografías
   <a href="#tipograf%c3%adas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
-</h3>
+</h2>
 <p>Existen muchos métodos distintos para usar tipografías personalizadas en nuestros gráficos de <code>{ggplot2}</code>. Debido a que obtener, instalar y activar tipografías suele ser algo complejo, una solución sencilla y compatible es utilizar tipografía web, como las ofrecidas por 
 <a href="https://fonts.google.com" target="_blank" rel="noopener">Google Fonts.</a> puedes navegar a ese sitio y encontrar una tipografía que te interese, y descargarla por medio del paquete <code>{showtext}</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># install.packages(&#34;showtext&#34;)</span>
@@ -1198,7 +1213,7 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
 </span></span></code></pre></div><p>Habiendo hecho lo anterior, basta con referirse al nombre de la tipografía, ya sea al especificar el tema de nuestro gráfico, o en cualquier geometría que utilice texto como <code>geom_text()</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">grafico_delincuencia_2</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">(</span><span style="color:#ea9a97">base_family</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Montserrat&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-63-1.png" width="768" />
+</span></span></code></pre></div><img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-64-1.png" width="768" />
 <p>Vale mencionar que el tipo grafías descargadas por este método solamente estarán disponibles durante la sesión de R, por lo que la próxima vez que quieras usarlas deberán ser descargadas de la misma manera. Si tienes algún problema con esas tipografías, basta con reiniciar la sesión de R para dejar de utilizarlas.</p>
 
 
@@ -1216,7 +1231,8 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
 <a href="https://bastianolea.rbind.io/blog/r_introduccion/proyectos/" target="_blank" rel="noopener">(deberías)</a> Lo más probable es que no encuentres la imagen porque aparecerá en la <em>raíz</em> de tu disco).</p>
 <p>Si no específicas un ancho y alto, el gráfico tendrá el ancho y alto de la ventana de previsualización de RStudio. Si deseas ajustar el tamaño de los elementos de tu gráfico, puedes usar el argumento <code>scale</code>, que es un número que mientras más grande hará que los elementos sean más pequeños.</p>
 <hr>
-<p>Con esto concluye este tutorial inicial para aprender a visualizar datos en R con <code>{ggplot2}</code>. Cómo puedes ver, las naciones principales son pocas, pero es la combinación entre ellas y su uso creativo lo que nos permite crear visualizaciones interesantes!</p>
+<p>Con esto concluye este tutorial inicial para aprender a visualizar datos en R con <code>{ggplot2}</code>. Cómo puedes ver, las nociones principales de <code>{ggplot2}</code> son pocas, pero es la combinación entre ellas y su uso creativo lo que nos permite crear visualizaciones interesantes!</p>
+<p>Si aprendiste con este tutorial, considera hacerme una pequeña donación en el siguiente enlace:</p>
 <div style = "height: 18px;">
 </div>
 <div>
@@ -1226,27 +1242,28 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
     <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
   </div>
 <hr>
+<p>Para cerrar, dejo algunos enlaces útiles para ayudarte a usar <code>{ggplot2}</code>:</p>
 <p><strong>Paletas de colores</strong></p>
 <ul>
-<li>
+<li>Tutorial sobre el uso de paletas de colores: 
 <a href="https://datavizf24.classes.andrewheiss.com/resource/colors.html" target="_blank" rel="noopener">https://datavizf24.classes.andrewheiss.com/resource/colors.html</a></li>
-<li>
+<li>Guía sobre herramientas para usar color en R: 
 <a href="https://bastianolea.rbind.io/blog/colores/" target="_blank" rel="noopener">https://bastianolea.rbind.io/blog/colores/</a></li>
-<li>viridis: 
+<li>Guía para el uso de paletas de colores Viridis: 
 <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#the-color-scales" target="_blank" rel="noopener">https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#the-color-scales</a></li>
-<li>colorbrewer: 
+<li>Sitio web con paletas de colores ColorBrewer: 
 <a href="https://colorbrewer2.org/#type=sequential&amp;scheme=YlGnBu&amp;n=3" target="_blank" rel="noopener">https://colorbrewer2.org/#type=sequential&scheme=YlGnBu&n=3</a></li>
-<li>scico: 
+<li>Paletas de colores Scico: 
 <a href="https://www.data-imaginist.com/posts/2018-05-30-scico-and-the-colour-conundrum/" target="_blank" rel="noopener">https://www.data-imaginist.com/posts/2018-05-30-scico-and-the-colour-conundrum/</a></li>
 </ul>
 <p><strong>Temas</strong></p>
 <ul>
-<li>temas ggplot: 
+<li>Sobre los temas de <code>{ggplot2}</code>: 
 <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" target="_blank" rel="noopener">https://ggplot2.tidyverse.org/reference/ggtheme.html</a></li>
-<li>ggthemes: 
+<li>Paquete <code>{ggthemes}</code> con temas extra: 
 <a href="https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/" target="_blank" rel="noopener">https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/</a></li>
 </ul>
-<p><strong>Elementos de un gráfico</strong> (para modificar temas):</p>
+<p><strong>Elementos de los gráficos</strong> (para modificar temas):</p>
 <ul>
 <li>
 <a href="https://isabella-b.com/blog/ggplot2-theme-elements-reference/" target="_blank" rel="noopener">https://isabella-b.com/blog/ggplot2-theme-elements-reference/</a></li>
@@ -1404,29 +1421,25 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
     <nav id="TableOfContents">
   <ul>
     <li><a href="#introducción">Introducción</a></li>
-    <li><a href="#tipos-de-gráfico">Tipos de gráfico</a>
-      <ul>
-        <li><a href="#dispersión">Dispersión</a></li>
-        <li><a href="#histograma">Histograma</a></li>
-        <li><a href="#densidad">Densidad</a></li>
-        <li><a href="#dispersión-1">Dispersión</a></li>
-        <li><a href="#cajas-o-boxplot">Cajas o boxplot</a></li>
-        <li><a href="#dispersión-por-grupos">Dispersión por grupos</a></li>
-        <li><a href="#violín">Violín</a></li>
-        <li><a href="#líneas">Líneas</a></li>
-        <li><a href="#mosaico">Mosaico</a></li>
-        <li><a href="#barras-ordenado">Barras ordenado</a></li>
-        <li><a href="#textos">Textos</a></li>
-        <li><a href="#anotaciones">Anotaciones</a></li>
-        <li><a href="#barras-apiladas">Barras apiladas</a></li>
-        <li><a href="#torta">Torta</a></li>
-        <li><a href="#facetas">Facetas</a></li>
-        <li><a href="#líneas-1">Líneas</a></li>
-        <li><a href="#barras-comparativas">Barras comparativas</a></li>
-        <li><a href="#temas">Temas</a></li>
-        <li><a href="#tipografías">Tipografías</a></li>
-      </ul>
-    </li>
+    <li><a href="#dispersión">Dispersión</a></li>
+    <li><a href="#histograma">Histograma</a></li>
+    <li><a href="#densidad">Densidad</a></li>
+    <li><a href="#dispersión-1">Dispersión</a></li>
+    <li><a href="#cajas-o-boxplot">Cajas o boxplot</a></li>
+    <li><a href="#dispersión-por-grupos">Dispersión por grupos</a></li>
+    <li><a href="#violín">Violín</a></li>
+    <li><a href="#líneas">Líneas</a></li>
+    <li><a href="#mosaico">Mosaico</a></li>
+    <li><a href="#barras-ordenado">Barras ordenado</a></li>
+    <li><a href="#textos">Textos</a></li>
+    <li><a href="#anotaciones">Anotaciones</a></li>
+    <li><a href="#barras-apiladas">Barras apiladas</a></li>
+    <li><a href="#torta">Torta</a></li>
+    <li><a href="#facetas">Facetas</a></li>
+    <li><a href="#líneas-1">Líneas</a></li>
+    <li><a href="#barras-comparativas">Barras comparativas</a></li>
+    <li><a href="#temas">Temas</a></li>
+    <li><a href="#tipografías">Tipografías</a></li>
     <li><a href="#guardar-gráficos">Guardar gráficos</a></li>
   </ul>
 </nav>
