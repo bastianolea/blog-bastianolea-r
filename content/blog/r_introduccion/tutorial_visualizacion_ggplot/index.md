@@ -6,7 +6,7 @@ format:
   hugo-md:
     output-file: index
     output-ext: md
-draft: true
+draft: false
 weight: 19
 slug: []
 categories:
@@ -20,14 +20,33 @@ execute:
   error: false
   message: false
   cache: false
+editor_options:
+  chunk_output_type: inline
+excerpt: >-
+  `{ggplot2}` es una librería de visualización de datos bastante popular en el
+  mundo de la ciencia de datos. Sus principales características son su
+  atractivo, su conveniencia para la exploración de datos, un gran potencial de
+  personalización, y un extenso ecosistema de extensiones que nos permiten
+  generar visualizaciones prácticamente de cualquier tipo. Sigue este tutorial
+  para aprender desde lo más básico a utilizar `{ggplot2}`
 ---
 
 
-## Introducción a {ggplot2}
+{{< imagen "ggplot2-featured.jpg" >}}
 
 `{ggplot2}` es una librería de visualización de datos bastante popular en el mundo de la ciencia de datos. Sus principales características son su atractivo, su conveniencia para la exploración de datos, un gran potencial de personalización, y un extenso ecosistema de extensiones que nos permiten generar visualizaciones prácticamente de cualquier tipo.
 
 Otro beneficio de usarlo es propio de el uso de cualquier herramienta programática para generar resultados en el ámbito del análisis de datos: la reusabilidad del código, que nos permite especificar una sola vez el resultado que queremos y luego volver a aplicarlo infinitas veces con distintos datos, datos actualizados, o variaciones de un conjunto de datos, etc.
+
+------------------------------------------------------------------------
+
+*Este tutorial está diseñado para empezar desde lo más básico, e ir avanzando de a poco por distintos tipos de visualizaciones para familiarizarse con el modo de uso de este paquete. A medida que tutorial avanza, se van introduciendo nuevos elementos es la medida que son relevantes y apropiados de introducir. También se van introduciendo distintos conjuntos de datos, y usando paquetes auxiliares que son introducidos secuencialmente. Por estas razones, se recomienda seguir el tutorial en orden.*
+
+------------------------------------------------------------------------
+
+## Introducción
+
+<img src = ggplot.png style = "float: left; max-width: 128px; margin-right: 20px;">
 
 La librería `{ggplot2}` crea gráficos por medio de un sistema de capas. Mediante la suma de capas vamos a poder crear expresiones gráficas de nuestros datos, agregando tantas capas como sean necesarias para comunicar los resultados, así como también para afinar la visualización final.
 
@@ -78,7 +97,9 @@ Con el código anterior hicimos que el eje horizontal se corresponda con la vari
 
 Sin embargo, aún no hay ninguna expresión gráfica directa de los datos en nuestro gráfico, debido a que aún no especificamos una capa de geometría.
 
-### Gráfico de dispersión
+## Tipos de gráfico
+
+### Dispersión
 
 Agreguemos una capa `geom_point()` a nuestro gráfico para que los datos se expresen visualmente como puntos:
 
@@ -121,14 +142,14 @@ iris |>
   aes(x = Sepal.Length, 
       y = Sepal.Width, 
       size = Petal.Length) + # variable mapeada al tamaño
-  geom_point(color = "purple2", alpha = 0.5)
+  geom_point(color = "purple2", alpha = 0.5) 
 ```
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-1.png" width="768" />
 
 Dentro de la geometría podemos definir manualmente el color, la transparencia, Y varios otros atributos visuales de todas las geometrías que usemos. En este caso, definimos un color para todos los puntos, y una transparencia que nos permitirá notar cuando existen puntos sobrepuestos (observaciones idénticas).
 
-### Gráfico de histograma
+### Histograma
 
 Los gráficos de histograma se usan comúnmente para explorar la distribución de los datos de forma rápida.
 
@@ -145,7 +166,7 @@ Ese tipo de gráficos solamente requiere de una variable. La variable se expresa
 
 En otras palabras, un histograma nos permite ver cuántas veces se repite cada valor de una variable, y de este modo podemos identificar cómo se distribuyen los datos.
 
-### Gráfico de densidad
+### Densidad
 
 Al igual que los histogramas, los gráficos de densidad solo requieren de una variable. Los gráficos de densidad expresan la distribución de los datos como una curva, simplificando la visualización.
 
@@ -223,8 +244,6 @@ glimpse(temp)
 
 El conjunto de datos posee variables de identificación de las estaciones meteorológicas como su nombre y ubicación, tres columnas que identifican la fecha de la observación, y dos columnas con las temperaturas mínimas y máximas.
 
-### Gráfico de histograma
-
 Exploremos las observaciones de una estación a través del tiempo con un gráfico de histograma, usando la geometría `geom_histogram()`:
 
 ``` r
@@ -241,7 +260,7 @@ temp |>
 
 Dentro de la función `geom_histogram()` especificamos que el borde de las barras sea blanco, y al final del gráfico agregamos una función `theme_x()` para darle una apariencia distinta a la visualización.
 
-### Gráfico de dispersión
+### Dispersión
 
 Teniendo dos columnas numéricas, podemos crear un gráfico de dispersión que dibuje un puntos que relacionen las mediciones meteorológicas de cada día.
 
@@ -260,7 +279,7 @@ temp |>
 
 Cada punto representa un día, y su ubicación corresponde a la temperatura máxima y mínima de cada día.
 
-### Gráfico de cajas o boxplot
+### Cajas o boxplot
 
 Puedes crear un gráfico de caja o *boxplot* del total de las observaciones:
 
@@ -317,7 +336,7 @@ temp_filt |>
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png" width="768" />
 
-### Gráfico de dispersión por grupos
+### Dispersión por grupos
 
 Si queremos producir un punto por cada observación a través de las tres estaciones metodologías que filtramos, obtenemos un gráfico como el siguiente:
 
@@ -345,7 +364,7 @@ temp_filt |>
 
 Dentro de los argumentos de `geom_jitter()` podemos especificar la dirección en la que queremos agregar la dispersión aleatoria. Si especificamos `height = 0`, entonces la dispersión no será vertical, y los puntos solamente se moverán horizontalmente, para que la posición vertical de los puntos sea certera y solamente se desplacen hacia los lados para poder verlos individualmente sin que se tapen unos a otros.
 
-### Gráfico de violín
+### Violín
 
 Los gráficos de violin son básicamente gráficos de densidad, pero espejados o duplicados para producir una silueta similar a la de un violín.
 
@@ -415,7 +434,7 @@ temp_filt |>
 
 Como las columnas de el segundo conjunto de datos (`temp_median`) se llaman igual a las del primero, `{ggplot2}` detecta las variables mapeadas en la capa de estética y las reutiliza en la segunda capa de geometría, por lo que no es necesario especificar en la capa de `geom_point()` las variables a utilizar. Pero si las variables de un segundo conjunto de datos se llamaran distinto, podríamos especificar dentro de la geometría una nueva estética con la función `aes()` para que se aplique a esa capa en particular.
 
-### Gráfico de líneas
+### Líneas
 
 Para visualizar los datos como líneas primero procesaremos los datos para obtener promedios mensuales de temperatura:
 
@@ -423,7 +442,7 @@ Para visualizar los datos como líneas primero procesaremos los datos para obten
 library(lubridate) # para trabajar con fechas
 
 temp_mensual <- temp |> 
-    filter(nombre == "Quinta Normal, Santiago",
+  filter(nombre == "Quinta Normal, Santiago",
          año > 1980) |>
   # redondear fechas al mes
   mutate(fecha = lubridate::floor_date(fecha, "month")) |>  
@@ -453,7 +472,7 @@ temp_mensual |>
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-29-1.png" width="768" />
 
-### Gráfico de mosaico
+### Mosaico
 
 Del mismo modo que realizamos un gráfico de dispersión, podemos realizar un gráfico de puntos ordenados si es que las variables numéricas que usaremos en los ejes de coordenadas son consistentes, por ejemplo, en el caso de observaciones medidas diaria o mensualente.
 
@@ -545,7 +564,7 @@ glimpse(pueblos)
     $ poblacion_total <dbl> 232628, 232628, 232628, 232628, 232628, 232628, 232628…
     $ orden_region    <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, …
 
-### Gráfico de barras ordenado
+### Barras ordenado
 
 Realicemos una suma de los conteos agrupada por pueblo originario:
 
@@ -602,6 +621,8 @@ grafico_pueblos_1
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-34-1.png" width="768" />
 
 También agregamos una capa `scale_y_continuous()` para modificar la escala vertical del gráfico y así mostrar correctamente los números grandes con un separador de miles, para mejorar la legibilidad de las cifras. Para lograrlo, usamos la función `label_comma()` del [conveniente paquete `{scales}`.](https://scales.r-lib.org)
+
+### Textos
 
 Para agregar texto a nuestros gráficos debemos introducir la capa de geometría `geom_text()`. Esta geometría requiere de un mapeo específico, `label`, que corresponde a la etiqueta de texto que se mostrará. En `label` debes poner la variable cuyo valor quieres que aparezca como texto:
 
@@ -682,13 +703,17 @@ pueblos_n |>
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-39-1.png" width="768" />
 
-### Gráfico de barras apiladas
+### Barras apiladas
+
+En un gráfico de barras apiladas, lo que hacemos es separar los datos por colores, y generar una sola barra que esté compuesta por segmentos de colores del tamaño que represente cada grupo. Este tipo de visualización puede ser himnos para mostrar la proporción que ocupa cada sus grupos dentro del total, dado que la información se presenta como un solo todo.
+
+Para lograr que la información esté en una misma barra, simplemente tenemos que definir alguno de los dos ejes, horizontal o vertical, como un valor fijo, en este caso `"grupo"`:
 
 ``` r
 grafico_pueblos_2 <- pueblos_n |> 
   mutate(pueblo = forcats::fct_reorder(pueblo, total)) |> 
   ggplot() +
-  aes(total, factor(1), fill = pueblo) +
+  aes(total, "grupo", fill = pueblo) +
   geom_col() +
   theme_minimal() +
   scale_fill_brewer(palette = "Dark2") +
@@ -701,23 +726,25 @@ grafico_pueblos_2
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-40-1.png" width="672" />
 
+Podemos realizar algunos ajustes al tema del gráfico para ocultar el truco que hicimos para que el gráfico tuviera una sola barra, y aprovechamos de ponerle texto a los valores de cada segmento. El texto lo agregamos con la función `geom_text()`, pero explicitando que la posición de las etiquetas tiene que ser apilada, igual que nuestro gráfico, con `position = position_stack()`. El número `0.5` dentro de `position_stack()` indica que queremos que las cifras aparezcan en medio de su correspondiente segmento, y no al final del mismo.
+
 ``` r
 grafico_pueblos_2 +
   geom_text(aes(label = format(total, big.mark = ".")), color = "white",
-          position = position_stack(0.5), angle = -90) +
+            position = position_stack(0.5), angle = -90) +
   theme(axis.title.y = element_blank(),
         axis.text.y = element_blank())
 ```
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-41-1.png" width="672" />
 
-### Gráfico de torta
+### Torta
 
-Muchas personas dedicadas a las estadísticas o a la ciencia de datos han planteado buenos críticas en contra de los gráficos de torta. Para fines de este tutorial, ignoraremos un poco estas críticas, debido a que, a pesar de ser inapropiados para muchas situaciones, siguen siendo gráficos atractivos y muy solicitados en la práctica. Por lo tanto, aprenderemos de todas formas a realizarlos en `{ggplot2}`.
+Muchas personas dedicadas a las estadísticas o a la ciencia de datos han planteado (buenas) críticas en contra de los gráficos de torta. Para fines de este tutorial, ignoraremos un poco estas críticas, debido a que, a pesar de ser inapropiados para muchas situaciones, siguen siendo gráficos atractivos y muy solicitados en la práctica. Por lo tanto, aprenderemos de todas formas a realizarlos en `{ggplot2}`.
 
-En `{ggplot2}`, un gráfico de torta no es un tipo de visualización completamente distinto a las que ya hemos visto, ya que, técnicamente, un gráfico de torta no es más que la una visualización radial o circular de lo mismo que expresa un gráfico de barras. En otras palabras, un gráfico de torta es un gráfico de barras apilado, y luego enrollado desde una de sus esquinas.
+En `{ggplot2}`, un gráfico de torta no es un tipo de visualización completamente distinto a las que ya hemos visto, ya que, técnicamente, un gráfico de torta no es más que una visualización radial o circular de lo mismo que expresa un gráfico de barras. En otras palabras, un gráfico de torta es un gráfico de barras apilado, y luego enrollado desde una de sus esquinas.
 
-Todo gráfico de tortas empieza siendo un gráfico de barras apilado:
+En este sentido, todo gráfico de tortas empieza siendo un gráfico de barras apilado:
 
 ``` r
 pueblos_n |> 
@@ -761,26 +788,12 @@ pueblos_n |>
   coord_polar(theta = "y") +
   # texto
   geom_text(aes(label = format(total, big.mark = "."), x = 1.3), color = "white",
-          position = position_stack(0.5))
+            position = position_stack(0.5))
 ```
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-44-1.png" width="768" />
 
-### Gráfico de donas
-
-un gráfico de dona es un gráfico de torta con espacio al medio
-
-``` r
-pueblos_n |> 
-  ggplot() +
-  aes(1, total, fill = pueblo) +
-  geom_col() +
-  scale_fill_brewer(palette = "Dark2")
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-45-1.png" width="768" />
-
-para crear el espacio dentro de la torta, necesitamos agregar espacio en el eje horizontal
+Una variación del gráfico de torta es el gráfico de dona, que no es más que un gráfico de torta con un espacio al medio. Para crear el espacio dentro de la torta, y recordando que los gráficos de tortas son gráficos de barras apiladas, necesitamos agregar espacio en el eje horizontal del gráfico de barras:
 
 ``` r
 pueblos_n |> 
@@ -792,7 +805,9 @@ pueblos_n |>
   scale_x_continuous(expand = expansion(c(2, 0)))
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-46-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-45-1.png" width="768" />
+
+Logramos agregar un espacio en el eje horizontal del gráfico modificando la escala correspondiente (`scale_x_continuous()`), ajustando en ella al argumento `expand` que controla cuánto espaciado va a haber en cada borde de el eje correspondiente. Por defecto, `{ggplot2}` agrega un pequeño espaciado en cada eje.
 
 ``` r
 pueblos_n |> 
@@ -804,55 +819,69 @@ pueblos_n |>
   scale_x_continuous(expand = expansion(c(2, 0))) +
   # hacer en torta
   coord_polar(theta = "y") +
-  theme_void()
+  theme_void() +
+  # texto
+  geom_text(aes(label = format(total, big.mark = "."), x = 1), color = "white", size = 3,
+            position = position_stack(0.5))
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-46-2.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-46-1.png" width="768" />
+
+Si cambiamos `coord_polar()` por `coord_radial()` y ajustamos un poco la escala vertical y otros detalles, podemos hacer que los textos sigan en el ángulo de la torta:
+
+``` r
+pueblos_n |> 
+  ggplot() +
+  aes(1, total, fill = pueblo) +
+  geom_col() +
+  scale_fill_brewer(palette = "Dark2") +
+  # agregar espacio en el eje
+  scale_x_continuous(expand = expansion(c(2, 0))) +
+  scale_y_continuous(expand = expansion(c(0, 0))) +
+  # hacer en torta
+  coord_radial(theta = "y", rotate.angle = TRUE) +
+  theme_void() +
+  # texto
+  geom_text(aes(label = scales::comma(total, big.mark = "."), x = 1.7), color = "black", size = 3,
+            position = position_stack(0.5))
+```
+
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-47-1.png" width="768" />
 
 ### Facetas
 
-calculemos los datos agrupados otra variable
+Se le llama a facetas a la división de un mismo gráfico en múltiples gráficos a partir de una variable determinada. Especificando una variable de agrupación, entonces, podemos generar una visualización que contenga múltiples gráficos del mismo tipo, pero visualizando datos filtrados por la variable seleccionada.
+
+Primero calculemos un conjunto de datos agrupados por dos variables:
 
 ``` r
 pueblos_n_sexo <- pueblos |> 
   mutate(pueblo = ifelse(pueblo %in% c("Mapuche", "Aymara", "Diaguita"), pueblo, "Otros")) |> 
   group_by(pueblo, sexo) |> 
   summarize(total = sum(n)) |> 
-  group_by(sexo) |> 
+  group_by(pueblo) |> 
   mutate(p = total/sum(total))
+
+glimpse(pueblos_n_sexo)
 ```
 
-teniendo una variable extra en la base, podemos dividir el gráfico en más de uno
+    Rows: 8
+    Columns: 4
+    Groups: pueblo [4]
+    $ pueblo <chr> "Aymara", "Aymara", "Diaguita", "Diaguita", "Mapuche", "Mapuche…
+    $ sexo   <chr> "Hombres", "Mujeres", "Hombres", "Mujeres", "Hombres", "Mujeres…
+    $ total  <dbl> 75785, 80969, 43360, 45114, 861241, 883906, 97725, 97692
+    $ p      <dbl> 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.506493…
+
+Teniendo una variable extra en el conjunto de datos, podemos dividir el gráfico en más de uno especificando una capa `facet_wrap()` con la variable de división:
 
 ``` r
 pueblos_n_sexo |> 
   ggplot() +
-  aes(1, p, fill = pueblo) +
-  geom_col() +
-  coord_polar(theta = "y") +
-  scale_fill_brewer(palette = "Dark2") +
-  theme_void() +
-  # dividir por sexo
-  facet_wrap(~sexo)
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-48-1.png" width="768" />
-
-faceta por otra variable
-
-``` r
-library(scales)
-
-pueblos |> 
-  group_by(pueblo, sexo) |> 
-  summarize(total = sum(n)) |> 
-  group_by(pueblo) |> 
-  mutate(p = total/sum(total)) |> 
-  ggplot() +
   aes(1, p, fill = sexo) +
   geom_col() +
   # agregar texto
-  geom_text(aes(label = percent(p, accuracy = 1)), color = "white",
+  geom_text(aes(label = scales::percent(p, accuracy = 1)), color = "white",
             position = position_stack(0.5), fontface = "bold") +
   coord_polar(theta = "y") +
   scale_fill_brewer(palette = "Dark2") +
@@ -862,554 +891,296 @@ pueblos |>
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-49-1.png" width="768" />
 
-### Datos de delincuencia
+Al crear una faceta por la variable `pueblo`, que tiene cuatro niveles, obtenemos cuatro gráficos con el mismo código que necesitamos para generar uno solo. ¡Qué ofertón!
+
+------------------------------------------------------------------------
+
+La tercera parte de tutorial continuaremos con un último conjunto de datos. Se trata de una base con más de 1 millón de filas que contiene la frecuencia de múltiples tipos de delitos, desagregados por el tipo de delito, ubicación geográfica, y año. Puedes descargar los datos [desde este repositorio](https://github.com/bastianolea/delincuencia_chile/) que recopila las estadísticas oficiales sobre delitos en Chile, o bien puedes ejecutar el siguiente código para descargar los datos y cargarlo en tu entorno de R. Debido a la cantidad de observaciones, el archivo viene en formato *parquet,* un formato moderno de datos columnares optimizado para eficiencia y velocidad, para el cual necesitas [instalar el paquete `{arrow}`](https://arrow.apache.org/docs/r/).
 
 ``` r
 # install.packages("arrow")
 library(arrow)
-library(lubridate)
+
+delinc <- arrow::read_parquet("https://github.com/bastianolea/delincuencia_chile/raw/main/datos_procesados/cead_delincuencia_chile.parquet")
 ```
 
-cargar datos (en formato arrow)
+### Líneas
 
-``` r
-delinc <- arrow::read_parquet("datos/cead_delincuencia_chile.parquet")
-```
-
-revisar tipos de delitos
+La gráficos en línea se usan principalmente para mostrar el cambio o evolución de una variable a través de otra, usualmente a través del tiempo. Usaremos `geom_line()` para visualizar la cantidad total de delitos mensuales desde el año 2018.
 
 ``` r
 delinc |> 
-  distinct(delito) |> 
-  print(n=Inf)
-```
-
-    # A tibble: 50 × 1
-       delito                                       
-       <fct>                                        
-     1 Abigeato                                     
-     2 Abusos sexuales                              
-     3 Amenazas con armas                           
-     4 Amenazas o riña                              
-     5 Animales sueltos en la vía pública           
-     6 Auxilio al suicidio                          
-     7 Comercio ilegal                              
-     8 Consumo de alcohol y drogas en la vía pública
-     9 Daños                                        
-    10 Delitos asociados a drogas                   
-    11 Desórdenes públicos                          
-    12 Disparo injustificado                        
-    13 Elaboración o producción de sustancias       
-    14 Femicidio                                    
-    15 Femicidio no íntimo                          
-    16 Homicidios                                   
-    17 Hurtos                                       
-    18 Lesiones graves o gravísimas                 
-    19 Lesiones leves                               
-    20 Lesiones menos graves                        
-    21 Microtráfico de sustancias                   
-    22 Ofensas al pudor                             
-    23 Otras infracciones a la ley de armas         
-    24 Otras infracciones a la ley de drogas        
-    25 Otras violaciones                            
-    26 Otros delitos sexuales                       
-    27 Otros robos con fuerza en las cosas          
-    28 Porte / posesión de armas o explosivos       
-    29 Porte de arma cortante o punzante            
-    30 Receptación                                  
-    31 Robo con homicidio                           
-    32 Robo con violación                           
-    33 Robo de objetos de o desde vehículo          
-    34 Robo de vehículo motorizado                  
-    35 Robo en lugar habitado                       
-    36 Robo frustrado                               
-    37 Robo por sorpresa                            
-    38 Robo violento de vehículo motorizado         
-    39 Robos con violencia o intimidación           
-    40 Robos en lugar no habitado                   
-    41 Suicidio femicida                            
-    42 Tortura o apremios ilegítimos con violación  
-    43 Tráfico de sustancias                        
-    44 Violación con homicidio                      
-    45 Violencia intrafamiliar a adulto mayor       
-    46 Violencia intrafamiliar a hombre             
-    47 Violencia intrafamiliar a mujer              
-    48 Violencia intrafamiliar a niño o niña        
-    49 Violencia intrafamiliar no clasificada       
-    50 Robos de vehículos y sus accesorios          
-
-gráfico de líneas de un delito específico
-
-``` r
-delinc |> 
-  # procesar datos
   filter(delito == "Robos con violencia o intimidación") |> 
   group_by(fecha) |> 
   summarize(n = sum(delito_n)) |> 
-  # gráfico
   ggplot() +
   aes(fecha, n) +
-  # podemos agregar más de una capa de geometría
-  geom_line() +
-  geom_point()
+  geom_line(alpha = .4) +
+  geom_point(size = 1) +
+  theme_classic()
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-53-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-51-1.png" width="768" />
 
-geom_col()
+Podemos agregar al mismo tiempo una capa de puntos sobre las líneas para destacar la ubicaciones específica de las observaciones.
 
-gráfico de barras vertical
+Recordemos que también podemos usar cualquier variable para darle color a cualquier geometría; por ejemplo, crear una variable que indique si la observación aumenta o disminuye con respecto al caso anterior, y pintar los puntos siguiendo estos cambios:
 
 ``` r
 delinc |> 
   filter(delito == "Robos con violencia o intimidación") |> 
-  group_by(region) |> 
+  group_by(fecha) |> 
   summarize(n = sum(delito_n)) |> 
+  mutate(cambio = ifelse(n > lag(n), "aumento", "disminución")) |> 
+  filter(!is.na(cambio)) |> 
   ggplot() +
-  aes(region, n) +
-  geom_col() +
-  # modificamos el tema del gráfico para que el texto del eje horizontal sea inclinado y justificado a la derecha
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  aes(fecha, n) +
+  geom_line(alpha = .4) +
+  geom_point(aes(color = cambio), size = 2) +
+  scale_color_manual(values = c("aumento" = "indianred3", "disminución" = "darkolivegreen3")) +
+  guides(color = guide_legend(override.aes = list(size = 5))) +
+  theme_classic()
+```
+
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-52-1.png" width="768" />
+
+Calculemos una tabla de datos que sume las cantidades de tres delitos en específico a través del tiempo:
+
+``` r
+delinc_filt <- delinc |> 
+  filter(delito %in% c("Robos con violencia o intimidación",
+                       "Robo en lugar habitado", 
+                       "Robo por sorpresa")) |> 
+  group_by(delito, fecha) |> 
+  summarize(n = sum(delito_n))
+```
+
+Ahora que los datos están agrupados por la variable `delito`, podemos usarla para dar color a nuestras líneas. Esto tiene como resultado que las líneas se separen para seguir la trayectoria de cada uno de los valores de los niveles de la variable que usamos para el color:
+
+``` r
+delinc_filt |> 
+  ggplot() +
+  aes(fecha, n, color = delito) +
+  geom_line(linewidth = 0.8) +
+  theme_classic() +
+  scale_color_brewer(palette = "Accent") +
+  scale_x_date(expand = expansion(0))
 ```
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-54-1.png" width="768" />
 
-### Gráfico de barras horizontal
+Algunas geometrías en `{ggplot2}` son capaces de realizar cálculos estadísticos por nosotros a la hora de visualizar. Uno de los más comunes para explorar tendencias en los datos es agregar líneas de regresión lineal sobre los datos. Agregando una capa de la geometría `geom_smooth()`, se calcularán tres líneas de regresión para cada uno de los grupos que estamos visualizando, debido a que en este caso estamos agrupando nuestra visualización por color.
 
 ``` r
-delinc |> 
-  filter(delito == "Robos con violencia o intimidación") |> 
-  group_by(region) |> 
-  summarize(n = sum(delito_n)) |> 
+delinc_filt |> 
   ggplot() +
-  aes(n, region) +
-  geom_col()
+  aes(fecha, n, color = delito) +
+  geom_line(linewidth = 0.8) +
+  geom_smooth(method = "lm", se = F, linetype = "dashed") +
+  theme_classic() +
+  scale_color_brewer(palette = "Accent") +
+  scale_x_date(expand = expansion(0))
 ```
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-55-1.png" width="768" />
 
-``` r
-library(scales) # para mejorar las escalas
-library(forcats) # para ordenar variables (tipo factor)
-```
+Estas líneas de regresión representan trayectorias ajustadas a la posición de todas las observaciones de cada grupo, entregándonos información visual acerca de si los datos representan en general una tendencia a la alza o a la baja.
 
-gráfico de barras horizontal, ordenadas, y con saltos de línea en las etiquetas
+Otra forma de complementar la información en nuestros gráficos es agregar líneas que marquen puntos importantes en una de las escalas. Esto suele ser útil cuando estamos presentando información graficada en torno al tiempo, para marcar por ejemplo alguna fecha clave. En este caso, marcaremos una barra vertical con respecto a la escala del tiempo que indique el inicio del último gobierno, usando `geom_vline()` (`v` por *vertical*). Además, usaremos `annotate()` para crear una etiqueta que indique a qué corresponde la barra que agregamos:
 
 ``` r
-delinc |> 
-  filter(delito == "Robos con violencia o intimidación") |> 
-  group_by(region) |> 
-  summarize(n = sum(delito_n), .groups = "drop") |> 
-  ungroup() |> 
-  # reordenar las barras 
-  mutate(region = fct_reorder(region, n)) |>
+delinc_filt |> 
   ggplot() +
-  aes(n, region) +
-  geom_col(width = 0.5) + # ancho de las barras
-  # modificar escala horizontal
-  scale_x_continuous(name = "Delitos",
-                     labels = scales::label_comma(big.mark = "."), # arreglar los miles
-                     expand = expansion(c(0, 0.1)) # agregar espacio extra al final de la escala
-                     ) +
-  scale_y_discrete(name = "Regiones",
-                   labels = label_wrap(30) # aplicar salto de línea a las etiquetas a los 30 caracteres
-                   )
+  aes(fecha, n, color = delito) +
+  geom_line(linewidth = 0.8) +
+  geom_vline(xintercept = as_date("2022-03-11"), linewidth = 1.3, color = "deeppink3", alpha = 0.5) +
+  annotate(geom = "label", label = "Gabriel Boric", 
+           x = as_date("2022-03-11") + 40, y = 7000, hjust = 0, 
+           fill = "deeppink3", color = "white", alpha = 0.6, size = 3.5) +
+  theme_classic() +
+  scale_color_brewer(palette = "Accent") +
+  scale_x_date(expand = expansion(0))
 ```
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-56-1.png" width="768" />
 
-### Gráfico de barras horizontal con color
+### Barras comparativas
 
-contar delitos por año, para elegir delitos similares
+Los gráficos de barras nos permiten comparar valores de forma muy clara. Pero a veces también queremos comparar valores dentro de los valores que estábamos comparando. Calcularemos la cantidad de tres delitos distintos a través de 10 comunas, para generar un gráfico que nos permita comparar tanto los delitos *entre* las comunas como las cantidades de los delitos distintos *dentro* de cada una de estas comunas.
 
 ``` r
-delinc |> 
-  group_by(delito) |> 
-  summarize(n = sum(delito_n)) |> 
+# obtener top 10 comunas segun cantidad de delitos
+comunas_delinc <- delinc |> 
+  filter(region == "Metropolitana de Santiago") |> 
+  group_by(comuna) |> 
+  summarize(total = sum(delito_n)) |> # sumar delitos por comuna
+  slice_max(total, n = 10) |> # filtrar 10 con mayor cantidad
+  pull(comuna) # extraer comunas
+
+# calcular delitos por comunas
+delinc_comuna <- delinc |> 
+  # seleccionar delitos a incluir
+  filter(delito %in% c("Robos con violencia o intimidación",
+                       "Robo en lugar habitado", 
+                       "Robo por sorpresa")) |> 
+  filter(lubridate::year(fecha) == 2023) |> 
+  filter(region == "Metropolitana de Santiago",
+         comuna %in% comunas_delinc) |> 
+  group_by(comuna, delito) |> 
+  summarize(n = sum(delito_n)) |>  
+  ungroup() |> 
   arrange(desc(n))
 ```
 
-    # A tibble: 50 × 2
-       delito                                              n
-       <fct>                                           <dbl>
-     1 Amenazas o riña                               944138 
-     2 Consumo de alcohol y drogas en la vía pública 917037.
-     3 Hurtos                                        856092.
-     4 Daños                                         764460 
-     5 Violencia intrafamiliar a mujer               666574 
-     6 Robos con violencia o intimidación            441673 
-     7 Lesiones leves                                376066 
-     8 Robo de objetos de o desde vehículo           329299 
-     9 Robo en lugar habitado                        297576 
-    10 Robos en lugar no habitado                    289593 
-    # ℹ 40 more rows
-
-gráfico de barras horizontal con leyenda en dos columnas
+Creamos un gráfico de barras, que en el eje horizontal tenga los valores y en el vertical tenga las comunas, y usamos las categorías de delitos como el relleno de color:
 
 ``` r
-delinc |> 
-  # seleccionar delitos a incluir
-  filter(delito %in% c("Robos con violencia o intimidación",
-                       "Violencia intrafamiliar a mujer",
-                       "Robo de objetos de o desde vehículo")) |> 
-  group_by(region, delito) |> 
-  summarize(n = sum(delito_n)) |> 
-  ungroup() |> 
-  # reordenar las barras
-  mutate(region = fct_reorder(region, n)) |>
-  # grafico
+delinc_comuna |> 
+  # reordenar las barras por frecuencia
+  mutate(comuna = forcats::fct_reorder(comuna, n)) |>
   ggplot() +
-  aes(n, region, 
+  aes(n, comuna, 
       fill = delito) + # especificar color
+  # barras
   geom_col(width = 0.5) +
+  # texto
+  geom_text(aes(label = ifelse(n > 350, n, "")), 
+            position = position_stack(vjust = 0.5),
+            size = 2.5) +
   # escalas
   scale_x_continuous(name = "Delitos",
                      labels = scales::label_comma(big.mark = "."), 
                      expand = expansion(c(0, 0.1))) +
   scale_y_discrete(name = "Regiones",
-                   labels = label_wrap(30)) + 
+                   labels = scales::label_wrap(30)) + 
+  theme_classic() +
+  # paleta de colores
+  scale_fill_brewer(palette = "Accent") +
   # modificar leyenda
   guides(fill = guide_legend(position = "bottom", # leyenda abajo
-                             ncol = 2)) # en dos columnas
+                             nrow = 1)) + # en dos columnas
+  labs(subtitle = "Total de delitos denunciados en el año 2023, por comunas",
+       caption = "Fuente: Centro de Estudios y Análisis del Delito")
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-58-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-58-1.png" width="672" />
+
+Sin embargo, en este gráfico toma preponderancia la cantidad total de delitos en ciertas comunas, dado que resultan muy mayores que en otras. Tenemos una alternativa para realizar esta visualización, que es poner los segmentos de las barras de cada variable del eje vertical lado al lado en vez de apilarlas. Para ello, podemos definir que los segmentos de color de cada barra se ubiquen en la posición `position_dodge()` en lugar de `position_stack()` (la anterior):
 
 ``` r
-library(stringr) # para trabajar con texto
-```
-
-gráfico de barras horizontal con leyenda en una fila
-
-``` r
-delinc |> 
-  filter(delito %in% c("Robos con violencia o intimidación",
-                       "Violencia intrafamiliar a mujer",
-                       "Robo de objetos de o desde vehículo")) |> 
-  group_by(region, delito) |> 
-  summarize(n = sum(delito_n)) |> 
-  ungroup() |> 
-  # reordenar las barras
-  mutate(region = fct_reorder(region, n)) |>
-  mutate(delito = stringr::str_wrap(delito, 25)) |> # arreglar textos de leyenda muy largos
-  # grafico
+grafico_delincuencia_1 <- delinc_comuna |> 
   ggplot() +
-  aes(n, region, fill = delito) +
-  geom_col(width = 0.5) +
-  scale_x_continuous(name = "Delitos",
-                     labels = scales::label_comma(big.mark = "."),
-                     expand = expansion(c(0, 0.1))) +
-  scale_y_discrete(name = "Regiones",
-                   labels = label_wrap(30)) +
-  # modificar leyenda
-  guides(fill = guide_legend(position = "bottom", nrow = 1)) # en una columna
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-59-1.png" width="768" />
-
-### Gráfico de barras comparando categorías
-
-``` r
-library(lubridate)
-```
-
-procesar datos primero
-
-``` r
-delinc_tabla <- delinc |> 
-  filter(lubridate::year(fecha) == 2023) |> 
-  filter(delito %in% c("Robos con violencia o intimidación",
-                       "Violencia intrafamiliar a mujer",
-                       "Robo de objetos de o desde vehículo")) |> 
-  group_by(region, delito) |> 
-  summarize(n = sum(delito_n)) |> 
-  ungroup() |> 
-  # reordenar las barras
-  mutate(region = fct_reorder(region, n)) |>
-  mutate(delito = str_wrap(delito, 25))
-```
-
-hacer gráfico pero guardándolo como objeto
-
-``` r
-grafico <- delinc_tabla |> 
-  ggplot() +
-  aes(n, region, 
+  aes(n, comuna, 
       fill = delito) + # relleno
-  geom_col(width = 0.9, 
+  geom_col(width = 0.8, 
            position = position_dodge(), # especificar que las categorías aparezcan lado a lado
            color = "white", linewidth = 0.5) +
+  geom_text(aes(label = paste(" ", n)), # espaciar texto
+            position = position_dodge(width = 0.8),
+            size = 2.3, hjust = 0) +
+  theme_classic() +
   scale_x_continuous(name = "Delitos",
                      labels = scales::label_comma(big.mark = "."), 
                      expand = expansion(c(0, 0.1))) +
-  scale_y_discrete(name = "Regiones",
-                   labels = label_wrap(30)) +
-  # modificar leyenda
-  guides(fill = guide_legend(position = "bottom", nrow = 1)) +
-  # título
-  labs(title = "Delitos",
-       subtitle = "Cantidad de delitos en el año 2023")
+  scale_fill_brewer(palette = "Accent", name = "Delitos",
+                    labels = scales::label_wrap(20)) +
+  guides(fill = guide_legend(position = "right", ncol = 1)) +
+  theme(panel.grid.major.x = element_line()) +
+  labs(subtitle = "Total de delitos denunciados en el año 2023, por comunas",
+       caption = "Fuente: Centro de Estudios y Análisis del Delito")
+
+grafico_delincuencia_1
 ```
 
-ver el gráfico
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-59-1.png" width="672" />
+
+Con este posicionamiento de las barras obtenemos un gráfico que nos permite comparar cada uno de los subgrupos de cada variable del eje vertical entre sí, dado que ahora los segmentos de colores, en este caso los tipos de delitos, se ubican lateralmente uno con el otro, facilitando la comparación visual.
+
+### Temas
+
+Si queremos modificar elementos específicos de la visualización, usamos la capa `theme()`. Dentro de esta función, podemos individualizar cualquier elemento de la visualización. Para saber cómo se llama cada elemento, puedes empezar escribiendo su ubicación general (`plot`, `panel`, `axis`, `legend`, etc.) y RStudio/Positron debería sugerirte las distintas posibilidades, o bien puedes [entrar a esta guía](https://isabella-b.com/blog/ggplot2-theme-elements-reference/) para encontrar los nombres de cada uno de los elementos.
+
+En este caso, definiremos la tipografía general del gráfico al incluirla en el llamado a `theme_classic()`, y dentro de la especificación del tema (`theme()`) modificaremos la apariencia del subtítulo, de las líneas en el panel del gráfico correspondientes al eje horizontal, eliminaremos el título del eje vertical y las rayitas de los ejes, y especificaremos el tipo de letra del texto del eje vertical.
 
 ``` r
-grafico
+grafico_delincuencia_2 <- grafico_delincuencia_1 +
+  theme_classic(base_family = "Verdana") +
+  theme(plot.subtitle = element_text(face = "italic", size = 12),
+        panel.grid.major.x = element_line(),
+        axis.title.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text.y = element_text(colour = "black", 
+                                   face = "bold", 
+                                   size = 11, lineheight = 0.8))
+
+grafico_delincuencia_2
+```
+
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-60-1.png" width="768" />
+
+### Tipografías
+
+Existen muchos métodos distintos para usar tipografías personalizadas en nuestros gráficos de `{ggplot2}`. Debido a que obtener, instalar y activar tipografías suele ser algo complejo, una solución sencilla y compatible es utilizar tipografía web, como las ofrecidas por [Google Fonts.](https://fonts.google.com) puedes navegar a ese sitio y encontrar una tipografía que te interese, y descargarla por medio del paquete `{showtext}`:
+
+``` r
+# install.packages("showtext")
+library(showtext)
+
+font_add_google(name = "Montserrat")
+```
+
+Luego, tienes que usar la función `showtext_auto()` para activar el uso de las tipografías descargadas en tu sesión de R, y posiblemente tengas que ajustar la resolución de las tipografías para que se vean bien en la pantalla.
+
+``` r
+showtext_auto()
+showtext_opts(dpi = 200) # resolución para que se vean bien las tipografías
+```
+
+Habiendo hecho lo anterior, basta con referirse al nombre de la tipografía, ya sea al especificar el tema de nuestro gráfico, o en cualquier geometría que utilice texto como `geom_text()`.
+
+``` r
+grafico_delincuencia_2 +
+  theme_classic(base_family = "Montserrat")
 ```
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-63-1.png" width="768" />
 
-### Temas
-
-aplicar un tema al gráfico ya creado
-
-``` r
-grafico +
-  theme_minimal()
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-64-1.png" width="768" />
-
-``` r
-grafico +
-  theme_classic()
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-64-2.png" width="768" />
-
-modificar elementos del tema del gráfico
-
-``` r
-grafico_2 <- grafico +
-  theme_classic() +
-  theme(axis.ticks = element_blank(),
-        axis.text.y = element_text(colour = "black", 
-                                   face = "bold", 
-                                   size = 11, lineheight = 0.8)) +
-  theme(axis.title.x = element_text(margin = margin(t = 10, b = -10)))
-
-grafico_2
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-65-1.png" width="768" />
-
-agregar una línea horizontal
-
-``` r
-grafico_2 +
-  geom_vline(xintercept = 30000, linetype = "dashed", alpha = .7)
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-66-1.png" width="768" />
-
-calcular promedio
-
-``` r
-promedio <- mean(delinc_tabla$n)
-```
-
-línea horizontal del promedio
-
-``` r
-grafico_2 +
-  geom_vline(xintercept = promedio, linetype = "solid", color = "red3", linewidth = 1, alpha = .7)
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-68-1.png" width="768" />
-
-### Gráfico de barras apiladas
-
-calcular datos
-
-``` r
-delinc_tabla_2 <- delinc |> 
-  filter(year(fecha) == 2023) |> 
-  filter(delito %in% c("Robos con violencia o intimidación",
-                       "Violencia intrafamiliar a mujer",
-                       "Robo de objetos de o desde vehículo")) |> 
-  group_by(region, delito) |> 
-  summarize(n = sum(delito_n)) |> 
-  ungroup() |> 
-  # reordenar las barras
-  mutate(region = fct_reorder(region, n)) |>
-  mutate(delito = str_wrap(delito, 25))
-```
-
-gráfico
-
-``` r
-grafico_apilado <- delinc_tabla_2 |> 
-  ggplot() +
-  aes(n, region, fill = delito) +
-  geom_col(width = 0.5) +
-  # escalas
-  scale_x_continuous(name = "Delitos",
-                     labels = scales::label_comma(big.mark = "."), # arreglar los miles
-                     expand = expansion(c(0, 0.1))) +
-  scale_y_discrete(name = "Regiones",
-                   labels = label_wrap(30)) +
-  # modificar leyenda
-  guides(fill = guide_legend(position = "bottom", nrow = 1))
-
-grafico_apilado
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-70-1.png" width="768" />
-
-agregar tema
-
-``` r
-grafico_apilado +
-  theme_classic()
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-71-1.png" width="768" />
-
-agregar texto
-
-``` r
-grafico_apilado +
-  theme_classic() +
-  geom_text(
-    aes(label = n),
-    position = position_stack(0.5), # especificar que aparezca al medio de las barras
-    size = 3)
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-72-1.png" width="768" />
-
-corregir texto para que solo aparezca para cantidades mayores a x usando ifelse()
-
-``` r
-grafico_apilado +
-  theme_classic() +
-  geom_text(
-    aes(label = ifelse(n > 8000, comma(n, big.mark = "."), "")),
-    position = position_stack(0.5),
-    size = 3)
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-73-1.png" width="768" />
-
-otra forma de lograr lo mismo, filtrando los datos que llegan a geom_text()
-
-``` r
-grafico_apilado +
-  theme_classic() +
-  geom_text(data = ~filter(.x, n > 5000), # especificar los datos de geom_text()
-    aes(label = n),
-    position = position_stack(0.5),
-    size = 3)
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-74-1.png" width="768" />
-
-calcular totales regionales
-
-``` r
-delinc_tabla_totales <- delinc_tabla_2 |> 
-  group_by(region) |> 
-  summarise(n = sum(n))
-
-delinc_tabla_totales
-```
-
-    # A tibble: 16 × 2
-       region                                         n
-       <fct>                                      <dbl>
-     1 Aysén del General Carlos Ibáñez del Campo    826
-     2 Magallanes y de la Antártica Chilena         963
-     3 Los Ríos                                    3730
-     4 Ñuble                                       4264
-     5 Atacama                                     4260
-     6 Arica y Parinacota                          4370
-     7 La Araucanía                                9589
-     8 Tarapacá                                    6473
-     9 Los Lagos                                  10362
-    10 Maule                                      11676
-    11 Libertador Gral. Bernardo O'Higgins        10898
-    12 Coquimbo                                    9383
-    13 Antofagasta                                 9930
-    14 Biobío                                     17595
-    15 Valparaíso                                 22621
-    16 Metropolitana de Santiago                 101961
-
-agregar texto de totales regionales
-
-``` r
-grafico_apilado_3 <- grafico_apilado +
-  theme_classic() +
-  geom_text(data = ~filter(.x, n > 5000),
-            aes(label = comma(n, big.mark = ".")),
-            position = position_stack(0.5),
-            size = 3) +
-  geom_text(data = delinc_tabla_totales,
-            inherit.aes = F, # que esta capa no herede las estéticas globales (aes) del gráfico
-            # especificar la estética de esta capa
-            aes(x = n, y = region, label = comma(n, big.mark = ".")), 
-            hjust = 0, size = 3, nudge_x = 800, 
-            fontface = "bold")
-```
-
-ver
-
-``` r
-grafico_apilado_3
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-77-1.png" width="768" />
-
-modificar escala de colores
-
-``` r
-grafico_apilado_4 <- grafico_apilado_3 +
-  scale_fill_manual(values = c("#D74967", "#B384C0", "#F47066")) +
-  theme(panel.grid.major.x = element_line(),
-        panel.grid.minor.x = element_line(linewidth = 0.2))
-```
-
-ver
-
-``` r
-grafico_apilado_4
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-79-1.png" width="768" />
-
-## Tipografías
-
-``` r
-# library(showtext)
-```
-
-descargar una tipografía desde google fonts
-
-``` r
-# font_add_google(name = "Montserrat")
-```
-
-font_add_google(name = "Nunito")
-
-activar el uso de tipografías
-
-``` r
-# showtext_auto()
-# showtext_opts(dpi = 300) # resolución para que se vean bien las tipografías
-```
-
-cambiar tipografía global
-
-``` r
-grafico_apilado_4 +
-  theme_classic(base_family = "Montserrat")
-```
-
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-83-1.png" width="768" />
+Vale mencionar que el tipo grafías descargadas por este método solamente estarán disponibles durante la sesión de R, por lo que la próxima vez que quieras usarlas deberán ser descargadas de la misma manera. Si tienes algún problema con esas tipografías, basta con reiniciar la sesión de R para dejar de utilizarlas.
 
 ## Guardar gráficos
 
+El último paso para nuestra visualización es, probablemente, guardarla a nuestro equipo para poder insertarla en algún documento u ocuparla. Para ello, la función `ggsave()` guardará a tu computadora el último gráfico que hayas generado. Solamente debes especificar el nombre del archivo resultante, con su extensión (`jpg`, `png`, `pdf`, etc.).
+
 ``` r
-ggsave("grafico.jpg", width = 10, height = 6, dpi = 300) 
+ggsave("grafico.jpg", width = 7, height = 5) 
 ```
+
+La extensión del archivo definirá el formato del archivo resultante. Si no especifica una ruta para archivo, lo más probable es que tu archivo aparezca en tu proyecto de R (si no estás usando proyectos de R [(deberías)](https://bastianolea.rbind.io/blog/r_introduccion/proyectos/) Lo más probable es que no encuentres la imagen porque aparecerá en la *raíz* de tu disco).
+
+Si no específicas un ancho y alto, el gráfico tendrá el ancho y alto de la ventana de previsualización de RStudio. Si deseas ajustar el tamaño de los elementos de tu gráfico, puedes usar el argumento `scale`, que es un número que mientras más grande hará que los elementos sean más pequeños.
+
+------------------------------------------------------------------------
+
+Con esto concluye este tutorial inicial para aprender a visualizar datos en R con `{ggplot2}`. Cómo puedes ver, las naciones principales son pocas, pero es la combinación entre ellas y su uso creativo lo que nos permite crear visualizaciones interesantes!
+
+{{< cafecito  >}}
+
+------------------------------------------------------------------------
+
+**Paletas de colores**
+- https://datavizf24.classes.andrewheiss.com/resource/colors.html
+- https://bastianolea.rbind.io/blog/colores/
+- viridis: https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html#the-color-scales
+- colorbrewer: https://colorbrewer2.org/#type=sequential&scheme=YlGnBu&n=3
+- scico: https://www.data-imaginist.com/posts/2018-05-30-scico-and-the-colour-conundrum/
+
+**Temas**
+- temas ggplot: https://ggplot2.tidyverse.org/reference/ggtheme.html
+- ggthemes: https://yutannihilation.github.io/allYourFigureAreBelongToUs/ggthemes/
+
+**Elementos de un gráfico** (para modificar temas):
+- https://isabella-b.com/blog/ggplot2-theme-elements-reference/
+- https://henrywang.nl/ggplot2-theme-elements-demonstration/
+- https://ggplot2.tidyverse.org/reference/theme
 
 [^1]: con *mapeo* nos referimos al acto de definir una correspondencia entre el comportamiento de una variable y el resultado de algún elemento de nuestro gráfico, el cual pasará a asumir características de la variable que se le mapea.
