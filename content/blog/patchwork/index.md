@@ -191,4 +191,28 @@ grafico_c +
 
 <img src="patchwork.markdown_strict_files/figure-markdown_strict/plot10-1.png" width="768" />
 
+Otra forma de insertar un gráfico dentro de otro es ubicándolo a una cierta distancia desde un borde; en este caso, insertaremos un gráfico que solo contiene un texto (el año) en al esquina superior derecha, y para ello, definiremos que el borde izquierdo de la figura insertada `inset_element()` se ubique en el borde izquierdo del gráfico menos 3 centímetros, el borde derecho de la figura insertada en el límite derecho del gráfico, el borde superior en el límite superior del gráfico, y el borde inferior de la figura a 2 centímetros menos del límite superior del gráfico.
+
+``` r
+# gráfico vacío que solo contiene un texto
+texto_año <- ggplot() + annotate("text", x = 1, y = 1, label = 2025, size = 7) +  theme_void()
+
+grafico_c +
+  inset_element(
+      texto_año,
+      left = unit(1, 'npc') - unit(3, 'cm'),
+      right = 1,
+      top = 1, 
+      bottom = unit(1, 'npc') - unit(2, 'cm'),
+      align_to = "full")
+```
+
+<img src="patchwork.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="768" />
+
+Podemos usar esta técnica para insertar cualquier texto en cualquier posición de un gráfico, incluso fuera de los límites de las escalas (que sería una limitación de hacer lo mismo con `annotate()`.
+
+La gracia de usar `inset_element()` es que posicionamos los elementos con respecto al tamaño del gráfico (donde el borde izquierdo es 0 y el derecho es 1, y el borde inferior es 0 y el superior es 1) y no a las coordenadas de las variables `x` e `y`, lo que nos permite ubicar los elementos de forma independiente al sistema de coordenadas del gráfico.
+
+------------------------------------------------------------------------
+
 {{< cafecito  >}}

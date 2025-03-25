@@ -50,7 +50,7 @@ library(dplyr) library(ggplot2) library(patchwork) Primero crearemos dos gráfic
 grafico_a &lt;- iris |&gt; # calcular promedios por especie group_by(Species) |&gt; summarize(Sepal.Length = mean(Sepal.Length)) |&gt; # gráfico ggplot() &#43; aes(x = Sepal.Length, y = Species) &#43; # barras geom_col(fill = &#34;darkslategray3&#34;, width = 0.6) &#43; theme_void() grafico_b &lt;- iris |&gt; # conteo por especies count(Species) |&gt; # porcentaje mutate(p = n/sum(n)) |&gt; # gráfico ggplot() &#43; aes(x = 1, y = p, fill = Species) &#43; geom_col() &#43; # escala de color scale_fill_brewer(name = &#34;Set2&#34;, type = &#34;qual&#34;) &#43; # gráfico de torta coord_polar(theta = &#34;y&#34;) &#43; theme_void() &#43; guides(fill = guide_legend(title = NULL)) Combinar dos gráficos lado a lado Gracias a {patchwork}, unir dos gráficos uno al lado del otro es tan sencillo como “sumarlos”:">
   <meta itemprop="datePublished" content="2025-03-08T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-03-08T00:00:00+00:00">
-  <meta itemprop="wordCount" content="747">
+  <meta itemprop="wordCount" content="996">
   <meta itemprop="keywords" content="Visualización de datos,Gráficos,Ggplot2">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -404,6 +404,22 @@ grafico_a &lt;- iris |&gt; # calcular promedios por especie group_by(Species) |&
 </span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">left</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">right</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.6</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#908caa">(</span><span style="color:#ea9a97">grafico_a</span> <span style="color:#908caa">/</span> <span style="color:#ea9a97">grafico_a</span> <span style="color:#908caa">/</span> <span style="color:#ea9a97">grafico_a</span> <span style="color:#908caa">/</span> <span style="color:#ea9a97">grafico_a</span> <span style="color:#908caa">/</span> <span style="color:#ea9a97">grafico_a</span> <span style="color:#908caa">/</span> <span style="color:#ea9a97">grafico_a</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><img src="patchwork.markdown_strict_files/figure-markdown_strict/plot10-1.png" width="768" />
+<p>Otra forma de insertar un gráfico dentro de otro es ubicándolo a una cierta distancia desde un borde; en este caso, insertaremos un gráfico que solo contiene un texto (el año) en al esquina superior derecha, y para ello, definiremos que el borde izquierdo de la figura insertada <code>inset_element()</code> se ubique en el borde izquierdo del gráfico menos 3 centímetros, el borde derecho de la figura insertada en el límite derecho del gráfico, el borde superior en el límite superior del gráfico, y el borde inferior de la figura a 2 centímetros menos del límite superior del gráfico.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># gráfico vacío que solo contiene un texto</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">texto_año</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span> <span style="color:#ea9a97">annotate</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;text&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2025</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">7</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>  <span style="color:#ea9a97">theme_void</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico_c</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">inset_element</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">texto_año</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">left</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">unit</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#39;npc&#39;</span><span style="color:#908caa">)</span> <span style="color:#908caa">-</span> <span style="color:#ea9a97">unit</span><span style="color:#908caa">(</span><span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#39;cm&#39;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">right</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">top</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">bottom</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">unit</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#39;npc&#39;</span><span style="color:#908caa">)</span> <span style="color:#908caa">-</span> <span style="color:#ea9a97">unit</span><span style="color:#908caa">(</span><span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#39;cm&#39;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">align_to</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;full&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><img src="patchwork.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="768" />
+<p>Podemos usar esta técnica para insertar cualquier texto en cualquier posición de un gráfico, incluso fuera de los límites de las escalas (que sería una limitación de hacer lo mismo con <code>annotate()</code>.</p>
+<p>La gracia de usar <code>inset_element()</code> es que posicionamos los elementos con respecto al tamaño del gráfico (donde el borde izquierdo es 0 y el derecho es 1, y el borde inferior es 0 y el superior es 1) y no a las coordenadas de las variables <code>x</code> e <code>y</code>, lo que nos permite ubicar los elementos de forma independiente al sistema de coordenadas del gráfico.</p>
+<hr>
 <div style = "height: 18px;">
 </div>
 <div>
@@ -421,7 +437,7 @@ grafico_a &lt;- iris |&gt; # calcular promedios por especie group_by(Species) |&
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">4 minute read, 747 words</dd>
+    <dd class="fw5 ml0">5 minute read, 996 words</dd>
   </dl>
   
   
