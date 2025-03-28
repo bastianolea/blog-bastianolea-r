@@ -20,10 +20,10 @@ blogdown::new_post(title = "Tutorial: visualización de datos con {ggplot2}",
                    tags = c("visualización de datos", "gráficos", "ggplot2"),
                    categories = c("Tutoriales") 
 )
-# format: 
-#   hugo-md:
-#     output-file: "index"
-#     output-ext: "md"
+format:
+  hugo-md:
+    output-file: "index"
+    output-ext: "md"
 
 
 ## archivos ----
