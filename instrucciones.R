@@ -14,18 +14,27 @@ blogdown::new_post(title = "Rellenar datos perdidos usando otro dataframe",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Tutorial: visualización de datos con {ggplot2}", 
-                   file = "blog/tutorial_visualizacion_ggplot/tutorial_ggplot.qmd",
+blogdown::new_post(title = "Crear contenido en serie usando loops en Quarto", 
+                   file = "blog/quarto_loop/quarto_loop.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("visualización de datos", "gráficos", "ggplot2"),
-                   categories = c("Tutoriales") 
+                   tags = c("quarto", "loops"),
+                   categories = c() 
 )
-format:
-  hugo-md:
-    output-file: "index"
-    output-ext: "md"
+# format:
+#   hugo-md:
+#     output-file: "index"
+#     output-ext: "md"
 
-
+## borradores ----
+"content/blog/stringr_texto/stringr.qmd"
+"content/blog/tutorial_scraping_selenium/selenium.qmd"
+"content/blog/quarto_loop/quarto_loop.qmd"
+"content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
+"content/blog/reportes_github_pages/github_pages.qmd"
+"content/blog/tutorial_digitalocean"
+    
+    
+    
 ## archivos ----
 
 "content/blog/r_introduccion/recursos_r/index.md" # páginas
