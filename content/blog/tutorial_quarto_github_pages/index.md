@@ -30,19 +30,30 @@ Los contenidos son:
 
 ----
 
+Lo más probable es que todas las cosas que hemos aprendido sobre R y análisis de datos fueron porque alguna persona linda y bondadosa compartió gratuita y abiertamente lo que sabía o lo que creó, para que los demás se beneficien. Uno de los aspectos más positivos de la comunidad de usuarixs de R es su disposición a compartir y ayudar a los demás 💕 ¿Por qué no devolver la mano? 🥰
 
-## GitHub
+
+## Crear un repositorio en GitHub para compartir código y/o datos
+
+Quizás la forma más sencilla de poder compartir en internet tus trabajos, desarrollos, o aprendizajes en R, es **creando un repositorio de código abierto** en GitHub. En los reposos dormitorios, las personas dan a conocer el código que producen, ofreciéndoselo a los demás para que puedan reutilizarlos en sus propios proyectos, ya sean utilidades, análisis de datos, clases o tutoriales, o incluso conjuntos de datos y paquetes de R.
+
+En este primer paso del tutorial, aprenderemos a crear un repositorio local `git` para tus proyectos de R, y luego subir este repositorio local a un repositorio remoto en GitHub para poder compartirlo y que otrxs puedan encontrarlo.
 
 ### Conectar R a GitHub
 - [Tutorial más detallado sobre esto escrito por mi](https://bastianolea.rbind.io/blog/r_introduccion/tutorial_github/)
 - Libro tutorial para aprender a usar git con R: [https://happygitwithr.com](https://happygitwithr.com)
 
+Para poder crear tus reposos remotos, primero tenemos que darle permiso a tu sesión de R para conectarse a tu cuenta de GitHub. Encuentra [instrucciones más detalladas en este tutorial.](https://bastianolea.rbind.io/blog/r_introduccion/tutorial_github/)
+
 GitHub es una plataforma online donde las personas pueden subir sus repositorios de Git, permitiendo a otros acceder a su código, y contribuir a los repositorios, entre muchas otras funcionalidades.
 
 El primer paso es instalar `{usethis}`, un [paquete de R](https://usethis.r-lib.org/) que automatiza muchas tareas repetitivas que se hacen al configurar tus proyectos.
+
 ```r
 install.packages("usethis")
 ```
+
+Gracias a este paquete, los siguientes pasos se vuelven mucho más sencillos:
 
 **1. Configurar nombre de usuario y correo**
 Luego, tienes que registrar cuál es tu cuenta de GitHub.
@@ -61,6 +72,7 @@ gitcreds::gitcreds_set()
 ```
 
 **4. Confirmar que está funcionando bien:**
+Con la siguientes función obtendremos una especie de diagnóstico sobre la conexión con nuestra cuenta, para confirmar que todo esté funcionando bien.
 ```r
 usethis::git_sitrep()
 ```
@@ -92,6 +104,8 @@ Si tu proyecto/repositorio tiene un archivo `readme.md`, aparecerá en GitHub co
 ```r
 usethis::use_readme()
 ```
+
+Con el solo hecho de tener un archivo `readme.md` en tu repositorio ya cuentas con una especie de sitio web donde puedes explayarte y compartir cosas más detalladas. Si bien no es la forma más atractiva de hacerlo, cumple con la función básica de poder compartir tus creaciones con el resto de la comunidad! 💜
 
 Si necesitas más información acerca del uso de git y GitHub con R, revisa el tutorial: [**Crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub**](https://bastianolea.rbind.io/blog/r_introduccion/tutorial_github/)
 
