@@ -10,6 +10,7 @@ tags:
   - quarto
   - shiny
   - git
+  - GitHub
 excerpt: En este tutorial veremos cuatro formas relativamente sencillas para crear nuestros propios espacios en internet con R para poder compartir nuestras creaciones y aprendizajes, de forma completamente gratuita. ¡En una tarde podrías tener tu propio sitio web para presentarte, para subir las cosas que has aprendido, o para destacar tu trabajo!
 ---
 
