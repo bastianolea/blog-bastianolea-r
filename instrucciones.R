@@ -7,10 +7,10 @@ blogdown::stop_server()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Eliminar símbolos, tildes y eñes de textos con R", 
+blogdown::new_post(title = "Redactar una lista de palabras separadas por comas en R", 
                    file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos", "datos", "limpieza de datos", "texto")
+                   tags = c("consejos", "texto")
 )
 
 # crear un post tutorial
