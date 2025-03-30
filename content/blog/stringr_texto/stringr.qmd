@@ -291,30 +291,3 @@ Agregar artículos a etxtos
                c("Biobío", "Maule", "Libertador General Bernardo O'Higgins") ~ paste("del", nombre_region),
                .default = paste("de", nombre_region))
 ```
-
-
-Limpiar texto
-```{r}
-# cut_comunas <- readxl::read_xls("datos/CUT_2018_v04.xls") |> 
-#   janitor::clean_names() |> 
-#   rename(codigo_comuna = codigo_comuna_2018) |> 
-#   mutate(comuna = nombre_comuna |> toupper() |> 
-#            stringr::str_replace_all(c("Á"="A", "É"="E", "Í"="I", "Ó"="O", "Ú"="U")))
-
-# cargar códigos únicos territoriales
-cut_comunas <- read_delim("datos/cut_comuna.csv", delim = ";", show_col_types = F) |> 
-  mutate(comuna = nombre_comuna |> toupper() |> 
-           stringr::str_replace_all(c("Á"="A", "É"="E", "Í"="I", "Ó"="O", "Ú"="U")))
-
-# cut_comunas$nombre_comuna |> iconv(to = "ASCII//translit") #elimina tildes pero los reaplica como símbolos individuales
-# cut_comunas$nombre_comuna |> textclean::strip() # elimina símbolos pero no tildes ni eñes
-# cut_comunas$nombre_comuna |> stringi::stri_trans_general("Latin-ASCII")  # transliterar, pero remueve eñes
-# cut_comunas$nombre_comuna |> stringr::str_replace_all(c("Á"="A", "É"="E", "Í"="I", "Ó"="O", "Ú"="U")) # reemplazo manual
-
-```
-
-```{r}
-texto = textclean::strip(texto, digit.remove = FALSE, char.keep = c(".", ",")),
-                                       texto = str_trunc(texto, 7000, side = "center")) 
-```
-

@@ -5,6 +5,7 @@ date: '2024-12-22'
 slug: []
 format: hugo-md
 draft: false
+freeze: true
 tags:
   - análisis de texto
   - inteligencia artificial
@@ -12,6 +13,8 @@ categories:
   - tutoriales
 editor_options:
   chunk_output_type: console
+execute:
+  freeze: true
 ---
 
 
