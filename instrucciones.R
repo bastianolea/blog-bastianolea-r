@@ -30,7 +30,7 @@ blogdown::new_post(title = "Crear contenido en serie usando loops en Quarto",
 "content/blog/tutorial_scraping_selenium/selenium.qmd"
 "content/blog/quarto_loop/quarto_loop.qmd"
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
-"content/blog/reportes_github_pages/github_pages.qmd"
+"content/blog/reportes_github_pages/index.md"
 "content/blog/tutorial_digitalocean"
     
     
