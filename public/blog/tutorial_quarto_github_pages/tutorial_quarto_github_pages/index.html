@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Tutorial: crea páginas web y blogs con R y Quarto, y publícalos online con GitHub Pages | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="En este tutorial veremos cuatro formas relativamente sencillas para crear nuestros propios espacios en internet con R para poder compartir nuestras creaciones y aprendizajes, de forma completamente gratuita. ¡En una tarde podrías tener tu propio sitio web para presentarte, para subir las cosas que has aprendido, o para destacar tu trabajo!">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Tutorial: crea páginas web y blogs con R y Quarto, y publícalos online con GitHub Pages | Blog">
+<meta property="og:description" content="En este tutorial veremos cuatro formas relativamente sencillas para crear nuestros propios espacios en internet con R para poder compartir nuestras creaciones y aprendizajes, de forma completamente gratuita. ¡En una tarde podrías tener tu propio sitio web para presentarte, para subir las cosas que has aprendido, o para destacar tu trabajo!" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/tutorial_quarto_github_pages/tutorial_quarto_github_pages/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.jpg" >
+    
+    
+  
+  <meta itemprop="name" content="Tutorial: crea páginas web y blogs con R y Quarto, y publícalos online con GitHub Pages">
+  <meta itemprop="description" content="En este tutorial veremos cuatro formas relativamente sencillas, y ordenadas de menor a mayor dificultad, para crear nuestros propios espacios en internet para compartir nuestras creaciones, aprendizajes y quiénes somos usando R, y de forma completamente gratuita.
+En una tarde podrías tener tu propio sitio web para presentarte, para subir las cosas que has aprendido, o para destacar tu trabajo!
+Los contenidos son:
+Crear repositorios en github Crear páginas estáticas con documentos Quarto y GitHub Pages Crear sitios web con Quarto Crear blogs con Quarto Crear blogs con Hugo Apéro Lo más probable es que todas las cosas que hemos aprendido sobre R y análisis de datos fueron porque alguna persona linda y bondadosa compartió gratuita y abiertamente lo que sabía o lo que creó, para que los demás se beneficien. Uno de los aspectos más positivos de la comunidad de usuarixs de R es su disposición a compartir y ayudar a los demás 💕 ¿Por qué no devolver la mano? 🥰">
+  <meta itemprop="datePublished" content="2025-03-27T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-03-27T00:00:00+00:00">
+  <meta itemprop="wordCount" content="3333">
+  <meta itemprop="keywords" content="Quarto,Shiny,Git,GitHub">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Tutorial: crea páginas web y blogs con R y Quarto, y publícalos online con GitHub Pages</h1>
+        
+        
+        <p class="f7 db mv0 ttu">27/3/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/quarto">quarto</a>  <a href="http://localhost:4321/tags/shiny">shiny</a>  <a href="http://localhost:4321/tags/git">git</a>  <a href="http://localhost:4321/tags/github">GitHub</a> </dd></em>
+  </dl>
+
+
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>En este tutorial veremos cuatro formas relativamente sencillas, y ordenadas de menor a mayor dificultad, para crear nuestros propios espacios en internet para compartir nuestras creaciones, aprendizajes y quiénes somos usando R, y de forma completamente gratuita.</p>
+<p><strong>En una tarde podrías tener tu propio sitio web para presentarte, para subir las cosas que has aprendido, o para destacar tu trabajo!</strong></p>
+<p>Los contenidos son:</p>
+<ol>
+<li>Crear repositorios en github</li>
+<li>Crear páginas estáticas con documentos Quarto y GitHub Pages</li>
+<li>Crear sitios web con Quarto</li>
+<li>Crear blogs con Quarto</li>
+<li>Crear blogs con Hugo Apéro</li>
+</ol>
+<img src="afiche-featured.jpg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<hr>
+<p>Lo más probable es que todas las cosas que hemos aprendido sobre R y análisis de datos fueron porque alguna persona linda y bondadosa compartió gratuita y abiertamente lo que sabía o lo que creó, para que los demás se beneficien. Uno de los aspectos más positivos de la comunidad de usuarixs de R es su disposición a compartir y ayudar a los demás 💕 ¿Por qué no devolver la mano? 🥰</p>
+<p>Antes que nada, todas las opciones de este tutorial requieren que sepas usar GitHub, para poder subir tus proyectos de R a GitHub. Así que, para empezar, te resumiré las instrucciones necesarias para hacerlo. Encuentra 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_github/" target="_blank" rel="noopener">instrucciones más detalladas sobre usar git y GitHub con R en este tutorial.</a></p>
+
+
+
+
+<h2 id="crear-un-repositorio-en-github-para-compartir-código-yo-datos">Crear un repositorio en GitHub para compartir código y/o datos
+  <a href="#crear-un-repositorio-en-github-para-compartir-c%c3%b3digo-yo-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Quizás la forma más sencilla de poder compartir en internet tus trabajos, desarrollos, o aprendizajes en R, es <strong>creando un repositorio de código abierto</strong> en GitHub. En los reposos dormitorios, las personas dan a conocer el código que producen, ofreciéndoselo a los demás para que puedan reutilizarlos en sus propios proyectos, ya sean utilidades, análisis de datos, clases o tutoriales, o incluso conjuntos de datos y paquetes de R.</p>
+<p>En este primer paso del tutorial, aprenderemos a crear un repositorio local <code>git</code> para tus proyectos de R, y luego subir este repositorio local a un repositorio remoto en GitHub para poder compartirlo y que otrxs puedan encontrarlo.</p>
+
+
+
+
+<h3 id="conectar-r-a-github">Conectar R a GitHub
+  <a href="#conectar-r-a-github"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<ul>
+<li>
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_github/" target="_blank" rel="noopener">Tutorial más detallado sobre esto escrito por mi</a></li>
+<li>Libro tutorial para aprender a usar git con R: 
+<a href="https://happygitwithr.com" target="_blank" rel="noopener">https://happygitwithr.com</a></li>
+</ul>
+<p>Para poder crear tus reposos remotos, primero tenemos que darle permiso a tu sesión de R para conectarse a tu cuenta de GitHub.</p>
+<p>GitHub es una plataforma online donde las personas pueden subir sus repositorios de Git, permitiendo a otros acceder a su código, y contribuir a los repositorios, entre muchas otras funcionalidades.</p>
+<p>El primer paso es instalar <code>{usethis}</code>, un 
+<a href="https://usethis.r-lib.org/" target="_blank" rel="noopener">paquete de R</a> que automatiza muchas tareas repetitivas que se hacen al configurar tus proyectos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;usethis&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Gracias a este paquete, los siguientes pasos se vuelven mucho más sencillos:</p>
+<p><strong>1. Configurar nombre de usuario y correo</strong>
+Luego, tienes que registrar cuál es tu cuenta de GitHub.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">usethis</span><span style="color:#908caa">::</span><span style="color:#ea9a97">use_git_config</span><span style="color:#908caa">(</span><span style="color:#ea9a97">user.name</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Basti&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">user.email</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;baolea@uc.cl&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p><strong>2. Crear un <em>token</em> en GitHub para permitir el acceso de R a tu cuenta</strong>
+Es necesario hacer esto para permitir que tu computador pueda usar tu cuenta de GitHub. Se hace por medio de <em>tokens</em> para no tener que escribir tu contraseña. Es una medida más segura para poder iniciar sesión en un servicio online, porque además siempre puedes revocar la autorización desde tu cuenta de GitHub.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">usethis</span><span style="color:#908caa">::</span><span style="color:#ea9a97">create_github_token</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Se abrirá una ventana de GitHub en la que podrás generar y copiar el <em>token</em>. Ejecuta la siguiente función, y cuando la consola te lo indique, pega el <em>token</em> que copiaste:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">gitcreds</span><span style="color:#908caa">::</span><span style="color:#ea9a97">gitcreds_set</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p><strong>4. Confirmar que está funcionando bien:</strong>
+Con la siguientes función obtendremos una especie de diagnóstico sobre la conexión con nuestra cuenta, para confirmar que todo esté funcionando bien.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">usethis</span><span style="color:#908caa">::</span><span style="color:#ea9a97">git_sitrep</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div>
+
+
+
+<h3 id="crear-un-repositorio-local">Crear un repositorio local
+  <a href="#crear-un-repositorio-local"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Luego de haber configurado tu cuenta, puedes empezar a crear repositorios en tus proyectos de R. Recuerda que en cada proyecto puede haber un solo repositorio.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">usethis</span><span style="color:#908caa">::</span><span style="color:#ea9a97">use_git</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Al ejecutar este comando, tu consola indicará cuáles son los archivos modificados, y preguntará si quieres hacer <em>commit</em> de tus archivos. <em>Commit</em> significa agregar los archivos modificados a la versión del proyecto que guardaremos/respaldaremos.</p>
+<p>De esta forma, activaste el control de versiones de <code>git</code> en tu proyecto de RStudio, lo que significa que tienes un repositorio local.</p>
+
+
+
+
+<h3 id="subir-el-repositorio-local-a-github">Subir el repositorio local a GitHub
+  <a href="#subir-el-repositorio-local-a-github"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Luego de tener el repositorio local, ahora toca subirlo como repositorio remoto a GitHub, para poder compartirlo con otrxs.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">usethis</span><span style="color:#908caa">::</span><span style="color:#ea9a97">use_github</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Con este comando se creará un repositorio remoto en tu cuenta de GitHub con el mismo nombre que el proyecto, y se abrirá una ventana de tu navegador con el repositorio subido. Este repositorio puedes enviárselo a otras personas, 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_github/#clonar-un-repositorio-c%c3%b3digo-de-r-en-github" target="_blank" rel="noopener">y ellos pueden clonar el repositorio</a> en sus propias sesiones de R para poder ejecutar tu mismo código.</p>
+
+
+
+
+<h3 id="crear-un-archivo-readmemd">Crear un archivo <code>readme.md</code>
+  <a href="#crear-un-archivo-readmemd"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Si tu proyecto/repositorio tiene un archivo <code>readme.md</code>, aparecerá en GitHub como descripción del código. Puedes usar este documento para explicar más detalles acerca de lo que se trata el repositorio, dar instrucciones, especificar el orden de ejecución de los scripts, indicar tus fuentes, etc.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">usethis</span><span style="color:#908caa">::</span><span style="color:#ea9a97">use_readme</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Con el solo hecho de tener un archivo <code>readme.md</code> en tu repositorio ya cuentas con una especie de sitio web donde puedes explayarte y compartir cosas más detalladas. Si bien no es la forma más atractiva de hacerlo, cumple con la función básica de poder compartir tus creaciones con el resto de la comunidad! 💜</p>
+<p>Si necesitas más información acerca del uso de git y GitHub con R, revisa el tutorial: 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_github/" target="_blank" rel="noopener"><strong>Crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub</strong></a></p>
+<hr>
+
+
+
+
+<h2 id="documentos-quarto">Documentos Quarto
+  <a href="#documentos-quarto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Los 
+<a href="https://quarto.org/docs/get-started/hello/rstudio.html" target="_blank" rel="noopener">documentos Quarto</a> combinan la escritura normal con el código. La escritura, como los párrafos, títulos, y subtítulos se escriben usando la sintaxis 
+<a href="https://quarto.org/docs/authoring/markdown-basics.html" target="_blank" rel="noopener">markdown</a>, un lenguaje de marcado que nos permite traducir textos en <code>html</code> usando sencillos símbolos.</p>
+<p>Los reportes de Quarto suelen ser en formato PDF o HTML, siendo HTML el formato más recomendado, porque además de ser más compatible, permite ciertos elementos de interacción en tu reporte, como índices, barras de menú, pestañas, selectores, enlaces, y más.</p>
+<p>Para crear un documento Quarto, en el menú <em>File</em> elige <em>New File</em> y luego <em>Quarto Document</em>.</p>
+<img src="img/quarto_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<p>Se abrirá un documento de ejemplo que puedes usar como base para tus propios documentos. En este caso, agregamos un <em>chunk</em> con un gráfico sencillo, y presionamos el botón <strong>Render</strong> para generar el documento en <code>html</code>:</p>
+<img src="img/quarto_2.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<p>Como vemos, obtenemos tres archivos en nuestro proyecto: el archivo <code>.qmd</code> que contiene el código que genera el documento, el documento <em>renderizado</em> en formato <code>html</code>, y una carpeta que contiene recursos necesarios para visualizar el documento:
+<img src="img/quarto_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;"></p>
+<p>El problema es que esta carpeta, que contiene cosas como imágenes (de los gráficos), estilos y scripts, dificultan la portabilidad del documento y la posibilidad de compartirlo con otros.</p>
+<p>La buena noticia es que podemos generar un reporte Quarto <strong>autocontenido</strong>; es decir, que no se requieran archivos externos al documento <code>html</code>. Agregamos el siguiente código al <em>header</em> del documento Quarto, en reemplazo del <code>format: html</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ea9a97">format</span><span style="color:#908caa">:</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">html</span><span style="color:#908caa">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">embed-resources</span><span style="color:#908caa">:</span> <span style="color:#3e8fb0">true</span>
+</span></span></code></pre></div><p>Hay que tener cuidado de que se respeten los espacios en blanco para que funcione bien. Si eliminas el reporte en <code>html</code> y la carpta <code>_files</code> y le das <em>render</em> nuevamente al documento Quarto, verás que ahora se genera solamente el reporte en <code>html</code>, listo para poder ser compartido!</p>
+<hr>
+
+
+
+
+<h2 id="documento-quarto-en-github-pages">Documento Quarto en GitHub Pages
+  <a href="#documento-quarto-en-github-pages"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Si tenemos un reporte en formato <code>html</code>, el salto a generar una <strong>página web estática</strong> que puedas compartir con otras personas es muy sencillo de hacer. Para esto, podemos usar 
+<a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> para hacer que nuestro documento Quarto se transforme en una página de internet que otras personas pueden visitar tan sólo con entrar al enlace.</p>
+<p>Con un reporte publicado como página web en GitHub Pages, en vez de enviar un documento por correo o similares, podremos hacer que el documento esté disponible en una dirección web fija para que otras personas puedan verlo en línea.</p>
+<p><strong>Beneficios:</strong></p>
+<ul>
+<li>No necesitas enviar tu reporte como un archivo adjunto</li>
+<li>No es necesario preocuparse si tu reporte contiene cientos de gráficos o es muy pesado, ya que estará online</li>
+<li>Si necesitas modificar o actualizar algo de tu reporte, puedes hacer los cambios y actualizar tu reporte cuando quieras</li>
+<li>Las personas que tengan el enlace tendrán siempre la versión actualizada de tu reporte</li>
+<li>La publicación de tu reporte es automática: subes los cambios a GitHub y tu reporte se actualizará en unos minutos</li>
+<li>El alojamiento online de tu reporte es gratuito</li>
+</ul>
+<p>Para hacer esto, necesitamos configurar primero el documento Quarto, subir nuestro documento Quarto a un repositorio de GitHub, y configurar el repositorio para que genere una página web estática a partir del documento. Todas estas instrucciones están detalladas 
+<a href="https://quarto.org/docs/publishing/github-pages.html" target="_blank" rel="noopener">en esta guía oficial</a>, pero a continuación te resumo lo principal.</p>
+<p>La configuración del documento Quarto consiste revisar el nombre del archivo, y en agregar un archivo de configuración a nuestro proyecto que hará que se guarden los archivos necesarios en una sola carpeta.</p>
+<p>Esto es importante, porque así GitHub Pages sabrá que éste es el documento específico que queremos que sea nuestra página web.</p>
+<p>Revisemos el <em>nombre del documento Quarto</em>*. Para que nuestro documento Quarto se publique como una página GitHub Pages, debe llamarse <code>index.qmd</code> (para que se genere un documento <code>index.html</code>), o bien, puede llamarse como queramos, pero agregando el siguiente código al header <code>yaml</code> del documento Quarto:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ea9a97">format</span><span style="color:#908caa">:</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">html</span><span style="color:#908caa">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">output-file</span><span style="color:#908caa">:</span> <span style="color:#f6c177">&#34;index&#34;</span>
+</span></span></code></pre></div><p>De este modo, el documento <code>html</code> resultante de nuestro documento Quarto se llamará <code>index.html</code>.</p>
+<p>El siguiente paso de configuración implica agregar un <strong>archivo de configuración</strong> al proyecto. En el panel de archivos (<em>File</em>) de RStudio, presionamos el botón <em>New File</em> y creamos un archivo de texto en blanco, llamado <code>_quarto.yml</code>:</p>
+<img src="img/quarto_4.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<p>En <code>_quarto.yml</code>, pegamos el siguiente código de configuración:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ea9a97">project</span><span style="color:#908caa">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">output-dir</span><span style="color:#908caa">:</span> <span style="color:#f6c177">docs</span>
+</span></span></code></pre></div><p>Con esta configuración le estamos pidiendo Quarto que guarde los recursos que necesita dentro de una carpeta <code>docs</code>, que es lo que necesitamos para generar nuestra página web.</p>
+<p>Si le damos <em>render</em> al documento Quarto, se generará la carpeta <code>docs</code> con los recursos necesarios dentro.</p>
+<p>Otra configuración que debemos crear para GitHub Pages se hace mediante la creación de un archivo vacío. En el proyecto desde RStudio creamos un nuevo archivo que se llame <code>.nojekyll</code>, y que esté vacío. Este archivo es para decirle a GitHub Pages que no procese el sitio con Jekyll, porque del sitio nos encargamos nosotres.</p>
+<img src="img/nojekyll.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<p>Ahora tenemos que subir estos cambios al repositorio remoto GitHub. En la pestaña <em>Terminal</em> de RStudio (al lado de la consola) ejecutamos los tres siguientes comandos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git add .
+</span></span><span style="display:flex;"><span>git commit -m <span style="color:#f6c177">&#34;documento quarto en docs&#34;</span>
+</span></span><span style="display:flex;"><span>git push
+</span></span></code></pre></div><p>Con el primer comando le pedimos que todos los archivos nuevos sean considerados para el <em>commit</em>, con el segundo creamos el <em>commit</em> y le damos un mensaje, y con el tercero hacemos <em>push</em> para subir los cambios al repositorio remoto.</p>
+<p>Si vamos a GitHub debiesen estar nuestros nuevos archivos arriba. Ahora vamos a configurar GitHub para que genere una página web a partir del documento Quarto. Vamos a la seccion <em>Settings</em>:</p>
+<img src="img/quarto_5.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<p>Dentro de <em>Settings</em>, en el menú izquierdo vamos a <em>Pages</em>. Dentro de <em>Pages</em>, tenemos que seleccionar la rama del repositorio que queremos usar (usualmente <em>main</em> o <em>master</em>), y especificar que queremos apuntar a la carpeta <code>/docs</code>. Luego presionamos <em>Save</em>.</p>
+<img src="img/quarto_6.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<p>Se tomará unos segundos o minutos en generar la página web, pero luego aparecerá el siguiente mensaje que te permitirá acceder al sitio:</p>
+<img src="img/quarto_7.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<p>¡Listo! Ahora puedes compartir tu página con todo el mundo. El enlace será algo como <code>https://usuario.github.io/repositorio/</code></p>
+<p>Ojo que con este método sólo podremos publicar un documento Quarto por repositorio.</p>
+<p>Puedes ver las instrucciones completas para este proceso 
+<a href="https://quarto.org/docs/publishing/github-pages.html" target="_blank" rel="noopener">en esta guía oficial.</a></p>
+<hr>
+
+
+
+
+<h2 id="sitios-web-quarto-en-github-pages">Sitios web Quarto en GitHub Pages
+  <a href="#sitios-web-quarto-en-github-pages"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Otra opción que tenemos para construir sitios más completos, pero también basados en documentos Quarto, donde podamos combinar texto y código, es 
+<a href="https://quarto.org/docs/websites/" target="_blank" rel="noopener">crear un sitio web Quarto.</a></p>
+<p>Con esta modalidad de documentos Quarto podemos crear un sitio web con múltiples secciones, enlaces, página de presentación, y más, que te puede servir como un espacio en Internet para presentarte y que otras personas te encuentren, y puedan conocer tu trabajo y trayectoria.</p>
+
+
+
+
+<h3 id="crear-el-sitio-web-quarto">Crear el sitio web Quarto
+  <a href="#crear-el-sitio-web-quarto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Al crear un nuevo proyecto desde RStudio podemos elegir la opción <em>Quarto Website</em>:</p>
+<img src="img/website_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<p>Se abrirán una nueva sesión de R y veremos que nuestro proyecto ya viene con varios archivos dentro. Primero que nada, presionemos <em>Render</em> para previsualizar lo que tenemos como base:</p>
+<img src="img/website_2.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<p>El proyecto ya viene con un sitio web funcional, que podemos explorar. Viene con dos páginas por defecto, <code>index.qmd</code> y <code>about.qmd</code>. Ambas puedes modificarlas a tu gusto con el contenido que desees.</p>
+<p>Estas páginas aparecen en la barra de navegación (arriba del sitio web, o en el lado izquierdo si la pantalla/ventana es pequeña), para que tus usuarios puedan acceder a ellas.</p>
+
+
+
+
+<h3 id="agregar-páginas-a-tu-sitio">Agregar páginas a tu sitio
+  <a href="#agregar-p%c3%a1ginas-a-tu-sitio"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Para agregar nuevas páginas al sitio, simplemente creamos nuevos documentos Quarto normalmente (<em>New File</em>, <em>Quarto Document</em>). Para hacer que sean agregados a la barra de navegación, entra al archivo de configuración de tu sitio, <code>_quarto.yml</code>. En este archivo, verás la configuración general de tu sitio:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ea9a97">website</span><span style="color:#908caa">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">title</span><span style="color:#908caa">:</span> <span style="color:#f6c177">&#34;tutorial_sitio_web_quarto&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">navbar</span><span style="color:#908caa">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">left</span><span style="color:#908caa">:</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ea9a97">href</span><span style="color:#908caa">:</span> <span style="color:#f6c177">index.qmd</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">text</span><span style="color:#908caa">:</span> <span style="color:#f6c177">Home</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f6c177">about.qmd</span>
+</span></span></code></pre></div><p>Esa es la lista de páginas de tu sitio web. Al igual como sale hecho con la página <code>about.qmd</code>, si agregas ahí el nombre de un documento Quarto nuevo, será agregado a la barra de navegación.</p>
+<p>Estas páginas también pueden ser enlaces a cualquier otro sitio web. Por ejemplo, si quieres agregar un enlace a tu GitHub o a alguna red social, haz lo siguiente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ea9a97">website</span><span style="color:#908caa">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">title</span><span style="color:#908caa">:</span> <span style="color:#f6c177">&#34;tutorial_sitio_web_quarto&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">navbar</span><span style="color:#908caa">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">left</span><span style="color:#908caa">:</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ea9a97">href</span><span style="color:#908caa">:</span> <span style="color:#f6c177">index.qmd</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">text</span><span style="color:#908caa">:</span> <span style="color:#f6c177">Home</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#f6c177">about.qmd</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ea9a97">icon</span><span style="color:#908caa">:</span> <span style="color:#f6c177">github</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">href</span><span style="color:#908caa">:</span> <span style="color:#f6c177">https://github.com/bastianolea</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ea9a97">icon</span><span style="color:#908caa">:</span> <span style="color:#f6c177">linkedin</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">href</span><span style="color:#908caa">:</span> <span style="color:#f6c177">https://www.linkedin.com/in/bastianolea/</span>
+</span></span></code></pre></div><p>Los enlaces aparecerán con los logos de las redes sociales que definas! Sólo recuerda que los enlaces tienen que empezar con <code>https://</code>.</p>
+
+
+
+
+<h3 id="cambiar-temas">Cambiar temas
+  <a href="#cambiar-temas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Dentro del mismo documento <code>_quarto.yml</code> puedes cambiar el tema de tu sitio web, para darle un toque más personalizado. Puedes 
+<a href="https://quarto.org/docs/output-formats/html-themes.html#overview" target="_blank" rel="noopener">elegir entre 25 temas, que puedes conocer en esta guía.</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ea9a97">format</span><span style="color:#908caa">:</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">html</span><span style="color:#908caa">:</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">theme</span><span style="color:#908caa">:</span> <span style="color:#f6c177">lux</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">css</span><span style="color:#908caa">:</span> <span style="color:#f6c177">styles.css</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">toc</span><span style="color:#908caa">:</span> <span style="color:#3e8fb0">true</span>
+</span></span></code></pre></div><p>La página <code>about.qmd</code> 
+<a href="https://quarto.org/docs/websites/website-about.html#templates" target="_blank" rel="noopener">también puede personalizarse</a>.</p>
+
+
+
+
+<h3 id="publicar-el-sitio-en-github-pages">Publicar el sitio en GitHub Pages
+  <a href="#publicar-el-sitio-en-github-pages"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Para publicar el sitio en GitHub Pages tenemos que seguir las mismas 
+<a href="https://quarto.org/docs/publishing/github-pages.html" target="_blank" rel="noopener">instrucciones para publicar en GitHub Pages</a> que seguimos en el paso anterior:</p>
+<p>Primero, en el archivo de configuración <code>_quarto.yml</code> agregamos <code>output-dir: docs</code> debajo de <code>project:</code> y hacemos <em>Render</em> al documento <code>index.qmd</code>.</p>
+<p>También podemos ejecutar <code>quarto render</code> desde la pestaña de Terminal para reconstruir el sitio completo.</p>
+<p>En el proyecto desde RStudio, creamos un nuevo archivo vacío que se llame <code>.nojekyll</code>, para decirle a GitHub Pages que no procese el sitio con Jekyll. Si no haces esto, cuando entres a un post del blog te aparecerá un error 404! 😨</p>
+<p>Luego debemos hacer que nuestro proyecto sea un repositorio git (<code>usethis::use_git()</code>) y subir el repositorio a GitHub (<code>usethis::use_github()</code>), o si ya era un repositorio git y ya estaba en GitHub, hacer <code>git add.</code>, <code>git commit -m &quot;actualizacion&quot;</code>, y <code>git push</code> desde la pestaña Terminal.</p>
+<p>Una vez que subimos nuestros cambios al repositorio remoto, vamos al repositorio en GitHub, <em>Settings</em>, <em>Pages</em>, y configuramos el repositorio para que genere la página desde <code>/docs</code>:</p>
+<img src="img/quarto_6.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<p>Siguiendo estas instrucciones ya tendrás tu sitio web básico listo! ¡Y gratis! 🥳 Ahora sólo falta hacerlo crecer agregando páginas, enlaces, y toda la información que quieras.</p>
+<img src="img/website_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<hr>
+
+
+
+
+<h2 id="blog-quarto">Blog Quarto
+  <a href="#blog-quarto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Una tercera opción para presentarte al mundo por internet usando Quarto es 
+<a href="https://quarto.org/docs/websites/website-blog.html" target="_blank" rel="noopener">crear un blog Quarto.</a></p>
+<p>Un blog funciona casi igual que un sitio web Quarto, con la diferencia de que el contenido está centrado en múltiples documentos Quarto que poseen más metadatos que le permiten agruparlos en categorías, en base a etiquetas, y ordenarlos por fechas. De este modo, tendrá un sitio web de presentación pero que además podrás ir subiéndole contenido periódicamente para ir compartiendo las cosas que haces. Recordemos que todo lo que hemos aprendido sobre R ácido gracias a personas que han querido compartir lo que saben, así que anímate a compartir lo que aprendes y lo que has creado!</p>
+
+
+
+
+<h3 id="crear-un-blog">Crear un blog
+  <a href="#crear-un-blog"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Crear un nuevo proyecto desde RStudio, elegimos la opción <em>Quarto Blog</em>:</p>
+<img src="img/blog_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<p>De la misma forma que cuando creamos el sitio web Quarto, el proyecto aparecerá con los archivos necesarios para tener un blog mínimo. Si presionamos <em>Render</em> podremos provisionar nuestro blog:</p>
+<img src="img/blog_2.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+
+
+
+
+<h3 id="agregar-posts-al-blog">Agregar posts al blog
+  <a href="#agregar-posts-al-blog"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>El funcionamiento del blog es idéntico al del sitio web, con la distinción de que la idea es ir agregando publicaciones.</p>
+<p>Dentro de la carpeta <code>posts</code> veremos que se encuentran las dos publicaciones de ejemplo que vienen con el proyecto. Si abrimos una de ellas, veremos que en su encabezado posee los metadatos que caracterizan a cada publicación:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ea9a97">---</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">title</span><span style="color:#908caa">:</span> <span style="color:#f6c177">&#34;Mi primera publicación en mi blog Quarto&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">author</span><span style="color:#908caa">:</span> <span style="color:#f6c177">&#34;Bastián Olea&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">date</span><span style="color:#908caa">:</span> <span style="color:#f6c177">&#34;2025-03-28&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">categories</span><span style="color:#908caa">:</span> <span style="color:#908caa">[</span><span style="color:#f6c177">noticias, R, programación]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">image</span><span style="color:#908caa">:</span> <span style="color:#f6c177">&#34;image.jpg&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">---</span>
+</span></span></code></pre></div><p>Entonces, para crear una nueva publicación, creamos una carpeta dentro de <code>posts</code> (el nombre de la carpeta será la dirección de la publicación), y dentro de la carpeta creamos un documento Quarto llamado <code>index.qmd</code> con un encabezado que contenga título, autor, fecha, y etiquetas.</p>
+<p>Si presionamos <em>Render</em> para generar el post, veremos que en el panel <em>Viewer</em> de RStudio se previsualiza nuestro blog!</p>
+<img src="img/blog_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+
+
+
+
+<h3 id="subir-el-blog-quarto-a-github-pages">Subir el blog Quarto a GitHub Pages
+  <a href="#subir-el-blog-quarto-a-github-pages"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Nuevamente, las instrucciones para hacer que nuestro blog aparezca GitHub Pages son las mismas:</p>
+<ol>
+<li>En <code>_quarto.yml</code> agregamos <code>output-dir: docs</code> debajo de <code>project:</code>.</li>
+<li>En el proyecto, creamos un nuevo archivo que se llame <code>.nojekyll</code>, vacío (para decirle a GitHub Pages que no procese el sitio con Jekyll)</li>
+<li>En la pestaña de terminal ejecutamos <code>quarto render</code> para construir el sitio completo.</li>
+<li>Creamos un repositorio git (<code>usethis::use_git()</code>)</li>
+<li>Subimos el repositorio a GitHub (<code>usethis::use_github()</code>)</li>
+<li>En GitHub, entramos a <em>Settings</em>, luego a <em>Pages</em>, y configuramos el repositorio para que genere la página desde <code>/docs</code></li>
+</ol>
+<p>Siguiendo estas instrucciones ya tendrás tu sitio web básico listo! ¡Y gratis! 🥳 Ahora sólo falta hacerlo crecer agregando páginas, enlaces, y toda la información que quieras.</p>
+<img src="img/website_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<p>Instrucciones para subir a GitHub
+
+<a href="https://quarto.org/docs/publishing/github-pages.html#render-to-docs" target="_blank" rel="noopener">https://quarto.org/docs/publishing/github-pages.html#render-to-docs</a>
+_quarto.yml con output-dir: docs para github
+touch .nojekyll</p>
+<p>Instrucciones para Netlify
+
+<a href="https://beamilz.com/posts/2022-06-05-creating-a-blog-with-quarto/en/#deploy-with-netlify" target="_blank" rel="noopener">https://beamilz.com/posts/2022-06-05-creating-a-blog-with-quarto/en/#deploy-with-netlify</a>
+entrar
+new site, elegir repo, poner _site, y listo</p>
+<hr>
+
+
+
+
+<h2 id="blog-hugo">Blog Hugo
+  <a href="#blog-hugo"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Un blog Hugo es otra forma de crear un blog desde R, que también utiliza documentos Quarto, pero cuyo sistema de construcción es distinto. Al ser 
+<a href="https://gohugo.io" target="_blank" rel="noopener">creados con Hugo,</a> resultan sitios mucho más personalizables, pero por lo mismo también pueden ser más complejos de mantener.</p>
+<p>Como ejemplo, 
+<a href="https://bastianolea.rbind.io" target="_blank" rel="noopener">mi propio sitio web</a> lo creé con Hugo, y 
+<a href="https://bastianolea.rbind.io/blog/hugo_blog_nuevo/" target="_blank" rel="noopener">detallé parte del proceso en un post</a>.</p>
+<p>Las instrucciones de este proceso se escapan un poco al objetivo de esta guía, pero les dejo el siguiente enlace, que corresponde al 
+<a href="https://hugo-apero-docs.netlify.app/" target="_blank" rel="noopener">tutorial oficial para crear un blog Hugo con el tema Apéro,</a> que detalla paso por paso todas las acciones que hay que hacer para construir un blog con Hugo, personalizarlo, y publicarlo usando Netlify.</p>
+<img src="img/hugo_0.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<p>Cabe mencionar que el tutorial mismo está construido en un blog Hugo Apéro.</p>
+<p>En resumidas cuentas, las instrucciones son:</p>
+<ul>
+<li>Crear un nuevo proyecto de R</li>
+<li><code>install.packages(&quot;blogdown&quot;)</code></li>
+<li><code>blogdown::install_hugo()</code></li>
+<li>Y ejecutar lo siguiente para crear tu blog Hugo Apéro:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">blogdown</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">new_site</span><span style="color:#908caa">(</span><span style="color:#ea9a97">theme</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;hugo-apero/hugo-apero&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">format</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;toml&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">sample</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">empty_dirs</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Luego ejecutas <code>blogdown::serve_site()</code> para previsualizar el blog creado.</p>
+<img src="img/hugo_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<p>Para crear un post nuevo, tenemos una conveniente función que nos ayuda:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># crear un post</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">blogdown</span><span style="color:#908caa">::</span><span style="color:#ea9a97">new_post</span><span style="color:#908caa">(</span><span style="color:#ea9a97">title</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Nubes aleatorias en ggplot&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">subdir</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;blog/&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">file</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;blog/ggplot_nubes/index.md&#34;</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># define el &#34;slug&#34;, la dirección url del post</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">author</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Bastián Olea Herrera&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">tags</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;ggplot2&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;gráficos&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;curiosidades&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><hr>
+
+
+
+
+<h2 id="apps-shiny">Apps Shiny
+  <a href="#apps-shiny"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Las aplicaciones Shiny son formas mucho más avanzadas y flexibles para poder compartir desarrollos en R con el mundo. Se trata de aplicaciones web completamente personalizables y que además son interactivas; significa que detrás de la aplicación web existe un proceso de R que está haciendo los cálculos para entregar resultados en tiempo real a sus usuarios.</p>
+<p>Acá te dejo dos tutoriales para aprender a usar Shiny:</p>
+<ul>
+<li>
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_shiny_1/" target="_blank" rel="noopener">Tutorial Shiny</a></li>
+<li>
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_shinyapps/" target="_blank" rel="noopener">Tutorial publicar en Shinyapps</a></li>
+</ul>
+<p>Y 
+<a href="https://bastianolea.github.io/shiny_apps/" target="_blank" rel="noopener">comparto también un sitio mío</a> (creado con Quarto y alojado en GitHub Pages) para mostrar aplicaciones Shiny qeu he creado.</p>
+<hr>
+
+
+
+
+<h2 id="recursos">Recursos:
+  <a href="#recursos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<ul>
+<li>
+<a href="https://happygitwithr.com" target="_blank" rel="noopener">Tutorial Git con R</a></li>
+<li>
+<a href="https://quarto.org/docs/publishing/github-pages.html" target="_blank" rel="noopener">Tutorial GitHub Pages</a></li>
+<li>
+<a href="https://quarto.org/docs/websites/" target="_blank" rel="noopener">Tutorial sitios web Quarto</a></li>
+<li>
+<a href="https://quarto.org/docs/output-formats/html-themes.html#overview" target="_blank" rel="noopener">Temas Quarto</a></li>
+<li>
+<a href="https://beamilz.com/posts/2022-06-05-creating-a-blog-with-quarto/en/" target="_blank" rel="noopener">Tutorial Blog Quarto</a></li>
+<li>
+<a href="https://jadeyryan.com/blog/2024-02-19_beginner-quarto-netlify/" target="_blank" rel="noopener">Tutorial Quarto y Netlifly</a></li>
+</ul>
+<hr>
+<p><em>Este contenido fue impartido en el marco de una charla abierta organizada por el 
+<a href="https://www.meetup.com/es-ES/grupo-de-usuarios-de-r-de-madrid/events/306917174/?eventOrigin=group_upcoming_events" target="_blank" rel="noopener">Grupo de Usuarios de R de Madrid</a>. ¡Muchas gracias por invitarme!</em></p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">March 27, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">16 minute read, 3333 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categorías:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/categories/tutoriales">tutoriales</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/quarto">quarto</a>  <a href="http://localhost:4321/tags/shiny">shiny</a>  <a href="http://localhost:4321/tags/git">git</a>  <a href="http://localhost:4321/tags/github">GitHub</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/reportes_github_pages/quarto_github_pages/">Publica documentos Quarto como páginas web con GitHub Pages</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/quarto_reportes/">Presenta los resultados de tus análsiis en R con reportes Quarto</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/quarto_loop/">Crear contenido en serie usando loops en Quarto</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="http://localhost:4321/blog/quarto_loop/">&larr; Crear contenido en serie usando loops en Quarto</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/patchwork/">Unir y combinar gráficos {ggplot2} en R &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

@@ -1,10 +1,6 @@
 ---
 title: Crear contenido en serie usando loops en Quarto
 author: Bastián Olea Herrera
-format:
-  hugo-md:
-    output-file: "index"
-    output-ext: "md"
 date: '2025-03-27'
 draft: true
 slug: []

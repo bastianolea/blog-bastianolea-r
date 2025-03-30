@@ -8,6 +8,8 @@ tags:
   - procesamiento de datos
   - inteligencia artificial
   - análisis de texto
+execute:
+  freeze: true
 excerpt: >-
   Aprende a usar modelos extensos de lenguaje (LLM) para clasificar datos con un
   caso de uso real, donde se necesita asumir el género de las personas a partir
@@ -106,23 +108,23 @@ resultados_1 |> select(genero, nombres) |> slice_sample(n = 15)
 ```
 
     # A tibble: 15 × 2
-       genero    nombres                        
-       <chr>     <chr>                          
-     1 masculino Claudio Alejandro Muñoz Seguel 
-     2 masculino Leonardo Francisco Gomez Valdes
-     3 masculino Patricio Andres Labra Quiroz   
-     4 masculino Ricardo Vargas Valenzuela      
-     5 femenino  Claudia Andrea Valdes Vasquez  
-     6 masculino Fernando Alberto Ruhl Perez    
-     7 masculino Ariel Espinoza Cerpa           
-     8 masculino Jose Rafael Saavedra Ibacache  
-     9 masculino Gustavo Jara Bertin            
-    10 masculino Raul Alfonso Medina Fernández  
-    11 femenino  Gabriela Mercedes Vera Martínez
-    12 femenino  Sandra Ines Bastias Bilbao     
-    13 femenino  Marcela Andrea Cubillos Hevia  
-    14 masculino Juan Carlos Melendez Santelices
-    15 femenino  Carolina Corti Badia           
+       genero    nombres                            
+       <chr>     <chr>                              
+     1 masculino Andres Parra Sandoval              
+     2 femenino  Leontina Del Carmen Gutierrez Rivas
+     3 masculino Mario Ortiz Cabezas                
+     4 masculino Jose Esteban Alarcon Vargas        
+     5 femenino  Nancy Milena Alfaro Jurjevic       
+     6 masculino Osvaldo Herrera Valdes             
+     7 femenino  Ninoska Villegas Lamas             
+     8 masculino Juan Carlos Diaz Avendaño          
+     9 masculino German Pino Maturana               
+    10 masculino Gonzalo Rubio Fuenzalida           
+    11 femenino  Laura Correa Fuentes               
+    12 masculino Alex Fernando Castillo Blas        
+    13 masculino Jonathan Velasquez Ramirez         
+    14 masculino Jorge Espinoza Cuevas              
+    15 femenino  Elizabeth Marican Rivas            
 
 Para la segunda prueba, intentamos entregarle al modelo *solamente los nombres*, excluyendo segundos nombres y apellidos, bajo el supuesto de que el primer nombre es el mejor predictor del género, mientras que los apellidos no son un predictor del género.
 
@@ -136,13 +138,13 @@ candidatos |>
 ```
 
     # A tibble: 5 × 2
-      nombre  nombres                        
-      <chr>   <chr>                          
-    1 Daniela Daniela Natalie Molina Sandoval
-    2 Juan    Juan Ibarra Mella              
-    3 Daniel  Daniel Parra Calabrano         
-    4 Juan    Juan Manuel Riffo Ortiz        
-    5 Felipe  Felipe Andres Barril Riquelme  
+      nombre    nombres                          
+      <chr>     <chr>                            
+    1 Paola     Paola Romero Valdivia            
+    2 Alejandra Alejandra Villegas Huichaman     
+    3 Yuliana   Yuliana Ema Bustos Zapata        
+    4 Elizabeth Elizabeth Salinas Valle          
+    5 Freddy    Freddy Antonio Ramirez Villalobos
 
 Realizamos la segunda prueba de clasificación, esta vez solamente con el primer nombre:
 

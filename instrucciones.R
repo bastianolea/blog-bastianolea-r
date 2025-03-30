@@ -7,17 +7,17 @@ blogdown::stop_server()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Rellenar datos perdidos usando otro dataframe", 
+blogdown::new_post(title = "Eliminar símbolos, tildes y eñes de textos con R", 
                    file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos", "datos", "limpieza de datos")
+                   tags = c("consejos", "datos", "limpieza de datos", "texto")
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Crear contenido en serie usando loops en Quarto", 
-                   file = "blog/quarto_loop/quarto_loop.qmd",
+blogdown::new_post(title = "Presenta los resultados de tus análsiis en R con reportes Quarto", 
+                   file = "blog/quarto_reportes/quarto_reportes.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("quarto", "loops"),
+                   tags = c("quarto"),
                    categories = c() 
 )
 # format:
@@ -26,15 +26,14 @@ blogdown::new_post(title = "Crear contenido en serie usando loops en Quarto",
 #     output-ext: "md"
 
 ## borradores ----
-"content/blog/stringr_texto/stringr.qmd"
+"content/blog/stringr_texto/stringr.qmd" # sacar del computador de la pega
+"content/blog/quarto_loop/index.md"
+"content/blog/quarto_reportes/index.md"
 "content/blog/tutorial_scraping_selenium/selenium.qmd"
-"content/blog/quarto_loop/quarto_loop.qmd"
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
-"content/blog/reportes_github_pages/index.md"
-"content/blog/tutorial_digitalocean"
-    
-    
-    
+"content/blog/tutorial_digitalocean/index.md"
+
+
 ## archivos ----
 
 "content/blog/r_introduccion/recursos_r/index.md" # páginas

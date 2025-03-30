@@ -1,5 +1,5 @@
 ---
-title: 'Tutorial: crear páginas, sitios web y blogs con R y Quarto, y publicarlos online con GitHub Pages'
+title: 'Tutorial: crea páginas web y blogs con R+Quarto, y publícalos online con GitHub Pages'
 author: Bastián Olea Herrera
 date: '2025-03-27'
 draft: false
@@ -20,11 +20,12 @@ En este tutorial veremos cuatro formas relativamente sencillas, y ordenadas de m
 
 Los contenidos son:
 
-1. Crear repositorios en github
-2. Crear páginas estáticas con documentos Quarto y GitHub Pages
-3. Crear sitios web con Quarto
-4. Crear blogs con Quarto
-5. Crear blogs con Hugo Apéro
+1. [Crear repositorios en GitGub](#crear-un-repositorio-en-github-para-compartir-código-yo-datos)
+2. [Crear documentos Quarto](#documentos-quarto)
+3. [Crear páginas estáticas a partir de documentos Quarto con GitHub Pages](#documento-quarto-en-github-pages)
+4. [Crear sitios web con Quarto](#sitios-web-quarto-en-github-pages)
+5. [Crear blogs con Quarto](#blog-quarto)
+6. [Crear blogs con Hugo Apéro](#blog-hugo)
 
 {{< imagen afiche-featured.jpg >}}
 
@@ -33,6 +34,7 @@ Los contenidos son:
 
 Lo más probable es que todas las cosas que hemos aprendido sobre R y análisis de datos fueron porque alguna persona linda y bondadosa compartió gratuita y abiertamente lo que sabía o lo que creó, para que los demás se beneficien. Uno de los aspectos más positivos de la comunidad de usuarixs de R es su disposición a compartir y ayudar a los demás 💕 ¿Por qué no devolver la mano? 🥰
 
+Antes que nada, todas las opciones de este tutorial requieren que sepas usar GitHub, para poder subir tus proyectos de R a GitHub. Así que, para empezar, te resumiré las instrucciones necesarias para hacerlo. Encuentra [instrucciones más detalladas sobre usar git y GitHub con R en este tutorial.](https://bastianolea.rbind.io/blog/r_introduccion/tutorial_github/)
 
 ## Crear un repositorio en GitHub para compartir código y/o datos
 
@@ -44,7 +46,7 @@ En este primer paso del tutorial, aprenderemos a crear un repositorio local `git
 - [Tutorial más detallado sobre esto escrito por mi](https://bastianolea.rbind.io/blog/r_introduccion/tutorial_github/)
 - Libro tutorial para aprender a usar git con R: [https://happygitwithr.com](https://happygitwithr.com)
 
-Para poder crear tus reposos remotos, primero tenemos que darle permiso a tu sesión de R para conectarse a tu cuenta de GitHub. Encuentra [instrucciones más detalladas en este tutorial.](https://bastianolea.rbind.io/blog/r_introduccion/tutorial_github/)
+Para poder crear tus reposos remotos, primero tenemos que darle permiso a tu sesión de R para conectarse a tu cuenta de GitHub. 
 
 GitHub es una plataforma online donde las personas pueden subir sus repositorios de Git, permitiendo a otros acceder a su código, y contribuir a los repositorios, entre muchas otras funcionalidades.
 
@@ -116,7 +118,9 @@ Si necesitas más información acerca del uso de git y GitHub con R, revisa el t
 
 ## Documentos Quarto 
 
-Los [documentos Quarto](https://quarto.org/docs/get-started/hello/rstudio.html) combinan la escritura normal con el código. La escritura, como los párrafos, títulos, y subtítulos se escriben usando la sintaxis [markdown](https://quarto.org/docs/authoring/markdown-basics.html), un lenguaje de marcado que nos permite traducir textos en html usando sencillos símbolos.
+Los [documentos Quarto](https://quarto.org/docs/get-started/hello/rstudio.html) combinan la escritura normal con el código. La escritura, como los párrafos, títulos, y subtítulos se escriben usando la sintaxis [markdown](https://quarto.org/docs/authoring/markdown-basics.html), un lenguaje de marcado que nos permite traducir textos en `html` usando sencillos símbolos.
+
+Los reportes de Quarto suelen ser en formato PDF o HTML, siendo HTML el formato más recomendado, porque además de ser más compatible, permite ciertos elementos de interacción en tu reporte, como índices, barras de menú, pestañas, selectores, enlaces, y más.
 
 Para crear un documento Quarto, en el menú _File_ elige _New File_ y luego _Quarto Document_.
 
@@ -145,7 +149,18 @@ Hay que tener cuidado de que se respeten los espacios en blanco para que funcion
 
 ## Documento Quarto en GitHub Pages
 
-Quizás no queremos enviar el documento Quarto que creamos, sino que queremos hacer que esté disponible para que otras personas puedan verlo en línea. Para esto, podemos usar [GitHub Pages](https://pages.github.com) para hacer que nuestro documento Quarto se transforme en una página de internet que otras personas pueden visitar tan sólo con entrar al enlace.
+Si tenemos un reporte en formato `html`, el salto a generar una **página web estática** que puedas compartir con otras personas es muy sencillo de hacer. Para esto, podemos usar [GitHub Pages](https://pages.github.com) para hacer que nuestro documento Quarto se transforme en una página de internet que otras personas pueden visitar tan sólo con entrar al enlace.
+
+Con un reporte publicado como página web en GitHub Pages, en vez de enviar un documento por correo o similares, podremos hacer que el documento esté disponible en una dirección web fija para que otras personas puedan verlo en línea. 
+
+**Beneficios:**
+
+-   No necesitas enviar tu reporte como un archivo adjunto
+-   No es necesario preocuparse si tu reporte contiene cientos de gráficos o es muy pesado, ya que estará online
+-   Si necesitas modificar o actualizar algo de tu reporte, puedes hacer los cambios y actualizar tu reporte cuando quieras
+-   Las personas que tengan el enlace tendrán siempre la versión actualizada de tu reporte
+-   La publicación de tu reporte es automática: subes los cambios a GitHub y tu reporte se actualizará en unos minutos
+-   El alojamiento online de tu reporte es gratuito
 
 Para hacer esto, necesitamos configurar primero el documento Quarto, subir nuestro documento Quarto a un repositorio de GitHub, y configurar el repositorio para que genere una página web estática a partir del documento. Todas estas instrucciones están detalladas [en esta guía oficial](https://quarto.org/docs/publishing/github-pages.html), pero a continuación te resumo lo principal.
 
@@ -309,13 +324,15 @@ Siguiendo estas instrucciones ya tendrás tu sitio web básico listo! ¡Y gratis
 
 
 
-## Blog Quarto
+## Blogs Quarto en GitHub Pages
 Una tercera opción para presentarte al mundo por internet usando Quarto es [crear un blog Quarto.](https://quarto.org/docs/websites/website-blog.html)
 
-Un blog funciona casi igual que un sitio web Quarto, con la diferencia de que el contenido está centrado en múltiples documentos Quarto que poseen más metadatos que le permiten agruparlos en categorías, en base a etiquetas, y ordenarlos por fechas. De este modo, tendrá un sitio web de presentación pero que además podrás ir subiéndole contenido periódicamente para ir compartiendo las cosas que haces. Recordemos que todo lo que hemos aprendido sobre R ácido gracias a personas que han querido compartir lo que saben, así que anímate a compartir lo que aprendes y lo que has creado!
+Un blog funciona casi igual que un sitio web Quarto, con la diferencia de que el contenido está centrado en múltiples documentos Quarto que poseen más metadatos que le permiten agruparlos en categorías, en base a etiquetas, y ordenarlos por fechas. De este modo, tendrás un sitio web de presentación pero al que además podrás ir subiéndole contenido periódicamente para ir compartiendo las cosas que haces. 
+
+Recordemos que todo lo que hemos aprendido sobre R ha sido gracias a personas que han querido compartir lo que saben, así que anímate a compartir lo que aprendes y lo que has creado!
 
 
-### Crear un blog
+### Crear un blog Quarto
 
 Crear un nuevo proyecto desde RStudio, elegimos la opción _Quarto Blog_:
 
@@ -326,7 +343,7 @@ De la misma forma que cuando creamos el sitio web Quarto, el proyecto aparecerá
 {{< imagen "img/blog_2.png" >}}
 
 
-### Agregar posts al blog
+### Agregar posts al blog Quarto
 El funcionamiento del blog es idéntico al del sitio web, con la distinción de que la idea es ir agregando publicaciones.
 
 Dentro de la carpeta `posts` veremos que se encuentran las dos publicaciones de ejemplo que vienen con el proyecto. Si abrimos una de ellas, veremos que en su encabezado posee los metadatos que caracterizan a cada publicación:

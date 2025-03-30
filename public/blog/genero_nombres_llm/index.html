@@ -50,7 +50,7 @@ El paquete incluye varias funciones para usar un modelo LLM local en las columna
 clasificar el contenido de una variable resumir textos extraer sentimiento a partir del texto extraer información desde el texto confirmar si algo es verdadero o falso a partir de un texto y también a aplicar cualquier prompt a una variable. Recientemente lo usé para un caso real, donde tenía una columna de casi 2.000 nombres, y necesitaba asignarle un género a cada una de estas personas, solamente a partir de sus nombres y apellidos.">
   <meta itemprop="datePublished" content="2025-02-19T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-02-19T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1300">
+  <meta itemprop="wordCount" content="1294">
   <meta itemprop="keywords" content="Procesamiento de datos,Inteligencia artificial,Análisis de texto">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -343,23 +343,23 @@ cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpntMvSc/_mall_
 <p>El proceso tarda aproximadamente 7 minutos en clasificar los casi 1.576 nombres, un ritmo de 0.26 segundos por cada predicción.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">resultados_1</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">genero</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombres</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">15</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><pre><code># A tibble: 15 × 2
-   genero    nombres                        
-   &lt;chr&gt;     &lt;chr&gt;                          
- 1 masculino Claudio Alejandro Muñoz Seguel 
- 2 masculino Leonardo Francisco Gomez Valdes
- 3 masculino Patricio Andres Labra Quiroz   
- 4 masculino Ricardo Vargas Valenzuela      
- 5 femenino  Claudia Andrea Valdes Vasquez  
- 6 masculino Fernando Alberto Ruhl Perez    
- 7 masculino Ariel Espinoza Cerpa           
- 8 masculino Jose Rafael Saavedra Ibacache  
- 9 masculino Gustavo Jara Bertin            
-10 masculino Raul Alfonso Medina Fernández  
-11 femenino  Gabriela Mercedes Vera Martínez
-12 femenino  Sandra Ines Bastias Bilbao     
-13 femenino  Marcela Andrea Cubillos Hevia  
-14 masculino Juan Carlos Melendez Santelices
-15 femenino  Carolina Corti Badia           
+   genero    nombres                            
+   &lt;chr&gt;     &lt;chr&gt;                              
+ 1 masculino Andres Parra Sandoval              
+ 2 femenino  Leontina Del Carmen Gutierrez Rivas
+ 3 masculino Mario Ortiz Cabezas                
+ 4 masculino Jose Esteban Alarcon Vargas        
+ 5 femenino  Nancy Milena Alfaro Jurjevic       
+ 6 masculino Osvaldo Herrera Valdes             
+ 7 femenino  Ninoska Villegas Lamas             
+ 8 masculino Juan Carlos Diaz Avendaño          
+ 9 masculino German Pino Maturana               
+10 masculino Gonzalo Rubio Fuenzalida           
+11 femenino  Laura Correa Fuentes               
+12 masculino Alex Fernando Castillo Blas        
+13 masculino Jonathan Velasquez Ramirez         
+14 masculino Jorge Espinoza Cuevas              
+15 femenino  Elizabeth Marican Rivas            
 </code></pre>
 <p>Para la segunda prueba, intentamos entregarle al modelo <em>solamente los nombres</em>, excluyendo segundos nombres y apellidos, bajo el supuesto de que el primer nombre es el mejor predictor del género, mientras que los apellidos no son un predictor del género.</p>
 <p>Probamos el código con una 
@@ -369,13 +369,13 @@ cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpntMvSc/_mall_
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombres</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><pre><code># A tibble: 5 × 2
-  nombre  nombres                        
-  &lt;chr&gt;   &lt;chr&gt;                          
-1 Daniela Daniela Natalie Molina Sandoval
-2 Juan    Juan Ibarra Mella              
-3 Daniel  Daniel Parra Calabrano         
-4 Juan    Juan Manuel Riffo Ortiz        
-5 Felipe  Felipe Andres Barril Riquelme  
+  nombre    nombres                          
+  &lt;chr&gt;     &lt;chr&gt;                            
+1 Paola     Paola Romero Valdivia            
+2 Alejandra Alejandra Villegas Huichaman     
+3 Yuliana   Yuliana Ema Bustos Zapata        
+4 Elizabeth Elizabeth Salinas Valle          
+5 Freddy    Freddy Antonio Ramirez Villalobos
 </code></pre>
 <p>Realizamos la segunda prueba de clasificación, esta vez solamente con el primer nombre:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tic</span><span style="color:#908caa">()</span>
@@ -471,7 +471,7 @@ cache_folder:/var/folders/z8/61w5pwts4h5fsvhfqs1wpvk40000gn/T//RtmpntMvSc/_mall_
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">7 minute read, 1300 words</dd>
+    <dd class="fw5 ml0">7 minute read, 1294 words</dd>
   </dl>
   
   
