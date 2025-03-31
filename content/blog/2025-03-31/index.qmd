@@ -1,0 +1,83 @@
+---
+title: Limpiar textos con símbolos, tildes o eñes en R
+author: Bastián Olea Herrera
+date: '2025-03-31'
+slug: []
+categories: []
+tags:
+  - consejos
+  - texto
+  - limpieza de datos
+---
+
+Amamos el castellano, con sus tildes y eñes, y nos encanta que R no tenga problemas para usar estos símbolos en cualquier parte del lenguaje. Pero hay veces en las que necesitamos deshacernos de estos símbolos especiales, como tildes, eñes, e incluso mayúsculas. 
+
+Por ejemplo:
+* Si queremos dar nombres a carpetas (porque puede dar conflictos con otros sistemas operativos o para subir archivos a internet), 
+* Si queremos buscar coincidencias de texto con `strinr::str_detect()` y queremos aumentar probabilidades de coincidir al omitir variaciones de los caracteres, 
+* Si queremos hacer un `left_join()` entre dos bases de datos con formas distintas de guardar los datos (todos en mayúscula, todos sin tilde pero con eñes, etc.)
+
+Hay muchas formas distintas de hacerlo, dependiendo de lo que necesitemos:
+
+```{r}
+library(stringr)
+
+texto_esp <- "TÉxtó con PequÉññños cáráctérés roñosos"
+```
+
+### Eliminar caracteres específicos
+Podemos usar `str_remove_all()` para eliminar todos los caracteres problemáticos, separándolos con el operador _o_ (`|`):
+```{r}
+str_remove_all(texto_esp, "ñ|á|é|í|ó|ú")
+```
+
+Pero vemos que no funciona con catacteres en mayúscula. Entonces, podemos convertir todo el texto a minúsculas primero:
+
+```{r}
+str_remove_all(tolower(texto_esp), "ñ|á|é|í|ó|ú")
+```
+Sigue sin ser una buena opción, porque se pierden demasiados caracteres.
+
+### Reemplazar caracteres específicos
+Una mejor opción sería reemplazar los caracteres problemáticos por otros. Por ejemplo, reemplazar carácteres con tilde por sus versiones sin tilde:
+```{r}
+str_replace_all(texto_esp, c("ñ"="n", "á"="a", "é"="e", "í"="i", "ó"="o", "ú"="u"))
+```
+
+Nuevamente, una buena opción es convertir a minúsculas para poder coincidir los caracteres en mayúsculas:
+```{r}
+str_replace_all(str_to_lower(texto_esp), c("ñ"="n", "á"="a", "é"="e", "í"="i", "ó"="o", "ú"="u"))
+```
+
+O bien, cambiar todo a mayúsculas para coincidir con caracteres también en mayúscula. Es cosa de gustos.
+```{r}
+str_replace_all(str_to_upper(texto_esp), c("Ñ"="Ñ", "Á"="A", "É"="E", "Í"="I", "Ó"="O", "Ú"="U"))
+```
+
+Finalmente, una forma más extensa pero más flexible sería incluir reemplazos para caracteres tanto en mayúscula como minúscula:
+```{r}
+str_replace_all(texto_esp, c("Ñ"="ñ", "Á"="A", "É"="E", "Í"="I", "Ó"="O", "Ú"="U",
+                             "ñ"="ñ", "á"="a", "é"="e", "í"="i", "ó"="o", "ú"="u"))
+```
+
+La gracia de este método es que tienes todo el control sobre los reemplazos. En este caso, reemplazamos caracteres con tilde por versiones sin tilde, pero mantenemos las eñes.
+
+### Transliterar
+El paquete para procesamiento de texto `{stringi}` (no confundir con `{stringr}`) cuenta con la función `stri_trans_general()`, que procesa texto para convertirlo o transliterarlo a otros sistemas de escritura. Para lo que necesitamos, podemos pedirle que translitere nuestro texto a ASCII (estándar de texto plano, _American Standard Code for Information Interchange_):
+
+```{r}
+stringi::stri_trans_general(texto_esp, "Latin-ASCII")  # transliterar, pero remueve eñes
+```
+Esta forma es más breve, pero 
+
+```{r}
+iconv(texto_esp, to = "ASCII//translit") #elimina tildes pero los reaplica como símbolos individuales
+```
+
+
+texto_num <- "hoy!!! tenemos **empanadas**..."
+
+```{r}
+textclean::strip(texto_num) # elimina símbolos pero no tildes ni eñes
+```
+
