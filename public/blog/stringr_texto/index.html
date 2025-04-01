@@ -45,8 +45,7 @@
     
   
   <meta itemprop="name" content="Recodificación de datos categóricos con {stringr}">
-  <meta itemprop="description" content="library(dplyr) library(readxl) library(stringr) # para trabajar con textos
-cargar datos
+  <meta itemprop="description" content="library(dplyr) library(readxl) library(stringr) # para trabajar con textos cargar datos
 datos &lt;- read_excel(&#34;MATERIAS_R.xlsx&#34;) |&gt; rename(materia = 1, submateria = 2) conteo exploratorio de la columna
 datos |&gt; count(materia, sort = TRUE) crear una columna
 datos |&gt; count(materia, sort = TRUE) |&gt; mutate(id = 1) detectar si en un texto está presente otro texto
@@ -54,7 +53,7 @@ str_detect(&#34;un texto acá muy feo&#34;, &#34;feo&#34;) # sí (TRUE) str_dete
 datos |&gt; count(materia, sort = TRUE) |&gt; mutate(ley_19886 = str_detect(materia, &#34;19.886&#34;)) lo mismo, pero con ifelse, para explicitar la condición verdadera y la falsa">
   <meta itemprop="datePublished" content="2024-12-23T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-12-23T00:00:00+00:00">
-  <meta itemprop="wordCount" content="885">
+  <meta itemprop="wordCount" content="966">
   <meta itemprop="keywords" content="Limpieza de datos,Dplyr,Stringr,Procesamiento de datos,Datos">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -279,10 +278,10 @@ datos |&gt; count(materia, sort = TRUE) |&gt; mutate(ley_19886 = str_detect(mate
 
       </header>
       <section class="post-body pt5 pb4">
-        <p>library(dplyr)
-library(readxl)
-library(stringr) # para trabajar con textos</p>
-<p>cargar datos</p>
+        <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">readxl</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># para trabajar con textos</span>
+</span></span></code></pre></div><p>cargar datos</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_excel</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;MATERIAS_R.xlsx&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rename</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> 
 </span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">submateria</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
@@ -456,10 +455,31 @@ así coincidimos por un criterio pero excluimos por otro, simultáneamente</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">glue_collapse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animales</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sep</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;, &#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">last</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34; y &#34;</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><p>Agregar artículos a etxtos</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>  <span style="color:#ea9a97">nombre_region_de</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">nombre_region</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">case_match</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Metropolitana de Santiago&#34;</span> <span style="color:#908caa">~</span> <span style="color:#ea9a97">nombre_region</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Biobío&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Maule&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Libertador General Bernardo O&#39;Higgins&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;del&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombre_region</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">.default</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;de&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombre_region</span><span style="color:#908caa">))</span>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">nombre_region_de</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">nombre_region</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">case_match</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Metropolitana de Santiago&#34;</span> <span style="color:#908caa">~</span> <span style="color:#ea9a97">nombre_region</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Biobío&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Maule&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Libertador General Bernardo O&#39;Higgins&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;del&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombre_region</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">.default</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;de&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombre_region</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><p>Limpiar texto</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">texto_esp</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;Éste texto tendrÁ una Pequeññña Ración de caracteres roñosos&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">str_replace_all</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;ñ&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;n&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;á&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;a&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;é&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;e&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;í&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;i&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ó&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;o&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ú&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;u&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">str_replace_all</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;ñ&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;n&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;á&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;a&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;é&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;e&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;í&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;i&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ó&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;o&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ú&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;u&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">str_replace_all</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_upper</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Ñ&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;Ñ&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Á&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;A&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;É&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;E&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Í&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;I&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Ó&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;O&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Ú&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;U&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">str_replace_all</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Ñ&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;ñ&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Á&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;A&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;É&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;E&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Í&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;I&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Ó&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;O&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Ú&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;U&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                             <span style="color:#f6c177">&#34;ñ&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;n&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;á&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;a&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;é&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;e&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;í&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;i&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ó&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;o&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ú&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;u&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">stringi</span><span style="color:#908caa">::</span><span style="color:#ea9a97">stri_trans_general</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Latin-ASCII&#34;</span><span style="color:#908caa">)</span>  <span style="color:#6e6a86"># transliterar, pero remueve eñes</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">iconv</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">to</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;ASCII//translit&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86">#elimina tildes pero los reaplica como símbolos individuales</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">texto_num</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;hoy!!! tenemos **empanadas**...&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">textclean</span><span style="color:#908caa">::</span><span style="color:#ea9a97">strip</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_num</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># elimina símbolos pero no tildes ni eñes</span>
 </span></span></code></pre></div>
         
         <details closed class="f6 fw7 input-reset">
@@ -469,7 +489,7 @@ así coincidimos por un criterio pero excluimos por otro, simultáneamente</p>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">5 minute read, 885 words</dd>
+    <dd class="fw5 ml0">5 minute read, 966 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -487,11 +507,11 @@ así coincidimos por un criterio pero excluimos por otro, simultáneamente</p>
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
+    <dd class="fw5 ml0"><a href="/blog/2025-03-31/">Limpiar textos con símbolos, tildes o eñes en R</a></dd>
+    
     <dd class="fw5 ml0"><a href="/blog/genero_nombres_llm/">Predecir género a partir de nombres usando un modelo de lenguaje en R</a></dd>
     
     <dd class="fw5 ml0"><a href="/blog/r_introduccion/dplyr_intermedio/">Manejo y transformación de datos con {dplyr} y {tidyr}</a></dd>
-    
-    <dd class="fw5 ml0"><a href="/blog/r_introduccion/dplyr_intro/">Introducción al manejo de datos con {dplyr}</a></dd>
     
   </dl>
 </details>
