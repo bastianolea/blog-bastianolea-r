@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Limpiar textos con símbolos, tildes o eñes en R | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Amamos el castellano, con sus tildes y eñes, y nos encanta que R no tenga problemas para usar estos símbolos en cualquier parte del lenguaje. Pero hay veces en las que necesitamos deshacernos de estos símbolos especiales, como tildes, eñes, e incluso mayúsculas. En este post te muestro varias opciones de limpieza de texto con R.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Limpiar textos con símbolos, tildes o eñes en R | Blog">
+<meta property="og:description" content="Amamos el castellano, con sus tildes y eñes, y nos encanta que R no tenga problemas para usar estos símbolos en cualquier parte del lenguaje. Pero hay veces en las que necesitamos deshacernos de estos símbolos especiales, como tildes, eñes, e incluso mayúsculas. En este post te muestro varias opciones de limpieza de texto con R." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/2025-03-31/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.jpg" >
+    
+    
+  
+  <meta itemprop="name" content="Limpiar textos con símbolos, tildes o eñes en R">
+  <meta itemprop="description" content="Amamos el castellano, con sus tildes y eñes, y nos encanta que R no tenga problemas para usar estos símbolos en cualquier parte del lenguaje. Pero hay veces en las que necesitamos deshacernos de estos símbolos especiales, como tildes, eñes, e incluso mayúsculas.
+Por ejemplo: * Si queremos dar nombres a carpetas (porque puede dar conflictos con otros sistemas operativos o para subir archivos a internet), * Si queremos buscar coincidencias de texto con strinr::str_detect() y queremos aumentar probabilidades de coincidir al omitir variaciones de los caracteres, * Si queremos hacer un left_join() entre dos bases de datos con formas distintas de guardar los datos (todos en mayúscula, todos sin tilde pero con eñes, etc.)">
+  <meta itemprop="datePublished" content="2025-03-31T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-03-31T00:00:00+00:00">
+  <meta itemprop="wordCount" content="596">
+  <meta itemprop="keywords" content="Consejos,Texto,Limpieza de datos">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Limpiar textos con símbolos, tildes o eñes en R</h1>
+        
+        
+        <p class="f7 db mv0 ttu">31/3/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/consejos">consejos</a>  <a href="http://localhost:4321/tags/texto">texto</a>  <a href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a> </dd></em>
+  </dl>
+
+
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>Amamos el castellano, con sus tildes y eñes, y nos encanta que R no tenga problemas para usar estos símbolos en cualquier parte del lenguaje. Pero hay veces en las que necesitamos deshacernos de estos símbolos especiales, como tildes, eñes, e incluso mayúsculas.</p>
+<p>Por ejemplo:
+* Si queremos dar nombres a carpetas (porque puede dar conflictos con otros sistemas operativos o para subir archivos a internet),
+* Si queremos buscar coincidencias de texto con <code>strinr::str_detect()</code> y queremos aumentar probabilidades de coincidir al omitir variaciones de los caracteres,
+* Si queremos hacer un <code>left_join()</code> entre dos bases de datos con formas distintas de guardar los datos (todos en mayúscula, todos sin tilde pero con eñes, etc.)</p>
+<p>Hay muchas formas distintas de hacerlo, dependiendo de lo que necesitemos. El paquete <code>{stringr}</code> se enfoca en el procesamiento de texto y tiene varias funciones que nos pueden ayudar.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">texto_esp</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;TÉxtó con PequÉññños cáráctérés roñosos&#34;</span>
+</span></span></code></pre></div>
+
+
+
+<h2 id="eliminar-caracteres-específicos">Eliminar caracteres específicos
+  <a href="#eliminar-caracteres-espec%c3%adficos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Podemos usar <code>str_remove_all()</code> para eliminar todos los caracteres problemáticos, separándolos con el operador <em>o</em> (<code>|</code>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">str_remove_all</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ñ|á|é|í|ó|ú&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;TÉxt con PequÉos crctrs roosos&quot;
+</code></pre>
+<p>Pero vemos que no funciona con caracteres en mayúscula. Así que convertimos todo el texto a minúsculas primero:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">str_remove_all</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tolower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;ñ|á|é|í|ó|ú&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;txt con pequos crctrs roosos&quot;
+</code></pre>
+<p>Sigue sin ser una buena opción, porque se pierden demasiados caracteres.</p>
+
+
+
+
+<h2 id="reemplazar-caracteres-específicos">Reemplazar caracteres específicos
+  <a href="#reemplazar-caracteres-espec%c3%adficos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Una mejor opción sería reemplazar los caracteres problemáticos por otros. Por ejemplo, reemplazar letras con tilde por sus versiones sin tilde. Para eso podemos usar <code>str_replace_all()</code>, que permite recibir un vector con las letras que queremos encontrar y un signo <code>=</code> con la letra que reemplazamos en casa caso:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">str_replace_all</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tolower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;ñ&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;n&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;á&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;a&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;é&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;e&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;í&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;i&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ó&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;o&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ú&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;u&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code>[1] &quot;texto con pequennnos caracteres ronosos&quot;
+</code></pre>
+<p>Una forma más larga pero más flexible de hacer esta limpieza sería incluir reemplazos para caracteres tanto en mayúscula como minúscula, así mantenemos la capitalización de los caracteres pero reemplazamos las versiones problemáticas por las versiones seguras:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">str_replace_all</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Ñ&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;ñ&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Á&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;A&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;É&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;E&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Í&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;I&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Ó&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;O&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Ú&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;U&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                             <span style="color:#f6c177">&#34;ñ&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;ñ&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;á&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;a&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;é&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;e&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;í&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;i&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ó&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;o&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ú&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;u&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code>[1] &quot;TExto con PequEññños caracteres roñosos&quot;
+</code></pre>
+<p>La gracia de este método es que tú tienes todo el control sobre los reemplazos. En este caso, reemplazamos caracteres con tilde por versiones sin tilde, pero mantenemos las eñes.</p>
+
+
+
+
+<h2 id="transliterar">Transliterar
+  <a href="#transliterar"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>El paquete para procesamiento de texto <code>{stringi}</code> (no confundir con <code>{stringr}</code>) cuenta con la función <code>stri_trans_general()</code>, que procesa texto para convertirlo o transliterarlo a otros sistemas de escritura. Para lo que necesitamos, podemos pedirle que translitere nuestro texto a ASCII (estándar de texto plano, <em>American Standard Code for Information Interchange</em>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">stringi</span><span style="color:#908caa">::</span><span style="color:#ea9a97">stri_trans_general</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Latin-ASCII&#34;</span><span style="color:#908caa">)</span>  <span style="color:#6e6a86"># transliterar, pero remueve eñes</span>
+</span></span></code></pre></div><pre><code>[1] &quot;TExto con PequEnnnos caracteres ronosos&quot;
+</code></pre>
+<p>Esta forma es más breve, pero menos flexible. Vemos, por ejemplo, que reemplaza las eñes, sin darnos mucha flexibilidad.</p>
+<p>Otra opción podría ser la siguiente, que transforma los símbolos especiales por versiones de varios caracteres:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iconv</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">to</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;ASCII//translit&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># elimina tildes pero los reaplica como símbolos individuales</span>
+</span></span></code></pre></div><pre><code>[1] &quot;T'Ext'o con Pequ'E~n~n~nos c'ar'act'er'es ro~nosos&quot;
+</code></pre>
+<p>El resultado es extraño, pero puede ser que en ciertos casos nos sirva.</p>
+
+
+
+
+<h2 id="eliminar-símbolos">Eliminar símbolos
+  <a href="#eliminar-s%c3%admbolos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>El paquete <code>{textclean}</code> contiene varias funciones avanzadas para limpieza de texto. Una de ellas es <code>strip()</code>, que elimina todos los símbolos, pero preservando tildes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">texto_num</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;Hoy!!! Súper ricas **empanadas** a $1.000 pesos... Ñam ñam&#34;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">textclean</span><span style="color:#908caa">::</span><span style="color:#ea9a97">strip</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_num</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;hoy súper ricas empanadas a pesos ñam ñam&quot;
+</code></pre>
+<p>El resultado es solamente texto, con tildes y con eñes, pero sin símbolos ni números. Esta función sí posee ciertas opciones para ajustar la limpieza; por ejemplo, no remover números, y dejar sólo símbolos específicos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">textclean</span><span style="color:#908caa">::</span><span style="color:#ea9a97">strip</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_num</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">digit.remove</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">char.keep</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;!&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code>[1] &quot;hoy!!! súper ricas empanadas a 1000 pesos ñam ñam&quot;
+</code></pre>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">March 31, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">3 minute read, 596 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/consejos">consejos</a>  <a href="http://localhost:4321/tags/texto">texto</a>  <a href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/2025-03-30/">Redactar una lista de palabras separadas por comas en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/r_introduccion/dplyr_intro/">Introducción al manejo de datos con {dplyr}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/2025-02-14/">Rellenar datos perdidos usando datos de otra tabla</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/2025-03-30/">Redactar una lista de palabras separadas por comas en R &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

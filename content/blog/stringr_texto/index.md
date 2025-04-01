@@ -6,7 +6,7 @@ draft: true
 format:
   hugo-md:
     output-file: index
-    output-ext: md
+output-ext: md
 slug: []
 categories:
   - tutoriales
@@ -21,9 +21,11 @@ execute:
 ---
 
 
+``` r
 library(dplyr)
 library(readxl)
-library(stringr) \# para trabajar con textos
+library(stringr) # para trabajar con textos
+```
 
 cargar datos
 
@@ -281,8 +283,33 @@ glue_collapse(animales, sep = ", ", last = " y ")
 Agregar artículos a etxtos
 
 ``` r
-  nombre_region_de <- nombre_region |>
-    case_match("Metropolitana de Santiago" ~ nombre_region,
-               c("Biobío", "Maule", "Libertador General Bernardo O'Higgins") ~ paste("del", nombre_region),
-               .default = paste("de", nombre_region))
+nombre_region_de <- nombre_region |>
+  case_match("Metropolitana de Santiago" ~ nombre_region,
+             c("Biobío", "Maule", "Libertador General Bernardo O'Higgins") ~ paste("del", nombre_region),
+             .default = paste("de", nombre_region))
+```
+
+Limpiar texto
+
+``` r
+library(stringr)
+
+texto_esp <- "Éste texto tendrÁ una Pequeññña Ración de caracteres roñosos"
+
+str_replace_all(texto_esp, c("ñ"="n", "á"="a", "é"="e", "í"="i", "ó"="o", "ú"="u"))
+
+str_replace_all(str_to_lower(texto_esp), c("ñ"="n", "á"="a", "é"="e", "í"="i", "ó"="o", "ú"="u"))
+
+str_replace_all(str_to_upper(texto_esp), c("Ñ"="Ñ", "Á"="A", "É"="E", "Í"="I", "Ó"="O", "Ú"="U"))
+
+str_replace_all(texto_esp, c("Ñ"="ñ", "Á"="A", "É"="E", "Í"="I", "Ó"="O", "Ú"="U",
+                             "ñ"="n", "á"="a", "é"="e", "í"="i", "ó"="o", "ú"="u"))
+
+stringi::stri_trans_general(texto_esp, "Latin-ASCII")  # transliterar, pero remueve eñes
+
+iconv(texto_esp, to = "ASCII//translit") #elimina tildes pero los reaplica como símbolos individuales
+
+texto_num <- "hoy!!! tenemos **empanadas**..."
+
+textclean::strip(texto_num) # elimina símbolos pero no tildes ni eñes
 ```
