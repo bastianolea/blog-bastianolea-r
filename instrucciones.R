@@ -28,7 +28,7 @@ blogdown::new_post(title = "Presenta los resultados de tus análsiis en R con re
 ## borradores ----
 "content/blog/stringr_texto/stringr.qmd" # sacar del computador de la pega
 "content/blog/quarto_loop/index.md"
-"content/blog/quarto_reportes/index.md"
+"content/blog/quarto_reportes/index.qmd"
 "content/blog/tutorial_scraping_selenium/selenium.qmd"
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
 "content/blog/tutorial_digitalocean/index.md"
