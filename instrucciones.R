@@ -14,8 +14,8 @@ blogdown::new_post(title = "Redactar una lista de palabras separadas por comas e
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Presenta los resultados de tus análsiis en R con reportes Quarto", 
-                   file = "blog/quarto_reportes/quarto_reportes.qmd",
+blogdown::new_post(title = "Automatiza la generación de reportes creando documentos parametrizados con Quarto y R", 
+                   file = "blog/quarto_params/index.md",
                    author = "Bastián Olea Herrera",
                    tags = c("quarto"),
                    categories = c() 
@@ -28,7 +28,6 @@ blogdown::new_post(title = "Presenta los resultados de tus análsiis en R con re
 ## borradores ----
 "content/blog/stringr_texto/stringr.qmd" # sacar del computador de la pega
 "content/blog/quarto_loop/index.md"
-"content/blog/quarto_reportes/index.qmd"
 "content/blog/tutorial_scraping_selenium/selenium.qmd"
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
 "content/blog/tutorial_digitalocean/index.md"
