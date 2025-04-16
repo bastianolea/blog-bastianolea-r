@@ -18,6 +18,8 @@ En este tutorial veremos cuatro formas relativamente sencillas, y ordenadas de m
 
 **En una tarde podrías tener tu propio sitio web para presentarte, para subir las cosas que has aprendido, o para destacar tu trabajo!**
 
+{{< aviso "Si quieres aprender a crear [documentos Quarto](/tags/quarto) desde cero, [revisa este tutorial!](/blog/quarto_reportes)" >}}
+
 Los contenidos son:
 
 1. [Crear repositorios en GitGub](#crear-un-repositorio-en-github-para-compartir-código-yo-datos)
@@ -119,6 +121,8 @@ Si necesitas más información acerca del uso de git y GitHub con R, revisa el t
 ## Documentos Quarto 
 
 Los [documentos Quarto](https://quarto.org/docs/get-started/hello/rstudio.html) combinan la escritura normal con el código. La escritura, como los párrafos, títulos, y subtítulos se escriben usando la sintaxis [markdown](https://quarto.org/docs/authoring/markdown-basics.html), un lenguaje de marcado que nos permite traducir textos en `html` usando sencillos símbolos.
+
+{{< aviso "Si necesitas una guía más detallada para aprender a crear [documentos Quarto](/tags/quarto) desde cero, incluyendo la inclusión de código en reportes, personalización y más, [revisa este tutorial!](/blog/quarto_reportes)" >}}
 
 Los reportes de Quarto suelen ser en formato PDF o HTML, siendo HTML el formato más recomendado, porque además de ser más compatible, permite ciertos elementos de interacción en tu reporte, como índices, barras de menú, pestañas, selectores, enlaces, y más.
 
@@ -465,3 +469,5 @@ Y [comparto también un sitio mío](https://bastianolea.github.io/shiny_apps/) (
 ----
 
 _Este contenido fue impartido en el marco de una charla abierta organizada por el [Grupo de Usuarios de R de Madrid](https://www.meetup.com/es-ES/grupo-de-usuarios-de-r-de-madrid/events/306917174/?eventOrigin=group_upcoming_events). ¡Muchas gracias por invitarme!_
+
+{{< cafecito >}}
