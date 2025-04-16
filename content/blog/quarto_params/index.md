@@ -6,13 +6,15 @@ date: '2025-04-15'
 categories:
   - Tutoriales
 tags:
-  - Quarto
+  - quarto
   - loops
 ---
 
-En este tutorial aprenderemos a crear reportes parametrizados con Quarto. Por parámetro nos referimos a un valor que podremos cambiar para alterar el resultado obtenido por un mismo reporte. Entonces, los [reportes parametrizados](https://posit.co/blog/parameterized-quarto/) nos permiten cambiar aspectos del output de un documento Quarto al cambiar una variable definida en el encabezado del mismo. 
+En este tutorial aprenderemos a crear [reportes parametrizados](https://posit.co/blog/parameterized-quarto/) con Quarto. Un reporte parametrizado es un reporte diseñado para que el contenido, incluyendo textos, gráficos y más, cambien al modificar una variable en su encabezado. En este sentido, por _parámetro_ nos referimos a un valor que podremos cambiar para alterar el resultado obtenido por un mismo reporte.
 
-De esta manera, podemos generar múltiples versiones de un mismo reporte simplemente cambiando el parámetro, por ejemplo, para diseñar un reporte con datos para un país, en base a un conjuntos de datos de múltiples países, y luego obtener múltiples versiones del mismo reporte pero para distintos países. O generar un reporte con datos de un año específico, y luego generar versiones del mismo reporte para distintos años.
+De esta manera, podemos **generar múltiples versiones de un mismo reporte simplemente cambiando el parámetro**, por ejemplo, para diseñar un reporte con datos para un país, en base a un conjuntos de datos de múltiples países, y luego obtener múltiples versiones del mismo reporte pero para distintos países. O generar un reporte con datos de un año específico, y luego generar versiones del mismo reporte para distintos años.
+
+{{< aviso "Si quieres aprender a crear [documentos Quarto](/tags/quarto) desde cero, [revisa este tutorial!](/blog/quarto_reportes)" >}}
 
 Si tengo un reporte donde los resultados dependen de un filtro en mis datos, definimos el valor de la variable a filtrar en el encabezado bajo la etiqueta `params`:
 
