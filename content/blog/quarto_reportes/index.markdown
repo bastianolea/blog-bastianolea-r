@@ -14,9 +14,7 @@ excerpt: "Quarto es una herramienta que te permite generar documentos y reportes
 
 [Quarto](https://quarto.org) es una herramienta de publicación de documentos que te permite generar reportes de manera muy sencilla, utilizando bloques de código de R. En estos reportes puedes incluir tablas, gráficos, y mucho más, de forma atractiva y simple, para poder compartir tus análisis y resultados con otras personas.
 
-{{< aviso “Hola” >}}
-
-Puedes leer este mismo tutorial directamente desde un reporte Quarto [**en este enlace**](/reportes/quarto_clase_1.html), y también puedes ver un documento de ejemplo hecho siguiendo los pasos de este tutorial [en este otro enlace](/reportes/quarto_clase_1b.html).
+{{< aviso “Puedes leer este mismo tutorial directamente desde un reporte Quarto [**en este enlace**](/reportes/quarto_clase_1.html), y también puedes ver un documento de ejemplo hecho siguiendo los pasos de este tutorial [en este otro enlace](/reportes/quarto_clase_1b.html).” >}}
 
 {{< imagen “quarto_themes.png” >}}
 
@@ -28,7 +26,7 @@ En RStudio, crear un nuevo archivo desde *New File*, y elegir *Quarto Document*.
 
 Cuando hagamos los cambios que deseemos, presionamos el botón *Render* para generar el reporte a partir del código. El reporte se abre en el visor *Viewer*, y quedará guardado como un archivo `.html` para abrirlo con un navegador web.
 
-{{< imagen “quarto_0.png” >}}
+{{< imagen “quarto_1.png” >}}
 
 El formato `.html` es el mismo formato que se usa para crear la mayoría de los sitios web, porque un reporte Quarto es básicamente una página web local. Es una forma más moderna, accesible, flexible e interactiva de crear documentos, a diferencia de formatos enfocados en la impresión como `.pdf` o formatos propietarios y editables como `.docx`.
 

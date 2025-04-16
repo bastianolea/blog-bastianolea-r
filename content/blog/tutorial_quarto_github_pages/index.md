@@ -460,6 +460,7 @@ Y [comparto también un sitio mío](https://bastianolea.github.io/shiny_apps/) (
 
 - [Tutorial Git con R](https://happygitwithr.com)
 - [Tutorial GitHub Pages](https://quarto.org/docs/publishing/github-pages.html)
+- [Tutorial Quarto](/blog/quarto_reportes/)
 - [Tutorial sitios web Quarto](https://quarto.org/docs/websites/)
 - [Temas Quarto](https://quarto.org/docs/output-formats/html-themes.html#overview)
 - [Tutorial Blog Quarto](https://beamilz.com/posts/2022-06-05-creating-a-blog-with-quarto/en/)
