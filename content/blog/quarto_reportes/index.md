@@ -34,7 +34,7 @@ En RStudio, crear un nuevo archivo desde *New File*, y elegir *Quarto Document*.
 
 Cuando hagamos los cambios que deseemos, presionamos el botón *Render* para generar el reporte a partir del código. El reporte se abre en el visor *Viewer*, y quedará guardado como un archivo `.html` para abrirlo con un navegador web.
 
-{{< imagen "quarto_0.png" >}}
+{{< imagen "quarto_1.png" >}}
 
 El formato `.html` es el mismo formato que se usa para crear la mayoría de los sitios web, porque un reporte Quarto es básicamente una página web local. Es una forma más moderna, accesible, flexible e interactiva de crear documentos, a diferencia de formatos enfocados en la impresión como `.pdf` o formatos propietarios y editables como `.docx`.
 
