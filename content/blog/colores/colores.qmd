@@ -153,13 +153,25 @@ swatch(c(color, hue(color, delta(50))))
 ```
 Al usar la función `delta()`, lo que hacemos es pedirle que cambie la tonalidad del color en 50°, volviéndose en un tono amarillo.
 
-El brillo (_brighness_) va de cero a uno, mientras que la claridad (_loghtness_) va de cero a 100.
+Podemos obtener un resultado similar usando `col_shift()` del paquete `{scales}`:
+```{r}
+library(scales)
+show_col(c(color, col_shift(color, 20)))
+```
+
+El brillo (_brighness_) va de cero a uno, mientras que la claridad (_lightness_) va de cero a 100.
 ```{r}
 #| fig-height: 4
 color |> brightness(0.7) |> swatch()
 
 color |> lightness(delta(20)) |> swatch()
 ```
+
+Con `{scales}`, la función `col_lighter()` realiza el mismo propósito:
+```{r}
+col_lighter(color, 20) |> show_col()
+```
+
 
 Por su parte, la saturación aumenta la intensidad del color.
 ```{r}
@@ -174,6 +186,12 @@ swatch(
     color,
     color |> chroma(delta(-30)))
 )
+```
+
+En `{scales}`, la función es `col_saturate()`:
+
+```{r}
+col_saturate(color, -50) |> show_col()
 ```
 
 Podemos combinar estas técnicas para crear una paleta de colores más compleja, construida toda a partir de un solo color al cual se le va aumentando o disminuyendo sus valores de claridad e intensidad. El beneficio de hacerlo de esta manera es que luego basta con cambiar el color principal para obtener una paleta de iguales características, pero basada en una tonalidad distinta.
@@ -230,6 +248,13 @@ swatch(c("#3377f7",
 swatch(c("#f9ce45",
          submix("#f9ce45", "#77d671", amount = 0.5),
          "#77d671"))
+```
+
+El paquete `{scales}` también provee una función para mezclar colores. Se puede usar esta función para tomar una paleta de colores y volverla más coherente al aplicarle una pequeña fracción de otro color, en este caso naranja:
+```{r}
+col_mix(a = c("#77d671", "#70f1d5", "#fae55f", "#ff479c"),
+        b = "orange2", 
+        amount = 0.2) |> show_col()
 ```
 
 
