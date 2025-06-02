@@ -3,14 +3,14 @@ title: Introducción al Análisis de Datos con R para principiantes
 subtitle: Dirigido a principiantes y personas sin conocimiento previo de R
 author: Bastián Olea Herrera
 date: "2025-01-21T18:30:00.000Z"
-date_end: "2024-12-12T20:30:00.000Z"
+date_end: "2025-04-10T20:30:00.000Z"
 draft: false
-excerpt: Curso online con cuatro niveles, en el cual puedes aprender R desde cero, sin conocimientos previos, y adentrarte en los siguientes niveles dependiendo de tus necesidades, o bien, tomar los niveles superiores para mejorar tus habilidades básicas de R. Inscripciones abiertas.
+excerpt: Curso online con cuatro niveles, en el cual puedes aprender R desde cero, sin conocimientos previos, y adentrarte en los siguientes niveles dependiendo de tus necesidades, o bien, tomar los niveles superiores para mejorar tus habilidades básicas de R. Inscripciones cerradas.
 layout: single
 location: Online
 ---
 
-[**¡Inscripciones abiertas!**](mailto:contacto@spatiallab.cl)
+**Inscripciones cerradas.** Por favor [visite la nueva versión de este curso aquí.](/clases/spatiallab_introduccion_r_2)
 
 {{<imagen "curso_introduccion_r_1_featured.jpg">}}
 
