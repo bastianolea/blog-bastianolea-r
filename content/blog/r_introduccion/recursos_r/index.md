@@ -21,6 +21,9 @@ _Sitios con contenido educacional para que aprendas R._
 - [Blog R-Bloggers](https://www.r-bloggers.com/), blog que reúne cientos de posts desde blogs de usuarios y desarrolladores de R
 - [R Weekly](https://rweekly.org), curatoría de noticias y posts sobre R
 - [Blog del Tidyverse](https://www.tidyverse.org/blog/)
+- [RWorks](https://rworks.dev/), blog de curatoría de funcionalidades y paquetes de R
+- [Blog de Posit](https://posit.co/blog/), blog oficial de Posit (antes RStudio)
+- [Blog de Posit sobre IA](https://blogs.rstudio.com/ai/)
 
 ### Obtener ayuda sobre R
 - [StackOverflow](https://stackoverflow.com/collectives/r-language), sitio web dedicado a preguntas y respuestas
@@ -28,30 +31,34 @@ _Sitios con contenido educacional para que aprendas R._
 
 ### Recursos sobre R
 - [Tutorial de R desde cero](https://bastianolea.rbind.io/blog/r_introduccion/), con niveles [básico](/blog/r_introduccion/r_basico/), [intermedio](/blog/r_introduccion/r_intermedio/), y foco en [`aprender {dplyr}`](/blog/r_introduccion/dplyr_intro/)
+- [R para ciencia de datos](https://es.r4ds.hadley.nz), traducción al español del libro "R for Data Science", recomendado para entrar a R
 - [Big Book of R](https://www.bigbookofr.com/index.html#live-stats), colección de cientos de libros sobre R, organizada por temas
-- [RWorks](https://rworks.dev/), blog de curatoría de funcionalidades y paquetes de R
 - [R Resource Database](https://www.resourcesdatabase.com), sitio que compila cientos de recursos para usuarios de R, como tutoriales, información sobre paquetes, y más.
 - [R Universe](https://r-universe.dev/search), plataforma para ayudarte a publicar y encontrar contenido sobre R
+- [RStudio Education](https://education.rstudio.com), recursos oficiales para aprender R (en inglés)
+- [Torpedos o _cheat sheets_](https://posit.co/resources/cheatsheets/), hojas de referencia rápida para recordar aspectos de R y sus paquetes más populares
 
-### Recursos sobre gráficos en R
+### Recursos sobre visualización de datos en R
 - [R graph Gallery](https://www.r-graph-gallery.com/), galería de gráficos y visualizaciones de datos hechas con R
 - [R Charts](https://r-charts.com/es/), galería de gráficos y visualizaciones de datos hechas con R
 - [Tutorial de visualización de datos con `{ggplot2}`](/blog/r_introduccion/tutorial_visualizacion_ggplot/)
 
-### Recursos sobre Shiny
+### Recursos sobre desarrollo de aplicaciones con Shiny en R
 - [Shiny Assistant](https://shiny.posit.co/blog/posts/shiny-assistant/), asistente de inteligencia artificial para desarrollar, corregir y revisar aplicaciones Shiny
 - [Galería de Shiny Widgets](http://shinyapps.dreamrs.fr/shinyWidgets/), paquete que ofrece muchas inputs nuevos para Shiny
 - [Extensiones de Shiny](https://github.com/nanxstats/awesome-shiny-extensions), colección de paquetes que extienden Shiny
 - [Documentación de `{bslib}`](https://rstudio.github.io/bslib/index.html), paquete para construir interfaces en Shiny
 
-### Cursos y formación para aprender R
+### Cursos para aprender R
 - [SpatialLab](https://spatiallab.cl), cursos de R y más (algunos impartidos por mi)
 - [Estación R](https://estacion-r.com)
 - [DataCamp](https://www.datacamp.com), cursos asíncronos interactivos para aprender R
 - [Hazla con Datos](https://hazlacondatos.com)
 - [Escuela de Datos](https://escueladedatos.online)
 
+
 ----
+
 
 ## Datos
 _Sitios donde puedes encontrar datos que puedes usar para explorar o aprender._
@@ -65,17 +72,18 @@ _Sitios donde puedes encontrar datos que puedes usar para explorar o aprender._
 
 ### Fuentes de datos
 
-#### Fuentes de datos sobre Chile
-- [Datos abiertos del Estado de Chile](https://datos.gob.cl) 🇨🇱
-- [Banco Integrado de Datos (BIDAT) del Ministerio de Desarrollo Social y Familia](https://bidat.midesof.cl/) 🇨🇱
-- [Banco Central de Chile: base de datos estadísticos](https://si3.bcentral.cl/siete) 🇨🇱
+#### Fuentes de datos sobre Chile 🇨🇱
+- [Datos abiertos del Estado de Chile](https://datos.gob.cl) 
+- [Banco Integrado de Datos (BIDAT) del Ministerio de Desarrollo Social y Familia](https://bidat.midesof.cl/) 
+- [Banco Central de Chile](https://si3.bcentral.cl/siete), repositorio de datos estadísticos sobre economía y trabajo
 - [Repositorio de datos sociales abiertos](https://bastianolea.github.io/datos_sociales/) (mantenido y desarrollado por mi)
-- [Estadísticas sociales del Instituto Nacional de Estadísticas (INE)](https://www.ine.gob.cl/estadisticas/) 🇨🇱
-- [Estadísticas y datos abiertos de salud pública en Chile: Departamento de Estadísticas e Información de Salud (DEIS)](https://deis.minsal.cl/#estadisticas) 🇨🇱
-- [`{guaguas}`: base de datos de nombres inscritos en Chile](https://rivaquiroga.github.io/guaguas/index.html) (Chile)
+- [Estadísticas sociales del Instituto Nacional de Estadísticas (INE)](https://www.ine.gob.cl/estadisticas/)
+- [Estadísticas y datos abiertos de salud pública en Chile: Departamento de Estadísticas e Información de Salud (DEIS)](https://deis.minsal.cl/#estadisticas)
+- [`{guaguas}`](https://rivaquiroga.github.io/guaguas/index.html), paquete de R con base de datos de nombres inscritos en Chile
 
 #### Otras fuentes de datos
-- [Paquete `{datos}`](https://cienciadedatos.github.io/datos/)
+- [Paquete `{datos}`](https://cienciadedatos.github.io/datos/), traducción al español de conjuntos de datos que vienen por defecto en paquetes de R populares
+- [DataSetsVerse](https://lightbluetitan.github.io/datasetsverse/), paquete de R que contiene conjuntos de datos de diversos temas
 - [dataverse.harvard.edu](https://dataverse.harvard.edu/)
 - [ourworldindata.org](https://ourworldindata.org/)
 - [statista.com](https://es.statista.com/)
