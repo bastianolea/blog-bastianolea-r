@@ -27,6 +27,7 @@ _Sitios con contenido educacional para que aprendas R._
 - [Comunidad de R en Reddit](https://www.reddit.com/r/rstats), donde también se pueden hacer consultas
 
 ### Recursos sobre R
+- [Tutorial de R desde cero](https://bastianolea.rbind.io/blog/r_introduccion/), con niveles [básico](/blog/r_introduccion/r_basico/), [intermedio](/blog/r_introduccion/r_intermedio/), y foco en [`aprender {dplyr}`](/blog/r_introduccion/dplyr_intro/)
 - [Big Book of R](https://www.bigbookofr.com/index.html#live-stats), colección de cientos de libros sobre R, organizada por temas
 - [RWorks](https://rworks.dev/), blog de curatoría de funcionalidades y paquetes de R
 - [R Resource Database](https://www.resourcesdatabase.com), sitio que compila cientos de recursos para usuarios de R, como tutoriales, información sobre paquetes, y más.
@@ -35,6 +36,7 @@ _Sitios con contenido educacional para que aprendas R._
 ### Recursos sobre gráficos en R
 - [R graph Gallery](https://www.r-graph-gallery.com/), galería de gráficos y visualizaciones de datos hechas con R
 - [R Charts](https://r-charts.com/es/), galería de gráficos y visualizaciones de datos hechas con R
+- [Tutorial de visualización de datos con `{ggplot2}`](/blog/r_introduccion/tutorial_visualizacion_ggplot/)
 
 ### Recursos sobre Shiny
 - [Shiny Assistant](https://shiny.posit.co/blog/posts/shiny-assistant/), asistente de inteligencia artificial para desarrollar, corregir y revisar aplicaciones Shiny
@@ -52,7 +54,7 @@ _Sitios con contenido educacional para que aprendas R._
 ----
 
 ## Datos
-_Sitios que contienen datos que puedes usar para explorar o aprender._
+_Sitios donde puedes encontrar datos que puedes usar para explorar o aprender._
 
 ### Iniciativas sobre datos en Latinoamérica
 - [Argendata](https://argendata.fund.ar), datos sobre Argentina
