@@ -13,6 +13,7 @@ tags:
   - gráficos
   - ciencias sociales
   - visualización de datos
+  - Chile
 editor_options:
   chunk_output_type: inline
 execute:
