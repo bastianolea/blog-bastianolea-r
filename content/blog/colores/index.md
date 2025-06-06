@@ -221,19 +221,36 @@ swatch(c(color, hue(color, delta(50))))
 
 Al usar la función `delta()`, lo que hacemos es pedirle que cambie la tonalidad del color en 50°, volviéndose en un tono amarillo.
 
-El brillo (*brighness*) va de cero a uno, mientras que la claridad (*loghtness*) va de cero a 100.
+Podemos obtener un resultado similar usando `col_shift()` del paquete `{scales}`:
+
+``` r
+library(scales)
+show_col(c(color, col_shift(color, 20)))
+```
+
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png" width="768" />
+
+El brillo (*brighness*) va de cero a uno, mientras que la claridad (*lightness*) va de cero a 100.
 
 ``` r
 color |> brightness(0.7) |> swatch()
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png" width="768" />
 
 ``` r
 color |> lightness(delta(20)) |> swatch()
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-2.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-2.png" width="768" />
+
+Con `{scales}`, la función `col_lighter()` realiza el mismo propósito:
+
+``` r
+col_lighter(color, 20) |> show_col()
+```
+
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png" width="768" />
 
 Por su parte, la saturación aumenta la intensidad del color.
 
@@ -241,7 +258,7 @@ Por su parte, la saturación aumenta la intensidad del color.
 color |> saturation(delta(30)) |> swatch()
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png" width="768" />
 
 Podemos utilizar la función `delta()` para crear una sencilla paleta de colores a partir de un mismo color, aumentando y disminuyendo su intensidad (*chroma*):
 
@@ -253,7 +270,15 @@ swatch(
 )
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png" width="768" />
+
+En `{scales}`, la función es `col_saturate()`:
+
+``` r
+col_saturate(color, -50) |> show_col()
+```
+
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-19-1.png" width="768" />
 
 Podemos combinar estas técnicas para crear una paleta de colores más compleja, construida toda a partir de un solo color al cual se le va aumentando o disminuyendo sus valores de claridad e intensidad. El beneficio de hacerlo de esta manera es que luego basta con cambiar el color principal para obtener una paleta de iguales características, pero basada en una tonalidad distinta.
 
@@ -272,7 +297,7 @@ swatch(c(color_principal,
          color_texto))
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png" width="768" />
 
 ``` r
 color_principal = "#3170ac"
@@ -289,7 +314,7 @@ swatch(c(color_principal,
          color_texto))
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.png" width="768" />
 
 Notar que el código es igual, y sólo se cambió el valor del `color_principal`. Esta estrategia es muy útil si se están produciendo visualizaciones o aplicaciones que ocupan una paleta de colores monocroma.
 
@@ -303,7 +328,7 @@ swatch(c("#70f1d5",
          "#fae55f"))
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-19-1.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.png" width="768" />
 
 ``` r
 swatch(c("#3377f7",
@@ -311,7 +336,7 @@ swatch(c("#3377f7",
          "#ec4e3c"))
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.png" width="768" />
 
 ``` r
 swatch(c("#f9ce45",
@@ -319,7 +344,17 @@ swatch(c("#f9ce45",
          "#77d671"))
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-24-1.png" width="768" />
+
+El paquete `{scales}` también provee una función para mezclar colores. Se puede usar esta función para tomar una paleta de colores y volverla más coherente al aplicarle una pequeña fracción de otro color, en este caso naranja:
+
+``` r
+col_mix(a = c("#77d671", "#70f1d5", "#fae55f", "#ff479c"),
+        b = "orange2", 
+        amount = 0.2) |> show_col()
+```
+
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-25-1.png" width="768" />
 
 ## Usar paletas de colores en {ggplot2}
 
@@ -350,7 +385,7 @@ iris |>
   theme_classic()
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-26-1.png" width="768" />
 
 ``` r
 iris |> 
@@ -364,7 +399,7 @@ iris |>
         axis.title = element_blank())
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-2.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-26-2.png" width="768" />
 
 ``` r
 iris |> 
@@ -378,7 +413,7 @@ iris |>
         axis.title = element_blank())
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-3.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-26-3.png" width="768" />
 
 ## Avanzado
 
@@ -388,13 +423,13 @@ iris |>
 colorspace::hclplot(sequential_hcl(7, h = 260, c = 80, l = c(35, 95), power = 1.5))
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-27-1.png" width="768" />
 
 ``` r
 colorspace::hclplot(sequential_hcl(7, h = c(260, 220), c = c(50, 75, 0), l = c(30, 95), power = 1))
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-2.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-27-2.png" width="768" />
 
 ------------------------------------------------------------------------
 

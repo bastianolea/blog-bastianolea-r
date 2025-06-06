@@ -288,7 +288,20 @@ swatch(c(color, hue(color, delta(50))))
 
 Al usar la función `delta()`, lo que hacemos es pedirle que cambie la tonalidad del color en 50°, volviéndose en un tono amarillo.
 
-El brillo (_brighness_) va de cero a uno, mientras que la claridad (_loghtness_) va de cero a 100.
+Podemos obtener un resultado similar usando `col_shift()` del paquete `{scales}`:
+
+
+
+``` r
+library(scales)
+show_col(c(color, col_shift(color, 20)))
+```
+
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+
+
+
+El brillo (_brighness_) va de cero a uno, mientras que la claridad (_lightness_) va de cero a 100.
 
 
 
@@ -296,13 +309,26 @@ El brillo (_brighness_) va de cero a uno, mientras que la claridad (_loghtness_)
 color |> brightness(0.7) |> swatch()
 ```
 
-<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-14-1.png" width="672" />
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-15-1.png" width="672" />
 
 ``` r
 color |> lightness(delta(20)) |> swatch()
 ```
 
-<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-14-2.png" width="672" />
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-15-2.png" width="672" />
+
+
+
+Con `{scales}`, la función `col_lighter()` realiza el mismo propósito:
+
+
+
+``` r
+col_lighter(color, 20) |> show_col()
+```
+
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+
 
 
 
@@ -314,7 +340,7 @@ Por su parte, la saturación aumenta la intensidad del color.
 color |> saturation(delta(30)) |> swatch()
 ```
 
-<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-15-1.png" width="672" />
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-17-1.png" width="672" />
 
 
 
@@ -330,7 +356,20 @@ swatch(
 )
 ```
 
-<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-16-1.png" width="672" />
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+
+
+
+En `{scales}`, la función es `col_saturate()`:
+
+
+
+
+``` r
+col_saturate(color, -50) |> show_col()
+```
+
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-19-1.png" width="672" />
 
 
 
@@ -353,7 +392,7 @@ swatch(c(color_principal,
          color_texto))
 ```
 
-<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-17-1.png" width="672" />
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-20-1.png" width="672" />
 
 
 ``` r
@@ -371,7 +410,7 @@ swatch(c(color_principal,
          color_texto))
 ```
 
-<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-18-1.png" width="672" />
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
 
 
@@ -390,7 +429,7 @@ swatch(c("#70f1d5",
          "#fae55f"))
 ```
 
-<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-19-1.png" width="672" />
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-22-1.png" width="672" />
 
 
 ``` r
@@ -399,7 +438,7 @@ swatch(c("#3377f7",
          "#ec4e3c"))
 ```
 
-<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 
 ``` r
@@ -408,7 +447,21 @@ swatch(c("#f9ce45",
          "#77d671"))
 ```
 
-<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-21-1.png" width="672" />
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-24-1.png" width="672" />
+
+
+
+El paquete `{scales}` también provee una función para mezclar colores. Se puede usar esta función para tomar una paleta de colores y volverla más coherente al aplicarle una pequeña fracción de otro color, en este caso naranja:
+
+
+
+``` r
+col_mix(a = c("#77d671", "#70f1d5", "#fae55f", "#ff479c"),
+        b = "orange2", 
+        amount = 0.2) |> show_col()
+```
+
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-25-1.png" width="672" />
 
 
 
@@ -450,7 +503,7 @@ iris |>
   theme_classic()
 ```
 
-<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-26-1.png" width="672" />
 
 ``` r
 iris |> 
@@ -464,7 +517,7 @@ iris |>
         axis.title = element_blank())
 ```
 
-<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-22-2.png" width="672" />
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-26-2.png" width="672" />
 
 ``` r
 iris |> 
@@ -478,7 +531,7 @@ iris |>
         axis.title = element_blank())
 ```
 
-<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-22-3.png" width="672" />
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-26-3.png" width="672" />
 
 
 
@@ -494,13 +547,13 @@ iris |>
 colorspace::hclplot(sequential_hcl(7, h = 260, c = 80, l = c(35, 95), power = 1.5))
 ```
 
-<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-23-1.png" width="672" />
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-27-1.png" width="672" />
 
 ``` r
 colorspace::hclplot(sequential_hcl(7, h = c(260, 220), c = c(50, 75, 0), l = c(30, 95), power = 1))
 ```
 
-<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-23-2.png" width="672" />
+<img src="/blog/colores/colores_files/figure-html/unnamed-chunk-27-2.png" width="672" />
 
 
 
