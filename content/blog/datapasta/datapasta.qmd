@@ -1,10 +1,10 @@
 ---
-title: Copia y pega datos fácilmente en R con {datapasta}
+title: Copia y pega datos en R con {datapasta}
 author: Bastián Olea Herrera
 date: '2025-06-06'
 slug: []
 categories: []
-draft: true
+draft: false
 format:
   hugo-md:
     output-file: "index"
@@ -12,29 +12,132 @@ format:
 tags:
   - consejos
   - datos
+editor_options: 
+  chunk_output_type: console
+excerpt: "`{datapasta}` es un paquete para R que te ayuda a copiar y pegar datos desde y hacia R. Este paquete convierte tus datos en texto que puedes copiar y pegar en otro lado, o editar manualmente. Usa la función `dpasta()` sobre un dataframe para hacer que los datos aparezcan como en texto directamente debajo de donde la ejecutaste."
 ---
 
-https://github.com/MilesMcBain/datapasta
+[`{datapasta}`](https://github.com/MilesMcBain/datapasta) es un paquete para R que te ayuda a copiar y pegar datos desde y hacia R. 
+
+Instala `{datapasta}` ejecutando el siguiente código:
 
 ```{r}
 #| eval: false
-install.packages(
-   "datapasta", 
-   repos = c(mm = "https://milesmcbain.r-universe.dev", getOption("repos")))
+install.packages("datapasta", repos = c(mm = "https://milesmcbain.r-universe.dev", getOption("repos")))
 ```
 
 
 ## Copiar
+
+`{datapasta}` puede ayudarte a **compartir fácilmente datos**, al convertir tus datos en texto que puedes copiar y pegar en otro lado, o editar manualmente. Usa la función `dpasta()` sobre un dataframe para hacer que los datos aparezcan como en texto directamente debajo de donde la ejecutaste. 
+
+Por ejemplo, creemos una tabla pequeña:
+
 ```{r}
-# dpasta
+#| warning: false
+library(dplyr)
+
+tabla <- iris |> 
+  slice_sample(n = 5) |> 
+  tibble()
 ```
+
+```{r}
+tabla
+```
+
+Imagínate que queremos corregir esta tabla, usarla como ejemplo, o compartirla con alguien. Entonces usamos la función `dpasta()`:
+
+```{r}
+#| eval: false
+datapasta::dpasta(tabla)
+```
+
+¡Magia! Aparecerá el siguiente código en nuestro script:
+```{r}
+#| eval: false
+tibble::tribble(
+     ~Sepal.Length, ~Sepal.Width, ~Petal.Length, ~Petal.Width,     ~Species,
+                 6,            3,           4.8,          1.8,  "virginica",
+               5.7,          2.9,           4.2,          1.3, "versicolor",
+               7.7,          2.8,           6.7,            2,  "virginica",
+               6.8,          2.8,           4.8,          1.4, "versicolor",
+               4.6,          3.2,           1.4,          0.2,     "setosa"
+     )
+```
+
+Al ejecutar este código podemos re-crear el dataframe. Es decir, obtenemos los datos como texto que luego podemos usar para crear un nuevo dataframe. Esto tiene varias utilidades:
+
+- transformar los datos a texto para poder editarlos manualmente (corregir cifras, agregar observaciones)
+- compartir pequeñas tablas con otras personas (adjuntando los datos como texto en un scirpt o correo)
+- corregir manualmente datos pequeños para los que no valdría la pena programar soluciones (por ejemplo, cambiar faltas de ortografía)
+- "guardar" datos en un script para eliminar la dependencia de un archivo externo, sobre todo si se trata de pocos datos (por ejemplo, para crear un diccionario de las variables o libro de códigos)
+
+Este tipo de tablas de datos almacenadas como código se llaman [`tribble`](https://tibble.tidyverse.org/reference/tribble.html), y su gracia es que muestran los datos tal como los veríamos en un dataframe o planilla, con la conveniencia de que podemos editarlos, incluso agregar nuevas filas o columnas si seguimos su sencilla sintaxis.
+
 
 
 ## Pegar
 
+`{datapasta}` también nos ayuda a _pegar_ en R datos que sacamos desde otro sitio, con la función `tribble_paste()`. Usando esta función podemos copiar datos de una tabla de Excel o de una página web y pegarlos como un dataframe en R.
+
+¡Probemos" Selecciona la siguiente tabla[^1] y cópiala:
+
 ```{r}
-# tribble_paste
+#| include: false
+pib_latam <- tibble::tribble(
+                 ~pais, ~pib_ppp, ~pib_per_capita,
+              "Brazil", 4958.122,           23238,
+              "Mexico", 3395.916,           25462,
+           "Argentina", 1493.423,           31379,
+            "Colombia", 1190.795,           22421,
+               "Chile",  710.195,           35146,
+                "Peru",  643.052,           18688,
+  "Dominican Republic",  336.082,           30874,
+             "Ecuador",  300.122,           16578,
+           "Guatemala",  282.833,           15633,
+           "Venezuela",  223.984,            8397
+  )
+
+pib_latam |> knitr::kable("markdown")
 ```
 
+|País               |  PIB (PPP)| PIB (per capita)|
+|:------------------|----------:|----------------:|
+|Brazil             |   4958.122|            23238|
+|Mexico             |   3395.916|            25462|
+|Argentina          |   1493.423|            31379|
+|Colombia           |   1190.795|            22421|
+|Chile              |    710.195|            35146|
+|Peru               |    643.052|            18688|
+|Dominican Republic |    336.082|            30874|
+|Ecuador            |    300.122|            16578|
+|Guatemala          |    282.833|            15633|
+|Venezuela          |    223.984|             8397|
 
+[^1]: Fuente: [Wikipedia](https://en-m-wikipedia-org.translate.goog/wiki/List_of_Latin_American_and_Caribbean_countries_by_GDP_(PPP))
+
+```{r}
+#| eval: false
+datapasta::tribble_paste()
+```
+
+En tu consola aparecerá el código necesario para cargar la tabla copiada en R!
+
+```{r}
+#| eval: false
+tibble::tribble(
+                    ~PAÍS, ~`PIB.(PPP)`, ~`PIB.(PER.CAPITA)`,
+                 "Brazil",     4958.122,              23238L,
+                 "Mexico",     3395.916,              25462L,
+              "Argentina",     1493.423,              31379L,
+               "Colombia",     1190.795,              22421L,
+                  "Chile",      710.195,              35146L,
+                   "Peru",      643.052,              18688L,
+     "Dominican Republic",      336.082,              30874L,
+                "Ecuador",      300.122,              16578L,
+              "Guatemala",      282.833,              15633L,
+              "Venezuela",      223.984,               8397L
+     )
+```
 
