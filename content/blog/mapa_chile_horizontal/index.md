@@ -11,6 +11,7 @@ categories: []
 tags:
   - mapas
   - visualización de datos
+  - Chile
 editor_options:
   chunk_output_type: console
 excerpt: >-

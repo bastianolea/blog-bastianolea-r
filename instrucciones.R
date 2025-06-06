@@ -7,17 +7,17 @@ blogdown::stop_server()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Redactar una lista de palabras separadas por comas en R", 
+blogdown::new_post(title = "Copia y pega datos con facilidad en R gracias a {datapasta}", 
                    file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos", "texto")
+                   tags = c("consejos", "datos")
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Automatiza la generación de reportes creando documentos parametrizados con Quarto y R", 
-                   file = "blog/quarto_params/index.md",
+blogdown::new_post(title = "Copia y pega datos fácilmente en R con {datapasta}", 
+                   file = "blog/datapasta/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("quarto"),
+                   tags = c("consejos", "datos"),
                    categories = c() 
 )
 # format:
@@ -26,11 +26,14 @@ blogdown::new_post(title = "Automatiza la generación de reportes creando docume
 #     output-ext: "md"
 
 ## borradores ----
+"content/blog/datapasta/index.qmd"
+"content/blog/ordenar_regiones/ordenar_regiones.qmd"
 "content/blog/stringr_texto/stringr.qmd" # sacar del computador de la pega
 "content/blog/quarto_loop/index.md"
 "content/blog/tutorial_scraping_selenium/selenium.qmd"
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
 "content/blog/tutorial_digitalocean/index.md"
+
 
 
 ## archivos ----
