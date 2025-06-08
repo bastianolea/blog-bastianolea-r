@@ -81,7 +81,31 @@ regiones_ordenadas <- regiones |>
   ))
 ```
 
-Si bien este ordenamiento geográfico también podría hacerse por el nombre de las regiones, se recomienda hacerlo por el código de las regiones, para evitar problemas por las distintas formas de escribir el nombre de cada región[^1].
+Se recomienda hacer este tipo de operaciones usando el código de las regiones, para evitar problemas por las distintas formas de escribir el nombre de cada región[^1]. Pero si lo quieres hacer por el nombre de las regiones, sería así:
+
+```{r}
+regiones_ordenadas <- regiones |> 
+  # agregar orden de región de norte a sur
+  mutate(orden_region = case_match(nombre_region,
+                                      "Tarapacá" ~  2,
+                                   "Antofagasta" ~  3,
+                                       "Atacama" ~  4,
+                                      "Coquimbo" ~  5,
+                                    "Valparaíso" ~  6,
+         "Libertador General Bernardo O'Higgins" ~  8,
+                                         "Maule" ~  9,
+                                        "Biobío" ~  11,
+                                  "La Araucanía" ~  12,
+                                     "Los Lagos" ~  14,
+     "Aysén del General Carlos Ibáñez del Campo" ~  15,
+          "Magallanes y de la Antártica Chilena" ~  16,
+                     "Metropolitana de Santiago" ~  7,
+                                      "Los Ríos" ~  13,
+                            "Arica y Parinacota" ~  1,
+                                         "Ñuble" ~  10
+     ))
+```
+
 
 [^1]: Por ejempo, _Valparaíso_ puede encontrarse como _Región de Valparaíso_, _De Valparaíso_, _V región de Valparaíso,_ etc., y para qué hablar de O'Higgins...
 
@@ -150,7 +174,7 @@ regiones_ordenadas_2 |>
 
 ```
 
-¡Listo! Si te sirve, acá dejo un dataframe con las regiones del país, su código y su orden, para que puedas copiarlo y pegarlo en tu script de R:
+¡Listo! Si te sirve, acá dejo un dataframe con las regiones del país, su código y su orden, para que puedas copiarlo y pegarlo en tu script de R, y luego agregarlo a tus datos usando `left_join()`:
 
 ```{r}
 #| output: false

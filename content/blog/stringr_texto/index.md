@@ -1,8 +1,8 @@
 ---
-title: 'Recodificación de datos categóricos con {stringr}'
+title: 'Limpieza y recodificación de datos de texto en R con {stringr}'
 author: Bastián Olea Herrera
-date: '2024-12-23'
-draft: true
+date: '2025-06-08'
+draft: false
 format:
   hugo-md:
     output-file: index
@@ -12,304 +12,289 @@ categories:
   - tutoriales
 tags:
   - limpieza de datos
-  - dplyr
-  - stringr
-  - procesamiento de datos
-  - datos
-execute:
-  eval: false
+  - texto
+excerpt: >-
+  Los datos que vienen como texto suelen necesitar una limpieza previa, y
+  adicionalmente un procesamiento para poder aprovecharlos mejor. En este
+  tutorial usamos el paquete `{stringr}` para limpiar y ordenar unos datos de
+  texto.
+editor_options:
+  chunk_output_type: console
 ---
 
 
+[El paquete `{stringr}`](https://stringr.tidyverse.org/index.html) facilita todo tipo de trabajo que implique texto en R.
+
+En general, los datos que vienen como texto suelen necesitar una limpieza previa, y adicionalmente un procesamiento para poder aprovecharlos mejor.
+
+Sigamos un ejemplo con una columna que viene con textos sobre compras en un servicio público:
+
 ``` r
 library(dplyr)
-library(readxl)
 library(stringr) # para trabajar con textos
+
+datos <- tibble::tribble(
+  ~texto, 
+  "Licitación pública N°3432",
+  "Trato directo #3341",
+  "Licitación privada 876",
+  "LICITACION PUBLICA N3430",
+  "Licitacion publica 3526 concluida",
+  "licitación pública 2986 ok",
+  "sin información")
 ```
 
-cargar datos
+| texto                             |
+|:----------------------------------|
+| Licitación pública N°3432         |
+| Trato directo #3341               |
+| Licitación privada 876            |
+| LICITACION PUBLICA N3430          |
+| Licitacion publica 3526 concluida |
+| licitación pública 2986 ok        |
+| sin información                   |
 
-``` r
-datos <- read_excel("MATERIAS_R.xlsx") |> 
-  rename(materia = 1, 
-         submateria = 2)
-```
+Como es de esperar, el texto viene *sucio*: escrito de distintas maneras, con y sin tildes, con y sin mayúsculas, etc.
 
-conteo exploratorio de la columna
+### Crear variable a partir de la detección de texto
 
-``` r
-datos |> 
-  count(materia, sort = TRUE)
-```
-
-crear una columna
-
-``` r
-datos |> 
-  count(materia, sort = TRUE) |> 
-  mutate(id = 1)
-```
-
-detectar si en un texto está presente otro texto
+Una primera limpieza de los datos puede ser identificar si un texto específico está o no presente en la variable de texto sucio. Para ello podemos usar la función `str_detect()`, que retorna `TRUE` o `FALSE` si en el texto que se le entrega como primer argumento está presente el texto en su segundo argumento. Por ejemplo:
 
 ``` r
 str_detect("un texto acá muy feo", "feo") # sí (TRUE)
+```
 
+    [1] TRUE
+
+``` r
 str_detect("un texto acá muy bonito", "feo") #no (FALSE)
 ```
 
-nueva columna detectando si está presente un texto en una columna
+    [1] FALSE
+
+Aplicamos `str_detect()` dentro de un `mutate()` para crear una columna que indique la presencia de un texto a lo largo de la columna de texto:
 
 ``` r
 datos |> 
-  count(materia, sort = TRUE) |> 
-  mutate(ley_19886 = str_detect(materia, "19.886"))
+  mutate(licitacion = str_detect(texto, "Licitación"))
 ```
 
-lo mismo, pero con ifelse, para explicitar la condición verdadera y la falsa
+    # A tibble: 7 × 2
+      texto                             licitacion
+      <chr>                             <lgl>     
+    1 Licitación pública N°3432         TRUE      
+    2 Trato directo #3341               FALSE     
+    3 Licitación privada 876            TRUE      
+    4 LICITACION PUBLICA N3430          FALSE     
+    5 Licitacion publica 3526 concluida FALSE     
+    6 licitación pública 2986 ok        FALSE     
+    7 sin información                   FALSE     
+
+Vemos que sólo entrega dos `TRUE`, siendo que en las filas 4, 5 y 6 también debería encontrar coincidencias. Usualmente esto se debe a **diferencias en las mayúsculas** de las palabras. Para prevenirlo, primero convertimos el texto a minúsculas con `str_to_lower()`, y buscamos el término en minúsculas:
 
 ``` r
 datos |> 
-  count(materia, sort = TRUE) |> 
-  mutate(ley_19886 = ifelse(str_detect(materia, "19.886"), 
-                            yes = "Ley 19.886",
-                            no = "Otros"))
+  mutate(licitacion = str_detect(str_to_lower(texto), "licitación"))
 ```
 
-crear columna con coincidencia múltiple
+    # A tibble: 7 × 2
+      texto                             licitacion
+      <chr>                             <lgl>     
+    1 Licitación pública N°3432         TRUE      
+    2 Trato directo #3341               FALSE     
+    3 Licitación privada 876            TRUE      
+    4 LICITACION PUBLICA N3430          FALSE     
+    5 Licitacion publica 3526 concluida FALSE     
+    6 licitación pública 2986 ok        TRUE      
+    7 sin información                   FALSE     
+
+Obtenemos una coincidencia más! Pero siguen faltando dos casos (casos 4 y 5) que deberían retornar `TRUE`. En estos casos, el problema está con **diferencias en los tildes** de las palabras. Para solucionar esto, podemos hacer una búsqueda de texto usando *regex*.
+
+#### Expresiones regulares
+
+Las [expresiones regulares o *regex*](https://stringr.tidyverse.org/articles/regular-expressions.html) son formas de escribir patrones de búsqueda, y son soportadas por todas las funciones de `{stringr}`. Uno de estos patrones es el operador *o* (`|`). El operador *o* puede usarse para encontrar coincidencias con varias palabras distintas separadas con `|`:
 
 ``` r
-datos |> 
-  count(materia, sort = TRUE) |> 
-  mutate(tipo = case_when(str_detect(materia, "licitación privada") ~ "Licitación Privada",
-                          str_detect(materia, "licitación pública") ~ "Licitación Pública",
-                          str_detect(materia, "trato directo") ~ "Trato directo")) |> 
-  count(tipo) # contar cuántas observaciones coinciden
+str_detect(c("hola", "holo", "holi"), "hola|holi")
 ```
 
-crear columna con coincidencia múltiple, pero primero pasando a minúscula la columna materia
+    [1]  TRUE FALSE  TRUE
 
-``` r
-datos |> 
-  count(materia, sort = TRUE) |> 
-  mutate(tipo = case_when(str_detect(str_to_lower(materia), "licitación privada") ~ "Licitación Privada",
-                          str_detect(str_to_lower(materia), "licitación pública") ~ "Licitación Pública",
-                          str_detect(str_to_lower(materia), "trato directo") ~ "Trato directo")) |> 
-  count(tipo) # contar cuántas observaciones coinciden
-```
-
-escribir distintas formas de coincidir cada texto a una misma categoría
-(por ejemplo, los tildes o plurales)
-
-``` r
-datos |> 
-  count(materia, sort = TRUE) |> 
-  mutate(tipo = case_when(str_detect(str_to_lower(materia), "licitación privada") ~ "Licitación Privada",
-                          str_detect(str_to_lower(materia), "licitacion privada") ~ "Licitación Privada",
-                          str_detect(str_to_lower(materia), "licitación pública") ~ "Licitación Pública",
-                          str_detect(str_to_lower(materia), "licitacion pública") ~ "Licitación Pública",
-                          str_detect(str_to_lower(materia), "licitaciones publicas") ~ "Licitación Pública",
-                          str_detect(str_to_lower(materia), "trato directo") ~ "Trato directo"))
-```
-
-usar regex para coincidir en una misma regla palabras con leves diferencias
+En este ejemplo, se coincide con un `TRUE` tanto el texto `hola` como `holi`. Pero en este ejemplo ambas palabras son muy similares; 75% similares, para ser exactos 🤓☝🏼. Podemos poner entre paréntesis los caracteres específicos que varían, para que dentro de una misma palabra se acepten distintos caracteres:
 
 ``` r
 str_detect(c("hola", "holo", "holi"), "hol(a|i)")
-datos |> 
-  count(materia, sort = TRUE) |> 
-  mutate(tipo = case_when(str_detect(str_to_lower(materia), "licitaci(ó|o)n privada") ~ "Licitación Privada",
-                          str_detect(str_to_lower(materia), "licitaci(ó|o)n p(ú|u)blica") ~ "Licitación Pública",
-                          str_detect(str_to_lower(materia), "licitaciones p(ú|u)blicas") ~ "Licitación Pública",
-                          str_detect(str_to_lower(materia), "trato directo") ~ "Trato directo")) |> 
-  count(tipo)
 ```
 
-usar el operador punto de regex para coincidir con cualquier letra en la posición del punto
-(por ejemplo, "." equivaldría a "a" o "á" o "o")
+    [1]  TRUE FALSE  TRUE
+
+De este modo, se coincide con la palabra `hol` seguida tanto de `a` como de `i`; es decir, `hola` y `holi`.
+
+Finalmente, también podemos pedirle que coincida una palabra que dentro de ella tenga *cualquier* caracter:
 
 ``` r
 str_detect(c("hola", "holo", "holi"), "hol.")
-datos |> 
-  count(materia, sort = TRUE) |> 
-  mutate(tipo = case_when(str_detect(str_to_lower(materia), "licitaci.n privada") ~ "Licitación Privada",
-                          str_detect(str_to_lower(materia), "licitaci.n p.blica") ~ "Licitación Pública",
-                          str_detect(str_to_lower(materia), "licitaciones p.blicas") ~ "Licitación Pública",
-                          str_detect(str_to_lower(materia), "trato directo") ~ "Trato directo")) |> 
-  count(tipo)
 ```
 
-usar el operador ".*" de regex para indicar cualquier cantidad de caracteres entre el texto inicial y el final
-(por ejemplo "ho.*la" coincide "hola" y "hooooooola" o "ho8787897la" o "hola hola")
+    [1] TRUE TRUE TRUE
+
+Siguiendo estos ejemplos para volver a nuestros datos, podemos coincidir texto con y sin tildes al mismo tiempo si usamos *regex* para especificar que uno o varios caracteres pueden ser distintos; en este caso, la letra *o* con y sin tilde:
+
+``` r
+datos |> 
+  mutate(licitacion = str_detect(str_to_lower(texto), "licitaci(ó|o)n"))
+```
+
+    # A tibble: 7 × 2
+      texto                             licitacion
+      <chr>                             <lgl>     
+    1 Licitación pública N°3432         TRUE      
+    2 Trato directo #3341               FALSE     
+    3 Licitación privada 876            TRUE      
+    4 LICITACION PUBLICA N3430          TRUE      
+    5 Licitacion publica 3526 concluida TRUE      
+    6 licitación pública 2986 ok        TRUE      
+    7 sin información                   FALSE     
+
+Podemos usar el mismo código pero dentro de un `ifelse()` para que, en vez de `TRUE` y `FALSE`, retorne lo que queramos para las condicies verdadera y falsa:
+
+``` r
+datos |> 
+  mutate(licitacion = ifelse(str_detect(str_to_lower(texto), "licitaci(ó|o)n"), 
+                             yes = "Licitación",
+                             no = "Otros"))
+```
+
+    # A tibble: 7 × 2
+      texto                             licitacion
+      <chr>                             <chr>     
+    1 Licitación pública N°3432         Licitación
+    2 Trato directo #3341               Otros     
+    3 Licitación privada 876            Licitación
+    4 LICITACION PUBLICA N3430          Licitación
+    5 Licitacion publica 3526 concluida Licitación
+    6 licitación pública 2986 ok        Licitación
+    7 sin información                   Otros     
+
+También podemos usar el operador `.*` de *regex* para indicar cualquier cantidad de caracteres entre el texto antes y después del operador. Por ejemplo:
 
 ``` r
 str_detect(c("hola", "hooooooola", "ho8787897la", "hola hola"), "ho.*la")
+```
+
+    [1] TRUE TRUE TRUE TRUE
+
+En el ejemplo, `ho.*la` significa coincidir con un texto que tenga `ho`, cualquier texto, y luego `la`; por lo tanto, coincide con `hola`, `hooooooola`, `ho8787897la` y cualquier otra variación.
+
+Podemos usar esto para hacer coincidencias más flexibles:
+
+``` r
 datos |> 
-  count(materia, sort = TRUE) |> 
-  mutate(tipo = case_when(str_detect(str_to_lower(materia), "lic.*privada") ~ "Licitación Privada",
-                          str_detect(str_to_lower(materia), "lic.*p.blica") ~ "Licitación Pública",
-                          str_detect(str_to_lower(materia), "trato.*directo|contra.*direct") ~ "Trato directo")
+  mutate(tipo = case_when(str_detect(str_to_lower(texto), "lic.*privada") ~ "Licitación privada",
+                          str_detect(str_to_lower(texto), "lic.*p.blica") ~ "Licitación pública",
+                          str_detect(str_to_lower(texto), "trato.*directo|contra.*direct") ~ "Trato directo")
   )
 ```
 
-buscar casos que aún no tengan coincidencia
+    # A tibble: 7 × 2
+      texto                             tipo              
+      <chr>                             <chr>             
+    1 Licitación pública N°3432         Licitación pública
+    2 Trato directo #3341               Trato directo     
+    3 Licitación privada 876            Licitación privada
+    4 LICITACION PUBLICA N3430          Licitación pública
+    5 Licitacion publica 3526 concluida Licitación pública
+    6 licitación pública 2986 ok        Licitación pública
+    7 sin información                   <NA>              
+
+Si combinamos los aprendizajes hasta el momento, podemos crear una columna nueva que entregue distintos valores dependiendo del texto detectado, gracias a `case_when()`:
 
 ``` r
 datos |> 
-  count(materia, sort = TRUE) |> 
-  mutate(tipo = case_when(str_detect(str_to_lower(materia), "lic.*privada") ~ "Licitación Privada",
-                          str_detect(str_to_lower(materia), "lic.*p.blica") ~ "Licitación Pública",
-                          str_detect(str_to_lower(materia), "trato.*directo|contra.*direct") ~ "Trato directo")
-  ) |> 
-  filter(is.na(tipo))
-
-datos |> 
-  mutate(tipo = case_when(str_detect(str_to_lower(materia), "lic.*privada") ~ "Licitación Privada",
-                          str_detect(str_to_lower(materia), "lic.*p.blica") ~ "Licitación Pública",
-                          str_detect(str_to_lower(materia), "trato.*directo|contra.*direct") ~ "Trato directo")
-  ) |> 
-  count(submateria, tipo, sort = TRUE) |> 
-  filter(is.na(tipo))
-```
-
-crear la columna con coincidencias desde mas de una columna
-
-``` r
-datos |> 
+  # limpiar el texto de antemano
+  mutate(texto_2 = str_to_lower(texto)) |> 
+  # detectar licitaciones
+  mutate(licitacion = str_detect(texto_2, "licitaci(ó|o)n")) |> 
+  # detectar si son públicas, privadas, o de otro tipo
   mutate(tipo = case_when(
-    # materia
-    str_detect(str_to_lower(materia), "lic.*privada") ~ "Licitación Privada",
-    str_detect(str_to_lower(materia), "lic.*p.blica") ~ "Licitación Pública",
-    str_detect(str_to_lower(materia), "trato.*directo|contra.*direct") ~ "Trato directo",
-    # submateria
-    str_detect(str_to_lower(submateria), "lic.*privada") ~ "Licitación Privada",
-    str_detect(str_to_lower(submateria), "lic.*p.blica") ~ "Licitación Pública",
-    str_detect(str_to_lower(submateria), "trato.*directo|contra.*direct") ~ "Trato directo")
-  ) |> 
-  count(submateria, tipo, sort = TRUE)
+    # si son licitaciones, y si contiene "privada"
+    licitacion & str_detect(texto_2, "privad(o|a)") ~ "Licitación privada",
+    # si son licitaciones y si contiene "público"
+    licitacion & str_detect(texto_2, "p(ú|u)blic(a|o)") ~ "Licitación pública",
+    # otros valores
+    str_detect(texto_2, "trato directo") ~ "Trato directo",
+    # todos los demás que no coincidieron en las condiciones anteriores
+    .default = "Otros"))
 ```
 
-usar el operador "\$" de regex para buscar algo que solo aparezca al final de la línea
+    # A tibble: 7 × 4
+      texto                             texto_2                     licitacion tipo 
+      <chr>                             <chr>                       <lgl>      <chr>
+    1 Licitación pública N°3432         licitación pública n°3432   TRUE       Lici…
+    2 Trato directo #3341               trato directo #3341         FALSE      Trat…
+    3 Licitación privada 876            licitación privada 876      TRUE       Lici…
+    4 LICITACION PUBLICA N3430          licitacion publica n3430    TRUE       Lici…
+    5 Licitacion publica 3526 concluida licitacion publica 3526 co… TRUE       Lici…
+    6 licitación pública 2986 ok        licitación pública 2986 ok  TRUE       Lici…
+    7 sin información                   sin información             FALSE      Otros
 
-``` r
-str_detect("director", "directo$")
-str_detect(c("directo trato", "directorio", "director de", "trato directo"), "directo$")
-str_detect("directo", "directo$")
-str_detect("director de asuntos", "directo$")
-```
+### Extraer textos desde un texto
 
-coincidir usando una condición que tiene que cumplirse y otra que no tenga que cumplirse
-así coincidimos por un criterio pero excluimos por otro, simultáneamente
-
-``` r
-tibble(tipo = c("contrato de personal",
-                "contratación directa",
-                "contrato directo")) |> 
-  mutate(tipo2 = case_when(str_detect(tipo, "contrat") & !str_detect(tipo, "personal") ~ "Sí",
-                           .default = "No"))
-```
-
-crear otra columna más, de tipo lógico (TRUE/FALSE)
+Una última alternativa para limpiar estos datos sería *extraer* texto específico desde la variable de texto. Para esto podemos usar la función `str_extract()` combinada con un operador *regex* para extraer secuencias de números (`\\d+`):
 
 ``` r
 datos |> 
+  mutate(numero = str_extract(texto, "\\d+"))
+```
+
+    # A tibble: 7 × 2
+      texto                             numero
+      <chr>                             <chr> 
+    1 Licitación pública N°3432         3432  
+    2 Trato directo #3341               3341  
+    3 Licitación privada 876            876   
+    4 LICITACION PUBLICA N3430          3430  
+    5 Licitacion publica 3526 concluida 3526  
+    6 licitación pública 2986 ok        2986  
+    7 sin información                   <NA>  
+
+------------------------------------------------------------------------
+
+Para finalizar, unimos todas las técnicas que vimos en este ejemplo, para terminar con una tabla de datos mucho más útil que la que teníamos al inicio!
+
+``` r
+datos_limpios <- datos |> 
+  # limpiar el texto de antemano
+  mutate(texto_2 = str_to_lower(texto)) |> 
+  # detectar licitaciones
+    mutate(licitacion = ifelse(str_detect(str_to_lower(texto), "licitaci(ó|o)n"), 
+                             yes = "Licitación",
+                             no = "Otros")) |> 
+  # detectar si son públicas, privadas, o de otro tipo
   mutate(tipo = case_when(
-    # materia
-    str_detect(str_to_lower(materia), "lic.*privada") ~ "Licitación Privada",
-    str_detect(str_to_lower(materia), "lic.*p.blica") ~ "Licitación Pública",
-    str_detect(str_to_lower(materia), "trato.*directo|contra.*direct") ~ "Trato directo",
-    # submateria
-    str_detect(str_to_lower(submateria), "lic.*privada") ~ "Licitación Privada",
-    str_detect(str_to_lower(submateria), "lic.*p.blica") ~ "Licitación Pública",
-    str_detect(str_to_lower(submateria), "trato.*directo|contra.*direct") ~ "Trato directo",
-    .default = "Otros"
-  )
-  ) |> 
-  mutate(contratacion_publica = case_when(
-    str_detect(str_to_lower(materia), "contrata.*p.blic")~ TRUE, .default = FALSE)) |> 
-  # filter(tipo == "Licitación Pública" | contratacion_publica)
-  filter(contratacion_publica) # si es TRUE/FALSE, al filtrar se subentiende que es TRUE
+    # si son licitaciones, y si contiene "privada"
+    licitacion == "Licitación" & str_detect(texto_2, "privad(o|a)") ~ "Licitación privada",
+    # si son licitaciones y si contiene "público"
+    licitacion == "Licitación" & str_detect(texto_2, "p(ú|u)blic(a|o)") ~ "Licitación pública",
+    # otros valores
+    licitacion == "Otros" & str_detect(texto_2, "trato directo") ~ "Trato directo",
+    # todos los demás que no coincidieron en las condiciones anteriores
+    .default = "Otros")) |> 
+  # extraer números
+  mutate(numero = str_extract(texto, "\\d+"),
+         numero = as.numeric(numero)) |> # convertir números a numéricos
+  # eliminar columnas innecesarias
+  select(-contains("texto"))
 ```
 
-coincidir usando límites de palabras (word boundary)
+| licitacion | tipo               | numero |
+|:-----------|:-------------------|-------:|
+| Licitación | Licitación pública |   3432 |
+| Otros      | Trato directo      |   3341 |
+| Licitación | Licitación privada |    876 |
+| Licitación | Licitación pública |   3430 |
+| Licitación | Licitación pública |   3526 |
+| Licitación | Licitación pública |   2986 |
+| Otros      | Otros              |     NA |
 
-``` r
-tibble(tipo = c("Trato directo",
-                "TD",
-                "KADSHTDJSDKS",
-                "T D")) |> 
-  mutate(tipo2 = case_when(str_detect(tolower(tipo), "trato directo") ~ "Sí",
-                           str_detect(tipo, "\\b(TD)\\b") ~ "Sí", # boundary
-                           str_detect(tipo, "\\bT D\\b") ~ "Sí",
-                           .default = "No"))
-```
-
-guardar un resultado como objeto
-
-``` r
-datos_2 <- datos |> 
-  mutate(tipo = case_when(
-    # materia
-    str_detect(str_to_lower(materia), "lic.*privada") ~ "Licitación Privada",
-    str_detect(str_to_lower(materia), "lic.*p.blica") ~ "Licitación Pública",
-    str_detect(str_to_lower(materia), "trato.*directo|contra.*direct") ~ "Trato directo",
-    # submateria
-    str_detect(str_to_lower(submateria), "lic.*privada") ~ "Licitación Privada",
-    str_detect(str_to_lower(submateria), "lic.*p.blica") ~ "Licitación Pública",
-    str_detect(str_to_lower(submateria), "trato.*directo|contra.*direct") ~ "Trato directo",
-    .default = "Otros"
-  )
-  )
-
-datos_3 <- datos_2 |> 
-  mutate(contratacion_publica = case_when(
-    str_detect(str_to_lower(materia), "contrata.*p.blic")~ TRUE, .default = FALSE))
-
-datos_3 |> 
-  rowwise() |> 
-  mutate(concat = sample(399999:322999, 1))
-```
-
-Unir textos de forma redactada
-
-``` r
-library(glue)
-
-animales <- c("mapache", "gato", "castor")
-
-glue_collapse(animales, sep = ", ", last = " y ")
-```
-
-Agregar artículos a etxtos
-
-``` r
-nombre_region_de <- nombre_region |>
-  case_match("Metropolitana de Santiago" ~ nombre_region,
-             c("Biobío", "Maule", "Libertador General Bernardo O'Higgins") ~ paste("del", nombre_region),
-             .default = paste("de", nombre_region))
-```
-
-Limpiar texto
-
-``` r
-library(stringr)
-
-texto_esp <- "Éste texto tendrÁ una Pequeññña Ración de caracteres roñosos"
-
-str_replace_all(texto_esp, c("ñ"="n", "á"="a", "é"="e", "í"="i", "ó"="o", "ú"="u"))
-
-str_replace_all(str_to_lower(texto_esp), c("ñ"="n", "á"="a", "é"="e", "í"="i", "ó"="o", "ú"="u"))
-
-str_replace_all(str_to_upper(texto_esp), c("Ñ"="Ñ", "Á"="A", "É"="E", "Í"="I", "Ó"="O", "Ú"="U"))
-
-str_replace_all(texto_esp, c("Ñ"="ñ", "Á"="A", "É"="E", "Í"="I", "Ó"="O", "Ú"="U",
-                             "ñ"="n", "á"="a", "é"="e", "í"="i", "ó"="o", "ú"="u"))
-
-stringi::stri_trans_general(texto_esp, "Latin-ASCII")  # transliterar, pero remueve eñes
-
-iconv(texto_esp, to = "ASCII//translit") #elimina tildes pero los reaplica como símbolos individuales
-
-texto_num <- "hoy!!! tenemos **empanadas**..."
-
-textclean::strip(texto_num) # elimina símbolos pero no tildes ni eñes
-```
+{{< cafecito  >}}

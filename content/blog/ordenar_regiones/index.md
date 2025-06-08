@@ -105,7 +105,30 @@ regiones_ordenadas <- regiones |>
   ))
 ```
 
-Si bien este ordenamiento geográfico también podría hacerse por el nombre de las regiones, se recomienda hacerlo por el código de las regiones, para evitar problemas por las distintas formas de escribir el nombre de cada región[^1].
+Se recomienda hacer este tipo de operaciones usando el código de las regiones, para evitar problemas por las distintas formas de escribir el nombre de cada región[^1]. Pero si lo quieres hacer por el nombre de las regiones, sería así:
+
+``` r
+regiones_ordenadas <- regiones |> 
+  # agregar orden de región de norte a sur
+  mutate(orden_region = case_match(nombre_region,
+                                      "Tarapacá" ~  2,
+                                   "Antofagasta" ~  3,
+                                       "Atacama" ~  4,
+                                      "Coquimbo" ~  5,
+                                    "Valparaíso" ~  6,
+         "Libertador General Bernardo O'Higgins" ~  8,
+                                         "Maule" ~  9,
+                                        "Biobío" ~  11,
+                                  "La Araucanía" ~  12,
+                                     "Los Lagos" ~  14,
+     "Aysén del General Carlos Ibáñez del Campo" ~  15,
+          "Magallanes y de la Antártica Chilena" ~  16,
+                     "Metropolitana de Santiago" ~  7,
+                                      "Los Ríos" ~  13,
+                            "Arica y Parinacota" ~  1,
+                                         "Ñuble" ~  10
+     ))
+```
 
 Si ejecutamos la nueva tabla con la columna `orden_region`, vemos que sigue desordenada, así que la ordenamos:
 
@@ -148,7 +171,7 @@ regiones_ordenadas |>
   theme_minimal()
 ```
 
-<img src="ordenar_regiones.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.png" width="768" />
+<img src="ordenar_regiones.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-1.png" width="768" />
 
 Las regiones nuevamente aparecen desordenadas. ¿Por qué? Porque `{ggplot2}`, la librería de visualización de datos que usamos, así como muchos otros paquetes, no se basan en en el orden de las filas de la base de datos que usemos, sino en el *orden de la variable.* Como la variable `nombre_region` es una variable de texto (tipo *caracter*), no tiene un orden, así que se asume que su orden es alfabético (en el gráfico vemos que abajo están las regiones que empiezan con *A*, porque el eje `y` nace desde el cero que está abajo y aumenta hacia arriba).
 
@@ -178,7 +201,7 @@ regiones_ordenadas_2 |>
   guides(fill = guide_none())
 ```
 
-<img src="ordenar_regiones.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
+<img src="ordenar_regiones.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="768" />
 
 Naturalmente, las regiones aparecen al revés, porque el eje `y` parte desde abajo y aumenta hacia arriba, entonces la primera región (la de más al norte) aparece abajo. Pero sería esperable que las regiones estén ordenadas de norte a sur y de arriba hacia abajo (en el hemisferio sur), así que podemos invertir el orden del factor:
 
@@ -195,9 +218,9 @@ regiones_ordenadas_2 |>
   guides(fill = guide_none())
 ```
 
-<img src="ordenar_regiones.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="768" />
+<img src="ordenar_regiones.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
 
-¡Listo! Si te sirve, acá dejo un dataframe con las regiones del país, su código y su orden, para que puedas copiarlo y pegarlo en tu script de R:
+¡Listo! Si te sirve, acá dejo un dataframe con las regiones del país, su código y su orden, para que puedas copiarlo y pegarlo en tu script de R, y luego agregarlo a tus datos usando `left_join()`:
 
 ``` r
 # regiones_ordenadas |> 
