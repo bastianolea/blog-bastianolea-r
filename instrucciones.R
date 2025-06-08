@@ -26,7 +26,6 @@ blogdown::new_post(title = "Copia y pega datos fácilmente en R con {datapasta}"
 #     output-ext: "md"
 
 ## borradores ----
-"content/blog/datapasta/datapasta.qmd"
 "content/blog/stringr_texto/stringr.qmd" # sacar del computador de la pega
 "content/blog/quarto_loop/index.md"
 "content/blog/tutorial_scraping_selenium/selenium.qmd"

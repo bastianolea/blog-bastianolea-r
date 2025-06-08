@@ -20,9 +20,9 @@ excerpt: >-
 Amamos el castellano, con sus tildes y eñes, y nos encanta que R no tenga problemas para usar estos símbolos en cualquier parte del lenguaje. Pero hay veces en las que necesitamos deshacernos de estos símbolos especiales, como tildes, eñes, e incluso mayúsculas.
 
 Por ejemplo:
-\* Si queremos dar nombres a carpetas (porque puede dar conflictos con otros sistemas operativos o para subir archivos a internet),
-\* Si queremos buscar coincidencias de texto con `strinr::str_detect()` y queremos aumentar probabilidades de coincidir al omitir variaciones de los caracteres,
-\* Si queremos hacer un `left_join()` entre dos bases de datos con formas distintas de guardar los datos (todos en mayúscula, todos sin tilde pero con eñes, etc.)
+- Si queremos dar nombres a carpetas (porque puede dar conflictos con otros sistemas operativos o para subir archivos a internet),
+- Si queremos buscar coincidencias de texto con `stringr::str_detect()` y queremos aumentar probabilidades de coincidir al omitir variaciones de los caracteres,
+- Si queremos hacer un `left_join()` entre dos bases de datos con formas distintas de guardar los datos (todos en mayúscula, todos sin tilde pero con eñes, etc.)
 
 Hay muchas formas distintas de hacerlo, dependiendo de lo que necesitemos. El paquete `{stringr}` se enfoca en el procesamiento de texto y tiene varias funciones que nos pueden ayudar.
 

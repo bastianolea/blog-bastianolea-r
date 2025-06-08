@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.136.5">
-<title>Recodificación de datos categóricos con {stringr} | Blog</title>
+<title>Limpieza y recodificación de datos de texto en R con {stringr} | Blog</title>
 
 
 <meta property="twitter:site" content="@bastimapache">
@@ -24,12 +24,12 @@
   
     
   
-<meta name="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
+<meta name="description" content="Los datos que vienen como texto suelen necesitar una limpieza previa, y adicionalmente un procesamiento para poder aprovecharlos mejor. En este tutorial usamos el paquete `{stringr}` para limpiar y ordenar unos datos de texto.">
 
 
 <meta property="og:site_name" content="Blog">
-<meta property="og:title" content="Recodificación de datos categóricos con {stringr} | Blog">
-<meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
+<meta property="og:title" content="Limpieza y recodificación de datos de texto en R con {stringr} | Blog">
+<meta property="og:description" content="Los datos que vienen como texto suelen necesitar una limpieza previa, y adicionalmente un procesamiento para poder aprovecharlos mejor. En este tutorial usamos el paquete `{stringr}` para limpiar y ordenar unos datos de texto." />
 <meta property="og:type" content="page" />
 <meta property="og:url" content="http://localhost:4321/blog/stringr_texto/" />
 <meta property="og:locale" content="es-ES">
@@ -44,17 +44,15 @@
     
     
   
-  <meta itemprop="name" content="Recodificación de datos categóricos con {stringr}">
-  <meta itemprop="description" content="library(dplyr) library(readxl) library(stringr) # para trabajar con textos cargar datos
-datos &lt;- read_excel(&#34;MATERIAS_R.xlsx&#34;) |&gt; rename(materia = 1, submateria = 2) conteo exploratorio de la columna
-datos |&gt; count(materia, sort = TRUE) crear una columna
-datos |&gt; count(materia, sort = TRUE) |&gt; mutate(id = 1) detectar si en un texto está presente otro texto
-str_detect(&#34;un texto acá muy feo&#34;, &#34;feo&#34;) # sí (TRUE) str_detect(&#34;un texto acá muy bonito&#34;, &#34;feo&#34;) #no (FALSE) nueva columna detectando si está presente un texto en una columna
-datos |&gt; count(materia, sort = TRUE) |&gt; mutate(ley_19886 = str_detect(materia, &#34;19.886&#34;)) lo mismo, pero con ifelse, para explicitar la condición verdadera y la falsa">
-  <meta itemprop="datePublished" content="2024-12-23T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-12-23T00:00:00+00:00">
-  <meta itemprop="wordCount" content="966">
-  <meta itemprop="keywords" content="Limpieza de datos,Dplyr,Stringr,Procesamiento de datos,Datos">
+  <meta itemprop="name" content="Limpieza y recodificación de datos de texto en R con {stringr}">
+  <meta itemprop="description" content="El paquete {stringr} facilita todo tipo de trabajo que implique texto en R.
+En general, los datos que vienen como texto suelen necesitar una limpieza previa, y adicionalmente un procesamiento para poder aprovecharlos mejor.
+Sigamos un ejemplo con una columna que viene con textos sobre compras en un servicio público:
+library(dplyr) library(stringr) # para trabajar con textos datos &lt;- tibble::tribble( ~texto, &#34;Licitación pública N°3432&#34;, &#34;Trato directo #3341&#34;, &#34;Licitación privada 876&#34;, &#34;LICITACION PUBLICA N3430&#34;, &#34;Licitacion publica 3526 concluida&#34;, &#34;licitación pública 2986 ok&#34;, &#34;sin información&#34;) texto Licitación pública N°3432 Trato directo #3341 Licitación privada 876 LICITACION PUBLICA N3430 Licitacion publica 3526 concluida licitación pública 2986 ok sin información Como es de esperar, el texto viene sucio: escrito de distintas maneras, con y sin tildes, con y sin mayúsculas, etc.">
+  <meta itemprop="datePublished" content="2025-06-08T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-06-08T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1370">
+  <meta itemprop="keywords" content="Limpieza de datos,Texto">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="false" type="image/x-icon">
@@ -112,6 +110,11 @@ datos |&gt; count(materia, sort = TRUE) |&gt; mutate(ley_19886 = str_detect(mate
         
         
       <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
       
         
         
@@ -261,15 +264,15 @@ datos |&gt; count(materia, sort = TRUE) |&gt; mutate(ley_19886 = str_detect(mate
   <section class="page-content mw7 center">
     <article class="post-content pa0 ph4-l">
       <header class="post-header">
-        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Recodificación de datos categóricos con {stringr}</h1>
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Limpieza y recodificación de datos de texto en R con {stringr}</h1>
         
         
-        <p class="f7 db mv0 ttu">23/12/2024</p>
+        <p class="f7 db mv0 ttu">8/6/2025</p>
         
         
         
   <dl class="f6 lh-copy">
-    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a>  <a href="http://localhost:4321/tags/dplyr">dplyr</a>  <a href="http://localhost:4321/tags/stringr">stringr</a>  <a href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a href="http://localhost:4321/tags/datos">datos</a> </dd></em>
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a>  <a href="http://localhost:4321/tags/texto">texto</a> </dd></em>
   </dl>
 
 
@@ -278,218 +281,311 @@ datos |&gt; count(materia, sort = TRUE) |&gt; mutate(ley_19886 = str_detect(mate
 
       </header>
       <section class="post-body pt5 pb4">
-        <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">readxl</span><span style="color:#908caa">)</span>
+        <p>
+<a href="https://stringr.tidyverse.org/index.html" target="_blank" rel="noopener">El paquete <code>{stringr}</code></a> facilita todo tipo de trabajo que implique texto en R.</p>
+<p>En general, los datos que vienen como texto suelen necesitar una limpieza previa, y adicionalmente un procesamiento para poder aprovecharlos mejor.</p>
+<p>Sigamos un ejemplo con una columna que viene con textos sobre compras en un servicio público:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># para trabajar con textos</span>
-</span></span></code></pre></div><p>cargar datos</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_excel</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;MATERIAS_R.xlsx&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rename</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> 
-</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">submateria</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>conteo exploratorio de la columna</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>crear una columna</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">id</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>detectar si en un texto está presente otro texto</p>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tibble</span><span style="color:#908caa">::</span><span style="color:#ea9a97">tribble</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">~</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#f6c177">&#34;Licitación pública N°3432&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f6c177">&#34;Trato directo #3341&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f6c177">&#34;Licitación privada 876&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f6c177">&#34;LICITACION PUBLICA N3430&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f6c177">&#34;Licitacion publica 3526 concluida&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f6c177">&#34;licitación pública 2986 ok&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#f6c177">&#34;sin información&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">texto</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">Licitación pública N°3432</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Trato directo #3341</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Licitación privada 876</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">LICITACION PUBLICA N3430</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Licitacion publica 3526 concluida</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">licitación pública 2986 ok</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">sin información</td>
+      </tr>
+  </tbody>
+</table>
+<p>Como es de esperar, el texto viene <em>sucio</em>: escrito de distintas maneras, con y sin tildes, con y sin mayúsculas, etc.</p>
+
+
+
+
+<h3 id="crear-variable-a-partir-de-la-detección-de-texto">Crear variable a partir de la detección de texto
+  <a href="#crear-variable-a-partir-de-la-detecci%c3%b3n-de-texto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Una primera limpieza de los datos puede ser identificar si un texto específico está o no presente en la variable de texto sucio. Para ello podemos usar la función <code>str_detect()</code>, que retorna <code>TRUE</code> o <code>FALSE</code> si en el texto que se le entrega como primer argumento está presente el texto en su segundo argumento. Por ejemplo:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;un texto acá muy feo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;feo&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># sí (TRUE)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;un texto acá muy bonito&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;feo&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86">#no (FALSE)</span>
-</span></span></code></pre></div><p>nueva columna detectando si está presente un texto en una columna</p>
+</span></span></code></pre></div><pre><code>[1] TRUE
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;un texto acá muy bonito&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;feo&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86">#no (FALSE)</span>
+</span></span></code></pre></div><pre><code>[1] FALSE
+</code></pre>
+<p>Aplicamos <code>str_detect()</code> dentro de un <code>mutate()</code> para crear una columna que indique la presencia de un texto a lo largo de la columna de texto:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ley_19886</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;19.886&#34;</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><p>lo mismo, pero con ifelse, para explicitar la condición verdadera y la falsa</p>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">licitacion</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Licitación&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 7 × 2
+  texto                             licitacion
+  &lt;chr&gt;                             &lt;lgl&gt;     
+1 Licitación pública N°3432         TRUE      
+2 Trato directo #3341               FALSE     
+3 Licitación privada 876            TRUE      
+4 LICITACION PUBLICA N3430          FALSE     
+5 Licitacion publica 3526 concluida FALSE     
+6 licitación pública 2986 ok        FALSE     
+7 sin información                   FALSE     
+</code></pre>
+<p>Vemos que sólo entrega dos <code>TRUE</code>, siendo que en las filas 4, 5 y 6 también debería encontrar coincidencias. Usualmente esto se debe a <strong>diferencias en las mayúsculas</strong> de las palabras. Para prevenirlo, primero convertimos el texto a minúsculas con <code>str_to_lower()</code>, y buscamos el término en minúsculas:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ley_19886</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">ifelse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;19.886&#34;</span><span style="color:#908caa">),</span> 
-</span></span><span style="display:flex;"><span>                            <span style="color:#ea9a97">yes</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Ley 19.886&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                            <span style="color:#ea9a97">no</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Otros&#34;</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><p>crear columna con coincidencia múltiple</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;licitación privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;licitación pública&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;trato directo&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># contar cuántas observaciones coinciden</span>
-</span></span></code></pre></div><p>crear columna con coincidencia múltiple, pero primero pasando a minúscula la columna materia</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitación privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitación pública&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato directo&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># contar cuántas observaciones coinciden</span>
-</span></span></code></pre></div><p>escribir distintas formas de coincidir cada texto a una misma categoría
-(por ejemplo, los tildes o plurales)</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitación privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitacion privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitación pública&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitacion pública&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitaciones publicas&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato directo&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><p>usar regex para coincidir en una misma regla palabras con leves diferencias</p>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">licitacion</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitación&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 7 × 2
+  texto                             licitacion
+  &lt;chr&gt;                             &lt;lgl&gt;     
+1 Licitación pública N°3432         TRUE      
+2 Trato directo #3341               FALSE     
+3 Licitación privada 876            TRUE      
+4 LICITACION PUBLICA N3430          FALSE     
+5 Licitacion publica 3526 concluida FALSE     
+6 licitación pública 2986 ok        TRUE      
+7 sin información                   FALSE     
+</code></pre>
+<p>Obtenemos una coincidencia más! Pero siguen faltando dos casos (casos 4 y 5) que deberían retornar <code>TRUE</code>. En estos casos, el problema está con <strong>diferencias en los tildes</strong> de las palabras. Para solucionar esto, podemos hacer una búsqueda de texto usando <em>regex</em>.</p>
+
+
+
+
+<h4 id="expresiones-regulares">Expresiones regulares
+  <a href="#expresiones-regulares"></a>
+</h4>
+<p>Las 
+<a href="https://stringr.tidyverse.org/articles/regular-expressions.html" target="_blank" rel="noopener">expresiones regulares o <em>regex</em></a> son formas de escribir patrones de búsqueda, y son soportadas por todas las funciones de <code>{stringr}</code>. Uno de estos patrones es el operador <em>o</em> (<code>|</code>). El operador <em>o</em> puede usarse para encontrar coincidencias con varias palabras distintas separadas con <code>|</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;hola&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;holo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;holi&#34;</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;hola|holi&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1]  TRUE FALSE  TRUE
+</code></pre>
+<p>En este ejemplo, se coincide con un <code>TRUE</code> tanto el texto <code>hola</code> como <code>holi</code>. Pero en este ejemplo ambas palabras son muy similares; 75% similares, para ser exactos 🤓☝🏼. Podemos poner entre paréntesis los caracteres específicos que varían, para que dentro de una misma palabra se acepten distintos caracteres:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;hola&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;holo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;holi&#34;</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;hol(a|i)&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitaci(ó|o)n privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitaci(ó|o)n p(ú|u)blica&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitaciones p(ú|u)blicas&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato directo&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>usar el operador punto de regex para coincidir con cualquier letra en la posición del punto
-(por ejemplo, &ldquo;.&rdquo; equivaldría a &ldquo;a&rdquo; o &ldquo;á&rdquo; o &ldquo;o&rdquo;)</p>
+</span></span></code></pre></div><pre><code>[1]  TRUE FALSE  TRUE
+</code></pre>
+<p>De este modo, se coincide con la palabra <code>hol</code> seguida tanto de <code>a</code> como de <code>i</code>; es decir, <code>hola</code> y <code>holi</code>.</p>
+<p>Finalmente, también podemos pedirle que coincida una palabra que dentro de ella tenga <em>cualquier</em> caracter:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;hola&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;holo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;holi&#34;</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;hol.&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitaci.n privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitaci.n p.blica&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitaciones p.blicas&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato directo&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>usar el operador &ldquo;.*&rdquo; de regex para indicar cualquier cantidad de caracteres entre el texto inicial y el final
-(por ejemplo &ldquo;ho.*la&rdquo; coincide &ldquo;hola&rdquo; y &ldquo;hooooooola&rdquo; o &ldquo;ho8787897la&rdquo; o &ldquo;hola hola&rdquo;)</p>
+</span></span></code></pre></div><pre><code>[1] TRUE TRUE TRUE
+</code></pre>
+<p>Siguiendo estos ejemplos para volver a nuestros datos, podemos coincidir texto con y sin tildes al mismo tiempo si usamos <em>regex</em> para especificar que uno o varios caracteres pueden ser distintos; en este caso, la letra <em>o</em> con y sin tilde:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">licitacion</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitaci(ó|o)n&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 7 × 2
+  texto                             licitacion
+  &lt;chr&gt;                             &lt;lgl&gt;     
+1 Licitación pública N°3432         TRUE      
+2 Trato directo #3341               FALSE     
+3 Licitación privada 876            TRUE      
+4 LICITACION PUBLICA N3430          TRUE      
+5 Licitacion publica 3526 concluida TRUE      
+6 licitación pública 2986 ok        TRUE      
+7 sin información                   FALSE     
+</code></pre>
+<p>Podemos usar el mismo código pero dentro de un <code>ifelse()</code> para que, en vez de <code>TRUE</code> y <code>FALSE</code>, retorne lo que queramos para las condicies verdadera y falsa:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">licitacion</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">ifelse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitaci(ó|o)n&#34;</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>                             <span style="color:#ea9a97">yes</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Licitación&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                             <span style="color:#ea9a97">no</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Otros&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 7 × 2
+  texto                             licitacion
+  &lt;chr&gt;                             &lt;chr&gt;     
+1 Licitación pública N°3432         Licitación
+2 Trato directo #3341               Otros     
+3 Licitación privada 876            Licitación
+4 LICITACION PUBLICA N3430          Licitación
+5 Licitacion publica 3526 concluida Licitación
+6 licitación pública 2986 ok        Licitación
+7 sin información                   Otros     
+</code></pre>
+<p>También podemos usar el operador <code>.*</code> de <em>regex</em> para indicar cualquier cantidad de caracteres entre el texto antes y después del operador. Por ejemplo:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;hola&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;hooooooola&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ho8787897la&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;hola hola&#34;</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;ho.*la&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*p.blica&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato.*directo|contra.*direct&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>buscar casos que aún no tengan coincidencia</p>
+</span></span></code></pre></div><pre><code>[1] TRUE TRUE TRUE TRUE
+</code></pre>
+<p>En el ejemplo, <code>ho.*la</code> significa coincidir con un texto que tenga <code>ho</code>, cualquier texto, y luego <code>la</code>; por lo tanto, coincide con <code>hola</code>, <code>hooooooola</code>, <code>ho8787897la</code> y cualquier otra variación.</p>
+<p>Podemos usar esto para hacer coincidencias más flexibles:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*p.blica&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato.*directo|contra.*direct&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">is.na</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">))</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*p.blica&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato.*directo|contra.*direct&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">submateria</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">tipo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">is.na</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><p>crear la columna con coincidencias desde mas de una columna</p>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación privada&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*p.blica&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación pública&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato.*directo|contra.*direct&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 7 × 2
+  texto                             tipo              
+  &lt;chr&gt;                             &lt;chr&gt;             
+1 Licitación pública N°3432         Licitación pública
+2 Trato directo #3341               Trato directo     
+3 Licitación privada 876            Licitación privada
+4 LICITACION PUBLICA N3430          Licitación pública
+5 Licitacion publica 3526 concluida Licitación pública
+6 licitación pública 2986 ok        Licitación pública
+7 sin información                   &lt;NA&gt;              
+</code></pre>
+<p>Si combinamos los aprendizajes hasta el momento, podemos crear una columna nueva que entregue distintos valores dependiendo del texto detectado, gracias a <code>case_when()</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># limpiar el texto de antemano</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_2</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># detectar licitaciones</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">licitacion</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;licitaci(ó|o)n&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># detectar si son públicas, privadas, o de otro tipo</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># materia</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*p.blica&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato.*directo|contra.*direct&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># submateria</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">submateria</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">submateria</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*p.blica&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">submateria</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato.*directo|contra.*direct&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">submateria</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">tipo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sort</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>usar el operador &ldquo;$&rdquo; de regex para buscar algo que solo aparezca al final de la línea</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;director&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;directo$&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;directo trato&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;directorio&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;director de&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;trato directo&#34;</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;directo$&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;directo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;directo$&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;director de asuntos&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;directo$&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>coincidir usando una condición que tiene que cumplirse y otra que no tenga que cumplirse
-así coincidimos por un criterio pero excluimos por otro, simultáneamente</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tibble</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;contrato de personal&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;contratación directa&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;contrato directo&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo2</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;contrat&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">&amp;</span> <span style="color:#908caa">!</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;personal&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Sí&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                           <span style="color:#ea9a97">.default</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;No&#34;</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><p>crear otra columna más, de tipo lógico (TRUE/FALSE)</p>
+</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># si son licitaciones, y si contiene &#34;privada&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">licitacion</span> <span style="color:#908caa">&amp;</span> <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;privad(o|a)&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación privada&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># si son licitaciones y si contiene &#34;público&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">licitacion</span> <span style="color:#908caa">&amp;</span> <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;p(ú|u)blic(a|o)&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación pública&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># otros valores</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;trato directo&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># todos los demás que no coincidieron en las condiciones anteriores</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">.default</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Otros&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 7 × 4
+  texto                             texto_2                     licitacion tipo 
+  &lt;chr&gt;                             &lt;chr&gt;                       &lt;lgl&gt;      &lt;chr&gt;
+1 Licitación pública N°3432         licitación pública n°3432   TRUE       Lici…
+2 Trato directo #3341               trato directo #3341         FALSE      Trat…
+3 Licitación privada 876            licitación privada 876      TRUE       Lici…
+4 LICITACION PUBLICA N3430          licitacion publica n3430    TRUE       Lici…
+5 Licitacion publica 3526 concluida licitacion publica 3526 co… TRUE       Lici…
+6 licitación pública 2986 ok        licitación pública 2986 ok  TRUE       Lici…
+7 sin información                   sin información             FALSE      Otros
+</code></pre>
+
+
+
+
+<h3 id="extraer-textos-desde-un-texto">Extraer textos desde un texto
+  <a href="#extraer-textos-desde-un-texto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Una última alternativa para limpiar estos datos sería <em>extraer</em> texto específico desde la variable de texto. Para esto podemos usar la función <code>str_extract()</code> combinada con un operador <em>regex</em> para extraer secuencias de números (<code>\\d+</code>):</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">numero</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">str_extract</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;\\d+&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 7 × 2
+  texto                             numero
+  &lt;chr&gt;                             &lt;chr&gt; 
+1 Licitación pública N°3432         3432  
+2 Trato directo #3341               3341  
+3 Licitación privada 876            876   
+4 LICITACION PUBLICA N3430          3430  
+5 Licitacion publica 3526 concluida 3526  
+6 licitación pública 2986 ok        2986  
+7 sin información                   &lt;NA&gt;  
+</code></pre>
+<hr>
+<p>Para finalizar, unimos todas las técnicas que vimos en este ejemplo, para terminar con una tabla de datos mucho más útil que la que teníamos al inicio!</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_limpios</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># limpiar el texto de antemano</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_2</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># detectar licitaciones</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">licitacion</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">ifelse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;licitaci(ó|o)n&#34;</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>                             <span style="color:#ea9a97">yes</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Licitación&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                             <span style="color:#ea9a97">no</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Otros&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># detectar si son públicas, privadas, o de otro tipo</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># materia</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*p.blica&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato.*directo|contra.*direct&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># submateria</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">submateria</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">submateria</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*p.blica&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">submateria</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato.*directo|contra.*direct&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">.default</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Otros&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">contratacion_publica</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;contrata.*p.blic&#34;</span><span style="color:#908caa">)</span><span style="color:#908caa">~</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">.default</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># filter(tipo == &#34;Licitación Pública&#34; | contratacion_publica)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">contratacion_publica</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># si es TRUE/FALSE, al filtrar se subentiende que es TRUE</span>
-</span></span></code></pre></div><p>coincidir usando límites de palabras (word boundary)</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tibble</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;TD&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;KADSHTDJSDKS&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;T D&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo2</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tolower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato directo&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Sí&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                           <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;\\b(TD)\\b&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Sí&#34;</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># boundary</span>
-</span></span><span style="display:flex;"><span>                           <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;\\bT D\\b&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Sí&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                           <span style="color:#ea9a97">.default</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;No&#34;</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><p>guardar un resultado como objeto</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># materia</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*p.blica&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato.*directo|contra.*direct&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># submateria</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">submateria</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*privada&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Privada&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">submateria</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;lic.*p.blica&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación Pública&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">submateria</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;trato.*directo|contra.*direct&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">.default</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Otros&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos_3</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datos_2</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">contratacion_publica</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">materia</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;contrata.*p.blic&#34;</span><span style="color:#908caa">)</span><span style="color:#908caa">~</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">.default</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">))</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos_3</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rowwise</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">concat</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">sample</span><span style="color:#908caa">(</span><span style="color:#f6c177">399999</span><span style="color:#908caa">:</span><span style="color:#f6c177">322999</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><p>Unir textos de forma redactada</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">glue</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">animales</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;mapache&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;gato&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;castor&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">glue_collapse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animales</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sep</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;, &#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">last</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34; y &#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>Agregar artículos a etxtos</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">nombre_region_de</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">nombre_region</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">case_match</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Metropolitana de Santiago&#34;</span> <span style="color:#908caa">~</span> <span style="color:#ea9a97">nombre_region</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Biobío&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Maule&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Libertador General Bernardo O&#39;Higgins&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;del&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombre_region</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">.default</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;de&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombre_region</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><p>Limpiar texto</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">texto_esp</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;Éste texto tendrÁ una Pequeññña Ración de caracteres roñosos&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">str_replace_all</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;ñ&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;n&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;á&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;a&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;é&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;e&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;í&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;i&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ó&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;o&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ú&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;u&#34;</span><span style="color:#908caa">))</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">str_replace_all</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_lower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;ñ&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;n&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;á&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;a&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;é&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;e&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;í&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;i&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ó&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;o&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ú&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;u&#34;</span><span style="color:#908caa">))</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">str_replace_all</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_to_upper</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Ñ&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;Ñ&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Á&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;A&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;É&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;E&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Í&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;I&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Ó&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;O&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Ú&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;U&#34;</span><span style="color:#908caa">))</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">str_replace_all</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Ñ&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;ñ&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Á&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;A&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;É&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;E&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Í&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;I&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Ó&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;O&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Ú&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;U&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                             <span style="color:#f6c177">&#34;ñ&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;n&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;á&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;a&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;é&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;e&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;í&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;i&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ó&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;o&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ú&#34;</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;u&#34;</span><span style="color:#908caa">))</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">stringi</span><span style="color:#908caa">::</span><span style="color:#ea9a97">stri_trans_general</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Latin-ASCII&#34;</span><span style="color:#908caa">)</span>  <span style="color:#6e6a86"># transliterar, pero remueve eñes</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">iconv</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_esp</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">to</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;ASCII//translit&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86">#elimina tildes pero los reaplica como símbolos individuales</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">texto_num</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;hoy!!! tenemos **empanadas**...&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">textclean</span><span style="color:#908caa">::</span><span style="color:#ea9a97">strip</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_num</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># elimina símbolos pero no tildes ni eñes</span>
-</span></span></code></pre></div>
+</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># si son licitaciones, y si contiene &#34;privada&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">licitacion</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Licitación&#34;</span> <span style="color:#908caa">&amp;</span> <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;privad(o|a)&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación privada&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># si son licitaciones y si contiene &#34;público&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">licitacion</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Licitación&#34;</span> <span style="color:#908caa">&amp;</span> <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;p(ú|u)blic(a|o)&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Licitación pública&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># otros valores</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">licitacion</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Otros&#34;</span> <span style="color:#908caa">&amp;</span> <span style="color:#ea9a97">str_detect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto_2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;trato directo&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">~</span> <span style="color:#f6c177">&#34;Trato directo&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># todos los demás que no coincidieron en las condiciones anteriores</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">.default</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Otros&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># extraer números</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">numero</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">str_extract</span><span style="color:#908caa">(</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;\\d+&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">numero</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">as.numeric</span><span style="color:#908caa">(</span><span style="color:#ea9a97">numero</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># convertir números a numéricos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># eliminar columnas innecesarias</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#908caa">-</span><span style="color:#ea9a97">contains</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;texto&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">licitacion</th>
+          <th style="text-align: left">tipo</th>
+          <th style="text-align: right">numero</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">Licitación</td>
+          <td style="text-align: left">Licitación pública</td>
+          <td style="text-align: right">3432</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Otros</td>
+          <td style="text-align: left">Trato directo</td>
+          <td style="text-align: right">3341</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Licitación</td>
+          <td style="text-align: left">Licitación privada</td>
+          <td style="text-align: right">876</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Licitación</td>
+          <td style="text-align: left">Licitación pública</td>
+          <td style="text-align: right">3430</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Licitación</td>
+          <td style="text-align: left">Licitación pública</td>
+          <td style="text-align: right">3526</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Licitación</td>
+          <td style="text-align: left">Licitación pública</td>
+          <td style="text-align: right">2986</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Otros</td>
+          <td style="text-align: left">Otros</td>
+          <td style="text-align: right">NA</td>
+      </tr>
+  </tbody>
+</table>
+<div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+
         
         <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
     <dt class="fw7">Fecha de publicación:</dt>
-    <dd class="fw5 ml0">December 23, 2024</dd>
+    <dd class="fw5 ml0">June 8, 2025</dd>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">5 minute read, 966 words</dd>
+    <dd class="fw5 ml0">7 minute read, 1370 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -501,7 +597,7 @@ así coincidimos por un criterio pero excluimos por otro, simultáneamente</p>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a>  <a href="http://localhost:4321/tags/dplyr">dplyr</a>  <a href="http://localhost:4321/tags/stringr">stringr</a>  <a href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a href="http://localhost:4321/tags/datos">datos</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a>  <a href="http://localhost:4321/tags/texto">texto</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -509,9 +605,9 @@ así coincidimos por un criterio pero excluimos por otro, simultáneamente</p>
     
     <dd class="fw5 ml0"><a href="/blog/2025-03-31/">Limpiar textos con símbolos, tildes o eñes en R</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/genero_nombres_llm/">Predecir género a partir de nombres usando un modelo de lenguaje en R</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/2025-03-30/">Redactar una lista de palabras separadas por comas en R</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/r_introduccion/dplyr_intermedio/">Manejo y transformación de datos con {dplyr} y {tidyr}</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/2025-02-14/">Rellenar datos perdidos usando datos de otra tabla</a></dd>
     
   </dl>
 </details>
@@ -521,13 +617,10 @@ así coincidimos por un criterio pero excluimos por otro, simultáneamente</p>
         <div class="post-pagination dt w-100 mt4 mb2">
   
   
-    <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4321/blog/2024-12-26/">&larr; Haciendo que un loop muy largo termine sin cancelarlo</a>
-  
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4321/blog/analisis_sentimiento_llm/">Análisis de sentimiento usando modelos de lenguaje (LLM) locales en R &rarr;</a>
+    href="http://localhost:4321/blog/datapasta/">Copia y pega datos en R con {datapasta} &rarr;</a>
   
 </div>
 
