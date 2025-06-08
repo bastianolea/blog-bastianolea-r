@@ -17,9 +17,13 @@ editor_options:
 excerpt: "`{datapasta}` es un paquete para R que te ayuda a copiar y pegar datos desde y hacia R. Este paquete convierte tus datos en texto que puedes copiar y pegar en otro script, o editar manualmente. Usa la función `dpasta()` sobre un dataframe para hacer que los datos aparezcan como en texto directamente debajo de donde la ejecutaste. Por otro lado, `{clipr}` nos va a permitir copiar un dataframe desde R para poder pegarlo en programas como Excel."
 ---
 
+
+
 [`{datapasta}`](https://github.com/MilesMcBain/datapasta) es un paquete para R que te ayuda a copiar y pegar datos desde y hacia R. 
 
 Instala `{datapasta}` ejecutando el siguiente código:
+
+
 
 ```{r}
 #| eval: false
@@ -27,11 +31,15 @@ install.packages("datapasta", repos = c(mm = "https://milesmcbain.r-universe.dev
 ```
 
 
+
+
 ## Copiar
 
 `{datapasta}` puede ayudarte a **compartir fácilmente datos**, al convertir tus datos en texto que puedes copiar y pegar en otro lado, o editar manualmente. Usa la función `dpasta()` sobre un dataframe para hacer que los datos aparezcan como en texto directamente debajo de donde la ejecutaste. 
 
 Por ejemplo, creemos una tabla pequeña:
+
+
 
 ```{r}
 #| warning: false
@@ -46,14 +54,22 @@ tabla <- iris |>
 tabla
 ```
 
+
+
 Imagínate que queremos corregir esta tabla, usarla como ejemplo, o compartirla con alguien. Entonces usamos la función `dpasta()`:
+
+
 
 ```{r}
 #| eval: false
 datapasta::dpasta(tabla)
 ```
 
+
+
 ¡Magia! Aparecerá el siguiente código en nuestro script:
+
+
 ```{r}
 #| eval: false
 tibble::tribble(
@@ -65,6 +81,8 @@ tibble::tribble(
                4.6,          3.2,           1.4,          0.2,     "setosa"
      )
 ```
+
+
 
 Al ejecutar este código podemos re-crear el dataframe. Es decir, obtenemos los datos como texto que luego podemos usar para crear un nuevo dataframe. Esto tiene varias utilidades:
 
@@ -82,6 +100,8 @@ Este tipo de tablas de datos almacenadas como código se llaman [`tribble`](http
 `{datapasta}` también nos ayuda a _pegar_ en R datos que sacamos desde otro sitio, con la función `tribble_paste()`. Usando esta función podemos copiar datos de una tabla de Excel o de una página web y pegarlos como un dataframe en R.
 
 ¡Probemos" Selecciona la siguiente tabla[^1] y cópiala:
+
+
 
 ```{r}
 #| include: false
@@ -102,6 +122,8 @@ pib_latam <- tibble::tribble(
 pib_latam |> knitr::kable("markdown")
 ```
 
+
+
 |País               |  PIB (PPP)| PIB (per capita)|
 |:------------------|----------:|----------------:|
 |Brazil             |   4958.122|            23238|
@@ -117,12 +139,18 @@ pib_latam |> knitr::kable("markdown")
 
 [^1]: Fuente: [Wikipedia](https://en-m-wikipedia-org.translate.goog/wiki/List_of_Latin_American_and_Caribbean_countries_by_GDP_(PPP))
 
+
+
 ```{r}
 #| eval: false
 datapasta::tribble_paste()
 ```
 
+
+
 En tu consola aparecerá el código necesario para cargar la tabla copiada en R!
+
+
 
 ```{r}
 #| eval: false
@@ -141,15 +169,21 @@ tibble::tribble(
      )
 ```
 
+
+
 Esto nos va a resultar útil si queremos pegar datos dentro de R, pero qué pasa si queremos copiar datos desde R y pegarlos en Excel u otro software planillas de datos?
 
 ### Pegar datos desde R a Excel
 La función `write_clip()` del paquete [`{clipr}`](http://matthewlincoln.net/clipr/) nos permite guardar datos en el portapapeles del sistema para poder pegarlos en Excel, Numbers, Google Sheets u otros programas:
 
+
+
 ```{r}
 #| eval: false
 pib_latam |> clipr::write_clip()
 ```
+
+
 
 Los datos quedarán copiados en el portapapeles de tu sistema, y vas a poder pegarlos en Excel:
 
@@ -157,4 +191,7 @@ Los datos quedarán copiados en el portapapeles de tu sistema, y vas a poder peg
 
 ----
 
+
+
 {{< cafecito >}}
+
