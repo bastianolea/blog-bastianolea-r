@@ -26,7 +26,6 @@ blogdown::new_post(title = "Copia y pega datos fácilmente en R con {datapasta}"
 #     output-ext: "md"
 
 ## borradores ----
-"content/blog/quarto_loop/index.md"
 "content/blog/tutorial_scraping_selenium/selenium.qmd"
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
 "content/blog/tutorial_digitalocean/index.md"

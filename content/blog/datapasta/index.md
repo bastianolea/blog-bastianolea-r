@@ -1,5 +1,5 @@
 ---
-title: 'Copia y pega datos en R con {datapasta}'
+title: 'Copia y pega datos en R con {datapasta} y {clipr}'
 author: Bastián Olea Herrera
 date: '2025-06-06'
 slug: []
@@ -17,9 +17,10 @@ editor_options:
 excerpt: >-
   `{datapasta}` es un paquete para R que te ayuda a copiar y pegar datos desde y
   hacia R. Este paquete convierte tus datos en texto que puedes copiar y pegar
-  en otro lado, o editar manualmente. Usa la función `dpasta()` sobre un
+  en otro script, o editar manualmente. Usa la función `dpasta()` sobre un
   dataframe para hacer que los datos aparezcan como en texto directamente debajo
-  de donde la ejecutaste.
+  de donde la ejecutaste. Por otro lado, `{clipr}` nos va a permitir copiar un
+  dataframe desde R para poder pegarlo en programas como Excel.
 ---
 
 
@@ -50,13 +51,13 @@ tabla
 ```
 
     # A tibble: 5 × 5
-      Sepal.Length Sepal.Width Petal.Length Petal.Width Species   
-             <dbl>       <dbl>        <dbl>       <dbl> <fct>     
-    1          6.4         2.8          5.6         2.1 virginica 
-    2          6.6         3            4.4         1.4 versicolor
-    3          5.9         3            5.1         1.8 virginica 
-    4          6.5         3            5.2         2   virginica 
-    5          4.4         2.9          1.4         0.2 setosa    
+      Sepal.Length Sepal.Width Petal.Length Petal.Width Species  
+             <dbl>       <dbl>        <dbl>       <dbl> <fct>    
+    1          6           2.2          5           1.5 virginica
+    2          5.1         3.8          1.5         0.3 setosa   
+    3          6.1         3            4.9         1.8 virginica
+    4          6.7         3.1          5.6         2.4 virginica
+    5          4.7         3.2          1.6         0.2 setosa   
 
 Imagínate que queremos corregir esta tabla, usarla como ejemplo, o compartirla con alguien. Entonces usamos la función `dpasta()`:
 
@@ -126,5 +127,23 @@ tibble::tribble(
               "Venezuela",      223.984,               8397L
      )
 ```
+
+Esto nos va a resultar útil si queremos pegar datos dentro de R, pero qué pasa si queremos copiar datos desde R y pegarlos en Excel u otro software planillas de datos?
+
+### Pegar datos desde R a Excel
+
+La función `write_clip()` del paquete [`{clipr}`](http://matthewlincoln.net/clipr/) nos permite guardar datos en el portapapeles del sistema para poder pegarlos en Excel, Numbers, Google Sheets u otros programas:
+
+``` r
+pib_latam |> clipr::write_clip()
+```
+
+Los datos quedarán copiados en el portapapeles de tu sistema, y vas a poder pegarlos en Excel:
+
+{{< imagen "pegar_excel.png" >}}
+
+------------------------------------------------------------------------
+
+{{< cafecito  >}}
 
 [^1]: Fuente: [Wikipedia](https://en-m-wikipedia-org.translate.goog/wiki/List_of_Latin_American_and_Caribbean_countries_by_GDP_(PPP))
