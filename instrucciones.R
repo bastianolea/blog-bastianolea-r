@@ -14,10 +14,10 @@ blogdown::new_post(title = "Copia y pega datos con facilidad en R gracias a {dat
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Procesa datos más rápido en R usando todos los núcleos de tu procesador con {furrr}", 
-                   file = "blog/purrr_multicore/purrr_multicore.qmd",
+blogdown::new_post(title = "Sugerencias y autocompletado de código con GitHub Copilot", 
+                   file = "blog/github_copilot/github_copilot.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos", "procesamiento de datos", "purrr"),
+                   tags = c("consejos", "inteligencia artificial"),
                    categories = c() 
 )
 # format:
@@ -26,9 +26,11 @@ blogdown::new_post(title = "Procesa datos más rápido en R usando todos los nú
 #     output-ext: "md"
 
 ## borradores ----
+"content/blog/github_copilot/github_copilot.qmd"
 "content/blog/tutorial_scraping_selenium/selenium.qmd"
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
 "content/blog/tutorial_digitalocean/index.md"
+"content/blog/furrr_multiprocesador/index.qmd"
 
 
 
