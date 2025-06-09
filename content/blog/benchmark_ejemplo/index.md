@@ -6,6 +6,7 @@ date: 2024-11-05T00:00:00.000Z
 tags:
   - consejos
   - procesamiento de datos
+  - optimización
 lang: es
 excerpt: >-
   Para comparar el rendimiento de distintas expresiones en R, realizamos un

@@ -8,6 +8,7 @@ categories: []
 tags:
   - consejos
   - datos
+  - optimización
 execute:
   eval: true
 ---
