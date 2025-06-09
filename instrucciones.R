@@ -14,10 +14,10 @@ blogdown::new_post(title = "Copia y pega datos con facilidad en R gracias a {dat
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Copia y pega datos fácilmente en R con {datapasta}", 
-                   file = "blog/datapasta/index.md",
+blogdown::new_post(title = "Procesa datos más rápido en R usando todos los núcleos de tu procesador con {furrr}", 
+                   file = "blog/purrr_multicore/purrr_multicore.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos", "datos"),
+                   tags = c("consejos", "procesamiento de datos", "purrr"),
                    categories = c() 
 )
 # format:

@@ -117,7 +117,7 @@ _Conoce a otras personas que usan R o únete a una comundad de usuarios/as!_
 - [Riva Quiroga](https://rivaquiroga.cl/ahora/) 🇨🇱 (humanidades computacionales, lingüística)
 - [Bruno Rodrigues](https://www.brodrigues.co) (reproducibilidad)
 - [Luis D. Verde Arregoitia](https://luisdva.github.io) (biólogo)
-- [Rosana Ferrero](https://x.com/RosanaFerrero)
+- [Rosana Ferrero](https://x.com/RosanaFerrero) (comparte mucho contenido sobre estadísticas y R)
 - [Joachim Schork](https://statisticsglobe.com)
 - [Kennedy Mwavu](https://x.com/kennedymwavu)
 - [Rony Rodríguez-Ramírez](https://rrmaximiliano.github.io) 🇳🇮

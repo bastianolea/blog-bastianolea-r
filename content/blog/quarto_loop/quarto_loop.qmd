@@ -2,7 +2,7 @@
 title: Generar contenido en serie usando loops en un reporte Quarto
 author: Bastián Olea Herrera
 date: '2025-06-08'
-draft: true
+draft: false
 slug: []
 categories: []
 format:
