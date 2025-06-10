@@ -15,7 +15,7 @@ layout: list-sidebar
 show_author_byline: false
 show_button_links: true
 show_post_date: true
-show_post_thumbnail: false
+show_post_thumbnail: true
 sidebar:
   title: Análisis de datos en R
   author: Bastián Olea Herrera

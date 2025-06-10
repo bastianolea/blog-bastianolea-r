@@ -239,7 +239,7 @@ theme: lux
 
 <div style="display: flex; margin:auto;">
   <div style="flex: 1; margin: auto; padding: 6px;">
-  <img src="quarto_theme_cosmo.png" style="border-radius: 7px; max-height: 360px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="quarto_theme_cosmo-featured.png" style="border-radius: 7px; max-height: 360px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   </div>
   <div style="flex: 1; margin: auto; padding: 6px;">
   <img src="quarto_theme_lux.png" style="border-radius: 7px; max-height: 360px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">

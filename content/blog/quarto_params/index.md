@@ -96,7 +96,7 @@ quarto_render(input = "reporte_elecciones_params.qmd",
 
 El reporte resultante:
 
-{{< imagen "quarto_params_2.png" >}}
+{{< imagen "quarto_params_2-featured.png" >}}
 
 Con tan sólo cambiar el parámetro a una región distinta, como `"Los Ríos"`, obtenemos instantáneamente un nuevo reporte basado en los datos de esta región:
 

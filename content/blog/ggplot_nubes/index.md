@@ -1,5 +1,5 @@
 ---
-title: '¿Arte? Nubes aleatorias en {ggplot2}'
+title: '¿Arte? Nubes aleatorias en `{ggplot2}`'
 author: Bastián Olea Herrera
 date: '2024-11-08'
 format: hugo-md
@@ -7,7 +7,7 @@ slug: []
 categories: []
 tags:
   - ggplot2
-  - visualización de datos
+  - gráficos
   - curiosidades
 draft: false
 excerpt: >-
@@ -47,7 +47,7 @@ iris |>
   theme(legend.position = "none") +
   theme(plot.margin = margin(rep(2, 4))) + # margen interior del gráfico
   coord_cartesian(clip = "off") +
-  theme(plot.background = element_rect(fill = "#E9DEED", linewidth = 0))
+  theme(plot.background = element_rect(fill = "#EAD1FA", linewidth = 0))
 ```
 
 <img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png" width="672" />
@@ -67,7 +67,7 @@ iris |>
   theme(legend.position = "none") +
   theme(plot.margin = margin(rep(60, 4))) + # margen interior del gráfico
   coord_cartesian(clip = "off") +
-  theme(plot.background = element_rect(fill = "#E9DEED", linewidth = 0))
+  theme(plot.background = element_rect(fill = "#EAD1FA", linewidth = 0))
 ```
 
 <img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="672" />
@@ -87,7 +87,7 @@ iris |>
   theme(legend.position = "none") +
   theme(plot.margin = margin(rep(60, 4))) + # margen interior del gráfico
   coord_cartesian(clip = "off") +
-  theme(plot.background = element_rect(fill = "#E9DEED", linewidth = 0))
+  theme(plot.background = element_rect(fill = "#EAD1FA", linewidth = 0))
 ```
 
 <img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png" width="672" />
@@ -116,7 +116,7 @@ map(1:9, ~{
     theme(legend.position = "none") +
     theme(plot.margin = margin(rep(60, 4))) + # margen interior del gráfico
     coord_cartesian(clip = "off") +
-    theme(plot.background = element_rect(fill = "#E9DEED", linewidth = 0))
+    theme(plot.background = element_rect(fill = "#EAD1FA", linewidth = 0))
   
   # guardar
   # ggsave(glue("nubes/orbe_{sample(111:999, 1)}.png"), 

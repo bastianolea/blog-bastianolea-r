@@ -26,7 +26,6 @@ blogdown::new_post(title = "Sugerencias y autocompletado de código con GitHub C
 #     output-ext: "md"
 
 ## borradores ----
-"content/blog/github_copilot/github_copilot.qmd"
 "content/blog/tutorial_scraping_selenium/selenium.qmd"
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
 "content/blog/tutorial_digitalocean/index.md"

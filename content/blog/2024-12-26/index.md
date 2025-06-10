@@ -9,6 +9,7 @@ tags:
   - curiosidades
   - blog
   - purrr
+  - optimización
 ---
 
 Me encuentro en la tarea de tener que [procesar cientos de miles de datos](/blog/2024-12-20/), lo cual demorará varios cientos de horas, por lo que necesito que dejar mi computador trabajando durante las noches, por varios días. La idea es que, cada noche, el computador procese de la mayor cantidad de datos posibles, los resultados se guarden, y a la siguiente noche el proceso se repita con datos nuevos, hasta que en algunos días logre procesar todos los cientos de miles de datos que necesito. 
