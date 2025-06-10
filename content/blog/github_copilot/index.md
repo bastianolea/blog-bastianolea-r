@@ -39,7 +39,7 @@ También tienes la opción de **permitir que el modelo tenga acceso a todos los 
 Luego de varias semanas utilizándolo, puedo decir que los resultados suelen ser muy positivos.
 
 Copilot entiende el contexto en que escribes; por ejemplo, acá sabe que estoy creando un input para una app Shiny, y lo rellena con la columna correspondiente del dataset correcto:
-{{< imagen "copilot_1.png" >}}
+{{< imagen "copilot_1-featured.png" >}}
 
 En este otro ejemplo, rellena las opciones de un input de Shiny con los valores que definí cientos de líneas arriba en el mismo script, ahorrándome el tener que moverme por el script para encontrar los valores:
 {{< imagen "copilot_2.png" >}}

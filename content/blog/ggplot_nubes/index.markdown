@@ -15,12 +15,16 @@ excerpt: "Probando un poco de arte generativo en `{ggplot2}`. La idea era genera
 Tomé el dataframe `iris`, configuré algunos elementos aleatorios en el gráfico, le agregué un efecto de desenfoque a los puntos, y luego hice un loop que genera 9 gráficos con parámetros aleatorios."
 ---
 
+
+
 Probando un poco de arte generativo en `{ggplot2}`. La idea era generar gráficos que parecieran nubes o humo. 
 
 Tomé el dataframe `iris`, configuré algunos elementos aleatorios en el gráfico, le agregué un efecto de desenfoque a los puntos, y luego hice un loop que genera 9 gráficos con parámetros aleatorios.
 
-```{r}
-#| message: false
+
+
+
+``` r
 library(dplyr)
 library(glue)
 library(ggplot2)
@@ -28,14 +32,16 @@ library(ggfx)
 library(purrr)
 ```
 
+
+
 Partimos con un gráfico base usando los datos de `iris`, donde los puntos crecen en base a una variable, y también aumentan su transparencia en la misma medida que aumentan su tamaño. De esta forma, los puntos más grandes son también menos visibles.
 
 
 
-```{r}
-#| fig-width: 7
-#| fig-height: 7
 
+
+
+``` r
 iris |> 
   ggplot(aes(x = Sepal.Length, y = Sepal.Width, alpha = Petal.Length,
              size = Petal.Length, color = Sepal.Width)) +
@@ -51,14 +57,18 @@ iris |>
   theme(plot.background = element_rect(fill = "#EAD1FA", linewidth = 0))
 ```
 
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+
+
+
 
 Luego que tenemos un gráfico base, hacemos una prueba aplicando `geom_jitter()` a los puntos, que hace que la posición de los puntos sea siempre aleatoria, y cambiamos los rangos de tamaño y de transparencia:
 
 
-```{r}
-#| fig-width: 7
-#| fig-height: 7
 
+
+
+``` r
 iris |> 
   ggplot(aes(x = Sepal.Length, y = Sepal.Width, alpha = Petal.Length,
              size = Petal.Length, color = Sepal.Width)) +
@@ -74,13 +84,17 @@ iris |>
   theme(plot.background = element_rect(fill = "#EAD1FA", linewidth = 0))
 ```
 
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+
+
+
 Ahora que tenemos un gráfico de movimiento aleatorio, agregamos a `geom_jitter()` la función `with_blur()` del paquete `{ggfx}`, que desenfoca el elemento al que se la apliquemos. Así creamos el efecto de humo o nube:
 
 
-```{r}
-#| fig-width: 7
-#| fig-height: 7
 
+
+
+``` r
 iris |> 
   ggplot(aes(x = Sepal.Length, y = Sepal.Width, alpha = Petal.Length,
              size = Petal.Length, color = Sepal.Width)) +
@@ -96,13 +110,17 @@ iris |>
   theme(plot.background = element_rect(fill = "#EAD1FA", linewidth = 0))
 ```
 
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+
+
+
 
 Una vez que tenemos un gráfico interesante, le agregamos más parámetros aleatorios, y lo metemos dentro de `purrr::map()` para generar muchos gráficos de una sola vez:
 
-```{r}
-#| fig-width: 7
-#| fig-height: 7
 
+
+
+``` r
 map(1:9, ~{
   # parámetros aleatorios
   jitter_x = sample(seq(0.7, 1.2, 0.1), 1) # 1
@@ -130,13 +148,78 @@ map(1:9, ~{
   # ggsave(glue("nubes/orbe_{sample(111:999, 1)}.png"), 
   #        width = 3, height = 3, scale = 2, dpi = 200)
 })
+```
 
 ```
+## [[1]]
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+
+```
+## 
+## [[2]]
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-2.png" width="672" />
+
+```
+## 
+## [[3]]
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-3.png" width="672" />
+
+```
+## 
+## [[4]]
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-4.png" width="672" />
+
+```
+## 
+## [[5]]
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-5.png" width="672" />
+
+```
+## 
+## [[6]]
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-6.png" width="672" />
+
+```
+## 
+## [[7]]
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-7.png" width="672" />
+
+```
+## 
+## [[8]]
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-8.png" width="672" />
+
+```
+## 
+## [[9]]
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-9.png" width="672" />
+
+
 
 Si queremos guardar los resultados a una carpeta, agregamos el siguiente código dentro de la iteración con `map()` para guardar los gráficos en una carpeta, dándole a los archivos nombres aleatorios para que no se sobreescriban.
 
-```{r}
-#| eval: false
+
+
+
+``` r
 # guardar
 ggsave(glue("nubes_{sample(111:999, 1)}.png"),
        width = 3, height = 3, scale = 2, dpi = 200)

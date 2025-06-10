@@ -5,7 +5,7 @@ cascade:
   type: talk
   author: Bastián Olea Herrera
   show_author_byline: false
-  show_comments: true
+  show_comments: false
   show_post_date: true
   show_post_time: false
   sidebar:
