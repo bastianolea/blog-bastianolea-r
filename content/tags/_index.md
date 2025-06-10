@@ -12,6 +12,7 @@ cascade:
     text_link_url: /tags/
 description: |
   Categorías de las temáticas de mis posts sobre R. Accede a la temática de tu interés para ver las publicaciones correspondientes.
+
 layout: list
 show_author_byline: false
 show_button_links: false
