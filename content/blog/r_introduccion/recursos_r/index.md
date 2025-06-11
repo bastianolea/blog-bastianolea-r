@@ -38,13 +38,14 @@ _Sitios con contenido educacional para que aprendas R._
 - [R Packages](https://r-packages.io), lista de paquetes de R populares que facilita el acceso a su documentación
 - [RStudio Education](https://education.rstudio.com), recursos oficiales para aprender R (en inglés)
 - [Torpedos o _cheat sheets_](https://posit.co/resources/cheatsheets/), hojas de referencia rápida para recordar aspectos de R y sus paquetes más populares
+- [Large Language Model tools for R](https://luisdva.github.io/llmsr-book/), Inteligencia artificial y modelos de lenguaje en R
 
-### Recursos sobre visualización de datos en R
+### Visualización de datos en R
 - [R graph Gallery](https://www.r-graph-gallery.com/), galería de gráficos y visualizaciones de datos hechas con R
 - [R Charts](https://r-charts.com/es/), galería de gráficos y visualizaciones de datos hechas con R
 - [Tutorial de visualización de datos con `{ggplot2}`](/blog/r_introduccion/tutorial_visualizacion_ggplot/)
 
-### Recursos sobre desarrollo de aplicaciones con Shiny en R
+### Desarrollo de aplicaciones con Shiny en R
 - [Shiny Assistant](https://shiny.posit.co/blog/posts/shiny-assistant/), asistente de inteligencia artificial para desarrollar, corregir y revisar aplicaciones Shiny
 - [Galería de Shiny Widgets](http://shinyapps.dreamrs.fr/shinyWidgets/), paquete que ofrece muchas inputs nuevos para Shiny
 - [Extensiones de Shiny](https://github.com/nanxstats/awesome-shiny-extensions), colección de paquetes que extienden Shiny
