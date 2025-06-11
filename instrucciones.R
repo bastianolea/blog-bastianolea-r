@@ -7,10 +7,10 @@ blogdown::stop_server()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Copia y pega datos con facilidad en R gracias a {datapasta}", 
+blogdown::new_post(title = "Feliz cumpleaños, {ggplot2}!", 
                    file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos", "datos")
+                   tags = c("ggplot2", "gráficos")
 )
 
 # crear un post tutorial
