@@ -26,10 +26,13 @@ blogdown::new_post(title = "Sugerencias y autocompletado de código con GitHub C
 #     output-ext: "md"
 
 ## borradores ----
+"content/blog/furrr_multiprocesador/index.qmd"
+# https://github.com/luisDVA/hexsession
+# https://gist.github.com/bastianolea/e0fd5f39e82403723e4bcf94d532c806
 "content/blog/tutorial_scraping_selenium/selenium.qmd"
+
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
 "content/blog/tutorial_digitalocean/index.md"
-"content/blog/furrr_multiprocesador/index.qmd"
 
 
 
