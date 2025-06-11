@@ -42,7 +42,7 @@ Otro beneficio de usarlo es propio de el uso de cualquier herramienta programát
 
 *Este tutorial está diseñado para empezar desde lo más básico, e ir avanzando de a poco por distintos tipos de visualizaciones para familiarizarse con el modo de uso de este paquete. A medida que tutorial avanza, se van introduciendo nuevos elementos es la medida que son relevantes y apropiados de introducir. También se van introduciendo distintos conjuntos de datos, y usando paquetes auxiliares que son introducidos secuencialmente. Por estas razones, se recomienda seguir el tutorial en orden.*
 
-⚠️ Si aún no te manejas bien programando en R, te recomiendo revisar primero [este tutorial sobre trabajar con datos usando `{dplyr}`](blog/r_introduccion/dplyr_intro/), o bien, [este tutorial](blog/r_introduccion/r_basico/) y su [segunda parte](blog/r_introduccion/r_intermedio/) para aprender R desde cero.
+⚠️ Si aún no te manejas bien programando en R, te recomiendo revisar primero [este tutorial sobre trabajar con datos usando `{dplyr}`](../../../../blog/r_introduccion/dplyr_intro/), o bien, [este tutorial](../../../../blog/r_introduccion/r_basico/) y su [segunda parte](../../../../blog/r_introduccion/r_intermedio/) para aprender R desde cero.
 
 ------------------------------------------------------------------------
 

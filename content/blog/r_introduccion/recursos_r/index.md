@@ -34,7 +34,8 @@ _Sitios con contenido educacional para que aprendas R._
 - [R para ciencia de datos](https://es.r4ds.hadley.nz), traducción al español del libro "R for Data Science", recomendado para entrar a R
 - [Big Book of R](https://www.bigbookofr.com/index.html#live-stats), colección de cientos de libros sobre R, organizada por temas
 - [R Resource Database](https://www.resourcesdatabase.com), sitio que compila cientos de recursos para usuarios de R, como tutoriales, información sobre paquetes, y más.
-- [R Universe](https://r-universe.dev/search), plataforma para ayudarte a publicar y encontrar contenido sobre R
+- [R Universe](https://r-universe.dev/search), plataforma para ayudarte a encontrar y publicar contenido sobre R
+- [R Packages](https://r-packages.io), lista de paquetes de R populares que facilita el acceso a su documentación
 - [RStudio Education](https://education.rstudio.com), recursos oficiales para aprender R (en inglés)
 - [Torpedos o _cheat sheets_](https://posit.co/resources/cheatsheets/), hojas de referencia rápida para recordar aspectos de R y sus paquetes más populares
 
