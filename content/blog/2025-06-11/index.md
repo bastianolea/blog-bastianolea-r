@@ -17,7 +17,7 @@ excerpt: >-
 ---
 
 
-Hoy está de cumpleaños el paquete `{ggplot2}` para visualización de datos en R! Este paquete es indispensable para explorar el mundo de los datos, ya que su filosofía o gramática está muy bien lograda, y su flexibilidad posibilita crear casi lo que desees, siempre siguiendo principios firmemente sostenidos en un enfoque de ciencia de datos.
+Hoy está de cumpleaños [el paquete `{ggplot2}`](https://ggplot2.tidyverse.org) para visualización de datos en R! Este paquete es indispensable para explorar el mundo de los datos, ya que su [filosofía o gramática](https://ggplot2-book.org/mastery.html) está muy bien lograda, su simplicidad ayuda a llegar a resultados útiles en pocos pasos, y su flexibilidad posibilita crear casi lo que desees, siempre siguiendo principios firmemente sostenidos en un enfoque de ciencia de datos. El paquete cumple 18 años desde su creación por [Hadley Wickham](https://hadley.nz), _Chief Scientist_ de [Posit](https://posit.co) y jefe del equipo [Tidyverse](https://www.tidyverse.org).
 
 Se trata de una herramienta que uso día a día, así que con mucho cariño (🤪) le hice un gráfico de mini celebración en 20 líneas 💜
 
@@ -63,7 +63,7 @@ tibble(a = sample(1:18, 18),
  guides(size = guide_none())
 ```
 
-Intenta reproducirlo en tu R! Si no te resulta, puede deberse a que el backend gráfico por defecto de R tiene problemas con los textos complejos, como los emojis En las configuraciones de RStudio, entra a *General* y luego en *Graphics* puedes cambiar el backend por uno como AGG (del [paquete `{ragg}`](https://ragg.r-lib.org))
+Intenta reproducirlo en tu R! Si no te resulta, puede deberse a que el backend gráfico por defecto de R tiene problemas con los textos complejos, como los emojis. En las configuraciones de RStudio, entra a *General* y luego en *Graphics* puedes cambiar el backend por uno como AGG (del [paquete `{ragg}`](https://ragg.r-lib.org))
 
 <!-- {{< imagen "grafico_ggplot_cumple_penca.png" >}} -->
 
