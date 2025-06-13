@@ -14,10 +14,10 @@ blogdown::new_post(title = "Feliz cumpleaños, {ggplot2}!",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Sugerencias y autocompletado de código con GitHub Copilot", 
-                   file = "blog/github_copilot/github_copilot.qmd",
+blogdown::new_post(title = "Limpia planillas de Excel complejas en R con {unpivotr}", 
+                   file = "blog/unpivotr/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos", "inteligencia artificial"),
+                   tags = c("limpieza de datos", "procesamiento de datos", "Excel"),
                    categories = c() 
 )
 # format:
@@ -26,7 +26,8 @@ blogdown::new_post(title = "Sugerencias y autocompletado de código con GitHub C
 #     output-ext: "md"
 
 ## borradores ----
-"content/blog/furrr_multiprocesador/index.qmd"
+"content/blog/openxlsx/index.md"
+"content/blog/unpivotr/index.qmd"
 # https://github.com/luisDVA/hexsession
 "content/blog/tutorial_scraping_selenium/selenium.qmd"
 
