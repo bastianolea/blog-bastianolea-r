@@ -1,5 +1,5 @@
 ---
-title: Identificar datos outliers o anómalos en R mediante gráficos
+title: Gráficos para identificar datos outliers o anómalos en R
 author: Bastián Olea Herrera
 date: '2025-06-18'
 slug: []
@@ -14,7 +14,7 @@ tags:
   - gráficos
   - visualización de datos
   - estadística
-excerpt: Los datos anómalos o _outliers_ son datos que se alejan considerablemente de los demás. Crearemos un dataset simulando datos outliers y luego mostraremos algunas formas de visualizarlos en `{ggplot2}, incluyendo un gráfico interactivo con `{ggiraph}` que permita poner el cursor sobre las observaciones para obtener más información.
+excerpt: Los datos anómalos o _outliers_ son datos que se alejan considerablemente de los demás. Crearemos un dataset simulando datos outliers y luego mostraremos algunas formas de visualizarlos en `{ggplot2}`, incluyendo un gráfico interactivo con `{ggiraph}` donde podemos poner el cursor sobre las observaciones del gráfico para obtener más información.
 ---
 
 Los datos anómalos o _outliers_ son datos que se alejan considerablemente de los demás. Estos datos pueden resultar problemáticos para ciertos análisis, pueden ser indicio de errores en la recolección o limpieza de datos, o pueden requerir que tomemos ciertas decisiones para corregirlos o excluirlos.
@@ -74,7 +74,7 @@ Ahora vamos a visualizar estos datos con el paquete `{ggplot2}`. Si necesitas un
 
 ## Gráfico de cajas o _boxplot_
 
-El _boxplot_ es una visualización que en su mismo diseño incluye la opción de mostrar los outliers, así que se trata de la opción natural para este tipo de visualizaciones exploratorias.
+El _boxplot_ es una visualización que en su mismo diseño incluye la opción de mostrar los outliers, así que se trata de la opción natural para este tipo de visualizaciones exploratorias. Así que con esto concluye este tutorial. Bromita 🥰
 
 ```{r}
 #| fig.height: 3
@@ -193,7 +193,7 @@ grafico_outliers <- grafico_outliers +
 grafico_outliers
 ```
 
-Ahora sabemos que _mapacha, pachache, chepama_ y _chachema_ son outliers.
+Ahora sabemos que _mapacha, pachache, chepama_ y _chachema_ son outliers 🤨
 
 ### Dividir por grupos
 Otra forma de afinar el análisis es separar la visualización en los valores de la variable de agrupación que tengamos con `facet_wrap()`. En este caso, como la variable `grupo` tiene 3 valores posibles, se multiplica la visualización por tres.
