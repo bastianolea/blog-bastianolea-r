@@ -1,0 +1,271 @@
+---
+title: Identificar datos outliers o anómalos en R mediante gráficos
+author: Bastián Olea Herrera
+date: '2025-06-18'
+slug: []
+categories: []
+format:
+  hugo-md:
+    output-file: "index"
+    output-ext: "md"
+tags:
+  - limpieza de datos
+  - ggplot2
+  - gráficos
+  - visualización de datos
+  - estadística
+excerpt: Los datos anómalos o _outliers_ son datos que se alejan considerablemente de los demás. Crearemos un dataset simulando datos outliers y luego mostraremos algunas formas de visualizarlos en `{ggplot2}, incluyendo un gráfico interactivo con `{ggiraph}` que permita poner el cursor sobre las observaciones para obtener más información.
+---
+
+Los datos anómalos o _outliers_ son datos que se alejan considerablemente de los demás. Estos datos pueden resultar problemáticos para ciertos análisis, pueden ser indicio de errores en la recolección o limpieza de datos, o pueden requerir que tomemos ciertas decisiones para corregirlos o excluirlos.
+
+En este post crearemos un dataset con datos outliers y luego mostraremos algunas formas de visualizarlos [en `{ggplot2}`](/tags/ggplot2/) para tomar decisiones al respecto. Al final crearemos un gráfico interactivo [con `{ggiraph}`](https://davidgohel.github.io/ggiraph/) que permita poner el cursor sobre las observaciones para obtener más información.
+
+----
+
+Primero creemos un conjunto de datos que contenga números al azar, 90 números entre 1 y 100, y 10 números más grandes, para que sean nuestros outliers simulados:
+```{r}
+#| message: false
+library(dplyr)
+library(ggplot2)
+
+set.seed(1993)
+
+valor <- c(sample(1:100, size = 90), # números al azar
+           sample(120:190, size = 10)) # outliers
+```
+
+Obtenemos un vector con los dos conjuntos de números al azar.
+
+Con la función `tibble()` convertimos el vector en una columna de un dataframe nuevo, y usando nuevamente `sample()` crearemos dos columnas con palabras al azar para complementar estos datos simulados:
+
+```{r}
+datos <- tibble(valor) |> 
+  # procesar por fila
+  rowwise() |> 
+  # por fila, elegir tres sílabas al azar y unirlas en un texto
+  mutate(nombre = sample(c("ma", "pa", "che", "cha"), 3, F) |> paste(collapse = "")) |> 
+  # desagrupar y creat otra columna que distribuya los datos en tres grupos
+  ungroup() |>
+  mutate(grupo = sample(c("ma", "pa", "che"), n(), T))
+
+datos
+```
+Para identificar los _outliers_, utilizaremos el criterio del rango intercuartílico. El rango intercuartílico es el rango de los datos entre el primer y tercer cuartil (el percentil 25 y el percentil 75; es decir, la diferencia entre el dato ubicado en el 75% mayor y el 25% mayor de la distribución de los datos). Luego, este valor se multiplica por 1,5, y se suma al valor del tercer cuartil (percentil 75), de modo que se identifiquen como _outliers_ los datos que sean mayores al tercer cuartil más 1,5 veces el rango intercuartílico.
+
+```{r}
+datos_outliers <- datos |> 
+  mutate(umbral = quantile(valor, 0.75) + 1.5 * IQR(valor))
+```
+Esto nos dará una cifra que operará como el umbral respecto del cual, si un valor es mayor a esta cifra, se clasificará como outlier. Es conveniente calcular este umbral dentro del dataframe, porque si queremos calcular outliers desagregados por otra variable, simplemente mantenemos la fórmula y agregamos antes un `group_by()` para realizar el cálculo por grupos.
+
+Crearemos una columna que simplemente nos diga si los valores son mayores o menores al umbral:
+
+```{r}
+datos_outliers <- datos_outliers |> 
+  mutate(outlier = valor >= umbral)
+
+datos_outliers
+```
+
+Obtenemos la variable `outlier` con `TRUE` si es outlier, y `FALSE` si no lo es.
+
+Ahora vamos a visualizar estos datos con el paquete `{ggplot2}`. Si necesitas una introducción a esta librería de visualización de datos, [te recomiendo revisar este tutorial](/blog/r_introduccion/tutorial_visualizacion_ggplot/), donde explicamos en mayor detalle varias de estas visualizaciones.
+
+## Gráfico de cajas o _boxplot_
+
+El _boxplot_ es una visualización que en su mismo diseño incluye la opción de mostrar los outliers, así que se trata de la opción natural para este tipo de visualizaciones exploratorias.
+
+```{r}
+#| fig.height: 3
+#| fig.width: 8
+datos_outliers |> 
+  ggplot() +
+  aes(x = valor, y = 1) +
+  # gráfico de boxplot
+  geom_boxplot(alpha = 0.4, fill = "black", 
+               outlier.color = "#F94C6A", outlier.size = 4, outlier.alpha = 0.7) + # configuración de outliers
+  # temas
+  theme_minimal() +
+  scale_y_continuous(expand = expansion(c(0.5, 0.5))) # aumentar margen del eje vertical
+```
+
+En un _boxplot_, los puntos al extremo de la caja representan los casos anómalos. 
+
+Pero la gracia de este tutorial es entrenar nuestras capacidades de visualización de datos, así que veamos otras formas de visualizarlos:
+
+## Gráfico de puntos
+Una forma sencilla de visualizar outliers sería simplemente visualizar las observaciones del dataser como puntos, coloreando los puntos si son outliers.
+```{r}
+#| fig.width: 12
+#| fig.height: 3
+datos_outliers |> 
+  ggplot() +
+  aes(x = valor, y = 1, color = outlier) +
+  # gráfico de puntos
+  geom_point(size = 4, alpha = 0.6) +
+  # escala de colores
+  scale_color_manual(values = c("black", "#F94C6A")) +
+  # temas
+  theme_minimal() +
+  # ocultar leyenda
+  guides(color = guide_none(),
+         y =  guide_none())
+```
+
+### Puntos con dispersión
+Como existe una concentración densa en parte de la distribución, podemos usar la función `geom_jitter()` para que los puntos se dispersen verticalmente (`width = 0`, porque si se dispersan horizontalmente se ubicarían incorrectamente con respecto a su valor)
+
+```{r}
+datos_outliers |> 
+  ggplot() +
+  aes(x = valor, y = 1, color = outlier) +
+  # gráfico de puntos con dispersión
+  geom_jitter(size = 4, alpha = 0.6, width = 0) +
+  scale_color_manual(values = c("black", "#F94C6A")) +
+  theme_minimal() +
+  guides(color = guide_none(),
+         y =  guide_none())
+```
+
+## Gráfico de violín
+El gráfico de violín también nos permite observar la distribución de los datos, pero por sí solo no nos muestra las observaciones exactas, por lo que no entrega información certera sobre los outliers, sino que nos da indicios de que la distribución de los datos tiene _colas_ que podrían contener outliers.
+```{r}
+datos_outliers |> 
+  ggplot() +
+  aes(x = valor, y = 1) +
+  # gráfico de violín
+  geom_violin(fill = "black", alpha = 0.4) +
+  theme_minimal() +
+  guides(y =  guide_none()) # ocultar eje y
+```
+
+## Combinar visualizaciones
+Una buena opción es combinar las visualizaciones anteriores en una sola. De fondo podemos poner la distribución de los datos con `geom_violin()`, y encima poner los puntos de las observaciones; para las observaciones normales podemos usar `geom_jitter()` para dispersar los datos, y para los outliers, como son poquitos, `geom_point()` para que se ubiquen en concordancia con la distribución del violín.
+
+```{r}
+grafico_outliers <- datos_outliers |> 
+  ggplot() +
+  aes(x = valor, y = 1, color = outlier) +
+  # gráfico de violín
+  geom_violin(aes(y = 1, x = valor), 
+              inherit.aes = F,
+              alpha = 0.2, lwd = 0.1, fill = "black") +
+  # puntos para los outliers
+  geom_point(data = ~filter(.x, outlier), # sólo para observaciones que son outlier
+             size = 4, alpha = 0.6) +
+  # puntos dispersados para el resto de los datos
+  geom_jitter(data = ~filter(.x, !outlier), # sólo para observaciones que no son outlier
+              size = 4, alpha = 0.6) +
+  # escala de colores
+  scale_color_manual(values = c("black", "#F94C6A")) +
+  # temas
+  theme_minimal() +
+  theme(axis.title = element_blank()) +
+  guides(color = guide_none(),
+         y =  guide_none())
+
+grafico_outliers
+```
+
+Para combinar estas visualizaciones, aprovechamos la capacidad de `{ggplot2}` de especificar los datos que se usan en cada capa o geometría de la visualización por medio del argumento `data`. Normalmente, el argumento `data` se rellena por defecto con los datos que entregamos a la función `ggplot()`, pero si especificamos el argumento podemos hacer que cada capa use datos completamente distintos. En nuestro caso, no queremos datos distintos, sino **aplicar filtros a los datos de cada capa**, lo que se logra con `data = ~filter(.x, ...)`[^1], donde `...` sería el filtro que necesitemos. En la visualización anterior, queremos que `geom_point()` sólo muestre los datos que son `outlier == FALSE`, y que `geom_jitter()` sólo muestre los datos que son `outlier == TRUE`[^2]. 
+
+[^1]: Esto funciona porque, al anteponer la colita de chancho (`~`) a la función, creamos una _función lambda_ que reciba los datos directamente sin tener que especificar el nombre del objeto (conveniente, por ejemplo, si pasaste directo de modificar los datos a hacer el gráfico sin crear un objeto intermedio).
+[^2]: En R, decir `variable == TRUE` es lo mismo que decir simplemente `variable`, porque `variable` _es_ `TRUE`; o sea que puedes hacer `filter(variable)` en vez de `filter(variable == TRUE)`, y de la misma forma, `filter(!variable)` en vez de `filter(variable == FALSE)`.
+
+```{r}
+data = ~filter(.x, outlier)
+```
+
+
+### Etiquetas de texto
+Al identificar outliers, una buena opción es mostrar etiquetas de texto para estos casos con `geom_text()`. De este modo podemos identificar exactamente a qué observaciones corresponden las anomalías. En el caso de que fueran muchas etiquetas, podemos usar `geom_text_repel()` para que las etiquetas se muevan si es que caen encima de otras.
+
+```{r}
+library(ggrepel)
+
+grafico_outliers <- grafico_outliers + 
+  # agregar texto al gráfico anterior
+  ggrepel::geom_text_repel(data = ~filter(.x, outlier), # sólo para observaciones que son outlier
+                  aes(label = nombre), # variable con el texto a mostrar
+                  fontface = "bold", size = 4, point.padding = 4, angle = 90, hjust = 0) 
+
+grafico_outliers
+```
+
+Ahora sabemos que _mapacha, pachache, chepama_ y _chachema_ son outliers.
+
+### Dividir por grupos
+Otra forma de afinar el análisis es separar la visualización en los valores de la variable de agrupación que tengamos con `facet_wrap()`. En este caso, como la variable `grupo` tiene 3 valores posibles, se multiplica la visualización por tres.
+
+```{r}
+#| fig.height: 9
+grafico_outliers <- grafico_outliers +
+  # separar gráfico en facetas según la variable grupo
+  facet_wrap(~grupo, ncol = 1, scales = "fixed") +
+  theme(strip.text = element_text(face = "bold")) # título de facetas en negrita
+
+grafico_outliers
+```
+
+
+## Gráfico interactivo
+Para mejorar la exploración de los datos podemos convertir fácilmente cualquier gráfico de `{ggplot2}` en gráficos interactivos gracias [al paquete `{ggiraph}`](https://davidgohel.github.io/ggiraph/). Principalmente, lo que agregaremos son _tooltips_ o cajas emergentes que aparecerán cuando se pose el cursor sobre un punto del gráfico y que muestren información extra.
+
+Con `{ggiraph}` solamente se requieren cambios mínimos para volver interactivo caulquier gráfico. Entre ellos es agregar `_interactive` a las funciones que crean las geometrías del gráfico:
+
+- Pasar de `geom_point()` a `geom_point_interactive()`
+- Pasar de `geom_jitter()` a `geom_jitter_interactive()`
+
+Habiendo hecho este cambio, dentro de las geometrías `geom_x_interactive()` podemos definir la estética `tooltip` dentro de `aes()` para especificar el contenido que aparecerá cuando se ponga el cursor sobre los elementos del gráfico. En este caso, haremos que los _tooltips_ muestren el nombre de la observación y su valor, y la palabra _outlier_ si corresponde.
+
+Copiamos el código anterior y hacemos los cambios apropiados al gráfico:
+```{r}
+library(ggiraph)
+
+grafico_outliers_interactivo <- datos_outliers |> 
+  ggplot() +
+  aes(x = valor, y = 1, color = outlier) +
+  geom_violin(aes(y = 1, x = valor), 
+              inherit.aes = F,
+              alpha = 0.2, lwd = 0.1, fill = "black") +
+  # puntos para los outliers
+  ggiraph::geom_point_interactive(data = ~filter(.x, outlier), 
+                         aes(tooltip = paste("outlier: ", valor, sep = "")), # texto "outlier" con el valor
+                         size = 4, alpha = 0.6) +
+  # puntos dispersados para el resto de los datos
+  ggiraph::geom_jitter_interactive(data = ~filter(.x, !outlier), 
+                          aes(tooltip = paste(nombre, ": ", valor, sep = "")), # nombre de observación y valor
+                          size = 4, alpha = 0.6) +
+  ggrepel::geom_text_repel(data = ~filter(.x, outlier),
+                  aes(label = nombre),
+                  fontface = "bold", size = 4, point.padding = 4, angle = 90, hjust = 0) +
+  scale_color_manual(values = c("black", "#F94C6A")) +
+  theme_minimal() +
+  theme(axis.title = element_blank()) +
+  guides(color = guide_none(),
+         y =  guide_none())
+```
+
+Finalmente, para permitir la interactividad del gráfico, debemos generarlo con la función `girafe()`, la cual recibe el objeto con el gráfico además de varias opciones para personalizar la visualización:
+
+```{r}
+#| output: asis
+girafe(ggobj = grafico_outliers_interactivo, 
+       # dimensiones del gráfico
+       width_svg = 9, height_svg = 4,
+       # opciones para los tooltips
+       options = list(
+         # ocultar barra de opciones
+         opts_toolbar(hidden = "selection", saveaspng = FALSE),
+         # personalizar la apariencia del tooltip
+         opts_tooltip(opacity = 0.7, use_fill = TRUE,
+                      css = "font-family: sans-serif; font-size: 70%; color: white; padding: 4px; border-radius: 5px;"))
+       )
+```
+
+Toca o posa el cursor sobre un punto para ver la información extra! ¿Puedes encontrar el punto que dice _pamache_? 🦝
+
+----
+
+{{< cafecito >}}

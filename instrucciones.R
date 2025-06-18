@@ -7,10 +7,10 @@ blogdown::stop_server()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Feliz cumpleaños, {ggplot2}!", 
+blogdown::new_post(title = "Identificar datos _outliers_ o anómalos en R", 
                    file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
-                   tags = c("ggplot2", "gráficos")
+                   tags = c("limpieza de datos", "ggplot2", "gráficos", "visualización de datos", "estadística")
 )
 
 # crear un post tutorial
