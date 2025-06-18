@@ -19,7 +19,7 @@ excerpt: Los datos anómalos o _outliers_ son datos que se alejan considerableme
 
 Los datos anómalos o _outliers_ son datos que se alejan considerablemente de los demás. Estos datos pueden resultar problemáticos para ciertos análisis, pueden ser indicio de errores en la recolección o limpieza de datos, o pueden requerir que tomemos ciertas decisiones para corregirlos o excluirlos.
 
-En este post crearemos un dataset con datos outliers y luego mostraremos algunas formas de visualizarlos [en `{ggplot2}`](/tags/ggplot2/) para tomar decisiones al respecto. Al final crearemos un gráfico interactivo [con `{ggiraph}`](https://davidgohel.github.io/ggiraph/) que permita poner el cursor sobre las observaciones para obtener más información.
+En este post **simularemos un dataset** con datos anómalos, y luego mostraremos algunas formas de **visualización de datos anómalos** [en `{ggplot2}`](/tags/ggplot2/) para tomar decisiones al respecto. Al final crearemos un **gráfico interactivo** [con `{ggiraph}`](https://davidgohel.github.io/ggiraph/) que permita poner el cursor sobre las observaciones para obtener más información.
 
 ----
 
@@ -37,27 +37,68 @@ valor <- c(sample(1:100, size = 90), # números al azar
 
 Obtenemos un vector con los dos conjuntos de números al azar.
 
-Con la función `tibble()` convertimos el vector en una columna de un dataframe nuevo, y usando nuevamente `sample()` crearemos dos columnas con palabras al azar para complementar estos datos simulados:
+Con la función `tibble()` convertimos el vector de números en una columna de un dataframe, y usando nuevamente `sample()` crearemos dos columnas con palabras al azar para complementar estos datos simulados:
 
 ```{r}
 datos <- tibble(valor) |> 
-  # procesar por fila
+  # procesar datos por fila en vez de por la columna entera (vectorización)
   rowwise() |> 
-  # por fila, elegir tres sílabas al azar y unirlas en un texto
+  # por fila, elegir tres sílabas al azar y unirlas en un sólo texto, que será el "nombre" de las observaciones
   mutate(nombre = sample(c("ma", "pa", "che", "cha"), 3, F) |> paste(collapse = "")) |> 
-  # desagrupar y creat otra columna que distribuya los datos en tres grupos
+  # desagrupar y crear otra variable con trres valores posibles, y que por lo tanto distribuya los datos en tres grupos
   ungroup() |>
   mutate(grupo = sample(c("ma", "pa", "che"), n(), T))
 
 datos
 ```
-Para identificar los _outliers_, utilizaremos el criterio del rango intercuartílico. El rango intercuartílico es el rango de los datos entre el primer y tercer cuartil (el percentil 25 y el percentil 75; es decir, la diferencia entre el dato ubicado en el 75% mayor y el 25% mayor de la distribución de los datos). Luego, este valor se multiplica por 1,5, y se suma al valor del tercer cuartil (percentil 75), de modo que se identifiquen como _outliers_ los datos que sean mayores al tercer cuartil más 1,5 veces el rango intercuartílico.
+
+```{r}
+sample(c("ma", "pa", "che", "cha"), 3, F) |> paste(collapse = "")
+```
+
+## Detección de datos anómalos
+
+Para identificar los _outliers_, utilizaremos el criterio del **rango intercuartílico.** El rango intercuartílico se calcula con la función `IQR()` y es el rango de los datos entre el primer y tercer cuartil (el percentil 25 y el percentil 75; es decir, la diferencia entre el dato ubicado en el 75% mayor y el 25% mayor de la distribución de los datos). 
+
+En otras palabras, el _IQR_ es una cifra que indica qué tanta distancia existe en la "mitad" de tus datos, si los esparcieras todos en una distribución, como aparece en el siguiente gráfico[^4]. 
+
+[^4]: El código para este gráfico [está disponible en este Gist.](https://gist.github.com/bastianolea/6f26f302f44fe546bebdd61f6134c4c5)
+
+
+```{r}
+#| fig.height: 3
+#| echo: false
+set.seed(1234)
+
+x <- rnorm(1000)
+y <- dnorm(x)
+df <- tibble(x, y)
+q_1 <- quantile(x, .25)
+q_3 <- quantile(x, .73)
+
+df |> 
+  ggplot() +
+  aes(x, y) +
+  geom_line() +
+  geom_vline(xintercept = c(q_1, q_3), linetype = "longdash") +
+  annotate(geom = "rect", xmin = q_1, xmax = q_3, ymin = 0, ymax = max(y)*1.05, fill = "black", alpha = 0.1) +
+  annotate(geom = "label", x = c(q_1, q_3), y = 0, label = c("1 (25%)", "3 (75%)")) +
+  scale_y_continuous(expand = expansion(c(0.1, 0.1))) +
+  theme_void()
+```
+
+Luego, el rango intercuartílico se multiplica por 1,5, y se suma al valor del tercer cuartil (percentil 75), de modo que se identifiquen como _outliers_ los datos que sean mayores[^3] al tercer cuartil más 1,5 veces el rango intercuartílico. Puedes calcular cualquier percentil de un vector o columna con la función `quantile(x, .75)`, donde el número identifica al percentil.
+
+[^3]: En este ejemplo solamente buscaremos outliers que estén _por sobre_ la distribución de los datos, pero si queremos buscar datos outliers _por debajo_; es decir, valores pequeños anómalos, la fórmula es la misma pero restando el `1.5 * IQR` al primer cuartil.
+
+Aplicamos el cálculo a la variable `valor`:
 
 ```{r}
 datos_outliers <- datos |> 
   mutate(umbral = quantile(valor, 0.75) + 1.5 * IQR(valor))
 ```
-Esto nos dará una cifra que operará como el umbral respecto del cual, si un valor es mayor a esta cifra, se clasificará como outlier. Es conveniente calcular este umbral dentro del dataframe, porque si queremos calcular outliers desagregados por otra variable, simplemente mantenemos la fórmula y agregamos antes un `group_by()` para realizar el cálculo por grupos.
+
+Esto nos dará una cifra que operará como el **umbral respecto del cual se clasificarán los outliers**. Es conveniente calcular este umbral dentro del dataframe, porque si queremos calcular outliers desagregados por otra variable, simplemente mantenemos la fórmula y agregamos antes un `group_by()` para realizar el cálculo por grupos.
 
 Crearemos una columna que simplemente nos diga si los valores son mayores o menores al umbral:
 
@@ -180,7 +221,7 @@ data = ~filter(.x, outlier)
 
 
 ### Etiquetas de texto
-Al identificar outliers, una buena opción es mostrar etiquetas de texto para estos casos con `geom_text()`. De este modo podemos identificar exactamente a qué observaciones corresponden las anomalías. En el caso de que fueran muchas etiquetas, podemos usar `geom_text_repel()` para que las etiquetas se muevan si es que caen encima de otras.
+Al identificar outliers, una buena opción es mostrar etiquetas de texto para estos casos con `geom_text()`. De este modo podemos identificar exactamente a qué observaciones corresponden las anomalías. En el caso de que fueran muchas etiquetas, podemos usar `geom_text_repel()` [del paquete `{ggrepel}`](https://ggrepel.slowkow.com) para que las etiquetas de texto se acomoden si es que caen encima de otras.
 
 ```{r}
 library(ggrepel)
@@ -188,8 +229,8 @@ library(ggrepel)
 grafico_outliers <- grafico_outliers + 
   # agregar texto al gráfico anterior
   ggrepel::geom_text_repel(data = ~filter(.x, outlier), # sólo para observaciones que son outlier
-                  aes(label = nombre), # variable con el texto a mostrar
-                  fontface = "bold", size = 4, point.padding = 4, angle = 90, hjust = 0) 
+                           aes(label = nombre), # variable con el texto a mostrar
+                           fontface = "bold", size = 4, point.padding = 4, angle = 90, hjust = 0) 
 
 grafico_outliers
 ```
@@ -213,12 +254,14 @@ grafico_outliers
 ## Gráfico interactivo
 Para mejorar la exploración de los datos podemos convertir fácilmente cualquier gráfico de `{ggplot2}` en gráficos interactivos gracias [al paquete `{ggiraph}`](https://davidgohel.github.io/ggiraph/). Principalmente, lo que agregaremos son _tooltips_ o cajas emergentes que aparecerán cuando se pose el cursor sobre un punto del gráfico y que muestren información extra.
 
-Con `{ggiraph}` solamente se requieren cambios mínimos para volver interactivo caulquier gráfico. Entre ellos es agregar `_interactive` a las funciones que crean las geometrías del gráfico:
+Con `{ggiraph}` solamente se requieren cambios mínimos para volver interactivo cualquier gráfico. Entre ellos es agregar `_interactive` a las funciones que crean las geometrías del gráfico:
 
 - Pasar de `geom_point()` a `geom_point_interactive()`
 - Pasar de `geom_jitter()` a `geom_jitter_interactive()`
 
-Habiendo hecho este cambio, dentro de las geometrías `geom_x_interactive()` podemos definir la estética `tooltip` dentro de `aes()` para especificar el contenido que aparecerá cuando se ponga el cursor sobre los elementos del gráfico. En este caso, haremos que los _tooltips_ muestren el nombre de la observación y su valor, y la palabra _outlier_ si corresponde.
+Habiendo hecho este cambio, dentro de las geometrías `geom_x_interactive()` ahora podremos definir la estética `tooltip` dentro de `aes()` para que **aparezca contenido cuando se ponga el cursor sobre los elementos del gráfico.** En este caso, haremos que los _tooltips_ muestren el nombre de la observación y su valor, y la palabra _outlier_ si corresponde. También podemos agregar `html` para dar estilo al texto; por ejemplo, las etiquetas `<b>` para letra negrita.
+
+Si queremos que los puntos del gráfico **se iluminen o cambien de color al poner el cursor encima**, adicionalmente tenemos que definir la estética `data_id` que identifique de forma única los elementos del gráfico (puede servir para hacer que varios se iluminen al mismo tiempo si elijes una variable que no identifique de forma única los valores).
 
 Copiamos el código anterior y hacemos los cambios apropiados al gráfico:
 ```{r}
@@ -226,21 +269,24 @@ library(ggiraph)
 
 grafico_outliers_interactivo <- datos_outliers |> 
   ggplot() +
-  aes(x = valor, y = 1, color = outlier) +
+  aes(x = valor, y = 1, color = outlier,
+      # variable que identifica de forma única a los elementos del gráfico
+      data_id = nombre) + 
   geom_violin(aes(y = 1, x = valor), 
-              inherit.aes = F,
-              alpha = 0.2, lwd = 0.1, fill = "black") +
+              inherit.aes = F, alpha = 0.2, lwd = 0.1, fill = "black") +
   # puntos para los outliers
   ggiraph::geom_point_interactive(data = ~filter(.x, outlier), 
-                         aes(tooltip = paste("outlier: ", valor, sep = "")), # texto "outlier" con el valor
-                         size = 4, alpha = 0.6) +
+                                  # texto "outlier" con el valor
+                                  aes(tooltip = paste("<b>outlier:</b> ", valor, sep = "")), 
+                                  size = 4, alpha = 0.6) +
   # puntos dispersados para el resto de los datos
   ggiraph::geom_jitter_interactive(data = ~filter(.x, !outlier), 
-                          aes(tooltip = paste(nombre, ": ", valor, sep = "")), # nombre de observación y valor
-                          size = 4, alpha = 0.6) +
+                                   # nombre de observación y valor
+                                   aes(tooltip = paste("<b>", nombre, ":</b> ", valor, sep = "")), 
+                                   size = 4, alpha = 0.6) +
   ggrepel::geom_text_repel(data = ~filter(.x, outlier),
-                  aes(label = nombre),
-                  fontface = "bold", size = 4, point.padding = 4, angle = 90, hjust = 0) +
+                           aes(label = nombre),
+                           fontface = "bold", size = 4, point.padding = 4, angle = 90, hjust = 0) +
   scale_color_manual(values = c("black", "#F94C6A")) +
   theme_minimal() +
   theme(axis.title = element_blank()) +
@@ -253,6 +299,7 @@ Finalmente, para permitir la interactividad del gráfico, debemos generarlo con 
 
 ```{r}
 #| output: asis
+
 girafe(ggobj = grafico_outliers_interactivo, 
        # dimensiones del gráfico
        width_svg = 9, height_svg = 4,
@@ -260,10 +307,12 @@ girafe(ggobj = grafico_outliers_interactivo,
        options = list(
          # ocultar barra de opciones
          opts_toolbar(hidden = "selection", saveaspng = FALSE),
+         # color al poner el cursor encima
+         opts_hover(css = "fill: white; stroke: black;"),
          # personalizar la apariencia del tooltip
          opts_tooltip(opacity = 0.7, use_fill = TRUE,
                       css = "font-family: sans-serif; font-size: 70%; color: white; padding: 4px; border-radius: 5px;"))
-       )
+)
 ```
 
 Toca o posa el cursor sobre un punto para ver la información extra! ¿Puedes encontrar el punto que dice _pamache_? 🦝
