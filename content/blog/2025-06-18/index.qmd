@@ -163,7 +163,8 @@ grafico_outliers <- datos_outliers |>
   theme_minimal() +
   theme(axis.title = element_blank()) +
   guides(color = guide_none(),
-         y =  guide_none())
+         y =  guide_none()) +
+  scale_y_continuous(expand = expansion(c(0.2, 0.2))) # aumentar margen del eje vertical
 
 grafico_outliers
 ```
@@ -244,7 +245,8 @@ grafico_outliers_interactivo <- datos_outliers |>
   theme_minimal() +
   theme(axis.title = element_blank()) +
   guides(color = guide_none(),
-         y =  guide_none())
+         y =  guide_none()) +
+  scale_y_continuous(expand = expansion(c(0.2, 0.2))) # aumentar margen del eje vertical
 ```
 
 Finalmente, para permitir la interactividad del gráfico, debemos generarlo con la función `girafe()`, la cual recibe el objeto con el gráfico además de varias opciones para personalizar la visualización:
