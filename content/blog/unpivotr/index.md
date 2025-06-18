@@ -1,0 +1,16 @@
+---
+title: 'Limpia planillas de Excel complejas en R con {unpivotr}'
+author: Bastián Olea Herrera
+date: '2025-06-13'
+slug: []
+categories: []
+format: hugo-md
+draft: true
+tags:
+  - limpieza de datos
+  - procesamiento de datos
+  - Excel
+---
+
+
+https://github.com/nacnudus/unpivotr
