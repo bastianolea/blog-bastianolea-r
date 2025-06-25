@@ -14,10 +14,10 @@ blogdown::new_post(title = "Identificar datos _outliers_ o anómalos en R",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Limpia planillas de Excel complejas en R con {unpivotr}", 
-                   file = "blog/unpivotr/index.qmd",
+blogdown::new_post(title = "Ordenar las comunas de Chile de norte a sur en R", 
+                   file = "blog/ordenar_comunas/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("limpieza de datos", "procesamiento de datos", "Excel"),
+                   tags = c("mapas", "Chile"),
                    categories = c() 
 )
 # format:
