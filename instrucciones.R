@@ -7,17 +7,17 @@ blogdown::stop_server()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Identificar datos _outliers_ o anómalos en R", 
+blogdown::new_post(title = "Mapas", 
                    file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
                    tags = c("limpieza de datos", "ggplot2", "gráficos", "visualización de datos", "estadística")
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Ordenar las comunas de Chile de norte a sur en R", 
-                   file = "blog/ordenar_comunas/index.qmd",
+blogdown::new_post(title = "Controla las dimensiones de tus gráficos con {ggview}", 
+                   file = "blog/ggview/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("mapas", "Chile"),
+                   tags = c("visualización de datos", "gráficos", "ggplot2"),
                    categories = c() 
 )
 # format:
@@ -26,6 +26,8 @@ blogdown::new_post(title = "Ordenar las comunas de Chile de norte a sur en R",
 #     output-ext: "md"
 
 ## borradores ----
+"content/blog/ggview/index.qmd"
+"content/blog/2025-07-01/index.qmd"
 "content/blog/openxlsx/index.md"
 "content/blog/unpivotr/index.qmd"
 # https://github.com/luisDVA/hexsession
