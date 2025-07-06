@@ -1,0 +1,127 @@
+---
+title: Crear nubes de palabras para análisis de texto con R
+author: Bastián Olea Herrera
+date: '2025-07-05'
+draft: true
+format:
+  hugo-md:
+    output-file: "index"
+    output-ext: "md"
+slug: []
+categories: []
+tags:
+  - visualización de datos
+  - gráficos
+  - ggplot2
+  - análisis de texto
+---
+```{r}
+library(dplyr, warn.conflicts = F)
+```
+
+Probemos haciendo un análisis de sentimiento a partir de un corpus de textos de noticias chilenas publicadas el año 2024. Los datos son obtenidos de [este repositorio de obtención automatizada de textos de noticias de prensa escrita chilena.](https://github.com/bastianolea/prensa_chile)
+
+```{r}
+#| message: false
+
+# dirección web donde se encuentran los datos
+url_datos <- "https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/datos/prensa_datos_muestra.csv"
+
+# lectura de los datos ubicados en internet
+noticias <- readr::read_csv2(url_datos)
+
+head(noticias)
+```
+
+
+Preparar el texto
+tokenizar
+`{tidytext}`
+https://www.tidytextmining.com/tidytext
+```{r}
+library(tidytext)
+
+palabras <- noticias |> 
+  # tokenizar
+  unnest_tokens(input = cuerpo,
+                output = palabra, 
+                token = "words",
+                # limpieza mínima de texto
+                to_lower = TRUE,
+                strip_punct = TRUE) |> 
+  # eliminar stopwords o palabras vacías
+  filter(!palabra %in% stopwords::stopwords("spanish"))
+
+palabras
+```
+```{r}
+palabras |> 
+  count(palabra, sort = TRUE)
+```
+
+
+## Nube de palabras con `{wordcloud2}`
+https://github.com/Lchiffon/wordcloud2
+
+```{r}
+noticias
+library(ggplot2)
+
+
+# devtools::install_github("lchiffon/wordcloud2")
+
+library(wordcloud2)
+
+palabras_semana |> 
+  filter(semana == max(semana)) |> 
+  group_by(palabra) |> 
+  summarize(n = sum(n)) |> 
+  select(palabra, n) |> 
+  slice_max(n, n = 200) |> 
+  arrange(desc(n)) |> 
+  rename(word = palabra, freq = n) |> 
+  print() |> 
+  wordcloud2(color = c(color_texto),
+             backgroundColor = color_fondo,
+             fontWeight = "normal",
+             fontFamily = "Lato",
+             rotateRatio = 0.1,
+             gridSize = 10,
+             size = 0.4,
+             minSize = 12
+             )
+
+lista_semanas <- palabras_semana |> 
+  distinct(fecha, semana) |> 
+  arrange(desc(fecha)) |> 
+  mutate(fecha_t = redactar_fecha(fecha),
+         fecha_t = paste("Semana del", fecha_t)) |> 
+  select(fecha_t, fecha) |> 
+  tibble::deframe()
+
+```
+
+## Nube de palabras con `{ggplot2}` y `{ggwordcloud}`
+https://lepennec.github.io/ggwordcloud/
+
+```{r}
+noticias
+
+datos_g2_a <- datos_g2() |> 
+        count(palabra) |>
+        filter(n > 1) |>
+        filter(n > quantile(n, 0.5)) |> 
+        mutate(transparencia = ifelse(n > quantile(n, 0.5), 1, .5))
+      
+      plot <- datos_g2_a |>   
+        ggplot(aes(label = palabra, 
+                   size = n, alpha = transparencia)) +
+        geom_text_wordcloud(shape = "circle", color = color_destacado, 
+                            grid_size = 6, family = "Arial",
+                            rm_outside = T, use_richtext = F
+        ) +
+        theme_minimal() +
+        scale_size_continuous(range = c(.min_texto, .max_texto)) +
+        scale_alpha_identity()
+```
+
