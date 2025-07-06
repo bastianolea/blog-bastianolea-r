@@ -2,7 +2,7 @@
 title: Visualizando texto como nubes de palabras en R
 author: Bastián Olea Herrera
 date: '2025-07-05'
-draft: true
+draft: false
 format:
   hugo-md:
     output-file: "index"
@@ -15,14 +15,17 @@ tags:
   - ggplot2
   - análisis de texto
 ---
-```{r}
-library(dplyr, warn.conflicts = F)
-```
 
-Probemos haciendo un análisis de sentimiento a partir de un corpus de textos de noticias chilenas publicadas el año 2024. Los datos son obtenidos de [este repositorio de obtención automatizada de textos de noticias de prensa escrita chilena.](https://github.com/bastianolea/prensa_chile)
+Una de las formas más intuitivas de visualizar datos de texto son las nubes de palabras. En las nubes de palabras seleccionamos un subconjunto de las palabras del texto que queremos analizar y las distribuimos en un gráfico, donde las palabras que aparecen más frecuentemente aparecen más grandes, y usualmente al centro. Sirven para ver rápidamente los conceptos clave de un documento o un corpus de documentos.
+
+En este post veremos dos formas de crear nubes de palabras con R: con `{wordcloud2}` y con `{ggplot2}`. Para empezar, necesitamos una base de datos que tenga información de texto; por ejemplo, una base donde cada fila contenga una respuesta abierta de una encuesta, una reseña de un producto, un párrafo de un texto, un capítulo de un libro, o un libro completo. 
+
+Con el siguiente código descargaremos una base de datos con 10.000 documentos de texto, en este caso se trata de noticias de la prensa chilena. Los datos son obtenidos de [este repositorio de obtención automatizada de textos de noticias de prensa escrita chilena.](https://github.com/bastianolea/prensa_chile)
 
 ```{r}
 #| message: false
+
+library(dplyr)
 
 # dirección web donde se encuentran los datos
 url_datos <- "https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/datos/prensa_datos_muestra.csv"
@@ -30,98 +33,235 @@ url_datos <- "https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/he
 # lectura de los datos ubicados en internet
 noticias <- readr::read_csv2(url_datos)
 
-head(noticias)
+noticias |> select(titulo, cuerpo, fecha)
 ```
 
+En este conjunto de datos, los textos completos de los documentos vienen en la columna `cuerpo`:
 
-Preparar el texto
-tokenizar
-`{tidytext}`
-https://www.tidytextmining.com/tidytext
+```{r}
+noticias |> select(cuerpo)
+```
+
+Usualmente los datos de texto van a venir de esta forma, con **todo el texto de cada documento dentro de una celda.** Para poder analizar los datos en este formato tenemos que _tokenizar_ los textos: transformar la estructura de los datos para pasar desde filas que contienen documentos, párrafos u oraciones, a **filas que contienen palabras individuales**, una palabra por observación.
+
+Usaremos la función `unnest_tokens` de [`{tidytext}`](https://www.tidytextmining.com/tidytext) para tokenizar y limpiar[^1] el texto:
+
+[^1]: La limpieza del texto es un paso clave en este tipo de análisis, que para simplificar esta guía, omitiremos. Es muy importante procesar los textos para poder eliminar palabras vacías, palabras mal escritas, remover símbolos, remover palabras irrelevantes, e incluso lematizar palabras para agrupar diferentes conjugaciones de una misma palabra en una sola. 
+
 ```{r}
 library(tidytext)
 
 palabras <- noticias |> 
-  # tokenizar
-  unnest_tokens(input = cuerpo,
+  # tokenizar columna que contiene los documentos
+  unnest_tokens(input = cuerpo, drop = FALSE,
                 output = palabra, 
                 token = "words",
                 # limpieza mínima de texto
                 to_lower = TRUE,
-                strip_punct = TRUE) |> 
+                strip_punct = TRUE,
+                strip_numeric = TRUE) |> 
   # eliminar stopwords o palabras vacías
   filter(!palabra %in% stopwords::stopwords("spanish"))
 
-palabras
-```
-```{r}
-palabras |> 
-  count(palabra, sort = TRUE)
+palabras |> select(palabra, cuerpo)
 ```
 
+Luego de tokenización, vemos que la columna que contiene el texto completo de los documentos está acompañada de una nueva variable que contiene **cada palabra por separado.** De esta forma puedes continuar analizando el documento con palabras individuales, pero teniendo como referencia al texto completo donde aparece cada palabra si es que lo necesitas.
+
+A partir de la variable de palabras individuales, vamos a hacer un **conteo de las palabras más frecuentes**:
+
+```{r}
+palabras_conteo <- palabras |> 
+  count(palabra, sort = TRUE)
+
+palabras_conteo
+```
+
+Rápidamente podemos ver dos problemas: tenemos demasiadas palabras individuales (más de 80 mil), y tenemos palabras muy cortas, como la palabra `si`, así que haremos una pequeña limpieza:
+
+```{r}
+palabras_conteo <- palabras_conteo |> 
+  # largo mínimo de palabras
+  filter(nchar(palabra) >= 3) |> 
+  # sólo las palabras más frecuentes
+  slice_max(n, n = 2000)
+```
+
+También podemos realizar una **búsqueda** dentro de las palabras y contar cuántas veces aparece cada una:
+```{r}
+palabras_conteo |> 
+  filter(palabra %in% c("guerra", "paz"))
+```
 
 ## Nube de palabras con `{wordcloud2}`
-https://github.com/Lchiffon/wordcloud2
+[`{wordcloud2}`](https://github.com/Lchiffon/wordcloud2) es un paquete muy sencillo de usar que permite visualizar datos de nubes de palabras con muy poca configuración.
+
+Si no tienes el paquete instalado, puedes instalarlo con el siguiente código:
 
 ```{r}
-noticias
-library(ggplot2)
+#| eval: false
+devtools::install_github("lchiffon/wordcloud2")
+```
 
+Para crear una nube de palabras con `{wordcloud2}` solo necesitas que la primera columna del dataframe contenga las palabras, y la segunda contenga el conteo de frecuencia de las palabras:
 
-# devtools::install_github("lchiffon/wordcloud2")
+```{r nube_1}
+#| echo: false
+#| output: false
+library(wordcloud2)
+
+nube_1 <- palabras_conteo |>
+  # sólo palabras que aparezcan n veces
+  filter(n > 1000) |> 
+  wordcloud2(backgroundColor = "#EAD1FA",
+             color = "#543A74")
+
+htmlwidgets::saveWidget(widget = nube_1,
+                        file = here::here("static/nube_1.html"),
+                        selfcontained = TRUE)
+```
+
+```{r}
+#| eval: false
 
 library(wordcloud2)
 
-palabras_semana |> 
-  filter(semana == max(semana)) |> 
-  group_by(palabra) |> 
-  summarize(n = sum(n)) |> 
-  select(palabra, n) |> 
-  slice_max(n, n = 200) |> 
-  arrange(desc(n)) |> 
-  rename(word = palabra, freq = n) |> 
-  print() |> 
-  wordcloud2(color = c(color_texto),
-             backgroundColor = color_fondo,
-             fontWeight = "normal",
-             fontFamily = "Lato",
-             rotateRatio = 0.1,
-             gridSize = 10,
-             size = 0.4,
-             minSize = 12
-             )
-
-lista_semanas <- palabras_semana |> 
-  distinct(fecha, semana) |> 
-  arrange(desc(fecha)) |> 
-  mutate(fecha_t = redactar_fecha(fecha),
-         fecha_t = paste("Semana del", fecha_t)) |> 
-  select(fecha_t, fecha) |> 
-  tibble::deframe()
-
+palabras_conteo |>
+  # sólo palabras que aparezcan n veces
+  filter(n > 1000) |> 
+  wordcloud2(backgroundColor = "#EAD1FA",
+             color = "#543A74")
 ```
 
-## Nube de palabras con `{ggplot2}` y `{ggwordcloud}`
-https://lepennec.github.io/ggwordcloud/
+```{=html}
+<iframe src="/nube_1.html" width="100%" height="500px" style="border:none;"></iframe>
+```
+
+Usamos algunas de las opciones de personalización de `wordcloud2()` para obtener el resultado que necesitamos. Personalmente no me gusta mucho que las palabras aparezcan tan en ángulo, y prefiero que las palabras sean menos grandes para que se vea una mayor cantidad.
+
+```{r nube_2}
+#| echo: false
+#| output: false
+
+nube_2 <- palabras_conteo |>
+  filter(n > 1000) |> 
+  wordcloud2(backgroundColor = "#EAD1FA",
+             color = "#543A74",
+             # personalización
+             rotateRatio = 0.1, # rotación máxima
+             gridSize = 8, # espaciado entre cada palabra
+             size = 0.5, # tamaño del texto en general
+             minSize = 11) # tamaño mínimo de las letras
+
+htmlwidgets::saveWidget(widget = nube_2,
+                        file = here::here("static/nube_2.html"),
+                        selfcontained = TRUE)
+```
 
 ```{r}
-noticias
-
-datos_g2_a <- datos_g2() |> 
-        count(palabra) |>
-        filter(n > 1) |>
-        filter(n > quantile(n, 0.5)) |> 
-        mutate(transparencia = ifelse(n > quantile(n, 0.5), 1, .5))
-      
-      plot <- datos_g2_a |>   
-        ggplot(aes(label = palabra, 
-                   size = n, alpha = transparencia)) +
-        geom_text_wordcloud(shape = "circle", color = color_destacado, 
-                            grid_size = 6, family = "Arial",
-                            rm_outside = T, use_richtext = F
-        ) +
-        theme_minimal() +
-        scale_size_continuous(range = c(.min_texto, .max_texto)) +
-        scale_alpha_identity()
+#| eval: false
+palabras_conteo |>
+  filter(n > 1000) |> 
+  wordcloud2(backgroundColor = "#EAD1FA",
+             color = "#543A74",
+             # personalización
+             rotateRatio = 0.1, # rotación máxima
+             gridSize = 8, # espaciado entre cada palabra
+             size = 0.5, # tamaño del texto en general
+             minSize = 11) # tamaño mínimo de las letras
 ```
 
+
+```{=html}
+<iframe src="/nube_2.html" width="100%" height="500px" style="border:none;"></iframe>
+</iframe>
+```
+
+
+----
+
+## Nube de palabras con `{ggplot2}` y `{ggwordcloud}`
+
+Otra forma de hacer nubes de palabras es agregando una geometría personalizada a `{ggplot2}`: `geom_text_wordcloud()` del paquete [`{ggwordcloud}`](https://lepennec.github.io/ggwordcloud/)
+
+Instalar el paquete:
+```{r}
+#| eval: false
+devtools::install_github("lepennec/ggwordcloud")
+```
+
+Configuramos un tema general para los gráficos, para que se vean bonitos aquí 🥰
+
+```{r}
+library(ggplot2)
+library(ggwordcloud)
+
+# definir el tema para todos los gráficos
+theme_set(
+  theme_void() +
+  theme(plot.background = element_rect(fill = "#EAD1FA", linewidth = 0))
+)
+```
+
+Para crear la nube de palabras con `{ggplot2}`, solamente tenemos que especificar en la estética `aes()` la variable que contiene las palabras (`palabra`) y la variable que controla el tamaño de las mismas (`n`). Luego simplemente indicar que los datos van a visualizarse por medio de la geometría `geom_text_wordcloud()`, que se encargará de distribuir los textos en el área del gráfico.
+
+```{r}
+palabras_conteo |> 
+  filter(n > 2000) |> 
+  ggplot() +
+  aes(label = palabra, size = n) +
+  geom_text_wordcloud(shape = "circle", 
+                      color = "#543A74") +
+  # definir rango de tamaños de las palabras
+  scale_size_continuous(range = c(3, 20))
+```
+El beneficio de usar esta estrategia es que te entrega toda la flexibilidad de visualizar datos con `{ggplot2}`. Por ejemplo, podemos agregar un mapeo de la transparencia y el color para crear una nube donde las palabras menos frecuentes sean más transparentes y donde ciertas palabras claves tengan un color distinto:
+
+```{r}
+palabras_conteo |> 
+  filter(n > 2000) |> 
+  mutate(clave = ifelse(palabra %in% c("gobierno", "presidente", "boric", "ministerio"),
+                         "clave", "otras")) |> 
+  ggplot() +
+  aes(label = palabra, size = n, 
+      alpha = n, 
+      color = clave) +
+  geom_text_wordcloud(shape = "circle", 
+                      grid_size = 6) +
+  # definir rango de tamaño de palabras
+  scale_size_continuous(range = c(3, 15)) +
+  # especificar colores de las palabras clave
+  scale_color_manual(values = c("clave" = "#D93E98", "otras" = "#543A74")) +
+  # definir el rango de la transparencia de palabras
+  scale_alpha_continuous(range = c(0.4, 1))
+```
+También podemos crear una variable que destaques ciertas palabras específicas dentro de la nube:
+
+```{r}
+palabras_conteo |> 
+  filter(n > 1500) |> 
+  # crear variable que destaque palabras específicas
+  mutate(clave = ifelse(palabra %in% c("gobierno", "chile",
+                                       "presidente", "boric", 
+                                       "ministerio", "ministra", "interior",
+                                       "partido",
+                                       "público"),
+                         "clave", "otras")) |> 
+  ggplot() +
+  aes(label = palabra, size = n, 
+      # mapear transparencia a la variable con palabras clave
+      alpha = clave) +
+  geom_text_wordcloud(shape = "circle",
+                      color = "#543A74",
+                      rm_outside = TRUE) +
+  # especificar rango de tamaños
+  scale_size_continuous(range = c(3, 15)) +
+  # especificar nivel de transparencia de las palabras clave y de las demás
+  scale_alpha_manual(values = c("clave" = 1, "otras" = 0.3))
+```
+
+Con esta aproximación podemos crear visualizaciones más personalizadas y complejas a partir de datos de texto, sobre todo si tenemos variables adicionales que nos digan más información sobre las palabras que queremos graficar, cómo puede ser alguna otro criterio de prevalencia de palabras en los documentos, alguna clasificación de las palabras en tópicos o temas, una agrupación de los documentos de donde provienen las palabras, etc.
+
+----
+
+{{< cafecito >}}

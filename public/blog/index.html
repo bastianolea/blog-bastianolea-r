@@ -46,8 +46,8 @@
   
   <meta itemprop="name" content="Blog: análisis de datos en R">
   <meta itemprop="description" content="Publicaciones periódicas sobre el uso de R para análisis de datos, incluyendo tutoriales, reseñas, tips o consejos, novedades, y más.">
-  <meta itemprop="datePublished" content="2025-06-08T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-06-08T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2025-07-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-07-05T00:00:00+00:00">
   <meta itemprop="wordCount" content="56">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -272,26 +272,33 @@
 
   
   
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/purrr_multicore/purrr_multicore/" class="db">Procesa datos más rápido en R usando todos los núcleos de tu procesador con {furrr}</a></h1>
-      
-    </header>
-      
-      
-    <footer>
-      
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/nubes_de_palabras/" class="db">
         
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/consejos">consejos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/purrr">purrr</a> </dd></em>
-        </dl>
+          <img src="http://localhost:4321/blog/nubes_de_palabras/featured.png" class="db ma0 dim" alt="">
         
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/nubes_de_palabras/" class="db">Visualizando texto como nubes de palabras en R</a></h1>
         
+      </header>
       
-      <p class="f7 db mv2">8/6/2025</p>
+      <p class="f6 lh-copy mv2 flex-auto"><p>Una de las formas más intuitivas de visualizar datos de texto son las nubes de palabras. En las nubes de palabras seleccionamos un subconjunto de las palabras del texto que queremos analizar y las distribuimos en un gráfico, donde las palabras que aparecen más frecuentemente aparecen más grandes, y usualmente al centro. Sirven para ver rápidamente los conceptos clave de un documento o un corpus de documentos.</p>
+<p>En este post veremos dos formas de crear nubes de palabras con R: con <code>{wordcloud2}</code> y con <code>{ggplot2}</code>. Para empezar, necesitamos una base de datos que tenga información de texto; por ejemplo, una base donde cada fila contenga una respuesta abierta de una encuesta, una reseña de un producto, un párrafo de un texto, un capítulo de un libro, o un libro completo.</p></p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">5/7/2025</p>
       
     </footer>
+    </div>
   </div>
+
+  
   
 </article>
 
@@ -304,26 +311,124 @@
 
   
   
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/stringr_texto/" class="db">Limpieza y recodificación de datos de texto en R con {stringr}</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Los datos que vienen como texto suelen necesitar una limpieza previa, y adicionalmente un procesamiento para poder aprovecharlos mejor. En este tutorial usamos el paquete <code>{stringr}</code> para limpiar y ordenar unos datos de texto.</p>
-    <footer>
-      
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/2025-07-01/" class="db">
         
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/texto">texto</a> </dd></em>
-        </dl>
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/2025-07-01/" class="db">Mapas</a></h1>
         
-        
+      </header>
       
-      <p class="f7 db mv2">8/6/2025</p>
+      <p class="f6 lh-copy mv2 flex-auto"><!-- library(dplyr) -->
+<!-- library(sf) -->
+<!-- library(ggplot2) -->
+<!-- library(janitor) -->
+<!-- library(readr) -->
+<!-- # comunas ide ---- -->
+<!-- # https://www.ide.cl/index.php/noticias/actualizacion-de-la-cartografia-de-division-politica-administrativa-en-chile -->
+<!-- # https://www.geoportal.cl/geoportal/catalog/download/912598ad-ac92-35f6-8045-098f214bd9c2 -->
+<!-- mapa_comunas_ide <- read_sf("shapes/ide_chile/DPA_2023/COMUNAS/") |> clean_names()  -->
+<!-- comunas_superficie <- mapa_comunas_ide |>  -->
+<!--   mutate(superficie = units::set_units(geometry |> st_area(), "km^2")) |>  -->
+<!--   st_drop_geometry() |>  -->
+<!--   mutate(across(starts_with("cut_"), as.numeric)) -->
+<!-- # areas ---- -->
+<!-- mapa_areas_pobladas <- read_sf("shapes/bcn/Areas_Pobladas/") |> clean_names() -->
+<!-- mapa_comunas_bcn <- read_sf("shapes/bcn/Comunas/") |> clean_names() -->
+<!-- mapa_areas_pobladas |>  -->
+<!--   ggplot() + -->
+<!--   aes() + -->
+<!--   geom_sf() -->
+<!-- mapa_comunas_bcn |>  -->
+<!--   ggplot() + -->
+<!--   aes() + -->
+<!--   geom_sf() -->
+<!-- mapa_comunas_bcn_filt <- mapa_comunas_bcn |>  -->
+<!--   filter(comuna == "Arica")  -->
+<!-- mapa_areas_pobladas_filt <- mapa_areas_pobladas |>  -->
+<!--   filter(comuna == "Arica") -->
+<!-- mapa_comunas_bcn_filt |>  -->
+<!--   ggplot() + -->
+<!--   geom_sf() + -->
+<!--   geom_sf(data = mapa_areas_pobladas_filt, fill = "grey30") -->
+<!-- #  -->
+<!-- # # unir areas pobladas en comunas -->
+<!-- # mapa_areas_pobladas_comunas <- mapa_areas_pobladas |>  -->
+<!-- #   mutate(superficie_area_poblada = units::set_units(geometry |> st_area(), "km^2")) |>  -->
+<!-- #   group_by(comuna) |>  -->
+<!-- #   summarize(superficie_area_poblada = sum(superficie_area_poblada), -->
+<!-- #             geometry = st_union(geometry)) -->
+<!-- # left_join(mapa_comunas_bcn |> st_drop_geometry(), -->
+<!-- #           mapa_areas_pobladas_comunas |> st_drop_geometry(), -->
+<!-- #           by = "comuna") |>  -->
+<!-- #   filter(is.na(cod_comuna)) -->
+<!-- # unir geográficamente mapa de comunas con el mapa de áreas pobladas -->
+<!-- # resultados <- st_join(mapa_comunas_bcn, mapa_areas_pobladas_comunas) -->
+<!-- mapas_unidos <- st_join(mapa_areas_pobladas, mapa_comunas_bcn) -->
+<!-- mapas_unidos_comunas <- mapas_unidos |>  -->
+<!--   group_by(comuna.y, cod_comuna, codregion) |> -->
+<!--   summarize(geometry = st_union(geometry)) |>  -->
+<!--   ungroup() -->
+<!-- superficie_comunas <- mapas_unidos_comunas |>  -->
+<!--   mutate(superficie_area_poblada = units::set_units(geometry |> st_area(), "km^2")) -->
+<!-- mapa_comunas_bcn |>  -->
+<!--   filter(!cod_comuna %in% resultado$cod_comuna) -->
+<!-- superficie_comunas |> filter(comuna.y == "Arica") -->
+<!-- mapa_comunas_bcn |> filter(comuna == "Arica") -->
+<!-- superficie_comunas |> filter(comuna.y == "San José de Maipo") -->
+<!-- superficie_comunas |>  -->
+<!--   filter(stringr::str_detect(comuna.y, "Dichato")) -->
+<!-- superficie_comunas |>  -->
+<!--   filter(stringr::str_detect(comuna.y, "Tom")) -->
+<!-- superficie_comunas |>  -->
+<!--   filter(stringr::str_detect(comuna.y, "Alhué")) -->
+<!-- superficie_comunas |>  -->
+<!--   filter(stringr::str_detect(comuna.y, "Puente")) -->
+<!-- # mapa_areas_pobladas |>  -->
+<!-- #   filter(stringr::str_detect(localidad, "Caleta")) -->
+<!-- comunas_superficie_area_poblada |>  -->
+<!--   filter(is.na(cut_com)) -->
+<!-- mapa_comunas_bcn |>  -->
+<!--   filter(comuna == "San José de Maipo") |>  -->
+<!--   ggplot() + -->
+<!--   geom_sf() + -->
+<!--   geom_sf(data = mapa_areas_pobladas |>  -->
+<!--             filter(comuna == "San José de Maipo"),  -->
+<!--           fill = "grey30") -->
+<!-- mapa_comunas_bcn |>  -->
+<!--   filter(comuna == "San José de Maipo") |>  -->
+<!--   ggplot() + -->
+<!--   geom_sf() + -->
+<!--   geom_sf(data = resultado |>  -->
+<!--             filter(comuna.y == "San José de Maipo"),  -->
+<!--           fill = "grey30") -->
+<!-- codigos_comunas_bcn |>  -->
+<!--   filter(stringr::str_detect(tolower(comuna), "puente")) -->
+<!-- mapa_areas_pobladas_comunas |>  -->
+<!--   filter(stringr::str_detect(tolower(comuna), "puente")) -->
+<!-- mapa_areas_pobladas_comunas |>  -->
+<!--   filter(!comuna %in% sort(codigos_comunas_bcn$comuna)) -->
+<!-- # pero pero pero y las zonas urbanas del censo??? -->
+<!-- # guardar -->
+<!-- superficie_comunas |>  -->
+<!--   st_drop_geometry() |>  -->
+<!--   select(codigo_comuna = cod_comuna, superficie_area_poblada) |>  -->
+<!--   readr::write_rds("datos/superficie_comunas_area_poblada.rds") --></p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">1/7/2025</p>
       
     </footer>
+    </div>
   </div>
+
+  
   
 </article>
 
@@ -336,29 +441,377 @@
 
   
   
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/quarto_loop/" class="db">Generar contenido en serie usando loops en un reporte Quarto</a></h1>
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/ggview/" class="db">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/ggview/" class="db">Controla las dimensiones de tus gráficos con {ggview}</a></h1>
+        
+      </header>
       
-    </header>
       
-      <p class="lh-copy mb4"><p>Una de las gracias de generar documentos en Quarto es que podemos combinar la redacción con el código. Pero esto puede ir más allá que simplemente escribir un párrafo de texto y seguido de un párrafo de código. Podemos usar código para literalmente generar texto, títulos y más.</p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">26/6/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/ordenar_comunas/" class="db">
+        
+          <img src="http://localhost:4321/blog/ordenar_comunas/featured.png" class="db ma0 dim" alt="">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/ordenar_comunas/" class="db">Ordenar las comunas de Chile de norte a sur en R</a></h1>
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto">Complementando el 
+<a href="../../../blog/ordenar_regiones/">post sobre ordenar regiones de Chile de norte a sur</a>, en esta publicación veremos cómo ordenar las comunas del país de norte a sur. Esto puede servirnos para mostrar datos a nivel comunal de una gran cantidad de regiones de una manera más intuitiva, en los casos donde ordenarlas por orden alfabético no entrega mucha información, o cuando queramos mostrar en nuestras visualizaciones o tablas que el factor geográfico incide en el dato principal.</p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">25/6/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/2025-06-18/" class="db">
+        
+          <img src="http://localhost:4321/blog/2025-06-18/featured.png" class="db ma0 dim" alt="">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/2025-06-18/" class="db">Gráficos para identificar datos outliers o anómalos en R</a></h1>
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto">Los datos anómalos o <em>outliers</em> son datos que se alejan considerablemente de los demás. Crearemos un dataset simulando datos outliers y luego mostraremos algunas formas de visualizarlos en <code>{ggplot2}</code>, incluyendo un gráfico interactivo con <code>{ggiraph}</code> donde podemos poner el cursor sobre las observaciones del gráfico para obtener más información.</p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">18/6/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/unpivotr/" class="db">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/unpivotr/" class="db">Limpia planillas de Excel complejas en R con {unpivotr}</a></h1>
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto"><a href="https://github.com/nacnudus/unpivotr" target="_blank" rel="noopener">https://github.com/nacnudus/unpivotr</a></p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">13/6/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/openxlsx/" class="db">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/openxlsx/" class="db">Crea planillas de Excel con formato directamente desde R con {openxlsx}</a></h1>
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto"><p>
+<a href="https://ycphs.github.io/openxlsx/" target="_blank" rel="noopener">https://ycphs.github.io/openxlsx/</a></p>
+<p>
+<a href="https://www.r-bloggers.com/2024/11/creating-professional-excel-reports-with-r-a-comprehensive-guide-to-openxlsx-package/" target="_blank" rel="noopener">https://www.r-bloggers.com/2024/11/creating-professional-excel-reports-with-r-a-comprehensive-guide-to-openxlsx-package/</a></p>
+<p>
+<a href="https://guslipkin.medium.com/making-pretty-excel-files-in-r-46a15c7a2ee8" target="_blank" rel="noopener">https://guslipkin.medium.com/making-pretty-excel-files-in-r-46a15c7a2ee8</a></p></p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">13/6/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/furrr_multiprocesador/" class="db">
+        
+          <img src="http://localhost:4321/blog/furrr_multiprocesador/featured.png" class="db ma0 dim" alt="">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/furrr_multiprocesador/" class="db">Procesamiento de datos multiprocesador en R con {furrr}</a></h1>
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto">Realiza cálculos a través de múltiples procesadores en R, aprovechando la totalidad de la capacidad de cómputo de tu computador para optimizar el rendimiento de tus procesos. Si tienes que trabajar con bases de datos muy grandes, puedes acelerar el cálculo con tan sólo un par de líneas, usando el paquete <code>{furrr}</code>.</p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">12/6/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/2025-06-11/" class="db">
+        
+          <img src="http://localhost:4321/blog/2025-06-11/featured.jpeg" class="db ma0 dim" alt="">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/2025-06-11/" class="db">Feliz cumpleaños, {ggplot2}!</a></h1>
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto">Hoy está de cumpleaños el paquete <code>{ggplot2}</code> para visualización de datos en R! Así que le hice un gráfico de mini celebración en 20 líneas.</p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">11/6/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/github_copilot/" class="db">
+        
+          <img src="http://localhost:4321/blog/github_copilot/copilot_1-featured.png" class="db ma0 dim" alt="">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/github_copilot/" class="db">Sugerencias y autocompletado de código con GitHub Copilot</a></h1>
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto">Uno de beneficios concretos de los avances en inteligencia artificial generativa son las herramientas de autocompletado de código. Una de estas herramientas es GitHub Copilot, un servicio de autocompletado de código que puede integrarse directamente en RStudio para ayudarte a programar en R. En este post mostraré algunos casos de uso real donde Copilot me ha servido.</p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">9/6/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/stringr_texto/" class="db">
+        
+          <img src="http://localhost:4321/blog/stringr_texto/featured.png" class="db ma0 dim" alt="">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/stringr_texto/" class="db">Limpieza y recodificación de datos de texto en R con {stringr}</a></h1>
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto">Los datos que vienen como texto suelen necesitar una limpieza previa, y adicionalmente un procesamiento para poder aprovecharlos mejor. En este tutorial usamos el paquete <code>{stringr}</code> para limpiar y ordenar unos datos de texto.</p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">8/6/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/quarto_loop/" class="db">
+        
+          <img src="http://localhost:4321/blog/quarto_loop/featured.png" class="db ma0 dim" alt="">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/quarto_loop/" class="db">Generar contenido en serie usando loops en un reporte Quarto</a></h1>
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto"><p>Una de las gracias de generar documentos en Quarto es que podemos combinar la redacción con el código. Pero esto puede ir más allá que simplemente escribir un párrafo de texto y seguido de un párrafo de código. Podemos usar código para literalmente generar texto, títulos y más.</p>
 <p>En otros tutoriales vimos cómo podemos 
 <a href="../../../blog/quarto_reportes/#c%c3%b3digo-entre-el-texto">incluir resultados del código dentro de nuestros párrafos de texto</a>, por ejemplo, para que una cifra que esté dentro de una oración venga directamente del resultado de un cálculo en vez de tener que escribirle de forma manual. Pero en esta guía vamos a ver cómo podemos programar la generación masiva de títulos, párrafos y gráficos en base a una 
 <a href="../../../blog/r_introduccion/r_intermedio/#bucles">iteración, bucle o <em>loop</em>.</a></p></p>
-    <footer>
+      <footer class="w-100">
       
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/quarto">quarto</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/loops">loops</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/automatizaci%C3%B3n">automatización</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a> </dd></em>
-        </dl>
-        
-        
       
-      <p class="f7 db mv2">8/6/2025</p>
+      <p class="f7 db mv1">8/6/2025</p>
       
     </footer>
+    </div>
   </div>
+
+  
   
 </article>
 
@@ -371,26 +824,32 @@
 
   
   
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/ordenar_regiones/" class="db">Ordenar las regiones de Chile de norte a sur en R</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">La franja larga y angosta que es Chile tiene el beneficio de que sus regiones se ubican casi perfectamente una sobre la otra, de norte a sur. Este orgen geográfico natural de sus regiones resulta familiar para sus habitantes, por lo que se vuelve recomendable ordenar los datos a nivel regional siguiendo este orden geográfico.</p>
-    <footer>
-      
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/ordenar_regiones/" class="db">
         
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/consejos">consejos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/mapas">mapas</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/chile">Chile</a> </dd></em>
-        </dl>
+          <img src="http://localhost:4321/blog/ordenar_regiones/featured.png" class="db ma0 dim" alt="">
         
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/ordenar_regiones/" class="db">Ordenar las regiones de Chile de norte a sur en R</a></h1>
         
+      </header>
       
-      <p class="f7 db mv2">6/6/2025</p>
+      <p class="f6 lh-copy mv2 flex-auto">La franja larga y angosta que es Chile tiene el beneficio de que sus regiones se ubican casi perfectamente una sobre la otra, de norte a sur. Este orgen geográfico natural de sus regiones resulta familiar para sus habitantes, por lo que se vuelve recomendable ordenar los datos a nivel regional siguiendo este orden geográfico.</p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">6/6/2025</p>
       
     </footer>
+    </div>
   </div>
+
+  
   
 </article>
 
@@ -403,26 +862,32 @@
 
   
   
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/datapasta/" class="db">Copia y pega datos en R con {datapasta} y {clipr}</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4"><code>{datapasta}</code> es un paquete para R que te ayuda a copiar y pegar datos desde y hacia R. Este paquete convierte tus datos en texto que puedes copiar y pegar en otro script, o editar manualmente. Usa la función <code>dpasta()</code> sobre un dataframe para hacer que los datos aparezcan como en texto directamente debajo de donde la ejecutaste. Por otro lado, <code>{clipr}</code> nos va a permitir copiar un dataframe desde R para poder pegarlo en programas como Excel.</p>
-    <footer>
-      
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/datapasta/" class="db">
         
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/consejos">consejos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/datos">datos</a> </dd></em>
-        </dl>
+          <img src="http://localhost:4321/blog/datapasta/featured.png" class="db ma0 dim" alt="">
         
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/datapasta/" class="db">Copia y pega datos en R con {datapasta} y {clipr}</a></h1>
         
+      </header>
       
-      <p class="f7 db mv2">6/6/2025</p>
+      <p class="f6 lh-copy mv2 flex-auto"><code>{datapasta}</code> es un paquete para R que te ayuda a copiar y pegar datos desde y hacia R. Este paquete convierte tus datos en texto que puedes copiar y pegar en otro script, o editar manualmente. Usa la función <code>dpasta()</code> sobre un dataframe para hacer que los datos aparezcan como en texto directamente debajo de donde la ejecutaste. Por otro lado, <code>{clipr}</code> nos va a permitir copiar un dataframe desde R para poder pegarlo en programas como Excel.</p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">6/6/2025</p>
       
     </footer>
+    </div>
   </div>
+
+  
   
 </article>
 
@@ -435,28 +900,34 @@
 
   
   
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/quarto_params/" class="db">Automatiza la generación de reportes creando documentos parametrizados con Quarto y R</a></h1>
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/quarto_params/" class="db">
+        
+          <img src="http://localhost:4321/blog/quarto_params/quarto_params_2-featured.png" class="db ma0 dim" alt="">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/quarto_params/" class="db">Automatiza la generación de reportes creando documentos parametrizados con Quarto y R</a></h1>
+        
+      </header>
       
-    </header>
-      
-      <p class="lh-copy mb4"><p>En este tutorial aprenderemos a crear 
+      <p class="f6 lh-copy mv2 flex-auto"><p>En este tutorial aprenderemos a crear 
 <a href="https://posit.co/blog/parameterized-quarto/" target="_blank" rel="noopener">reportes parametrizados</a> con Quarto. Un reporte parametrizado es un reporte diseñado para que el contenido, incluyendo textos, gráficos y más, cambien al modificar una variable en su encabezado. En este sentido, por <em>parámetro</em> nos referimos a un valor que podremos cambiar para alterar el resultado obtenido por un mismo reporte.</p>
 <p>De esta manera, podemos <strong>generar múltiples versiones de un mismo reporte simplemente cambiando el parámetro</strong>, por ejemplo, para diseñar un reporte con datos para un país, en base a un conjuntos de datos de múltiples países, y luego obtener múltiples versiones del mismo reporte pero para distintos países. O generar un reporte con datos de un año específico, y luego generar versiones del mismo reporte para distintos años.</p></p>
-    <footer>
+      <footer class="w-100">
       
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/quarto">quarto</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/loops">loops</a> </dd></em>
-        </dl>
-        
-        
       
-      <p class="f7 db mv2">15/4/2025</p>
+      <p class="f7 db mv1">15/4/2025</p>
       
     </footer>
+    </div>
   </div>
+
+  
   
 </article>
 
@@ -469,26 +940,32 @@
 
   
   
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/quarto_reportes/" class="db">Tutorial Quarto: presenta los resultados de tus análisis de datos con R creando reportes y documentos Quarto</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Quarto es una herramienta que te permite generar documentos y reportes de manera muy sencilla utilizando bloques de código de R. En estos reportes puedes incluir tablas, gráficos, y mucho más, de forma atractiva, para poder compartir tus análisis y resultados con otras personas. Aprender a generar documentos Quarto es una herramienta que puede llevar tus habilidades de análisis de datos al siguiente nivel!</p>
-    <footer>
-      
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/quarto_reportes/" class="db">
         
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/quarto">quarto</a> </dd></em>
-        </dl>
+          <img src="http://localhost:4321/blog/quarto_reportes/quarto_theme_cosmo-featured.png" class="db ma0 dim" alt="">
         
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/quarto_reportes/" class="db">Tutorial Quarto: presenta los resultados de tus análisis de datos con R creando reportes y documentos Quarto</a></h1>
         
+      </header>
       
-      <p class="f7 db mv2">14/4/2025</p>
+      <p class="f6 lh-copy mv2 flex-auto">Quarto es una herramienta que te permite generar documentos y reportes de manera muy sencilla utilizando bloques de código de R. En estos reportes puedes incluir tablas, gráficos, y mucho más, de forma atractiva, para poder compartir tus análisis y resultados con otras personas. Aprender a generar documentos Quarto es una herramienta que puede llevar tus habilidades de análisis de datos al siguiente nivel!</p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">14/4/2025</p>
       
     </footer>
+    </div>
   </div>
+
+  
   
 </article>
 
@@ -501,26 +978,32 @@
 
   
   
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/2025-03-31/" class="db">Limpiar textos con símbolos, tildes o eñes en R</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Amamos el castellano, con sus tildes y eñes, y nos encanta que R no tenga problemas para usar estos símbolos en cualquier parte del lenguaje. Pero hay veces en las que necesitamos deshacernos de estos símbolos especiales, como tildes, eñes, e incluso mayúsculas. En este post te muestro varias opciones de limpieza de texto con R.</p>
-    <footer>
-      
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/2025-03-31/" class="db">
         
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/consejos">consejos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/texto">texto</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a> </dd></em>
-        </dl>
+          <img src="http://localhost:4321/blog/2025-03-31/featured.png" class="db ma0 dim" alt="">
         
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/2025-03-31/" class="db">Limpiar textos con símbolos, tildes o eñes en R</a></h1>
         
+      </header>
       
-      <p class="f7 db mv2">31/3/2025</p>
+      <p class="f6 lh-copy mv2 flex-auto">Amamos el castellano, con sus tildes y eñes, y nos encanta que R no tenga problemas para usar estos símbolos en cualquier parte del lenguaje. Pero hay veces en las que necesitamos deshacernos de estos símbolos especiales, como tildes, eñes, e incluso mayúsculas. En este post te muestro varias opciones de limpieza de texto con R.</p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">31/3/2025</p>
       
     </footer>
+    </div>
   </div>
+
+  
   
 </article>
 
@@ -533,26 +1016,32 @@
 
   
   
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/2025-03-30/" class="db">Redactar una lista de palabras separadas por comas en R</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Aprende a generar un texto que redacte un vector de palabras sueltas en una oración separada por comas y con el separador <em>y</em> al final; por ejemplo: ’uno, dos y tres’. Útil para escribir programáticamente títulos, subtítulos y textos para reportes.</p>
-    <footer>
-      
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/2025-03-30/" class="db">
         
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/consejos">consejos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/texto">texto</a> </dd></em>
-        </dl>
+          <img src="http://localhost:4321/blog/2025-03-30/featured.png" class="db ma0 dim" alt="">
         
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/2025-03-30/" class="db">Redactar una lista de palabras separadas por comas en R</a></h1>
         
+      </header>
       
-      <p class="f7 db mv2">30/3/2025</p>
+      <p class="f6 lh-copy mv2 flex-auto">Aprende a generar un texto que redacte un vector de palabras sueltas en una oración separada por comas y con el separador <em>y</em> al final; por ejemplo: ’uno, dos y tres’. Útil para escribir programáticamente títulos, subtítulos y textos para reportes.</p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">30/3/2025</p>
       
     </footer>
+    </div>
   </div>
+
+  
   
 </article>
 
@@ -565,26 +1054,32 @@
 
   
   
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/tutorial_quarto_github_pages/" class="db">Tutorial: crea páginas web y blogs con R+Quarto, y publícalos online con GitHub Pages</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">En este tutorial veremos cuatro formas relativamente sencillas para crear nuestros propios espacios en internet con R para poder compartir nuestras creaciones y aprendizajes, de forma completamente gratuita. ¡En una tarde podrías tener tu propio sitio web para presentarte, para subir las cosas que has aprendido, o para destacar tu trabajo!</p>
-    <footer>
-      
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/tutorial_quarto_github_pages/" class="db">
         
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/quarto">quarto</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/shiny">shiny</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/git">git</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/github">GitHub</a> </dd></em>
-        </dl>
+          <img src="http://localhost:4321/blog/tutorial_quarto_github_pages/afiche-featured.jpg" class="db ma0 dim" alt="">
         
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/tutorial_quarto_github_pages/" class="db">Tutorial: crea páginas web y blogs con R+Quarto, y publícalos online con GitHub Pages</a></h1>
         
+      </header>
       
-      <p class="f7 db mv2">27/3/2025</p>
+      <p class="f6 lh-copy mv2 flex-auto">En este tutorial veremos cuatro formas relativamente sencillas para crear nuestros propios espacios en internet con R para poder compartir nuestras creaciones y aprendizajes, de forma completamente gratuita. ¡En una tarde podrías tener tu propio sitio web para presentarte, para subir las cosas que has aprendido, o para destacar tu trabajo!</p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">27/3/2025</p>
       
     </footer>
+    </div>
   </div>
+
+  
   
 </article>
 
@@ -597,323 +1092,34 @@
 
   
   
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/r_introduccion/tutorial_visualizacion_ggplot/" class="db">Tutorial: visualización de datos con {ggplot2}</a></h1>
-      
-      <h2 class="f5"><i class="fas fa-stream fa-fw pr1"></i><small class="f5 ttu tracked">Series: </small><a class="link i dim" href="/blog/r_introduccion/">Introducción a R</a></h2>
-      
-    </header>
-      
-      <p class="lh-copy mb4"><code>{ggplot2}</code> es una librería de visualización de datos bastante popular en el mundo de la ciencia de datos. Sus principales características son su atractivo, su conveniencia para la exploración de datos, un gran potencial de personalización, y un extenso ecosistema de extensiones que nos permiten generar visualizaciones prácticamente de cualquier tipo. Sigue este tutorial para aprender desde lo más básico a utilizar <code>{ggplot2}</code></p>
-    <footer>
-      
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/r_introduccion/tutorial_visualizacion_ggplot/" class="db">
         
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a> </dd></em>
-        </dl>
+          <img src="http://localhost:4321/blog/r_introduccion/tutorial_visualizacion_ggplot/ggplot2-featured.jpg" class="db ma0 dim" alt="">
         
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/r_introduccion/tutorial_visualizacion_ggplot/" class="db">Tutorial: visualización de datos con {ggplot2}</a></h1>
         
+        <h2 class="f5"><i class="fas fa-stream fa-fw pr1"></i><small class="f5 ttu tracked">Series: </small><a class="link i dim" href="/blog/r_introduccion/">Introducción a R</a></h2>
+        
+      </header>
       
-      <p class="f7 db mv2">21/3/2025</p>
+      <p class="f6 lh-copy mv2 flex-auto"><code>{ggplot2}</code> es una librería de visualización de datos bastante popular en el mundo de la ciencia de datos. Sus principales características son su atractivo, su conveniencia para la exploración de datos, un gran potencial de personalización, y un extenso ecosistema de extensiones que nos permiten generar visualizaciones prácticamente de cualquier tipo. Sigue este tutorial para aprender desde lo más básico a utilizar <code>{ggplot2}</code></p>
+      <footer class="w-100">
+      
+      
+      <p class="f7 db mv1">21/3/2025</p>
       
     </footer>
+    </div>
   </div>
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
 
   
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/patchwork/" class="db">Unir y combinar gráficos {ggplot2} en R</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">El paquete {patchwork} ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas, por medio de la combinación de gráficos en una sola visualización, y la inserción de gráficos dentro de otros.</p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a> </dd></em>
-        </dl>
-        
-        
-      
-      <p class="f7 db mv2">8/3/2025</p>
-      
-    </footer>
-  </div>
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/tutorial_scraping_selenium/" class="db">Tutorial: web scraping con Selenium en R usando {RSelenium}</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Selenium es una herramienta que permite realizar web scraping avanzado por medio del control programático de un navegador web, lo cual abre infinitas posibilidades al momento de automatizar la obtención de datos e información desde sitios web dinámicos y/o complejos. En este tutorial aprenderemos a usar {RSelenium} para programar scripts de R que automaticen el control de un navegador para interactuar con sitios web y así scrapear datos mas difíciles de obtener.</p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/web-scraping">web scraping</a> </dd></em>
-        </dl>
-        
-        
-      
-      <p class="f7 db mv2">7/3/2025</p>
-      
-    </footer>
-  </div>
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/colores/" class="db">Creación y personalización de paletas de colores en R</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4"><p>El uso del color es clave para comunicar, y el ecosistema de R tiene varios trucos convenientes para ayudarnos a usar el color de mejores formas.</p>
-<p>El primer consejo que usaremos a lo largo de este post es la función <code>swatch()</code> del paquete {shades}, que genera una paleta a partir de un vector de colores, lo que nos ayudará a visualizar nuestros colores más fácil. También usaremos {colorspace}, otro paquete conveniente para trabajar con color.</p></p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a> </dd></em>
-        </dl>
-        
-        
-      
-      <p class="f7 db mv2">6/3/2025</p>
-      
-    </footer>
-  </div>
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/mapa_chile_horizontal/" class="db">Rotar un mapa de Chile en R para que quede horizontal</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Visualizar un mapa de Chile puede ser complicado debido a su largo. Muchas veces cuesta ubicar correctamente el mapa por el espacio vertical que requiere. Pero en ciertos casos puede ser conveniente visualizar a Chile <em>de lado</em>, para aprovechar el espacio horizontal. En esta guía veremos cómo rotar un mapa de Chile 90° hacia la izquierda en R para que quede acostado.</p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/mapas">mapas</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/chile">Chile</a> </dd></em>
-        </dl>
-        
-        
-      
-      <p class="f7 db mv2">4/3/2025</p>
-      
-    </footer>
-  </div>
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/simplificar_mapas/" class="db">Simplificar la geometría de los polígonos de un mapa en R</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Un problema común al visualizar datos georeferenciados o mapas coropléticos (con colores en las zonas geográficas que se corresponden con los datos) yace en que usamos mapas que tienen geometrías o características geográficas mucho más detalladas de lo que necesitamos. Este exceso de detalle puede jugarle en contra a la visualización que estamos intentando crear, ya sea porque dificulta la interpretación, o complejiza visualmente el gráfico. En esta guía aprenderemos a simplificar mapas en R para producir visualizaciones con el nivel apropiado de detalle, y hacer más rápida la generación de mapas.</p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/mapas">mapas</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a> </dd></em>
-        </dl>
-        
-        
-      
-      <p class="f7 db mv2">27/2/2025</p>
-      
-    </footer>
-  </div>
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/genero_nombres_llm/" class="db">Predecir género a partir de nombres usando un modelo de lenguaje en R</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Aprende a usar modelos extensos de lenguaje (LLM) para clasificar datos con un caso de uso real, donde se necesita asumir el género de las personas a partir de sus nombres para poder realizar análisis con perspectiva de género. Aplicar inteligencia artificial en R para este tipo de tareas es puede ahorrarte muchísimo tiempo, y dependiendo de como ajustes los datos y el <em>prompt</em> puede entregar buenos resultados.</p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/inteligencia-artificial">inteligencia artificial</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/an%C3%A1lisis-de-texto">análisis de texto</a> </dd></em>
-        </dl>
-        
-        
-      
-      <p class="f7 db mv2">19/2/2025</p>
-      
-    </footer>
-  </div>
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/tutorial_shinymanager/" class="db">Protege el acceso a tus aplicaciones Shiny con contraseña</a></h1>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Si 
-<a href="/blog/r_introduccion/tutorial_shiny_1">creaste una aplicación Shiny</a> y quieres 
-<a href="/blog/r_introduccion/tutorial_shinyapps">compartirla con otros/as</a>, pero tu app contiene información que no puede ser vista por cualquiera, ¡entonces sigue estos pasos! En unos minutos tendrás una aplicación que requiere de usuario y contraseña para poder usarla.</p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/shiny">shiny</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/aplicaciones">aplicaciones</a> </dd></em>
-        </dl>
-        
-        
-      
-      <p class="f7 db mv2">17/2/2025</p>
-      
-    </footer>
-  </div>
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/r_introduccion/dplyr_intermedio/" class="db">Manejo y transformación de datos con {dplyr} y {tidyr}</a></h1>
-      
-      <h2 class="f5"><i class="fas fa-stream fa-fw pr1"></i><small class="f5 ttu tracked">Series: </small><a class="link i dim" href="/blog/r_introduccion/">Introducción a R</a></h2>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Prueba</p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/dplyr">dplyr</a> </dd></em>
-        </dl>
-        
-        
-      
-      <p class="f7 db mv2">16/2/2025</p>
-      
-    </footer>
-  </div>
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  <div class="measure-wide center mb4 mb5-l">
-    <header>
-      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/r_introduccion/dplyr_intro/" class="db">Introducción al manejo de datos con {dplyr}</a></h1>
-      
-      <h2 class="f5"><i class="fas fa-stream fa-fw pr1"></i><small class="f5 ttu tracked">Series: </small><a class="link i dim" href="/blog/r_introduccion/">Introducción a R</a></h2>
-      
-    </header>
-      
-      <p class="lh-copy mb4">Luego de haber aprendido las funcionalidades básicas del lenguaje y R, y habernos familiarizado con herramientas un poco más avanzadas de la programación en este lenguaje, ahora podemos aplicar estos aprendizajes a los datos. Aprenderemos a explorar, comprender, y navegar tablas de datos, tanto en la forma nativa de trabajar con R, como con la ayuda del paquete {dplyr}.</p>
-    <footer>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/dplyr">dplyr</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/consejos">consejos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/datos">datos</a> </dd></em>
-        </dl>
-        
-        
-      
-      <p class="f7 db mv2">15/2/2025</p>
-      
-    </footer>
-  </div>
   
 </article>
 
@@ -930,7 +1136,7 @@
     
     </li>
     <li class="dtc w-50 v-mid">
-      <span class="page_number fw6 f7 ttu tracked">1 of 4</span>
+      <span class="page_number fw6 f7 ttu tracked">1 of 5</span>
     </li>
     <li class="dtc w-25 tr v-mid">
     
