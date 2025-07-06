@@ -157,6 +157,8 @@ palabras_conteo |>
     1 guerra    398
     2 paz       267
 
+------------------------------------------------------------------------
+
 ## Nube de palabras con `{wordcloud2}`
 
 [`{wordcloud2}`](https://github.com/Lchiffon/wordcloud2) es un paquete muy sencillo de usar que permite visualizar datos de nubes de palabras con muy poca configuración.
