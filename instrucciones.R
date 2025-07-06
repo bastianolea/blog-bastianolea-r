@@ -26,7 +26,6 @@ blogdown::new_post(title = "Crear nubes de palabras para análisis de texto con 
 #     output-ext: "md"
 
 ## borradores ----
-"content/blog/nubes_de_palabras/index.qmd"
 "content/blog/ggview/index.qmd"
 "content/blog/2025-07-01/index.qmd"
 "content/blog/openxlsx/index.md"
