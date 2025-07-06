@@ -45,8 +45,8 @@
   
   <meta itemprop="name" content="Gráficos">
   <meta itemprop="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
-  <meta itemprop="datePublished" content="2025-06-08T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-06-08T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2025-07-05T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-07-05T00:00:00+00:00">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="false" type="image/x-icon">
@@ -274,6 +274,261 @@
   
   <div class="measure-wide center mb4 mb5-l">
     <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/nubes_de_palabras/" class="db">Visualizando texto como nubes de palabras en R</a></h1>
+      
+    </header>
+      
+      <p class="lh-copy mb4"><p>Una de las formas más intuitivas de visualizar datos de texto son las nubes de palabras. En las nubes de palabras seleccionamos un subconjunto de las palabras del texto que queremos analizar y las distribuimos en un gráfico, donde las palabras que aparecen más frecuentemente aparecen más grandes, y usualmente al centro. Sirven para ver rápidamente los conceptos clave de un documento o un corpus de documentos.</p>
+<p>En este post veremos dos formas de crear nubes de palabras con R: con <code>{wordcloud2}</code> y con <code>{ggplot2}</code>. Para empezar, necesitamos una base de datos que tenga información de texto; por ejemplo, una base donde cada fila contenga una respuesta abierta de una encuesta, una reseña de un producto, un párrafo de un texto, un capítulo de un libro, o un libro completo.</p></p>
+    <footer>
+      
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/an%C3%A1lisis-de-texto">análisis de texto</a> </dd></em>
+        </dl>
+        
+        
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+  
+    
+                               
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/2025-07-01/" class="db">Mapas</a></h1>
+      
+    </header>
+      
+      <p class="lh-copy mb4"><!-- library(dplyr) -->
+<!-- library(sf) -->
+<!-- library(ggplot2) -->
+<!-- library(janitor) -->
+<!-- library(readr) -->
+<!-- # comunas ide ---- -->
+<!-- # https://www.ide.cl/index.php/noticias/actualizacion-de-la-cartografia-de-division-politica-administrativa-en-chile -->
+<!-- # https://www.geoportal.cl/geoportal/catalog/download/912598ad-ac92-35f6-8045-098f214bd9c2 -->
+<!-- mapa_comunas_ide <- read_sf("shapes/ide_chile/DPA_2023/COMUNAS/") |> clean_names()  -->
+<!-- comunas_superficie <- mapa_comunas_ide |>  -->
+<!--   mutate(superficie = units::set_units(geometry |> st_area(), "km^2")) |>  -->
+<!--   st_drop_geometry() |>  -->
+<!--   mutate(across(starts_with("cut_"), as.numeric)) -->
+<!-- # areas ---- -->
+<!-- mapa_areas_pobladas <- read_sf("shapes/bcn/Areas_Pobladas/") |> clean_names() -->
+<!-- mapa_comunas_bcn <- read_sf("shapes/bcn/Comunas/") |> clean_names() -->
+<!-- mapa_areas_pobladas |>  -->
+<!--   ggplot() + -->
+<!--   aes() + -->
+<!--   geom_sf() -->
+<!-- mapa_comunas_bcn |>  -->
+<!--   ggplot() + -->
+<!--   aes() + -->
+<!--   geom_sf() -->
+<!-- mapa_comunas_bcn_filt <- mapa_comunas_bcn |>  -->
+<!--   filter(comuna == "Arica")  -->
+<!-- mapa_areas_pobladas_filt <- mapa_areas_pobladas |>  -->
+<!--   filter(comuna == "Arica") -->
+<!-- mapa_comunas_bcn_filt |>  -->
+<!--   ggplot() + -->
+<!--   geom_sf() + -->
+<!--   geom_sf(data = mapa_areas_pobladas_filt, fill = "grey30") -->
+<!-- #  -->
+<!-- # # unir areas pobladas en comunas -->
+<!-- # mapa_areas_pobladas_comunas <- mapa_areas_pobladas |>  -->
+<!-- #   mutate(superficie_area_poblada = units::set_units(geometry |> st_area(), "km^2")) |>  -->
+<!-- #   group_by(comuna) |>  -->
+<!-- #   summarize(superficie_area_poblada = sum(superficie_area_poblada), -->
+<!-- #             geometry = st_union(geometry)) -->
+<!-- # left_join(mapa_comunas_bcn |> st_drop_geometry(), -->
+<!-- #           mapa_areas_pobladas_comunas |> st_drop_geometry(), -->
+<!-- #           by = "comuna") |>  -->
+<!-- #   filter(is.na(cod_comuna)) -->
+<!-- # unir geográficamente mapa de comunas con el mapa de áreas pobladas -->
+<!-- # resultados <- st_join(mapa_comunas_bcn, mapa_areas_pobladas_comunas) -->
+<!-- mapas_unidos <- st_join(mapa_areas_pobladas, mapa_comunas_bcn) -->
+<!-- mapas_unidos_comunas <- mapas_unidos |>  -->
+<!--   group_by(comuna.y, cod_comuna, codregion) |> -->
+<!--   summarize(geometry = st_union(geometry)) |>  -->
+<!--   ungroup() -->
+<!-- superficie_comunas <- mapas_unidos_comunas |>  -->
+<!--   mutate(superficie_area_poblada = units::set_units(geometry |> st_area(), "km^2")) -->
+<!-- mapa_comunas_bcn |>  -->
+<!--   filter(!cod_comuna %in% resultado$cod_comuna) -->
+<!-- superficie_comunas |> filter(comuna.y == "Arica") -->
+<!-- mapa_comunas_bcn |> filter(comuna == "Arica") -->
+<!-- superficie_comunas |> filter(comuna.y == "San José de Maipo") -->
+<!-- superficie_comunas |>  -->
+<!--   filter(stringr::str_detect(comuna.y, "Dichato")) -->
+<!-- superficie_comunas |>  -->
+<!--   filter(stringr::str_detect(comuna.y, "Tom")) -->
+<!-- superficie_comunas |>  -->
+<!--   filter(stringr::str_detect(comuna.y, "Alhué")) -->
+<!-- superficie_comunas |>  -->
+<!--   filter(stringr::str_detect(comuna.y, "Puente")) -->
+<!-- # mapa_areas_pobladas |>  -->
+<!-- #   filter(stringr::str_detect(localidad, "Caleta")) -->
+<!-- comunas_superficie_area_poblada |>  -->
+<!--   filter(is.na(cut_com)) -->
+<!-- mapa_comunas_bcn |>  -->
+<!--   filter(comuna == "San José de Maipo") |>  -->
+<!--   ggplot() + -->
+<!--   geom_sf() + -->
+<!--   geom_sf(data = mapa_areas_pobladas |>  -->
+<!--             filter(comuna == "San José de Maipo"),  -->
+<!--           fill = "grey30") -->
+<!-- mapa_comunas_bcn |>  -->
+<!--   filter(comuna == "San José de Maipo") |>  -->
+<!--   ggplot() + -->
+<!--   geom_sf() + -->
+<!--   geom_sf(data = resultado |>  -->
+<!--             filter(comuna.y == "San José de Maipo"),  -->
+<!--           fill = "grey30") -->
+<!-- codigos_comunas_bcn |>  -->
+<!--   filter(stringr::str_detect(tolower(comuna), "puente")) -->
+<!-- mapa_areas_pobladas_comunas |>  -->
+<!--   filter(stringr::str_detect(tolower(comuna), "puente")) -->
+<!-- mapa_areas_pobladas_comunas |>  -->
+<!--   filter(!comuna %in% sort(codigos_comunas_bcn$comuna)) -->
+<!-- # pero pero pero y las zonas urbanas del censo??? -->
+<!-- # guardar -->
+<!-- superficie_comunas |>  -->
+<!--   st_drop_geometry() |>  -->
+<!--   select(codigo_comuna = cod_comuna, superficie_area_poblada) |>  -->
+<!--   readr::write_rds("datos/superficie_comunas_area_poblada.rds") --></p>
+    <footer>
+      
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/estad%C3%ADstica">estadística</a> </dd></em>
+        </dl>
+        
+        
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+  
+    
+                               
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/ggview/" class="db">Controla las dimensiones de tus gráficos con {ggview}</a></h1>
+      
+    </header>
+      
+      
+    <footer>
+      
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a> </dd></em>
+        </dl>
+        
+        
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+  
+    
+                               
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/2025-06-18/" class="db">Gráficos para identificar datos outliers o anómalos en R</a></h1>
+      
+    </header>
+      
+      <p class="lh-copy mb4">Los datos anómalos o <em>outliers</em> son datos que se alejan considerablemente de los demás. Crearemos un dataset simulando datos outliers y luego mostraremos algunas formas de visualizarlos en <code>{ggplot2}</code>, incluyendo un gráfico interactivo con <code>{ggiraph}</code> donde podemos poner el cursor sobre las observaciones del gráfico para obtener más información.</p>
+    <footer>
+      
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/limpieza-de-datos">limpieza de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/estad%C3%ADstica">estadística</a> </dd></em>
+        </dl>
+        
+        
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+  
+    
+                               
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/2025-06-11/" class="db">Feliz cumpleaños, {ggplot2}!</a></h1>
+      
+    </header>
+      
+      <p class="lh-copy mb4">Hoy está de cumpleaños el paquete <code>{ggplot2}</code> para visualización de datos en R! Así que le hice un gráfico de mini celebración en 20 líneas.</p>
+    <footer>
+      
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a> </dd></em>
+        </dl>
+        
+        
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+  
+    
+                               
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
       <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/quarto_loop/" class="db">Generar contenido en serie usando loops en un reporte Quarto</a></h1>
       
     </header>
@@ -450,6 +705,39 @@
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/mapas">mapas</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ciencias-sociales">ciencias sociales</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/chile">Chile</a> </dd></em>
+        </dl>
+        
+        
+      
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+  
+    
+                               
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="/blog/ggplot_nubes/" class="db">¿Arte? Nubes aleatorias en <code>{ggplot2}</code></a></h1>
+      
+    </header>
+      
+      <p class="lh-copy mb4">Probando un poco de arte generativo en <code>{ggplot2}</code>. La idea era generar gráficos que parecieran nubes o humo.
+Tomé el dataframe <code>iris</code>, configuré algunos elementos aleatorios en el gráfico, le agregué un efecto de desenfoque a los puntos, y luego hice un loop que genera 9 gráficos con parámetros aleatorios.</p>
+    <footer>
+      
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/ggplot2">ggplot2</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a>  <a style = "font-size: 12px; color: #543A74 !important;", href="http://localhost:4321/tags/curiosidades">curiosidades</a> </dd></em>
         </dl>
         
         

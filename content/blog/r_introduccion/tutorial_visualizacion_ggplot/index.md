@@ -1192,7 +1192,7 @@ Con esto concluye este tutorial inicial para aprender a visualizar datos en R co
 
 Si aprendiste con este tutorial, considera hacerme una pequeña donación en el siguiente enlace:
 
-{{< cafecito  >}}
+{{< cafecito >}}
 
 ------------------------------------------------------------------------
 

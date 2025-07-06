@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.136.5">
-<title>Cálculos multiprocesador en R con {furrr} | Blog</title>
+<title>Procesamiento de datos multiprocesador en R con {furrr} | Blog</title>
 
 
 <meta property="twitter:site" content="@bastimapache">
@@ -24,12 +24,12 @@
   
     
   
-<meta name="description" content="Si tienes que trabajar con bases de datos muy grandes, puedes acelerar el cálculo usando todos los procesadores de tu computador con tan sólo un par de líneas, usando `{purrr}` y `{furrr}`.">
+<meta name="description" content="Realiza cálculos a través de múltiples procesadores en R, aprovechando la totalidad de la capacidad de cómputo de tu computador para optimizar el rendimiento de tus procesos. Si tienes que trabajar con bases de datos muy grandes, puedes acelerar el cálculo con tan sólo un par de líneas, usando el paquete `{furrr}`.">
 
 
 <meta property="og:site_name" content="Blog">
-<meta property="og:title" content="Cálculos multiprocesador en R con {furrr} | Blog">
-<meta property="og:description" content="Si tienes que trabajar con bases de datos muy grandes, puedes acelerar el cálculo usando todos los procesadores de tu computador con tan sólo un par de líneas, usando `{purrr}` y `{furrr}`." />
+<meta property="og:title" content="Procesamiento de datos multiprocesador en R con {furrr} | Blog">
+<meta property="og:description" content="Realiza cálculos a través de múltiples procesadores en R, aprovechando la totalidad de la capacidad de cómputo de tu computador para optimizar el rendimiento de tus procesos. Si tienes que trabajar con bases de datos muy grandes, puedes acelerar el cálculo con tan sólo un par de líneas, usando el paquete `{furrr}`." />
 <meta property="og:type" content="page" />
 <meta property="og:url" content="http://localhost:4321/blog/furrr_multiprocesador/" />
 <meta property="og:locale" content="es-ES">
@@ -38,19 +38,20 @@
 
 
     
-        <meta property="og:image" content="http://localhost:4321/blog/sidebar-listing.jpg" >
+        <meta property="og:image" content="http://localhost:4321/blog/furrr_multiprocesador/featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:4321/blog/sidebar-listing.jpg" >
+        <meta name="twitter:image" content="http://localhost:4321/blog/furrr_multiprocesador/featured.png" >
     
     
   
-  <meta itemprop="name" content="Cálculos multiprocesador en R con {furrr}">
-  <meta itemprop="description" content="Si tienes que trabajar con bases de datos muy grandes, puedes acelerar el cálculo usando todos los procesadores de tu computador con tan sólo un par de líneas, usando {purrr} y {furrr}.
-library (dplyr) # cálculo normal, un solo procesador datos |&gt; count (id, palabra) # cálculo multiprocesador library(furrr) plan(multisession,workers=8) # procesadores a usar datos |&gt; # crear variable con 8 niveles de igual cantidad de filas mutate (grupos = (row_number ()-1) %/% (n()/8)) |&gt; # separar el dataframe en una lista con un dataframe por grupo group_split (grupos) |&gt; # calcular multiprocesador, un grupo por procesador future_map(~count(.x, id, palabra)) |&gt; # volver a unir resultados en un solo dataframe list_rbind()">
-  <meta itemprop="datePublished" content="2024-09-05T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-09-05T00:00:00+00:00">
-  <meta itemprop="wordCount" content="111">
-  <meta itemprop="keywords" content="Procesamiento de datos,Consejos">
+  <meta itemprop="name" content="Procesamiento de datos multiprocesador en R con {furrr}">
+  <meta itemprop="description" content="La mayoría de las funciones de R, así como R mismo, se ejecutan en un único proceso dentro de tu computadora, dado que R es un software de un sólo hilo (single threaded).
+Los computadores modernos en general tienen entre 2 y 8 núcleos (cores), algunos incluso muchos más. Una mayor cantidad de núcleos o procesadores permite a tu computadora hacer más operaciones paralelas. Por ejemplo, si tu computador tiene 6 núcleos y R está procesando datos, R usará 1 núcleo al 100%, y te quedarán 5 núcleos en desuso, que podrían estar ejecutando otras tareas. En otras palabras, R está usando sólo el 100% de tu computador, cuando podría estar usando el 600%.">
+  <meta itemprop="datePublished" content="2025-06-12T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-06-12T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1265">
+  <meta itemprop="image" content="http://localhost:4321/blog/furrr_multiprocesador/featured.png">
+  <meta itemprop="keywords" content="Procesamiento de datos,Optimización,Loops,Purrr">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="false" type="image/x-icon">
@@ -262,15 +263,15 @@ library (dplyr) # cálculo normal, un solo procesador datos |&gt; count (id, pal
   <section class="page-content mw7 center">
     <article class="post-content pa0 ph4-l">
       <header class="post-header">
-        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Cálculos multiprocesador en R con {furrr}</h1>
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Procesamiento de datos multiprocesador en R con {furrr}</h1>
         
         
-        <p class="f7 db mv0 ttu">5/9/2024</p>
+        <p class="f7 db mv0 ttu">12/6/2025</p>
         
         
         
   <dl class="f6 lh-copy">
-    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a href="http://localhost:4321/tags/consejos">consejos</a> </dd></em>
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a href="http://localhost:4321/tags/optimizaci%C3%B3n">optimización</a>  <a href="http://localhost:4321/tags/loops">loops</a>  <a href="http://localhost:4321/tags/purrr">purrr</a> </dd></em>
   </dl>
 
 
@@ -279,53 +280,201 @@ library (dplyr) # cálculo normal, un solo procesador datos |&gt; count (id, pal
 
       </header>
       <section class="post-body pt5 pb4">
-        <p>Si tienes que trabajar con bases de datos muy grandes, puedes acelerar el cálculo usando todos los procesadores de tu computador con tan sólo un par de líneas, usando <code>{purrr}</code> y <code>{furrr}</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library </span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span> 
+        <p>La mayoría de las funciones de R, así como R mismo, se ejecutan en un único proceso dentro de tu computadora, dado que R es un software de un sólo hilo (<em>single threaded</em>).</p>
+<p>Los computadores modernos en general tienen entre 2 y 8 núcleos (<em>cores</em>), algunos incluso muchos más. Una mayor cantidad de núcleos o procesadores permite a tu computadora hacer más <strong>operaciones paralelas</strong>. Por ejemplo, si tu computador tiene 6 núcleos y R está procesando datos, R usará 1 núcleo al 100%, y te quedarán 5 núcleos en desuso, que podrían estar ejecutando otras tareas. En otras palabras, R está usando sólo el 100% de tu computador, cuando podría estar usando el 600%.</p>
+<p>Existen programas que son capaces de <strong>distribuir</strong> cargas de procesamiento en múltiples núcleos de tu computador, lo cual les permite terminar sus tareas más rápido o realizar tareas más complejas. Siguiendo el ejemplo, si tienes 6 núcleos y una tarea que usa 1 núcleo se demora 30 segundos en realizarse, en teoría podrías usar los 6 núcleos para realizar la tarea en una fracción del tiempo original (~5 segundos).</p>
+<p>Pero esto asume varias cosas:</p>
+<ul>
+<li>que es posible separar en partes la tarea</li>
+<li>que las partes de la tarea se pueden procesar simultáneamente<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></li>
+<li>que procesar paralelamente la tarea trae beneficios de rendimiento<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>.</li>
+</ul>
+<p>Asumiendo que lo anterior se cumple,  podemos <strong>realizar cálculos a través de múltiples procesadores (<em>multicore</em>) en R</strong>, aprovechando la totalidad de la capacidad de cómputo de nuestros computadores para optimizar el rendimiento de nuestros procesos.</p>
+
+
+
+
+<h2 id="ejemplo">Ejemplo
+  <a href="#ejemplo"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Usaremos un conjunto de datos que contiene 
+<a href="https://github.com/bastianolea/prensa_chile" target="_blank" rel="noopener">10.000 noticias de prensa digital chilena</a>; es decir, que contiene muchísimo texto. Para hacer el ejemplo más ilustrativo de un problema de procesamiento de grandes volúmenes de datos, multiplicaremos la base de datos para que sea 20 veces más grande, y así se entienda la necesidad de optimización.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># cargar datos desde repositorio</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">prensa</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">readr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">read_csv2</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;https://github.com/bastianolea/prensa_chile/raw/main/datos/prensa_datos_muestra.csv&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># para más información: https://github.com/bastianolea/prensa_chile</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># cálculo normal, un solo procesador</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count </span><span style="color:#908caa">(</span><span style="color:#ea9a97">id</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">palabra</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># multiplicar cantidad de datos</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">prensa_b</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">rep</span><span style="color:#908caa">(</span><span style="color:#ea9a97">list</span><span style="color:#908caa">(</span><span style="color:#ea9a97">prensa</span><span style="color:#908caa">),</span> <span style="color:#f6c177">20</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">purrr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">list_rbind</span><span style="color:#908caa">()</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># cálculo multiprocesador</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># ver datos</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">prensa_b</span>
+</span></span></code></pre></div><pre tabindex="0"><code># A tibble: 200,000 × 4
+   titulo                                               cuerpo fuente fecha     
+   &lt;chr&gt;                                                &lt;chr&gt;  &lt;chr&gt;  &lt;date&gt;    
+ 1 &#34;Hombre de 66 años fue asesinado en plena vía públi… &#34;El h… Coope… 2024-07-21
+ 2 &#34;Revive el cuarto capítulo de Indecisos: Candidatos… &#34;Este… Megan… 2024-09-03
+ 3 &#34;Menos personas circulando y miedo de los residente… &#34;Poca… Megan… 2024-04-08
+ 4 &#34;CEO de Walmart Chile sostiene que si la empresa no… &#34;Hace… The C… 2024-12-22
+ 5 &#34;Pdte. Boric entregó mensaje por la muerte de Piñer… &#34;El p… CNN C… 2024-02-06
+ 6 &#34;Encuentran dos cadáveres en un canal de regadío en… &#34;Pers… Publi… 2024-07-13
+ 7 &#34;Magisterio denuncia &#39;abandono de la educación públ… &#34;Carl… Coope… 2024-02-21
+ 8 &#34;“El día que la democracia triunfó sobre la dictadu… &#34;Los … CNN C… 2024-10-05
+ 9 &#34;Accidente de tránsito deja un fallecido y tres her… &#34;En h… T13    2024-12-22
+10 &#34;Dos personas resultan baleadas tras intentar evita… &#34;Aton… Emol   2024-11-02
+# ℹ 199,990 more rows
+</code></pre><p>Tenemos un dataset con 200 mil filas, donde cada fila es una noticia, y en la columna <code>cuerpo</code> está el texto completo de cada noticia.</p>
+
+
+
+
+<h3 id="ejemplo-de-cálculo-con-1-procesador">Ejemplo de cálculo con 1 procesador
+  <a href="#ejemplo-de-c%c3%a1lculo-con-1-procesador"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>El objetivo va a ser detectar noticias que contengan un conjunto de palabras en su cuerpo, contar cuántas palabras están presentes en cada noticia, y luego filtrar los datos para dejar sólo las noticias que tengan <code>x</code> cantidad de términos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span> 
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># lista de términos a buscar</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">términos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;delincuen(cia|te)|crimen|criminal|inseguridad|deli(to|ctual)|hurto|robo|asalt(o|ante)|narco|homicidio|asesina(to|do)&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tictoc</span><span style="color:#908caa">::</span><span style="color:#ea9a97">tic</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">prensa_delincuencia</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">prensa_b</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># extraer términos desde cada noticia, si es que están presentes</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">conceptos</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">str_extract_all</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cuerpo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">términos</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># contar cantidad de términos presentes en cada noticia</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n_conceptos</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">lengths</span><span style="color:#908caa">(</span><span style="color:#ea9a97">conceptos</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># filtrar para que tengan más de x términos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n_conceptos</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tictoc</span><span style="color:#908caa">::</span><span style="color:#ea9a97">toc</span><span style="color:#908caa">()</span> 
+</span></span></code></pre></div><p>Medimos el tiempo que se demora en realizar esta operación usando las funciones <code>tic()</code> y <code>toc()</code> del 
+<a href="https://github.com/collectivemedia/tictoc" target="_blank" rel="noopener">paquete <code>{tictoc}</code></a>.</p>
+<p>En mi computador R se demoró <strong>70 segundos</strong> en buscar los términos entre las 200.000 noticias (varios millones de palabras en total) y luego hacer el conteo y filtrado.</p>
+<div style="display: flex; margin:auto; max-width: 500px;">
+  <div style="flex: 1; margin: auto; padding: 6px;">
+  <img src="single_a.png" style="max-height: 90px; display: block; margin: auto;">
+  </div>
+  <div style="flex: 1; margin: auto; padding: 6px;">
+  <img src="single_b.png" style="max-height: 440px; display: block; margin: auto;">
+  </div>
+</div>
+<div style="text-align: center; margin: auto; opacity: 65%; font-size: 85%;">
+<em>Uso de recursos con 1 procesador</em>
+</div>
+<p>Como vemos en los gráficos, solamente 1 núcleo del computador mostró uso de recursos, y el resto de los núcleos permanecieron inactivos. Esto significa que R no está aprovechando la capacidad de procesamiento de tu computador, y por lo tanto, el cálculo se demora más de lo que podría. En otras palabras, si R ocupa 1 núcleo y sobran 5 núcleos en desuso, significa que podrías ejecutar 5 sesiones de R más, de forma paralela.</p>
+
+
+
+
+<h3 id="ejemplo-de-cálculo-con-6-procesadores">Ejemplo de cálculo con 6 procesadores
+  <a href="#ejemplo-de-c%c3%a1lculo-con-6-procesadores"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Para realizar el cálculo optimizando para el uso de múltiples procesadores, primero usamos la función <code>split()</code> para <strong>dividir los datos en varias partes iguales.</strong> Esto es equivalente a lo que mencionamos antes sobre dividir una tarea en partes.</p>
+<p>Luego, vamos a usar la función <code>future_map()</code> del 
+<a href="https://furrr.futureverse.org" target="_blank" rel="noopener">paquete <code>{furrr}</code></a>, Esta función es similar a <code>map()</code> de 
+<a href="https://purrr.tidyverse.org" target="_blank" rel="noopener"><code>{purrr}</code></a>, que permite iterar sobre tus datos, pero al agregarle <code>future_</code> hará que cada iteración se ejecute en un proceso separado, aprovechando los múltiples núcleos de tu computador. En otras palabras, <code>{furrr}</code> creará 6 sesiones de R, y cada una procesará su parte de los datos.</p>
+<p>Cargamos los paquetes que posibilitan esta optimización:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">purrr</span><span style="color:#908caa">)</span> 
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">furrr</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">plan</span><span style="color:#908caa">(</span><span style="color:#ea9a97">multisession</span><span style="color:#908caa">,</span><span style="color:#ea9a97">workers</span><span style="color:#908caa">=</span><span style="color:#f6c177">8</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># procesadores a usar</span>
+</span></span></code></pre></div><p>Definimos la cantidad de procesadores que usaremos:<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">plan</span><span style="color:#908caa">(</span><span style="color:#ea9a97">multisession</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">workers</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">6</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Modificamos el código del cálculo levemente para pedirle que lo ejecute a cada una de las partes de nuestro dataset, recordando que los datos quedaron divididos en una lista que contiene 6 elementos, cada uno con una parte de los datos originales:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tictoc</span><span style="color:#908caa">::</span><span style="color:#ea9a97">tic</span><span style="color:#908caa">()</span> <span style="color:#6e6a86"># benchmark</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># crear variable con 8 niveles de igual cantidad de filas</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate </span><span style="color:#908caa">(</span><span style="color:#ea9a97">grupos</span> <span style="color:#908caa">=</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">row_number </span><span style="color:#908caa">()</span><span style="color:#f6c177">-1</span><span style="color:#908caa">)</span> <span style="color:#908caa">%/%</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">()</span><span style="color:#908caa">/</span><span style="color:#f6c177">8</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># separar el dataframe en una lista con un dataframe por grupo</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_split </span><span style="color:#908caa">(</span><span style="color:#ea9a97">grupos</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># calcular multiprocesador, un grupo por procesador</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">future_map</span><span style="color:#908caa">(</span><span style="color:#908caa">~</span><span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">id</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">palabra</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># volver a unir resultados en un solo dataframe</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">list_rbind</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">prensa_delincuencia</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">prensa_b</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># separar el dataframe en una lista con x cantidad de dataframes de la misma cantidad de filas</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">split</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">:</span><span style="color:#f6c177">6</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># calcular multiprocesador, una parte por cada procesador</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">future_map</span><span style="color:#908caa">(</span><span style="color:#ea9a97">\</span><span style="color:#908caa">(</span><span style="color:#ea9a97">parte</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">parte</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">conceptos</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">str_extract_all</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cuerpo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">términos</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n_conceptos</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">lengths</span><span style="color:#908caa">(</span><span style="color:#ea9a97">conceptos</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n_conceptos</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">})</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># volver a unir los resultados en un solo dataframe</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">list_rbind</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tictoc</span><span style="color:#908caa">::</span><span style="color:#ea9a97">toc</span><span style="color:#908caa">()</span> 
+</span></span></code></pre></div><p>El proceso se demora <strong>18 segundos, apenas un 25% de lo que se demoró antes!</strong> En el monitor de actividad vemos claramente la diferencia en el aprovechamiento de los recursos computacionales:</p>
+<div style="display: flex; margin:auto; max-width: 500px;">
+  <div style="flex: 1; margin: auto; padding: 6px;">
+  <img src="multi_a.png" style="max-height: 90px; display: block; margin: auto;">
+  </div>
+  <div style="flex: 1; margin: auto; padding: 6px;">
+  <img src="multi_b.png" style="max-height: 440px; display: block; margin: auto;">
+  </div>
+</div>
+<div style="text-align: center; margin: auto; opacity: 65%; font-size: 85%;">
+<em>Uso de recursos con 6 procesadores</em>
+</div>
+<p>Notamos que todos los procesadores del computador están al 100%, a diferencia de antes. Si revisamos los procesos en el computador durante el cálculo, vemos que, aparte del proceso principal <code>rsession</code>, se crearon 6 procesos <code>R</code> que procesan los datos de forma paralela:</p>
+<div style="max-width: 440px; margin: auto;">
+<img src="monitor.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+</div>
+<p>En conclusión, vimos que al usar 6 procesadores, obtenemos resultados 400%<sup id="fnref:4"><a href="#fn:4" class="footnote-ref" role="doc-noteref">4</a></sup> más rápidos, con tan solo haber agregado un par de líneas.</p>
+<hr>
+<div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>No todas las tareas son posibles de procesar de forma paralela, por ejemplo, 6 personas no se demoran menos en contar hasta 100 porque sería imposible.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>No todas las tareas escalan de la misma forma; por ejemplo, si la tarea es lenta porque tiene que leer muchos datos, no se va a realizar más rápido por leer simultáneamente los datos, porque el cuello de botella es la velocidad de lectura y no el procesador.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>El número de <code>workers</code> (subprocesos) depende de tu computador; en este caso pondré 6, pero si tu computador tiene 8 entonces pone 8, aunque hay gente que recomienda usar <code>n-1</code> para dejar un núcleo libre para el sistema operativo.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:4">
+<p>400% más rápido porque se demoró 18 segundos en vez de 70 segundos al usar 6 núcleos en vez de 1. Pero entonces, ¿por qué no 600% más rápido, si eran 6 procesadores? Esto se debe a que un procesamiento de este tipo tiene el costo extra (<em>overhead</em>) de tener que duplicar los datos y el entorno para cada subproceso, lo cual también puede significar un aumento en el uso de la memoria.&#160;<a href="#fnref:4" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
         
         <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
     <dt class="fw7">Fecha de publicación:</dt>
-    <dd class="fw5 ml0">September 5, 2024</dd>
+    <dd class="fw5 ml0">June 12, 2025</dd>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">1 minute read, 111 words</dd>
+    <dd class="fw5 ml0">6 minute read, 1265 words</dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a href="http://localhost:4321/tags/consejos">consejos</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/procesamiento-de-datos">procesamiento de datos</a>  <a href="http://localhost:4321/tags/optimizaci%C3%B3n">optimización</a>  <a href="http://localhost:4321/tags/loops">loops</a>  <a href="http://localhost:4321/tags/purrr">purrr</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/purrr_multicore/purrr_multicore/">Procesa datos más rápido en R usando todos los núcleos de tu procesador con {furrr}</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/unpivotr/">Limpia planillas de Excel complejas en R con {unpivotr}</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/ordenar_regiones/">Ordenar las regiones de Chile de norte a sur en R</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/openxlsx/">Crea planillas de Excel con formato directamente desde R con {openxlsx}</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/datapasta/">Copia y pega datos en R con {datapasta} y {clipr}</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/quarto_loop/">Generar contenido en serie usando loops en un reporte Quarto</a></dd>
     
   </dl>
 </details>
@@ -336,12 +485,12 @@ library (dplyr) # cálculo normal, un solo procesador datos |&gt; count (id, pal
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4321/blog/evitar_errores/">&larr; Evitar que un loop se detenga debido a errores</a>
+    href="http://localhost:4321/blog/unpivotr/">&larr; Limpia planillas de Excel complejas en R con {unpivotr}</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4321/blog/tutorial_mapas_osm/">Tutorial: Mapa en {ggplot2} con calles desde Open Street Map &rarr;</a>
+    href="http://localhost:4321/blog/2025-06-11/">Feliz cumpleaños, {ggplot2}! &rarr;</a>
   
 </div>
 

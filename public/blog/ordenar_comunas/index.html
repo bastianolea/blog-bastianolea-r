@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Ordenar las comunas de Chile de norte a sur en R | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Ordenar las comunas de Chile de norte a sur en R | Blog">
+<meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4321/blog/ordenar_comunas/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4321/blog/ordenar_comunas/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4321/blog/ordenar_comunas/featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Ordenar las comunas de Chile de norte a sur en R">
+  <meta itemprop="description" content="Complementando el post sobre ordenar regiones de Chile de norte a sur, en esta publicación veremos cómo ordenar las comunas del país de norte a sur. Esto puede servirnos para mostrar datos a nivel comunal de una gran cantidad de regiones de una manera más intuitiva, en los casos donde ordenarlas por orden alfabético no entrega mucha información, o cuando queramos mostrar en nuestras visualizaciones o tablas que el factor geográfico incide en el dato principal.">
+  <meta itemprop="datePublished" content="2025-06-25T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-06-25T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1360">
+  <meta itemprop="image" content="http://localhost:4321/blog/ordenar_comunas/featured.png">
+  <meta itemprop="keywords" content="Mapas,Chile">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Ordenar las comunas de Chile de norte a sur en R</h1>
+        
+        
+        <p class="f7 db mv0 ttu">25/6/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/mapas">mapas</a>  <a href="http://localhost:4321/tags/chile">Chile</a> </dd></em>
+  </dl>
+
+
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>Complementando el 
+<a href="../../../blog/ordenar_regiones/">post sobre ordenar regiones de Chile de norte a sur</a>, en esta publicación veremos cómo ordenar las comunas del país de norte a sur. Esto puede servirnos para mostrar datos a nivel comunal de una gran cantidad de regiones de una manera más intuitiva, en los casos donde ordenarlas por orden alfabético no entrega mucha información, o cuando queramos mostrar en nuestras visualizaciones o tablas que el factor geográfico incide en el dato principal.</p>
+<p>Partamos con una tabla de datos de varias comunas del país. Es necesario que estas comunas cuenten con su 
+<a href="https://www.subdere.gov.cl/documentacion/c%c3%b3digos-%c3%banicos-territoriales-actualizados-al-06-de-septiembre-2018" target="_blank" rel="noopener"><strong>código único territorial</strong></a>, el códgo numérico que identifica de manera única a cada región del país. Si tu base de datos no tiene los códigos únicos territoriales, tendrás que realizar una unión entre los nombres de las comunas y los códigos, que 
+<a href="https://github.com/bastianolea/cut_comunas" target="_blank" rel="noopener">puedes encontrar en <code>csv</code> y <code>rds</code> en este respositorio.</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">comunas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tibble</span><span style="color:#908caa">::</span><span style="color:#ea9a97">tribble</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#908caa">~</span><span style="color:#ea9a97">nombre_comuna</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">codigo_comuna</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;Rancagua&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">6101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;San Fernando&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">6301</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#34;Coyhaique&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">11101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f6c177">&#34;La Pintana&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13112</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;Rengo&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">6115</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;Puerto Montt&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">10101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f6c177">&#34;San Pedro de la Paz&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">8108</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#f6c177">&#34;Alto Hospicio&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">1107</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#f6c177">&#34;Chillán&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">16101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;Angol&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">9201</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f6c177">&#34;Talcahuano&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">8110</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#f6c177">&#34;Calama&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">2201</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f6c177">&#34;Concepción&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">8101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#f6c177">&#34;Hualpén&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">8112</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#34;La Serena&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">4101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#f6c177">&#34;Calera&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">5502</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;Valdivia&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">14101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#f6c177">&#34;Cerro Navia&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13103</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;Lampa&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13302</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#f6c177">&#34;Quinta Normal&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13126</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f6c177">&#34;Huechuraba&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13107</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#f6c177">&#34;Linares&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">7401</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#f6c177">&#34;Tomé&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">8111</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;Viña del Mar&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">5109</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;Recoleta&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13127</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#34;Talagante&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13601</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f6c177">&#34;Valparaíso&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">5101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#f6c177">&#34;Coronel&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">8102</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#f6c177">&#34;Buin&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13402</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;Macul&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13118</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;Punta Arenas&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">12101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;Talca&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">7101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#f6c177">&#34;Los Ángeles&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">8301</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#f6c177">&#34;Puente Alto&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13201</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#f6c177">&#34;Copiapó&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">3101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#f6c177">&#34;Curicó&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">7301</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;Coquimbo&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">4102</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#34;Melipilla&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13501</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;Vitacura&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13132</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#f6c177">&#34;Antofagasta&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">2101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#f6c177">&#34;Chiguayante&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">8103</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;Renca&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13128</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#34;Quilicura&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13125</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#f6c177">&#34;Pedro Aguirre Cerda&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13121</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#f6c177">&#34;Ovalle&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">4301</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;San Bernardo&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13401</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#34;Los Andes&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">5301</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#f6c177">&#34;San Joaquín&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13129</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#f6c177">&#34;Colina&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13301</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;Quillota&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">5501</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#34;Peñalolén&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13122</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f6c177">&#34;Estación Central&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13106</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#34;San Ramón&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13131</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;Lo Prado&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13117</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;Arica&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">15101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#f6c177">&#34;San Antonio&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">5601</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#34;Cerrillos&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13102</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;Santiago&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;Lo Barnechea&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13115</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#f6c177">&#34;Temuco&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">9101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f6c177">&#34;La Florida&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13110</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f6c177">&#34;San Felipe&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">5701</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;Ñuñoa&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13120</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#f6c177">&#34;La Cisterna&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13109</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#f6c177">&#34;Machalí&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">6108</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#f6c177">&#34;Independencia&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13108</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#34;La Granja&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13111</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#f6c177">&#34;Villa Alemana&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">5804</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f6c177">&#34;San Miguel&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13130</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#f6c177">&#34;Las Condes&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13114</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#34;Lo Espejo&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13116</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#f6c177">&#34;Quilpué&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">5801</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;Conchalí&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13104</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;Peñaflor&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13605</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#34;El Bosque&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13105</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;Maipú&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13119</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;La Reina&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13113</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;Pudahuel&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13124</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#f6c177">&#34;Providencia&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13123</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#f6c177">&#34;Padre Hurtado&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">13604</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                     <span style="color:#f6c177">&#34;Iquique&#34;</span><span style="color:#908caa">,</span>           <span style="color:#f6c177">1101</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#f6c177">&#34;Osorno&#34;</span><span style="color:#908caa">,</span>          <span style="color:#f6c177">10301</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Puedes copiar y pegar este código para obtener en tu sesión de R la tabla con comunas. Si ejecutamos esta tabla de datos, veremos que las regiones no están ordenadas geográficamente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">comunas</span>
+</span></span></code></pre></div><pre><code># A tibble: 82 × 2
+   nombre_comuna       codigo_comuna
+   &lt;chr&gt;                       &lt;dbl&gt;
+ 1 Rancagua                     6101
+ 2 San Fernando                 6301
+ 3 Coyhaique                   11101
+ 4 La Pintana                  13112
+ 5 Rengo                        6115
+ 6 Puerto Montt                10101
+ 7 San Pedro de la Paz          8108
+ 8 Alto Hospicio                1107
+ 9 Chillán                     16101
+10 Angol                        9201
+# ℹ 72 more rows
+</code></pre>
+<p>Si hacemos un gráfico con estas comunas, veremos que el orden del eje con las comunas será alfabético, dado que las comunas son una variable de tipo carácter o texto:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">comunas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">codigo_comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nombre_comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">codigo_comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_col</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_x_continuous</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">0</span><span style="color:#908caa">,</span> <span style="color:#f6c177">0</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="768" />
+<p>Tampoco nos serviría ordenarla por los códigos únicos territoriales, dado que éstos empiezan con el código de las regiones, y 
+<a href="../../../blog/ordenar_regiones/">como vimos en el otro post,</a> los códigos regionales no ordenan geográficamente las regiones, y menos a las comunas.</p>
+<p>Una forma de <strong>ordenar las comunas de Chile geográficamente de norte a sur</strong> es valiéndonos de la geografía vertical del país. Podemos obtener un mapa de Chile con el paquete <code>{chilemapas}</code>, y luego <strong>extraer la latitud</strong> de las comunas, para usarla como variable de ordenamiento de las comunas.</p>
+<p>La función <code>chilemapas::mapa_comunas</code> de <code>{chilemapas}</code> nos entrega un dataframe con los datos geográficos del país a nivel comunal.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Loading required package: sf
+
+Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE
+
+La documentacion del paquete y ejemplos de uso se encuentran en https://pacha.dev/chilemapas/.
+Visita https://buymeacoffee.com/pacha/ si deseas donar para contribuir al desarrollo de este software.
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># obtener mapa</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_chile</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">::</span><span style="color:#ea9a97">mapa_comunas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">codigo_comuna</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">as.numeric</span><span style="color:#908caa">(</span><span style="color:#ea9a97">codigo_comuna</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">codigo_comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">geometry</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_chile</span>
+</span></span></code></pre></div><pre><code># A tibble: 345 × 2
+   codigo_comuna                                                        geometry
+           &lt;dbl&gt;                                              &lt;MULTIPOLYGON [°]&gt;
+ 1          1401 (((-68.86081 -21.28512, -68.92172 -21.30035, -68.98939 -21.317…
+ 2          1403 (((-68.65113 -19.77188, -68.81182 -19.74362, -68.81575 -19.733…
+ 3          1405 (((-68.65113 -19.77188, -68.63545 -19.78062, -68.62511 -19.785…
+ 4          1402 (((-69.31789 -19.13651, -69.2717 -19.23735, -69.14291 -19.2967…
+ 5          1404 (((-69.39615 -19.06125, -69.40025 -19.06897, -69.40296 -19.071…
+ 6          1107 (((-70.1095 -20.35131, -70.12438 -20.31578, -70.10985 -20.2743…
+ 7          1101 (((-70.09894 -20.08504, -70.1023 -20.11401, -70.12001 -20.1551…
+ 8          2104 (((-68.98863 -25.38016, -68.98731 -25.38411, -68.98696 -25.393…
+ 9          2101 (((-70.60654 -23.43054, -70.60175 -23.43515, -70.60133 -23.438…
+10          2201 (((-67.94302 -22.38175, -67.95564 -22.39233, -67.96315 -22.393…
+# ℹ 335 more rows
+</code></pre>
+<p>A partir de este mapa, usamos el paquete <code>{sf}</code> para extraer los <strong>centroides</strong> de las comunas, que son el punto central de la geometría de cada polígono. Luego, a partir del centroide podemos obtener la <strong>latitud</strong> de estos puntos, para ver qué tan al norte o sur está cada comuna.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sf</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># extraer latitud desde los polígonos comunales</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_chile_latitud</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_chile</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">centroide</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_centroid</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">longitud</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">sf</span><span style="color:#908caa">::</span><span style="color:#ea9a97">st_coordinates</span><span style="color:#908caa">(</span><span style="color:#ea9a97">centroide</span><span style="color:#908caa">)</span><span style="color:#ea9a97">[</span><span style="color:#908caa">,</span><span style="color:#f6c177">1</span><span style="color:#ea9a97">]</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">latitud</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">sf</span><span style="color:#908caa">::</span><span style="color:#ea9a97">st_coordinates</span><span style="color:#908caa">(</span><span style="color:#ea9a97">centroide</span><span style="color:#908caa">)</span><span style="color:#ea9a97">[</span><span style="color:#908caa">,</span><span style="color:#f6c177">2</span><span style="color:#ea9a97">]</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_chile_latitud</span>
+</span></span></code></pre></div><pre><code># A tibble: 345 × 5
+   codigo_comuna                     geometry             centroide longitud
+           &lt;dbl&gt;           &lt;MULTIPOLYGON [°]&gt;           &lt;POINT [°]&gt;    &lt;dbl&gt;
+ 1          1401 (((-68.86081 -21.28512, -68… (-69.50811 -20.77126)    -69.5
+ 2          1403 (((-68.65113 -19.77188, -68… (-68.84517 -19.35443)    -68.8
+ 3          1405 (((-68.65113 -19.77188, -68… (-68.91311 -20.48006)    -68.9
+ 4          1402 (((-69.31789 -19.13651, -69… (-69.50102 -19.36999)    -69.5
+ 5          1404 (((-69.39615 -19.06125, -69… (-69.66358 -19.60151)    -69.7
+ 6          1107 (((-70.1095 -20.35131, -70.… (-70.01261 -20.18971)    -70.0
+ 7          1101 (((-70.09894 -20.08504, -70… (-70.04836 -20.92498)    -70.0
+ 8          2104 (((-68.98863 -25.38016, -68…  (-69.8618 -25.30966)    -69.9
+ 9          2101 (((-70.60654 -23.43054, -70… (-69.40757 -24.27784)    -69.4
+10          2201 (((-67.94302 -22.38175, -67… (-68.62665 -22.16826)    -68.6
+# ℹ 335 more rows
+# ℹ 1 more variable: latitud &lt;dbl&gt;
+</code></pre>
+<p>Con esto podemos simplemente ordenar por latitud y generar un orden numérico del 1 al 345.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">orden_comunas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_chile_latitud</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">desc</span><span style="color:#908caa">(</span><span style="color:#ea9a97">latitud</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">longitud</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">orden_comuna</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">row_number</span><span style="color:#908caa">())</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">codigo_comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">orden_comuna</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">orden_comunas</span>
+</span></span></code></pre></div><pre><code># A tibble: 345 × 2
+   codigo_comuna orden_comuna
+           &lt;dbl&gt;        &lt;int&gt;
+ 1         15202            1
+ 2         15201            2
+ 3         15101            3
+ 4         15102            4
+ 5          1403            5
+ 6          1402            6
+ 7          1404            7
+ 8          1107            8
+ 9          1405            9
+10          1401           10
+# ℹ 335 more rows
+</code></pre>
+<p>Obtenemos una tabla con los códigos únicos territoriales y la latitud de cada comuna. Ahora podemos unir estas columnas con nuestros datos usando <code>left_join()</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># a los datos originales, agregarle la tabla con el orden de las comunas</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">comunas_ordenadas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">comunas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">left_join</span><span style="color:#908caa">(</span><span style="color:#ea9a97">orden_comunas</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">join_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">codigo_comuna</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># ordenar observaciones</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">orden_comuna</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">comunas_ordenadas</span>
+</span></span></code></pre></div><pre><code># A tibble: 82 × 3
+   nombre_comuna codigo_comuna orden_comuna
+   &lt;chr&gt;                 &lt;dbl&gt;        &lt;int&gt;
+ 1 Arica                 15101            3
+ 2 Alto Hospicio          1107            8
+ 3 Iquique                1101           11
+ 4 Calama                 2201           15
+ 5 Antofagasta            2101           19
+ 6 Copiapó                3101           25
+ 7 La Serena              4101           32
+ 8 Coquimbo               4102           34
+ 9 Ovalle                 4301           38
+10 San Felipe             5701           56
+# ℹ 72 more rows
+</code></pre>
+<p>Intentamos nuevamente con el gráfico a ver cómo sale:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># intento incorrecto de gráfico ordenado</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">comunas_ordenadas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">orden_comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">codigo_comuna</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">nombre_comuna</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">codigo_comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_col</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">guides</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_none</span><span style="color:#908caa">())</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_x_continuous</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">0</span><span style="color:#908caa">,</span> <span style="color:#f6c177">0</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
+<p>Al igual como nos pasó con el 
+<a href="../../../blog/ordenar_regiones/">ordenamiento de regiones</a>, la variable <code>nombre_comuna</code> es una variable de texto (tipo caracter) y que no tiene un orden intrínseco, así que se asume que su orden es alfabético. Por lo tanto, tenemos que darle un orden a esta variable, convirtiéndola a factor con el orden de una segunda variable numérica usando <code>fct_reorder()</code>; en otras palabras, darle a <code>nombre_comuna</code> el orden que tiene la variable numérica <code>orden_comuna</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">forcats</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># ordenar variable a partir de una segunda variable numérica</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">comunas_ordenadas_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">comunas_ordenadas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre_comuna</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">fct_reorder</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre_comuna</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                                     <span style="color:#ea9a97">orden_comuna</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                                     <span style="color:#ea9a97">.desc</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">T</span><span style="color:#908caa">))</span> 
+</span></span></code></pre></div><p>Ahora si repetimos el mismo gráfico que antes, vemos que el orden de las comunas ahora sí es geográfico! Arica está arriba y Punta Arenas abajo, como corresponde.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># crear un gráfico</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">comunas_ordenadas_2</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">orden_comuna</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">nombre_comuna</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">orden_comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_col</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">guides</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_none</span><span style="color:#908caa">())</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_x_continuous</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">0</span><span style="color:#908caa">,</span> <span style="color:#f6c177">0</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
+<p>Aparecen visualmente de norte a sur (de arriba a abajo) porque al ordenarlas le pusimos un orden descendiente (<code>.desc = TRUE</code>), y ésto es necesario porque generalmente en los gráficos el origen o inicio de los ejes es en 1 y el valor de la variable aumenta a medida que se aleja del origen.</p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">June 25, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">7 minute read, 1360 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/mapas">mapas</a>  <a href="http://localhost:4321/tags/chile">Chile</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/ordenar_regiones/">Ordenar las regiones de Chile de norte a sur en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/mapa_chile_horizontal/">Rotar un mapa de Chile en R para que quede horizontal</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/simplificar_mapas/">Simplificar la geometría de los polígonos de un mapa en R</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="http://localhost:4321/blog/ggview/">&larr; Controla las dimensiones de tus gráficos con {ggview}</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4321/blog/2025-06-18/">Gráficos para identificar datos outliers o anómalos en R &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
