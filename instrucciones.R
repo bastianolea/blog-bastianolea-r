@@ -14,10 +14,10 @@ blogdown::new_post(title = "Mapas",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Crear nubes de palabras para análisis de texto con R", 
-                   file = "blog/nubes_de_palabras/index.qmd",
+blogdown::new_post(title = "Análisis y visualización de correlaciones en R", 
+                   file = "blog/correlaciones/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("visualización de datos", "gráficos", "ggplot2", "análisis de texto"),
+                   tags = c("estadísticas", "ggplot2", "gráficos", "visualización de datos"),
                    categories = c() 
 )
 # format:
@@ -26,6 +26,7 @@ blogdown::new_post(title = "Crear nubes de palabras para análisis de texto con 
 #     output-ext: "md"
 
 ## borradores ----
+"content/blog/correlaciones/index.qmd"
 "content/blog/ggview/index.qmd"
 "content/blog/2025-07-01/index.qmd"
 "content/blog/openxlsx/index.md"

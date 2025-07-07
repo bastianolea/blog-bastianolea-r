@@ -25,7 +25,7 @@ En otros tutoriales vimos cómo podemos [incluir resultados del código dentro d
 
 Dentro de un _chunk_ de código, podemos usar funciones que entreguen como output código markdown. Esto nos servirá para construir un documento a partir de un loop o iteración. De este modo, podemos usar nuestros datos para generar una cantidad indeterminada de títulos, subtítulos, párrafos de textos, gráficos o más, que se generarán automáticamente. 
 
-Usaremos el paquete `{pander}` para que el chunk de R retorne contenido en Markdown que Quarto interpretará como parte del documento gracias a la opción `#| results: asis` que tenemos que definir al principio del chunk:
+Usaremos el paquete `{pander}` para que el chunk de R retorne contenido en Markdown que Quarto interpretará como parte del documento gracias a la opción `#| results: "asis"` que tenemos que definir al principio del chunk:
 
 ```{r}
 #| warning: false
@@ -121,6 +121,8 @@ for (especie in unique(iris$Species)) {
   # pandoc.horizontal.rule()
 }
 ```
+
+Si no te funciona, recuerda que el chunk tiene que tener `#| results: "asis"` definido al principio para que el output sea el correcto.
 
 Usando esta técnica podemos producir documentos muy extensos con poco código, lo que nos vuelve más eficientes y también nos ayuda para actualizar y retocar los reportes, dado que un cambio hecho una sola vez se replica en todos los elementos generados por el loop.
 

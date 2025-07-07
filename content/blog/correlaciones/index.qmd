@@ -1,0 +1,211 @@
+---
+title: Análisis y visualización de correlaciones en R
+author: Bastián Olea Herrera
+date: '2025-07-07'
+draft: true
+format:
+  hugo-md:
+    output-file: "index"
+    output-ext: "md"
+slug: []
+categories: []
+tags:
+  - estadísticas
+  - ggplot2
+  - gráficos
+  - visualización de datos
+editor_options: 
+  chunk_output_type: console
+---
+
+https://bastianolea.github.io/datos_sociales/
+
+```{r}
+library(arrow)
+
+sinim <- read_parquet("https://github.com/bastianolea/sinim_datos_comunales/raw/main/datos/sinim_2019-2023.parquet")
+
+siedu <- read_parquet("https://github.com/bastianolea/siedu_indicadores_urbanos/raw/main/datos/siedu_indicadores_desarrollo_urbano.parquet")
+```
+
+```{r}
+sinim_2 <- sinim |> 
+  # filtrar variables
+  filter(variable %in% c("Ingresos Propios Permanentes per Cápita (IPPP)",
+                         "Disponibilidad Presupuestaria Municipal por Habitante (M$)",
+                         "Inversión Municipal",
+                         "Participación del Fondo Común Municipal en el Ingreso Total",
+                         "Participación de Ingresos por Transferencias en el Ingreso Total",
+                         "Porcentaje de Ejecución Presupuestaria Devengada Municipal",
+                         "Porcentaje de Puntajes PSU Igual o Superior a 450 Puntos en Establecimientos Municipales de Educación",
+                         "Metros Cuadrados (M2) de Areas Verdes con Mantenimiento por Habitante",
+                         "Porcentaje de mujeres funcionarias municipales")) |> 
+  # dejar sólo la medición más reciente de cada variable en cada comuna
+  group_by(cut_comuna, variable) |> 
+  slice_max(año) |> 
+  ungroup()
+```
+
+```{r}
+sinim_2
+```
+
+
+```{r}
+siedu_2 <- siedu |> 
+  # filtrar variables
+  filter(variable %in% c("Densidad de hogares en campamentos",
+                         "Distancia a centros de salud primaria",
+                         "Distancia a plazas públicas",
+                         "Población estimada de migrantes internacionales por comuna",
+                         "Porcentaje de la población en situación de pobreza multidimensional",
+                         "Porcentaje de viviendas en situación de hacinamiento",
+                         "Tasa de víctimas de delitos violentos por casos policiales cada 10.000 habitantes",
+                         "Tasa de conexiones residenciales fijas de internet por cada 100 habitantes")) |> 
+  # dejar sólo la medición más reciente de cada variable en cada comuna
+  group_by(cut_comuna, variable) |> 
+  slice_max(año) |> 
+  ungroup()
+```
+
+```{r}
+siedu_2
+```
+
+
+
+```{r}
+comunas <- readr::read_csv2("https://github.com/bastianolea/cut_comunas/raw/master/datos/cut_comuna.csv")
+
+comunas
+```
+
+```{r}
+library(dplyr)
+
+sinim_3 <- sinim_2 |> 
+  select(cut_comuna, variable, valor) |> 
+  mutate(cut_comuna = as.numeric(cut_comuna)) |> 
+  mutate(fuente = "sinim")
+
+siedu_3 <- siedu_2 |> 
+  select(cut_comuna, variable, valor) |> 
+  mutate(cut_comuna = as.numeric(cut_comuna)) |> 
+  mutate(fuente = "siedu")
+
+# datos_comunas <- comunas |> 
+#   select(nombre_region, codigo_region, nombre_comuna, codigo_comuna) |> 
+#   left_join(sinim_2 |> select(codigo_comuna = cut_comuna, variable, valor), join_by(codigo_comuna)) |> 
+#   left_join(siedu_2 |> select(codigo_comuna = cut_comuna, variable, valor), join_by(codigo_comuna))
+```
+
+https://corrr.tidymodels.org
+
+```{r}
+library(corrr)
+
+datos <- bind_rows(sinim_3, siedu_3)
+
+library(tidyr)
+
+datos_ancho <- datos |> 
+  select(-fuente) |> 
+  pivot_wider(id_cols = cut_comuna,
+              values_from = valor, names_from = variable)
+```
+
+```{r}
+datos_ancho |> 
+  select(-cut_comuna) |> 
+  correlate() 
+```
+
+```{r}
+datos_ancho |> 
+  select(-cut_comuna) |> 
+  correlate() |> 
+  shave()
+```
+
+```{r}
+datos_ancho |> 
+  select(-cut_comuna) |> 
+  correlate() |> 
+  shave()
+```
+
+
+```{r}
+datos_ancho |> 
+  select(-cut_comuna) |> 
+  correlate() |> 
+  stretch()
+```
+
+
+```{r}
+datos_ancho |> 
+  select(-cut_comuna) |> 
+  correlate() |> 
+  stretch() |> 
+  filter(r > 0.5 | r < -0.5)
+```
+
+
+
+
+```{r}
+#| fig.width: 15
+library(ggplot2)
+
+
+datos_ancho |> 
+  select(-cut_comuna) |> 
+  correlate() |> 
+  rearrange() |> 
+  rplot(print_cor = T) +
+  scale_y_discrete(labels = scales::label_wrap(60)) +
+  scale_x_discrete(labels = scales::label_wrap(60)) +
+  theme(axis.text = element_text(lineheight = 0.9, color = "black"),
+        axis.text.x = element_text(angle = 40, hjust = 1))
+```
+
+
+```{r}
+#| fig.width: 14
+#| fig.height: 10
+
+datos_ancho |> 
+  select(-cut_comuna) |> 
+  GGally::ggcorr(hjust = 1, nbreaks = 5, layout.exp = 10,
+                 label = TRUE)
+```
+
+
+
+```{r}
+datos_ancho |> 
+  select(-cut_comuna) |> 
+  correlate() |> 
+  rearrange() |> 
+  stretch() |> 
+  # gráfico
+  ggplot() +
+  aes(x, y, fill = r) +
+  geom_tile(color = "white", linewidth = 0.6) + # cuadros
+  geom_text(aes(label = round(r, 1)), color = "black", size = 3) + # texto
+  # color de cuadros
+  scale_fill_gradient2(high = "indianred2", mid = "white", low = "skyblue1", na.value = "white") +
+  # formato de escalas
+  scale_y_discrete(labels = scales::label_wrap(50), expand = c(0, 0)) +
+  scale_x_discrete(labels = scales::label_wrap(50), expand = c(0, 0)) +
+  # ajustes de tema
+  theme_minimal() +
+  theme(axis.text = element_text(lineheight = 0.9, color = "black"),
+        axis.text.x = element_text(angle = 40, hjust = 1),
+        axis.title = element_blank(),
+        legend.key.width = unit(2, "mm"))
+
+```
+
+
