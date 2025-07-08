@@ -7,17 +7,24 @@ blogdown::stop_server()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Mapas", 
+blogdown::new_post(title = "Generar múltiples gráficos automáticamente con R", 
                    file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
-                   tags = c("limpieza de datos", "ggplot2", "gráficos", "visualización de datos", "estadística")
+                   tags = c("visualización de datos", "automatización", "purrr", "ggplot2")
+)
+
+# crear un post normal
+blogdown::new_post(title = "Cargar y unir datos desde varios archivos en R", 
+                   file = paste0("blog/", "2025-07-06", "/index.qmd"),
+                   author = "Bastián Olea Herrera",
+                   tags = c("limpieza de datos", "procesamiento de datos", "purrr")
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Análisis y visualización de correlaciones en R", 
-                   file = "blog/correlaciones/index.qmd",
+blogdown::new_post(title = "Mini sitio: repositorio de datos sociales de Chile", 
+                   file = "blog/datos_sociales/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("estadísticas", "ggplot2", "gráficos", "visualización de datos"),
+                   tags = c("datos", "Chile", "quarto"),
                    categories = c() 
 )
 # format:
@@ -26,9 +33,11 @@ blogdown::new_post(title = "Análisis y visualización de correlaciones en R",
 #     output-ext: "md"
 
 ## borradores ----
+"content/blog/2025-07-07/index.qmd" # gráficos en serie
+"content/blog/2025-07-06/index.qmd" # unir datos
 "content/blog/correlaciones/index.qmd"
 "content/blog/ggview/index.qmd"
-"content/blog/2025-07-01/index.qmd"
+"content/blog/2025-07-01/index.qmd" # st_join
 "content/blog/openxlsx/index.md"
 "content/blog/unpivotr/index.qmd"
 # https://github.com/luisDVA/hexsession
