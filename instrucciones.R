@@ -7,10 +7,10 @@ blogdown::stop_server()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Generar múltiples gráficos automáticamente con R", 
+blogdown::new_post(title = "Reduce el tamaño de tus reportes Quarto con este truco", 
                    file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
-                   tags = c("visualización de datos", "automatización", "purrr", "ggplot2")
+                   tags = c("quarto", "consejos")
 )
 
 # crear un post tutorial
@@ -27,6 +27,7 @@ blogdown::new_post(title = "Etiquetas de texto que se repelen entre sí en gráf
 #     output-ext: "md"
 
 ## borradores ----
+"content/blog/2025-07-08/index.qmd" # tamaño quarto
 "content/blog/ggrepel/index.qmd"
 "content/blog/2025-07-07/index.qmd" # gráficos en serie
 "content/blog/2025-07-06/index.qmd" # unir datos
