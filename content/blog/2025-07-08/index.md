@@ -8,8 +8,12 @@ categories: []
 tags:
   - quarto
   - consejos
+_build:
+  render: never
+  list: never
+  publishResources: 'no'
 ---
 
-{{< imagen "quarto_size_a.png" >}}
 
+{{< imagen "quarto_size_a.png" >}}
 {{< imagen "quarto_size_b.png" >}}
