@@ -14,18 +14,20 @@ blogdown::new_post(title = "Generar múltiples gráficos automáticamente con R"
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Mini sitio: repositorio de datos sociales de Chile", 
-                   file = "blog/datos_sociales/index.qmd",
+blogdown::new_post(title = "Etiquetas de texto que se repelen entre sí en gráficos {ggplot2}", 
+                   file = "blog/ggrepel/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("datos", "Chile", "quarto"),
+                   tags = c("visualización de datos", "ggplot2", "gráficos"),
                    categories = c() 
 )
+# draft: true
 # format:
 #   hugo-md:
 #     output-file: "index"
 #     output-ext: "md"
 
 ## borradores ----
+"content/blog/ggrepel/index.qmd"
 "content/blog/2025-07-07/index.qmd" # gráficos en serie
 "content/blog/2025-07-06/index.qmd" # unir datos
 "content/blog/correlaciones/index.qmd"
