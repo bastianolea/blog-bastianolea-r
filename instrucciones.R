@@ -13,13 +13,6 @@ blogdown::new_post(title = "Generar múltiples gráficos automáticamente con R"
                    tags = c("visualización de datos", "automatización", "purrr", "ggplot2")
 )
 
-# crear un post normal
-blogdown::new_post(title = "Cargar y unir datos desde varios archivos en R", 
-                   file = paste0("blog/", "2025-07-06", "/index.qmd"),
-                   author = "Bastián Olea Herrera",
-                   tags = c("limpieza de datos", "procesamiento de datos", "purrr")
-)
-
 # crear un post tutorial
 blogdown::new_post(title = "Mini sitio: repositorio de datos sociales de Chile", 
                    file = "blog/datos_sociales/index.qmd",
