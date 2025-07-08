@@ -17,226 +17,226 @@ tags:
 
 ```{r}
 
-indice_brechas_comp |> 
-  filter(variable == "farmacias_cantidad") |> 
-  filter(!is.na(valor)) |> 
-  rename(cruce = "pob_mayores_65") |> 
-  mutate(cruce = round(cruce, 3)) |> 
-  select(valor, cruce, clasificacion, nombre_comuna) |> 
-  datapasta::dpasta()
-
-
-tibble::tribble(
-             ~valor, ~cruce, ~clasificacion,        ~nombre_comuna,
-              0.205,  0.108,       "Urbana",               "Arica",
-              0.341,  0.092,       "Urbana",             "Iquique",
-              0.182,  0.042,       "Urbana",       "Alto Hospicio",
-               0.21,  0.079,       "Urbana",         "Antofagasta",
-              0.175,  0.067,       "Urbana",              "Calama",
-              0.189,  0.088,       "Urbana",             "Copiapó",
-              0.209,  0.123,        "Mixta",            "Vallenar",
-              0.189,   0.11,       "Urbana",           "La Serena",
-              0.165,  0.106,       "Urbana",            "Coquimbo",
-              0.114,   0.12,       "Urbana",              "Ovalle",
-              0.427,  0.133,       "Urbana",          "Valparaíso",
-              0.435,  0.121,        "Mixta",          "Casablanca",
-              0.382,  0.116,        "Mixta",              "Concón",
-              0.387,  0.144,        "Mixta",          "Puchuncaví",
-              0.347,  0.133,        "Mixta",            "Quintero",
-               0.51,  0.148,       "Urbana",        "Viña del Mar",
-              0.787,   0.12,       "Urbana",           "Los Andes",
-              0.175,  0.113,        "Mixta",         "Calle Larga",
-              0.471,  0.119,        "Mixta",         "San Esteban",
-              0.656,  0.135,        "Mixta",            "La Ligua",
-              0.627,  0.125,        "Mixta",             "Cabildo",
-              0.553,  0.132,       "Urbana",            "Quillota",
-              0.483,   0.13,       "Urbana",              "Calera",
-              0.363,  0.118,        "Mixta",            "Hijuelas",
-              0.113,  0.103,        "Mixta",             "La Cruz",
-              0.532,  0.127,       "Urbana",         "San Antonio",
-              0.511,  0.193,        "Mixta",           "Algarrobo",
-              0.419,  0.166,        "Mixta",           "Cartagena",
-              0.545,   0.21,        "Mixta",           "El Quisco",
-              0.405,  0.207,        "Mixta",             "El Tabo",
-              0.446,  0.116,       "Urbana",          "San Felipe",
-               0.26,  0.123,        "Mixta",            "Llaillay",
-              0.616,  0.149,        "Mixta",            "Putaendo",
-               0.24,  0.124,        "Mixta",         "Santa María",
-              0.305,  0.146,       "Urbana",             "Quilpué",
-               0.59,   0.14,        "Mixta",             "Limache",
-              0.216,   0.13,       "Urbana",       "Villa Alemana",
-              0.528,  0.074,       "Urbana",            "Santiago",
-              0.178,  0.119,       "Urbana",           "Cerrillos",
-              0.148,  0.123,       "Urbana",         "Cerro Navia",
-              0.166,  0.137,       "Urbana",            "Conchalí",
-              0.187,  0.122,       "Urbana",           "El Bosque",
-              0.198,  0.118,       "Urbana",    "Estación Central",
-              0.216,  0.095,       "Urbana",          "Huechuraba",
-              0.207,  0.109,       "Urbana",       "Independencia",
-              0.336,  0.143,       "Urbana",         "La Cisterna",
-              0.229,  0.128,       "Urbana",          "La Florida",
-              0.132,  0.119,       "Urbana",           "La Granja",
-              0.079,  0.091,       "Urbana",          "La Pintana",
-               0.28,  0.149,       "Urbana",            "La Reina",
-              0.352,  0.156,       "Urbana",          "Las Condes",
-              0.234,  0.076,       "Urbana",        "Lo Barnechea",
-              0.078,  0.117,       "Urbana",           "Lo Espejo",
-              0.193,  0.145,       "Urbana",            "Lo Prado",
-              0.117,  0.147,       "Urbana",               "Macul",
-              0.186,  0.094,       "Urbana",               "Maipú",
-              0.339,  0.146,       "Urbana",               "Ñuñoa",
-              0.178,  0.142,       "Urbana", "Pedro Aguirre Cerda",
-              0.196,  0.103,       "Urbana",           "Peñalolén",
-              0.681,  0.156,       "Urbana",         "Providencia",
-              0.174,  0.085,       "Urbana",            "Pudahuel",
-               0.15,  0.054,       "Urbana",           "Quilicura",
-              0.164,  0.129,       "Urbana",       "Quinta Normal",
-              0.266,  0.125,       "Urbana",            "Recoleta",
-              0.142,    0.1,       "Urbana",               "Renca",
-              0.145,  0.148,       "Urbana",         "San Joaquín",
-              0.258,  0.127,       "Urbana",          "San Miguel",
-              0.211,  0.146,       "Urbana",           "San Ramón",
-              0.502,  0.176,       "Urbana",            "Vitacura",
-              0.145,  0.076,       "Urbana",         "Puente Alto",
-              0.169,   0.06,       "Urbana",              "Colina",
-              0.074,  0.058,       "Urbana",               "Lampa",
-              0.175,  0.087,       "Urbana",        "San Bernardo",
-              0.167,  0.087,       "Urbana",                "Buin",
-              0.204,  0.094,        "Mixta",     "Calera de Tango",
-              0.128,  0.097,        "Mixta",               "Paine",
-              0.199,  0.115,       "Urbana",           "Melipilla",
-              0.107,  0.118,        "Mixta",            "Curacaví",
-              0.251,  0.096,       "Urbana",           "Talagante",
-              0.073,  0.102,        "Mixta",            "El Monte",
-              0.218,  0.102,        "Mixta",       "Isla de Maipo",
-              0.141,  0.088,       "Urbana",       "Padre Hurtado",
-              0.202,  0.099,       "Urbana",            "Peñaflor",
-              0.196,  0.112,       "Urbana",            "Rancagua",
-               0.07,  0.104,        "Mixta",             "Codegua",
-              0.046,  0.125,        "Mixta",            "Coltauco",
-              0.086,  0.114,        "Mixta",             "Doñihue",
-              0.107,  0.095,        "Mixta",            "Graneros",
-              0.128,  0.082,       "Urbana",             "Machalí",
-              0.143,  0.111,        "Mixta",            "Mostazal",
-              0.133,  0.127,        "Mixta",               "Peumo",
-              0.071,  0.128,        "Mixta",   "Quinta de Tilcoco",
-              0.216,  0.114,       "Urbana",               "Rengo",
-              0.129,  0.098,        "Mixta",            "Requínoa",
-              0.214,  0.133,        "Mixta",         "San Vicente",
-              0.225,  0.117,       "Urbana",        "San Fernando",
-              0.062,  0.144,        "Mixta",             "Chépica",
-              0.103,  0.124,        "Mixta",            "Nancagua",
-               0.31,  0.128,        "Mixta",          "Santa Cruz",
-              0.305,  0.119,       "Urbana",               "Talca",
-              0.158,  0.101,        "Mixta",        "Constitución",
-              0.046,  0.068,        "Mixta",               "Maule",
-              0.215,  0.108,       "Urbana",              "Curicó",
-              0.098,  0.121,        "Mixta",              "Molina",
-              0.121,  0.115,        "Mixta",             "Romeral",
-              0.136,  0.125,       "Urbana",             "Linares",
-                0.2,  0.139,        "Mixta",              "Parral",
-              0.139,  0.131,        "Mixta",          "San Javier",
-              0.194,  0.121,       "Urbana",             "Chillán",
-              0.029,  0.094,        "Mixta",       "Chillán Viejo",
-               0.21,   0.17,        "Mixta",             "Quillón",
-               0.16,  0.145,        "Mixta",              "Yungay",
-              0.164,  0.158,        "Mixta",            "Quirihue",
-              0.141,  0.142,        "Mixta",          "San Carlos",
-              0.435,  0.124,       "Urbana",          "Concepción",
-              0.118,  0.098,       "Urbana",             "Coronel",
-              0.153,  0.113,       "Urbana",         "Chiguayante",
-              0.113,  0.111,        "Mixta",             "Hualqui",
-              0.154,  0.127,        "Mixta",                "Lota",
-               0.16,  0.119,        "Mixta",               "Penco",
-              0.133,  0.087,       "Urbana", "San Pedro de la Paz",
-              0.269,  0.146,        "Mixta",         "Santa Juana",
-              0.196,   0.12,       "Urbana",          "Talcahuano",
-               0.22,  0.143,       "Urbana",                "Tomé",
-              0.123,  0.125,       "Urbana",             "Hualpén",
-              0.221,  0.109,        "Mixta",                "Lebu",
-              0.177,  0.113,        "Mixta",         "Curanilahue",
-              0.176,  0.109,       "Urbana",         "Los Ángeles",
-              0.209,  0.135,        "Mixta",                "Laja",
-              0.193,   0.13,        "Mixta",             "Mulchén",
-               0.25,  0.119,        "Mixta",          "Nacimiento",
-              0.225,  0.169,        "Mixta",              "Yumbel",
-              0.192,  0.108,       "Urbana",              "Temuco",
-              0.132,  0.167,        "Mixta",              "Gorbea",
-              0.145,  0.117,        "Mixta",             "Lautaro",
-              0.161,  0.148,        "Mixta",            "Loncoche",
-              0.088,  0.141,        "Mixta",      "Nueva Imperial",
-              0.095,  0.097,        "Mixta",     "Padre Las Casas",
-              0.152,  0.149,        "Mixta",          "Pitrufquén",
-              0.317,  0.121,        "Mixta",          "Villarrica",
-              0.248,  0.128,       "Urbana",               "Angol",
-               0.22,  0.161,        "Mixta",          "Curacautín",
-              0.183,  0.122,        "Mixta",             "Renaico",
-              0.207,  0.155,        "Mixta",            "Traiguén",
-              0.197,  0.139,        "Mixta",            "Victoria",
-              0.228,  0.113,       "Urbana",            "Valdivia",
-              0.392,  0.132,        "Mixta",               "Lanco",
-              0.135,  0.138,        "Mixta",               "Máfil",
-              0.152,  0.149,        "Mixta",           "Río Bueno",
-              0.196,  0.085,       "Urbana",        "Puerto Montt",
-              0.134,  0.128,        "Mixta",             "Calbuco",
-               0.38,  0.098,        "Mixta",        "Puerto Varas",
-               0.27,  0.109,        "Mixta",              "Castro",
-              0.212,  0.133,        "Mixta",               "Ancud",
-              0.168,  0.072,        "Mixta",             "Quellón",
-              0.171,  0.117,       "Urbana",              "Osorno",
-              0.113,  0.089,       "Urbana",           "Coyhaique",
-               0.16,  0.119,       "Urbana",        "Punta Arenas"
-             )
-
-
-datos <- indice_brechas_comp |> 
-  filter(variable == "farmacias_cantidad") |> 
-  rename(cruce = "pob_mayores_65") |> 
-  select(variable, cruce, clasificacion, valor, indice_d, nombre_comuna) |> 
-  # etiquetas comuna, no poner etiquetas si están cerca de los promedios
-  group_by(clasificacion) |> 
-  mutate(etiqueta = if_else(valor > mean(valor, na.rm = T)*1.5 
-                            | valor < mean(valor, na.rm = T)*0.5 
-                            | cruce > mean(cruce, na.rm = T)*1.5
-                            | cruce < mean(cruce, na.rm = T)*0.5, 
-                            nombre_comuna, "  ")) |> 
-  # corregir cuando no salen nombres
-  group_by(clasificacion, indice_d) |> 
-  mutate(n = n(),
-         n_con_etiqueta = sum(etiqueta != "  "),
-         p_con_etiqueta = n_con_etiqueta/n) |> 
-  mutate(etiqueta = if_else((p_con_etiqueta < 0.2 & n > 40)
-                            | (n_con_etiqueta < 4 & n < 20),
-                            nombre_comuna, etiqueta))
-
-# browser()
-grafico <- datos |>
-  ggplot() +
-  aes(valor, cruce, color = indice_d) +
-  geom_smooth(method = "lm", se = F, color = "black", lwd = 0.3, linetype = "dotted") +
-  geom_point(size = 2.2, alpha = 0.7) +
-  
-  scale_color_manual(values = c("sin brecha" = color_positivo, "con brecha" = color_negativo),
-                     labels = ~str_to_sentence(.x)) +
-  theme_linedraw() +
-  guides(color = guide_legend(title = NULL, position = "bottom", override.aes = list(size = 3))) +
-  labs(x = "Tasa de farmacias por cada 1.000 habitantes",
-       y = "Porcentaje de población mayor a 65 años",
-       color = "Resultado") +
-  facet_wrap(~clasificacion) +
-  theme(legend.text = element_text(margin = margin(l = 1))) +
-  theme(axis.title.x = element_text(face = "bold", margin = margin(b = -12, t = 5))) +
-  theme(strip.background = element_rect(fill = "transparent", linewidth = 0),
-        strip.text = element_text(color = "black", face = "bold", size = 10)) #+
-# ggview::canvas(7, 5)
-
-grafico
-
-grafico <- grafico +
-  ggrepel::geom_text_repel(aes(label = etiqueta), 
-                           size = 2.5, color = "grey40",
-                           point.padding = 0.2, box.padding = 0.4, max.overlaps = 5,
-                           segment.size = 0) +
-  scale_y_continuous(labels = label_percent(big.mark = ".", decimal.mark = ","))
+# indice_brechas_comp |> 
+#   filter(variable == "farmacias_cantidad") |> 
+#   filter(!is.na(valor)) |> 
+#   rename(cruce = "pob_mayores_65") |> 
+#   mutate(cruce = round(cruce, 3)) |> 
+#   select(valor, cruce, clasificacion, nombre_comuna) |> 
+#   datapasta::dpasta()
+# 
+# 
+# tibble::tribble(
+#              ~valor, ~cruce, ~clasificacion,        ~nombre_comuna,
+#               0.205,  0.108,       "Urbana",               "Arica",
+#               0.341,  0.092,       "Urbana",             "Iquique",
+#               0.182,  0.042,       "Urbana",       "Alto Hospicio",
+#                0.21,  0.079,       "Urbana",         "Antofagasta",
+#               0.175,  0.067,       "Urbana",              "Calama",
+#               0.189,  0.088,       "Urbana",             "Copiapó",
+#               0.209,  0.123,        "Mixta",            "Vallenar",
+#               0.189,   0.11,       "Urbana",           "La Serena",
+#               0.165,  0.106,       "Urbana",            "Coquimbo",
+#               0.114,   0.12,       "Urbana",              "Ovalle",
+#               0.427,  0.133,       "Urbana",          "Valparaíso",
+#               0.435,  0.121,        "Mixta",          "Casablanca",
+#               0.382,  0.116,        "Mixta",              "Concón",
+#               0.387,  0.144,        "Mixta",          "Puchuncaví",
+#               0.347,  0.133,        "Mixta",            "Quintero",
+#                0.51,  0.148,       "Urbana",        "Viña del Mar",
+#               0.787,   0.12,       "Urbana",           "Los Andes",
+#               0.175,  0.113,        "Mixta",         "Calle Larga",
+#               0.471,  0.119,        "Mixta",         "San Esteban",
+#               0.656,  0.135,        "Mixta",            "La Ligua",
+#               0.627,  0.125,        "Mixta",             "Cabildo",
+#               0.553,  0.132,       "Urbana",            "Quillota",
+#               0.483,   0.13,       "Urbana",              "Calera",
+#               0.363,  0.118,        "Mixta",            "Hijuelas",
+#               0.113,  0.103,        "Mixta",             "La Cruz",
+#               0.532,  0.127,       "Urbana",         "San Antonio",
+#               0.511,  0.193,        "Mixta",           "Algarrobo",
+#               0.419,  0.166,        "Mixta",           "Cartagena",
+#               0.545,   0.21,        "Mixta",           "El Quisco",
+#               0.405,  0.207,        "Mixta",             "El Tabo",
+#               0.446,  0.116,       "Urbana",          "San Felipe",
+#                0.26,  0.123,        "Mixta",            "Llaillay",
+#               0.616,  0.149,        "Mixta",            "Putaendo",
+#                0.24,  0.124,        "Mixta",         "Santa María",
+#               0.305,  0.146,       "Urbana",             "Quilpué",
+#                0.59,   0.14,        "Mixta",             "Limache",
+#               0.216,   0.13,       "Urbana",       "Villa Alemana",
+#               0.528,  0.074,       "Urbana",            "Santiago",
+#               0.178,  0.119,       "Urbana",           "Cerrillos",
+#               0.148,  0.123,       "Urbana",         "Cerro Navia",
+#               0.166,  0.137,       "Urbana",            "Conchalí",
+#               0.187,  0.122,       "Urbana",           "El Bosque",
+#               0.198,  0.118,       "Urbana",    "Estación Central",
+#               0.216,  0.095,       "Urbana",          "Huechuraba",
+#               0.207,  0.109,       "Urbana",       "Independencia",
+#               0.336,  0.143,       "Urbana",         "La Cisterna",
+#               0.229,  0.128,       "Urbana",          "La Florida",
+#               0.132,  0.119,       "Urbana",           "La Granja",
+#               0.079,  0.091,       "Urbana",          "La Pintana",
+#                0.28,  0.149,       "Urbana",            "La Reina",
+#               0.352,  0.156,       "Urbana",          "Las Condes",
+#               0.234,  0.076,       "Urbana",        "Lo Barnechea",
+#               0.078,  0.117,       "Urbana",           "Lo Espejo",
+#               0.193,  0.145,       "Urbana",            "Lo Prado",
+#               0.117,  0.147,       "Urbana",               "Macul",
+#               0.186,  0.094,       "Urbana",               "Maipú",
+#               0.339,  0.146,       "Urbana",               "Ñuñoa",
+#               0.178,  0.142,       "Urbana", "Pedro Aguirre Cerda",
+#               0.196,  0.103,       "Urbana",           "Peñalolén",
+#               0.681,  0.156,       "Urbana",         "Providencia",
+#               0.174,  0.085,       "Urbana",            "Pudahuel",
+#                0.15,  0.054,       "Urbana",           "Quilicura",
+#               0.164,  0.129,       "Urbana",       "Quinta Normal",
+#               0.266,  0.125,       "Urbana",            "Recoleta",
+#               0.142,    0.1,       "Urbana",               "Renca",
+#               0.145,  0.148,       "Urbana",         "San Joaquín",
+#               0.258,  0.127,       "Urbana",          "San Miguel",
+#               0.211,  0.146,       "Urbana",           "San Ramón",
+#               0.502,  0.176,       "Urbana",            "Vitacura",
+#               0.145,  0.076,       "Urbana",         "Puente Alto",
+#               0.169,   0.06,       "Urbana",              "Colina",
+#               0.074,  0.058,       "Urbana",               "Lampa",
+#               0.175,  0.087,       "Urbana",        "San Bernardo",
+#               0.167,  0.087,       "Urbana",                "Buin",
+#               0.204,  0.094,        "Mixta",     "Calera de Tango",
+#               0.128,  0.097,        "Mixta",               "Paine",
+#               0.199,  0.115,       "Urbana",           "Melipilla",
+#               0.107,  0.118,        "Mixta",            "Curacaví",
+#               0.251,  0.096,       "Urbana",           "Talagante",
+#               0.073,  0.102,        "Mixta",            "El Monte",
+#               0.218,  0.102,        "Mixta",       "Isla de Maipo",
+#               0.141,  0.088,       "Urbana",       "Padre Hurtado",
+#               0.202,  0.099,       "Urbana",            "Peñaflor",
+#               0.196,  0.112,       "Urbana",            "Rancagua",
+#                0.07,  0.104,        "Mixta",             "Codegua",
+#               0.046,  0.125,        "Mixta",            "Coltauco",
+#               0.086,  0.114,        "Mixta",             "Doñihue",
+#               0.107,  0.095,        "Mixta",            "Graneros",
+#               0.128,  0.082,       "Urbana",             "Machalí",
+#               0.143,  0.111,        "Mixta",            "Mostazal",
+#               0.133,  0.127,        "Mixta",               "Peumo",
+#               0.071,  0.128,        "Mixta",   "Quinta de Tilcoco",
+#               0.216,  0.114,       "Urbana",               "Rengo",
+#               0.129,  0.098,        "Mixta",            "Requínoa",
+#               0.214,  0.133,        "Mixta",         "San Vicente",
+#               0.225,  0.117,       "Urbana",        "San Fernando",
+#               0.062,  0.144,        "Mixta",             "Chépica",
+#               0.103,  0.124,        "Mixta",            "Nancagua",
+#                0.31,  0.128,        "Mixta",          "Santa Cruz",
+#               0.305,  0.119,       "Urbana",               "Talca",
+#               0.158,  0.101,        "Mixta",        "Constitución",
+#               0.046,  0.068,        "Mixta",               "Maule",
+#               0.215,  0.108,       "Urbana",              "Curicó",
+#               0.098,  0.121,        "Mixta",              "Molina",
+#               0.121,  0.115,        "Mixta",             "Romeral",
+#               0.136,  0.125,       "Urbana",             "Linares",
+#                 0.2,  0.139,        "Mixta",              "Parral",
+#               0.139,  0.131,        "Mixta",          "San Javier",
+#               0.194,  0.121,       "Urbana",             "Chillán",
+#               0.029,  0.094,        "Mixta",       "Chillán Viejo",
+#                0.21,   0.17,        "Mixta",             "Quillón",
+#                0.16,  0.145,        "Mixta",              "Yungay",
+#               0.164,  0.158,        "Mixta",            "Quirihue",
+#               0.141,  0.142,        "Mixta",          "San Carlos",
+#               0.435,  0.124,       "Urbana",          "Concepción",
+#               0.118,  0.098,       "Urbana",             "Coronel",
+#               0.153,  0.113,       "Urbana",         "Chiguayante",
+#               0.113,  0.111,        "Mixta",             "Hualqui",
+#               0.154,  0.127,        "Mixta",                "Lota",
+#                0.16,  0.119,        "Mixta",               "Penco",
+#               0.133,  0.087,       "Urbana", "San Pedro de la Paz",
+#               0.269,  0.146,        "Mixta",         "Santa Juana",
+#               0.196,   0.12,       "Urbana",          "Talcahuano",
+#                0.22,  0.143,       "Urbana",                "Tomé",
+#               0.123,  0.125,       "Urbana",             "Hualpén",
+#               0.221,  0.109,        "Mixta",                "Lebu",
+#               0.177,  0.113,        "Mixta",         "Curanilahue",
+#               0.176,  0.109,       "Urbana",         "Los Ángeles",
+#               0.209,  0.135,        "Mixta",                "Laja",
+#               0.193,   0.13,        "Mixta",             "Mulchén",
+#                0.25,  0.119,        "Mixta",          "Nacimiento",
+#               0.225,  0.169,        "Mixta",              "Yumbel",
+#               0.192,  0.108,       "Urbana",              "Temuco",
+#               0.132,  0.167,        "Mixta",              "Gorbea",
+#               0.145,  0.117,        "Mixta",             "Lautaro",
+#               0.161,  0.148,        "Mixta",            "Loncoche",
+#               0.088,  0.141,        "Mixta",      "Nueva Imperial",
+#               0.095,  0.097,        "Mixta",     "Padre Las Casas",
+#               0.152,  0.149,        "Mixta",          "Pitrufquén",
+#               0.317,  0.121,        "Mixta",          "Villarrica",
+#               0.248,  0.128,       "Urbana",               "Angol",
+#                0.22,  0.161,        "Mixta",          "Curacautín",
+#               0.183,  0.122,        "Mixta",             "Renaico",
+#               0.207,  0.155,        "Mixta",            "Traiguén",
+#               0.197,  0.139,        "Mixta",            "Victoria",
+#               0.228,  0.113,       "Urbana",            "Valdivia",
+#               0.392,  0.132,        "Mixta",               "Lanco",
+#               0.135,  0.138,        "Mixta",               "Máfil",
+#               0.152,  0.149,        "Mixta",           "Río Bueno",
+#               0.196,  0.085,       "Urbana",        "Puerto Montt",
+#               0.134,  0.128,        "Mixta",             "Calbuco",
+#                0.38,  0.098,        "Mixta",        "Puerto Varas",
+#                0.27,  0.109,        "Mixta",              "Castro",
+#               0.212,  0.133,        "Mixta",               "Ancud",
+#               0.168,  0.072,        "Mixta",             "Quellón",
+#               0.171,  0.117,       "Urbana",              "Osorno",
+#               0.113,  0.089,       "Urbana",           "Coyhaique",
+#                0.16,  0.119,       "Urbana",        "Punta Arenas"
+#              )
+# 
+# 
+# datos <- indice_brechas_comp |> 
+#   filter(variable == "farmacias_cantidad") |> 
+#   rename(cruce = "pob_mayores_65") |> 
+#   select(variable, cruce, clasificacion, valor, indice_d, nombre_comuna) |> 
+#   # etiquetas comuna, no poner etiquetas si están cerca de los promedios
+#   group_by(clasificacion) |> 
+#   mutate(etiqueta = if_else(valor > mean(valor, na.rm = T)*1.5 
+#                             | valor < mean(valor, na.rm = T)*0.5 
+#                             | cruce > mean(cruce, na.rm = T)*1.5
+#                             | cruce < mean(cruce, na.rm = T)*0.5, 
+#                             nombre_comuna, "  ")) |> 
+#   # corregir cuando no salen nombres
+#   group_by(clasificacion, indice_d) |> 
+#   mutate(n = n(),
+#          n_con_etiqueta = sum(etiqueta != "  "),
+#          p_con_etiqueta = n_con_etiqueta/n) |> 
+#   mutate(etiqueta = if_else((p_con_etiqueta < 0.2 & n > 40)
+#                             | (n_con_etiqueta < 4 & n < 20),
+#                             nombre_comuna, etiqueta))
+# 
+# # browser()
+# grafico <- datos |>
+#   ggplot() +
+#   aes(valor, cruce, color = indice_d) +
+#   geom_smooth(method = "lm", se = F, color = "black", lwd = 0.3, linetype = "dotted") +
+#   geom_point(size = 2.2, alpha = 0.7) +
+#   
+#   scale_color_manual(values = c("sin brecha" = color_positivo, "con brecha" = color_negativo),
+#                      labels = ~str_to_sentence(.x)) +
+#   theme_linedraw() +
+#   guides(color = guide_legend(title = NULL, position = "bottom", override.aes = list(size = 3))) +
+#   labs(x = "Tasa de farmacias por cada 1.000 habitantes",
+#        y = "Porcentaje de población mayor a 65 años",
+#        color = "Resultado") +
+#   facet_wrap(~clasificacion) +
+#   theme(legend.text = element_text(margin = margin(l = 1))) +
+#   theme(axis.title.x = element_text(face = "bold", margin = margin(b = -12, t = 5))) +
+#   theme(strip.background = element_rect(fill = "transparent", linewidth = 0),
+#         strip.text = element_text(color = "black", face = "bold", size = 10)) #+
+# # ggview::canvas(7, 5)
+# 
+# grafico
+# 
+# grafico <- grafico +
+#   ggrepel::geom_text_repel(aes(label = etiqueta), 
+#                            size = 2.5, color = "grey40",
+#                            point.padding = 0.2, box.padding = 0.4, max.overlaps = 5,
+#                            segment.size = 0) +
+#   scale_y_continuous(labels = label_percent(big.mark = ".", decimal.mark = ","))
 ```
 

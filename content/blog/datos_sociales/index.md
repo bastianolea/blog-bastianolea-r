@@ -1,5 +1,5 @@
 ---
-title: Mini sitio: repositorio de datos sociales
+title: Repositorio de datos sociales
 author: Bastián Olea Herrera
 date: '2025-02-09'
 slug: []
