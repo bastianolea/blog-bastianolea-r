@@ -1,10 +1,11 @@
 ---
 title: Análisis y visualización de correlaciones en R
 author: Bastián Olea Herrera
-date: '2025-07-07'
-draft: true
+date: '2025-07-09'
+draft: false
 format:
   hugo-md:
+    fig-format: "jpeg"
     output-file: "index"
     output-ext: "md"
 slug: []
@@ -18,19 +19,59 @@ editor_options:
   chunk_output_type: console
 ---
 
-https://bastianolea.github.io/datos_sociales/
+El análisis de correlación es una herramienta estadística que nos permite identificar si existen relaciones lineales entre distintas variables. Lo que hace una correlación es indicarnos si dos variables tienen una relación entre sí, en el sentido de que el aumento o disminución de una de las variables ocurra en concordancia con la otra variable, ya sea una **correlación positiva** (si una variable aumenta, la otra también) o **correlación negativa** (si una variable aumenta, la otra disminuye).
+
+Un ejemplo de correlación positiva sería: mientras más soleado, más calor. Una correlación negativa sería: a mayor frío, menos ganas de levantarse 😴
+
+En R podemos realizar análisis de correlación en conjunto de datos enteros, y de este modo podemos encontrar todas las correlaciones que existen en las variables de los datos. Esto se lograría tomando todas las variables y cruzándolas todas con todas, para luego identificar cuáles se correlacionan, en qué dirección y con qué intensidad.
+
+## Cargar datos
+
+Para ser más interesante al ejemplo, vamos a cargar dos conjuntos de datos sociales, obtenidos de mi [repositorio de datos sociales públicos](https://bastianolea.github.io/datos_sociales/). 
+
+En esta oportunidad cargaremos un conjunto de datos del [Sistema de Información Municipal (Sinim)](https://github.com/bastianolea/sinim_info_municipal), que es una base de datos sobre los municipios chilenos mantenida anualmente por la [Subsecretaría de Desarrollo Regional y Administrativo (Subdere)](https://datos.sinim.gov.cl), y el conjunto de datos del [Sistema de Indicadores y Estándares de Desarrollo Urbano](https://github.com/bastianolea/siedu_indicadores_urbanos/), conjunto desarrollado por el [Instituto Nacional de Estadísticas de Chile](https://www.ine.gob.cl/herramientas/portal-de-mapas/siedu) que agrupa estadísticas Sobre medio ambiente, planificación de ciudades, desarrollo sostenible, acceso a servicios básicos, y movilidad.
+
+Gracias al [repositorio de datos sociales](https://bastianolea.github.io/datos_sociales/), tenemos enlaces directos a conjuntos de datos sociales listos para usar, y cargarlos a tu sesión de R es tan fácil como cargar el dato directamente desde internet:
 
 ```{r}
 library(arrow)
 
-sinim <- read_parquet("https://github.com/bastianolea/sinim_datos_comunales/raw/main/datos/sinim_2019-2023.parquet")
+# cargar datos sinim
+sinim <- arrow::read_parquet("https://github.com/bastianolea/sinim_datos_comunales/raw/main/datos/sinim_2019-2023.parquet")
 
-siedu <- read_parquet("https://github.com/bastianolea/siedu_indicadores_urbanos/raw/main/datos/siedu_indicadores_desarrollo_urbano.parquet")
+# cargar datos de siedu
+siedu <- arrow::read_parquet("https://github.com/bastianolea/siedu_indicadores_urbanos/raw/main/datos/siedu_indicadores_desarrollo_urbano.parquet")
 ```
 
+
+## Limpieza de datos
+
+Antes que nada, vamos a cargar `{dplyr}` para el manejo y la limpieza de los datos. 
+
 ```{r}
+#| message: false
+library(dplyr)
+```
+
+Echémosle un vistazo a los datos con `glimpse()`:
+
+```{r}
+glimpse(sinim)
+
+glimpse(siedu)
+```
+Notamos que ambos conjuntos de datos vienen en el [formato _largo_](https://r4ds.had.co.nz/tidy-data.html#longer), dónde tenemos una columna con los nombres de las variables o indicadores, y otra columna con los valores correspondientes. Así tenemos una tabla con menor cantidad de columnas,
+donde cada fila es una observación que corresponde a una comuna del país, en un año específico, para una de las variables del conjunto de datos, con su valor correspondiente.
+
+Haremos tres cosas con los datos: 
+
+1. Primero haremos una selección de variables interesantes de cada conjunto de datos. 
+2. Luego, como ambos conjuntos de datos poseen mediciones de distintos años en cada una de sus indicadores o estadísticos, realizaremos una agrupación por comuna y variable para dejar las mediciones más recientes en cada indicador y en cada comuna. 
+3. Finalmente, dejaremos sólo las columnas que nos interesan
+
+```{r}
+# filtrar variables
 sinim_2 <- sinim |> 
-  # filtrar variables
   filter(variable %in% c("Ingresos Propios Permanentes per Cápita (IPPP)",
                          "Disponibilidad Presupuestaria Municipal por Habitante (M$)",
                          "Inversión Municipal",
@@ -39,141 +80,217 @@ sinim_2 <- sinim |>
                          "Porcentaje de Ejecución Presupuestaria Devengada Municipal",
                          "Porcentaje de Puntajes PSU Igual o Superior a 450 Puntos en Establecimientos Municipales de Educación",
                          "Metros Cuadrados (M2) de Areas Verdes con Mantenimiento por Habitante",
-                         "Porcentaje de mujeres funcionarias municipales")) |> 
-  # dejar sólo la medición más reciente de cada variable en cada comuna
-  group_by(cut_comuna, variable) |> 
-  slice_max(año) |> 
-  ungroup()
-```
+                         "Porcentaje de mujeres funcionarias municipales",
+                         "Densidad de Población por Km2",
+                         "Población Comunal, Estimada por el INE",
+                         "Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH)"))
 
-```{r}
-sinim_2
-```
-
-
-```{r}
-siedu_2 <- siedu |> 
-  # filtrar variables
-  filter(variable %in% c("Densidad de hogares en campamentos",
-                         "Distancia a centros de salud primaria",
-                         "Distancia a plazas públicas",
-                         "Población estimada de migrantes internacionales por comuna",
-                         "Porcentaje de la población en situación de pobreza multidimensional",
-                         "Porcentaje de viviendas en situación de hacinamiento",
-                         "Tasa de víctimas de delitos violentos por casos policiales cada 10.000 habitantes",
-                         "Tasa de conexiones residenciales fijas de internet por cada 100 habitantes")) |> 
-  # dejar sólo la medición más reciente de cada variable en cada comuna
-  group_by(cut_comuna, variable) |> 
-  slice_max(año) |> 
-  ungroup()
-```
-
-```{r}
-siedu_2
-```
-
-
-
-```{r}
-comunas <- readr::read_csv2("https://github.com/bastianolea/cut_comunas/raw/master/datos/cut_comuna.csv")
-
-comunas
-```
-
-```{r}
-library(dplyr)
-
+# dejar sólo la medición más reciente de cada variable en cada comuna
 sinim_3 <- sinim_2 |> 
-  select(cut_comuna, variable, valor) |> 
-  mutate(cut_comuna = as.numeric(cut_comuna)) |> 
-  mutate(fuente = "sinim")
-
-siedu_3 <- siedu_2 |> 
-  select(cut_comuna, variable, valor) |> 
-  mutate(cut_comuna = as.numeric(cut_comuna)) |> 
-  mutate(fuente = "siedu")
-
-# datos_comunas <- comunas |> 
-#   select(nombre_region, codigo_region, nombre_comuna, codigo_comuna) |> 
-#   left_join(sinim_2 |> select(codigo_comuna = cut_comuna, variable, valor), join_by(codigo_comuna)) |> 
-#   left_join(siedu_2 |> select(codigo_comuna = cut_comuna, variable, valor), join_by(codigo_comuna))
+  group_by(cut_comuna, variable) |> 
+  slice_max(año) |> 
+  ungroup()
+  
+# seleccionar columnas
+sinim_4 <- sinim_3 |> 
+  select(cut_comuna, variable, valor)
 ```
 
-https://corrr.tidymodels.org
+```{r}
+# filtrar variables
+siedu_2 <- siedu |> 
+  filter(variable %in% c(
+    "Consumo de energía eléctrica per cápita residencial",
+    "Tiempo de viaje en hora punta mañana",
+    "Superficie de áreas verdes públicas por habitante",
+    "Número de microbasurales por cada 10.000 habitantes",
+    "Población estimada de migrantes internacionales por comuna",
+    "Porcentaje de la población en situación de pobreza multidimensional",
+    "Porcentaje de viviendas en situación de hacinamiento",
+    "Tasa de víctimas de delitos violentos por casos policiales cada 10.000 habitantes",
+    "Tasa de conexiones residenciales fijas de internet por cada 100 habitantes"))
+
+# dejar sólo la medición más reciente de cada variable en cada comuna
+siedu_3 <- siedu_2 |> 
+  group_by(cut_comuna, variable) |> 
+  slice_max(año) |> 
+  ungroup()
+
+# seleccionar columnas
+siedu_4 <- siedu_3 |> 
+  select(cut_comuna, variable, valor)
+```
+
+Veamos cómo van quedando los datos:
+```{r}
+sinim_4
+```
 
 ```{r}
-library(corrr)
+siedu_4
+```
 
-datos <- bind_rows(sinim_3, siedu_3)
+### Unir datos
+Vamos a combinar estos dos conjuntos de datos para tener una mezcla de variables de temas socioeconómicos que sería interesante correlacionar. Como hicimos que ambos conjuntos de datos estén ordenados bajo la misma lógica, para unirlos sólo necesitamos agregar las filas de un conjunto al otro. 
 
+```{r}
+datos <- bind_rows(sinim_4, siedu_4)
+```
+
+Ahora que los datos están unidos, contamos con 20 variables para correlacionar.
+```{r}
+datos |> distinct(variable) |> print(n=Inf)
+```
+
+### Pivotar datos a ancho
+
+El último paso antes del análisis de correlación es [pivotar la estructura de los datos al formato ancho.](https://r4ds.hadley.nz/data-tidy.html#widening-data), porque las funciones que realizan correlaciones en R esperan que los datos vengan de esta forma. 
+
+Si bien en el formato largo tenemos una columna con el nombre de las variables y otra columna con el valor de cada variable, siendo cada fila una observación, en el **formato ancho** cada columna corresponde a una variable, mientras que cada fila corresponde a una observación.
+
+```{r}
 library(tidyr)
 
 datos_ancho <- datos |> 
-  select(-fuente) |> 
-  pivot_wider(id_cols = cut_comuna,
-              values_from = valor, names_from = variable)
+  # pivotar a ancho
+  pivot_wider(id_cols = cut_comuna, # columna que identifica las observaciones
+              values_from = valor, # columna con los valores
+              names_from = variable # columna con los nombres de columna
+              )
+```
+
+Se consultamos los nombres de las columnas, confirmamos que ahora cada variable se encuentra una columna individual:
+```{r}
+names(datos_ancho)
+```
+
+
+## Correlación
+
+El paquete [`{corrr}`](https://corrr.tidymodels.org), parte del framework [tidymodels](https://www.tidymodels.org), nos facilita realizar una correlación cuyo resultado viene en una tabla ordenada con tan sólo una función: `correlate()`
+
+```{r}
+#| echo: false
+options(width = 500)
 ```
 
 ```{r}
-datos_ancho |> 
+#| message: false
+library(corrr)
+
+correlación <- datos_ancho |> 
   select(-cut_comuna) |> 
   correlate() 
+
+correlación
+```
+En la tabla anterior (muy rudimentaria aún) podemos ver el cruce entre todas las variables. La tabla se lee partiendo por una fila, que representa una de las variables, y cada vez que esta fila se intercepta con una columna, el valor representa el cruce de la variable de la fila con la variable de la columna.
+
+Como estamos cruzando todas con todas las variables, obviamente cada variable también se cruza consigo misma, lo cual resulta en un `NA`. 
+
+Como el resultado es muy grande, y la cantidad de columnas muy alta, `{corrr}` ofrece la función `stretch()` para convertir fácilmente el resultado a un formato largo:
+
+```{r}
+#| echo: false
+options(width = 85)
 ```
 
 ```{r}
-datos_ancho |> 
-  select(-cut_comuna) |> 
-  correlate() |> 
-  shave()
+correlación |> stretch()
 ```
+Esto nos puede servir para encontrar las correlaciones con una de las variables en particular; por ejemplo, encontrar la correlación de las variables con el tiempo de viaje en hora punta por las mañanas:
 
 ```{r}
-datos_ancho |> 
-  select(-cut_comuna) |> 
-  correlate() |> 
-  shave()
-```
-
-
-```{r}
-datos_ancho |> 
-  select(-cut_comuna) |> 
-  correlate() |> 
-  stretch()
-```
-
-
-```{r}
-datos_ancho |> 
-  select(-cut_comuna) |> 
-  correlate() |> 
+correlación |> 
   stretch() |> 
-  filter(r > 0.5 | r < -0.5)
+  filter(x == "Tiempo de viaje en hora punta mañana") |> 
+  select(y, r) |> 
+  head()
 ```
 
+### Interpretación de correlaciones
 
+La columna `r` nos indica el valor de la correlación de la variable filtrada con todo el resto de las variables.
 
+Como las correlaciones pueden ser positivas o negativas, el valor de la correlación (`r`) puede ser positivo o negativo. Los valores de correlación van del 0 al 1 (o del 0 al -1), donde una correlación igual a 0 significa que no existe correlación, y una correlación igual a 1 significa que la correlación es total. Usualmente, una correlación mayor a 0,3 se considera moderada, y mayor a 0,5 se considera fuerte, pero las interpretaciones De estos valores son múltiples.
+
+Ordenemos las variables por su intensidad de correlación con el tiempo de viaje:
 
 ```{r}
-#| fig.width: 15
+correlación |> 
+  stretch() |> 
+  filter(x == "Tiempo de viaje en hora punta mañana") |> 
+  select(y, r) |> 
+  arrange(desc(abs(r))) |> 
+  head()
+```
+
+En las primeras 3 filas podemos ver **correlaciones negativas fuertes**: las comunas del país donde los _tiempos de viaje de viaje en hora punta por la mañana_ son mayores, también son comunas donde los _puntajes en la prueba de selección universitaria (PSU)_ son menores, y menores son los _recursos municipales por habitante_. Dicho de otro modo, a menores recursos municipales por habitantes, mayor tiempo de viaje en hora punta por la mañana.
+
+En las filas 4 y 5 vemos unas **correlaciones positivas moderadas**: los tiempos de viaje en horario punta por las mañanas también son más altos en las comunas donde existen más _hogares con ingresos bajos_ (según el Registro Social de Hogares), y donde los _municipios dependen más del financiamiento del Fondo Común Municipal_.
+
+
+### Búsqueda de correlaciones
+Cómo tenemos todos los valores de correlación en una misma columna gracias a `stretch()`, podemos filtrar los valores para encontrar solamente con relaciones fuertes. Podemos lograr esto filtrando valores mayores a 0,5 o menores a -0,5, o filtrando valores mayores a el valor absoluto de 0,5 (`abs(0.5)`). Luego ordenamos los valores de mayor a menor, usando el valor absoluto de `r` (el valor en positivo).
+
+```{r}
+#| echo: false
+options(width = 160)
+```
+
+```{r}
+correlación |> 
+  stretch(remove.dups = T) |> 
+  filter(r > 0.5 | r < -0.5) |> 
+  arrange(desc(abs(r))) |> 
+  head()
+```
+
+Evidentemente, las correlaciones más fuertes son entre variables similares: los hogares de menores ingresos correlacionan con la población en situación de pobreza, la disponibilidad de presupuesto municipal por habitante se correlaciona con los ingresos municipales percápita, y otras obviedades. Habría que afinar la selección de variables para remover aquellas que representan a un mismo fenómeno social subyacente.
+
+## Visualización
+
+Otra gracia de `{corrr}` es que facilita visualizar las correlaciones por medio de un gráfico con la función `rplot()`, que produce un gráfico `{ggplot2}` con nuestra matriz de correlación. 
+
+En teoría, visualizar una correlación sería así de fácil:
+
+```r
+datos |> 
+  correlate() |> 
+  rplot()
+```
+
+Como nuestra matriz de correlación tiene muchas variables, tendremos que agregar algunos ajustes para que se vea bien.
+
+```{r}
+#| fig.width: 12
+#| fig.height: 9
 library(ggplot2)
 
-
-datos_ancho |> 
-  select(-cut_comuna) |> 
-  correlate() |> 
-  rearrange() |> 
-  rplot(print_cor = T) +
-  scale_y_discrete(labels = scales::label_wrap(60)) +
-  scale_x_discrete(labels = scales::label_wrap(60)) +
-  theme(axis.text = element_text(lineheight = 0.9, color = "black"),
-        axis.text.x = element_text(angle = 40, hjust = 1))
+correlación |> 
+  rearrange() |> # ordenar por intensidad
+  rplot(print_cor = T, # agregar valores encima
+        legend = F) + # sin leyenda
+  # cortar los nombres de variable
+  scale_y_discrete(labels = scales::label_wrap(70)) +
+  scale_x_discrete(labels = scales::label_wrap(70)) +
+  # variables inferiores inclinadas
+  theme(axis.text.x = element_text(angle = 40, hjust = 1),
+        axis.text = element_text(lineheight = 0.9, color = "black"))
 ```
 
+Con esta visualización, podemos ver el color y el tamaño de los círculos para encontrar rápidamente los cruces entre variables que están correlacionados.
+
+A la rápida, podemos ver que arriba a la izquierda la variable de consumo de energía eléctrica se correlaciona con los recursos municipales, y abajo la izquierda podemos ver qué el porcentaje de hogares en los tramos menores de ingresos se correlaciona con menos conexiones a Internet y menos consumo eléctrico. También al centro del gráfico podemos ver una alta correlación entre la _tasa de víctimas de delitos violentos_ y la _densidad poblacional_.
+
+
+### Alternativa
+Otra función de R que permite realizar correlaciones y visualizarlas de inmediato es `ggcor()` del paquete [`{GGally}`](https://ggobi.github.io/ggally/index.html), que entrega varios tipos de gráficos estadísticos para análisis exploratorios de datos.
 
 ```{r}
 #| fig.width: 14
 #| fig.height: 10
+#| message: false
 
 datos_ancho |> 
   select(-cut_comuna) |> 
@@ -181,24 +298,32 @@ datos_ancho |>
                  label = TRUE)
 ```
 
+El resultado es menos atractivo, pero si es bastante más legible.
 
+### Manualmente
+
+Finalmente, y como no podía faltar, también podemos crear un gráfico de la matriz de correlación desde cero con `{ggplot2}`. Esto no es tan complejo gracias a que `correlate()` y `stretch()` entregan los resultados bien ordenaditos.
 
 ```{r}
+#| fig.width: 14
+#| fig.height: 10
+#| message: false
+#| warning: false
+
 datos_ancho |> 
-  select(-cut_comuna) |> 
   correlate() |> 
   rearrange() |> 
   stretch() |> 
   # gráfico
   ggplot() +
   aes(x, y, fill = r) +
-  geom_tile(color = "white", linewidth = 0.6) + # cuadros
+  geom_tile(color = "white", linewidth = 0.6) + # geometría de cuadros o mosaicos
   geom_text(aes(label = round(r, 1)), color = "black", size = 3) + # texto
-  # color de cuadros
+  # escala de color de los cuadros
   scale_fill_gradient2(high = "indianred2", mid = "white", low = "skyblue1", na.value = "white") +
-  # formato de escalas
+  # formato de las escalas de los ejes
   scale_y_discrete(labels = scales::label_wrap(50), expand = c(0, 0)) +
-  scale_x_discrete(labels = scales::label_wrap(50), expand = c(0, 0)) +
+  scale_x_discrete(labels = scales::label_wrap(60), expand = c(0, 0)) +
   # ajustes de tema
   theme_minimal() +
   theme(axis.text = element_text(lineheight = 0.9, color = "black"),
@@ -208,4 +333,30 @@ datos_ancho |>
 
 ```
 
+También podemos aprovechar el vuelo para hacer una bonita obra de arte con nuestras correlaciones:
 
+```{r}
+#| fig.width: 4
+#| fig.height: 4
+#| message: false
+
+datos_ancho |> 
+  correlate() |> 
+  rearrange() |> 
+  stretch() |> 
+  ggplot() +
+  aes(x, y, fill = r) +
+  geom_tile(color = "white", linewidth = 0.6) +
+  scale_fill_gradient2(high = "#865BAB", mid = "white", low = "#AB5B90", na.value = "white") +
+  guides(fill = guide_none()) +
+  theme_void() +
+  coord_fixed()
+```
+
+Como siempre, `{ggplot2}` es una herramienta extremadamente versátil para visualizar cualquier tipo de información. Puedes [aprender a crear visualizaciones de datos desde cero en R siguiendo este tutorial de `{ggplot2}`.](https://bastianolea.rbind.io/blog/r_introduccion/tutorial_visualizacion_ggplot/)
+
+----
+
+Si te gustó este contenido, puedes ayudarme donándome un cafecito si presionas el siguiente botón. Te lo agradecería mucho y me anima a seguir compartiendo!
+
+{{< cafecito >}}
