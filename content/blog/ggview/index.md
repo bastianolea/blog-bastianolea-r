@@ -30,7 +30,7 @@ ggsave("grafico.jpg")
 
 Pero cuando abres el gráfico, sorpresa, se ve distinto! 🙄
 
-{{< imagen "grafico_guardado.png">}}
+{{< imagen "grafico_guardado.jpg">}}
 
 Esto es porque las dimensiones del panel _Plots_ no son las mismas que las dimensiones con que se guardan por defecto los gráficos. En la función `ggsave()` puedes especificar ancho, alto y resolución de la imagen que se va a guardar. Entonces, lo que podrías hacer es intentar configurar `ggsave()` para que el gráfico se guarde como tú esperas... pero a veces esto se vuelve en un juego de ir adivinando, intentando números varias veces hasta que le achuntas al gráfico que esperabas.
 
