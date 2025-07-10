@@ -13,6 +13,10 @@ excerpt: Si tus documentos Quarto salen pesados por tener muchos gráficos, inte
 
 Consejo: si tus [documentos Quarto](/blog/quarto_reportes/) salen pesados por tener muchos gráficos, intenta cambiar en el `YAML` el siguiente argumento para que los gráficos incluidos vayan en formato `.jpg` en vez de `.png` (por defecto). 
 
+```yaml
+fig-format: "jpeg"
+```
+
 <div style="max-width:390px; margin:auto">
 
 {{< imagen "quarto_yaml-featured.png" >}}

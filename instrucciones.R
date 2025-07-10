@@ -34,12 +34,10 @@ blogdown::new_post(title = "Etiquetas de texto que se repelen entre sí en gráf
 "content/blog/2025-07-01/index.qmd" # st_join
 "content/blog/openxlsx/index.md"
 "content/blog/unpivotr/index.qmd"
-# https://github.com/luisDVA/hexsession
-"content/blog/tutorial_scraping_selenium/selenium.qmd"
 
+"content/blog/tutorial_scraping_selenium/selenium.qmd"
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
 "content/blog/tutorial_digitalocean/index.md"
-
 
 
 ## archivos ----

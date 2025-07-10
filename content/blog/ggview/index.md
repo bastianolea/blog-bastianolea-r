@@ -55,3 +55,9 @@ grafico_2 <- grafico + canvas(7, 5)
 
 save_ggplot(grafico_2, "grafico_2.jpg") # mantiene las dimensiones 
 ```
+
+Instala [`{ggview}`](https://github.com/idmn/ggview) ejecutando lo siguiente en tu consola:
+
+```r
+install.packages("ggview")
+```
