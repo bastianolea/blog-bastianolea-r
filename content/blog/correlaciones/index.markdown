@@ -9,7 +9,8 @@ format:
     output-file: "index"
     output-ext: "md"
 slug: []
-categories: []
+categories: 
+  - Tutoriales
 tags:
   - estadísticas
   - ggplot2
@@ -17,19 +18,22 @@ tags:
   - visualización de datos
 editor_options: 
   chunk_output_type: console
+excerpt: El análisis de correlación es una técnica estadística de análisis exploratorio que nos permite identificar si existen relaciones lineales entre distintas variables. En este tutorial aprenderemos a realizar correlaciones entre múltiples variables, interpretarlas, y visualizarlas de tres maneras distintas. 
 ---
 
 
 
-El análisis de correlación es una herramienta estadística que nos permite identificar si existen relaciones lineales entre distintas variables. Lo que hace una correlación es indicarnos si dos variables tienen una relación entre sí, en el sentido de que el aumento o disminución de una de las variables ocurra en concordancia con la otra variable, ya sea una **correlación positiva** (si una variable aumenta, la otra también) o **correlación negativa** (si una variable aumenta, la otra disminuye).
+El análisis de correlación es una técnica estadística que nos permite **identificar si existen relaciones lineales entre distintas variables.** 
 
-Un ejemplo de correlación positiva sería: mientras más soleado, más calor. Una correlación negativa sería: a mayor frío, menos ganas de levantarse 😴
+Lo que hace una correlación es indicarnos si dos variables tienen una relación entre sí, en el sentido de que el aumento o disminución de una de las variables ocurra en concordancia con la otra variable, ya sea una **correlación positiva** (si una variable aumenta, la otra también) o **correlación negativa** (si una variable aumenta, la otra disminuye).
 
-En R podemos realizar análisis de correlación en conjunto de datos enteros, y de este modo podemos encontrar todas las correlaciones que existen en las variables de los datos. Esto se lograría tomando todas las variables y cruzándolas todas con todas, para luego identificar cuáles se correlacionan, en qué dirección y con qué intensidad.
+Un ejemplo de correlación positiva sería: mientras más solcito, más calor. Una correlación negativa sería: a mayor frío, menos ganas de levantarse 😴
+
+En R podemos realizar análisis de correlación en conjuntos de datos enteros, y de este modo podemos encontrar todas las correlaciones que existen entre las variables de los datos. Esto se lograría tomando todas las variables y cruzándolas todas con todas, para luego identificar cuáles se correlacionan, en qué dirección y con qué intensidad.
 
 ## Cargar datos
 
-Para ser más interesante al ejemplo, vamos a cargar dos conjuntos de datos sociales, obtenidos de mi [repositorio de datos sociales públicos](https://bastianolea.github.io/datos_sociales/). 
+Para hacer más interesante el tutorial, vamos a cargar dos conjuntos de datos sociales, obtenidos de mi [repositorio de datos sociales públicos](https://bastianolea.github.io/datos_sociales/). 
 
 En esta oportunidad cargaremos un conjunto de datos del [Sistema de Información Municipal (Sinim)](https://github.com/bastianolea/sinim_info_municipal), que es una base de datos sobre los municipios chilenos mantenida anualmente por la [Subsecretaría de Desarrollo Regional y Administrativo (Subdere)](https://datos.sinim.gov.cl), y el conjunto de datos del [Sistema de Indicadores y Estándares de Desarrollo Urbano](https://github.com/bastianolea/siedu_indicadores_urbanos/), conjunto desarrollado por el [Instituto Nacional de Estadísticas de Chile](https://www.ine.gob.cl/herramientas/portal-de-mapas/siedu) que agrupa estadísticas Sobre medio ambiente, planificación de ciudades, desarrollo sostenible, acceso a servicios básicos, y movilidad.
 
@@ -40,20 +44,7 @@ Gracias al [repositorio de datos sociales](https://bastianolea.github.io/datos_s
 
 ``` r
 library(arrow)
-```
 
-```
-## 
-## Attaching package: 'arrow'
-```
-
-```
-## The following object is masked from 'package:utils':
-## 
-##     timestamp
-```
-
-``` r
 # cargar datos sinim
 sinim <- arrow::read_parquet("https://github.com/bastianolea/sinim_datos_comunales/raw/main/datos/sinim_2019-2023.parquet")
 
