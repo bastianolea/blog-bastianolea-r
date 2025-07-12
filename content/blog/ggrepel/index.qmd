@@ -1,8 +1,8 @@
 ---
-title: Etiquetas de texto que se repelen entre sí en gráficos {ggplot2}
+title: Etiquetas de texto que se repelen entre sí con {ggrepel}
 author: Bastián Olea Herrera
-date: '2025-07-08'
-draft: true
+date: '2025-07-11'
+draft: false
 format:
   hugo-md:
     output-file: "index"
@@ -16,8 +16,13 @@ tags:
 execute: 
   message: false
   warning: false
+excerpt: En este post veremos cómo mejorar visualizaciones de datos a las que queremos agregarle texto que identifique las observaciones, aún cuando las observaciones son demasiadas como para etiquetarlas a todas. Usaremos el [paquete de R `{ggrepel}`](https://ggrepel.slowkow.com) para etiquetar puntos en un gráfico con textos que se repelen entre sí de forma automática.
 ---
 
+En este post veremos cómo mejorar visualizaciones de datos a las que queremos agregarle texto que identifique las observaciones, aún cuando las observaciones son demasiadas como para etiquetarlas a todas. Usaremos el [paquete de R `{ggrepel}`](https://ggrepel.slowkow.com) para etiquetar puntos en un gráfico con textos que se repelen entre sí de forma automática.
+
+### Datos
+A modo de ejemplo, usaremos datos del [plebiscito de entrada de 2020 en Chile](https://www.bcn.cl/procesoconstituyente/plebiscito2020), obtenidos desde el [repositorio de datos sobre los plebiscitos constitucionales](https://github.com/bastianolea/plebiscitos_chile). Éste repositorio, parte de mi [mini sitio de datos sociales chilenos](https://bastianolea.github.io/datos_sociales/), ofrece versiones limpias y listas para usar de los resultados electorales de estos procesos.
 
 ```{r}
 library(arrow)
@@ -25,11 +30,19 @@ library(arrow)
 plebiscito <- read_parquet("https://github.com/bastianolea/plebiscitos_chile/raw/main/datos/plebiscito_2020_comunas.parquet")
 ```
 
+Como los datos están alojados en el repositorio, pueden cargarse directamente en tu sesión de R tan sólo cargándolos desde el enlace anterior, sin necesidad de descargarse en tu computador.
+
+Los datos vienen con cada fila representando una opción de voto por comuna del país, con su respectiva cantidad de votos, y se ven así:
+
 ```{r}
 library(dplyr)
 
 head(plebiscito)
 ```
+
+## Procesamiento
+
+Vamos a hacer un [gráfico de dispersión](https://bastianolea.rbind.io/blog/r_introduccion/tutorial_visualizacion_ggplot/#dispersión) con `{ggplot2}`, para el cual necesitamos dos columnas con las dos opciones de voto: apruebo y rechazo. Como en el conjunto de datos que cargamos las opciones vienen en una columna (`opciones`), y el conteo viene en otra (`votos`), transformaremos la estructura de los datos a un formato _ancho_ usando `pivot_wider()`:
 
 ```{r}
 library(tidyr)
@@ -39,9 +52,13 @@ plebiscito_ancho <- plebiscito |>
   janitor::clean_names()
 ```
 
+Lo que hizo `pivot_wider()` fue a usar la variable `opciones` para crear nuevas columnas, y la variable `votos` para rellenar las nuevas columnas con valores. De este modo, nuestros datos pasaron del formato largo al formato ancho, con una columna que contiene los votos del _apruebo_ y otra del _rechazo_:
+
 ```{r}
 head(plebiscito_ancho)
 ```
+
+Ahora usaremos `{dplyr}` para calcular qué opción ganó en cada comuna del país, y el porcentaje de votos que obtuvo:
 
 ```{r}
 library(dplyr)
@@ -61,6 +78,9 @@ plebiscito_comunas <- plebiscito_ancho |>
 head(plebiscito_comunas)
 ```
 
+### Gráfico
+
+Para realizar un gráfico de densidad, y especificamos las dos variables que pondremos en los ejes _x_ e _y_, y una variable que representará el color de cada observación, las cuales se visualizarán como puntos usando `geom_point()`:
 
 ```{r}
 library(ggplot2)
@@ -71,8 +91,11 @@ plebiscito_comunas |>
   geom_point()
 ```
 
+Ahora mejoraremos un poco el gráfico anterior: definiremos el formato de los números de las escalas con `scales::number_options()`, ajustaremos el tamaño transparencia de los puntos de `geom_point()`, luego aplicaremos escalas numéricas más bonitas con `scale_{x}_continuous()`, y finalmente ajustaremos un poco el tema y textos del gráfico:
+
 ```{r}
 library(scales)
+# formato de números
 number_options(decimal.mark = ",", big.mark = ".")
 
 grafico_resultado <- plebiscito_comunas |> 
@@ -88,25 +111,48 @@ grafico_resultado <- plebiscito_comunas |>
 grafico_resultado
 ```
 
+Ahora, al gráfico anterior, le agregaremos inocentemente etiquetas de texto a cada punto, a ver qué pasa:
+
 ```{r}
 grafico_resultado +
   geom_text(aes(label = comuna), size = 2, color = "grey30", hjust = 0)
 ```
+Absolutamente nefasto. Son tantos puntos que los textos se transforman en una masa gris debido a la concentración.
+
+Un intento desesperado de corregir esto podría ser el argumento `check_overlap`, eliminará los textos que aparezcan encima de otros:
+
+```{r}
+grafico_resultado +
+  geom_text(aes(label = comuna), size = 2, color = "grey30", hjust = 0,
+            check_overlap = TRUE)
+```
+Sin embargo, esta solución es demasiado básica, y aún hay textos que aparece encima de puntos, o fuera del margen del gráfico.
+
+En estos casos resulta ideal `geom_text_repel()` como reemplazo de `geom_text()`:
 
 ```{r}
 library(ggrepel)
 
 grafico_resultado +
   geom_text_repel(aes(label = comuna), size = 2.5, color = "grey30",
-                  segment.size = 0.1, point.padding = 2)
+                  point.padding = 2 # margen de cada punto
+  )
 ```
+
+La función `geom_text_repel()` calcula la posesión de las etiquetas de texto con respecto a las demás, y decide el posicionamiento óptimo para que la mayor cantidad de textos aparezcan, sin que salgan encima de otros textos, ni encima de los puntos.
+
+Esta función tiene varios argumentos para ajustar el algoritmo que decide la ubicación de los textos. Uno de ellos es `max.overlaps`, cuyo defecto es 10, y determina la cantidad máxima de etiquetas que pueden estar unas encima de otras antes de qué sean descartadas por estar demasiado concentrados en un mismo lugar. Si aumentamos este argumento, la función tomará en cuenta etiquetas de texto en ubicaciones más complejas, e intentará graficarlas moviéndolas más lejos de los puntos, o moviendo otras etiquetas de texto a posiciones más lejanas del punto que lo origina. Para mejorar el resultado, podemos aumentar el valor del argumento `max.time`, el cual le da más tiempo al algoritmo para buscar resolver el posicionamiento de los textos.
 
 ```{r}
 grafico_resultado +
   geom_text_repel(aes(label = comuna), size = 2.5, color = "grey30",
-                  segment.size = 0.1, 
+                  segment.size = 0.1, # ancho de líneas (si es que salen)
                   max.overlaps = 30, max.time = 1)
 ```
+
+En el gráfico anterior, aparecen nuevas etiquetas que no salieron antes, algunas de ellas conectadas por líneas con el punto correspondiente.
+
+También podemos determinar ciertos parámetros para que aparezcan o no aparezcan ciertos textos en el gráfico. En el siguiente ejemplo, agregamos una condicional para que solamente aparezcan textos que superen ciertos valores de cada eje, excluyendo los demás.
 
 ```{r}
 grafico_resultado +
@@ -115,17 +161,25 @@ grafico_resultado +
                   segment.size = 0, max.overlaps = 30)
 ```
 
-Es importante dejar los puntos con un texto vacío y no sólo filtrarlos del dataset, porque así los textos se seguirán repeliendo de los puntos aunque éstos no tengan texto.
+Es importante dejar las observaciones que queremos excluir de el etiquetado de texto con un texto vacío o un espacio (`" "`), y no solamente filtrar las observaciones del dataset, porque así los puntos del gráfico seguirán teniendo un texto vacío encima de ellos, lo que hará que el resto de las etiquetas de texto también se alejen de los puntos sin etiqueta.
+
+Haremos un acercamiento al gráfico, definiendo los límites verticales y horizontales con `coord_cartesian()`, para que hayan puntos más dispersos:
 
 ```{r}
 grafico_resultado +
   coord_cartesian(xlim = c(0, 10000),
                   ylim = c(0, 50000),
                   clip = "off") +
-  geom_text_repel(aes(label = ifelse(rechazo > 3000 & rechazo < 10000 | apruebo > 20000 & apruebo < 50000, comuna, " ")), 
-                  size = 2.5, color = "grey30",
-                  segment.size = 0, max.overlaps = 30, max.time = 5)
+  geom_text_repel(
+    aes(label = ifelse(rechazo > 3000 & rechazo < 10000 
+                       | apruebo > 20000 & apruebo < 50000, 
+                       comuna, " ")), 
+    size = 2.5, color = "grey30",
+    segment.size = 0, max.overlaps = 30, max.time = 5)
 ```
+En este caso aplicamos condicionales más estrictas para que aparezcan o desaparezcan los puntos, con el objetivo de que aparezca la mayor cantidad de textos de un sector específico del gráfico.
+
+También podemos utilizar criterios estadísticos para incluir o excluir el etiquetado de textos. Por ejemplo, en el siguiente gráfico solamente mostramos el nombre de los puntos cuyo valor es superior al percentil 73 de cada variable.
 
 ```{r}
 grafico_resultado +
@@ -138,6 +192,9 @@ grafico_resultado +
   labs(x = "Rechazo (detalle)", y = "Apruebo (detalle)")
 ```
 
+## Gráfico interactivo
+
+Finalmente, una mejor solución para estos casos sería permitir a las y los usuarios explorar la información de todas las observaciones del gráfico mediante la interactividad. El [paquete `{ggiraph}` para visualizaciones interactivas](https://davidgohel.github.io/ggiraph/) nos puede ayudar a transformar cualquier gráfico de `{ggplot2}` en un gráfico interactivo, donde los usuarios pueden tocar o poner el Mouse encima de un elemento para obtener más información. Sólo es necesario agregarle `_interactive` a las funciones `geom_` del gráfico, y especificar el texto que aparecerá cuándo se ponga el cursor encima de cada elemento en `tooltip` dentro de `aes()`:
 
 ```{r}
 library(ggiraph)
@@ -157,6 +214,8 @@ grafico_interactivo <- plebiscito_comunas |>
   theme(legend.text = element_text(margin = margin(l = 2))) +
   labs(x = "Rechazo", y = "Apruebo", color = "Resultado")
 ```
+
+Para que el gráfico se vea y funcione interactivamente, debemos mostrarlo mediante la función `girafe()`:
 
 ```{r}
 #| output: asis
@@ -178,3 +237,12 @@ girafe(ggobj = grafico_interactivo,
 )
 ```
 
+Vemos que en el gráfico anterior, podemos obtener información extra de cada observación tan sólo poniendo el cursor encima, lo cual amplía bastante las posibilidades de comunicación, por ejemplo, permitiendo saber información de los puntos de los sectores más densos, o agregando la información de otras variables del conjunto de datos, como el porcentaje.
+
+----
+
+_Próximamente:_ ejemplos para aplicar `{ggrepel}` en mapas y otras visualizaciones geoespaciales.
+
+----
+
+{{< cafecito >}}}
