@@ -1,5 +1,5 @@
 ---
-title: 'Introducción al manejo de datos con {dplyr}'
+title: Introducción al manejo de datos con {dplyr}
 author: Bastián Olea Herrera
 date: '2025-02-15'
 format:
@@ -711,4 +711,5 @@ En ese tutorial nuevamente aprendimos herramientas básicas de R, esta vez orien
 
 Ahora puedes pasar a los siguientes tutoriales, donde practicaremos estos aprendizajes en conjunto de datos reales: con [datos de proyecciones de población provenientes del Censo](../../../../blog/r_introduccion/tutorial_dplyr_censo/), y con [datos de un catastro de asentamientos de viviendas rudimentarias](../../../../blog/r_introduccion/tutorial_dplyr_campamentos/)
 
-{{< cafecito  >}}
+{{< cafecito >}}
+{{< cursos >}}

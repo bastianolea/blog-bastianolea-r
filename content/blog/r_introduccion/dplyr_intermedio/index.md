@@ -1,5 +1,5 @@
 ---
-title: 'Manejo y transformación de datos con {dplyr} y {tidyr}'
+title: Manejo y transformación de datos con {dplyr} y {tidyr}
 author: Bastián Olea Herrera
 date: '2025-02-16'
 format:
@@ -33,3 +33,5 @@ pivot_longer
 pivot_wider
 
 left_join
+
+{{< cursos >}}

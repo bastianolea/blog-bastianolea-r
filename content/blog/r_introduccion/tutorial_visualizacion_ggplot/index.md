@@ -689,7 +689,7 @@ grafico_pueblos_1 +
 
 <img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-38-1.png" width="768" />
 
-Hicimos que cada capa dibuje textos distintos filtrando los datos que llegan a cada una de las capas en el argumento `data` de cada geometría. En los argumentos `data` usamos notación lambda para filtrar los datos del gráfico (`~filter(.x)`) sin tener que especificar el conjunto de datos específico. Pero si esto te parece complicado, también se puede lograr el mismo efecto sin `data` usando `ifelse(total > mean(total), total, "")` en `label` para que cada capa escriba el texto que cumple con la condición, E imprima nada si es que no la cumple.
+Hicimos que cada capa dibuje textos distintos filtrando los datos que llegan a cada una de las capas en el argumento `data` de cada geometría. En los argumentos `data` usamos notación lambda para filtrar los datos del gráfico (`~filter(.x)`) sin tener que especificar el conjunto de datos específico. Pero si esto te parece complicado, también se puede lograr el mismo efecto sin `data` usando `ifelse(total > mean(total), total, "")` en `label` para que cada capa escriba el texto que cumple con la condición, e imprima nada si es que no la cumple.
 
 ## Anotaciones
 
@@ -1193,6 +1193,7 @@ Con esto concluye este tutorial inicial para aprender a visualizar datos en R co
 Si aprendiste con este tutorial, considera hacerme una pequeña donación en el siguiente enlace:
 
 {{< cafecito >}}
+{{< cursos >}}
 
 ------------------------------------------------------------------------
 

@@ -525,3 +525,4 @@ Como siempre, `{ggplot2}` es una herramienta extremadamente versátil para visua
 Si te gustó este contenido, puedes ayudarme donándome un cafecito si presionas el siguiente botón. Te lo agradecería mucho y me anima a seguir compartiendo!
 
 {{< cafecito >}}
+{{< cursos >}}

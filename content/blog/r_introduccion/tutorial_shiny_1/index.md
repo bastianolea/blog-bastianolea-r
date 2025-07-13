@@ -322,3 +322,5 @@ Si tienes cualquier consulta, necesitas apoyo con tu aplicación Shiny, o deseas
 [Revisa mis clases para ver los cursos anteriores de Shiny](/clases/) que he impartido, los cuales contienen código y ejemplos de aplicaciones.
 
 {{<cafecito>}}
+
+{{< cursos >}}

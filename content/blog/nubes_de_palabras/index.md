@@ -297,6 +297,7 @@ Con esta aproximación podemos crear visualizaciones más personalizadas y compl
 
 ------------------------------------------------------------------------
 
+{{< cursos >}}
 {{< cafecito >}}
 
 [^1]: La limpieza del texto es un paso clave en este tipo de análisis, que para simplificar esta guía, omitiremos. Es muy importante procesar los textos para poder eliminar palabras vacías, palabras mal escritas, remover símbolos, remover palabras irrelevantes, e incluso lematizar palabras para agrupar diferentes conjugaciones de una misma palabra en una sola.

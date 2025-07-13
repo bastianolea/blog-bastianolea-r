@@ -44,3 +44,7 @@ https://posit.co/download/rstudio-desktop/#download
 Principalmente, lo que hace RStudio es presentarnos una consola de R junto a otros paneles: el panel de visualización, donde exploramos los gráficos, la ventana de entorno (environment) donde vemos los elementos con los que estamos trabajando, y la ventana de script o source, donde podemos ir elaborando uno o varios documentos con instrucciones para R. Además de estos paneles, RStudio facilita tareas como la importación de datos, la instalación de paquetes, la gestión de cambios, y otros.
 
 Teniendo ambas cosas instaladas, podemos abrir RStudio y verificar está funcionando escribiendo en la consola: “2+2” (sin comillas), y presionamos enter. Si obtenemos una respuesta, significa que la instalación funciona.
+
+----
+
+{{< cursos >}}

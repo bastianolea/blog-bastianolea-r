@@ -3,7 +3,7 @@ title: 'Tutorial: introducción a {dplyr} con datos de población'
 author: Bastián Olea Herrera
 date: '2024-11-08'
 draft: false
-weight: 4
+weight: 14
 format: hugo-md
 slug: []
 categories:
@@ -15,7 +15,8 @@ excerpt: "Tutorial de introducción al paquete `{dplyr}` para la exploración y 
 
 
 
-Este post es una introducción al paquete `{dplyr}` para la exploración y análisis de datos con R. Está dirigido a principiantes de R. Si es primera vez que usas R, te recomiendo revisar primero [este breve tutorial inicial de R.](/blog/tutorial_r_1/).
+
+Este post es una introducción al paquete `{dplyr}` para la exploración y análisis de datos con R. Está dirigido a principiantes de R. Si es primera vez que usas R, te recomiendo revisar primero [este breve tutorial inicial de R.](/blog/r_introduccion/r_basico/).
 
 _En este tutorial veremos:_
 - carga de datos de Excel
@@ -34,6 +35,7 @@ Los paquetes son conjuntos de funciones, programas, datos y documentación que s
 
 
 
+
 ``` r
 # es necesario instalarlos una sola vez
 install.packages("dplyr")
@@ -42,7 +44,9 @@ install.packages("readxl")
 
 
 
+
 Luego cargamos los paquetes:
+
 
 
 
@@ -54,14 +58,16 @@ library(readxl) # carga de archivos Excel
 
 
 
+
 `{dplyr}` es un paquete parte del Tidyverse, que se usa para manipular datos a partir de funciones que emulan instrucciones sencillas, como _seleccionar, filtrar,_ etc.
 
 
 ## Cargar datos
 
-Antes que nada, debemos descargar el archivo que usaremos para el tutorial: [clic aquí para descargar el archivo Excel `censo_proyeccion_2024.xlsx`](https://raw.githubusercontent.com/bastianolea/censo_proyecciones_poblacion/refs/heads/main/datos_procesados/censo_proyeccion_2024.xlsx)
+Antes que nada, debemos **descargar** el archivo que usaremos para el tutorial: [clic aquí para descargar el archivo Excel `censo_proyeccion_2024.xlsx`](https://raw.githubusercontent.com/bastianolea/blog-r/refs/heads/master/content/blog/r_introduccion/tutorial_dplyr_censo/censo_proyeccion_2024.xlsx)
 
 Importamos los datos que usaremos con la funcion `read_excel()`, cuyo argumento es el nombre del archivo. Asignamos el resultado a un objeto, y así tenemos nuetros datos de Excel cargados en R:
+
 
 
 
@@ -91,7 +97,9 @@ censo # ver los datos de dataframe o tabla
 
 
 
+
 Para ver más filas del dataframe, usamos la función `print()`:
+
 
 
 
@@ -129,10 +137,12 @@ print(censo, n = 20)
 
 
 
+
 Ahora que tenemos nuestros datos cargados como un objeto en nuestro entorno de R, podemos empezar a manipularlo y explorarlo usando `{dplyr}`.
 
 ## Seleccionar columnas
 La función `select()` selecciona columnas del dataframe.
+
 
 
 
@@ -161,9 +171,11 @@ censo |> # comando + shift + M
 
 
 
+
 El operador `|>` es un conector, y significa que _a este objeto le hago esto otro;_ es decir, se lee como si dijera "luego" o "entonces". En este caso: _a `censo` le selecciono `comuna` y `población`._
 
 Podemos seleccionar negativamente; es decir, excluir ciertas columnas
+
 
 
 
@@ -191,7 +203,9 @@ censo |>
 
 
 
+
 También podemos seleccionar columnas en base a sus nombres parciales:
+
 
 
 
@@ -219,7 +233,9 @@ censo |>
 
 
 
+
 Selección de columnas por el numero de una columna (su posición):
+
 
 
 
@@ -248,8 +264,10 @@ censo |>
 
 
 
+
 ## Ordenar filas
 Usamos la función `arrange()` para ordenar las filas de nuestros datos de acuerdo a otra variable:
+
 
 
 
@@ -279,7 +297,9 @@ censo |>
 
 
 
+
 Ordenar de mayor a menor:
+
 
 
 
@@ -309,7 +329,9 @@ censo |>
 
 
 
+
 Ordenar por dos variables a la vez
+
 
 
 
@@ -350,10 +372,12 @@ censo |>
 
 
 
+
 ## Filtrar datos 
 Con la función `filter()` podemos filtrar nuestro dataframe a partir de una comparación, dejando solamente las filas del dataframe que cumplan con la comparación.
 
 Por ejemplo, dejar sólo las filas donde la comuna sea "Providencia":
+
 
 
 
@@ -370,7 +394,9 @@ censo |> filter(comuna == "Providencia")
 
 
 
+
 Excluir las filas donde la columna sea "Alto Hospicio":
+
 
 
 
@@ -397,7 +423,9 @@ censo |> filter(comuna != "Alto Hospicio")
 
 
 
+
 Dejar sólo las observaciones donde la población sea mayor a un valor:
+
 
 
 
@@ -423,7 +451,9 @@ censo |> filter(población > 300000)
 
 
 
+
 Población menor a 1000, sólo dejar comuna y población, y ordenar de menor a mayor:
+
 
 
 
@@ -453,7 +483,9 @@ censo |>
 
 
 
+
 Podemos hacer filtros usando funciones que operen sobre las columnas, por ejemplo, para filtrar las filas donde la población sea igual al mínimo de población:
+
 
 
 
@@ -472,7 +504,9 @@ censo |>
 
 
 
+
 Un caso más útil sería filtrar los casos donde la población sea mayor o igual al promedio de población:
+
 
 
 
@@ -501,7 +535,9 @@ censo |>
 
 
 
+
 También es posible filtrar usando objetos que creamos con anterioridad:
+
 
 
 
@@ -539,7 +575,9 @@ censo |>
 
 
 
+
 Del mismo modo, podemos filtrar usando la cifra del promedio de población:
+
 
 
 
@@ -572,8 +610,10 @@ censo |>
 
 
 
+
 ## Seleccionar filas
 Usamos `slice()` para seleccionar filas específicas del dataframe:
+
 
 
 
@@ -602,7 +642,9 @@ censo |>
 
 
 
+
 También puede servir para seleccionar la fila que tenga el mayor o menos valor en una columna:
+
 
 
 
@@ -632,7 +674,9 @@ censo |>
 ```
 
 
+
 Incluso nos puede servir para seleccionar una cantidad de filas elegidas al azar:
+
 
 
 
@@ -644,19 +688,21 @@ censo |>
 
 ```
 ## # A tibble: 5 × 1
-##   comuna  
-##   <chr>   
-## 1 Quirihue
-## 2 Pica    
-## 3 Timaukel
-## 4 Renca   
-## 5 Quellón
+##   comuna    
+##   <chr>     
+## 1 Paine     
+## 2 La Higuera
+## 3 Concón    
+## 4 Maullín   
+## 5 Mostazal
 ```
+
 
 
 
 ## Selección de filas por grupos
 Haciendo uso de la función `group_by()` podemos realizar operaciones en base a grupos. Esto significa que si agrupamos por región, y luego usamos `slice_max()` para obtener las observaciones con mayor población, el filtro de `slice_max()` se realizará una vez por cada región. Entonces, en vez de solamente obtener la comuna de mayor población del país, obtendremos la comuna con mayor población para cada región.
+
 
 
 
@@ -693,4 +739,22 @@ censo |>
 
 
 
+
 Con esto concluye este tutorial inicial para manipular datos con el paquete `{dplyr}`. En siguientes tutoriales iremos usando funciones más complejas y avanzadas! 🫣
+
+
+----
+
+
+Si este tutorial te sirvió, por favor considera hacerme una donación! Cualquier monto me ayuda al menos a poder tomarme un cafecito 🥺
+
+
+
+
+
+{{< cafecito >}}
+
+
+{{< cursos >}}
+
+
