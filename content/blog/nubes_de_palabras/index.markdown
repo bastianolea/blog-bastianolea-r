@@ -156,6 +156,8 @@ palabras_conteo |>
     ## 1 guerra    398
     ## 2 paz       267
 
+------------------------------------------------------------------------
+
 ## Nube de palabras con `{wordcloud2}`
 
 [`{wordcloud2}`](https://github.com/Lchiffon/wordcloud2) es un paquete muy sencillo de usar que permite visualizar datos de nubes de palabras con muy poca configuración.
@@ -236,8 +238,7 @@ palabras_conteo |>
 ```
 
     ## Warning in wordcloud_boxes(data_points = points_valid_first, boxes = boxes, :
-    ## Some words could not fit on page. They have been placed at their original
-    ## positions.
+    ## One word could not fit on page. It has been placed at its original position.
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
@@ -297,6 +298,8 @@ palabras_conteo |>
 Con esta aproximación podemos crear visualizaciones más personalizadas y complejas a partir de datos de texto, sobre todo si tenemos variables adicionales que nos digan más información sobre las palabras que queremos graficar, cómo puede ser alguna otro criterio de prevalencia de palabras en los documentos, alguna clasificación de las palabras en tópicos o temas, una agrupación de los documentos de donde provienen las palabras, etc.
 
 ------------------------------------------------------------------------
+
+{{< cursos >}}
 
 {{< cafecito >}}
 

@@ -118,11 +118,11 @@ saludar <- function(persona) {
 saludar(personas)
 ```
 
-    [1] "¡Hola BASTI! Tu número de la suerte es 47"     
-    [2] "¡Hola PAULA! Tu número de la suerte es 89"     
-    [3] "¡Hola CATHERINE! Tu número de la suerte es 95" 
-    [4] "¡Hola LUIS! Tu número de la suerte es 28"      
-    [5] "¡Hola MARÍA JOSÉ! Tu número de la suerte es 11"
+    [1] "¡Hola BASTI! Tu número de la suerte es 57"     
+    [2] "¡Hola PAULA! Tu número de la suerte es 21"     
+    [3] "¡Hola CATHERINE! Tu número de la suerte es 58" 
+    [4] "¡Hola LUIS! Tu número de la suerte es 10"      
+    [5] "¡Hola MARÍA JOSÉ! Tu número de la suerte es 24"
 
 En este caso, dentro del cuerpo de la función estamos realizando varias operaciones. Dentro de una función podemos crear nuevos objetos, y usar esos nuevos objetos para realizar otras operaciones sobre ellos. De este modo podemos llevar a cabo acciones más complejas. En el ejemplo, el argumento de la función es transformado a mayúsculas con `toupper()`, luego se inserta dentro del texto con `paste()`. Después, se crea un vector de números al azar que contenga una cantidad de números igual a la cantidad de elementos del vector que viene del argumento de la función, para que haya un número por persona. Finalmente, se usa nuevamente `paste()` junto a `sample()` para agregar el número aleatorio, y se entrega el objeto final, que será lo que la función retorna.
 
@@ -394,4 +394,5 @@ Cómo puedes ver, la creación de funciones, el control de flujo, y los bucles o
 
 *Luego de haber aprendido los contenidos de este tutorial, creo que podemos [dar el siguiente paso, que es adentrarnos a los datos tabulares o dataframes](../../../../blog/r_introduccion/dplyr_intro), e introducirnos al uso de R para el análisis de datos!*
 
-{{< cafecito  >}}
+{{< cafecito >}}
+{{< cursos >}}

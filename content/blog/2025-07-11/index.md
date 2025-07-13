@@ -210,3 +210,5 @@ Evidentemente, este gráfico es más estético que funcional. Sin embargo, se tr
 ----
 
 {{< cafecito >}}
+
+{{< cursos >}}

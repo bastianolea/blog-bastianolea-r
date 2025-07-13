@@ -406,13 +406,7 @@ El web scraping es una herramienta muy útil para acelerar tus procesos y automa
 
 Si te sirvió este tutorial, por favor considera hacerme una pequeña donación para poder tomarme un cafecito mientras escribo el siguiente tutorial 🥺
 
-<div style = "height: 18px;">
-</div>
-<div>
-  <div style="display: flex;
-  justify-content: center;
-  align-items: center;">
-    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
-  </div>
+{{< cafecito >}}
+{{< cursos >}}
 
 [^1]: Lo más probable sea que este sitio identifique que estamos conectándonos desde un paquete de R que hace web scraping, y por lo tanto cancela la conexión entregando un error 403 (prohibido). Esto se debe a que cualquier interfaz que se conecte una página web entrega un *user agent* que los identifica, y muchos sitios usan esta información para prohibir el acceso o mostrar distintos elementos dependiendo del navegador que uses.

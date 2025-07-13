@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head>
   
                            
      
@@ -31,16 +31,16 @@
 <meta property="og:title" content="Generar contenido en serie usando loops en un reporte Quarto | Blog">
 <meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:4321/blog/quarto_loop/" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/quarto_loop/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:4321/blog/quarto_loop/featured.png" >
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/quarto_loop/featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:4321/blog/quarto_loop/featured.png" >
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/quarto_loop/featured.png" >
     
     
   
@@ -49,8 +49,8 @@
 En otros tutoriales vimos cómo podemos incluir resultados del código dentro de nuestros párrafos de texto, por ejemplo, para que una cifra que esté dentro de una oración venga directamente del resultado de un cálculo en vez de tener que escribirle de forma manual. Pero en esta guía vamos a ver cómo podemos programar la generación masiva de títulos, párrafos y gráficos en base a una iteración, bucle o loop.">
   <meta itemprop="datePublished" content="2025-06-08T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-06-08T00:00:00+00:00">
-  <meta itemprop="wordCount" content="801">
-  <meta itemprop="image" content="http://localhost:4321/blog/quarto_loop/featured.png">
+  <meta itemprop="wordCount" content="825">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/quarto_loop/featured.png">
   <meta itemprop="keywords" content="Quarto,Loops,Automatización,Gráficos">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -70,7 +70,7 @@ En otros tutoriales vimos cómo podemos incluir resultados del código dentro de
       <div class="grid-container">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
       <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -271,7 +271,7 @@ En otros tutoriales vimos cómo podemos incluir resultados del código dentro de
         
         
   <dl class="f6 lh-copy">
-    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/quarto">quarto</a>  <a href="http://localhost:4321/tags/loops">loops</a>  <a href="http://localhost:4321/tags/automatizaci%C3%B3n">automatización</a>  <a href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a> </dd></em>
+    <em><dd class="fw5 ml0">Temas:  <a href="https://bastianoleah.netlify.app/tags/quarto">quarto</a>  <a href="https://bastianoleah.netlify.app/tags/loops">loops</a>  <a href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n">automatización</a>  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos">gráficos</a> </dd></em>
   </dl>
 
 
@@ -295,7 +295,7 @@ En otros tutoriales vimos cómo podemos incluir resultados del código dentro de
     </svg></a>
 </h2>
 <p>Dentro de un <em>chunk</em> de código, podemos usar funciones que entreguen como output código markdown. Esto nos servirá para construir un documento a partir de un loop o iteración. De este modo, podemos usar nuestros datos para generar una cantidad indeterminada de títulos, subtítulos, párrafos de textos, gráficos o más, que se generarán automáticamente.</p>
-<p>Usaremos el paquete <code>{pander}</code> para que el chunk de R retorne contenido en Markdown que Quarto interpretará como parte del documento gracias a la opción <code>#| results: asis</code> que tenemos que definir al principio del chunk:</p>
+<p>Usaremos el paquete <code>{pander}</code> para que el chunk de R retorne contenido en Markdown que Quarto interpretará como parte del documento gracias a la opción <code>#| results: &quot;asis&quot;</code> que tenemos que definir al principio del chunk:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pander</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><p>Como primer ejemplo, tendremos un vector que contiene tres elementos de texto. Para generar el contenido de nuestro documento, queremos generar un título y un párrafo por cada elemento de texto del vector. Entonces, hacemos un loop que vaya iterando por cada elemento del vector, y para cada elemento va a crear un título, un pequeño párrafo, e insertar un emoji:</p>
@@ -430,6 +430,7 @@ En otros tutoriales vimos cómo podemos incluir resultados del código dentro de
 </h3>
 <img src="quarto_loop.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-3.png" width="768" />
 <p>La observación más alta en largo de pétalos en la especie <strong>virginica</strong> es: 6.9</p>
+<p>Si no te funciona, recuerda que el chunk tiene que tener <code>#| results: &quot;asis&quot;</code> definido al principio para que el output sea el correcto.</p>
 <p>Usando esta técnica podemos producir documentos muy extensos con poco código, lo que nos vuelve más eficientes y también nos ayuda para actualizar y retocar los reportes, dado que un cambio hecho una sola vez se replica en todos los elementos generados por el loop.</p>
 <p>Esto puede sernos útil si es que estamos generando un documento en el que estamos presentando resultados y tenemos que repetir varias veces contenido similar para los distintos valores de una variable, o si tenemos que mostrar muchos gráficos similares para distintas variables, etc.</p>
 <hr>
@@ -450,24 +451,24 @@ En otros tutoriales vimos cómo podemos incluir resultados del código dentro de
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">4 minute read, 801 words</dd>
+    <dd class="fw5 ml0">4 minute read, 825 words</dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/quarto">quarto</a>  <a href="http://localhost:4321/tags/loops">loops</a>  <a href="http://localhost:4321/tags/automatizaci%C3%B3n">automatización</a>  <a href="http://localhost:4321/tags/gr%C3%A1ficos">gráficos</a> </dd>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/quarto">quarto</a>  <a href="https://bastianoleah.netlify.app/tags/loops">loops</a>  <a href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n">automatización</a>  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos">gráficos</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/2025-07-08/">Reduce el tamaño de tus reportes Quarto con este truco</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/2025-07-11/">Gráfico de densidad tipo Joy Division en {ggplot2}</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/ggview/">Controla las dimensiones de tus gráficos con {ggview}</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/ggrepel/">Etiquetas de texto que se repelen entre sí con {ggrepel}</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/2025-07-07/">Generar múltiples gráficos automáticamente con R</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/correlaciones/">Análisis y visualización de correlaciones en R</a></dd>
     
   </dl>
 </details>
@@ -478,12 +479,12 @@ En otros tutoriales vimos cómo podemos incluir resultados del código dentro de
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4321/blog/github_copilot/">&larr; Sugerencias y autocompletado de código con GitHub Copilot</a>
+    href="https://bastianoleah.netlify.app/blog/github_copilot/">&larr; Sugerencias y autocompletado de código con GitHub Copilot</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4321/blog/stringr_texto/">Limpieza y recodificación de datos de texto en R con {stringr} &rarr;</a>
+    href="https://bastianoleah.netlify.app/blog/stringr_texto/">Limpieza y recodificación de datos de texto en R con {stringr} &rarr;</a>
   
 </div>
 

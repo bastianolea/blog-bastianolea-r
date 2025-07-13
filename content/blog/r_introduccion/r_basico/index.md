@@ -724,7 +724,7 @@ numeros <- 1:10000000
 sample(numeros, size = 1)
 ```
 
-    [1] 6407203
+    [1] 8470837
 
 La función recibe como primer argumento el vector de elementos, y como segundo argumento la cantidad de elementos que queremos obtener al azar.
 
@@ -798,7 +798,7 @@ animales <- c("gato", "mapache", "castor", "pollo", "ratón", "pudú")
 paste("el animal más lindo es el", sample(animales, 1))
 ```
 
-    [1] "el animal más lindo es el gato"
+    [1] "el animal más lindo es el pollo"
 
 ### Redondear datos
 
@@ -912,6 +912,7 @@ El entender cómo funcionan estas pequeñas herramientas, y familiarizarse con s
 
 Si este tutorial te sirvió, por favor considera hacerme una donación, al menos para poder tomarme un cafecito 🥺
 
-{{< cafecito  >}}
+{{< cafecito >}}
+{{< cursos >}}
 
 [^1]: Si ejecutamos una línea incompleta, puede ser que la consola de R quede esperando que terminemos la expresión o que la completemos, y esto puede ser muy confuso para usuarios principiantes. Por ejemplo, si ejecutamos `1 +`, la consola va a quedar esperando que le demos el número que está esperando que venga, y cualquier otra cosa que le entreguemos va a intentar sumársela a la operación anterior que quedó inconclusa.

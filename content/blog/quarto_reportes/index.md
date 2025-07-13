@@ -439,7 +439,8 @@ Aprender a generar documentos Quarto es una herramienta que puede llevar tus hab
 
 Si quieres seguir aprendiendo Quarto, por ejemplo a [automatizar reportes con documentos Quarto parametrizados](../../../blog/quarto_params/), o a generar contenido automáticamente para tus reportes usando loops, [revisa las siguientes publicaciones de este blog en la etiqueta Quarto!](../../../tags/quarto/)
 
-{{< cafecito  >}}
+{{< cafecito >}}
+{{< cursos >}}
 
 [^1]: Nota al pie.
 

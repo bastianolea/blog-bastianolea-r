@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Análisis y visualización de correlaciones en R | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="El análisis de correlación es una técnica estadística de análisis exploratorio que nos permite identificar si existen relaciones lineales entre distintas variables. En este tutorial aprenderemos a realizar correlaciones entre múltiples variables, interpretarlas, y visualizarlas de tres maneras distintas.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Análisis y visualización de correlaciones en R | Blog">
+<meta property="og:description" content="El análisis de correlación es una técnica estadística de análisis exploratorio que nos permite identificar si existen relaciones lineales entre distintas variables. En este tutorial aprenderemos a realizar correlaciones entre múltiples variables, interpretarlas, y visualizarlas de tres maneras distintas." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/correlaciones/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/correlaciones/correlacion-featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/correlaciones/correlacion-featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Análisis y visualización de correlaciones en R">
+  <meta itemprop="description" content="El análisis de correlación es una técnica estadística que nos permite identificar si existen relaciones lineales entre distintas variables.
+Lo que hace una correlación es indicarnos si dos variables tienen una relación entre sí, en el sentido de que el aumento o disminución de una de las variables ocurra en concordancia con la otra variable, ya sea una correlación positiva (si una variable aumenta, la otra también) o correlación negativa (si una variable aumenta, la otra disminuye).">
+  <meta itemprop="datePublished" content="2025-07-09T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-07-09T00:00:00+00:00">
+  <meta itemprop="wordCount" content="4088">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/correlaciones/correlacion-featured.png">
+  <meta itemprop="keywords" content="Estadísticas,Ggplot2,Gráficos,Visualización de datos">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Análisis y visualización de correlaciones en R</h1>
+        
+        
+        <p class="f7 db mv0 ttu">9/7/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="https://bastianoleah.netlify.app/tags/estad%C3%ADsticas">estadísticas</a>  <a href="https://bastianoleah.netlify.app/tags/ggplot2">ggplot2</a>  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos">gráficos</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a> </dd></em>
+  </dl>
+
+
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>El análisis de correlación es una técnica estadística que nos permite <strong>identificar si existen relaciones lineales entre distintas variables.</strong></p>
+<p>Lo que hace una correlación es indicarnos si dos variables tienen una relación entre sí, en el sentido de que el aumento o disminución de una de las variables ocurra en concordancia con la otra variable, ya sea una <strong>correlación positiva</strong> (si una variable aumenta, la otra también) o <strong>correlación negativa</strong> (si una variable aumenta, la otra disminuye).</p>
+<p>Un ejemplo de correlación positiva sería: mientras más solcito, más calor. Una correlación negativa sería: a mayor frío, menos ganas de levantarse 😴</p>
+<p>En R podemos realizar análisis de correlación en conjuntos de datos enteros, y de este modo podemos encontrar todas las correlaciones que existen entre las variables de los datos. Esto se lograría tomando todas las variables y cruzándolas todas con todas, para luego identificar cuáles se correlacionan, en qué dirección y con qué intensidad.</p>
+
+
+
+
+<h2 id="cargar-datos">Cargar datos
+  <a href="#cargar-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para hacer más interesante el tutorial, vamos a cargar dos conjuntos de datos sociales, obtenidos de mi 
+<a href="https://bastianolea.github.io/datos_sociales/" target="_blank" rel="noopener">repositorio de datos sociales públicos</a>.</p>
+<p>En esta oportunidad cargaremos un conjunto de datos del 
+<a href="https://github.com/bastianolea/sinim_info_municipal" target="_blank" rel="noopener">Sistema de Información Municipal (Sinim)</a>, que es una base de datos sobre los municipios chilenos mantenida anualmente por la 
+<a href="https://datos.sinim.gov.cl" target="_blank" rel="noopener">Subsecretaría de Desarrollo Regional y Administrativo (Subdere)</a>, y el conjunto de datos del 
+<a href="https://github.com/bastianolea/siedu_indicadores_urbanos/" target="_blank" rel="noopener">Sistema de Indicadores y Estándares de Desarrollo Urbano</a>, conjunto desarrollado por el 
+<a href="https://www.ine.gob.cl/herramientas/portal-de-mapas/siedu" target="_blank" rel="noopener">Instituto Nacional de Estadísticas de Chile</a> que agrupa estadísticas Sobre medio ambiente, planificación de ciudades, desarrollo sostenible, acceso a servicios básicos, y movilidad.</p>
+<p>Gracias al 
+<a href="https://bastianolea.github.io/datos_sociales/" target="_blank" rel="noopener">repositorio de datos sociales</a>, tenemos enlaces directos a conjuntos de datos sociales listos para usar, y cargarlos a tu sesión de R es tan fácil como cargar el dato directamente desde internet:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">arrow</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># cargar datos sinim</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">sinim</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">arrow</span><span style="color:#908caa">::</span><span style="color:#ea9a97">read_parquet</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;https://github.com/bastianolea/sinim_datos_comunales/raw/main/datos/sinim_2019-2023.parquet&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># cargar datos de siedu</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">siedu</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">arrow</span><span style="color:#908caa">::</span><span style="color:#ea9a97">read_parquet</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;https://github.com/bastianolea/siedu_indicadores_urbanos/raw/main/datos/siedu_indicadores_desarrollo_urbano.parquet&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+
+
+
+<h2 id="limpieza-de-datos">Limpieza de datos
+  <a href="#limpieza-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Antes que nada, vamos a cargar <code>{dplyr}</code> para el manejo y la limpieza de los datos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Echémosle un vistazo a los datos con <code>glimpse()</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">glimpse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sinim</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Rows: 842,510
+Columns: 11
+$ municipio     &lt;chr&gt; &quot;IQUIQUE&quot;, &quot;ALTO HOSPICIO&quot;, &quot;POZO ALMONTE&quot;, &quot;CAMIÑA&quot;, &quot;C…
+$ cut_comuna    &lt;chr&gt; &quot;01101&quot;, &quot;01107&quot;, &quot;01401&quot;, &quot;01402&quot;, &quot;01403&quot;, &quot;01404&quot;, &quot;0…
+$ año_id        &lt;int&gt; 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, …
+$ año           &lt;int&gt; 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 2019, 20…
+$ variable_id   &lt;chr&gt; &quot;879&quot;, &quot;879&quot;, &quot;879&quot;, &quot;879&quot;, &quot;879&quot;, &quot;879&quot;, &quot;879&quot;, &quot;879&quot;, …
+$ variable      &lt;chr&gt; &quot;Ingresos Propios Permanentes (IPP)&quot;, &quot;Ingresos Propios …
+$ variable_desc &lt;chr&gt; &quot;Indicador Bep Ingresos (variable sistema antiguo)&quot;, &quot;In…
+$ area          &lt;chr&gt; &quot;01.  ADMINISTRACION Y FINANZAS MUNICIPALES&quot;, &quot;01.  ADMI…
+$ subarea       &lt;chr&gt; &quot;A. INGRESOS MUNICIPALES (M$)&quot;, &quot;A. INGRESOS MUNICIPALES…
+$ unidad        &lt;chr&gt; &quot;M$&quot;, &quot;M$&quot;, &quot;M$&quot;, &quot;M$&quot;, &quot;M$&quot;, &quot;M$&quot;, &quot;M$&quot;, &quot;M$&quot;, &quot;M$&quot;, &quot;M…
+$ valor         &lt;dbl&gt; 34745945, 4107522, 3776040, 108439, 160661, 1067476, 333…
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">glimpse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">siedu</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Rows: 6,701
+Columns: 8
+$ comuna     &lt;chr&gt; &quot;ALTO HOSPICIO&quot;, &quot;ALTO HOSPICIO&quot;, &quot;ALTO HOSPICIO&quot;, &quot;ALTO HO…
+$ cut_comuna &lt;chr&gt; &quot;1107&quot;, &quot;1107&quot;, &quot;1107&quot;, &quot;1107&quot;, &quot;1107&quot;, &quot;1107&quot;, &quot;1107&quot;, &quot;11…
+$ id         &lt;chr&gt; &quot;BPU_8&quot;, &quot;BPU_17&quot;, &quot;EA_34&quot;, &quot;EA_22a&quot;, &quot;EA_22&quot;, &quot;EA_33a&quot;, &quot;B…
+$ año        &lt;dbl&gt; 2018, 2019, 2019, 2021, 2021, 2022, 2018, 2018, 2018, 2018,…
+$ variable   &lt;chr&gt; &quot;Cantidad de jornadas diarias completas de trabajo de médic…
+$ valor      &lt;dbl&gt; 32.750000, 0.580000, 1.220618, 168.223082, 484.296058, 44.9…
+$ medida     &lt;chr&gt; &quot;Jornadas diarias / 10.000 habs&quot;, &quot;Relación (Número de lumi…
+$ estandar   &lt;chr&gt; &quot;Sin estándar&quot;, &quot;Sin estándar&quot;, &quot;Hasta 1 kilogramo / habita…
+</code></pre>
+<p>Notamos que ambos conjuntos de datos vienen en el 
+<a href="https://r4ds.had.co.nz/tidy-data.html#longer" target="_blank" rel="noopener">formato <em>largo</em></a>, dónde tenemos una columna con los nombres de las variables o indicadores, y otra columna con los valores correspondientes. Así tenemos una tabla con menor cantidad de columnas,
+donde cada fila es una observación que corresponde a una comuna del país, en un año específico, para una de las variables del conjunto de datos, con su valor correspondiente.</p>
+<p>Haremos tres cosas con los datos:</p>
+<ol>
+<li>Primero haremos una selección de variables interesantes de cada conjunto de datos.</li>
+<li>Luego, como ambos conjuntos de datos poseen mediciones de distintos años en cada una de sus indicadores o estadísticos, realizaremos una agrupación por comuna y variable para dejar las mediciones más recientes en cada indicador y en cada comuna.</li>
+<li>Finalmente, dejaremos sólo las columnas que nos interesan</li>
+</ol>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># filtrar variables</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">sinim_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sinim</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">variable</span> <span style="color:#908caa">%in%</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Ingresos Propios Permanentes per Cápita (IPPP)&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#f6c177">&#34;Disponibilidad Presupuestaria Municipal por Habitante (M$)&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#f6c177">&#34;Inversión Municipal&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#f6c177">&#34;Participación del Fondo Común Municipal en el Ingreso Total&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#f6c177">&#34;Participación de Ingresos por Transferencias en el Ingreso Total&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#f6c177">&#34;Porcentaje de Ejecución Presupuestaria Devengada Municipal&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#f6c177">&#34;Porcentaje de Puntajes PSU Igual o Superior a 450 Puntos en Establecimientos Municipales de Educación&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#f6c177">&#34;Metros Cuadrados (M2) de Areas Verdes con Mantenimiento por Habitante&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#f6c177">&#34;Porcentaje de mujeres funcionarias municipales&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#f6c177">&#34;Densidad de Población por Km2&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#f6c177">&#34;Población Comunal, Estimada por el INE&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#f6c177">&#34;Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH)&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># dejar sólo la medición más reciente de cada variable en cada comuna</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">sinim_3</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sinim_2</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cut_comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">variable</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">año</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ungroup</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># seleccionar columnas</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">sinim_4</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sinim_3</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cut_comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">variable</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">valor</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># filtrar variables</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">siedu_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">siedu</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">variable</span> <span style="color:#908caa">%in%</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Consumo de energía eléctrica per cápita residencial&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Tiempo de viaje en hora punta mañana&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Superficie de áreas verdes públicas por habitante&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Número de microbasurales por cada 10.000 habitantes&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Población estimada de migrantes internacionales por comuna&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Porcentaje de la población en situación de pobreza multidimensional&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Porcentaje de viviendas en situación de hacinamiento&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Tasa de víctimas de delitos violentos por casos policiales cada 10.000 habitantes&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Tasa de conexiones residenciales fijas de internet por cada 100 habitantes&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># dejar sólo la medición más reciente de cada variable en cada comuna</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">siedu_3</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">siedu_2</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cut_comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">variable</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">año</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ungroup</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># seleccionar columnas</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">siedu_4</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">siedu_3</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cut_comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">variable</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">valor</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Veamos cómo van quedando los datos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sinim_4</span>
+</span></span></code></pre></div><pre><code># A tibble: 3,806 × 3
+   cut_comuna variable                                                     valor
+   &lt;chr&gt;      &lt;chr&gt;                                                        &lt;dbl&gt;
+ 1 01101      Densidad de Población por Km2                               1.02e2
+ 2 01101      Disponibilidad Presupuestaria Municipal por Habitante (M$)  4.27e2
+ 3 01101      Ingresos Propios Permanentes per Cápita (IPPP)              1.92e2
+ 4 01101      Inversión Municipal                                         2.57e6
+ 5 01101      Participación de Ingresos por Transferencias en el Ingreso… 4.38e1
+ 6 01101      Participación del Fondo Común Municipal en el Ingreso Total 6.4 e0
+ 7 01101      Población Comunal, Estimada por el INE                      2.31e5
+ 8 01101      Porcentaje de Ejecución Presupuestaria Devengada Municipal  7.58e1
+ 9 01101      Porcentaje de Hogares de 0-40% de Ingresos respecto del To… 4.44e1
+10 01101      Porcentaje de Puntajes PSU Igual o Superior a 450 Puntos e… 7.61e1
+# ℹ 3,796 more rows
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">siedu_4</span>
+</span></span></code></pre></div><pre><code># A tibble: 891 × 3
+   cut_comuna variable                                                     valor
+   &lt;chr&gt;      &lt;chr&gt;                                                        &lt;dbl&gt;
+ 1 10101      Consumo de energía eléctrica per cápita residencial        8.91e+2
+ 2 10101      Número de microbasurales por cada 10.000 habitantes        1.5 e-1
+ 3 10101      Población estimada de migrantes internacionales por comuna 1.27e+4
+ 4 10101      Porcentaje de la población en situación de pobreza multid… 2.03e+1
+ 5 10101      Porcentaje de viviendas en situación de hacinamiento       6.43e+0
+ 6 10101      Superficie de áreas verdes públicas por habitante          7.92e+0
+ 7 10101      Tasa de conexiones residenciales fijas de internet por ca… 1.89e+1
+ 8 10101      Tasa de víctimas de delitos violentos por casos policiale… 7.71e+1
+ 9 10101      Tiempo de viaje en hora punta mañana                       6   e+1
+10 10109      Consumo de energía eléctrica per cápita residencial        1.37e+3
+# ℹ 881 more rows
+</code></pre>
+
+
+
+
+<h3 id="unir-datos">Unir datos
+  <a href="#unir-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Vamos a combinar estos dos conjuntos de datos para tener una mezcla de variables de temas socioeconómicos que sería interesante correlacionar. Como hicimos que ambos conjuntos de datos estén ordenados bajo la misma lógica, para unirlos sólo necesitamos agregar las filas de un conjunto al otro.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">bind_rows</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sinim_4</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">siedu_4</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Ahora que los datos están unidos, contamos con 20 variables para correlacionar.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">distinct</span><span style="color:#908caa">(</span><span style="color:#ea9a97">variable</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">print</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span><span style="color:#908caa">=</span><span style="color:#3e8fb0">Inf</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 20 × 1
+   variable                                                                     
+   &lt;chr&gt;                                                                        
+ 1 Densidad de Población por Km2                                                
+ 2 Disponibilidad Presupuestaria Municipal por Habitante (M$)                   
+ 3 Ingresos Propios Permanentes per Cápita (IPPP)                               
+ 4 Inversión Municipal                                                          
+ 5 Participación de Ingresos por Transferencias en el Ingreso Total             
+ 6 Participación del Fondo Común Municipal en el Ingreso Total                  
+ 7 Población Comunal, Estimada por el INE                                       
+ 8 Porcentaje de Ejecución Presupuestaria Devengada Municipal                   
+ 9 Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH) 
+10 Porcentaje de Puntajes PSU Igual o Superior a 450 Puntos en Establecimientos…
+11 Porcentaje de mujeres funcionarias municipales                               
+12 Consumo de energía eléctrica per cápita residencial                          
+13 Número de microbasurales por cada 10.000 habitantes                          
+14 Población estimada de migrantes internacionales por comuna                   
+15 Porcentaje de la población en situación de pobreza multidimensional          
+16 Porcentaje de viviendas en situación de hacinamiento                         
+17 Superficie de áreas verdes públicas por habitante                            
+18 Tasa de conexiones residenciales fijas de internet por cada 100 habitantes   
+19 Tasa de víctimas de delitos violentos por casos policiales cada 10.000 habit…
+20 Tiempo de viaje en hora punta mañana                                         
+</code></pre>
+
+
+
+
+<h3 id="pivotar-datos-a-ancho">Pivotar datos a ancho
+  <a href="#pivotar-datos-a-ancho"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>El último paso antes del análisis de correlación es 
+<a href="https://r4ds.hadley.nz/data-tidy.html#widening-data" target="_blank" rel="noopener">pivotar la estructura de los datos al formato ancho.</a>, porque las funciones que realizan correlaciones en R esperan que los datos vengan de esta forma.</p>
+<p>Si bien en el formato largo tenemos una columna con el nombre de las variables y otra columna con el valor de cada variable, siendo cada fila una observación, en el <strong>formato ancho</strong> cada columna corresponde a una variable, mientras que cada fila corresponde a una observación.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tidyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos_ancho</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># pivotar a ancho</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">pivot_wider</span><span style="color:#908caa">(</span><span style="color:#ea9a97">id_cols</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">cut_comuna</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># columna que identifica las observaciones</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">values_from</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">valor</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># columna con los valores</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">names_from</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">variable</span> <span style="color:#6e6a86"># columna con los nombres de columna</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Se consultamos los nombres de las columnas, confirmamos que ahora cada variable se encuentra una columna individual:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">names</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos_ancho</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code> [1] &quot;cut_comuna&quot;                                                                                           
+ [2] &quot;Densidad de Población por Km2&quot;                                                                        
+ [3] &quot;Disponibilidad Presupuestaria Municipal por Habitante (M$)&quot;                                           
+ [4] &quot;Ingresos Propios Permanentes per Cápita (IPPP)&quot;                                                       
+ [5] &quot;Inversión Municipal&quot;                                                                                  
+ [6] &quot;Participación de Ingresos por Transferencias en el Ingreso Total&quot;                                     
+ [7] &quot;Participación del Fondo Común Municipal en el Ingreso Total&quot;                                          
+ [8] &quot;Población Comunal, Estimada por el INE&quot;                                                               
+ [9] &quot;Porcentaje de Ejecución Presupuestaria Devengada Municipal&quot;                                           
+[10] &quot;Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH)&quot;                         
+[11] &quot;Porcentaje de Puntajes PSU Igual o Superior a 450 Puntos en Establecimientos Municipales de Educación&quot;
+[12] &quot;Porcentaje de mujeres funcionarias municipales&quot;                                                       
+[13] &quot;Consumo de energía eléctrica per cápita residencial&quot;                                                  
+[14] &quot;Número de microbasurales por cada 10.000 habitantes&quot;                                                  
+[15] &quot;Población estimada de migrantes internacionales por comuna&quot;                                           
+[16] &quot;Porcentaje de la población en situación de pobreza multidimensional&quot;                                  
+[17] &quot;Porcentaje de viviendas en situación de hacinamiento&quot;                                                 
+[18] &quot;Superficie de áreas verdes públicas por habitante&quot;                                                    
+[19] &quot;Tasa de conexiones residenciales fijas de internet por cada 100 habitantes&quot;                           
+[20] &quot;Tasa de víctimas de delitos violentos por casos policiales cada 10.000 habitantes&quot;                    
+[21] &quot;Tiempo de viaje en hora punta mañana&quot;                                                                 
+</code></pre>
+
+
+
+
+<h2 id="correlación">Correlación
+  <a href="#correlaci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>El paquete 
+<a href="https://corrr.tidymodels.org" target="_blank" rel="noopener"><code>{corrr}</code></a>, parte del framework 
+<a href="https://www.tidymodels.org" target="_blank" rel="noopener">tidymodels</a>, nos facilita realizar una correlación cuyo resultado viene en una tabla ordenada con tan sólo una función: <code>correlate()</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">corrr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">correlación</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datos_ancho</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#908caa">-</span><span style="color:#ea9a97">cut_comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">correlate</span><span style="color:#908caa">()</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">correlación</span>
+</span></span></code></pre></div><pre><code># A tibble: 20 × 21
+   term                                   Densidad de Població…¹ Disponibilidad Presu…² Ingresos Propios Per…³ `Inversión Municipal` Participación de Ing…⁴ Participación del Fo…⁵ Población Comunal, E…⁶ Porcentaje de Ejecuc…⁷ Porcentaje de Hogare…⁸ Porcentaje de Puntaj…⁹ Porcentaje de mujere…˟ Consumo de energía e…˟ Número de microbasur…˟ Población estimada d…˟ Porcentaje de la pob…˟ Porcentaje de vivien…˟ Superficie de áreas …˟ Tasa de conexiones r…˟ Tasa de víctimas de …˟ Tiempo de viaje en h…˟
+   &lt;chr&gt;                                                   &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                 &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;
+ 1 Densidad de Población por Km2                         NA                     -0.0969                -0.0445               0.222                  0.0415                 -0.255                 0.480                  0.192                  -0.311                  0.0238               -0.0105                 -0.0514                -0.143                  0.567                 -0.0601                 0.410                 -0.249                 0.367                  0.740                 -0.0829 
+ 2 Disponibilidad Presupuestaria Municip…                -0.0969                NA                      0.782               -0.0794                 0.110                   0.0764               -0.190                 -0.217                  -0.327                 -0.0743               -0.0905                  0.748                 -0.0984                -0.102                 -0.512                 -0.605                  0.472                 0.344                 -0.129                 -0.409  
+ 3 Ingresos Propios Permanentes per Cápi…                -0.0445                 0.782                 NA                    0.0366                 0.0233                 -0.224                -0.0802                -0.117                  -0.359                 -0.106                -0.0711                  0.830                 -0.0682                -0.0125                -0.547                 -0.604                  0.576                 0.359                 -0.134                 -0.457  
+ 4 Inversión Municipal                                    0.222                 -0.0794                 0.0366              NA                      0.00615                -0.290                 0.555                  0.0647                 -0.317                  0.153                -0.0946                  0.374                 -0.116                  0.134                 -0.547                 -0.482                  0.198                 0.478                 -0.0113                -0.234  
+ 5 Participación de Ingresos por Transfe…                 0.0415                 0.110                  0.0233               0.00615               NA                      -0.331                 0.0326                -0.0573                 -0.0969                 0.0340                0.00478                -0.119                 -0.0619                -0.265                  0.112                  0.0431                -0.235                 0.00647                0.104                  0.163  
+ 6 Participación del Fondo Común Municip…                -0.255                  0.0764                -0.224               -0.290                 -0.331                  NA                    -0.400                 -0.263                   0.511                 -0.100                -0.0315                 -0.637                 -0.0353                -0.167                  0.504                  0.443                 -0.295                -0.370                 -0.117                  0.358  
+ 7 Población Comunal, Estimada por el INE                 0.480                 -0.190                 -0.0802               0.555                  0.0326                 -0.400                NA                      0.213                  -0.416                  0.110                -0.0592                 -0.0802                -0.113                  0.417                 -0.262                 -0.0987                -0.113                 0.413                  0.230                 -0.00621
+ 8 Porcentaje de Ejecución Presupuestari…                 0.192                 -0.217                 -0.117                0.0647                -0.0573                 -0.263                 0.213                 NA                      -0.0976                 0.0992                0.00160                 0.0778                 0.135                  0.0863                -0.0491                 0.0899                 0.0296                0.0158                 0.00294                0.0366 
+ 9 Porcentaje de Hogares de 0-40% de Ing…                -0.311                 -0.327                 -0.359               -0.317                 -0.0969                  0.511                -0.416                 -0.0976                 NA                     -0.143                -0.0263                 -0.767                  0.134                 -0.221                  0.852                  0.673                 -0.295                -0.755                 -0.123                  0.402  
+10 Porcentaje de Puntajes PSU Igual o Su…                 0.0238                -0.0743                -0.106                0.153                  0.0340                 -0.100                 0.110                  0.0992                 -0.143                 NA                    -0.0230                  0.474                 -0.0812                 0.314                 -0.718                 -0.500                  0.213                 0.553                  0.0376                -0.484  
+11 Porcentaje de mujeres funcionarias mu…                -0.0105                -0.0905                -0.0711              -0.0946                 0.00478                -0.0315               -0.0592                 0.00160                -0.0263                -0.0230               NA                      -0.248                  0.0473                -0.261                  0.406                  0.365                 -0.158                -0.169                  0.108                  0.351  
+12 Consumo de energía eléctrica per cápi…                -0.0514                 0.748                  0.830                0.374                 -0.119                  -0.637                -0.0802                 0.0778                 -0.767                  0.474                -0.248                  NA                      0.0685                 0.0691                -0.346                 -0.482                  0.450                 0.342                 -0.0319                -0.155  
+13 Número de microbasurales por cada 10.…                -0.143                 -0.0984                -0.0682              -0.116                 -0.0619                 -0.0353               -0.113                  0.135                   0.134                 -0.0812                0.0473                  0.0685                NA                     -0.0890                 0.0742                 0.0720                -0.120                -0.251                 -0.0503                -0.191  
+14 Población estimada de migrantes inter…                 0.567                 -0.102                 -0.0125               0.134                 -0.265                  -0.167                 0.417                  0.0863                 -0.221                  0.314                -0.261                   0.0691                -0.0890                NA                     -0.230                  0.246                 -0.145                 0.0871                 0.523                 -0.119  
+15 Porcentaje de la población en situaci…                -0.0601                -0.512                 -0.547               -0.547                  0.112                   0.504                -0.262                 -0.0491                  0.852                 -0.718                 0.406                  -0.346                  0.0742                -0.230                 NA                      0.628                 -0.169                -0.681                  0.0239                 0.301  
+16 Porcentaje de viviendas en situación …                 0.410                 -0.605                 -0.604               -0.482                  0.0431                  0.443                -0.0987                 0.0899                  0.673                 -0.500                 0.365                  -0.482                  0.0720                 0.246                  0.628                 NA                     -0.235                -0.505                  0.454                  0.266  
+17 Superficie de áreas verdes públicas p…                -0.249                  0.472                  0.576                0.198                 -0.235                  -0.295                -0.113                  0.0296                 -0.295                  0.213                -0.158                   0.450                 -0.120                 -0.145                 -0.169                 -0.235                 NA                     0.135                 -0.0458                -0.241  
+18 Tasa de conexiones residenciales fija…                 0.367                  0.344                  0.359                0.478                  0.00647                -0.370                 0.413                  0.0158                 -0.755                  0.553                -0.169                   0.342                 -0.251                  0.0871                -0.681                 -0.505                  0.135                NA                      0.172                 -0.338  
+19 Tasa de víctimas de delitos violentos…                 0.740                 -0.129                 -0.134               -0.0113                 0.104                  -0.117                 0.230                  0.00294                -0.123                  0.0376                0.108                  -0.0319                -0.0503                 0.523                  0.0239                 0.454                 -0.0458                0.172                 NA                     -0.0366 
+20 Tiempo de viaje en hora punta mañana                  -0.0829                -0.409                 -0.457               -0.234                  0.163                   0.358                -0.00621                0.0366                  0.402                 -0.484                 0.351                  -0.155                 -0.191                 -0.119                  0.301                  0.266                 -0.241                -0.338                 -0.0366                NA      
+# ℹ abbreviated names: ¹​`Densidad de Población por Km2`, ²​`Disponibilidad Presupuestaria Municipal por Habitante (M$)`, ³​`Ingresos Propios Permanentes per Cápita (IPPP)`, ⁴​`Participación de Ingresos por Transferencias en el Ingreso Total`, ⁵​`Participación del Fondo Común Municipal en el Ingreso Total`, ⁶​`Población Comunal, Estimada por el INE`, ⁷​`Porcentaje de Ejecución Presupuestaria Devengada Municipal`, ⁸​`Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH)`,
+#   ⁹​`Porcentaje de Puntajes PSU Igual o Superior a 450 Puntos en Establecimientos Municipales de Educación`, ˟​`Porcentaje de mujeres funcionarias municipales`, ˟​`Consumo de energía eléctrica per cápita residencial`, ˟​`Número de microbasurales por cada 10.000 habitantes`, ˟​`Población estimada de migrantes internacionales por comuna`, ˟​`Porcentaje de la población en situación de pobreza multidimensional`, ˟​`Porcentaje de viviendas en situación de hacinamiento`,
+#   ˟​`Superficie de áreas verdes públicas por habitante`, ˟​`Tasa de conexiones residenciales fijas de internet por cada 100 habitantes`, ˟​`Tasa de víctimas de delitos violentos por casos policiales cada 10.000 habitantes`, ˟​`Tiempo de viaje en hora punta mañana`
+</code></pre>
+<p>En la tabla anterior (muy rudimentaria aún) podemos ver el cruce entre todas las variables. La tabla se lee partiendo por una fila, que representa una de las variables, y cada vez que esta fila se intercepta con una columna, el valor representa el cruce de la variable de la fila con la variable de la columna.</p>
+<p>Como estamos cruzando todas con todas las variables, obviamente cada variable también se cruza consigo misma, lo cual resulta en un <code>NA</code>.</p>
+<p>Como el resultado es muy grande, y la cantidad de columnas muy alta, <code>{corrr}</code> ofrece la función <code>stretch()</code> para convertir fácilmente el resultado a un formato largo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">correlación</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">stretch</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><pre><code># A tibble: 400 × 3
+   x                             y                                                  r
+   &lt;chr&gt;                         &lt;chr&gt;                                          &lt;dbl&gt;
+ 1 Densidad de Población por Km2 Densidad de Población por Km2                NA     
+ 2 Densidad de Población por Km2 Disponibilidad Presupuestaria Municipal por… -0.0969
+ 3 Densidad de Población por Km2 Ingresos Propios Permanentes per Cápita (IP… -0.0445
+ 4 Densidad de Población por Km2 Inversión Municipal                           0.222 
+ 5 Densidad de Población por Km2 Participación de Ingresos por Transferencia…  0.0415
+ 6 Densidad de Población por Km2 Participación del Fondo Común Municipal en … -0.255 
+ 7 Densidad de Población por Km2 Población Comunal, Estimada por el INE        0.480 
+ 8 Densidad de Población por Km2 Porcentaje de Ejecución Presupuestaria Deve…  0.192 
+ 9 Densidad de Población por Km2 Porcentaje de Hogares de 0-40% de Ingresos … -0.311 
+10 Densidad de Población por Km2 Porcentaje de Puntajes PSU Igual o Superior…  0.0238
+# ℹ 390 more rows
+</code></pre>
+<p>Esto nos puede servir para encontrar las correlaciones con una de las variables en particular; por ejemplo, encontrar la correlación de las variables con el tiempo de viaje en hora punta por las mañanas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">correlación</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">stretch</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Tiempo de viaje en hora punta mañana&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">y</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">r</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">head</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><pre><code># A tibble: 6 × 2
+  y                                                                      r
+  &lt;chr&gt;                                                              &lt;dbl&gt;
+1 Densidad de Población por Km2                                    -0.0829
+2 Disponibilidad Presupuestaria Municipal por Habitante (M$)       -0.409 
+3 Ingresos Propios Permanentes per Cápita (IPPP)                   -0.457 
+4 Inversión Municipal                                              -0.234 
+5 Participación de Ingresos por Transferencias en el Ingreso Total  0.163 
+6 Participación del Fondo Común Municipal en el Ingreso Total       0.358 
+</code></pre>
+
+
+
+
+<h3 id="interpretación-de-correlaciones">Interpretación de correlaciones
+  <a href="#interpretaci%c3%b3n-de-correlaciones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>La columna <code>r</code> nos indica el valor de la correlación de la variable filtrada con todo el resto de las variables.</p>
+<p>Como las correlaciones pueden ser positivas o negativas, el valor de la correlación (<code>r</code>) puede ser positivo o negativo. Los valores de correlación van del 0 al 1 (o del 0 al -1), donde una correlación igual a 0 significa que no existe correlación, y una correlación igual a 1 significa que la correlación es total. Usualmente, una correlación mayor a 0,3 se considera moderada, y mayor a 0,5 se considera fuerte, pero las interpretaciones De estos valores son múltiples.</p>
+<p>Ordenemos las variables por su intensidad de correlación con el tiempo de viaje:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">correlación</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">stretch</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Tiempo de viaje en hora punta mañana&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">y</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">r</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">desc</span><span style="color:#908caa">(</span><span style="color:#ea9a97">abs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">r</span><span style="color:#908caa">)))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">head</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><pre><code># A tibble: 6 × 2
+  y                                                                                 r
+  &lt;chr&gt;                                                                         &lt;dbl&gt;
+1 Porcentaje de Puntajes PSU Igual o Superior a 450 Puntos en Establecimiento… -0.484
+2 Ingresos Propios Permanentes per Cápita (IPPP)                               -0.457
+3 Disponibilidad Presupuestaria Municipal por Habitante (M$)                   -0.409
+4 Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH)  0.402
+5 Participación del Fondo Común Municipal en el Ingreso Total                   0.358
+6 Porcentaje de mujeres funcionarias municipales                                0.351
+</code></pre>
+<p>En las primeras 3 filas podemos ver <strong>correlaciones negativas fuertes</strong>: las comunas del país donde los <em>tiempos de viaje de viaje en hora punta por la mañana</em> son mayores, también son comunas donde los <em>puntajes en la prueba de selección universitaria (PSU)</em> son menores, y menores son los <em>recursos municipales por habitante</em>. Dicho de otro modo, a menores recursos municipales por habitantes, mayor tiempo de viaje en hora punta por la mañana.</p>
+<p>En las filas 4 y 5 vemos unas <strong>correlaciones positivas moderadas</strong>: los tiempos de viaje en horario punta por las mañanas también son más altos en las comunas donde existen más <em>hogares con ingresos bajos</em> (según el Registro Social de Hogares), y donde los <em>municipios dependen más del financiamiento del Fondo Común Municipal</em>.</p>
+
+
+
+
+<h3 id="búsqueda-de-correlaciones">Búsqueda de correlaciones
+  <a href="#b%c3%basqueda-de-correlaciones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Cómo tenemos todos los valores de correlación en una misma columna gracias a <code>stretch()</code>, podemos filtrar los valores para encontrar solamente con relaciones fuertes. Podemos lograr esto filtrando valores mayores a 0,5 o menores a -0,5, o filtrando valores mayores a el valor absoluto de 0,5 (<code>abs(0.5)</code>). Luego ordenamos los valores de mayor a menor, usando el valor absoluto de <code>r</code> (el valor en positivo).</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">correlación</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">stretch</span><span style="color:#908caa">(</span><span style="color:#ea9a97">remove.dups</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">T</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">r</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">0.5</span> <span style="color:#908caa">|</span> <span style="color:#ea9a97">r</span> <span style="color:#908caa">&lt;</span> <span style="color:#f6c177">-0.5</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">desc</span><span style="color:#908caa">(</span><span style="color:#ea9a97">abs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">r</span><span style="color:#908caa">)))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">head</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><pre><code># A tibble: 6 × 3
+  x                                                                            y                                                                               r
+  &lt;chr&gt;                                                                        &lt;chr&gt;                                                                       &lt;dbl&gt;
+1 Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH) Porcentaje de la población en situación de pobreza multidimensional         0.852
+2 Ingresos Propios Permanentes per Cápita (IPPP)                               Consumo de energía eléctrica per cápita residencial                         0.830
+3 Disponibilidad Presupuestaria Municipal por Habitante (M$)                   Ingresos Propios Permanentes per Cápita (IPPP)                              0.782
+4 Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH) Consumo de energía eléctrica per cápita residencial                        -0.767
+5 Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH) Tasa de conexiones residenciales fijas de internet por cada 100 habitantes -0.755
+6 Disponibilidad Presupuestaria Municipal por Habitante (M$)                   Consumo de energía eléctrica per cápita residencial                         0.748
+</code></pre>
+<p>Evidentemente, las correlaciones más fuertes son entre variables similares: los hogares de menores ingresos correlacionan con la población en situación de pobreza, la disponibilidad de presupuesto municipal por habitante se correlaciona con los ingresos municipales percápita, y otras obviedades. Habría que afinar la selección de variables para remover aquellas que representan a un mismo fenómeno social subyacente.</p>
+
+
+
+
+<h2 id="visualización">Visualización
+  <a href="#visualizaci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Otra gracia de <code>{corrr}</code> es que facilita visualizar las correlaciones por medio de un gráfico con la función <code>rplot()</code>, que produce un gráfico <code>{ggplot2}</code> con nuestra matriz de correlación.</p>
+<p>En teoría, visualizar una correlación sería así de fácil:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">correlate</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rplot</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Como nuestra matriz de correlación tiene muchas variables, tendremos que agregar algunos ajustes para que se vea bien.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">correlación</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rearrange</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># ordenar por intensidad</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rplot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">print_cor</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">T</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># agregar valores encima</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">legend</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">F</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># sin leyenda</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># cortar los nombres de variable</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_y_discrete</span><span style="color:#908caa">(</span><span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">scales</span><span style="color:#908caa">::</span><span style="color:#ea9a97">label_wrap</span><span style="color:#908caa">(</span><span style="color:#f6c177">70</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_x_discrete</span><span style="color:#908caa">(</span><span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">scales</span><span style="color:#908caa">::</span><span style="color:#ea9a97">label_wrap</span><span style="color:#908caa">(</span><span style="color:#f6c177">70</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># variables inferiores inclinadas</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">axis.text.x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">angle</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">40</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">hjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.text</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lineheight</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.9</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;black&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><p><img src="/blog/correlaciones/index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.jpeg"></p>
+<p>Con esta visualización, podemos ver el color y el tamaño de los círculos para encontrar rápidamente los cruces entre variables que están correlacionados.</p>
+<p>A la rápida, podemos ver que arriba a la izquierda la variable de consumo de energía eléctrica se correlaciona con los recursos municipales, y abajo la izquierda podemos ver qué el porcentaje de hogares en los tramos menores de ingresos se correlaciona con menos conexiones a Internet y menos consumo eléctrico. También al centro del gráfico podemos ver una alta correlación entre la <em>tasa de víctimas de delitos violentos</em> y la <em>densidad poblacional</em>.</p>
+
+
+
+
+<h3 id="alternativa">Alternativa
+  <a href="#alternativa"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Otra función de R que permite realizar correlaciones y visualizarlas de inmediato es <code>ggcor()</code> del paquete 
+<a href="https://ggobi.github.io/ggally/index.html" target="_blank" rel="noopener"><code>{GGally}</code></a>, que entrega varios tipos de gráficos estadísticos para análisis exploratorios de datos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_ancho</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#908caa">-</span><span style="color:#ea9a97">cut_comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">GGally</span><span style="color:#908caa">::</span><span style="color:#ea9a97">ggcorr</span><span style="color:#908caa">(</span><span style="color:#ea9a97">hjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nbreaks</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">layout.exp</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p><img src="/blog/correlaciones/index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.jpeg"></p>
+<p>El resultado es menos atractivo, pero si es bastante más legible.</p>
+
+
+
+
+<h3 id="manualmente">Manualmente
+  <a href="#manualmente"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Finalmente, y como no podía faltar, también podemos crear un gráfico de la matriz de correlación desde cero con <code>{ggplot2}</code>. Esto no es tan complejo gracias a que <code>correlate()</code> y <code>stretch()</code> entregan los resultados bien ordenaditos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_ancho</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">correlate</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rearrange</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">stretch</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># gráfico</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">y</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">r</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_tile</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.6</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># geometría de cuadros o mosaicos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">round</span><span style="color:#908caa">(</span><span style="color:#ea9a97">r</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)),</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;black&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># texto</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># escala de color de los cuadros</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_fill_gradient2</span><span style="color:#908caa">(</span><span style="color:#ea9a97">high</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;indianred2&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">mid</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">low</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;skyblue1&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">na.value</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># formato de las escalas de los ejes</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_y_discrete</span><span style="color:#908caa">(</span><span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">scales</span><span style="color:#908caa">::</span><span style="color:#ea9a97">label_wrap</span><span style="color:#908caa">(</span><span style="color:#f6c177">50</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">0</span><span style="color:#908caa">,</span> <span style="color:#f6c177">0</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_x_discrete</span><span style="color:#908caa">(</span><span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">scales</span><span style="color:#908caa">::</span><span style="color:#ea9a97">label_wrap</span><span style="color:#908caa">(</span><span style="color:#f6c177">60</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">0</span><span style="color:#908caa">,</span> <span style="color:#f6c177">0</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># ajustes de tema</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">axis.text</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lineheight</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.9</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;black&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.text.x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">angle</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">40</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">hjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.title</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">legend.key.width</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">unit</span><span style="color:#908caa">(</span><span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;mm&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><p><img src="/blog/correlaciones/index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.jpeg"></p>
+<p>También podemos aprovechar el vuelo para hacer una bonita obra de arte con nuestras correlaciones:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_ancho</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">correlate</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rearrange</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">stretch</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">y</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">r</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_tile</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.6</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_fill_gradient2</span><span style="color:#908caa">(</span><span style="color:#ea9a97">high</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#865BAB&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">mid</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">low</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#AB5B90&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">na.value</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">guides</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_none</span><span style="color:#908caa">())</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_void</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_fixed</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p><img src="/blog/correlaciones/index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.jpeg"></p>
+<p>Como siempre, <code>{ggplot2}</code> es una herramienta extremadamente versátil para visualizar cualquier tipo de información. Puedes 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_visualizacion_ggplot/" target="_blank" rel="noopener">aprender a crear visualizaciones de datos desde cero en R siguiendo este tutorial de <code>{ggplot2}</code>.</a></p>
+<hr>
+<p>Si te gustó este contenido, puedes ayudarme donándome un cafecito si presionas el siguiente botón. Te lo agradecería mucho y me anima a seguir compartiendo!</p>
+<p><div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+<div style="margin-top:24px;">
+  
+<a href="/clases/spatiallab_introduccion_r_2/">
+<img src="/clases/spatiallab_introduccion_r_2/banner_curso_r.jpeg" style="border-radius: 7px; max-height: 240px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;" alt="¿Necesitas aprender R para análisis de datos desde cero? Inscríbete a mi curso!">
+</a>
+
+<div style="max-width: 320px; margin:auto; font-size:85%;opacity:60%;">
+  <p>¿Necesitas aprender R para análisis de datos desde cero? <a href="https://spatiallab.cl/2da-version-curso-introduccion-al-analisis-de-datos-con-r-para-principiantes?variant_id=109682226">Inscríbete a mi curso!</a></p>
+  </div>
+
+</div></p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">July 9, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">20 minute read, 4088 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categorías:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/categories/tutoriales">Tutoriales</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/estad%C3%ADsticas">estadísticas</a>  <a href="https://bastianoleah.netlify.app/tags/ggplot2">ggplot2</a>  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos">gráficos</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/2025-07-11/">Gráfico de densidad tipo Joy Division en {ggplot2}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ggrepel/">Etiquetas de texto que se repelen entre sí con {ggrepel}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ggview/">Controla las dimensiones de tus gráficos con {ggview}</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/ggrepel/">&larr; Etiquetas de texto que se repelen entre sí con {ggrepel}</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/ggview/">Controla las dimensiones de tus gráficos con {ggview} &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
