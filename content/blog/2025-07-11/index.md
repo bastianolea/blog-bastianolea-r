@@ -20,6 +20,8 @@ Se trata de un gráfico de densidad, donde las densidades están apiladas vertic
 
 En este post reproduciremos este gráfico en R, pero usando datos socioeconómicos de la [Encuesta de caracterización socioeconómica nacional (Casen) 2022.](https://observatorio.ministeriodesarrollosocial.gob.cl/encuesta-casen-2022)
 
+{{< aviso "Este post es sobre visualización de datos con `{ggplot2}`. Si quieres aprender, puedes revisar [este tutorial sobre visualización de datos desde cero!](/blog/r_introduccion/tutorial_visualizacion_ggplot/)" >}}
+
 Los paquetes que usaremos son los siguientes: 
 ```r
 library(arrow) # carga de datos en formato parquet
@@ -38,6 +40,8 @@ Como dato al margen, los datos de ese repositorio se usan en una [aplicación in
 <div style="max-width:340px; margin:auto;">
 
 {{< imagen "comparador_ingresos_casen.jpg" >}}
+
+{{< bajada "Aplicación web comparador de ingresos Casen, desarrollada en R. [Pruébala aquí](https://bastianoleah.shinyapps.io/casen_comparador_ingresos)." >}}
 
 </div>
 
@@ -203,7 +207,11 @@ casen_ingresos_3 |>
        subtitle = "Ingreso de la ocupación principal, CASEN 2022")
 ```
 
-{{< imagen "grafico_densidad_joy_division.jpg" >}}
+<a href="grafico_densidad_joy_division.jpg">
+<img src="grafico_densidad_joy_division.jpg" style="border-radius: 7px; width: 100%; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+</a>
+
+{{< bajada "Toca la imagen o [este enlace](grafico_densidad_joy_division.jpg) para ver en tamaño completo" >}}
 
 Evidentemente, este gráfico es más estético que funcional. Sin embargo, se trata de un ejercicio de visualización basada en datos reales. El gráfico nos permite ver rápidamente la concentración de ingresos en la mayoría de las comunas en torno al sueldo mínimo, cada una con distintas desviaciones respecto a esta columna montañosa. Las densidades de más arriba corresponden a comunas de mayores ingresos, y por lo tanto sus distribuciones muestran una mayor cantidad de personas que perciben ingresos mayores a 500.000, incluso formándose una pequeña montañita sobre los 2 millones. A medida que bajamos la vista por el gráfico vemos como las demás comunas van acercando sus densidades hacia la mediana nacional.
 

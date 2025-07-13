@@ -34,9 +34,17 @@ blogdown::new_post(title = "Etiquetas de texto que se repelen entre sí en gráf
 "content/blog/openxlsx/index.md"
 "content/blog/unpivotr/index.qmd"
 
+# scraping chromote?
 "content/blog/tutorial_scraping_selenium/selenium.qmd"
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
 "content/blog/tutorial_digitalocean/index.md"
+
+## shortcodes ----
+# {{< cafecito >}}
+# {{< cursos >}}
+# {{< bajada "x" >}}
+# {{< imagen "x" >}}
+# {{< aviso "x" >}}
 
 
 ## archivos ----
