@@ -22,11 +22,11 @@ execute:
   warning: false
 excerpt: >-
   La reutilización de código es súper conveniente para la visualización de
-  datos: una vez que diseñaste un gráfico, con muy pocas modificaciones puedes
   adaptarlo para que funcione con una fuente de datos distintas, una fuente
   actualizada, o para que visualice distintas variables. En este post vamos a
   ver cómo automatizar la creación de gráficos para que solamente tengas que
   diseñar una visualización que te genere múltiples resultados.
+  datos: una vez que diseñaste un gráfico, con muy pocas modificaciones puedes
 ---
 
 
@@ -270,7 +270,7 @@ Dentro de la función, simplemente ponemos el código que genera el gráfico, y 
 ``` r
 library(purrr)
 
-map(comunas[1:10], # elementos por los que se va a iterar
+map(comunas[1:12], # elementos por los que se va a iterar
     \(comuna) { # cada elemento va a pasar a la función como un objeto llamado `comuna`
       
       # crear gráficos
@@ -313,9 +313,21 @@ map(comunas[1:10], # elementos por los que se va a iterar
     [[10]]
     [1] "graficos/Gráfico Paes San Joaquín.jpeg"
 
+    [[11]]
+    [1] "graficos/Gráfico Paes Valparaíso.jpeg"
+
+    [[12]]
+    [1] "graficos/Gráfico Paes Limache.jpeg"
+
 Con tan sólo ejecutar el código anterior, obtendremos más de 300 gráficos! Pero como son tantos, le puse `comunas[1:10]` para que sólo se hagan las primeras 10 😅
 
-{{< imagen "graficos.jpg" >}}
+Procesando...
+
+<div style="margin:auto; max-width:70%;">
+<video src="ggplot_batch_singlecore.mov" style="border-radius:7px; max-width: 100%; margin:auto;" autoplay loop>
+</video>
+</div>
+{{< bajada "Grabación en tiempo real de los gráficos siendo generados dentro de un loop de `purrr::map()`" >}}
 
 ## Optimización
 
@@ -325,7 +337,7 @@ Lo bueno es que podemos aprovechar todo el potencial de nuestras computadoras [m
 
 ``` r
 library(furrr)
-plan(multisession, workers = 6)
+plan(multisession, workers = 8)
 
 future_map(comunas[1:20],
            \(comuna) {
@@ -342,6 +354,14 @@ future_map(comunas[1:20],
   <img src="r_multicore.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   </div>
 {{< bajada "Visualización de uso de CPU al procesar gráficos multicore con R, demostrando que se usan todos los procesadores al mismo tiempo" >}}
+
+Procesando...
+
+<div style="margin:auto; max-width:80%;">
+<video src="ggplot_batch_multicore.mov" style="border-radius:7px; max-width: 100%; margin:auto;" autoplay loop>
+</video>
+</div>
+{{< bajada "Grabación en tiempo real de los gráficos siendo generados, usando 8 procesadores (Apple M3)" >}}
 
 Listo! 🎉 Imagínate todo el tiempo que ahorramos: podemos obtener cientos de gráficos con tan sólo presionar el botón *Run* (o la combinación *control* + *enter*), y si tenemos que actualizar, modificar o mejorar los gráficos, simplemente cambiamos el código en la función y volvemos a ejecutar el *loop*. Excelente! Esto hace que aprender a programar valga la pena, cierto?... cierto? 🥺
 
