@@ -27,9 +27,7 @@ blogdown::new_post(title = "Etiquetas de texto que se repelen entre sí en gráf
 #     output-ext: "md"
 
 ## borradores ----
-"content/blog/2025-07-07/index.qmd" # gráficos en serie
 "content/blog/2025-07-06/index.qmd" # unir datos
-"content/blog/correlaciones/index.qmd"
 "content/blog/2025-07-01/index.qmd" # st_join
 "content/blog/openxlsx/index.md"
 "content/blog/unpivotr/index.qmd"
@@ -50,9 +48,7 @@ blogdown::new_post(title = "Etiquetas de texto que se repelen entre sí en gráf
 ## archivos ----
 
 "content/blog/r_introduccion/recursos_r/index.md" # páginas
-
 "assets/tema-morado-hex.scss" # tema
-
 "config.toml" # configuración
 
 
