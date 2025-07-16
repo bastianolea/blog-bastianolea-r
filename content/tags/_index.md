@@ -11,9 +11,8 @@ cascade:
     text_link_label: Posts por temática
     text_link_url: /tags/
 description: |
-  Categorías de las temáticas de mis posts sobre R. Accede a la temática de tu interés para ver las publicaciones correspondientes.
+  Categorías de las temáticas de mis posts sobre R. Elige un tema para ver las publicaciones relacionadas.
 
-layout: list
 show_author_byline: false
 show_button_links: false
 show_post_date: true
