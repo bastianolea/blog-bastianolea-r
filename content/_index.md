@@ -4,7 +4,7 @@ title: Bastián Olea Herrera
 subtitle: Sociólogx, analista de datos y desarrollador R
 type: home
 
-description: 'Este sitio contiene todo tipo de recursos sobre programación con el lenguaje R aplicado al análisis de datos sociales. Comparto datos, proyectos, consejos y tutoriales para que otras personas puedan adentrarse en la programación con R. También busco compartir datos sociales sobre Chile de forma atractiva y accesible, por medio de aplicaciones interactivas y otros proyectos desarrollados en R.'
+description: 'Este sitio contiene todo tipo de recursos sobre programación con el lenguaje R para análisis de datos, con un foco en las ciencias sociales. En el blog comparto [consejos, novedades](/blog/) y [tutoriales](/categories/tutoriales/) de R para que otras personas aprendan a programar en este lenguaje.'
 
 image_left: true
 images:
