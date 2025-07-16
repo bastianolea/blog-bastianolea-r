@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Generar múltiples gráficos automáticamente con R | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="La reutilización de código es súper conveniente para la visualización de datos: una vez que diseñaste un gráfico, con muy pocas modificaciones puedes adaptarlo para que funcione con una fuente de datos distintas, una fuente actualizada, o para que visualice distintas variables. En este post vamos a ver cómo automatizar la creación de gráficos para que solamente tengas que diseñar una visualización que te genere múltiples resultados.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Generar múltiples gráficos automáticamente con R | Blog">
+<meta property="og:description" content="La reutilización de código es súper conveniente para la visualización de datos: una vez que diseñaste un gráfico, con muy pocas modificaciones puedes adaptarlo para que funcione con una fuente de datos distintas, una fuente actualizada, o para que visualice distintas variables. En este post vamos a ver cómo automatizar la creación de gráficos para que solamente tengas que diseñar una visualización que te genere múltiples resultados." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/ggplot_purrr/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/ggplot_purrr/featured.jpeg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/ggplot_purrr/featured.jpeg" >
+    
+    
+  
+  <meta itemprop="name" content="Generar múltiples gráficos automáticamente con R">
+  <meta itemprop="description" content="Uno de los principales beneficios del análisis de datos en base a programación es que el código es reutilizable. Esto significa que cualquier cosa que hayas hecho puedes reutilizarla, y así ahorrar trabajo. El siguiente paso es reutilizar el código de tal forma que sirva para aplicarlo a varios casos a la vez, incluso cientos o miles de veces.
+La reutilización de código es súper conveniente para la visualización de datos: una vez que diseñaste un gráfico, con muy pocas modificaciones puedes adaptarlo para que funcione con una fuente de datos distintas, una fuente actualizada, o para que visualice distintas variables.">
+  <meta itemprop="datePublished" content="2025-07-14T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-07-14T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2192">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/ggplot_purrr/featured.jpeg">
+  <meta itemprop="keywords" content="Visualización de datos,Automatización,Purrr,Loops,Ggplot2,Optimización">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Generar múltiples gráficos automáticamente con R</h1>
+        
+        
+        <p class="f7 db mv0 ttu">14/7/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n">automatización</a>  <a href="https://bastianoleah.netlify.app/tags/purrr">purrr</a>  <a href="https://bastianoleah.netlify.app/tags/loops">loops</a>  <a href="https://bastianoleah.netlify.app/tags/ggplot2">ggplot2</a>  <a href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n">optimización</a> </dd></em>
+  </dl>
+
+
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>Uno de los principales beneficios del análisis de datos en base a programación es que <strong>el código es reutilizable.</strong> Esto significa que cualquier cosa que hayas hecho puedes <strong>reutilizarla</strong>, y así ahorrar trabajo. El siguiente paso es reutilizar el código de tal forma que sirva para aplicarlo a varios casos a la vez, incluso cientos o miles de veces.</p>
+<p>La reutilización de código es súper conveniente para la visualización de datos: una vez que diseñaste un gráfico, con muy pocas modificaciones puedes adaptarlo para que funcione con una fuente de datos distintas, una fuente actualizada, o para que visualice distintas variables.</p>
+<p>En este post vamos a ver cómo <strong>automatizar la creación de gráficos</strong> para que solamente tengas que diseñar una visualización que te genere múltiples resultados.</p>
+<p>Lo que necesitamos para automatizar la generación de gráficos es:</p>
+<ol>
+<li>Preparar los datos para la visualización</li>
+<li>Diseñar una visualización que pueda adaptarse a distintos datos o variables</li>
+<li>Crear un loop o iteración donde el código que genera el gráfico se ejecute múltiples veces en base a lo que necesites replicar.</li>
+</ol>
+
+
+
+
+<h2 id="datos">Datos
+  <a href="#datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para este tutorial usaremos 
+<a href="https://github.com/bastianolea/puntajes_prueba_paes" target="_blank" rel="noopener">un conjunto de datos relativamente grande sobre educación</a>, sacado de mi 
+<a href="https://bastianolea.github.io/datos_sociales/" target="_blank" rel="noopener">repositorio de datos sociales abiertos</a>. Se trata de una bases de datos de resultados de puntajes de la Prueba de Acceso a la Educación Superior (PAES).</p>
+<p>Dado que los datos ya vienen limpios y procesados desde su fuente original 
+<a href="https://github.com/bastianolea/puntajes_prueba_paes" target="_blank" rel="noopener">en el repositorio de GitHub</a>, podemos cargarlos directamente desde su repositorio usando el enlace:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">arrow</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># cargar datos desde GitHub</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_parquet</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;https://github.com/bastianolea/puntajes_prueba_paes/raw/main/datos/puntajes_paes_2024.parquet&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Antes que nada, miremos los datos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">glimpse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Rows: 304,420
+Columns: 12
+$ nombre_comuna    &lt;chr&gt; &quot;Ñuñoa&quot;, &quot;Santiago&quot;, &quot;San Antonio&quot;, &quot;Concepción&quot;, &quot;Pe…
+$ codigo_comuna    &lt;dbl&gt; 13120, 13101, 5601, 8101, 9113, 13130, 7101, 13118, 1…
+$ nombre_region    &lt;chr&gt; &quot;Metropolitana de Santiago&quot;, &quot;Metropolitana de Santia…
+$ codigo_region    &lt;chr&gt; &quot;13&quot;, &quot;13&quot;, &quot;05&quot;, &quot;08&quot;, &quot;09&quot;, &quot;13&quot;, &quot;07&quot;, &quot;13&quot;, &quot;13&quot;,…
+$ año              &lt;dbl&gt; 2024, 2024, 2024, 2024, 2024, 2024, 2024, 2024, 2024,…
+$ cod_sexo         &lt;chr&gt; &quot;Femenino&quot;, &quot;Femenino&quot;, &quot;Masculino&quot;, &quot;Femenino&quot;, &quot;Fem…
+$ promedio_notas   &lt;dbl&gt; 6.50, NA, NA, 5.10, 6.35, 5.45, 6.50, 6.10, NA, NA, 5…
+$ paes_complectora &lt;dbl&gt; 711, NA, 484, 597, 491, 364, NA, 584, 510, NA, NA, NA…
+$ paes_matematica1 &lt;dbl&gt; NA, NA, 513, 498, 436, 424, NA, 498, 478, NA, NA, NA,…
+$ paes_matematica2 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+$ paes_histciesoc  &lt;dbl&gt; 739, NA, 520, 647, 373, 405, NA, 654, 540, NA, NA, NA…
+$ paes_ciencias    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, 4…
+</code></pre>
+<p>En este conjunto de datos, de 304 mil observaciones, cada fila representa a una persona que dio la <em>Prueba de Acceso a la Educación Superior</em> (PAES), y en las columnas se detallan características de las personas y los puntajes obtenidos. Las columnas que empiezan con <code>paes_</code> contienen los puntajes.</p>
+<p>Exploremos visualmente dos de las variables con un 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_visualizacion_ggplot/#dispersi%c3%b3n" target="_blank" rel="noopener">gráfico de dispersión</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># filter(nombre_region == &#34;Metropolitana de Santiago&#34;) |&gt; </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">paes_matematica1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">paes_complectora</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_jitter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">height</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">width</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_fixed</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Matemáticas&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Comprensión lectora&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="768" />
+<p>Obtenemos una tenebrosa nube que correlaciona los puntajes de la prueba de comprensión lectora y la de matemátitas. En este gráfico cada punto es un estudiante, y la ubicación del punto corresponde al puntaje que obtuvo en las pruebas de Matemática y Comprensión Lectora. Como los datos vienen con más variables de caracterización de las observaciones, podemos filtrar los datos por comuna:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre_comuna</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;La Florida&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 6,306 × 12
+   nombre_comuna codigo_comuna nombre_region        codigo_region   año cod_sexo
+   &lt;chr&gt;                 &lt;dbl&gt; &lt;chr&gt;                &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;   
+ 1 La Florida            13110 Metropolitana de Sa… 13             2024 Masculi…
+ 2 La Florida            13110 Metropolitana de Sa… 13             2024 Masculi…
+ 3 La Florida            13110 Metropolitana de Sa… 13             2024 Femenino
+ 4 La Florida            13110 Metropolitana de Sa… 13             2024 Masculi…
+ 5 La Florida            13110 Metropolitana de Sa… 13             2024 Femenino
+ 6 La Florida            13110 Metropolitana de Sa… 13             2024 Femenino
+ 7 La Florida            13110 Metropolitana de Sa… 13             2024 Femenino
+ 8 La Florida            13110 Metropolitana de Sa… 13             2024 Femenino
+ 9 La Florida            13110 Metropolitana de Sa… 13             2024 Femenino
+10 La Florida            13110 Metropolitana de Sa… 13             2024 Femenino
+# ℹ 6,296 more rows
+# ℹ 6 more variables: promedio_notas &lt;dbl&gt;, paes_complectora &lt;dbl&gt;,
+#   paes_matematica1 &lt;dbl&gt;, paes_matematica2 &lt;dbl&gt;, paes_histciesoc &lt;dbl&gt;,
+#   paes_ciencias &lt;dbl&gt;
+</code></pre>
+<p>Esto significa qeu podemos generar gráficos para subgrupos de la población; en este caso, gráficos por unidades administrativas o comunas.</p>
+
+
+
+
+<h2 id="gráfico">Gráfico
+  <a href="#gr%c3%a1fico"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
+
+Si necesitas aprender a visualizar datos desde cero, 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_visualizacion_ggplot/" target="_blank" rel="noopener">revisa este tutorial de <code>{ggplot2}</code></a>
+
+</div>
+
+<p>Podemos intentar volver a generar el mismo gráfico con <strong>exactamente el mismo código</strong>, pero antes filtrando una comuna, para obtener sólo los resultados de estudiantes que viven en la comuna de La Florida:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># filtrar datos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre_comuna</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;La Florida&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># gráfico</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">paes_matematica1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">paes_complectora</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_jitter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">shape</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">height</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">width</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.4</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.5</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_fixed</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">subtitle</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;La Florida&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Matemáticas&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Comprensión lectora&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="768" />
+<p>Obviamente podemos filtrar por cualquier otra comuna (o cualquier otra variable) y obtendremos el gráfico de los estudiantes correspondientes.</p>
+<p>Mejoremos un poco la visualización, ahora además con la reutilización en mente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># el nombre de la comuna que seleccionamos para visualizar</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">comuna</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;Lo Espejo&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># filtrado de los gráficos</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># crear variable que indica si la observacion pertenece o no a la comuna seleccionada</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">seleccion</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">if_else</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre_comuna</span> <span style="color:#908caa">==</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                             <span style="color:#ea9a97">true</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Destacada&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">false</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Otras&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># ordenar las observaciones según la selección de comuna</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">desc</span><span style="color:#908caa">(</span><span style="color:#ea9a97">seleccion</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># redondear punteajes</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">across</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">paes_matematica1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">paes_complectora</span><span style="color:#908caa">),</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">signif</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># gráfico básico</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico_base</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">paes_matematica1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">paes_complectora</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">seleccion</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">seleccion</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.4</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># modificar detalles del gráfico</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico_bonito</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">grafico_base</span> <span style="color:#908caa">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># escala de colores para destacar la comuna seleccionada</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_color_manual</span><span style="color:#908caa">(</span><span style="color:#ea9a97">values</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Otras&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;grey85&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Destacada&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#6E3A98&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># escala de transparencia para mejorar visualización</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_alpha_manual</span><span style="color:#908caa">(</span><span style="color:#ea9a97">values</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Otras&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Destacada&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.3</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># temas</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">legend.position</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;none&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># ocultar leyenda</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_fixed</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># gráfico cuadrado</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">subtitle</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># nombre de la comuna elegida</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">title</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Puntajes de prueba PAES 2024&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Matemáticas&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Comprensión lectora&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico_bonito</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.png" width="768" />
+<p>Efectivamente obtenemos un gráfico más bonito ☺️ donde especificamos de antemano un objeto <code>comuna</code> con el nombre de la unidad administrativa que queremos visualizar. Luego, este objeto se usa para filtrar los datos y para poner un título al gráfico.</p>
+<p>También usamos la función <code>signif()</code> para redondear los puntajes a dos <em>dígitos significativos</em>; es decir, un número como <code>456</code> se vuelve <code>450</code>, para simplificar el ordenamiento de los puntos en el plano del gráfico.</p>
+
+
+
+
+<h2 id="función">Función
+  <a href="#funci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
+
+Si nunca has creado una función en R, 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/r_intermedio/#crear-funciones" target="_blank" rel="noopener">revisa esta guía</a>
+
+</div>
+
+<p>El siguiente paso es opcional, pero lo recomiendo porque simplifica bastante la lectura del código y su mantenimiento futuro. Vamos a 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/r_intermedio/#crear-funciones" target="_blank" rel="noopener"><strong>crear una función</strong></a> que genere el mismo gráfico que antes, para facilitar su reutilización.</p>
+<p>Para crear una función, simplemente incluimos el código dentro de <code>function() { }</code> y definimos los argumentos de la función en <code>function()</code> y dentro de la misma. Pero como somos bacanes, en vez de <code>function()</code> vamos a usar la abreviatura <code>\()</code> 😎</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">grafico</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">\</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">seleccion</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">if_else</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre_comuna</span> <span style="color:#908caa">==</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                               <span style="color:#ea9a97">true</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Destacada&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">false</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Otras&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">desc</span><span style="color:#908caa">(</span><span style="color:#ea9a97">seleccion</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">across</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">paes_matematica1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">paes_complectora</span><span style="color:#908caa">),</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">signif</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">paes_matematica1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">paes_complectora</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">seleccion</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">seleccion</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.4</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">scale_color_manual</span><span style="color:#908caa">(</span><span style="color:#ea9a97">values</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Otras&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;grey85&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Destacada&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#6E3A98&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">scale_alpha_manual</span><span style="color:#908caa">(</span><span style="color:#ea9a97">values</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Otras&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Destacada&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.3</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">legend.position</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;none&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">coord_fixed</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">subtitle</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">title</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Puntajes de prueba PAES 2024&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Matemáticas&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Comprensión lectora&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span></code></pre></div><p>
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/r_intermedio/#crear-funciones" target="_blank" rel="noopener">Hacer una función en R</a> es como empaquetar tu código en su propio programita para que sea más fácil de usar sin tener que copiar y pegar todo el código cada vez que lo necesites. También tiene el beneficio de que, si necesitas corregir o mejorar el código, lo modificas una sola vez y el cambio va a aparecer en todos los demás lugares que la uses.</p>
+<p>Ahora que creamos la función, solo tenemos que ejecutar <code>grafico()</code> para generar el gráfico!</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">grafico</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;La Reina&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">grafico</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Cerrillos&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-2.png" width="768" />
+
+
+
+
+<h2 id="automatización">Automatización
+  <a href="#automatizaci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Una vez que hayamos desarrollado el código que genera la visualización, y que hayamos probado y confirmado que el código va a servir en distintas situaciones (en nuestro caso, filtrando distintas comunas), podemos 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/r_intermedio/#bucles" target="_blank" rel="noopener">introducir el código a un <em>loop</em></a> para <strong>generar todas las variaciones que queramos</strong> del mismo gráfico.</p>
+<p>En el caso de nuestro conjunto de datos, esto sería <strong>hacer un gráfico por cada comuna</strong> en la base de datos. Si hiciéramos esto a mano, tendríamos que copiar y pegar más de 300 veces el mismo código 😰 Así que, para no tener que hacer las cosas a mano como los perdedores, vamos a <strong>automatizar el proceso de generación de gráficos</strong>.</p>
+<p>Definamos primero la lista de elementos por los que queremos crear los gráficos. Esto pueden ser años, países, nombres, o en nuestro caso, divisiones administrativas como pueden ser comunas.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">comunas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">unique</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">$</span><span style="color:#ea9a97">nombre_comuna</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>El vector anterior nos da todas las categorías de la variable <code>nombre_comuna</code> del dataset <code>datos</code>, eliminando duplicados con <code>unique()</code>. Estos serán los valores por los que iremos iterando: por cada uno de estos valores vamos a querer que se produzca un gráfico distinto.</p>
+<p>En otras palabras, queremos aplicar nuestra función <code>grafico()</code> (o el código para generar el gráfico) una vez por cada comuna en el dataset. Para esto utilizaremos un 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/r_intermedio/#bucles" target="_blank" rel="noopener">bucle o <em>loop</em> en R</a> nos permite <strong>repetir un conjunto de instrucciones varias veces</strong>.</p>
+<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
+
+Si nunca has hecho un loop en R, [revisa esta guía](
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/r_intermedio/#bucles" target="_blank" rel="noopener">https://bastianolea.rbind.io/blog/r_introduccion/r_intermedio/#bucles</a>
+
+</div>
+
+<p>Si bien en R podemos crear loops o bucles con <code>for</code>, usaremos <code>map()</code> del 
+<a href="https://purrr.tidyverse.org" target="_blank" rel="noopener">paquete <code>{purrr}</code></a> para lograr lo mismo de una forma más elegante y eficiente.</p>
+<p>Dentro de <code>map()</code>, primero entregamos los <strong>elementos por los que queremos iterar</strong> (en nuestro caso, los nombres de las comunas), y <strong>luego se aplica una función</strong><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, dentro de la cual ponemos lo que queremos que pase en cada paso de la iteración. O sea que, por cada elemento de <code>comunas</code>, se va a aplicar el código del gráfico.</p>
+<p>Dentro de la función, simplemente ponemos el código que genera el gráfico, y luego le pedimos que guarde el resultado en nuestro computador. Es muy importante que los nombres de archivo sean distintos! De lo contrario los resultados se van a ir sobrescribiendo unos a otros 🙄 Así que usamos el nombre de la comuna dentro de <code>paste()</code> para crear nombres de archivo únicos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">purrr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">map</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comunas[1</span><span style="color:#908caa">:</span><span style="color:#f6c177">12</span><span style="color:#ea9a97">]</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># elementos por los que se va a iterar</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">\</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span> <span style="color:#6e6a86"># cada elemento va a pasar a la función como un objeto llamado `comuna`</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      <span style="color:#6e6a86"># crear gráficos</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">grafico</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">grafico</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      <span style="color:#6e6a86"># guardar gráficos</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">ggsave</span><span style="color:#908caa">(</span><span style="color:#ea9a97">plot</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">grafico</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">filename</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">paste0</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;graficos/Gráfico Paes &#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;.jpeg&#34;</span><span style="color:#908caa">),</span> <span style="color:#6e6a86"># nombre del archivo</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">width</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">6</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">height</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">6</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#908caa">})</span>
+</span></span></code></pre></div><pre><code>[[1]]
+[1] &quot;graficos/Gráfico Paes Ñuñoa.jpeg&quot;
+
+[[2]]
+[1] &quot;graficos/Gráfico Paes Santiago.jpeg&quot;
+
+[[3]]
+[1] &quot;graficos/Gráfico Paes San Antonio.jpeg&quot;
+
+[[4]]
+[1] &quot;graficos/Gráfico Paes Concepción.jpeg&quot;
+
+[[5]]
+[1] &quot;graficos/Gráfico Paes Perquenco.jpeg&quot;
+
+[[6]]
+[1] &quot;graficos/Gráfico Paes San Miguel.jpeg&quot;
+
+[[7]]
+[1] &quot;graficos/Gráfico Paes Talca.jpeg&quot;
+
+[[8]]
+[1] &quot;graficos/Gráfico Paes Macul.jpeg&quot;
+
+[[9]]
+[1] &quot;graficos/Gráfico Paes Quilicura.jpeg&quot;
+
+[[10]]
+[1] &quot;graficos/Gráfico Paes San Joaquín.jpeg&quot;
+
+[[11]]
+[1] &quot;graficos/Gráfico Paes Valparaíso.jpeg&quot;
+
+[[12]]
+[1] &quot;graficos/Gráfico Paes Limache.jpeg&quot;
+</code></pre>
+<p>Con tan sólo ejecutar el código anterior, obtendremos más de 300 gráficos! Pero como son tantos, le puse <code>comunas[1:10]</code> para que sólo se hagan las primeras 10 😅</p>
+<p>Procesando&hellip;</p>
+<video src="ggplot_batch_singlecore.mov" style="border-radius:7px; max-width: 100%; margin:auto;" autoplay loop>
+</video>
+<div style="max-width: 380px; margin:auto; text-align: center; font-size:80%; opacity:60%;">
+  Grabación en tiempo real de los gráficos siendo generados dentro de un loop de <code>purrr::map()</code>
+  </div>
+
+
+
+
+<h2 id="optimización">Optimización
+  <a href="#optimizaci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Naturalmente, generar cientos de gráficos puede demorar unos minutos, sobre todo si los datos son muy grandes (y en nuestro caso, cada gráfico tiene más de 300 mil puntos&hellip;).</p>
+<p>Lo bueno es que podemos aprovechar todo el potencial de nuestras computadoras 
+<a href="https://bastianolea.rbind.io/blog/furrr_multiprocesador/" target="_blank" rel="noopener">modificando el código para que el proceso sea multiprocesador</a>; es decir, que se usen todos los procesadores de nuestro computador al mismo tiempo. Tan sólo especificamos cuántos procesadores queremos usar con <code>plan(multisession, workers = 6)</code>, y luego reemplazamos <code>map()</code> por <code>future_map()</code> de 
+<a href="https://furrr.futureverse.org" target="_blank" rel="noopener"><code>{furrr}</code></a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">furrr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">plan</span><span style="color:#908caa">(</span><span style="color:#ea9a97">multisession</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">workers</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">8</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">future_map</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comunas[1</span><span style="color:#908caa">:</span><span style="color:#f6c177">20</span><span style="color:#ea9a97">]</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">\</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>             
+</span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">grafico</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">grafico</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>             
+</span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">ggsave</span><span style="color:#908caa">(</span><span style="color:#ea9a97">plot</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">grafico</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                    <span style="color:#ea9a97">filename</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">paste0</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;graficos/Gráfico Paes &#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;.jpeg&#34;</span><span style="color:#908caa">),</span> <span style="color:#6e6a86"># nombre del archivo</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#ea9a97">width</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">6</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">height</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">6</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#908caa">})</span>
+</span></span></code></pre></div><div style="max-width: 280px; margin:auto;">
+  <img src="r_multicore.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  </div>
+<div style="max-width: 380px; margin:auto; text-align: center; font-size:80%; opacity:60%;">
+  Visualización de uso de CPU al procesar gráficos multicore con R, demostrando que se usan todos los procesadores al mismo tiempo
+  </div>
+<p>Procesando&hellip;</p>
+<video src="ggplot_batch_multicore.mov" style="border-radius:7px; max-width: 100%; margin:auto;" autoplay loop>
+</video>
+<div style="max-width: 380px; margin:auto; text-align: center; font-size:80%; opacity:60%;">
+  Grabación en tiempo real de los gráficos siendo generados, usando 8 procesadores
+  </div>
+<p>Listo! 🎉 Imagínate todo el tiempo que ahorramos: podemos obtener cientos de gráficos con tan sólo presionar el botón <em>Run</em> (o la combinación <em>control</em> + <em>enter</em>), y si tenemos que actualizar, modificar o mejorar los gráficos, simplemente cambiamos el código en la función y volvemos a ejecutar el <em>loop</em>. Excelente! Esto hace que aprender a programar valga la pena, cierto?&hellip; cierto? 🥺</p>
+<hr>
+<p><div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+<div style="margin-top:24px;">
+  
+<a href="/clases/spatiallab_introduccion_r_2/">
+<img src="/clases/spatiallab_introduccion_r_2/banner_curso_r.jpeg" style="border-radius: 7px; max-height: 240px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;" alt="¿Necesitas aprender R para análisis de datos desde cero? Inscríbete a mi curso!">
+</a>
+
+<div style="max-width: 320px; margin:auto; font-size:85%;opacity:60%;">
+  <p>¿Necesitas aprender R para análisis de datos desde cero? <a href="https://spatiallab.cl/2da-version-curso-introduccion-al-analisis-de-datos-con-r-para-principiantes?variant_id=109682226">Inscríbete a mi curso!</a></p>
+  </div>
+
+</div></p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>En vez de una función, usaremos una 
+<a href="https://www.jumpingrivers.com/blog/new-features-r410-pipe-anonymous-functions/" target="_blank" rel="noopener">función anónima</a>, lo que significa que crearemos la función dentro de <code>map()</code> solamente porque es más rápido.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">July 14, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">11 minute read, 2192 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n">automatización</a>  <a href="https://bastianoleah.netlify.app/tags/purrr">purrr</a>  <a href="https://bastianoleah.netlify.app/tags/loops">loops</a>  <a href="https://bastianoleah.netlify.app/tags/ggplot2">ggplot2</a>  <a href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n">optimización</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/2025-07-11/">Gráfico de densidad tipo Joy Division en {ggplot2}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ggrepel/">Etiquetas de texto que se repelen entre sí con {ggrepel}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/correlaciones/">Análisis y visualización de correlaciones en R</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/tutorial_scraping_selenium/">&larr; Tutorial: web scraping controlando un navegador web con {RSelenium} en R</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/2025-07-11/">Gráfico de densidad tipo Joy Division en {ggplot2} &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

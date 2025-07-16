@@ -50,7 +50,7 @@ Se trata de un gráfico de densidad, donde las densidades están apiladas vertic
 En este post reproduciremos este gráfico en R, pero usando datos socioeconómicos de la Encuesta de caracterización socioeconómica nacional (Casen) 2022.">
   <meta itemprop="datePublished" content="2025-07-12T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-07-12T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1443">
+  <meta itemprop="wordCount" content="1487">
   <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/2025-07-11/featured.png">
   <meta itemprop="keywords" content="Ggplot2,Gráficos">
   
@@ -282,10 +282,23 @@ En este post reproduciremos este gráfico en R, pero usando datos socioeconómic
       </header>
       <section class="post-body pt5 pb4">
         <p>Existe un gráfico estadístico muy famoso por haber aparecido en la portada del disco <em>Unknown Pleasures</em> de Joy Division:</p>
-<img src="joy_division.jpg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="joy_division.jpg" target="_blank">
+
+  <img src="joy_division.jpg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Se trata de un gráfico de densidad, donde las densidades están apiladas verticalmente y se sobreponen, dando una apariencia montañosa, cordillerana y casi tridimensional.</p>
 <p>En este post reproduciremos este gráfico en R, pero usando datos socioeconómicos de la 
 <a href="https://observatorio.ministeriodesarrollosocial.gob.cl/encuesta-casen-2022" target="_blank" rel="noopener">Encuesta de caracterización socioeconómica nacional (Casen) 2022.</a></p>
+<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
+
+Este post es sobre visualización de datos con <code>{ggplot2}</code>. Si quieres aprender, puedes revisar 
+<a href="/blog/r_introduccion/tutorial_visualizacion_ggplot/">este tutorial sobre visualización de datos desde cero!</a>
+
+</div>
+
 <p>Los paquetes que usaremos son los siguientes:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">arrow</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># carga de datos en formato parquet</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># manipulación de datos</span>
@@ -300,7 +313,15 @@ En este post reproduciremos este gráfico en R, pero usando datos socioeconómic
 <p>Como dato al margen, los datos de ese repositorio se usan en una 
 <a href="https://bastianoleah.shinyapps.io/casen_comparador_ingresos" target="_blank" rel="noopener">aplicación interactiva desarrollada en R</a>. donde puedes comparar la densidades de las distribuciones de ingreso de cualquier comuna de Chile.</p>
 <div style="max-width:340px; margin:auto;">
-<img src="comparador_ingresos_casen.jpg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="comparador_ingresos_casen.jpg" target="_blank">
+
+  <img src="comparador_ingresos_casen.jpg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<div style="max-width: 380px; margin:auto; text-align: center; font-size:80%; opacity:60%;">
+  Aplicación web comparador de ingresos Casen, desarrollada en R. 
+<a href="https://bastianoleah.shinyapps.io/casen_comparador_ingresos" target="_blank" rel="noopener">Pruébala aquí</a>.
+  </div>
 </div>
 
 
@@ -409,7 +430,11 @@ En este post reproduciremos este gráfico en R, pero usando datos socioeconómic
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">variable</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_density_ridges</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="grafico_base.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+</span></span></code></pre></div><a href="grafico_base.png" target="_blank">
+
+  <img src="grafico_base.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>A este gráfico horripilante le aplicaremos un poco de magia de <code>{ggplot2}</code> para darle la apariencia que merece.</p>
 <p>El punto clave es la función <code>geom_density_ridges()</code>, que produce las densidades apiladas o <em>crestas</em>. El argumento <code>scale</code> define la elevación de cada densidad por encima de la que tiene detrás, y <code>bandwidth</code> controla que tanto se suavizan los datos al calcular la curva de densidad, aumentando disminuyendo el detalle de las figuras. Al extremo derecho del gráfico agregué la mediana de ingresos de cada comuna con <code>geom_text()</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">number_options</span><span style="color:#908caa">(</span><span style="color:#ea9a97">decimal.mark</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;,&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">big.mark</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;.&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># opciones de números grandes</span>
@@ -446,7 +471,13 @@ En este post reproduciremos este gráfico en R, pero usando datos socioeconómic
 </span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># textos</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">title</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Distribución de ingresos por comuna: Chile&#34;</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">toupper</span><span style="color:#908caa">(),</span>
 </span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">subtitle</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Ingreso de la ocupación principal, CASEN 2022&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><img src="grafico_densidad_joy_division.jpg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+</span></span></code></pre></div><a href="grafico_densidad_joy_division.jpg">
+<img src="grafico_densidad_joy_division.jpg" style="border-radius: 7px; width: 100%; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+</a>
+<div style="max-width: 380px; margin:auto; text-align: center; font-size:80%; opacity:60%;">
+  Toca la imagen o 
+<a href="grafico_densidad_joy_division.jpg">este enlace</a> para ver en tamaño completo
+  </div>
 <p>Evidentemente, este gráfico es más estético que funcional. Sin embargo, se trata de un ejercicio de visualización basada en datos reales. El gráfico nos permite ver rápidamente la concentración de ingresos en la mayoría de las comunas en torno al sueldo mínimo, cada una con distintas desviaciones respecto a esta columna montañosa. Las densidades de más arriba corresponden a comunas de mayores ingresos, y por lo tanto sus distribuciones muestran una mayor cantidad de personas que perciben ingresos mayores a 500.000, incluso formándose una pequeña montañita sobre los 2 millones. A medida que bajamos la vista por el gráfico vemos como las demás comunas van acercando sus densidades hacia la mediana nacional.</p>
 <hr>
 <div style = "height: 18px;">
@@ -477,7 +508,7 @@ En este post reproduciremos este gráfico en R, pero usando datos socioeconómic
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">7 minute read, 1443 words</dd>
+    <dd class="fw5 ml0">7 minute read, 1487 words</dd>
   </dl>
   
   
@@ -490,11 +521,11 @@ En este post reproduciremos este gráfico en R, pero usando datos socioeconómic
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
+    <dd class="fw5 ml0"><a href="/blog/ggplot_purrr/">Generar múltiples gráficos automáticamente con R</a></dd>
+    
     <dd class="fw5 ml0"><a href="/blog/ggrepel/">Etiquetas de texto que se repelen entre sí con {ggrepel}</a></dd>
     
     <dd class="fw5 ml0"><a href="/blog/correlaciones/">Análisis y visualización de correlaciones en R</a></dd>
-    
-    <dd class="fw5 ml0"><a href="/blog/ggview/">Controla las dimensiones de tus gráficos con {ggview}</a></dd>
     
   </dl>
 </details>
@@ -503,6 +534,9 @@ En este post reproduciremos este gráfico en R, pero usando datos socioeconómic
       <footer class="post-footer">
         <div class="post-pagination dt w-100 mt4 mb2">
   
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/ggplot_purrr/">&larr; Generar múltiples gráficos automáticamente con R</a>
   
   
   

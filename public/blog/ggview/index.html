@@ -284,19 +284,35 @@ Pero si amplías el tamaño del panel lo suficiente, el gráfico se verá mejor:
         <p>
 <a href="https://github.com/idmn/ggview" target="_blank" rel="noopener"><code>{ggview}</code></a> es un paquete de R que te ayuda a crear gráficos en <code>{ggplot2}</code> manteniendo un tamaño fijo.</p>
 <p>En RStudio, los gráficos que aparecen en el panel de gráficos (<em>Plots</em>) se adaptan al tamaño de dicho panel. Por ejemplo, si tu panel es chico, el gráfico no tendría espacio para verse bien:</p>
-<img src="grafico_chico.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="grafico_chico.png" target="_blank">
+
+  <img src="grafico_chico.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Pero si amplías el tamaño del panel lo suficiente, el gráfico se verá mejor:</p>
-<img src="grafico_rstudio.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="grafico_rstudio.png" target="_blank">
+
+  <img src="grafico_rstudio.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Esto es conveniente para ir explorando visualizaciones, pero puede confundirte cuando quieras guardar el gráfico. Una vez que tu gráfico está listo, procedes a guardarlo&hellip;</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">ggsave</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;grafico.jpg&#34;</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><p>Pero cuando abres el gráfico, sorpresa, se ve distinto! 🙄</p>
-<img src="grafico_guardado.jpg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="grafico_guardado.jpg" target="_blank">
+
+  <img src="grafico_guardado.jpg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Esto es porque las dimensiones del panel <em>Plots</em> no son las mismas que las dimensiones con que se guardan por defecto los gráficos. En la función <code>ggsave()</code> puedes especificar ancho, alto y resolución de la imagen que se va a guardar. Entonces, lo que podrías hacer es intentar configurar <code>ggsave()</code> para que el gráfico se guarde como tú esperas&hellip; pero a veces esto se vuelve en un juego de ir adivinando, intentando números varias veces hasta que le achuntas al gráfico que esperabas.</p>
 <p>Una mejor alternativa es usar <code>{ggview}</code> para previsualizar tus gráficos con un tamaño fijo:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggview</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico</span> <span style="color:#908caa">+</span> <span style="color:#ea9a97">canvas</span><span style="color:#908caa">(</span><span style="color:#f6c177">7</span><span style="color:#908caa">,</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><img src="grafico_ggview-featured.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+</span></span></code></pre></div><a href="grafico_ggview-featured.png" target="_blank">
+
+  <img src="grafico_ggview-featured.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>De esta forma, no importa el tamaño de tu ventana de RStudio: tu gráfico se previsualizará con la resolución y proporción que tu especifiques.</p>
 <p>Recomiendo empezar a usar <code>ggview::canvas()</code> cuando tu gráfico ya está casi completo y te pones a afinar detalles estéticos finales.</p>
 <p>Cuando ya sea la hora de guardar el gráfico como una imagen, si usas la función <code>ggview::save_ggplot()</code> (no confundir con la común, <code>ggsave()</code>), el gráfico se guardará con las dimensiones que habías puesto en <code>canvas()</code> y se verá exactamente como lo estabas previsualizando en RStudio!</p>
@@ -328,11 +344,11 @@ Pero si amplías el tamaño del panel lo suficiente, el gráfico se verá mejor:
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
+    <dd class="fw5 ml0"><a href="/blog/ggplot_purrr/">Generar múltiples gráficos automáticamente con R</a></dd>
+    
     <dd class="fw5 ml0"><a href="/blog/2025-07-11/">Gráfico de densidad tipo Joy Division en {ggplot2}</a></dd>
     
     <dd class="fw5 ml0"><a href="/blog/ggrepel/">Etiquetas de texto que se repelen entre sí con {ggrepel}</a></dd>
-    
-    <dd class="fw5 ml0"><a href="/blog/correlaciones/">Análisis y visualización de correlaciones en R</a></dd>
     
   </dl>
 </details>

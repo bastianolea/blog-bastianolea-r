@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head>
   
                            
      
@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.136.5">
-<title>Tutorial: web scraping con Selenium en R usando {RSelenium} | Blog</title>
+<title>Tutorial: web scraping controlando un navegador web con {RSelenium} en R | Blog</title>
 
 
 <meta property="twitter:site" content="@bastimapache">
@@ -28,29 +28,30 @@
 
 
 <meta property="og:site_name" content="Blog">
-<meta property="og:title" content="Tutorial: web scraping con Selenium en R usando {RSelenium} | Blog">
+<meta property="og:title" content="Tutorial: web scraping controlando un navegador web con {RSelenium} en R | Blog">
 <meta property="og:description" content="Selenium es una herramienta que permite realizar web scraping avanzado por medio del control programático de un navegador web, lo cual abre infinitas posibilidades al momento de automatizar la obtención de datos e información desde sitios web dinámicos y/o complejos. En este tutorial aprenderemos a usar {RSelenium} para programar scripts de R que automaticen el control de un navegador para interactuar con sitios web y así scrapear datos mas difíciles de obtener." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:4321/blog/tutorial_scraping_selenium/" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/tutorial_scraping_selenium/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:4321/blog/tutorial_scraping_selenium/featured.png" >
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/tutorial_scraping_selenium/featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:4321/blog/tutorial_scraping_selenium/featured.png" >
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/tutorial_scraping_selenium/featured.png" >
     
     
   
-  <meta itemprop="name" content="Tutorial: web scraping con Selenium en R usando {RSelenium}">
-  <meta itemprop="description" content="Selenium es una herramienta que permite realizar web scraping avanzado por medio del control programático de un navegador web, lo cual abre infinitas posibilidades al momento de automatizar la obtención de datos e información desde sitios web dinámicos y/o complejos. En este tutorial aprenderemos a usar {RSelenium} para programar scripts de R que automaticen el control de un navegador para interactuar con sitios web y así scrapear datos mas difíciles de obtener.">
-  <meta itemprop="datePublished" content="2025-03-07T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-03-07T00:00:00+00:00">
-  <meta itemprop="wordCount" content="273">
-  <meta itemprop="image" content="http://localhost:4321/blog/tutorial_scraping_selenium/featured.png">
-  <meta itemprop="keywords" content="Web scraping">
+  <meta itemprop="name" content="Tutorial: web scraping controlando un navegador web con {RSelenium} en R">
+  <meta itemprop="description" content="Selenium es un programa para automatizar navegadores web. Mediante el control de un navegador web, Selenium se vuelve una buena herramienta para realizar web scraping avanzado. El paquete de R {RSelenium} nos permitirá controlar un navegador por medio de código de R, lo cual abre infinitas posibilidades al momento de automatizar la obtención de datos e información desde sitios web dinámicos y/o complejos.
+En este tutorial aprenderemos a usar {RSelenium} para programar scripts de R que automaticen el control de un navegador para interactuar con sitios web y así scrapear datos más difíciles de obtener.">
+  <meta itemprop="datePublished" content="2025-07-15T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-07-15T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1658">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/tutorial_scraping_selenium/featured.png">
+  <meta itemprop="keywords" content="Web scraping,Datos">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="false" type="image/x-icon">
@@ -69,7 +70,7 @@
       <div class="grid-container">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4321/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
       <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -262,15 +263,15 @@
   <section class="page-content mw7 center">
     <article class="post-content pa0 ph4-l">
       <header class="post-header">
-        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Tutorial: web scraping con Selenium en R usando {RSelenium}</h1>
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Tutorial: web scraping controlando un navegador web con {RSelenium} en R</h1>
         
         
-        <p class="f7 db mv0 ttu">7/3/2025</p>
+        <p class="f7 db mv0 ttu">15/7/2025</p>
         
         
         
   <dl class="f6 lh-copy">
-    <em><dd class="fw5 ml0">Temas:  <a href="http://localhost:4321/tags/web-scraping">web scraping</a> </dd></em>
+    <em><dd class="fw5 ml0">Temas:  <a href="https://bastianoleah.netlify.app/tags/web-scraping">web scraping</a>  <a href="https://bastianoleah.netlify.app/tags/datos">datos</a> </dd></em>
   </dl>
 
 
@@ -279,94 +280,392 @@
 
       </header>
       <section class="post-body pt5 pb4">
-        <p>Selenium es una herramienta que permite realizar web scraping avanzado por medio del control programático de un navegador web, lo cual abre infinitas posibilidades al momento de automatizar la obtención de datos e información desde sitios web dinámicos y/o complejos. En este tutorial aprenderemos a usar {RSelenium} para programar scripts de R que automaticen el control de un navegador para interactuar con sitios web y así scrapear datos mas difíciles de obtener.</p>
+        <p>Selenium es un programa para automatizar navegadores web. Mediante el control de un navegador web, Selenium se vuelve una buena herramienta para realizar <strong>web scraping avanzado</strong>. El 
+<a href="https://docs.ropensci.org/RSelenium/" target="_blank" rel="noopener">paquete de R <code>{RSelenium}</code></a> nos permitirá controlar un navegador por medio de código de R, lo cual abre infinitas posibilidades al momento de automatizar la obtención de datos e información desde sitios web dinámicos y/o complejos.</p>
+<p>En este tutorial aprenderemos a usar <code>{RSelenium}</code> para programar scripts de R que automaticen el control de un navegador para interactuar con sitios web y así scrapear datos más difíciles de obtener.</p>
+<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
+
+Si necesitas aprender lo básico del web scraping, primero 
+<a href="/blog/tutorial_scraping_rvest/">revisa este tutorial de <code>{rvest}</code></a>
+
+</div>
+
+<p>En otro post aprendimos a 
+<a href="../../../blog/tutorial_scraping_rvest/">hacer web scraping con <code>{rvest}</code></a>, un paquete muy sencillo de usar para obtener información desde sitios web. Entonces ¿por qué aprender también <code>{RSelenium}</code>? La diferencia es que Selenium es capaz de controlar un <em>navegador web real</em> en tu computador, como Chrome o Firefox, lo cual puede marcar la diferencia para extraer datos de sitios que buscan dificultar o impedir el acceso a herramientas automatizadas de web scraping.</p>
+
+
+
+
+<h3 id="iniciar-un-cliente">Iniciar un cliente
+  <a href="#iniciar-un-cliente"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>La primera que necesitamos para hacer web scraping es un navegador web. La función <code>rsDriver()</code> se encarga de la descarga e instalación de un navegador para poder usarlo desde R. Elegimos Firefox, y opcionalmente definimos un <em>puerto</em><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">RSelenium</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">driver</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">rsDriver</span><span style="color:#908caa">(</span><span style="color:#ea9a97">port</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">4570L</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">browser</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;firefox&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">chromever</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">verbose</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">T</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">check</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">T</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">driver</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">rsDriver</span><span style="color:#908caa">(</span><span style="color:#ea9a97">browser</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;firefox&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">port</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">4560L</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">verbose</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">F</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">chromever</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">phantomver</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Éste código pondrá a descargar el navegador y lo abrirá:</p>
+<a href="rselenium_1.png" target="_blank">
+
+  <img src="rselenium_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Aparece una ventana de navegador con la barra superior en rojo, indicando que está siendo controlado por otro programa, en este caso por R.</p>
+<p>Ahora tenemos que pasarle el control a un objeto de R que representa al navegador remoto:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remote</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">driver</span><span style="color:#908caa">$</span><span style="color:#ea9a97">client</span>
+</span></span></code></pre></div>
+
+
+
+<h3 id="navegar-a-un-sitio-web">Navegar a un sitio web
+  <a href="#navegar-a-un-sitio-web"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Desde el navegador remoto podemos ir ejecutando las acciones que necesitamos. Lo primero es navegar al sitio web que nos interesa</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">navigate</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;https://www.portaltransparencia.cl/PortalPdT/directorio-de-organismos-regulados/?org=MU291&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Si nos vamos a ver el navegador, vemos que la página efectivamente se ha cargado.</p>
+<a href="rselenium_2.png" target="_blank">
+
+  <img src="rselenium_2.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Desde esta página web de Transparencia podemos extraer datos sobre la gestión de organismos públicos, pero para llegar a ellos tenemos que hacer clic en varios enlaces. Usaremos <code>{RSelenium}</code> para navegar el sitio y obtener los datos, generando un script que podremos reutilizar para actualizar los datos, obtener datos de manera masiva de este sitio, u obtener los datos del mismo portal pero de otro organismo público, dado que funcionan igual.</p>
+
+
+
+
+<h3 id="identificar-elementos">Identificar elementos
+  <a href="#identificar-elementos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>En este punto podemos usar el navegador para ir explorando el sitio. Obviamente podríamos ir haciendo clic en el mismo navegador, pero no es la idea. La idea es poder automatizar el proceso por medio de un script que controle las acciones que se hacen en el navegador. Lo que sí podemos hacer es usar las herramientas del navegador para ayudarnos.</p>
+<p>Si hacemos clic derecho sobre cualquier elemento del sitio y elegimos <em>Inspeccionar</em>, se abrirá el panel de herramientas de desarrollador web.</p>
+<a href="rselenium_3.png" target="_blank">
+
+  <img src="rselenium_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Con este panel podemos inspeccionar el código fuente del sitio web, desde donde podremos extraer texto, enlaces, imágenes, tablas, y más.</p>
+<p>En el panel de herramientas de desarrollador apretamos el <em>botón de selección</em> (destacado con un círculo en la imagen anterior, o <code>comando + shift + C</code>) para que cuando pasemos el cursor sobre los elementos del sitio web, se destaque el código fuente correspondiente.</p>
+<a href="rselenium_4.png" target="_blank">
+
+  <img src="rselenium_4.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Cuándo identificamos el elemento que necesitamos, vamos al código correspondiente, hacemos clic derecho, y copiamos el <code>xpath</code> o el <code>selector css</code>. Ambas son formas de identificar de manera única elementos en un sitio web, pero esta vez copiaremos el <code>xpath</code>.</p>
+<a href="rselenium_5.png" target="_blank">
+
+  <img src="rselenium_5.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+
+
+
+
+<h3 id="interactuar-con-elementos">Interactuar con elementos
+  <a href="#interactuar-con-elementos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Ahora que tenemos identificado el enlace que queremos apretar por medio de su <code>xpath</code>, le decimos al navegador que le haga clic:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">findElement</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;xpath&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#39;//*[@id=&#34;A6428:formInfo:j_idt39:0:datalist:3:j_idt43:4:j_idt47&#34;]&#39;</span><span style="color:#908caa">)</span><span style="color:#908caa">$</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">clickElement</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Funcionó! El navegador navegó al enlace que le pedimos.</p>
+<a href="rselenium_6.png" target="_blank">
+
+  <img src="rselenium_6.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Ahora repetimos el proceso para navegar al enlace <em>Municipal</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">findElement</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;xpath&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#39;//*[@id=&#34;A6428:formInfo:j_idt76:0:j_idt78&#34;]&#39;</span><span style="color:#908caa">)</span><span style="color:#908caa">$</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">clickElement</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Ahora el sitio muestra una selección de todos los años que tienen datos. Si volvemos a repetir el proceso, nos damos cuenta de que el <code>xpath</code> del año 2025 termina con un <code>0</code>, y el del año 2024 termina en <code>1</code>, el de 2023 en <code>2</code>, y así sucesivamente.</p>
+<a href="rselenium_7.png" target="_blank">
+
+  <img src="rselenium_7.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Esto significa que podríamos automatizar el acceso a todos los años simplemente creando un loop que vaya desde 0 a 10 (año 2015). Pero por ahora accedamos al segundo año:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">findElement</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;xpath&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#39;//*[@id=&#34;A6428:formInfo:j_idt94:0:j_idt95&#34;]&#39;</span><span style="color:#908caa">)</span><span style="color:#908caa">$</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">clickElement</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Ahora llegamos a una página con los meses, donde se repita el mismo patrón: todos los meses comparten un <code>xpath</code> que termina con el número del cero a la cantidad de meses presentes.</p>
+<a href="rselenium_8.png" target="_blank">
+
+  <img src="rselenium_8.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Si navegamos alguno de los meses, finalmente llegamos a los datos que estábamos buscando:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">findElement</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;xpath&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#39;//*[@id=&#34;A6428:formInfo:j_idt110:0:j_idt111&#34;]&#39;</span><span style="color:#908caa">)</span><span style="color:#908caa">$</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">clickElement</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><a href="rselenium_9.png" target="_blank">
+
+  <img src="rselenium_9.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+
+
+
+
+<h3 id="obtener-el-código-fuente-del-sitio">Obtener el código fuente del sitio
+  <a href="#obtener-el-c%c3%b3digo-fuente-del-sitio"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Ahora que llegamos a una tabla de datos, podemos pedirle al navegador que nos entregue todo el código de fuente del sitio, para 
+<a href="../../../blog/tutorial_scraping_rvest/">continuar el scraping con el paquete <code>{rvest}</code></a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">rvest</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">remDr</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">driver[[</span><span style="color:#f6c177">&#34;client&#34;</span><span style="color:#ea9a97">]]</span>
-</span></span></code></pre></div><p>Navegar a un sitio web</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remDr</span><span style="color:#908caa">$</span><span style="color:#ea9a97">navigate</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;http://chileindica.cl/home.php&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>Hacer click</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remDr</span><span style="color:#908caa">$</span><span style="color:#ea9a97">findElement</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;xpath&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;/html/body/section/form/div[2]/div[2]/div[4]/a/span&#34;</span><span style="color:#908caa">)</span><span style="color:#908caa">$</span><span style="color:#ea9a97">clickElement</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><p>Obtener código de fuente del sitio</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sitio</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_html</span><span style="color:#908caa">(</span><span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">getPageSource</span><span style="color:#908caa">()</span><span style="color:#ea9a97">[[1]]</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>Luego podemos continuar usando {rvest} para realizar el scraping</p>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">fuente</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">getPageSource</span><span style="color:#908caa">()</span><span style="color:#ea9a97">[[1]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">sitio</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_html</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fuente</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
+
+Si necesitas aprender a usar <code>{rvest}</code>, 
+<a href="/blog/tutorial_scraping_rvest/">revisa este tutorial primero</a>
+
+</div>
+
+<p>Podemos usar la función <code>html_elements()</code> para extraer elementos del sitio por su selector CSS, y convertirlos en texto. Por ejemplo, extraer el texto que está en el título de la tabla:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sitio</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">html_elements</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;.recursos&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">html_elements</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;a&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>Tomar captura de pantalla</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remDr</span><span style="color:#908caa">$</span><span style="color:#ea9a97">screenshot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">file</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#39;test.png&#39;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>Descargar archivos</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># obtener enlaces</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">html_elements</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;.section-title&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">html_text2</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><pre><code>[1] &quot;04. Personal y remuneraciones&quot;
+</code></pre>
+
+
+
+
+<h3 id="extraer-tablas">Extraer tablas
+  <a href="#extraer-tablas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Si es que el sitio web tiene datos en forma de tabla, podemos extraerlo fácilmente con la función <code>html_table()</code></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tabla</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sitio</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">html_table</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tabla[[1]]</span>
+</span></span></code></pre></div><pre><code># A tibble: 100 × 19
+   Estamento      `Nombre completo`      `Cargo o función` `Grado EUS o jornada`
+   &lt;chr&gt;          &lt;chr&gt;                  &lt;chr&gt;                             &lt;int&gt;
+ 1 Auxiliar       ACEVEDO BERTRIN, ANDR… CUADRILLA OPERAC…                    14
+ 2 Administrativo AEDO ACEVEDO, ESTEFAN… ADMINISTRATIVA H…                    11
+ 3 Administrativo AGUILAR MARTINEZ, ELI… ADMINISTRATIVO D…                    12
+ 4 Administrativo AHUMADA COFRE, GERALD… ADMINISTRATIVA V…                    16
+ 5 Profesional    ALARCON HERRERA, CARL… PROFESIONAL DE A…                     6
+ 6 Administrativo ALARCON NEIRA, CLAUDI… INSPECTOR VIGILA…                    14
+ 7 Auxiliar       ALCAINO MARTINEZ, EDU… AUXILIAR ASEO Y …                    14
+ 8 Administrativo ALDERETE ALMENDRAS, N… ADMINISTRATIVA V…                    16
+ 9 Administrativo ALTAMIRANO ROJAS, ANN… SECRETARIA ADMIN…                    11
+10 Administrativo ALVAREZ FARFAN, CYNTH… INSPECTORA FERIA…                    16
+# ℹ 90 more rows
+# ℹ 15 more variables: `Calificación profesional o formación` &lt;chr&gt;,
+#   Región &lt;chr&gt;, `Asignaciones especiales` &lt;chr&gt;,
+#   `Remuneración bruta mensualizada` &lt;chr&gt;,
+#   `Remuneración líquida mensualizada` &lt;chr&gt;,
+#   `Remuneraciones adicionales` &lt;chr&gt;, `Remuneración Bonos incentivos` &lt;chr&gt;,
+#   `Derecho a horas extraordinarias` &lt;chr&gt;, …
+</code></pre>
+<p>Ahora que tenemos los datos, sólo resta guardarlos en nuestro proyecto de R y seguir procesándolos en otro script.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tabla[[1]]</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">readr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">write_rds</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;datos.rds&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+
+
+
+<h3 id="descargar-archivos">Descargar archivos
+  <a href="#descargar-archivos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Finalmente, tenemos la opción de descargar los datos de este sitio como un archivo en el botón <em>Descargar CSV</em> que aparece arriba. Pero a diferencia de los enlaces, generalmente los botones de los sitios web no conllevan un enlace, sino que esperan que los aprietes para ejecutar un acción internamente que te entrega el archivo. En estos casos, sería imposible obtener el enlace del botón y descargar el archivo enlazado con <code>download.file(&quot;enlace&quot;)</code>, Sino que simplemente hay que perder el botón y esperar que el sitio te entregue el archivo.</p>
+<p>Utilizamos las herramientas del navegador para identificar el <code>xpath</code> o selector CSS del botón para presionarlo.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># descargar archivo</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">findElement</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#39;css selector&#39;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                   <span style="color:#f6c177">&#39;.fa-file-csv&#39;</span><span style="color:#908caa">)</span><span style="color:#908caa">$</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">clickElement</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Como estamos controlando un navegador web real, el archivo descargado aparecerá en la <strong>carpeta de descargas</strong> de tu computadora, no en tu 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/proyectos/" target="_blank" rel="noopener">proyecto de R</a>. Pero podemos mover el archivo desde la carpeta de descargas a tu proyecto con el siguiente código:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fs</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">download.file</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla_enlaces</span><span style="color:#908caa">$</span><span style="color:#ea9a97">url</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">destfile</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">paste0</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;datos/&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">tabla_enlaces</span><span style="color:#908caa">$</span><span style="color:#ea9a97">archivos</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><p>Descargar imágenes</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># for parsing the src:</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># crear una carpeta en tu proyecto</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">dir_create</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;datos&#34;</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># Get all the images:</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">images</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">remDr</span><span style="color:#908caa">$</span><span style="color:#ea9a97">findElements</span><span style="color:#908caa">(</span><span style="color:#ea9a97">using</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;tag name&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;img&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># mover archivo descargado al proyecto</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">file_move</span><span style="color:#908caa">(</span><span style="color:#ea9a97">path</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;~/Downloads/TransparenciaActiva.csv&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">new_path</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;datos/TransparenciaActiva.csv&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Opcionalmente, al crear el navegador con <code>rsDriver()</code>, puedes configurar el navegador para especificar la ubicación de las descargas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">here</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># create images directory</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">dir.create</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;images&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">perfil</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">makeFirefoxProfile</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">list</span><span style="color:#908caa">(</span><span style="color:#ea9a97">browser.download.dir</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">here</span><span style="color:#908caa">())</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#3e8fb0">for</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">image</span> <span style="color:#3e8fb0">in</span> <span style="color:#ea9a97">images</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># get the image src</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">src</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">image</span><span style="color:#908caa">$</span><span style="color:#ea9a97">getElementAttribute</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;src&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">rsDriver</span><span style="color:#908caa">(</span><span style="color:#ea9a97">browser</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;firefox&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">chromever</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">phantomver</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">extraCapabilities</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">perfil</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+
+
+
+<h3 id="terminar-la-navegación">Terminar la navegación
+  <a href="#terminar-la-navegaci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Cuándo termines de usar el navegador, tienes que cerrar la sesión. Esto se hace principalmente para liberar el puerto que asignaste al navegador al crearlo.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">driver</span><span style="color:#908caa">$</span><span style="color:#ea9a97">server</span><span style="color:#908caa">$</span><span style="color:#ea9a97">stop</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><hr>
+<p>Pero te preguntarás, ¿por qué hicimos todo esto si desde el principio podíamos apretar el botón de descargas y obtener los datos? Lo primero es porque de esta manera tenemos un script con el que podemos seguir las instrucciones paso a paso para volver a descargar exactamente el mismo archivo en el futuro. Pero también, porque podemos usar este Skip para modificarlo y obtener un archivo de otra fecha, o incluso modificar la dirección de raíz del scraping y obtener el archivo equivalente pero de otro organismo público.</p>
+<p>El potencial del web scraping no solamente obtener datos, sino obtenerlos de una manera tal que podamos automatizar la obtención masiva de los mismos.</p>
+<hr>
+
+
+
+
+<h3 id="otros">Otros
+  <a href="#otros"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+
+
+
+
+<h4 id="tomar-captura-de-pantalla">Tomar captura de pantalla
+  <a href="#tomar-captura-de-pantalla"></a>
+</h4>
+<p>También es posible capturar lo que está mostrando el navegador por medio de una captura de pantalla:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">screenshot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">file</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#39;pantallazo_1.jpg&#39;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><a href="pantallazo_1.jpg" target="_blank">
+
+  <img src="pantallazo_1.jpg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Este tipo de acciones no es posible con herramientas de web scraping como <code>{rvest}</code>, que funcionan navegando directamente el código fuente del sitio, sin cargarlo como normalmente haría un navegador web.</p>
+
+
+
+
+<h4 id="desplazarse-por-el-sitio">Desplazarse por el sitio
+  <a href="#desplazarse-por-el-sitio"></a>
+</h4>
+<p>Otro tipo de acciones que a veces son necesarias de hacer para obtener datos en un sitio es <em>scrollear</em> por el mismo para que se carguen los elementos. Esto puede hacerse en Selenium ejecutando un script:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># scrolear</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">executeScript</span><span style="color:#908caa">(</span><span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;window.scrollBy(0, &#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">500</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;);&#34;</span><span style="color:#908caa">))</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># extract the end of the url and hope it is unique. should be good to go based on a quick inspection</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">src_name</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">gsub</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;/&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">str_extract</span><span style="color:#908caa">(</span><span style="color:#ea9a97">src</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;[^/]+/[^/]+.jpg&#34;</span><span style="color:#908caa">))</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># download!</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">download.file</span><span style="color:#908caa">(</span><span style="color:#ea9a97">src</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;./images/&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">src_name</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sep</span><span style="color:#908caa">=</span><span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">))</span>
-</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
-</span></span></code></pre></div><p>Obtener dimensiones del navegador</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># Get inner window height and width</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">inner_window_height</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">remDr</span><span style="color:#908caa">$</span><span style="color:#ea9a97">executeScript</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;return window.innerHeight&#34;</span><span style="color:#908caa">)</span><span style="color:#ea9a97">[[1]]</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">inner_window_width</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">remDr</span><span style="color:#908caa">$</span><span style="color:#ea9a97">executeScript</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;return window.innerWidth&#34;</span><span style="color:#908caa">)</span><span style="color:#ea9a97">[[1]]</span>
-</span></span></code></pre></div><p>Cambiar dimensiones de ventana del navegador</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># remDr$setWindowSize(width = 1024, height = 1000)</span>
-</span></span></code></pre></div><p>Desplazarse por el sitio (scroll)</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># Scroll down (loop from here to end)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">remDr</span><span style="color:#908caa">$</span><span style="color:#ea9a97">executeScript</span><span style="color:#908caa">(</span><span style="color:#ea9a97">str_c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;window.scrollBy(0, &#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">inner_window_height</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;);&#34;</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><p>Usar Selenium IDE para grabar interacciones con un sitio</p>
-<p>
-<a href="https://addons.mozilla.org/en-US/firefox/addon/selenium-ide/" target="_blank" rel="noopener">https://addons.mozilla.org/en-US/firefox/addon/selenium-ide/</a></p>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># verificar visualmente</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">screenshot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">file</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#39;pantallazo_2.jpg&#39;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><a href="pantallazo_2.jpg" target="_blank">
+
+  <img src="pantallazo_2.jpg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+
+
+
+
+<h4 id="cambiar-dimensiones-de-la-ventana">Cambiar dimensiones de la ventana
+  <a href="#cambiar-dimensiones-de-la-ventana"></a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">setWindowSize</span><span style="color:#908caa">(</span><span style="color:#ea9a97">width</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">640</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">height</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">480</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+
+
+
+<h4 id="obtener-dimensiones-de-la-ventana">Obtener dimensiones de la ventana
+  <a href="#obtener-dimensiones-de-la-ventana"></a>
+</h4>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">ventana_alto</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">executeScript</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;return window.innerHeight&#34;</span><span style="color:#908caa">)</span><span style="color:#ea9a97">[[1]]</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ventana_ancho</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">executeScript</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;return window.innerWidth&#34;</span><span style="color:#908caa">)</span><span style="color:#ea9a97">[[1]]</span>
+</span></span></code></pre></div>
+
+
+
+<h4 id="grabar-tu-interacción-con-el-navegador">Grabar tu interacción con el navegador
+  <a href="#grabar-tu-interacci%c3%b3n-con-el-navegador"></a>
+</h4>
+<p>Usa 
+<a href="https://addons.mozilla.org/en-US/firefox/addon/selenium-ide/" target="_blank" rel="noopener">Selenium IDE</a> para grabar interacciones con un sitio. Puedes instalar esta extensión de Firefox para <em>grabar</em> tu interacción con un sitio web, y que queden registrado todos los pasos que hiciste en el sitio, de manera que puedas reproducirlos después en un script.</p>
+<hr>
+<p><div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+<div style="margin-top:24px;">
+  
+<a href="/clases/spatiallab_introduccion_r_2/">
+<img src="/clases/spatiallab_introduccion_r_2/banner_curso_r.jpeg" style="border-radius: 7px; max-height: 240px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;" alt="¿Necesitas aprender R para análisis de datos desde cero? Inscríbete a mi curso!">
+</a>
+
+<div style="max-width: 320px; margin:auto; font-size:85%;opacity:60%;">
+  <p>¿Necesitas aprender R para análisis de datos desde cero? <a href="https://spatiallab.cl/2da-version-curso-introduccion-al-analisis-de-datos-con-r-para-principiantes?variant_id=109682226">Inscríbete a mi curso!</a></p>
+  </div>
+
+</div></p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>El puerto es como la conexión entre tu computador y el navegador, por lo que no pueden haber dos navegadores en un mismo puerto. Si necesitas abrir más de un navegador, o te aparece ocupado el puerto, intenta con otro.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
 
         
         <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
     <dt class="fw7">Fecha de publicación:</dt>
-    <dd class="fw5 ml0">March 7, 2025</dd>
+    <dd class="fw5 ml0">July 15, 2025</dd>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">2 minute read, 273 words</dd>
+    <dd class="fw5 ml0">8 minute read, 1658 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Categorías:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4321/categories/tutoriales">Tutoriales</a> </dd>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/categories/tutoriales">Tutoriales</a> </dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4321/tags/web-scraping">web scraping</a> </dd>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/web-scraping">web scraping</a>  <a href="https://bastianoleah.netlify.app/tags/datos">datos</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/unim/taller_ciencia_de_datos_gestion_municipal/">Video: Taller Aplicación de la Ciencia de Datos en la Gestión Municipal</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/datapasta/">Copia y pega datos en R con {datapasta} y {clipr}</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/2025-01-14/">Actualización de app Análisis de prensa: visualización de análisis de sentimiento de noticias recientes</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/r_introduccion/dplyr_intro/">Introducción al manejo de datos con {dplyr}</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/2024-12-31/">Web scraping de noticias: avances de fin de año</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/2025-02-12/">Cargar archivos csv más rápido en R con Arrow</a></dd>
     
   </dl>
 </details>
@@ -376,13 +675,10 @@
         <div class="post-pagination dt w-100 mt4 mb2">
   
   
-    <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4321/blog/patchwork/">&larr; Unir y combinar gráficos {ggplot2} en R</a>
-  
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4321/blog/colores/">Creación y personalización de paletas de colores en R &rarr;</a>
+    href="https://bastianoleah.netlify.app/blog/ggplot_purrr/">Generar múltiples gráficos automáticamente con R &rarr;</a>
   
 </div>
 

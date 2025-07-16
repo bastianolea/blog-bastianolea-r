@@ -308,7 +308,11 @@ Si quieres aprender a crear
 <li>
 <a href="#blog-hugo">Crear blogs con Hugo Apéro</a></li>
 </ol>
-<img src="afiche-featured.jpg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="afiche-featured.jpg" target="_blank">
+
+  <img src="afiche-featured.jpg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <hr>
 <p>Lo más probable es que todas las cosas que hemos aprendido sobre R y análisis de datos fueron porque alguna persona linda y bondadosa compartió gratuita y abiertamente lo que sabía o lo que creó, para que los demás se beneficien. Uno de los aspectos más positivos de la comunidad de usuarixs de R es su disposición a compartir y ayudar a los demás 💕 ¿Por qué no devolver la mano? 🥰</p>
 <p>Antes que nada, todas las opciones de este tutorial requieren que sepas usar GitHub, para poder subir tus proyectos de R a GitHub. Así que, para empezar, te resumiré las instrucciones necesarias para hacerlo. Encuentra 
@@ -427,11 +431,23 @@ Si necesitas una guía más detallada para aprender a crear
 
 <p>Los reportes de Quarto suelen ser en formato PDF o HTML, siendo HTML el formato más recomendado, porque además de ser más compatible, permite ciertos elementos de interacción en tu reporte, como índices, barras de menú, pestañas, selectores, enlaces, y más.</p>
 <p>Para crear un documento Quarto, en el menú <em>File</em> elige <em>New File</em> y luego <em>Quarto Document</em>.</p>
-<img src="img/quarto_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/quarto_1.png" target="_blank">
+
+  <img src="img/quarto_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Se abrirá un documento de ejemplo que puedes usar como base para tus propios documentos. En este caso, agregamos un <em>chunk</em> con un gráfico sencillo, y presionamos el botón <strong>Render</strong> para generar el documento en <code>html</code>:</p>
-<img src="img/quarto_2.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/quarto_2.png" target="_blank">
+
+  <img src="img/quarto_2.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Como vemos, obtenemos tres archivos en nuestro proyecto: el archivo <code>.qmd</code> que contiene el código que genera el documento, el documento <em>renderizado</em> en formato <code>html</code>, y una carpeta que contiene recursos necesarios para visualizar el documento:
-<img src="img/quarto_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;"></p>
+<a href="img/quarto_3.png" target="_blank">
+
+  <img src="img/quarto_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a></p>
 <p>El problema es que esta carpeta, que contiene cosas como imágenes (de los gráficos), estilos y scripts, dificultan la portabilidad del documento y la posibilidad de compartirlo con otros.</p>
 <p>La buena noticia es que podemos generar un reporte Quarto <strong>autocontenido</strong>; es decir, que no se requieran archivos externos al documento <code>html</code>. Agregamos el siguiente código al <em>header</em> del documento Quarto, en reemplazo del <code>format: html</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ea9a97">format</span><span style="color:#908caa">:</span> 
@@ -471,25 +487,45 @@ Si necesitas una guía más detallada para aprender a crear
 </span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">output-file</span><span style="color:#908caa">:</span> <span style="color:#f6c177">&#34;index&#34;</span>
 </span></span></code></pre></div><p>De este modo, el documento <code>html</code> resultante de nuestro documento Quarto se llamará <code>index.html</code>.</p>
 <p>El siguiente paso de configuración implica agregar un <strong>archivo de configuración</strong> al proyecto. En el panel de archivos (<em>File</em>) de RStudio, presionamos el botón <em>New File</em> y creamos un archivo de texto en blanco, llamado <code>_quarto.yml</code>:</p>
-<img src="img/quarto_4.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/quarto_4.png" target="_blank">
+
+  <img src="img/quarto_4.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>En <code>_quarto.yml</code>, pegamos el siguiente código de configuración:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#ea9a97">project</span><span style="color:#908caa">:</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">output-dir</span><span style="color:#908caa">:</span> <span style="color:#f6c177">docs</span>
 </span></span></code></pre></div><p>Con esta configuración le estamos pidiendo Quarto que guarde los recursos que necesita dentro de una carpeta <code>docs</code>, que es lo que necesitamos para generar nuestra página web.</p>
 <p>Si le damos <em>render</em> al documento Quarto, se generará la carpeta <code>docs</code> con los recursos necesarios dentro.</p>
 <p>Otra configuración que debemos crear para GitHub Pages se hace mediante la creación de un archivo vacío. En el proyecto desde RStudio creamos un nuevo archivo que se llame <code>.nojekyll</code>, y que esté vacío. Este archivo es para decirle a GitHub Pages que no procese el sitio con Jekyll, porque del sitio nos encargamos nosotres.</p>
-<img src="img/nojekyll.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/nojekyll.png" target="_blank">
+
+  <img src="img/nojekyll.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Ahora tenemos que subir estos cambios al repositorio remoto GitHub. En la pestaña <em>Terminal</em> de RStudio (al lado de la consola) ejecutamos los tres siguientes comandos:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git add .
 </span></span><span style="display:flex;"><span>git commit -m <span style="color:#f6c177">&#34;documento quarto en docs&#34;</span>
 </span></span><span style="display:flex;"><span>git push
 </span></span></code></pre></div><p>Con el primer comando le pedimos que todos los archivos nuevos sean considerados para el <em>commit</em>, con el segundo creamos el <em>commit</em> y le damos un mensaje, y con el tercero hacemos <em>push</em> para subir los cambios al repositorio remoto.</p>
 <p>Si vamos a GitHub debiesen estar nuestros nuevos archivos arriba. Ahora vamos a configurar GitHub para que genere una página web a partir del documento Quarto. Vamos a la seccion <em>Settings</em>:</p>
-<img src="img/quarto_5.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/quarto_5.png" target="_blank">
+
+  <img src="img/quarto_5.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Dentro de <em>Settings</em>, en el menú izquierdo vamos a <em>Pages</em>. Dentro de <em>Pages</em>, tenemos que seleccionar la rama del repositorio que queremos usar (usualmente <em>main</em> o <em>master</em>), y especificar que queremos apuntar a la carpeta <code>/docs</code>. Luego presionamos <em>Save</em>.</p>
-<img src="img/quarto_6.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/quarto_6.png" target="_blank">
+
+  <img src="img/quarto_6.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Se tomará unos segundos o minutos en generar la página web, pero luego aparecerá el siguiente mensaje que te permitirá acceder al sitio:</p>
-<img src="img/quarto_7.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/quarto_7.png" target="_blank">
+
+  <img src="img/quarto_7.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>¡Listo! Ahora puedes compartir tu página con todo el mundo. El enlace será algo como <code>https://usuario.github.io/repositorio/</code></p>
 <p>Ojo que con este método sólo podremos publicar un documento Quarto por repositorio.</p>
 <p>Puedes ver las instrucciones completas para este proceso 
@@ -519,9 +555,17 @@ Si necesitas una guía más detallada para aprender a crear
     </svg></a>
 </h3>
 <p>Al crear un nuevo proyecto desde RStudio podemos elegir la opción <em>Quarto Website</em>:</p>
-<img src="img/website_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/website_1.png" target="_blank">
+
+  <img src="img/website_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Se abrirán una nueva sesión de R y veremos que nuestro proyecto ya viene con varios archivos dentro. Primero que nada, presionemos <em>Render</em> para previsualizar lo que tenemos como base:</p>
-<img src="img/website_2.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/website_2.png" target="_blank">
+
+  <img src="img/website_2.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>El proyecto ya viene con un sitio web funcional, que podemos explorar. Viene con dos páginas por defecto, <code>index.qmd</code> y <code>about.qmd</code>. Ambas puedes modificarlas a tu gusto con el contenido que desees.</p>
 <p>Estas páginas aparecen en la barra de navegación (arriba del sitio web, o en el lado izquierdo si la pantalla/ventana es pequeña), para que tus usuarios puedan acceder a ellas.</p>
 
@@ -592,9 +636,17 @@ Si necesitas una guía más detallada para aprender a crear
 <p>En el proyecto desde RStudio, creamos un nuevo archivo vacío que se llame <code>.nojekyll</code>, para decirle a GitHub Pages que no procese el sitio con Jekyll. Si no haces esto, cuando entres a un post del blog te aparecerá un error 404! 😨</p>
 <p>Luego debemos hacer que nuestro proyecto sea un repositorio git (<code>usethis::use_git()</code>) y subir el repositorio a GitHub (<code>usethis::use_github()</code>), o si ya era un repositorio git y ya estaba en GitHub, hacer <code>git add.</code>, <code>git commit -m &quot;actualizacion&quot;</code>, y <code>git push</code> desde la pestaña Terminal.</p>
 <p>Una vez que subimos nuestros cambios al repositorio remoto, vamos al repositorio en GitHub, <em>Settings</em>, <em>Pages</em>, y configuramos el repositorio para que genere la página desde <code>/docs</code>:</p>
-<img src="img/quarto_6.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/quarto_6.png" target="_blank">
+
+  <img src="img/quarto_6.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Siguiendo estas instrucciones ya tendrás tu sitio web básico listo! ¡Y gratis! 🥳 Ahora sólo falta hacerlo crecer agregando páginas, enlaces, y toda la información que quieras.</p>
-<img src="img/website_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/website_3.png" target="_blank">
+
+  <img src="img/website_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <hr>
 
 
@@ -621,9 +673,17 @@ Si necesitas una guía más detallada para aprender a crear
     </svg></a>
 </h3>
 <p>Crear un nuevo proyecto desde RStudio, elegimos la opción <em>Quarto Blog</em>:</p>
-<img src="img/blog_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/blog_1.png" target="_blank">
+
+  <img src="img/blog_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>De la misma forma que cuando creamos el sitio web Quarto, el proyecto aparecerá con los archivos necesarios para tener un blog mínimo. Si presionamos <em>Render</em> podremos provisionar nuestro blog:</p>
-<img src="img/blog_2.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/blog_2.png" target="_blank">
+
+  <img src="img/blog_2.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 
 
 
@@ -645,7 +705,11 @@ Si necesitas una guía más detallada para aprender a crear
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">---</span>
 </span></span></code></pre></div><p>Entonces, para crear una nueva publicación, creamos una carpeta dentro de <code>posts</code> (el nombre de la carpeta será la dirección de la publicación), y dentro de la carpeta creamos un documento Quarto llamado <code>index.qmd</code> con un encabezado que contenga título, autor, fecha, y etiquetas.</p>
 <p>Si presionamos <em>Render</em> para generar el post, veremos que en el panel <em>Viewer</em> de RStudio se previsualiza nuestro blog!</p>
-<img src="img/blog_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/blog_3.png" target="_blank">
+
+  <img src="img/blog_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 
 
 
@@ -666,7 +730,11 @@ Si necesitas una guía más detallada para aprender a crear
 <li>En GitHub, entramos a <em>Settings</em>, luego a <em>Pages</em>, y configuramos el repositorio para que genere la página desde <code>/docs</code></li>
 </ol>
 <p>Siguiendo estas instrucciones ya tendrás tu sitio web básico listo! ¡Y gratis! 🥳 Ahora sólo falta hacerlo crecer agregando páginas, enlaces, y toda la información que quieras.</p>
-<img src="img/website_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/website_3.png" target="_blank">
+
+  <img src="img/website_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Instrucciones para subir a GitHub
 
 <a href="https://quarto.org/docs/publishing/github-pages.html#render-to-docs" target="_blank" rel="noopener">https://quarto.org/docs/publishing/github-pages.html#render-to-docs</a>
@@ -695,7 +763,11 @@ new site, elegir repo, poner _site, y listo</p>
 <a href="https://bastianolea.rbind.io/blog/hugo_blog_nuevo/" target="_blank" rel="noopener">detallé parte del proceso en un post</a>.</p>
 <p>Las instrucciones de este proceso se escapan un poco al objetivo de esta guía, pero les dejo el siguiente enlace, que corresponde al 
 <a href="https://hugo-apero-docs.netlify.app/" target="_blank" rel="noopener">tutorial oficial para crear un blog Hugo con el tema Apéro,</a> que detalla paso por paso todas las acciones que hay que hacer para construir un blog con Hugo, personalizarlo, y publicarlo usando Netlify.</p>
-<img src="img/hugo_0.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/hugo_0.png" target="_blank">
+
+  <img src="img/hugo_0.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Cabe mencionar que el tutorial mismo está construido en un blog Hugo Apéro.</p>
 <p>En resumidas cuentas, las instrucciones son:</p>
 <ul>
@@ -710,7 +782,11 @@ new site, elegir repo, poner _site, y listo</p>
 </span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">sample</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">empty_dirs</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><p>Luego ejecutas <code>blogdown::serve_site()</code> para previsualizar el blog creado.</p>
-<img src="img/hugo_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+<a href="img/hugo_1.png" target="_blank">
+
+  <img src="img/hugo_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Para crear un post nuevo, tenemos una conveniente función que nos ayuda:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># crear un post</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">blogdown</span><span style="color:#908caa">::</span><span style="color:#ea9a97">new_post</span><span style="color:#908caa">(</span><span style="color:#ea9a97">title</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Nubes aleatorias en ggplot&#34;</span><span style="color:#908caa">,</span> 
