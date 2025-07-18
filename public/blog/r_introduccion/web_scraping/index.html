@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Web scraping con R | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Se trata del conjunto de técnicas que permiten extraer datos e información alojada en páginas web, usualmente en formatos que no son fácilmente convertibles a tablas de datos. En este post vemos tres formas de extraer datos desde páginas web con R, cada una con ventajas y desventajas, y su propio tutorial para aprender desde cero a usarlas.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Web scraping con R | Blog">
+<meta property="og:description" content="Se trata del conjunto de técnicas que permiten extraer datos e información alojada en páginas web, usualmente en formatos que no son fácilmente convertibles a tablas de datos. En este post vemos tres formas de extraer datos desde páginas web con R, cada una con ventajas y desventajas, y su propio tutorial para aprender desde cero a usarlas." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/r_introduccion/web_scraping/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/r_introduccion/web_scraping/hex_chromote.png" >
+        <meta property="twitter:card" content="summary">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/r_introduccion/web_scraping/hex_chromote.png" >
+    
+    
+  
+  <meta itemprop="name" content="Web scraping con R">
+  <meta itemprop="description" content="Se denomina web scraping al conjunto de técnicas que permiten extraer datos e información alojada en páginas web, usualmente en formatos que no son fácilmente convertibles a tablas de datos.
+Al ser R un lenguaje enfocado completamente el análisis de datos, es la plataforma ideal para este tipo de tareas, dado que puedes usar un sólo lenguaje para controlar las herramientas de extracción de datos, programar la lógica para automatizar la extracción, procesar y limpiar los datos, y finalmente analizar y presentar tus resultados.">
+  <meta itemprop="datePublished" content="2025-07-17T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-07-17T00:00:00+00:00">
+  <meta itemprop="wordCount" content="491">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/r_introduccion/web_scraping/featured.jpg">
+  <meta itemprop="keywords" content="Web scraping">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container single-series">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+                       
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 pl3-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Web scraping con R</h1>
+        
+        <p class="f6 measure lh-copy mv1">Por Bastián Olea Herrera</p>
+        <p class="f7 db mv0 ttu">17/7/2025</p>
+      </header>
+      <section class="post-body pt5 pb4">
+        <a href="featured.png" target="_blank">
+
+  <img src="featured.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Se denomina 
+<a href="/tags/web-scraping/">web scraping</a> al conjunto de técnicas que permiten <strong>extraer datos e información alojada en páginas web</strong>, usualmente en formatos que no son fácilmente convertibles a tablas de datos.</p>
+<p>Al ser R un lenguaje enfocado completamente el análisis de datos, es la plataforma ideal para este tipo de tareas, dado que puedes usar un sólo lenguaje para controlar las herramientas de extracción de datos, programar la lógica para automatizar la extracción, procesar y limpiar los datos, y finalmente analizar y presentar tus resultados.</p>
+<p>A continuación, te presento tres formas distintas de extraer datos desde páginas web con R. Cada una tiene sus ventajas y desventajas, y están acompañadas de un tutorial en el que le explico desde cero a utilizarlas.</p>
+
+
+
+
+<h2 id="rvest">{rvest}
+  <a href="#rvest"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<img src = rvest_hex_sticker.png style = "float: left; width: 100px; margin-left: 2px; margin-right: 20px;">
+<div style = "margin-left: 120px;">
+<p><code>{rvest}</code> es uno de los paquetes principales y más usados para extraer datos desde internet. Como forma parte del 
+<a href="https://www.tidyverse.org" target="_blank" rel="noopener">Tidyverse</a>, su sintaxis es muy intuitiva y coincide con el flujo de trabajo de la mayoría de usuarios/as de R. Además de ser una forma sencilla de acercarse al web scraping, contiene funciones para interpretar el código HTML obtenido, lo cual lo vuelve una herramienta versátil que también sirve a la par de otras herramientas de web scraping.</p>
+<p>Sirve para la mayoría de los sitios web, pero presenta dificultades con sitios web dinámicos.</p>
+<p>
+<a href="/blog/tutorial_scraping_rvest/"><strong>Tutorial de {rvest}</strong></a></p>
+<p>
+<a href="https://rvest.tidyverse.org" target="_blank" rel="noopener"><strong>Sitio web oficial</strong></a></p>
+</div>
+<hr>
+
+
+
+
+<h2 id="rselenium">{RSelenium}
+  <a href="#rselenium"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<img src = rselenium_hex_sticker.png style = "float: left; margin-left: 2px; width: 100px; margin-right: 20px;">
+<p>Selenium es un software de automatización y testeo de sitios web bastante popular y muy usado. Por esta misma razón, puede ser una de las herramientas de web scraping para la que sea más fácil encontrar recursos, consejos y asistencia online.</p>
+<p>Su fuerte está en la capacidad de controlar distintos navegadores, como Firefox y Chrome, incluso ayudándote con la instalación, u operando desde contendores Docker.</p>
+<div style = "margin-left: 120px;">
+<p>
+<a href="/blog/tutorial_scraping_selenium/"><strong>Tutorial de {RSelenium}</strong></a></p>
+<p>
+<a href="https://docs.ropensci.org/RSelenium/" target="_blank" rel="noopener"><strong>Sitio web oficial</strong></a></p>
+</div>
+<hr>
+
+
+
+
+<h2 id="chromote">{chromote}
+  <a href="#chromote"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<img src = hex_chromote.png style = "float: left; width: 100px; margin-left: 4px; margin-right: 20px;">
+<p>Con este paquete se puede controlar una instancia sin interfaz gráfica de Google Chrome. Hoy en día, cuando este navegador ha monopolizado gran parte del internet, puede ser conveniente utilizarlo para la extracción de datos web. También te permite controlar el navegador de forma gráfica, y una de sus fortalezas es que es más difícil de detectar como un web scraper por los sitios web.</p>
+<div style = "margin-left: 120px;">
+<p>
+<a href="/blog/tutorial_scraping_chromote/"><strong>Tutorial de {chromote}</strong></a></p>
+<p>
+<a href="https://rstudio.github.io/chromote/index.html" target="_blank" rel="noopener"><strong>Sitio web oficial</strong></a></p>
+</div>
+<hr>
+
+
+
+
+<h3 id="ejemplos-de-web-scraping-con-r">Ejemplos de web scraping con R
+  <a href="#ejemplos-de-web-scraping-con-r"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<ul>
+<li>
+<a href="https://github.com/bastianolea/servel_scraping_votaciones" target="_blank" rel="noopener">Web scraping de datos electorales desde Servel (Chile), automatizando el control de varios botones y selectores, con <code>{RSelenium}</code></a></li>
+<li>
+<a href="https://github.com/bastianolea/economia_chile/blob/main/obtener_datos.R" target="_blank" rel="noopener">Web scraping de varios sitios del Banco Central usando <code>{rvest}</code>, automatizado de forma recurrente con GitHub Actions</a></li>
+<li>
+<a href="https://github.com/bastianolea/datos_sociales/blob/master/scraping.R" target="_blank" rel="noopener">Web scraping de perfiles de GitHub con <code>{rvest}</code> para generar tablas de los repositorios</a></li>
+<li>
+<a href="https://github.com/bastianolea/prensa_chile/blob/main/scraping/fuentes/scraping_ejemplo.R" target="_blank" rel="noopener">Ejemplo de web scraping de noticias con <code>{rvest}</code></a></li>
+<li>
+<a href="https://bastianolea.rbind.io/blog/tutorial_scraping_selenium/#navegar-a-un-sitio-web" target="_blank" rel="noopener">Ejemplo de web scraping de un sitio web de Transparencia Activa (Chile) con <code>{RSelenium}</code></a></li>
+<li>
+<a href="https://github.com/bastianolea/prensa_chile" target="_blank" rel="noopener">Obtención automatizada y masiva de datos de prensa con <code>{rvest}</code> y <code>{chromote}</code> para sitios que bloquean el acceso</a></li>
+<li>
+<a href="https://bastianolea.rbind.io/blog/tutorial_scraping_rvest/#extraer-tablas-desde-un-sitio-web" target="_blank" rel="noopener">Extracción de una tabla de Wikipedia con <code>{rvest}</code></a></li>
+<li>
+<a href="https://bastianolea.rbind.io/blog/tutorial_gt/#tabla-de-producto-interno-bruto-regional" target="_blank" rel="noopener">Ejemplo de extracción de una tabla del Banco Central con <code>{rvest}</code></a></li>
+</ul>
+<hr>
+<p><div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+<div style="margin-top:24px;">
+  
+<a href="/clases/spatiallab_introduccion_r_2/">
+<img src="/clases/spatiallab_introduccion_r_2/banner_curso_r.jpeg" style="border-radius: 7px; max-height: 240px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;" alt="¿Necesitas aprender R para análisis de datos desde cero? Inscríbete a mi curso!">
+</a>
+
+<div style="max-width: 320px; margin:auto; font-size:85%;opacity:60%;">
+  <p>¿Necesitas aprender R para análisis de datos desde cero? <a href="https://spatiallab.cl/2da-version-curso-introduccion-al-analisis-de-datos-con-r-para-principiantes?variant_id=109682226">Inscríbete a mi curso!</a></p>
+  </div>
+
+</div></p>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_shinyapps/">&larr; Tutorial: publicar una app Shiny en shinyapps.io</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_github/">Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+
+<aside class="page-sidebar" role="complementary">
+                         
+ 
+
+
+<div style = "padding: 12px;">
+                       
+ 
+
+
+
+
+
+
+
+
+
+
+
+  <img src="/blog/r_introduccion/sidebar-featured.jpg" style = "border-radius: 8px;" class="db ma0">
+
+</div>
+
+<div class="blog-info ph4 pt4 pb4 pb0-l">
+  
+
+  <h1 class="f3">Introducción a R</h1>
+  <p class="f6 lh-copy measure"><p>Contenido para principiantes en R. Serie de posts y tutoriales del nivel más básico, para quienes quieran adentrarse por primera vez en el análisis de datos con R.</p>
+<p>Si tienes alguna duda con R, no entiendes alguno de los contenidos, o necesitas apoyo personalizado, puedes 
+<a href="/contact/">contactarme.</a></p>
+</p>
+  <p class="f7 measure lh-copy i mh0-l">Escrito por Bastián Olea Herrera</p>
+
+
+  
+
+</div>
+
+
+                         
+ 
+
+
+
+<div class="flex items-start sticky ph4 pb4">
+  <div class="w-two-thirds w-50-l ph0">
+    
+    <h2 class="mt3 mb3 f5 fw7 ttu tracked"><a class="no-underline dim" href="/blog/r_introduccion/">Publicaciones de la serie</a></h2>
+    <nav id="SeriesTableOfContents">
+        <ul>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/instalar_r/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/instalar_r/">Primer paso: instalar R</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/por_que_r/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/por_que_r/">¿Por qué usar R?</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/r_basico/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/r_basico/">Introducción al lenguaje de programación R</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/r_intermedio/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/r_intermedio/">Herramientas básicas para programar con R</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/proyectos/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/proyectos/">Organizar el trabajo en Proyectos de RStudio</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/dplyr_intro/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/dplyr_intro/">Introducción al manejo de datos con {dplyr}</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_censo/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_campamentos/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_dplyr_campamentos/">Tutorial: introducción a {dplyr} usando datos de campamentos</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_visualizacion_ggplot/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_visualizacion_ggplot/">Tutorial: visualización de datos con {ggplot2}</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shiny_1/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_shiny_1/">Tutorial: crea una aplicación Shiny básica</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shinyapps/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_shinyapps/">Tutorial: publicar una app Shiny en shinyapps.io</a></li>
+        
+          
+          <li class="active" hugo-nav="/blog/r_introduccion/web_scraping/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/web_scraping/">Web scraping con R</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_github/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_github/">Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/recursos_r/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/recursos_r/">Recursos, blogs y otros sitios sobre R</a></li>
+        
+        </ul>
+      </nav>
+  </div>
+  <details open id="PageTableOfContents">
+    <summary><h2 class="mv0 f5 fw7 ttu tracked dib">Índice</h2></summary>
+    <div class="pl2 pr0 mh0">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#rvest">{rvest}</a></li>
+    <li><a href="#rselenium">{RSelenium}</a></li>
+    <li><a href="#chromote">{chromote}</a>
+      <ul>
+        <li><a href="#ejemplos-de-web-scraping-con-r">Ejemplos de web scraping con R</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </details>
+  
+</div>
+</aside>
+
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
