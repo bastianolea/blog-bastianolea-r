@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Web scraping usando Google Chrome desde R con {chromote} | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="El paquete `{chromote}` permite utilizar desde R _Chrome DevTools_ para controlar navegadores Chromium, como Google Chrome, entre otros. Esto significa que podremos usar Chrome para conectarnos a los sitios web e interpretarlos usando su propio motor para cargar sitios web dinámicos y complejos.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Web scraping usando Google Chrome desde R con {chromote} | Blog">
+<meta property="og:description" content="El paquete `{chromote}` permite utilizar desde R _Chrome DevTools_ para controlar navegadores Chromium, como Google Chrome, entre otros. Esto significa que podremos usar Chrome para conectarnos a los sitios web e interpretarlos usando su propio motor para cargar sitios web dinámicos y complejos." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/tutorial_scraping_chromote/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/tutorial_scraping_chromote/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/tutorial_scraping_chromote/featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Web scraping usando Google Chrome desde R con {chromote}">
+  <meta itemprop="description" content="En este blog ya hemos cubierto un par de herramientas de web scraping, cada una con sus características y beneficios: {rvest}, un paquete fácil y rápido de usar para extraer datos desde sitios webs comunes, y {RSelenium}, una interfaz en R para utilizar un software de automatización de navegadores bastante popular, aunque un poco menos amigable.
+Ahora veremos cómo extraer datos desde páginas web usando un paquete de R que, a grandes rasgos, hace web scraping controlando Google Chrome.">
+  <meta itemprop="datePublished" content="2025-07-17T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-07-17T00:00:00+00:00">
+  <meta itemprop="wordCount" content="613">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/tutorial_scraping_chromote/featured.png">
+  <meta itemprop="keywords" content="Web scraping">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Web scraping usando Google Chrome desde R con {chromote}</h1>
+        
+        
+        <p class="f7 db mv0 ttu">17/7/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="https://bastianoleah.netlify.app/tags/web-scraping">web scraping</a>, </dd></em>
+  </dl>
+ 
+
+
+
+
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>En este blog ya hemos cubierto un par de herramientas de 
+<a href="../../../tags/web-scraping/">web scraping</a>, cada una con sus características y beneficios: 
+<a href="../../../blog/tutorial_scraping_rvest/"><code>{rvest}</code></a>, un paquete fácil y rápido de usar para extraer datos desde sitios webs comunes, y 
+<a href="../../../blog/tutorial_scraping_selenium/"><code>{RSelenium}</code></a>, una interfaz en R para utilizar un software de automatización de navegadores bastante popular, aunque un poco menos amigable.</p>
+<p>Ahora veremos cómo extraer datos desde páginas web usando un paquete de R que, a grandes rasgos, hace web scraping controlando Google Chrome.</p>
+<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
+
+Si necesitas aprender lo básico del web scraping, primero 
+<a href="/blog/tutorial_scraping_rvest/">revisa este tutorial de <code>{rvest}</code></a>
+
+</div>
+
+<p>El 
+<a href="https://rstudio.github.io/chromote/index.html" target="_blank" rel="noopener">paquete <code>{chromote}</code></a> permite utilizar desde R <em>Chrome DevTools</em> para controlar navegadores Chromium, como Google Chrome, entre otros. Esto significa que podremos usar Chrome para conectarnos a los sitios web e interpretarlos usando su propio motor para cargar sitios web dinámicos y complejos, como con 
+<a href="../../../blog/tutorial_scraping_selenium/"><code>{RSelenium}</code></a>.</p>
+<p>Instalamos el paquete, si es que no lo tenemos aún:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;chromote&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Cargamos <code>{chromote}</code> y especificamos que queremos utilizar el nuevo modo sin interfaz gráfica (<em>headless</em>) de Chrome, ya recientemente hubo una actualización de este modo que cambió la forma en que se usa.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">chromote</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">options</span><span style="color:#908caa">(</span><span style="color:#ea9a97">chromote.headless</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;new&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Ahora abrimos una nueva sesión en el navegador para poder empezar a controlarlo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">chrome</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">ChromoteSession</span><span style="color:#908caa">$</span><span style="color:#ea9a97">new</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Lo que hicimos aquí fue crear un objeto <code>chrome</code> te representa la instancia del navegador que abrimos, y desde el cual podremos ir ejecutando las instrucciones.</p>
+<p>Como <code>{chromote}</code> principalmente funciona sin un interfaz gráfica, igual que <code>{rvest}</code>, podremos seguir desde nuestra consola de R sin tener que cambiar de aplicación.</p>
+<p>Ahora podemos aplicar una de las fortalezas de estas estrategia para web scraping, que es <strong>especificar un 
+<a href="https://rstudio.github.io/chromote/articles/example-custom-user-agent.html" target="_blank" rel="noopener">agente de usuario personalizado</a></strong>. Lo que hace esto es decirle a los sitios web que te estás conectando desde un navegador común y corriente, en vez de que detecten que estas haciendo scraping de manera programática, es decir, que no sospechen que eres un robot 🤖</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">navegador</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">chrome</span><span style="color:#908caa">$</span><span style="color:#ea9a97">Network</span><span style="color:#908caa">$</span><span style="color:#ea9a97">setUserAgentOverride</span><span style="color:#908caa">(</span><span style="color:#ea9a97">userAgent</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">navegador</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>De este modo estamos simulando que usamos un navegador real, lo que puede ayudarte a resolver problemas con conexiones a determinados sitios.</p>
+
+
+
+
+<h3 id="navegar-a-páginas-web">Navegar a páginas web
+  <a href="#navegar-a-p%c3%a1ginas-web"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Ahora podemos controlar el navegador para dirigirlo a una página web con <code>$Page$navigate()</code>. Luego podemos ejecutar <code>$Page$loadEventFired()</code> para que la sesión se bloquee hasta que la página web esté completamente cargada. Esto es súper conveniente cuando los sitios son complejos, para evitar extraer el código del sitio antes de qué esté completamente cargado.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">enlace</span> <span style="color:#908caa">&lt;-</span> <span style="color:#f6c177">&#34;https://bastianolea.rbind.io&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">chrome</span><span style="color:#908caa">$</span><span style="color:#ea9a97">Page</span><span style="color:#908caa">$</span><span style="color:#ea9a97">navigate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">enlace</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># navegar a la página</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">chrome</span><span style="color:#908caa">$</span><span style="color:#ea9a97">Page</span><span style="color:#908caa">$</span><span style="color:#ea9a97">loadEventFired</span><span style="color:#908caa">()</span> <span style="color:#6e6a86"># esperar a que cargue</span>
+</span></span></code></pre></div>
+
+
+
+<h3 id="extraer-el-código-fuente">Extraer el código fuente
+  <a href="#extraer-el-c%c3%b3digo-fuente"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Una vez que estamos en el sitio que deseamos, ejecutamos lo siguiente para 
+<a href="https://rstudio.github.io/chromote/articles/example-extract-text.html" target="_blank" rel="noopener">extraer el código fuente</a> de la página:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">fuente</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">chrome</span><span style="color:#908caa">$</span><span style="color:#ea9a97">Runtime</span><span style="color:#908caa">$</span><span style="color:#ea9a97">evaluate</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;document.querySelector(&#39;html&#39;).outerHTML&#34;</span><span style="color:#908caa">)</span><span style="color:#908caa">$</span><span style="color:#ea9a97">result</span><span style="color:#908caa">$</span><span style="color:#ea9a97">value</span> <span style="color:#6e6a86"># obtener datos</span>
+</span></span></code></pre></div><p>Ahora contamos con todo el código HTML que genera el contenido de la página web, podemos 
+<a href="../../../blog/tutorial_scraping_rvest/">recurrir a <code>{rvest}</code></a> para interpretar el código y así extraer los contenidos que necesitemos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">rvest</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># leer código fuente del sitio web</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">sitio</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_html</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fuente</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># extraer un párrafo de texto</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">sitio</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">html_elements</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;.page-main&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">html_elements</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;p&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">html_text2</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><pre><code>[1] &quot;Este sitio contiene todo tipo de recursos sobre programación con el lenguaje R para análisis de datos, con un foco en las ciencias sociales. En el blog comparto consejos, novedades y tutoriales de R para que otras personas aprendan a programar en este lenguaje.&quot;
+</code></pre>
+
+
+
+
+<h3 id="otros">Otros
+  <a href="#otros"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Si queremos vigilar visualmente el control que hacemos sobre Chrome con <code>{chromote}</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">chrome</span><span style="color:#908caa">$</span><span style="color:#ea9a97">view</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><a href="chromote_r.png" target="_blank">
+
+  <img src="chromote_r.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>También podemos tomar capturas de pantalla de lo que está viendo nuestro navegador remoto:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">chrome</span><span style="color:#908caa">$</span><span style="color:#ea9a97">screenshot</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;pantallazo.png&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Finalmente, para terminar la sesión y apagar el proceso del navegador remoto, ejecutamos lo siguiente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">chrome</span><span style="color:#908caa">$</span><span style="color:#ea9a97">close</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><hr>
+<p><div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+<div style="margin-top:24px;">
+  
+<a href="/clases/spatiallab_introduccion_r_2/">
+<img src="/clases/spatiallab_introduccion_r_2/banner_curso_r.jpeg" style="border-radius: 7px; max-height: 240px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;" alt="¿Necesitas aprender R para análisis de datos desde cero? Inscríbete a mi curso!">
+</a>
+
+<div style="max-width: 320px; margin:auto; font-size:85%;opacity:60%;">
+  <p>¿Necesitas aprender R para análisis de datos desde cero? <a href="https://spatiallab.cl/2da-version-curso-introduccion-al-analisis-de-datos-con-r-para-principiantes?variant_id=109682226">Inscríbete a mi curso!</a></p>
+  </div>
+
+</div></p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">July 17, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">3 minute read, 613 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/web-scraping">web scraping</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/r_introduccion/web_scraping/">Web scraping con R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/tutorial_scraping_selenium/">Tutorial: web scraping controlando un navegador web con {RSelenium} en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/unim/taller_ciencia_de_datos_gestion_municipal/">Video: Taller Aplicación de la Ciencia de Datos en la Gestión Municipal</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/tutorial_scraping_selenium/">Tutorial: web scraping controlando un navegador web con {RSelenium} en R &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

@@ -14,8 +14,8 @@ blogdown::new_post(title = "Web scraping usando Google Chrome desde R con {chrom
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Web scraping usando Google Chrome desde R con {chromote}", 
-                   file = "blog/tutorial_scraping_chromote/index.qmd",
+blogdown::new_post(title = "Web scraping con R", 
+                   file = "blog/web_scraping/index.qmd",
                    author = "Bastián Olea Herrera",
                    tags = c("web scraping"),
                    categories = c() 
