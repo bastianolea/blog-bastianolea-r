@@ -19,7 +19,7 @@ links:
 
 Lo creé usando [Hugo](https://gohugo.io), un generador de sitios web estáticos de código abierto y gratuito. Hugo se puede usar a través de R usando `{blogdown}` y el tema [Hugo Apéro](https://hugo-apero.netlify.app), creado por [Alison Hill](https://www.apreshill.com), y así puedes crear páginas y publicaciones usando Quarto o RMarkdown. De ese modo resulta muy fácil integrar las cosas que hagas con R en tu sitio, compartiendo el código en los posts. 
 
-La [guía para aprender a usar Hugo Apéro](https://hugo-apero-docs.netlify.app) y dejar tu blog operacional es muy amigable y sencilla de seguir! Lo recomiendo, solo me tomó una tarde. Tiene amplia documentación y recursos [en su repositorio.](https://github.com/hugo-apero/)
+La [guía para aprender a usar Hugo Apéro](https://hugo-apero-docs.netlify.app) y dejar tu blog operacional es muy amigable y sencilla de seguir! Lo recomiendo, solo me tomó una tarde. Tiene amplia documentación y recursos [en su repositorio.](https://github.com/hugo-apero/) También existe [el libro, _Create, Publish, and Analyze Personal Websites Using R and RStudio_](https://r4sites-book.netlify.app), que detalla todas las instrucciones de crear un sitio web con R y Hugo.
 
 El sitio web se genera con `{blogdown}` dentro de un proyecto de R cada vez que hago un cambio en el código del sitio. Luego, cuando subo los cambios del sitio a GitHub, [Netlifly](https://www.netlify.com) detecta los cambios, reconstruye el sitio y lo re-publica en minutos. De esta forma, el proceso es de _despliegue continuo:_ cada cambio local que hago, al ser subido al [repositorio remoto,](https://github.com/bastianolea/blog-r) gatilla la reconstrucción del sitio y su actualización en la versión pública del sitio web. 
 
