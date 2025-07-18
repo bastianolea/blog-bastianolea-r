@@ -7,17 +7,17 @@ blogdown::stop_server()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Reduce el tamaño de tus reportes Quarto con este truco", 
+blogdown::new_post(title = "Web scraping usando Google Chrome desde R con {chromote}", 
                    file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
                    tags = c("quarto", "consejos")
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Etiquetas de texto que se repelen entre sí en gráficos {ggplot2}", 
-                   file = "blog/ggrepel/index.qmd",
+blogdown::new_post(title = "Web scraping usando Google Chrome desde R con {chromote}", 
+                   file = "blog/tutorial_scraping_chromote/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("visualización de datos", "ggplot2", "gráficos"),
+                   tags = c("web scraping"),
                    categories = c() 
 )
 # draft: true
