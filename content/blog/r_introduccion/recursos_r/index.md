@@ -51,6 +51,11 @@ _Sitios con contenido educacional para que aprendas R._
 - [Extensiones de Shiny](https://github.com/nanxstats/awesome-shiny-extensions), colección de paquetes que extienden Shiny
 - [Documentación de `{bslib}`](https://rstudio.github.io/bslib/index.html), paquete para construir interfaces en Shiny
 
+### Reportes Quarto
+- [Tutorial para crear documentos Quarto](https://bastianolea.rbind.io/blog/quarto_reportes/)
+- [Tutorial para usar Quarto para generar blogs y sitios web](https://bastianolea.rbind.io/blog/tutorial_quarto_github_pages/)
+- [Crear, publicar y analizar sitios web personales usando R](https://r4sites-book.netlify.app), libro detalla todas las instrucciones de crear un sitio web con R y Hugo.
+
 ### Cursos para aprender R
 - [SpatialLab](https://spatiallab.cl), cursos de R y más (algunos impartidos por mi)
 - [Estación R](https://estacion-r.com)
@@ -75,10 +80,10 @@ _Sitios donde puedes encontrar datos que puedes usar para explorar o aprender._
 ### Fuentes de datos
 
 #### Fuentes de datos sobre Chile 🇨🇱
+- [Repositorio de datos sociales abiertos](https://bastianolea.github.io/datos_sociales/) (mantenido y desarrollado por mi)
 - [Datos abiertos del Estado de Chile](https://datos.gob.cl) 
 - [Banco Integrado de Datos (BIDAT) del Ministerio de Desarrollo Social y Familia](https://bidat.midesof.cl/) 
 - [Banco Central de Chile](https://si3.bcentral.cl/siete), repositorio de datos estadísticos sobre economía y trabajo
-- [Repositorio de datos sociales abiertos](https://bastianolea.github.io/datos_sociales/) (mantenido y desarrollado por mi)
 - [Estadísticas sociales del Instituto Nacional de Estadísticas (INE)](https://www.ine.gob.cl/estadisticas/)
 - [Estadísticas y datos abiertos de salud pública en Chile: Departamento de Estadísticas e Información de Salud (DEIS)](https://deis.minsal.cl/#estadisticas)
 - [`{guaguas}`](https://rivaquiroga.github.io/guaguas/index.html), paquete de R con base de datos de nombres inscritos en Chile

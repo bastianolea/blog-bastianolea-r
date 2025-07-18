@@ -412,6 +412,8 @@ Las instrucciones de este proceso se escapan un poco al objetivo de esta guía, 
 
 Cabe mencionar que el tutorial mismo está construido en un blog Hugo Apéro.
 
+También recomiendo [este libro, _Create, Publish, and Analyze Personal Websites Using R and RStudio_](https://r4sites-book.netlify.app), que detalla todas las instrucciones de crear un sitio web con R y Hugo.
+
 En resumidas cuentas, las instrucciones son:
 - Crear un nuevo proyecto de R
 - `install.packages("blogdown")`
