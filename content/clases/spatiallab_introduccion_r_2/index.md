@@ -24,7 +24,7 @@ Si no tienes experiencia programando ni analizando datos, o si ya tienes experie
 
 El curso consiste de 3 módulos. Puedes tomarlos todos para aprender DESDE CERO a analizar datos con el lenguaje R, o bien, puedes elegir sólo los niveles que necesites! Por ejemplo, saltarte el nivel básico, sólo tomar los dos últimos que son más avanzados, o uno en particular que te permita solucionar una necesidad puntual.
 
-1. **Módulo 1:** Fundamentos del Lenguaje R y manejo inicial de datos (6 horas) 22 - 25 - 29 de julio de 2025
+1. **Módulo 1:** Fundamentos del Lenguaje R y manejo inicial de datos (6 horas) 22 - 24 - 29 de julio de 2025
 2. **Módulo 2:** Manipulación y transformación de datos con Tidyverse (6 horas)	5 - 7 - 12 de agosto de 2025
 3. **Módulo 3:** Visualización y comunicación de resultados (6 horas) 19 - 21 - 26 de agosto de 2025
 

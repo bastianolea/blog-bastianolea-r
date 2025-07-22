@@ -31,8 +31,9 @@ _Sitios con contenido educacional para que aprendas R._
 
 ### Recursos sobre R
 - [Tutorial de R desde cero](https://bastianolea.rbind.io/blog/r_introduccion/), con niveles [básico](/blog/r_introduccion/r_basico/), [intermedio](/blog/r_introduccion/r_intermedio/), y foco en [`aprender {dplyr}`](/blog/r_introduccion/dplyr_intro/)
-- [R para ciencia de datos](https://es.r4ds.hadley.nz), traducción al español del libro "R for Data Science", recomendado para entrar a R
-- [Big Book of R](https://www.bigbookofr.com/index.html#live-stats), colección de cientos de libros sobre R, organizada por temas
+- [R para ciencia de datos](https://es.r4ds.hadley.nz) 📚 traducción al español del libro "R for Data Science", recomendado para entrar a R
+- [Ciencia de Datos para Gente Sociable](https://bitsandbricks.github.io/ciencia_de_datos_gente_sociable/) 📚 libro introductorio de R enfocado en personas de las ciencias sociales
+- [Big Book of R](https://www.bigbookofr.com/index.html#live-stats) 📚 colección de cientos de libros sobre R, organizada por temas
 - [R Resource Database](https://www.resourcesdatabase.com), sitio que compila cientos de recursos para usuarios de R, como tutoriales, información sobre paquetes, y más.
 - [R Universe](https://r-universe.dev/search), plataforma para ayudarte a encontrar y publicar contenido sobre R
 - [R Packages](https://r-packages.io), lista de paquetes de R populares que facilita el acceso a su documentación
@@ -54,13 +55,13 @@ _Sitios con contenido educacional para que aprendas R._
 ### Reportes Quarto
 - [Tutorial para crear documentos Quarto](https://bastianolea.rbind.io/blog/quarto_reportes/)
 - [Tutorial para usar Quarto para generar blogs y sitios web](https://bastianolea.rbind.io/blog/tutorial_quarto_github_pages/)
-- [Crear, publicar y analizar sitios web personales usando R](https://r4sites-book.netlify.app), libro detalla todas las instrucciones de crear un sitio web con R y Hugo.
+- [Crear, publicar y analizar sitios web personales usando R](https://r4sites-book.netlify.app) 📚 libro que detalla todas las instrucciones de crear un sitio web con R y Hugo.
 
 ### Cursos para aprender R
-- [SpatialLab](https://spatiallab.cl), cursos de R y más (algunos impartidos por mi)
+- [SpatialLab](https://spatiallab.cl), cursos de R y más (algunos impartidos por mi! 😌)
 - [Estación R](https://estacion-r.com)
-- [DataCamp](https://www.datacamp.com), cursos asíncronos interactivos para aprender R
-- [Hazla con Datos](https://hazlacondatos.com)
+- [DataCamp](https://www.datacamp.com), cursos asíncronos interactivos para aprender R (así aprendí yo)
+- [Hazla con Datos](https://hazlacondatos.com) 🩺
 - [Escuela de Datos](https://escueladedatos.online)
 
 
@@ -71,10 +72,10 @@ _Sitios con contenido educacional para que aprendas R._
 _Sitios donde puedes encontrar datos que puedes usar para explorar o aprender._
 
 ### Iniciativas sobre datos en Latinoamérica
-- [Argendata](https://argendata.fund.ar), datos sobre Argentina
+- [Argendata](https://argendata.fund.ar) 🇦🇷 datos sobre Argentina
 - [infoactivismo.org](https://infoactivismo.org/), sitio sobre activismo de datos, tecnología e información en Latinoamérica
-- [Vivir sin violencia](https://www.vivirsinviolencia.org), datos abiertos sobre violencia de género y contra el colectivo LGBTIQ+
-- [Abriendo Datos](https://www.abriendodatos.org), fundación chilena que promueve una cultura de datos abiertos
+- [Vivir sin violencia](https://www.vivirsinviolencia.org) 🏳️‍🌈 datos abiertos sobre violencia de género y contra el colectivo LGBTIQ+
+- [Abriendo Datos](https://www.abriendodatos.org) 🇨🇱 fundación chilena que promueve una cultura de datos abiertos
 
 
 ### Fuentes de datos
@@ -108,9 +109,11 @@ _Conoce a otras personas que usan R o únete a una comundad de usuarios/as!_
 ### Comunidades de R en Latinoamérica o hipanohablantes
 - [Latin R](https://latinr.org), Conferencia Latinoamericana de R para investigación y desarrollo
 - [Escuela de Datos](https://escueladedatos.online)
-- [Grupo de usuarios de R de Madrid](https://madrid.r-es.org)
-- [R en Buenos Aires](https://www.meetup.com/renbaires/?_xtd=gqFyqTIxOTE0ODE0MqFwp2FuZHJvaWQ%253D&from=ref)
+- [Grupo de usuarios de R de Madrid](https://madrid.r-es.org) 🇪🇸
+- [R en Buenos Aires](https://www.meetup.com/renbaires/?_xtd=gqFyqTIxOTE0ODE0MqFwp2FuZHJvaWQ%253D&from=ref) 🇦🇷
 
+### Otras comunidades de R
+- [rainbowR](https://rainbowr.org) 🏳️‍🌈 comunidad de usuarixs de R enfocada en diversidad y disidencias sexo-genéricas y activismo de datos
 
 ### Usuarios de R destacados
 - [Julia Silge](https://juliasilge.com) (análisis de texto, machine learning)
