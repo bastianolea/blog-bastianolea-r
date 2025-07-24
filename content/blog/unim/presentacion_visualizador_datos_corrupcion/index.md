@@ -4,7 +4,7 @@ author: Bastián Olea Herrera
 date: '2025-01-24'
 slug: []
 categories: []
-tags: [shiny, Chile, blog, visualización de datos, aplicaciones]
+tags: [shiny, Chile, visualización de datos, aplicaciones, videos]
 links:
 - icon: youtube
   icon_pack: fab

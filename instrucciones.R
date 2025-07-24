@@ -14,10 +14,10 @@ blogdown::new_post(title = "Web scraping usando Google Chrome desde R con {chrom
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Web scraping con R", 
-                   file = "blog/web_scraping/index.qmd",
+blogdown::new_post(title = "Taller: Medición y Análisis de la Corrupción en Chile desde el Análisis de Datos y Herramientas Abiertas", 
+                   file = "blog/taller_corrupcion_cesi/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("web scraping"),
+                   tags = c("web scraping", "Chile", "visualización de datos", "análisis de texto"),
                    categories = c() 
 )
 # draft: true
@@ -51,6 +51,9 @@ blogdown::new_post(title = "Web scraping con R",
 "assets/tema-morado-hex.scss" # tema
 "config.toml" # configuración
 
+"~/Documents/Otros/blog-bastianolea-r/themes/hugo-apero/layouts/partials/shared/summary.html" # html del blog (lista de posts)
+"~/Documents/Otros/blog-bastianolea-r/themes/hugo-apero/layouts/taxonomy/taxonomy.html" # html de la página de tags
+"~/Documents/Otros/blog-bastianolea-r/themes/hugo-apero/layouts/partials/shared/summary-thumbnail.html" # html de las páginas de cada tag
 
 ## utilidades ----
 
