@@ -508,13 +508,13 @@ censo |>
 ```
 
     # A tibble: 5 × 1
-      comuna  
-      <chr>   
-    1 Santiago
-    2 Graneros
-    3 Bulnes  
-    4 Quirihue
-    5 Yumbel  
+      comuna     
+      <chr>      
+    1 San Vicente
+    2 Toltén     
+    3 Papudo     
+    4 Cerro Navia
+    5 Freirina   
 
 ## Selección de filas por grupos
 

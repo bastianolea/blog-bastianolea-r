@@ -4,7 +4,7 @@ author: Bastián Olea Herrera
 date: '2025-01-24'
 slug: []
 categories: ["tutoriales"]
-tags: ["dplyr", "web scraping", "datos", "procesamiento de datos", "limpieza de datos", "Chile"]
+tags: ["dplyr", "web scraping", "datos", "procesamiento de datos", "limpieza de datos", "Chile", "videos"]
 links:
 - icon: youtube
   icon_pack: fab

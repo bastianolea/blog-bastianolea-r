@@ -29,8 +29,16 @@
         {{ end }}
       </header>
       {{ $summary := cond (ne .Params.excerpt nil) .Params.excerpt .Summary }}
-      {{ with $summary }}<p class="f6 lh-copy mv2 flex-auto">{{ . | markdownify | emojify }}</p>{{ end }}
+      {{ with $summary }}<p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">{{ . | markdownify | emojify }}</p>{{ end }}
+      <!-- agregar tags -->
+        {{ with .Params.tags }}
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0">{{ range . }} <a style = "font-size: 12px; color: #543A74 !important;", href="{{ "tags/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}</dd></em>
+        </dl>
+        {{ end }}
+        <!-- /agregar tags -->
       <footer class="w-100">
+        
       <!--ensures section Params are respected-->
       {{ if $root.Params.show_author_byline }}<p class="f7 db mv1">{{ if .Params.author }}Por {{ .Params.author }}{{ end }}{{ with .Params.categories }} in{{ range . }} <a href="{{ "categories/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}{{ end }}</p>{{ end }}
       {{ if $root.Params.show_post_date }}<p class="f7 db mv1">{{ .PublishDate.Format "2/1/2006" }}</p>{{ end }}
