@@ -7,10 +7,10 @@ blogdown::stop_server()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Descargar todos los archivos de la página web del Censo 2024 con {rvest}", 
-                   file = paste0("blog/", lubridate::today(), "/index.qmd"),
+blogdown::new_post(title = "Gráfico de mis géneros musicales más escuchados según datos de Last.fm", 
+                   file = paste0("blog/", lubridate::today()+1, "/index.qmd"),
                    author = "Bastián Olea Herrera",
-                   tags = c("rvest", "datos", "Chile")
+                   tags = c("ggplot2", "visualización de datos", "blog")
 )
 
 # crear un post tutorial
@@ -52,9 +52,9 @@ blogdown::new_post(title = "Taller: Medición y Análisis de la Corrupción en C
 "assets/tema-morado-hex.scss" # tema
 "config.toml" # configuración
 
-"~/Documents/Otros/blog-bastianolea-r/themes/hugo-apero/layouts/partials/shared/summary.html" # html del blog (lista de posts)
-"~/Documents/Otros/blog-bastianolea-r/themes/hugo-apero/layouts/taxonomy/taxonomy.html" # html de la página de tags
-"~/Documents/Otros/blog-bastianolea-r/themes/hugo-apero/layouts/partials/shared/summary-thumbnail.html" # html de las páginas de cada tag
+"themes/hugo-apero/layouts/partials/shared/summary.html" # html del blog (lista de posts)
+"themes/hugo-apero/layouts/taxonomy/taxonomy.html" # html de la página de tags
+"themes/hugo-apero/layouts/partials/shared/summary-thumbnail.html" # html de las páginas de cada tag
 
 ## utilidades ----
 
