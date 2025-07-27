@@ -1,0 +1,88 @@
+---
+title: Descargar todos los archivos de la página web del Censo 2024 con {rvest}
+author: Bastián Olea Herrera
+date: '2025-07-27'
+slug: []
+categories: []
+tags:
+  - datos
+  - Chile
+  - automatización
+  - loops
+  - purrr
+  - web scraping
+links:
+- icon: github
+  icon_pack: fab
+  name: código
+  url: https://github.com/bastianolea/censo_2024
+excerpt: "Éste es un mini ejemplo de automatización de tareas con R: los resultados del Censo 2024 vienen en 20 archivos, en 20 enlaces distintos! En un script de R, con `{rvest}` extraemos todos los enlaces del sitio, y con `{purrr}` descargamos todos los archivos de una."
+---
+
+Veamos un mini ejemplo de automatización de tareas con R: los resultados del Censo 2024 vienen en 20 archivos, en 20 enlaces distintos! 
+
+¿El problema? para obtenerlos, tendríamos que entrar al sitio con el navegador, ir al enlace de descargas, bajar cada uno de los 20 archivos manualmente, y guardarlos en una carpeta para poder usarlos.
+
+En un script de R, con `{rvest}` extraemos todos los enlaces del sitio, y con `{purrr}` descargamos todos los archivos de una 🚀
+
+Beneficios? Muchos!
+- No tendrás que apretar 20 veces un botón como un perdedor/a 😎
+- Obtendrás una fuente reproducible de los datos originales 🤓
+- Creaste trazabilidad de los datos (nadie puede alegar que son manipulados) 🕵🏻‍♀️
+- Puedes actualizarlos o volver a descargarlos en otro equipo con un clic
+- Creaste un proceso que puedes aplicar a otros sitios!
+- Fastidiaste a la gente del INE descargando 20 archivos en menos de 1 segundo 😣
+
+Lo primero obtener el código fuente de la página y extraer los en enlaces que están en cada botón con [web scraping](https://bastianolea.rbind.io/blog/r_introduccion/web_scraping/). Puedes aprender cómo extraer elementos de una página web con [este tutorial de web scraping](https://bastianolea.rbind.io/blog/tutorial_scraping_rvest/) o viendo [este taller donde lo explico en un video](https://bastianolea.rbind.io/blog/taller_corrupcion_cesi/).
+```{r}
+enlace <- "https://censo2024.ine.gob.cl/estadisticas/"
+
+# extraer enlaces de descarga
+enlaces <- rvest::read_html(enlace) |> # descargar sitio
+  rvest::html_elements(".fusion-button") |> # botones
+  rvest::html_attr("href") |> # enlaces
+  stringr::str_subset("xls") # sólo excel
+
+enlaces
+```
+
+Obtuvimos todos los enlaces que están en la página! Ahora usaremos [un poco de magia (`regex`) con `{stringr}`](/blog/stringr_texto/) para que solamente queden los enlaces que apuntan a archivos Excel:
+```{r}
+# extraer nombres de archivos
+archivos <- stringr::str_extract(enlaces, "(?<=\\d{2}/\\d{2}/).*")
+
+archivos
+```
+
+Finalmente, [creamos un loop](/blog/r_introduccion/r_intermedio/#bucles) que vaya por cada uno de los enlaces, descargue cada uno de los archivos, y le ponga el nombre al archivo correspondiente:
+```{r}
+#| eval: false
+#| echo: true
+
+# crear carpeta
+dir.create("datos/originales", showWarnings = F) 
+
+# por cada posición de los enlaces (x va del 1 al n)
+seq_along(enlaces) |> 
+  purrr::walk(
+    ~{message("descargando ", enlaces[.x]) # enlace correspondiente a x
+      
+      # descargar archivo en el enlace
+      download.file(enlaces[.x],
+                    # nombre del archivo a guardar
+                    destfile = paste0("datos/originales/", 
+                                      archivos[.x]) # nombre de archivo de x
+      )
+      Sys.sleep(1) # espera post-descarga
+    })
+
+```
+
+<div style="margin:auto; max-width:70%;">
+<video src="r_grabacion.mov" style="border-radius:7px; max-width: 100%; margin:auto;" autoplay loop>
+</video>
+</div>
+
+Con este breve script obtuviste un proceso que te permite descargar automáticamente todos los datos, lo cual es una forma certera de crear una trazabilidad y una fuente real de los datos, además de darte un proceso que puedes volver a utilizar en otros sitios para optimizar tu trabajo!
+
+Puedes encontrar el código de este ejemplo (y los datos) en [este repositorio sobre extracción y limpieza de los datos del Censo 2024.](https://github.com/bastianolea/censo_2024)

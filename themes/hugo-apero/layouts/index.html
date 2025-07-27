@@ -4,9 +4,24 @@
   <section class="page-content mw9 center">
     <div class="flex-l items-center" style="{{ if .Params.image_left }}flex-direction: row-reverse;{{ end }}">
       <div class="mh4 w-50-l {{ if not .Params.text_align_left }}tr{{ end }}">
-        {{ with .Params.title }}<h1 class="f2 f1-m f-subheadline-l fw5-ns mv4 lh-solid">{{ . }}</h1>{{ end }}
-        {{ with .Params.subtitle }}<h2 class="f5 fw7 mt0 mb4 ttu tracked">{{ . }}</h2>{{ end }}
-        {{ if .Params.show_social_links }}{{ partial "shared/social-links.html" . }}{{ end }}
+        <!-- avatar arriba -->
+                        <!-- <img src="/about/sidebar/avatar.jpg" class="h4 w4 dib br3" alt="avatar" style="margin:auto;max-width:60px;max-height:60px; margin-bottom: -10px; margin-top: -30px;"> -->
+
+<!-- avatar al lado del título (se ve mal cuando es chico el espacio -->
+  <!-- <div style="display: flex; margin:auto;">
+  <div style="flex: 1.7; padding: 0px;">
+    {{ with .Params.title }}<h1 class="f2 f1-m f-subheadline-l fw5-ns mv4 lh-solid">{{ . }}</h1>{{ end }}
+    {{ with .Params.subtitle }}<h2 class="f5 fw7 mt0 mb4 ttu tracked">{{ . }}</h2>{{ end }}
+
+  </div>
+  <div style="flex: 1; margin: auto; text-align: center; padding: 10px;">
+  <img src="/about/sidebar/avatar.jpg" alt="avatar" style="margin:auto; width: 70%;  border-radius: 50%;">
+  </div>
+</div>
+-->
+      {{ with .Params.title }}<h1 class="f2 f1-m f-subheadline-l fw5-ns mv4 lh-solid">{{ . }}</h1>{{ end }}
+    {{ with .Params.subtitle }}<h2 class="f5 fw7 mt0 mb4 ttu tracked">{{ . }}</h2>{{ end }}
+                {{ if .Params.show_social_links }}{{ partial "shared/social-links.html" . }}{{ end }}
         {{ with .Params.description }}<p class="f4 mt4 lh-copy">{{ . | markdownify }}</p>{{ end }}
         <!-- {{ if .Params.show_action_link }}<a class="mt4 action {{ .Params.action_type }}" href="{{ .Params.action_link | relURL }}">{{ .Params.action_label | safeHTML }}</a>{{ end }} -->
                 <a class="mt4 action text" href="/blog/">blog ></a>
