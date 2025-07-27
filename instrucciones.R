@@ -7,10 +7,10 @@ blogdown::stop_server()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Web scraping usando Google Chrome desde R con {chromote}", 
+blogdown::new_post(title = "Descargar todos los archivos de la página web del Censo 2024 con {rvest}", 
                    file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
-                   tags = c("quarto", "consejos")
+                   tags = c("rvest", "datos", "Chile")
 )
 
 # crear un post tutorial
@@ -42,6 +42,7 @@ blogdown::new_post(title = "Taller: Medición y Análisis de la Corrupción en C
 # {{< cursos >}}
 # {{< bajada "x" >}}
 # {{< imagen "x" >}}
+# {{< video "x" >}}
 # {{< aviso "x" >}}
 
 
