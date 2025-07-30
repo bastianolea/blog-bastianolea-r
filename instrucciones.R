@@ -8,7 +8,7 @@ blogdown::stop_server()
 
 # crear un post normal
 blogdown::new_post(title = "Gráfico de mis géneros musicales más escuchados según datos de Last.fm", 
-                   file = paste0("blog/", lubridate::today()+1, "/index.qmd"),
+                   file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
                    tags = c("ggplot2", "visualización de datos", "blog")
 )
