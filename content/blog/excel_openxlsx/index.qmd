@@ -1,0 +1,221 @@
+---
+title: "Crea planillas de Excel con formato desde R con {openxlsx}"
+author: Bastián Olea Herrera
+date: '2025-08-01'
+slug: []
+categories: []
+draft: true
+tags:
+  - limpieza de datos
+  - procesamiento de datos
+  - automatización
+  - Excel
+---
+
+https://ycphs.github.io/openxlsx/
+
+https://www.r-bloggers.com/2024/11/creating-professional-excel-reports-with-r-a-comprehensive-guide-to-openxlsx-package/
+
+https://guslipkin.medium.com/making-pretty-excel-files-in-r-46a15c7a2ee8
+
+```{r}
+#| cache: true
+library(arrow)
+
+datos <- read_parquet("https://github.com/bastianolea/siedu_indicadores_urbanos/raw/main/datos/siedu_indicadores_desarrollo_urbano.parquet")
+
+datos
+```
+
+```{r}
+library(dplyr)
+
+datos |> distinct(variable)
+```
+
+
+
+```{r}
+datos <- datos |> 
+  filter(variable %in% c("Distancia a plazas públicas",
+                         "Número de víctimas mortales en siniestros de tránsito por cada 100.000 habitantes",
+                         "Porcentaje de cobertura de la red de ciclovía sobre la red vial")) |> 
+  group_by(nombre_region, nombre_comuna, variable) |>
+  filter(año == max(año)) |>
+  ungroup()
+
+datos
+```
+
+
+```{r}
+library(tidyr)
+
+datos <- datos |> 
+  select(nombre_region, nombre_comuna, codigo_comuna, variable, valor) |> 
+  pivot_wider(names_from = variable, values_from = valor) |> 
+  arrange(codigo_comuna)
+
+datos
+```
+
+
+```{r}
+library(writexl)
+
+write_xlsx(datos, "indicadores.xlsx")
+```
+
+{{< imagen "openxlsx_0.png">}}
+
+```{r}
+library(openxlsx)
+
+tabla <- createWorkbook()
+```
+
+```{r}
+addWorksheet(tabla, "Hoja")
+```
+
+{{< imagen "openxlsx_1.png" >}}
+
+```{r}
+# tabla con formato personalizado
+writeDataTable(tabla, "Hoja",
+               x = datos,  # la tabla que queremos escribir en el Excel
+               tableStyle = "TableStyleLight9", # estilo de la tabla
+               startRow = 1, startCol = 1,
+               colNames = TRUE,
+               bandedCols = TRUE,
+               bandedRows = FALSE,
+               withFilter = FALSE, 
+               # keepNA = TRUE, 
+               # na.string = "sin datos"
+)
+```
+
+
+{{< imagen "openxlsx_2.png" >}}
+
+
+```{r}
+# ancho de columnas
+setColWidths(tabla, "Hoja",
+             cols = c(1, 2, 3,
+                      4, 5, 6),
+             widths = c(22, 22, 13,
+                        30, 30, 30)
+)
+```
+
+{{< imagen "openxlsx_3.png" >}}
+
+```{r}
+# flujo de texto 
+addStyle(tabla, "Hoja",
+         style = createStyle(wrapText = TRUE), 
+         rows = c(1, 1:nrow(datos)+1), 
+         cols = c(1, 4, 5, 6), 
+         stack = TRUE, gridExpand = T)  
+```
+
+{{< imagen "openxlsx_4.png" >}}
+
+```{r}
+# celdas en negrita
+addStyle(tabla, "Hoja",
+         style = createStyle(textDecoration = "BOLD"), 
+         rows = 1:nrow(datos)+1, 
+         cols = c(1, 2), 
+         stack = TRUE, gridExpand = T)
+```
+
+{{< imagen "openxlsx_5.png" >}}
+
+```{r}
+# centrado vertical
+addStyle(tabla, "Hoja",
+         style = createStyle(valign = "center"),
+         rows = 1:nrow(datos)+1, cols = 1:length(datos), 
+         stack = TRUE, gridExpand = T)
+```
+
+{{< imagen "openxlsx_6.png" >}}
+
+```{r}
+# decimales
+addStyle(tabla, "Hoja",
+         style = createStyle(numFmt = "0.00"), 
+         rows = 1:nrow(datos)+1, cols = c(6),
+         stack = TRUE, gridExpand = TRUE)
+
+addStyle(tabla, "Hoja",
+         style = createStyle(numFmt = "0.0"), 
+         rows = 1:nrow(datos)+1, cols = c(4, 5),
+         stack = TRUE, gridExpand = TRUE)
+```
+
+{{< imagen "openxlsx_7.png" >}}
+
+```{r}
+which(datos[[4]] > 400)
+```
+
+```{r}
+# color condicional
+addStyle(tabla, "Hoja",
+         style = createStyle(fgFill = "#E6B8B7",
+                             border = c("top", "bottom"),
+                             borderColour = c("#DA9694", "#DA9694")),
+         rows = which(datos[[4]] > 400)+1, 
+         cols = 4, 
+         stack = TRUE, gridExpand = T)
+
+addStyle(tabla, "Hoja",
+         style = createStyle(fgFill = "#E6B8B7",  
+                             border = c("top", "bottom"),
+                             borderColour = c("#DA9694", "#DA9694")),
+         rows = which(datos[[5]] > 10)+1, 
+         cols = 5, 
+         stack = TRUE, gridExpand = T)
+
+addStyle(tabla, "Hoja",
+         style = createStyle(fgFill = "#D7E4BC",
+                             border = c("top", "bottom"),
+                             borderColour = c("#C4D79B", "#C4D79B")),
+         rows = which(datos[[6]] > 5)+1, 
+         cols = 6, 
+         stack = TRUE, gridExpand = T)
+```
+
+{{< imagen "openxlsx_8.png" >}}
+
+```{r}
+#| eval: false
+# guardar
+saveWorkbook(tabla, 
+             "indicadores.xlsx",
+             overwrite = TRUE)
+```
+
+
+### Otros
+Aquí voy a ir dejando otras funcionalidades útiles de `{openxlsx}`:
+
+Definir el tamaño que tendrá la ventana al abrir la planilla
+```{r}
+# tamaño de la ventana
+setWindowSize(tabla,
+              yWindow = 12, xWindow = 12,
+              windowWidth = "20000",
+              windowHeight = "15000")
+```
+
+Cambiar la altura de las celdas:
+```{r}
+# altura para celdas con texto
+setRowHeights(tabla, "Hoja",
+              rows = c(6, 7, 12, 13),
+              heights = c(64, 64, 64))
+```
