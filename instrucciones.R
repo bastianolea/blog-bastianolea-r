@@ -29,7 +29,7 @@ blogdown::new_post(title = "Taller: Medición y Análisis de la Corrupción en C
 ## borradores ----
 "content/blog/2025-07-06/index.qmd" # unir datos
 "content/blog/2025-07-01/index.qmd" # st_join
-"content/blog/openxlsx/index.md"
+"content/blog/excel_openxlsx/index.qmd"
 "content/blog/unpivotr/index.qmd"
 
 # scraping chromote?

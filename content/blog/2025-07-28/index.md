@@ -1,21 +1,23 @@
 ---
-title: Gráfico de mis géneros musicales más escuchados según Last.fm
+title: Gráfico de mis artistas y géneros musicales más escuchados según Last.fm
 author: Bastián Olea Herrera
-date: '2025-07-27'
+date: '2025-07-30'
 slug: []
 categories: []
+freeze: true
 tags:
   - ggplot2
   - visualización de datos
   - blog
   - gráficos
+  - blog
 execute:
   message: false
 links:
   - icon: github
     icon_pack: fab
     name: código
-    url: https://github.com/bastianolea/lastfm_top_tags
+    url: https://github.com/bastianolea/lastfm_graficos
   - icon: lastfm
     icon_pack: fab
     name: mi Last.fm
@@ -24,9 +26,12 @@ excerpt: >-
   Tenía ganas de reproducir en R uno de los gráficos que aparecen en el reporte
   mensual de Last.fm, una plataforma donde las personas van registrando la
   música que escuchan diariamente, así que aquí va el proceso y el resultado
-  final.
+  final. También incluye otras visualizaciones alternativas, y una animación del
+  proceso de visualización de una de ellas!
 ---
 
+
+{{< imagen "camcorder4.webp">}}
 
 [Last.fm](https://www.last.fm) es una plataforma donde las personas van registrando la música que escuchan diariamente, y luego pueden obtener estadísticas sobre sus gustos musicales y recomendaciones basadas en los gustos de usuarios similares.
 
@@ -363,3 +368,37 @@ Algunos comentarios sobre esta visualización:
 - junto con lo anterior, se devuelve casi obligatorio tener que usar la función `geom_stream_label()` para agregar textos, lo que te quita harta libertad
 - quizás relacionado a lo anterior: traté de [grabar la evolución del gráfico con `{camcorder}`](../../../blog/camcorder/), pero por alguna razón no pescaba al pasar a `{ggstream}`
 - el paquete `{lastfmR}` de obtención de datos solamente extrajo las últimas 17.000 canciones escuchadas, pero en mi caso eso fue un poco más de un año de datos, así que fue suficiente. De todos modos hay ene paquetes y tutoriales para sacar datos de Last.fm, y ambién [hay otras alternativas para bajar todos los datos de tu perfil](https://lastfm.ghan.nl/export/), pero en este caso no creí que fuera necesario, sobre todo porque tengo un lapsus de un par de años donde dejé de usar Last.fm!
+
+------------------------------------------------------------------------
+
+Después de esta, hice una variación de la misma visualización, pero en vez de mostrar géneros musicales, muestra artistas. Como ya tenía todo el código para hacer la visualización y procesar los datos, modificarlo para este nuevo fin fue muy fácil. Pueden ver todo el código que necesité [en el script `lastfm_artists.R` en el repositorio.](https://github.com/bastianolea/lastfm_graficos).
+
+<a href="lastfm_artists_bastimapache.png" target="_blank">
+
+<img src="lastfm_artists_bastimapache.png" style="border-radius: 7px; width: 100%;display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+
+</a>
+
+Al ver las marcadas tendencias que habían en mi rotación de artistas más escuchados, me entró la curiosidad y generé un ranking de artistas por semana:
+
+<a href="lastfm_weekly_bastimapache_b.png" target="_blank">
+
+<img src="lastfm_weekly_bastimapache_b.png" style="border-radius: 7px; width: 100%;display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+
+</a>
+
+Este fue bastante más complejo que los anteriores, porque tuve que programar toda la lógica para llegar a hacer un ranking que no tuviera empates[^1], y luego de eso, hacer el seguimiento de los artistas que iban repitiéndose semana a semana, para ver cómo iban cambiando en su posición de ranking entre las distintas semanas[^2]. Todo este código se puede ver [en el script `lastfm_weekly.R` en el repositorio.](https://github.com/bastianolea/lastfm_graficos).
+
+En términos visuales, este gráfico en realidad es una tabla hecha con `geom_tile()`, con líneas verticales con `annotate("segment")` que hacen una separación entre semanas, líneas que van conectando a los artistas consecutivos hechas con `geom_step()`, y efecto de sombra a medida que el ranking es menor que se hicieron con un `geom_tile()` donde la transparencia era ligada al ranking. También tiene distinto tamaño y grosor de letra para los artistas en el número 1, y colores que responden a recodificación de los géneros musicales en categorías más generales en vez de ponerle un color a cada subgénero del mundo. Mención especial al circulito con un 1 hecho con `annotate()`.
+
+Si bien a este gráfico tampoco lo grabé con `{camcorder}` mientras lo hacía, luego de terminarlo hice una especie de simulación paso por paso de cómo se genera la visualización de principio a fin:
+
+<a href="camcorder4.webp" target="_blank">
+
+<img src="camcorder4.webp" style="border-radius: 7px; width: 100%;display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+
+</a>
+
+[^1]: Aquí la dificultad era que el ranking se define por el porcentaje semanal de canciones escuchadas que pertenecen a cada artista, pero ocurría que, si los números eran muy bajos, los porcentajes se repetían, porque un mismo artista era escuchado la misma cantidad de veces que otros. En estos casos, el desempate se hizo agregándole a los artistas un porcentaje que tenía que ver con el porcentaje de canciones escuchadas en total ---de todos los tiempos--- que del artista, y de esta manera dar privilegio al artista más escuchado en general en el ranking semanal. También se agrega un pequeñísimo número aleatorio para desempatar otros casos.
+
+[^2]: El problema en estos casos era que se podía ir trazando una línea que muestre el cambio de posición semanal de un artista, pero la dificultad era hacer que la línea se cortara si el artista deja de ser escuchado una semana, pero que volviera a aparecer si vuelve a ser escuchado en una semana futura. La solución fue generar una variable que agrupa con un número único las escuchas consecutivas semanales de un artista, y si el artista no entra en el ranking en una o más semanas se genera un grupo distinto. Luego se usan estos grupos para que las líneas se unan solamente cuando las escuchas son consecutivas, en vez de qué se haga una línea que pase por encima de semanas donde el artista no entró al ranking.
