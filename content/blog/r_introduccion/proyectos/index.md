@@ -14,9 +14,18 @@ excerpt: "Antes de hacer cualquier trabajo que involucre datos con R, es recomen
 ## Proyectos
 Antes de hacer cualquier trabajo que involucre datos con R, **se recomienda crear un _Proyecto_ de RStudio**. Un proyecto es una forma de definir la carpeta específica donde vamos a guardar todos los scripts y archivos que vamos a necesitar. Se caracteriza por un archivo que termina en `.Rproj`, que marca nuestro espacio de trabajo: **una sola carpeta que reúne todas las piezas de nuestro análisis.**
 
+{{< aviso "Existe un post clásico en la comunidad de R que explica esto mucho mejor: [Project-oriented workflow](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/), mejor conocido como _si usas `setwd()` voy a ir a tu oficina a incendiar tu computador!_" >}}
+
+
 ### ¿Por qué trabajar con Proyectos? 
 
-A través del tiempo vamos a trabajar con distintas fuentes de datos, para objetivos distintos, incluso para llevar a cabo ideas o trabajos completamente diferentes. **Los proyectos de RStudio nos permiten separar estos distintos espacios de trabajo de forma clara.** Si tenemos múltiples proyectos en los que trabajamos con R, al delimitarlos por medio de proyectos de RStudio podremos **cambiar entre uno y otro** de manera muy sencilla. También podremos tener **distintas sesiones de R abiertas al mismo tiempo**, en distintas ventanas de RStudio, cada una con proyectos distintos. Esto significa que cada proyecto de R va a tener un entorno distinto y scripts distintos. De esta forma, no mezclamos cosas ni nos confundimos.
+El objetivo de un proyecto es tener todos nuestros datos y código en un sólo lugar, por lo que se vuelven **autcontenidos**; es decir, funcionarán **sin depender de nada que esté fuera del proyecto**.
+
+Un efecto secundario de lo anterior es que nuestros proyectos serán **portátiles**: podremos cambiarlos de lugar en nuestro computador, abrirlos en otro computador, correrlos en la nube, o enviárselos a alguien más, y gracias a que son autocontenidos, seguirán funcionando.
+
+A través del tiempo vamos a trabajar con distintas fuentes de datos, para objetivos distintos, incluso para llevar a cabo ideas o trabajos completamente diferentes. Los proyectos de RStudio nos permiten **separar distintos espacios de trabajo**, sin que los resultados de un proyecto contagien a otro. Si tenemos múltiples proyectos en los que trabajamos con R, al delimitarlos por medio de proyectos de RStudio podremos **cambiar entre proyectos** de manera rápida y sencilla. 
+
+También podremos tener **distintas sesiones de R abiertas al mismo tiempo**, en distintas ventanas de RStudio, cada una con proyectos distintos. Esto significa que cada proyecto de R va a tener un entorno distinto y scripts distintos. De esta forma, no mezclamos cosas ni nos confundimos.
 
 ### Beneficios de trabajar con Proyectos
 
