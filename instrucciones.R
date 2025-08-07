@@ -15,7 +15,7 @@ blogdown::new_post(title = "Gráfico de mis géneros musicales más escuchados s
 
 # crear un post tutorial
 blogdown::new_post(title = "Taller: Medición y Análisis de la Corrupción en Chile desde el Análisis de Datos y Herramientas Abiertas", 
-                   file = "blog/taller_corrupcion_cesi/index.qmd",
+                   file = "blog/validacion/index.qmd",
                    author = "Bastián Olea Herrera",
                    tags = c("web scraping", "Chile", "visualización de datos", "análisis de texto"),
                    categories = c() 
