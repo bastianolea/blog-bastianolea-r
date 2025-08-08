@@ -1,5 +1,5 @@
-
 # previsualizar sitio
+
 blogdown::serve_site()
 blogdown::stop_server()
 
@@ -14,10 +14,10 @@ blogdown::new_post(title = "Gráfico de mis géneros musicales más escuchados s
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Taller: Medición y Análisis de la Corrupción en Chile desde el Análisis de Datos y Herramientas Abiertas", 
-                   file = "blog/validacion/index.qmd",
+blogdown::new_post(title = "Validación avanzada de datos y código con {testthat} y {pointblank}", 
+                   file = "blog/validacion_avanzada/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("web scraping", "Chile", "visualización de datos", "análisis de texto"),
+                   tags = c("procesamiento de datos", "consejos", "automatización", "control de flujo", "funciones"),
                    categories = c() 
 )
 # draft: true
