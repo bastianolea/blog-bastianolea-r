@@ -5,6 +5,7 @@ date: '2025-08-08'
 slug: []
 categories: []
 draft: false
+freeze: true
 tags:
   - limpieza de datos
   - procesamiento de datos
@@ -331,7 +332,7 @@ which(datos[[4]] > 400)
      [1]   3  11  14  15  16  21  22  24  25  27  28  29  36  46  51  57  61  77  79
     [20]  94  96  98  99 102 105 110
 
-Es decir, obtenemos un vector que dice en qué filas se cumple la condición. Teniendo esto, podemos crear formatos condicionales según los datos: creamos un estilo con `createStyle()` que defina un relleno, borde y color de borde, \*\*que se aplique solamente a las celdas donde se cumple la condición\*, pero sumándole 1 para saltarnos la primera fila (nombres de columnas en Excel).
+Es decir, obtenemos un vector que dice en qué filas se cumple la condición. Teniendo esto, podemos crear formatos condicionales según los datos: creamos un estilo con `createStyle()` que defina un relleno, borde y color de borde, **que se aplique solamente a las celdas donde se cumple la condición**, pero sumándole 1 para saltarnos la primera fila (nombres de columnas en Excel).
 
 ``` r
 # color condicional
@@ -366,7 +367,7 @@ addStyle(tabla, "Hoja",
 
 En este ejemplo aplicamos tres estilos condicionales a tres columnas distintas, cada uno con un criterio personalizado para destacar celdas con valores que cumplen la condición apropiada.
 
-{{< imagen "openxlsx_8-featured.png" >}}
+{{< imagen "openxlsx_8.png" >}}
 
 Cuando estemos satisfechxs con nuestra planilla, la guardamos como Excel.
 
