@@ -31,9 +31,7 @@ blogdown::new_post(title = "Validación avanzada de datos y código con {testtha
 "content/blog/2025-07-01/index.qmd" # st_join
 "content/blog/excel_openxlsx/index.qmd"
 "content/blog/unpivotr/index.qmd"
-
-# scraping chromote?
-"content/blog/tutorial_scraping_selenium/selenium.qmd"
+# https://waldo.r-lib.org
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
 "content/blog/tutorial_digitalocean/index.md"
 
