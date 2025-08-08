@@ -1,22 +1,28 @@
 ---
-title: "Crea planillas de Excel con formato desde R con {openxlsx}"
+title: "Crea planillas de Excel con formato personalizado desde R con {openxlsx}"
 author: Bastián Olea Herrera
-date: '2025-08-01'
+date: '2025-08-08'
 slug: []
 categories: []
-draft: true
+draft: false
+freeze: true
 tags:
   - limpieza de datos
   - procesamiento de datos
   - automatización
-  - Excel
+  - tablas
+excerpt: El paquete `{openxlsx}` nos entrega funciones para generar archivos Excel desde R que contengan todo tipo de formato, estilo de tablas, y manipulación celda por celda del archivo resultante, con lo que podemos generar planillas de Excel atractivas desde R. La gracia es que podremos usar estas herramientas de forma reproducible (poder re-hacer gratis la planilla con datos actualizados o corregidos), y también podremos combinar la programación de R para crear estilos condicionales, crear cientos de archivos Excel, o planillas de cientos de hojas, y mucho más.
 ---
 
-https://ycphs.github.io/openxlsx/
+Al terminar el procesamiento o limpieza de un conjunto de datos, usualmente necesitamos _entregar_ la base en un formato más amigable para otros colegas o usuarios/as, lo que significa: Excel. Exportar datos de R a Excel es fácil: con la función `writexl::write_xlsx()` podemos guardar cualquier dataframe en Excel. Pero esta función hace sólo eso, y el archivo resultante es básico y hasta feo.
 
-https://www.r-bloggers.com/2024/11/creating-professional-excel-reports-with-r-a-comprehensive-guide-to-openxlsx-package/
+Sin embargo, existe el [paquete `{openxlsx}`](https://ycphs.github.io/openxlsx/), que además de leer y escribir archivos Excel, nos entrega funciones para generar archivos Excel desde R que contengan **todo tipo de formato, estilo de tablas, y manipulación celda por celda** del archivo resultante, con lo que podemos **generar planillas de Excel atractivas desde R.**
 
-https://guslipkin.medium.com/making-pretty-excel-files-in-r-46a15c7a2ee8
+La gracia es que podremos usar estas herramientas de forma reproducible (poder re-hacer gratis la planilla con datos actualizados o corregidos), y también podremos combinar la programación de R para crear **estilos condicionales**, crear **cientos de archivos Excel**, o **planillas de cientos de hojas**, y mucho más.
+
+----
+
+Carguemos un conjunto de datos de indicadores de calidad de vida urbana de Chile, del [Sistema de Indicadores y Estándares de Desarrollo Urbano](https://github.com/bastianolea/siedu_indicadores_urbanos).
 
 ```{r}
 #| cache: true
@@ -27,27 +33,26 @@ datos <- read_parquet("https://github.com/bastianolea/siedu_indicadores_urbanos/
 datos
 ```
 
+Filtremos los datos para dejar tres indicadores, y sólo los valores más recientes para cada unidad territorial.
 ```{r}
+#| message: false
+#| warning: false
 library(dplyr)
 
-datos |> distinct(variable)
-```
-
-
-
-```{r}
 datos <- datos |> 
+  # filtrar variables
   filter(variable %in% c("Distancia a plazas públicas",
                          "Número de víctimas mortales en siniestros de tránsito por cada 100.000 habitantes",
                          "Porcentaje de cobertura de la red de ciclovía sobre la red vial")) |> 
+  # dejar sólo valores más recientes por comuna
   group_by(nombre_region, nombre_comuna, variable) |>
   filter(año == max(año)) |>
   ungroup()
 
-datos
+datos |> select(-starts_with("codigo"))
 ```
 
-
+Ahora pivotemos los datos para crear una típica tabla de Excel donde los indicadores estén en columnas hacia el lado, mientras que hacia abajo están las unidades u observaciones; en este caso, comunas.
 ```{r}
 library(tidyr)
 
@@ -56,9 +61,10 @@ datos <- datos |>
   pivot_wider(names_from = variable, values_from = valor) |> 
   arrange(codigo_comuna)
 
-datos
+datos |> select(-starts_with("codigo"))
 ```
 
+Si guardamos este archivo con `{writexl}`, obtenemos una planilla básica de Excel:
 
 ```{r}
 library(writexl)
@@ -68,17 +74,40 @@ write_xlsx(datos, "indicadores.xlsx")
 
 {{< imagen "openxlsx_0.png">}}
 
+Este resultado puede ser suficiente para algo rápido, pero definitivamente no es algo presentable ni atractivo.
+
+## Crear planillas Excel personalizadas con `{openxlsx}`
+
+El primer paso para crear nuestro Excel es crear la planilla con la función `createWorkbook()`. Esta función se asigna a un objeto que representará a nuestra planilla.
 ```{r}
 library(openxlsx)
 
 tabla <- createWorkbook()
 ```
 
+Iremos aplicando distintas funciones de `{openxlsx}` sobre este objeto `tabla` para ir modificando la planilla Excel resultante.
+
+Con nuestra planilla creada, tenemos que crear una _hoja_ de Excel para que podamos ponerle datos a la planilla.
 ```{r}
 addWorksheet(tabla, "Hoja")
 ```
 
-{{< imagen "openxlsx_1.png" >}}
+Podemos usar esta función una o varias veces para crear una o varias hojas en nuestra planilla.
+
+
+### Guardar la planilla Excel
+En cualquier momento del proceso puedes guardar la planilla como archivo Excel para previsualizar como está quedando tu tabla, aunque en este paso del tutorial nuestra planilla está vacía.
+```{r}
+#| eval: false
+# guardar
+saveWorkbook(tabla, 
+             "indicadores.xlsx",
+             overwrite = TRUE)
+```
+
+
+### Escribir datos en la hoja de Excel
+Ahora tenemos que rellenar la planilla con datos con la función `writeDataTable()`, a la que hay que especificarle primero la planilla que vamos a editar (`tabla`), y la hoja (`"Hoja"`) en que queremos escribir los datos. En el argumento `x` entregamos el dataframe que queremos escribir en la hoja de la planilla.
 
 ```{r}
 # tabla con formato personalizado
@@ -95,9 +124,19 @@ writeDataTable(tabla, "Hoja",
 )
 ```
 
+Esta función tiene varios argumentos que permiten personalizar la planilla. El más relevante es `tableStyle`, con el que le damos uno de los temas de Excel a la tabla. Podemos encontrar los temas de Excel en el botón _Dar formato como tabla_ del panel _Inicio_ de Excel.
+
+{{< imagen "openxlsx_1.png" >}}
+
+En este panel, si pones el cursor sobre los íconos puedes ver que cada estilo tiene un número (9 es una tabla azul con fila de encabezado, 13 es la misma pero morada, 5 es una tabla celeste con encabezado sin relleno, etc.), y una intensidad (_claro, medio_ y _oscuro_)
 
 {{< imagen "openxlsx_2.png" >}}
 
+Así va quedando nuestra planilla!
+
+### Modificar ancho de columnas
+
+Si tenemos columnas que requieren más ancho, podemos definirlo con `setColWidths()`. En esta y otras funciones de `{openxlsx}`, en el argumento `cols` le decimos qué columnas queremos afectar, y luego le decimos el valor que queremos darle a cada columna correspondiente.
 
 ```{r}
 # ancho de columnas
@@ -109,18 +148,28 @@ setColWidths(tabla, "Hoja",
 )
 ```
 
+En este ejemplo, afectamos las 6 columnas: a las 1 y 2 le damos `22` de ancho, luego a la 3 le damos `13`, y a las tres finales (columnas con los indicadores) les damos un mayor ancho de `30`.
+
 {{< imagen "openxlsx_3.png" >}}
+
+Si el texto aún no cabe en las celdas, podemos **definir un estilo** a las celdas para que el texto se corte y aumente el alto de las celdas con mucho texto. Para definir un estilo usamos `addStyle()` y le damos un estilo que se hace con `createStyle()`. Luego, se define las filas (`rows`) y columnas (`cols`) que recibirán este estilo.
 
 ```{r}
 # flujo de texto 
 addStyle(tabla, "Hoja",
          style = createStyle(wrapText = TRUE), 
-         rows = c(1, 1:nrow(datos)+1), 
+         rows = 1:nrow(datos)+1, 
          cols = c(1, 4, 5, 6), 
          stack = TRUE, gridExpand = T)  
 ```
 
+En este caso le puse que las filas a las que se aplica el estilo sean todas las filas del dataframe (`nrow(datos)`) más `1`, porque recordemos que en Excel la fila de los nombres de columna cuenta como una fila. Por eso el estilo se aplica desde la fila `1` a la `nrow(datos)+1`.
+
 {{< imagen "openxlsx_4.png" >}}
+
+### Definir estilo de texto
+
+Ahora quiero que las primeras dos columnas vayan en negrita. Hacemos lo mismo que en el paso anterior, pero ahora creamos un estilo distinto con `createStyle()`:
 
 ```{r}
 # celdas en negrita
@@ -131,17 +180,29 @@ addStyle(tabla, "Hoja",
          stack = TRUE, gridExpand = T)
 ```
 
+Es importante definir los argumentos `stack = TRUE, gridExpand = T` para que los estilos se sumen en vez de reemplazarse.
+
 {{< imagen "openxlsx_5.png" >}}
+
+Notamos que, cuando el texto de las celdas _fluye_ para usar múltiples líneas, los valores quedan alineados verticalmente hacia abajo, y se ven feos, así que los alinearemos verticalmente en el centro:
 
 ```{r}
 # centrado vertical
 addStyle(tabla, "Hoja",
          style = createStyle(valign = "center"),
-         rows = 1:nrow(datos)+1, cols = 1:length(datos), 
+         rows = 1:nrow(datos)+1, 
+         cols = 1:length(datos), 
          stack = TRUE, gridExpand = T)
 ```
 
+Nótese que aplicamos este estilo a todas las filas (`1:nrow(datos)+1`) y a todas las columnas `1:length(datos)`.
+
 {{< imagen "openxlsx_6.png" >}}
+
+
+### Formatear variables numéricas
+
+Los números con decimales pueden ser ajustados definiendo el estilo `createStyle(numFmt = "0.00")` o similar, donde el texto representa la cantidad de decimales que queremos mostrar:
 
 ```{r}
 # decimales
@@ -158,20 +219,44 @@ addStyle(tabla, "Hoja",
 
 {{< imagen "openxlsx_7.png" >}}
 
+
+### Estilo condicional de celdas de acuerdo a los valores de los datos
+
+Como hemos visto hasta ahora, todos los estilos se aplican definiendo la posición de las filas y columnas que queremos modificar. Por ejemplo, si queremos modificar la cuarta fila de la segunda columna, sería `rows = 4, cols = 2`.
+
+Podemos aprovechar esta lógica para aplicar estilos que dependan del valor de los datos.
+
+Por ejemplo, si tenemos un vector de datos:
+
+```{r}
+datos[[4]]
+```
+
+Podemos evaluar una comparación para ver qué valores cumplen o no; en este caso, qué valores son superiores a `400`:
+```{r}
+datos[[4]] > 400
+```
+
+Ahora que sabemos qué valores cumplen, con la función `which()` podemos obtener su posición:
 ```{r}
 which(datos[[4]] > 400)
 ```
 
+Es decir, obtenemos un vector que dice en qué filas se cumple la condición. Teniendo esto, podemos crear formatos condicionales según los datos: creamos un estilo con `createStyle()` que defina un relleno, borde y color de borde, **que se aplique solamente a las celdas donde se cumple la condición*, pero sumándole 1 para saltarnos la primera fila (nombres de columnas en Excel).
+
 ```{r}
 # color condicional
 addStyle(tabla, "Hoja",
+         # crear estilo de color de relleno
          style = createStyle(fgFill = "#E6B8B7",
                              border = c("top", "bottom"),
                              borderColour = c("#DA9694", "#DA9694")),
-         rows = which(datos[[4]] > 400)+1, 
+         # filas a las que se va a aplicar el estilo
+         rows = which(datos[[4]] > 400)+1, # celdas donde x es mayor a 400, + 1 para saltarse la primera fila
          cols = 4, 
          stack = TRUE, gridExpand = T)
 
+# otro estilo para otra columna
 addStyle(tabla, "Hoja",
          style = createStyle(fgFill = "#E6B8B7",  
                              border = c("top", "bottom"),
@@ -180,6 +265,7 @@ addStyle(tabla, "Hoja",
          cols = 5, 
          stack = TRUE, gridExpand = T)
 
+# un tercer estilo con colores distintos
 addStyle(tabla, "Hoja",
          style = createStyle(fgFill = "#D7E4BC",
                              border = c("top", "bottom"),
@@ -189,8 +275,12 @@ addStyle(tabla, "Hoja",
          stack = TRUE, gridExpand = T)
 ```
 
-{{< imagen "openxlsx_8.png" >}}
+En este ejemplo aplicamos tres estilos condicionales a tres columnas distintas, cada uno con un criterio personalizado para destacar celdas con valores que cumplen la condición apropiada.
 
+{{< imagen "openxlsx_8-featured.png" >}}
+
+
+Cuando estemos satisfechxs con nuestra planilla, la guardamos como Excel.
 ```{r}
 #| eval: false
 # guardar
@@ -219,3 +309,16 @@ setRowHeights(tabla, "Hoja",
               rows = c(6, 7, 12, 13),
               heights = c(64, 64, 64))
 ```
+
+----
+
+## Otros tutoriales:
+
+- [Creating Professional Excel Reports with R: A Comprehensive Guide to openxlsx Package](https://www.r-bloggers.com/2024/11/creating-professional-excel-reports-with-r-a-comprehensive-guide-to-openxlsx-package/)
+- [Making pretty Excel files in R](https://guslipkin.medium.com/making-pretty-excel-files-in-r-46a15c7a2ee8)
+
+----
+
+{{< cafecito >}}
+
+{{< cursos >}}
