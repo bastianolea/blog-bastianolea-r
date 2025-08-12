@@ -12,13 +12,13 @@ slug: []
 categories: 
   - Tutoriales
 tags:
-  - estadísticas
+  - estadística
   - ggplot2
   - gráficos
   - visualización de datos
 editor_options: 
   chunk_output_type: console
-excerpt: El análisis de correlación es una técnica estadística de análisis exploratorio que nos permite identificar si existen relaciones lineales entre distintas variables. En este tutorial aprenderemos a realizar correlaciones entre múltiples variables, interpretarlas, y visualizarlas de tres maneras distintas. 
+excerpt: El análisis de correlación es una técnica estadística de análisis exploratorio que nos permite identificar si existen relaciones lineales entre distintas variables. En este tutorial aprenderemos a realizar correlaciones entre múltiples variables, interpretarlas, y visualizarlas de varias maneras distintas. 
 ---
 
 El análisis de correlación es una técnica estadística que nos permite **identificar si existen relaciones lineales entre distintas variables.** 
@@ -94,7 +94,8 @@ sinim_2 <- sinim |>
 sinim_3 <- sinim_2 |> 
   group_by(cut_comuna, variable) |> 
   slice_max(año) |> 
-  ungroup()
+  ungroup() |> 
+  mutate(cut_comuna = as.numeric(cut_comuna))
   
 # seleccionar columnas
 sinim_4 <- sinim_3 |> 
@@ -117,13 +118,13 @@ siedu_2 <- siedu |>
 
 # dejar sólo la medición más reciente de cada variable en cada comuna
 siedu_3 <- siedu_2 |> 
-  group_by(cut_comuna, variable) |> 
+  group_by(codigo_comuna, variable) |> 
   slice_max(año) |> 
   ungroup()
 
 # seleccionar columnas
 siedu_4 <- siedu_3 |> 
-  select(cut_comuna, variable, valor)
+  select(cut_comuna = codigo_comuna, variable, valor)
 ```
 
 Veamos cómo van quedando los datos:
@@ -289,7 +290,30 @@ Con esta visualización, podemos ver el color y el tamaño de los círculos para
 A la rápida, podemos ver que arriba a la izquierda la variable de consumo de energía eléctrica se correlaciona con los recursos municipales, y abajo la izquierda podemos ver qué el porcentaje de hogares en los tramos menores de ingresos se correlaciona con menos conexiones a Internet y menos consumo eléctrico. También al centro del gráfico podemos ver una alta correlación entre la _tasa de víctimas de delitos violentos_ y la _densidad poblacional_.
 
 
-### Alternativa
+### Alternativas
+El paquete [`{ggcorrplot}`](https://github.com/kassambara/ggcorrplot) es muy usado para obener gráficos de correlaciones, y tiene opciones que permiten personalizar la forma de visualizarlas:
+
+```{r}
+library(ggcorrplot)
+
+corr <- round(cor(mtcars), 1)
+ggcorrplot(corr)
+```
+
+También permite presentar con círculos:
+```{r}
+ggcorrplot(corr, method = "circle")
+```
+
+Y tiene la opción de entregar una matriz de correlación de los valores _p_ para excluir las correlaciones con coeficientes que no sean estadísticamente significativos:
+```{r}
+ggcorrplot(corr,
+           hc.order = TRUE,
+           type = "lower",
+           p.mat = cor_pmat(mtcars))
+```
+
+
 Otra función de R que permite realizar correlaciones y visualizarlas de inmediato es `ggcor()` del paquete [`{GGally}`](https://ggobi.github.io/ggally/index.html), que entrega varios tipos de gráficos estadísticos para análisis exploratorios de datos.
 
 ```{r}
