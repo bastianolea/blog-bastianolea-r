@@ -14,10 +14,10 @@ blogdown::new_post(title = "Gráfico de mis géneros musicales más escuchados s
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Validación avanzada de datos y código con {testthat} y {pointblank}", 
-                   file = "blog/validacion_avanzada/index.qmd",
+blogdown::new_post(title = "Encuentra diferencias entre objetos de R con {waldo}", 
+                   file = "blog/diferencias/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("procesamiento de datos", "consejos", "automatización", "control de flujo", "funciones"),
+                   tags = c("limpieza de datos", "consejos"),
                    categories = c() 
 )
 # draft: true
