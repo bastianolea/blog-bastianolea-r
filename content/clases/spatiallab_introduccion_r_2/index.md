@@ -1,5 +1,5 @@
 ---
-title: Introducción al Análisis de Datos con R para principiantes
+title: Introducción al Análisis de Datos con R para principiantes, 2ª versión
 subtitle: Dirigido a principiantes y personas sin conocimiento previo de R
 author: Bastián Olea Herrera
 date: "2025-07-22T19:00:00.000Z"
@@ -8,6 +8,11 @@ draft: false
 excerpt: Curso online con tres módulos, en el cual puedes aprender R desde cero, sin conocimientos previos, y adentrarte en los siguientes niveles dependiendo de tus necesidades, o bien, tomar los niveles superiores para mejorar tus habilidades básicas de R. Inscripciones abiertas.
 layout: single
 location: Online
+links:
+- icon: github
+  icon_pack: fab
+  name: código y contenidos
+  url: https://github.com/bastianolea/curso_intro_R_v2_spatialLab
 ---
 
 [**¡Inscripciones abiertas!**](https://spatiallab.cl/2da-version-curso-introduccion-al-analisis-de-datos-con-r-para-principiantes?variant_id=109682227)
