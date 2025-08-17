@@ -14,10 +14,10 @@ blogdown::new_post(title = "Gráfico de mis géneros musicales más escuchados s
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Encuentra diferencias entre objetos de R con {waldo}", 
-                   file = "blog/diferencias/index.qmd",
+blogdown::new_post(title = "Unir o cruzar dos tablas de datos con un _left join_", 
+                   file = "blog/left_join/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("limpieza de datos", "consejos"),
+                   tags = c("procesamiento de datos", "limpieza de datos"),
                    categories = c() 
 )
 # draft: true
@@ -27,11 +27,11 @@ blogdown::new_post(title = "Encuentra diferencias entre objetos de R con {waldo}
 #     output-ext: "md"
 
 ## borradores ----
-"content/blog/2025-07-06/index.qmd" # unir datos
+"content/blog/diferencias/waldo.qmd"
+"content/blog/left_join/left_join.qmd"
+"content/blog/2025-07-06/index.qmd" # cargar y unir datos
 "content/blog/2025-07-01/index.qmd" # st_join
-"content/blog/excel_openxlsx/index.qmd"
 "content/blog/unpivotr/index.qmd"
-# https://waldo.r-lib.org
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
 "content/blog/tutorial_digitalocean/index.md"
 
