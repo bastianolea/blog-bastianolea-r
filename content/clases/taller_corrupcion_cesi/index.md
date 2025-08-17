@@ -1,11 +1,10 @@
 ---
-title: Desarrollo de aplicaciones web interactivas con R y Shiny (2a versión)
-subtitle: Dirigido a usuarios/as de R
+title: Taller Medición y Análisis de la Corrupción en Chile desde el Análisis de
+  Datos y Herramientas Abiertas
 author: Bastián Olea Herrera
-date: "2024-11-21T19:00:00.000Z"
-date_end: "2024-12-12T21:00:00.000Z"
+date: '2025-07-23'
 draft: false
-excerpt: Curso online de cuatro sesiones, donde aprenderás desde cero a desarrollar apps para visualizar, explorar y presentar tus datos. Inscripciones cerradas.
+excerpt: "Taller online dentro del Congreso Estudiantil de Sociología Interdisciplinaria. En este taller introduje a estudiantes de sociología al lenguaje de programación R, explicando los beneficios del análisis de datos desarrollado en flujos de trabajo basados en la programación, y las posibilidades que se abren para producir estudios y obtener resultados usando código. Puse énfasis en el uso de tecnologías y datos abiertos, y en el principal beneficio de la programación (en mi opinión): el poder actualizar resultados, aplicaciones y visualizaciones automáticamente."
 layout: single
 location: Online
 links:
@@ -15,20 +14,32 @@ links:
   url: https://github.com/bastianolea/curso_shiny_2_spatialLab
 ---
 
-![](curso_desarrollo_apps_2_1-featured.jpeg)
+Taller online que impartí para el _Congreso Estudiantil de Sociología Interdisciplinaria._ En este taller introduje a estudiantes de sociología al lenguaje de programación R, explicando los beneficios del análisis de datos desarrollado en flujos de trabajo basados en la programación, y las posibilidades que se abren para producir estudios y obtener resultados usando código. Puse énfasis en el uso de tecnologías y datos abiertos, y en el principal beneficio de la programación (en mi opinión): el poder actualizar resultados, aplicaciones y visualizaciones automáticamente.
 
-Debido al gran interés, se realizará una segunda versión del curso Desarrollo de aplicaciones web interactivas usando R y Shiny dictado por Bastián Olea Herrera, Magíster en Sociología.  [SÓLO 25 CUPOS]  
-El curso consta de 8 horas cronológicas, divididas en cuatro sesiones de dos horas de duración. Todos los jueves a las 19:00 hrs (GMT-3), desde el 21 de noviembre hasta el 12 de diciembre.  
+{{<imagen "afiche-featured.webp">}}
 
-Este curso es ideal para aquellas personas que busquen generar aplicaciones interactivas en su red de trabajo y sea accesible al público.
 
-![](curso_desarrollo_apps_2_2.jpeg)
+## Herramientas y Estrategias contra la Corrupción: _Talleres para la Medición y Análisis de la Corrupción en Chile desde el Análisis de Datos y Herramientas Abiertas_
 
-_Temario:_
+Sesión 2: **Extracción de Datos desde Medios: Web scraping y Criterios de Selección/ Análisis y Visualización de Datos**
 
-1. Introducción al framework Shiny y el concepto de reactividad [21 de noviembre]  
-2. Primeros pasos: programación de cifras interactivas [28 de noviembre]  
-3. Personalizar apariencia de una aplicación web [05 de diciembre]  
-4. Publicación de la aplicación web para volverla accesible al público [12 de diciembre]
+- Web scraping en investigación social: definición, casos de uso.
+- Selección de medios y criterios éticos.
+- Exploración de estructuras HTML simples (solo como contexto).
+- Uso de la app de Bastián para extraer datos de prensa.
+- Visualización básica en RStudio con ggplot2
 
-Dictado por Bastián Olea Herrera, Magíster en sociología
+{{< youtube fAmwXWvtR4E >}}
+
+## Aplicaciones vistas en la sesión
+- [Visualizador de casos de corrupción en Chile](https://bastianoleah.shinyapps.io/corrupcion_chile/)
+- [Visualizador de análisis de prensa digital en Chile](https://bastianoleah.shinyapps.io/prensa_chile/)
+
+## Código
+En este repositorio está todo el código usado en el taller.
+
+- **Ejemplo de web scraping de un medio digital chileno:** [`scraping.qmd`](https://github.com/bastianolea/taller_corrupcion_cesi/blob/main/scraping.qmd)
+
+- **Ejemplo de modelamiento de tópicos en análisis de texto:** [`modelamiento_stm.R`](https://github.com/bastianolea/taller_corrupcion_cesi/blob/main/modelamiento_stm.R)
+
+- **Análisis de datos de un corpus de noticias de corrupción (6.000 noticias):** [`explorar.qmd`](https://github.com/bastianolea/taller_corrupcion_cesi/blob/main/explorar.qmd), los datos están disponibles en: [`datos/prensa_corrupcion.parquet`](https://github.com/bastianolea/taller_corrupcion_cesi/blob/main/datos/prensa_corrupcion.parquet)

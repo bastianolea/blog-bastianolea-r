@@ -8,6 +8,23 @@ draft: false
 excerpt: Curso online con cuatro niveles, en el cual puedes aprender R desde cero, sin conocimientos previos, y adentrarte en los siguientes niveles dependiendo de tus necesidades, o bien, tomar los niveles superiores para mejorar tus habilidades básicas de R. Inscripciones cerradas.
 layout: single
 location: Online
+links:
+- icon: github
+  icon_pack: fab
+  name: código módulo 1
+  url: https://github.com/bastianolea/curso_intro_R_nivel1_spatialLab
+- icon: github
+  icon_pack: fab
+  name: código módulo 2
+  url: https://github.com/bastianolea/curso_intro_R_nivel2_spatialLab
+- icon: github
+  icon_pack: fab
+  name: código módulo 3
+  url: https://github.com/bastianolea/curso_intro_R_nivel13_spatialLab
+- icon: github
+  icon_pack: fab
+  name: código módulo 4
+  url: https://github.com/bastianolea/curso_intro_R_nivel4_spatialLab
 ---
 
 **Inscripciones cerradas.** Por favor [visite la nueva versión de este curso aquí.](/clases/spatiallab_introduccion_r_2)
