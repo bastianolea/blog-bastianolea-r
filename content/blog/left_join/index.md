@@ -8,7 +8,8 @@ format:
     output-file: index
     output-ext: md
 slug: []
-categories: []
+categories:
+  - tutoriales
 tags:
   - procesamiento de datos
   - limpieza de datos
@@ -227,7 +228,11 @@ viajes <- tibble(run = c(10000005, 10000001, 10000002, 10000003, 10000008),
 | 10000003 |    Italia     | 2024-02-09  |
 | 10000008 |    España     | 2025-08-17  |
 
-Ahora que tenemos datos simulados, lo primero sería **filtrar las licencias médicas** para que solamente correspondan con funcionarios públicos (también podría hacerce con `left_join()` pero creo que es más pertinente un filtro)
+Ahora que tenemos datos simulados, usaremos `{dplyr}` para trabajar con los datos y encontrar respuestas.
+
+{{< aviso "Si necesitas aprender lo básico del manejo de datos con R, revisa este [tutorial básico de `{dplyr}`!](/blog/r_introduccion/dplyr_intro/)" >}}
+
+Lo primero sería **filtrar las licencias médicas** para que solamente correspondan con funcionarios públicos (también podría hacerse con `left_join()` pero creo que es más pertinente un filtro)
 
 ``` r
 licencias_f <- licencias |> 
