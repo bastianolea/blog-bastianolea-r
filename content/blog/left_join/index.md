@@ -169,7 +169,7 @@ Contamos con tres bases de datos: una de funcionarios públicos, una de licencia
 
 ``` r
 options(scipen = 9999)
-  
+
 funcionarios <- tibble(run = c(10000001, 10000002, 10000003),
                        nombre = c("maría", "pepito", "juanito"),
                        ministerio = c("defensa", "economía", "hacienda"))
@@ -187,9 +187,9 @@ Luego tenemos una base de datos con licencias médicas de trabajadores que puede
 
 ``` r
 licencias <- tibble(run = c(10000001, 10000002, 10000003, 10000004),
-                       licencia = c(FALSE, FALSE, TRUE, TRUE),
-                       licencia_inicio = c(NA, "2024-04-10", "2024-02-04", "2010-09-18"),
-                       licencia_fin = c(NA, "2024-04-13", "2024-02-18", "2030-12-31"))
+                    licencia = c(FALSE, FALSE, TRUE, TRUE),
+                    licencia_inicio = c(NA, "2024-04-10", "2024-02-04", "2010-09-18"),
+                    licencia_fin = c(NA, "2024-04-13", "2024-02-18", "2030-12-31"))
 ```
 
 |   run    | licencia | licencia_inicio | licencia_fin |
@@ -207,7 +207,7 @@ Finalmente tenemos la información de salidas del país de distintas personas, q
 viajes <- tibble(run = c(10000005, 10000001, 10000002, 10000003, 10000008),
                  viaje_destino = c("Bolivia", "Perú", "Argentina", "Italia", "España"),
                  viaje_fecha = c("2021-01-06", "2021-02-15", "2023-06-23", "2024-02-09", "2025-08-17")
-                 )
+)
 ```
 
 |   run    | viaje_destino | viaje_fecha |
@@ -237,16 +237,22 @@ cruce <- licencias_f |>
 Finalmente revisamos si el viaje fue durante el tiempo de licencia médica, y si el viaje fue fuera del país:
 
 ``` r
-# revisar si viajaron fuera del páis durante licencia
+# revisar si viajaron fuera del país durante licencia
 resultado <- cruce |> 
-  mutate(irregular = between(viaje_fecha, licencia_inicio, licencia_fin) & viaje_destino != "Chile")
+  mutate(irregular = 
+           licencia == TRUE & 
+           viaje_destino != "Chile" &
+           between(viaje_fecha, 
+                   licencia_inicio, licencia_fin)
+         ) |> 
+  select(-viaje_destino)
 ```
 
-| run | licencia | licencia_inicio | licencia_fin | viaje_destino | viaje_fecha | irregular |
-|:-------:|:-------:|:------------:|:---------:|:----------:|:---------:|:-------:|
-| 10000001 | FALSE | NA | NA | Perú | 2021-02-15 | NA |
-| 10000002 | FALSE | 2024-04-10 | 2024-04-13 | Argentina | 2023-06-23 | FALSE |
-| 10000003 | TRUE | 2024-02-04 | 2024-02-18 | Italia | 2024-02-09 | TRUE |
+|   run    | licencia | licencia_inicio | licencia_fin | viaje_fecha | irregular |
+|:--------:|:--------:|:---------------:|:------------:|:-----------:|:---------:|
+| 10000001 |  FALSE   |       NA        |      NA      | 2021-02-15  |   FALSE   |
+| 10000002 |  FALSE   |   2024-04-10    |  2024-04-13  | 2023-06-23  |   FALSE   |
+| 10000003 |   TRUE   |   2024-02-04    |  2024-02-18  | 2024-02-09  |   TRUE    |
 
 Detectamos en la última columna un caso de funcionario público que viajó fuera del país durante su licencia médica!
 
