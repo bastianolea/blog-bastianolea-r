@@ -14,10 +14,10 @@ blogdown::new_post(title = "Gráfico de mis géneros musicales más escuchados s
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Unir o cruzar dos tablas de datos con un _left join_", 
-                   file = "blog/left_join/index.qmd",
+blogdown::new_post(title = "Usando tipografías personalizadas en gráficos {ggplot2}", 
+                   file = "blog/tipografias_ggplot2/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("procesamiento de datos", "limpieza de datos"),
+                   tags = c("visualización de datos", "ggplot2", "gráficos"),
                    categories = c() 
 )
 # draft: true
@@ -27,8 +27,9 @@ blogdown::new_post(title = "Unir o cruzar dos tablas de datos con un _left join_
 #     output-ext: "md"
 
 ## borradores ----
+"content/blog/tipografias_ggplot2/tipografias_ggplot.qmd"
+"content/blog/tipografias_shiny/tipografias_shiny.qmd"
 "content/blog/diferencias/waldo.qmd"
-"content/blog/left_join/left_join.qmd"
 "content/blog/2025-07-06/index.qmd" # cargar y unir datos
 "content/blog/2025-07-01/index.qmd" # st_join
 "content/blog/unpivotr/index.qmd"
