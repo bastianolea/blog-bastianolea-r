@@ -1,0 +1,20 @@
+---
+title: Usando tipografías personalizadas en gráficos {ggplot2}
+author: Bastián Olea Herrera
+date: '2025-08-20'
+draft: true
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+slug: []
+categories: []
+tags:
+  - visualización de datos
+  - ggplot2
+  - gráficos
+---
+
+
+{{< cafecito >}}
+{{< cursos >}}

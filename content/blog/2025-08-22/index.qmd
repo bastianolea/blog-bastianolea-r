@@ -1,0 +1,46 @@
+---
+title: Convertir zonas horarias con R
+author: Bastián Olea Herrera
+date: '2025-08-22'
+format:
+  hugo-md:
+    output-file: "index"
+    output-ext: "md"
+slug: []
+categories: []
+tags:
+  - consejos
+  - curiosidades
+  - fechas
+excerpt: "Si necesitas saber a qué hora es un evento que ocurre en otro país, puedes usar `{lubridate}` para convertir las zonas horarias."
+---
+
+Si necesitas saber a qué hora es un evento que ocurre en otro país, puedes usar `{lubridate}` para convertir las zonas horarias:
+
+Primero definimos la fecha del evento, la zona horaria del evento y tu zona horaria:
+```{r}
+fecha_evento <- "2025-08-22 18:00:00"
+zona_horaria_evento <- "Mexico/General"
+zona_horaria_local <- "Chile/Continental"
+```
+
+Si no sabes cuál es tu zona horaria, [en esta tabla](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) hay una lista de identificadores de zona horaria (`TZ Identifier`).
+
+Luego usamos `{lubridate}` para convertir la fecha/hora en al zona horaria de tu interés:
+```{r}
+#| warning: false
+library(lubridate)
+ymd_hms(fecha_evento, tz = zona_horaria_evento) |>
+  with_tz(zona_horaria_local)
+```
+
+Ahora sé que [el taller que voy a dar para estudiantes de México](/clases/taller_unam/) va a ser a las 20 horas de Chile y no a las 16 como yo pensaba 🙄😂
+
+Otro ejemplo:
+```{r}
+library(lubridate)
+ymd_hms("2025-08-27 16:00:00") |>
+with_tz("Europe/Vienna")
+```
+
+Este tip lo aprendí en el sitio de [RainborR](https://rainbowr.org), una comunidad de usuarixs de R que también son parte de la comunidad LGBT+ 🏳️‍🌈
