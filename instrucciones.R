@@ -7,10 +7,10 @@ blogdown::stop_server()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Gráfico de mis géneros musicales más escuchados según datos de Last.fm", 
+blogdown::new_post(title = "Convertir zonas horarias con R", 
                    file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
-                   tags = c("ggplot2", "visualización de datos", "blog")
+                   tags = c("consejos", "curiosidades")
 )
 
 # crear un post tutorial
@@ -27,6 +27,8 @@ blogdown::new_post(title = "Usando tipografías personalizadas en gráficos {ggp
 #     output-ext: "md"
 
 ## borradores ----
+"https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html" # plagiar
+"~/Documents/Otros/blog-bastianolea-r/content/blog/2025-08-22/index.qmd" # zonas horarias
 "content/blog/tipografias_ggplot2/tipografias_ggplot.qmd"
 "content/blog/tipografias_shiny/tipografias_shiny.qmd"
 "content/blog/diferencias/waldo.qmd"

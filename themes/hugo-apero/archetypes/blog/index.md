@@ -5,6 +5,10 @@ excerpt: ""
 date: {{ .Date }}
 author: ""
 draft: true
+format:
+  hugo-md:
+    output-file: "index"
+    output-ext: "md"
 series:
 tags:
 categories:
