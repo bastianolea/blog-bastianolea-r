@@ -29,7 +29,7 @@ _Sitios con contenido educacional para que aprendas R._
 - [StackOverflow](https://stackoverflow.com/collectives/r-language), sitio web dedicado a preguntas y respuestas
 - [Comunidad de R en Reddit](https://www.reddit.com/r/rstats), donde también se pueden hacer consultas
 
-### Recursos sobre R
+### Recursos para aprender R
 - [Tutorial de R desde cero](https://bastianolea.rbind.io/blog/r_introduccion/), con niveles [básico](/blog/r_introduccion/r_basico/), [intermedio](/blog/r_introduccion/r_intermedio/), y foco en [`aprender {dplyr}`](/blog/r_introduccion/dplyr_intro/)
 - [R para ciencia de datos](https://es.r4ds.hadley.nz) 📚 traducción al español del libro "R for Data Science", recomendado para entrar a R
 - [Ciencia de Datos para Gente Sociable](https://bitsandbricks.github.io/ciencia_de_datos_gente_sociable/) 📚 libro introductorio de R enfocado en personas de las ciencias sociales
@@ -42,7 +42,7 @@ _Sitios con contenido educacional para que aprendas R._
 - [Large Language Model tools for R](https://luisdva.github.io/llmsr-book/), Inteligencia artificial y modelos de lenguaje en R
 
 ### Visualización de datos en R
-- [R graph Gallery](https://www.r-graph-gallery.com/), galería de gráficos y visualizaciones de datos hechas con R
+- [R Graph Gallery](https://www.r-graph-gallery.com/), galería de gráficos y visualizaciones de datos hechas con R
 - [R Charts](https://r-charts.com/es/), galería de gráficos y visualizaciones de datos hechas con R
 - [Tutorial de visualización de datos con `{ggplot2}`](/blog/r_introduccion/tutorial_visualizacion_ggplot/)
 

@@ -26,7 +26,7 @@ Los contenidos son:
 2. [Crear documentos Quarto](#documentos-quarto)
 3. [Crear páginas estáticas a partir de documentos Quarto con GitHub Pages](#documento-quarto-en-github-pages)
 4. [Crear sitios web con Quarto](#sitios-web-quarto-en-github-pages)
-5. [Crear blogs con Quarto](#blog-quarto)
+5. [Crear blogs con Quarto](#blogs-quarto-en-github-pages)
 6. [Crear blogs con Hugo Apéro](#blog-hugo)
 
 {{< imagen afiche-featured.jpg >}}
