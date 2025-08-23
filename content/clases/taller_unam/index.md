@@ -8,6 +8,15 @@ layout: single
 location: Online
 title: Clase magistral del Diplomado de Ciencia de Datos para Ciencias Sociales y Humanidades
 subtitle: Creando tu marca como científico/a de datos
+links:
+- icon: github
+  icon_pack: fab
+  name: código y contenidos
+  url: https://github.com/bastianolea/taller_datos_unam
+- icon: circle-play
+  icon_pack: fashttp://localhost:4321/clases/taller_corrupcion_cesi/
+  name: diapositivas
+  url: https://bastianolea.github.io/taller_datos_unam/taller.html
 ---
 
 El viernes 22 de agosto tengo el honor de participar en las clases magistrales del Diplomado de Ciencia de Datos para Ciencias Sociales y Humanidades de la Facultad de Estudios Superiores Acatlán, Universidad Nacional Autónoma de México.
