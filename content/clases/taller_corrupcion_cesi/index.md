@@ -12,6 +12,10 @@ links:
   icon_pack: fab
   name: código y contenidos
   url: https://github.com/bastianolea/curso_shiny_2_spatialLab
+- icon: youtube
+  icon_pack: fab
+  name: grabación
+  url: https://www.youtube.com/watch?v=fAmwXWvtR4E
 ---
 
 Taller online que impartí para el _Congreso Estudiantil de Sociología Interdisciplinaria._ En este taller introduje a estudiantes de sociología al lenguaje de programación R, explicando los beneficios del análisis de datos desarrollado en flujos de trabajo basados en la programación, y las posibilidades que se abren para producir estudios y obtener resultados usando código. Puse énfasis en el uso de tecnologías y datos abiertos, y en el principal beneficio de la programación (en mi opinión): el poder actualizar resultados, aplicaciones y visualizaciones automáticamente.

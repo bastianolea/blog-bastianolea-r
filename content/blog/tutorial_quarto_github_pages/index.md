@@ -384,18 +384,11 @@ Siguiendo estas instrucciones ya tendrás tu sitio web básico listo! ¡Y gratis
 
 {{< imagen "img/website_3.png" >}}
 
-
-
-Instrucciones para subir a GitHub
+Instrucciones para subir a GitHub:
 https://quarto.org/docs/publishing/github-pages.html#render-to-docs
-_quarto.yml con output-dir: docs para github
-touch .nojekyll
 
-Instrucciones para Netlify
+Instrucciones para subir a Netlify:
 https://beamilz.com/posts/2022-06-05-creating-a-blog-with-quarto/en/#deploy-with-netlify
-entrar
-new site, elegir repo, poner _site, y listo
-
 
 
 ----

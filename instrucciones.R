@@ -14,8 +14,8 @@ blogdown::new_post(title = "Convertir zonas horarias con R",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Usando tipografías personalizadas en gráficos {ggplot2}", 
-                   file = "blog/tipografias_ggplot2/index.qmd",
+blogdown::new_post(title = "Clase de UNAM", 
+                   file = "blog/unam/index.qmd",
                    author = "Bastián Olea Herrera",
                    tags = c("visualización de datos", "ggplot2", "gráficos"),
                    categories = c() 

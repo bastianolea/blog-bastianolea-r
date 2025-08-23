@@ -16,7 +16,20 @@ tags:
 ---
 
 ```{r}
+#| eval: false
+library(showtext)
 
+# descargar una tipografía desde google fonts
+font_add_google(name = "Montserrat")
+# font_add_google(name = "Nunito")
+
+# activar el uso de tipografías
+showtext_auto()
+showtext_opts(dpi = 300) # resolución para que se vean bien las tipografías
+
+# cambiar tipografía global
+grafico_apilado_4 +
+  theme_classic(base_family = "Montserrat")
 ```
 
 {{< cafecito >}}
