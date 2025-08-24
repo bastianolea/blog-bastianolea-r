@@ -13,7 +13,9 @@ excerpt: El paquete `{visdat}` tiene funciones para visualizar tus conjuntos de 
 
 
 
+
 En una clase reciente me preguntaron cómo saber de una dónde hay datos perdidos o _missing_ en un conjunto de datos. La respuesta que di fue usar `summarize()` para contar la cantidad de datos perdidos en todas las columnas de un dataframe:
+
 
 
 
@@ -39,8 +41,9 @@ iris_m |>
 
 ```
 ##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-## 1           14          15           14          17      20
+## 1            8          14           11          15      14
 ```
+
 
 
 
@@ -53,6 +56,7 @@ Pero hay formas más convenientes de hacerlo!
 
 
 
+
 ``` r
 install.packages("visdat")
 library(visdat)
@@ -60,7 +64,10 @@ library(visdat)
 
 
 
+
 En [este post de ROpenSci](https://ropensci.org/blog/2017/08/22/visdat/) hay una reseña más completa del paquete, pero te dejo ejemplos útiles a continuación:
+
+
 
 
 
@@ -76,6 +83,7 @@ Para visualizar si es que hay datos perdidos en nuestro dataframe, y además sab
 
 
 
+
 ``` r
 vis_miss(iris_m)
 ```
@@ -84,9 +92,11 @@ vis_miss(iris_m)
 
 
 
+
 `{visdat}` nos muestra visualmente toda la tabla de datos como un rectángulo, destacando los datos perdidos. ¡Súper útil!
 
 Con el argumento `cluster` podemos agrupar los datos perdidos para tener una mejor noción de la proporción en cada columna.
+
 
 
 
@@ -99,9 +109,11 @@ vis_miss(iris_m, cluster = TRUE)
 
 
 
+
 ## Visualizar el tipo de las columnas
 
 Con `vis_dat()` vemos con colores distintos las columnas que corresponden a tipos distintos (numérico, caracter, factor, etc.)
+
 
 
 
@@ -114,9 +126,11 @@ vis_dat(iris)
 
 
 
+
 ## Visualizar los valores de las variables numéricas
 
 Para explorar los datos de tipo numérico, podemos usar `vis_value()` para visualizar con una escala de colores los valores de cada columna, dándonos una noción sobre las cifras dentro de nuestra tabla:
+
 
 
 
@@ -131,9 +145,11 @@ iris |>
 
 
 
+
 ## Visualizar valores numéricos que cumplan una condición
 
 Para indagar en los datos numéricos, podemos entregar una condición dentro de una función lambda para aplicarla a todas las columnas y visualizar los resultados:
+
 
 
 
@@ -151,4 +167,5 @@ vis_expect(iris, ~.x >= 5)
 
 
 {{< cursos >}}
+
 

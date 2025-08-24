@@ -14,7 +14,7 @@ links:
   name: código y contenidos
   url: https://github.com/bastianolea/taller_datos_unam
 - icon: circle-play
-  icon_pack: fashttp://localhost:4321/clases/taller_corrupcion_cesi/
+  icon_pack: fas
   name: diapositivas
   url: https://bastianolea.github.io/taller_datos_unam/taller.html
 ---
