@@ -40,7 +40,7 @@ iris_m |>
 ```
 
       Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-    1           11          16           15          15      12
+    1           10          13           11          17      12
 
 Pero hay formas más convenientes de hacerlo!
 
