@@ -2,7 +2,7 @@
 title: usar tipografías personalizadas en gráficos {ggplot2}
 author: Bastián Olea Herrera
 date: '2025-08-25'
-draft: true
+draft: false
 freeze: true
 format:
   hugo-md:
@@ -14,16 +14,32 @@ tags:
   - visualización de datos
   - ggplot2
   - gráficos
-execute: 
-  warning: false
 ---
 
-```{r}
-#| warning: false
-#| message: false
+
+``` r
 library(ggplot2)
 library(dplyr)
+```
 
+```
+## 
+## Attaching package: 'dplyr'
+```
+
+```
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+```
+
+``` r
 # crear datos al azar
 datos <- tibble(a = rnorm(20, mean = 10, sd = 1),
                 b = rnorm(20, mean = 10, sd = 1),
@@ -39,26 +55,47 @@ grafico <- datos |>
   theme_light()
 ```
 
-```{r}
-# especificar tipografía desde el tema
+
+``` r
+# especificar tipografía para el tema
 grafico +
   theme(text = element_text(family = "Menlo"))
 ```
 
-```{r}
+<img src="/blog/tipografias_ggplot2/tipografias_ggplot_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+
+
+``` r
 # especificar tipografía para geom_text() y para el tema
 grafico +
-  ggrepel::geom_text_repel(
-    aes(label = c),  family = "Menlo") +
+  ggrepel::geom_text_repel(aes(label = c), 
+                           size = 3, family = "Menlo") +
   theme(text = element_text(family = "Menlo"))
 ```
+
+<img src="/blog/tipografias_ggplot2/tipografias_ggplot_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+
+
 
 
 ## Showtext
 
-```{r}
-library(showtext)
 
+
+
+``` r
+library(showtext)
+```
+
+```
+## Loading required package: sysfonts
+```
+
+```
+## Loading required package: showtextdb
+```
+
+``` r
 # descargar una tipografía desde google fonts
 font_add_google(name = "Pacifico")
 
@@ -73,10 +110,17 @@ grafico +
   theme(text = element_text(family = "Pacifico"))
 ```
 
+<img src="/blog/tipografias_ggplot2/tipografias_ggplot_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+
+
+
 
 ## Archivo
 
-```{r}
+
+
+
+``` r
 # agregar una tipografía desde un archivo
 font_add("gobCL", 
          regular = "tipografías/gobCL_Regular.otf",
@@ -89,37 +133,43 @@ grafico +
   theme(text = element_text(family = "gobCL"))
 ```
 
+<img src="/blog/tipografias_ggplot2/tipografias_ggplot_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+
+
+
 
 ## Descargar
 
-https://fonts.google.com/specimen/Arvo
-
-- `Arvo-Bold.ttf`
-- `Arvo-BoldItalic.ttf`
-- `Arvo-Italic.ttf`
-- `Arvo-Regular.ttf`
-
-```{r}
-# agregar una tipografía desde un archivo
-font_add("Arvo", 
-         regular = "tipografías/Arvo-Regular.ttf",
-         bold = "tipografías/Arvo-Bold.ttf")
-
-# probar tipografía descargada como archivo desde Google Fonts
-grafico +
-  ggrepel::geom_text_repel(aes(label = c), family = "Arvo") +
-  theme(text = element_text(family = "Arvo"))
-```
 
 
-```{r}
-#| eval: false
+``` r
 # descargar tipografía desde Google Fonts
 gfonts::setup_font("arvo", "tipografías")
 ```
 
+```
+## ✓ Font files downloaded!
+## ✓ CSS file generated!
+## ✲ Please use `use_font("arvo", "tipografías/css/arvo.css")` to import the font in Shiny or Markdown.
+```
 
+``` r
+# agregar una tipografía desde un archivo
+font_add("Arvo", 
+         regular = "tipografías/fonts/arvo-v23-latin-regular.ttf",
+         bold = "tipografías/fonts/arvo-v23-latin-700.ttf")
 
+# probar tipografía descargada como archivo desde Google Fonts
+grafico +
+  ggrepel::geom_text_repel(aes(label = c), 
+                           size = 3, family = "Arvo") +
+  theme(text = element_text(family = "Arvo"))
+```
+
+<img src="/blog/tipografias_ggplot2/tipografias_ggplot_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 {{< cafecito >}}
+
+
 {{< cursos >}}
+

@@ -28,7 +28,6 @@ blogdown::new_post(title = "Clase de UNAM",
 
 ## borradores ----
 "https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html" # plagiar
-"~/Documents/Otros/blog-bastianolea-r/content/blog/2025-08-22/index.qmd" # zonas horarias
 "content/blog/tipografias_ggplot2/tipografias_ggplot.qmd"
 "content/blog/tipografias_shiny/tipografias_shiny.qmd"
 "content/blog/diferencias/waldo.qmd"
