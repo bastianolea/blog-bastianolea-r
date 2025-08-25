@@ -3,6 +3,7 @@ title: Análisis y visualización de correlaciones en R
 author: Bastián Olea Herrera
 date: '2025-07-09'
 draft: false
+freeze: true
 format:
   hugo-md:
     fig-format: "jpeg"
@@ -20,6 +21,7 @@ editor_options:
   chunk_output_type: console
 excerpt: El análisis de correlación es una técnica estadística de análisis exploratorio que nos permite identificar si existen relaciones lineales entre distintas variables. En este tutorial aprenderemos a realizar correlaciones entre múltiples variables, interpretarlas, y visualizarlas de varias maneras distintas. 
 ---
+
 
 
 
@@ -42,6 +44,7 @@ Gracias al [repositorio de datos sociales](https://bastianolea.github.io/datos_s
 
 
 
+
 ``` r
 library(arrow)
 
@@ -55,9 +58,11 @@ siedu <- arrow::read_parquet("https://github.com/bastianolea/siedu_indicadores_u
 
 
 
+
 ## Limpieza de datos
 
 Antes que nada, vamos a cargar `{dplyr}` para el manejo y la limpieza de los datos. 
+
 
 
 
@@ -68,7 +73,9 @@ library(dplyr)
 
 
 
+
 Echémosle un vistazo a los datos con `glimpse()`:
+
 
 
 
@@ -115,6 +122,7 @@ glimpse(siedu)
 ```
 
 
+
 Notamos que ambos conjuntos de datos vienen en el [formato _largo_](https://r4ds.had.co.nz/tidy-data.html#longer), dónde tenemos una columna con los nombres de las variables o indicadores, y otra columna con los valores correspondientes. Así tenemos una tabla con menor cantidad de columnas,
 donde cada fila es una observación que corresponde a una comuna del país, en un año específico, para una de las variables del conjunto de datos, con su valor correspondiente.
 
@@ -123,6 +131,7 @@ Haremos tres cosas con los datos:
 1. Primero haremos una selección de variables interesantes de cada conjunto de datos. 
 2. Luego, como ambos conjuntos de datos poseen mediciones de distintos años en cada una de sus indicadores o estadísticos, realizaremos una agrupación por comuna y variable para dejar las mediciones más recientes en cada indicador y en cada comuna. 
 3. Finalmente, dejaremos sólo las columnas que nos interesan
+
 
 
 
@@ -183,7 +192,9 @@ siedu_4 <- siedu_3 |>
 
 
 
+
 Veamos cómo van quedando los datos:
+
 
 
 
@@ -232,8 +243,10 @@ siedu_4
 
 
 
+
 ### Unir datos
 Vamos a combinar estos dos conjuntos de datos para tener una mezcla de variables de temas socioeconómicos que sería interesante correlacionar. Como hicimos que ambos conjuntos de datos estén ordenados bajo la misma lógica, para unirlos sólo necesitamos agregar las filas de un conjunto al otro. 
+
 
 
 
@@ -244,7 +257,9 @@ datos <- bind_rows(sinim_4, siedu_4)
 
 
 
+
 Ahora que los datos están unidos, contamos con 20 variables para correlacionar.
+
 
 
 
@@ -280,11 +295,13 @@ datos |> distinct(variable) |> print(n=Inf)
 
 
 
+
 ### Pivotar datos a ancho
 
 El último paso antes del análisis de correlación es [pivotar la estructura de los datos al formato ancho.](https://r4ds.hadley.nz/data-tidy.html#widening-data), porque las funciones que realizan correlaciones en R esperan que los datos vengan de esta forma. 
 
 Si bien en el formato largo tenemos una columna con el nombre de las variables y otra columna con el valor de cada variable, siendo cada fila una observación, en el **formato ancho** cada columna corresponde a una variable, mientras que cada fila corresponde a una observación.
+
 
 
 
@@ -302,7 +319,9 @@ datos_ancho <- datos |>
 
 
 
+
 Se consultamos los nombres de las columnas, confirmamos que ahora cada variable se encuentra una columna individual:
+
 
 
 
@@ -337,9 +356,11 @@ names(datos_ancho)
 
 
 
+
 ## Correlación
 
 El paquete [`{corrr}`](https://corrr.tidymodels.org), parte del framework [tidymodels](https://www.tidymodels.org), nos facilita realizar una correlación cuyo resultado viene en una tabla ordenada con tan sólo una función: `correlate()`
+
 
 
 
@@ -386,11 +407,13 @@ correlación
 ```
 
 
+
 En la tabla anterior (muy rudimentaria aún) podemos ver el cruce entre todas las variables. La tabla se lee partiendo por una fila, que representa una de las variables, y cada vez que esta fila se intercepta con una columna, el valor representa el cruce de la variable de la fila con la variable de la columna.
 
 Como estamos cruzando todas con todas las variables, obviamente cada variable también se cruza consigo misma, lo cual resulta en un `NA`. 
 
 Como el resultado es muy grande, y la cantidad de columnas muy alta, `{corrr}` ofrece la función `stretch()` para convertir fácilmente el resultado a un formato largo:
+
 
 
 
@@ -419,7 +442,9 @@ correlación |> stretch()
 ```
 
 
+
 Esto nos puede servir para encontrar las correlaciones con una de las variables en particular; por ejemplo, encontrar la correlación de las variables con el tiempo de viaje en hora punta por las mañanas:
+
 
 
 
@@ -446,6 +471,7 @@ correlación |>
 
 
 
+
 ### Interpretación de correlaciones
 
 La columna `r` nos indica el valor de la correlación de la variable filtrada con todo el resto de las variables.
@@ -453,6 +479,7 @@ La columna `r` nos indica el valor de la correlación de la variable filtrada co
 Como las correlaciones pueden ser positivas o negativas, el valor de la correlación (`r`) puede ser positivo o negativo. Los valores de correlación van del 0 al 1 (o del 0 al -1), donde una correlación igual a 0 significa que no existe correlación, y una correlación igual a 1 significa que la correlación es total. Usualmente, una correlación mayor a 0,3 se considera moderada, y mayor a 0,5 se considera fuerte, pero las interpretaciones De estos valores son múltiples.
 
 Ordenemos las variables por su intensidad de correlación con el tiempo de viaje:
+
 
 
 
@@ -480,6 +507,7 @@ correlación |>
 
 
 
+
 En las primeras 3 filas podemos ver **correlaciones negativas fuertes**: las comunas del país donde los _tiempos de viaje de viaje en hora punta por la mañana_ son mayores, también son comunas donde los _puntajes en la prueba de selección universitaria (PSU)_ son menores, y menores son los _recursos municipales por habitante_. Dicho de otro modo, a menores recursos municipales por habitantes, mayor tiempo de viaje en hora punta por la mañana.
 
 En las filas 4 y 5 vemos unas **correlaciones positivas moderadas**: los tiempos de viaje en horario punta por las mañanas también son más altos en las comunas donde existen más _hogares con ingresos bajos_ (según el Registro Social de Hogares), y donde los _municipios dependen más del financiamiento del Fondo Común Municipal_.
@@ -487,6 +515,7 @@ En las filas 4 y 5 vemos unas **correlaciones positivas moderadas**: los tiempos
 
 ### Búsqueda de correlaciones
 Cómo tenemos todos los valores de correlación en una misma columna gracias a `stretch()`, podemos filtrar los valores para encontrar solamente con relaciones fuertes. Podemos lograr esto filtrando valores mayores a 0,5 o menores a -0,5, o filtrando valores mayores a el valor absoluto de 0,5 (`abs(0.5)`). Luego ordenamos los valores de mayor a menor, usando el valor absoluto de `r` (el valor en positivo).
+
 
 
 
@@ -515,6 +544,7 @@ correlación |>
 
 
 
+
 Evidentemente, las correlaciones más fuertes son entre variables similares: los hogares de menores ingresos correlacionan con la población en situación de pobreza, la disponibilidad de presupuesto municipal por habitante se correlaciona con los ingresos municipales percápita, y otras obviedades. Habría que afinar la selección de variables para remover aquellas que representan a un mismo fenómeno social subyacente.
 
 ## Visualización
@@ -530,6 +560,7 @@ datos |>
 ```
 
 Como nuestra matriz de correlación tiene muchas variables, tendremos que agregar algunos ajustes para que se vea bien.
+
 
 
 
@@ -553,6 +584,7 @@ correlación |>
 
 
 
+
 Con esta visualización, podemos ver el color y el tamaño de los círculos para encontrar rápidamente los cruces entre variables que están correlacionados.
 
 A la rápida, podemos ver que arriba a la izquierda la variable de consumo de energía eléctrica se correlaciona con los recursos municipales, y abajo la izquierda podemos ver qué el porcentaje de hogares en los tramos menores de ingresos se correlaciona con menos conexiones a Internet y menos consumo eléctrico. También al centro del gráfico podemos ver una alta correlación entre la _tasa de víctimas de delitos violentos_ y la _densidad poblacional_.
@@ -560,6 +592,7 @@ A la rápida, podemos ver que arriba a la izquierda la variable de consumo de en
 
 ### Alternativas
 El paquete [`{ggcorrplot}`](https://github.com/kassambara/ggcorrplot) es muy usado para obener gráficos de correlaciones, y tiene opciones que permiten personalizar la forma de visualizarlas:
+
 
 
 
@@ -575,7 +608,9 @@ ggcorrplot(corr)
 
 
 
+
 También permite presentar con círculos:
+
 
 
 
@@ -587,7 +622,9 @@ ggcorrplot(corr, method = "circle")
 
 
 
+
 Y tiene la opción de entregar una matriz de correlación de los valores _p_ para excluir las correlaciones con coeficientes que no sean estadísticamente significativos:
+
 
 
 
@@ -603,7 +640,9 @@ ggcorrplot(corr,
 
 
 
+
 Otra función de R que permite realizar correlaciones y visualizarlas de inmediato es `ggcor()` del paquete [`{GGally}`](https://ggobi.github.io/ggally/index.html), que entrega varios tipos de gráficos estadísticos para análisis exploratorios de datos.
+
 
 
 
@@ -619,11 +658,13 @@ datos_ancho |>
 
 
 
+
 El resultado es menos atractivo, pero si es bastante más legible.
 
 ### Manualmente
 
 Finalmente, y como no podía faltar, también podemos crear un gráfico de la matriz de correlación desde cero con `{ggplot2}`. Esto no es tan complejo gracias a que `correlate()` y `stretch()` entregan los resultados bien ordenaditos.
+
 
 
 
@@ -655,7 +696,9 @@ datos_ancho |>
 
 
 
+
 También podemos aprovechar el vuelo para hacer una bonita obra de arte con nuestras correlaciones:
+
 
 
 
@@ -678,6 +721,7 @@ datos_ancho |>
 
 
 
+
 Como siempre, `{ggplot2}` es una herramienta extremadamente versátil para visualizar cualquier tipo de información. Puedes [aprender a crear visualizaciones de datos desde cero en R siguiendo este tutorial de `{ggplot2}`.](https://bastianolea.rbind.io/blog/r_introduccion/tutorial_visualizacion_ggplot/)
 
 ----
@@ -686,8 +730,10 @@ Si te gustó este contenido, puedes ayudarme donándome un cafecito si presionas
 
 
 
+
 {{< cafecito >}}
 
 
 {{< cursos >}}
+
 
