@@ -14,8 +14,8 @@ blogdown::new_post(title = "Convertir zonas horarias con R",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Clase de UNAM", 
-                   file = "blog/unam/index.qmd",
+blogdown::new_post(title = "Personaliza fácilmente los colores de tus gráficos de {ggplot2} en R gracias a {thematic}", 
+                   file = "blog/ggplot_temas/index.qmd",
                    author = "Bastián Olea Herrera",
                    tags = c("visualización de datos", "ggplot2", "gráficos"),
                    categories = c() 
@@ -28,9 +28,12 @@ blogdown::new_post(title = "Clase de UNAM",
 
 ## borradores ----
 "https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html" # plagiar
-"content/blog/tipografias_ggplot2/tipografias_ggplot.qmd"
-"content/blog/tipografias_shiny/tipografias_shiny.qmd"
+"content/blog/ggplot_temas/ggplot_temas.qmd"
+"content/blog/shiny_temas/shiny_temas.qmd"
+"content/blog/shiny_tipografias/shiny_tipografias.qmd"
+
 "content/blog/diferencias/waldo.qmd"
+
 "content/blog/2025-07-06/index.qmd" # cargar y unir datos
 "content/blog/2025-07-01/index.qmd" # st_join
 "content/blog/unpivotr/index.qmd"

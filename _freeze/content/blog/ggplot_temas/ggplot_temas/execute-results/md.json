@@ -1,0 +1,15 @@
+{
+  "hash": "bf2a91d958c034b6253aca6185d0cb02",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: Personaliza fácilmente los colores de tus gráficos de {ggplot2} en R gracias\n  a {thematic}\nauthor: Bastián Olea Herrera\ndate: '2025-08-26'\ndraft: true\nfreeze: true\nformat:\n  hugo-md:\n    output-file: \"index\"\n    output-ext: \"md\"\nslug: []\ncategories: []\ntags:\n  - visualización de datos\n  - ggplot2\n  - gráficos\n---\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(ggplot2)\nlibrary(showtext)\nlibrary(dplyr)\n\n# crear datos al azar\ndatos <- tibble(a = rnorm(20, mean = 10, sd = 1),\n                b = rnorm(20, mean = 10, sd = 1),\n                c = round(rnorm(20, mean = 10, sd = 1), 1))\n\ngrafico <- datos |> \n  ggplot() +\n  aes(x = a, y = b) +\n  geom_point(size = 2, alpha = 0.4) +\n  labs(title = \"Gráfico de dispersión\",\n       subtitle = \"Números al azar\",\n       x = \"Eje horizontal\", y = \"Eje vertical\",\n       caption = \"Fuente: de los deseos\") +\n  # theme_light(base_size = 12) +\n  theme(plot.title = element_text(face = \"bold\"))\n\n\n# descargar una tipografía desde google fonts\nfont_add_google(name = \"Pacifico\")\n\n# activar tipografías\nshowtext_auto()\nshowtext_opts(dpi = 300)\n\nlibrary(thematic)\n\nthematic_on(fg = \"#553A74\",\n            bg = \"#EAD2FA\")\n\n# usar la tipografía desde Google Fonts\ngrafico +\n  ggrepel::geom_text_repel(aes(label = c), family = \"Pacifico\") +\n  theme(text = element_text(family = \"Pacifico\"))\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": null,
+    "postProcess": false
+  }
+}
