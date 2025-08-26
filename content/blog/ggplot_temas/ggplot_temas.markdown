@@ -94,14 +94,6 @@ thematic_on(fg = "#553A74",
 grafico
 ```
 
-```
-## Warning: thematic was unable to resolve `accent='auto'`. Try providing an
-## actual color (or `NA`) to the `accent` argument of `thematic_on()`. By the way,
-## 'auto' is only officially supported in `shiny::renderPlot()`, some rmarkdown
-## scenarios (specifically, `html_document()` with `theme!=NULL`), in RStudio, or
-## if `auto_config_set()` is used.
-```
-
 <img src="/blog/ggplot_temas/ggplot_temas_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 
@@ -122,14 +114,6 @@ Veamos algunos ejemplos de como queda el mismo gráfico con otros pares de color
 
 
 
-``` r
-thematic_on(fg = "#BC513D",
-            bg = "#E9E1C1")
-
-grafico
-```
-
-<img src="/blog/ggplot_temas/ggplot_temas_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 
 ``` r

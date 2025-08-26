@@ -82,12 +82,6 @@ thematic_on(fg = "#553A74",
 grafico
 ```
 
-    Warning: thematic was unable to resolve `accent='auto'`. Try providing an
-    actual color (or `NA`) to the `accent` argument of `thematic_on()`. By the way,
-    'auto' is only officially supported in `shiny::renderPlot()`, some rmarkdown
-    scenarios (specifically, `html_document()` with `theme!=NULL`), in RStudio, or
-    if `auto_config_set()` is used.
-
 <img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png" width="768" />
 
 Solamente con definir dos colores con `thematic_on()` e imprimir el gráfico obtenemos el gráfico con el tema aplicado. Muy lindo 💜
@@ -97,15 +91,6 @@ Para encontrar pares de colores interesantes, recomiendo el sitio [Pigment](http
 {{< imagen "pigment.png" >}}
 
 Veamos algunos ejemplos de como queda el mismo gráfico con otros pares de colores:
-
-``` r
-thematic_on(fg = "#BC513D",
-            bg = "#E9E1C1")
-
-grafico
-```
-
-<img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="768" />
 
 ``` r
 thematic_on(fg = "#6A3F5B",
