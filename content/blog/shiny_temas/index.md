@@ -2,6 +2,7 @@
 title: Temas de colores personalizados en apps Shiny
 author: Bastián Olea Herrera
 date: '2025-08-22'
+draft: true
 slug: []
 categories: []
 tags:
@@ -14,6 +15,8 @@ format:
     output-ext: md
 ---
 
+
+https://rstudio.github.io/thematic/
 
 ``` r
 thematic_shiny()

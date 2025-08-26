@@ -133,7 +133,7 @@ Crea el _token_ que necesitas, y copia del código secreto. Recuerda que este c�
 Ejecuta el comando `gitcreds::gitcreds_set()` y entrégale el _token_ que copiaste. De esta forma queda enlazada tu cuenta con tu computador.
 
 ### Configurar tu cuenta
-Solamente queda un último paso de configuración, que es guardar la información básica de tu cuenta en R. Ejecuta el comando `use_git_config(user.name = "usuario", user.email = "correo")`, indicando en sus argumentos tu nombre de usuario y tu correo de tu cuenta GitHub.
+Solamente queda un último paso de configuración, que es guardar la información básica de tu cuenta en R. Ejecuta el comando `usethis::use_git_config(user.name = "usuario", user.email = "correo")`, indicando en sus argumentos tu nombre de usuario y tu correo de tu cuenta GitHub.
 
 ----
 
