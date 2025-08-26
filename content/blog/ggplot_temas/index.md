@@ -1,7 +1,5 @@
 ---
-title: >-
-  Personaliza fácilmente los colores de tus gráficos de {ggplot2} en R gracias a
-  {thematic}
+title: Temas de colores personalizados para gráficos {ggplot2}
 author: Bastián Olea Herrera
 date: '2025-08-26'
 draft: true
@@ -16,6 +14,12 @@ tags:
   - visualización de datos
   - ggplot2
   - gráficos
+excerpt: >-
+  Darle un toque de color a tus gráficos produce visualizaciones con más
+  personalidad y mayor impacto. Pero cambiar cada color de cada elemento puede
+  ser engorroso. Pero para eso existe el paquete `{thematic}`! En este post
+  vemos cómo usar `{thematic}` para cambiar fácilmente los colores de fondo de
+  tus gráficos.
 ---
 
 
