@@ -88,6 +88,8 @@ _Sitios donde puedes encontrar datos que puedes usar para explorar o aprender._
 - [Estadísticas sociales del Instituto Nacional de Estadísticas (INE)](https://www.ine.gob.cl/estadisticas/)
 - [Estadísticas y datos abiertos de salud pública en Chile: Departamento de Estadísticas e Información de Salud (DEIS)](https://deis.minsal.cl/#estadisticas)
 - [`{guaguas}`](https://rivaquiroga.github.io/guaguas/index.html), paquete de R con base de datos de nombres inscritos en Chile
+- [Observa](https://observa.minciencia.gob.cl), observatorio del Sistema Nacional de Ciencia, Tecnología, Conocimiento e Innovación
+- [Data Observatory](https://dataobservatory.net), plataforma de datos integrado por el Ministerio de Ciencia, Agencia Nacional de Investigación y Desarrollo, Ministerio de Economía y Universidad Adolfo Ibáñez
 
 #### Otras fuentes de datos
 - [Paquete `{datos}`](https://cienciadedatos.github.io/datos/), traducción al español de conjuntos de datos que vienen por defecto en paquetes de R populares
