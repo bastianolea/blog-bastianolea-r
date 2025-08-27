@@ -149,6 +149,11 @@ El código en los posts queda así: `{{</* imagen "imagen.jpeg"*/>}}`, y funcion
 
 Donde `{{.Get 0}}` es el lugar donde se entrega el texto que se pone en el _shortcode_ la ruta de la imagen). Entonces, crear _shortcodes_ te permite reutilizar código para construir tu sitio; en este caso, el código para dar estilo a las imágenes, o por ejemplo para poner botones bonitos en el sitio. Lo bueno es que si actualizo el shortcode, en todas las páginas que lo usé se actualiza también.
 
+
+#### Columnas
+
+Saqué unos shortcodes para hacer columnas en los posts de Hugo desde [este ejemplo](https://roneo.org/shortcodes/#responsive-columns), y las [instrucciones de instalación están acá](https://roneo.org/en/hugo-install-shortcode-collection/), que en realidad consisten en descargar el repo y copiar los archivos `html` a `layouts/shortcodes/`.
+
 ----
 
 ### Consejos

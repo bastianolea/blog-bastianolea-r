@@ -7,10 +7,10 @@ blogdown::stop_server()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Convertir zonas horarias con R", 
+blogdown::new_post(title = "Generando ruido visual con R", 
                    file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos", "curiosidades")
+                   tags = c("curiosidades", "arte generativo")
 )
 
 # crear un post tutorial
@@ -27,6 +27,7 @@ blogdown::new_post(title = "Personaliza fácilmente los colores de tus gráficos
 #     output-ext: "md"
 
 ## borradores ----
+# https://github.com/rundel/livecode
 "https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html" # plagiar
 "content/blog/ggplot_temas/ggplot_temas.qmd"
 "content/blog/shiny_temas/shiny_temas.qmd"

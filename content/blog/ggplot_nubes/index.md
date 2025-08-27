@@ -9,6 +9,7 @@ tags:
   - ggplot2
   - gráficos
   - curiosidades
+  - arte generativo
 draft: false
 excerpt: >-
   Probando un poco de arte generativo en `{ggplot2}`. La idea era generar
