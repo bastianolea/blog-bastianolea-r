@@ -13,6 +13,11 @@ format:
     output-file: index
     output-ext: md
 excerpt: "Una aproximación al arte generativo ASCII por medio de loops de código que generan secuencias de textos aleatorias, produciendo patrones de ruido interesantes."
+links:
+- icon: github
+  icon_pack: fab
+  name: código
+  url: https://github.com/bastianolea/ruido_visual
 ---
 
 El otro día tuve que usar R para generar comandos muy largos (para automatizar el convertir cientos de reportes `html` a `pdf` usando un navegador web), y el código resultante fue eterno. Al pegarlo en la consola se produjo un aluvión de texto:
