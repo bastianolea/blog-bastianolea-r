@@ -104,13 +104,15 @@ Usamos `observe()` para que **ocurra una acción en nuestra app si es que cambia
 
 {{< video "shiny_app_a.mov" >}}
 
-Para este ejemplo, agregamos un pequeño para que se vea más bonita la aplicación, definido al principio de la UI:
+Para este ejemplo, agregamos [un toque de color](/blog/shiny_temas/) para que se vea más bonita la aplicación, definido al principio de la UI:
 
 ```r
 theme = bs_theme(bg = "#EAD1FA",
                    fg = "#553A74", 
                    primary = "#8557AB")
 ```
+
+Para más información sobre [aplicar temas a apps Shiny, revisa este post.](/blog/shiny_temas/)
  
 Puedes ver el [código completo de esta aplicación en este Gist de Github.](https://gist.github.com/bastianolea/4fd42f2e95bfd34deb386b3373960358)
 
@@ -201,4 +203,4 @@ Vale mencionar que debemos especificar también la condición donde el gráfico 
 
 Puedes ver el [código completo de esta aplicación en este Gist de Github.](https://gist.github.com/bastianolea/31509ea2d6ed040fe61231e2247987a1)
 
-Nuevamente, le agregamos el tema a la aplicación para que se vea bonita, y además agregamos la función `thematic_shiny()` del paquete `{thematic}` para que los gráficos usen los colores del tema automáticamente.
+Nuevamente, le [agregamos el tema a la aplicación Shiny](/blog/shiny_temas/) para que se vea bonita, y además agregamos la función `thematic_shiny()` del paquete `{thematic}` [para que los gráficos usen los colores del tema automáticamente.](/blog/shiny_temas/#aplicar-el-tema-de-tu-app-shiny-a-tus-gráficos)
