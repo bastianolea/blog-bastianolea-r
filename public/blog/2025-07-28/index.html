@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Gráfico de mis artistas y géneros musicales más escuchados según Last.fm | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Tenía ganas de reproducir en R uno de los gráficos que aparecen en el reporte mensual de Last.fm, una plataforma donde las personas van registrando la música que escuchan diariamente, así que aquí va el proceso y el resultado final. También incluye otras visualizaciones alternativas, y una animación del proceso de visualización de una de ellas!">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Gráfico de mis artistas y géneros musicales más escuchados según Last.fm | Blog">
+<meta property="og:description" content="Tenía ganas de reproducir en R uno de los gráficos que aparecen en el reporte mensual de Last.fm, una plataforma donde las personas van registrando la música que escuchan diariamente, así que aquí va el proceso y el resultado final. También incluye otras visualizaciones alternativas, y una animación del proceso de visualización de una de ellas!" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/2025-07-28/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/2025-07-28/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/2025-07-28/featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Gráfico de mis artistas y géneros musicales más escuchados según Last.fm">
+  <meta itemprop="description" content="Last.fm es una plataforma donde las personas van registrando la música que escuchan diariamente, y luego pueden obtener estadísticas sobre sus gustos musicales y recomendaciones basadas en los gustos de usuarios similares.
+Tenía ganas de reproducir en R uno de los gráficos que aparecen en el reporte mensual:
+Así que me apliqué con {ggplot2}, usando un paquete que agrega una visualización similar, y usando otro paquete para descargar los datos de mi perfil de Last.fm.">
+  <meta itemprop="datePublished" content="2025-07-30T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-07-30T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2376">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/2025-07-28/featured.png">
+  <meta itemprop="keywords" content="Ggplot2,Visualización de datos,Gráficos,Blog">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.275ca2dcb3ce1d8540f2ac94c30dfdd4bd3b9d520b326846a6631c5403c03f8d.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Gráfico de mis artistas y géneros musicales más escuchados según Last.fm</h1>
+        
+        
+        <p class="f7 db mv0 ttu">30/7/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">Temas:  <a href="https://bastianoleah.netlify.app/tags/ggplot2">ggplot2</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/blog">blog</a>  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos">gráficos</a>  <a href="https://bastianoleah.netlify.app/tags/blog">blog</a> </dd></em>
+  </dl>
+ 
+
+
+
+
+        
+      
+      <div class="ph0 pt5">
+        
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" href="https://github.com/bastianolea/lastfm_graficos" target="_blank" rel="noopener"><i class="fab fa-github fa-lg fa-fw mr2"></i>código</a>
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" href="https://www.last.fm/user/bastimapache" target="_blank" rel="noopener"><i class="fab fa-lastfm fa-lg fa-fw mr2"></i>mi Last.fm</a>
+
+
+      </div>
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <a href="camcorder4.webp" target="_blank">
+
+  <img src="camcorder4.webp" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>
+<a href="https://www.last.fm" target="_blank" rel="noopener">Last.fm</a> es una plataforma donde las personas van registrando la música que escuchan diariamente, y luego pueden obtener estadísticas sobre sus gustos musicales y recomendaciones basadas en los gustos de usuarios similares.</p>
+<p>Tenía ganas de reproducir en R uno de los gráficos que aparecen en el reporte mensual:</p>
+<a href="inspo.png" target="_blank">
+
+  <img src="inspo.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Así que me apliqué con <code>{ggplot2}</code>, usando un paquete que agrega una visualización similar, y usando otro paquete para descargar los datos de mi perfil de Last.fm.</p>
+
+
+
+
+<h2 id="obtención-de-datos">Obtención de datos
+  <a href="#obtenci%c3%b3n-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para obtener los datos de mis canciones escuchadas usé 
+<a href="https://github.com/ppatrzyk/lastfmR" target="_blank" rel="noopener">el paquete <code>{lastfmR}</code></a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">devtools</span><span style="color:#908caa">::</span><span style="color:#ea9a97">install_github</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;ppatrzyk/lastfmR&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lastfmR</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>La obtención de los datos de Last.fm se hace con las siguientes funciones:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">scrobbles</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">get_scrobbles</span><span style="color:#908caa">(</span><span style="color:#ea9a97">user</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;bastimapache&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">artist_info</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">get_library_info</span><span style="color:#908caa">(</span><span style="color:#ea9a97">user</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;bastimapache&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">scrobbles</span>
+</span></span></code></pre></div><pre><code># A tibble: 17,000 × 4
+   date                artist                    track             album        
+   &lt;POSIXt&gt;            &lt;chr&gt;                     &lt;chr&gt;             &lt;chr&gt;        
+ 1 2025-07-27 18:38:27 Bullet for My Valentine   Tears Don't Fall  The Poison   
+ 2 2025-07-25 15:35:20 Premiata Forneria Marconi Geranio           Per un amico 
+ 3 2025-07-25 15:13:14 Premiata Forneria Marconi Il Banchetto      Per un amico 
+ 4 2025-07-25 15:06:31 Premiata Forneria Marconi Per Un Amico      Per un amico 
+ 5 2025-07-25 15:01:41 Premiata Forneria Marconi Generale          Per un amico 
+ 6 2025-07-25 14:48:01 Premiata Forneria Marconi Appena un po'     Per un amico 
+ 7 2025-07-25 13:46:32 The Body &amp; OAA            Docile Gift       Enemy of Love
+ 8 2025-07-25 13:43:07 The Body &amp; OAA            Ignorant Messiah  Enemy of Love
+ 9 2025-07-25 13:40:40 The Body &amp; OAA            Miserable Freedom Enemy of Love
+10 2025-07-25 13:37:31 The Body &amp; OAA            Barren of Joy     Enemy of Love
+# ℹ 16,990 more rows
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">artist_info</span>
+</span></span></code></pre></div><pre><code># A tibble: 3,882 × 5
+   artist           user_scrobbles global_listeners global_scrobbles artist_tags
+   &lt;chr&gt;                     &lt;int&gt;            &lt;int&gt;            &lt;int&gt; &lt;chr&gt;      
+ 1 Opeth                      5006          1066799        110560572 Progressiv…
+ 2 Magma                      4905           158887          3353010 Zeuhl; Pro…
+ 3 Between the Bur…           4519           411709         27305709 Progressiv…
+ 4 Erik Satie                 3439          1690933         35397288 Classical;…
+ 5 ASIAN KUNG-FU G…           3318           601332         33012597 J-rock; ja…
+ 6 Gojira                     3289           898440         71798696 death meta…
+ 7 Boris                      3178           538299         21493173 drone; Sto…
+ 8 Rosetta                    3148           140465          6019868 Post-Metal…
+ 9 The Beatles                3019          5830439        885054050 classic ro…
+10 Mastodon                   3006          1139246         72786659 Progressiv…
+# ℹ 3,872 more rows
+</code></pre>
+<p>Los datos obtenidos son el historial de canciones escuchadas, y los artistas escuchados que además incluye las etiquetas de cada artista, que corresponden a los <strong>géneros o subgéneros musicales</strong> que las y los usuarios de Last.fm agregan.</p>
+
+
+
+
+<h2 id="procesamiento-de-datos">Procesamiento de datos
+  <a href="#procesamiento-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Teniendo estos dos conjuntos de datos, los unimos según la variable del nombre de artista, para que cada canción escuchada tenga las etiquetas del artista:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lubridate</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tidyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">scrobbles_tags</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">scrobbles</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">tibble</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">left_join</span><span style="color:#908caa">(</span><span style="color:#ea9a97">artist_info</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">artist</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">artist_tags</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><p>Luego, como cada artista puede tener más de una etiqueta, separamos las etiquetas en distintas columnas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">scrobbles_tags_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">scrobbles_tags</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">separate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">artist_tags</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sep</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;; &#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">into</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;artist_tags&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">:</span><span style="color:#f6c177">10</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sep</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;_&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">glimpse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">scrobbles_tags_2</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Rows: 17,000
+Columns: 14
+$ date           &lt;POSIXt&gt; 2025-07-27 18:38:27, 2025-07-25 15:35:20, 2025-07-25…
+$ artist         &lt;chr&gt; &quot;Bullet for My Valentine&quot;, &quot;Premiata Forneria Marconi&quot;,…
+$ track          &lt;chr&gt; &quot;Tears Don't Fall&quot;, &quot;Geranio&quot;, &quot;Il Banchetto&quot;, &quot;Per Un …
+$ album          &lt;chr&gt; &quot;The Poison&quot;, &quot;Per un amico&quot;, &quot;Per un amico&quot;, &quot;Per un a…
+$ artist_tags_1  &lt;chr&gt; &quot;metalcore&quot;, &quot;Progressive rock&quot;, &quot;Progressive rock&quot;, &quot;P…
+$ artist_tags_2  &lt;chr&gt; &quot;metal&quot;, &quot;italian progressive rock&quot;, &quot;italian progressi…
+$ artist_tags_3  &lt;chr&gt; &quot;hardcore&quot;, &quot;italian&quot;, &quot;italian&quot;, &quot;italian&quot;, &quot;italian&quot;,…
+$ artist_tags_4  &lt;chr&gt; &quot;emocore&quot;, &quot;Progressive&quot;, &quot;Progressive&quot;, &quot;Progressive&quot;,…
+$ artist_tags_5  &lt;chr&gt; &quot;seen live&quot;, &quot;italian prog&quot;, &quot;italian prog&quot;, &quot;italian p…
+$ artist_tags_6  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ artist_tags_7  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ artist_tags_8  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ artist_tags_9  &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+$ artist_tags_10 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA,…
+</code></pre>
+<p>Ahora que tenemos hasta 10 columnas de etiquetas, transformamos los datos a formato largo, para obtener una sola variable que contenga hacia abajo todas las etiquetas de cada artista.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">scrobbles_tags_3</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">scrobbles_tags_2</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">pivot_longer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cols</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">starts_with</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;artist_tags&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">names_to</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;tags_n&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">values_to</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;tags&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#908caa">!</span><span style="color:#ea9a97">is.na</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tags</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#908caa">-</span><span style="color:#ea9a97">tags_n</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tags</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">tolower</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tags</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">scrobbles_tags_3</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice</span><span style="color:#908caa">(</span><span style="color:#f6c177">65</span><span style="color:#908caa">:</span><span style="color:#f6c177">75</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">artist</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">tags</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 11 × 2
+   artist         tags             
+   &lt;chr&gt;          &lt;chr&gt;            
+ 1 The Body &amp; OAA drone            
+ 2 The Body &amp; OAA drone metal      
+ 3 The Body &amp; OAA noise            
+ 4 The Body &amp; OAA experimental     
+ 5 The Body &amp; OAA drone            
+ 6 The Body &amp; OAA drone metal      
+ 7 Alberich       noise            
+ 8 Alberich       power electronics
+ 9 Alberich       industrial       
+10 Alberich       death industrial 
+11 Alberich       electronic       
+</code></pre>
+<p>Excluimos algunas etiquetas de géneros musicales que son demasiado amplios:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">scrobbles_tags_4</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">scrobbles_tags_3</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tags</span> <span style="color:#908caa">!=</span> <span style="color:#f6c177">&#34;seen live&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#908caa">!</span><span style="color:#ea9a97">tags</span> <span style="color:#908caa">%in%</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;metal&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;electronic&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;hardcore&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;experimental&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">add_count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tags</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">name</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;tag_n&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Luego especificamos cuántas etiquetas máximas queremos tener, y extraemos el Top 15 de géneros musicales más escuchados por mi:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">n_tags</span> <span style="color:#908caa">&lt;-</span>  <span style="color:#f6c177">15</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">top_tags</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">scrobbles_tags_4</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">distinct</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tags</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">tag_n</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tag_n</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">n_tags</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">pull</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tags</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">top_tags</span>
+</span></span></code></pre></div><pre><code> [1] &quot;black metal&quot;        &quot;death metal&quot;        &quot;noise&quot;             
+ [4] &quot;jazz&quot;               &quot;post-black metal&quot;   &quot;grindcore&quot;         
+ [7] &quot;ambient&quot;            &quot;progressive metal&quot;  &quot;sludge&quot;            
+[10] &quot;brutal death metal&quot; &quot;avant-garde&quot;        &quot;doom metal&quot;        
+[13] &quot;drone&quot;              &quot;post-rock&quot;          &quot;deathcore&quot;         
+</code></pre>
+<p>Filtramos todas las canciones escuchadas para que solamente queden las que corresponden a uno de estos 15 géneros más escuchados, y dejamos solamente la primera etiqueta de cada canción:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">scrobbles_tags_5</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">scrobbles_tags_4</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tags</span> <span style="color:#908caa">%in%</span> <span style="color:#ea9a97">top_tags</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">date</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tag_n</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">scrobbles_tags_5</span>
+</span></span></code></pre></div><pre><code># A tibble: 14,127 × 6
+# Groups:   date [14,110]
+   date                artist       track              album       tags  tag_n
+   &lt;POSIXt&gt;            &lt;chr&gt;        &lt;chr&gt;              &lt;chr&gt;       &lt;chr&gt; &lt;int&gt;
+ 1 2023-11-06 13:23:28 Dreamcrusher INCINERATOR        INCINERATOR noise  2633
+ 2 2023-11-06 13:29:44 Dreamcrusher Cathedral Of Moths INCINERATOR noise  2633
+ 3 2023-11-06 13:29:44 Dreamcrusher Pseudogender       INCINERATOR noise  2633
+ 4 2023-11-06 13:36:34 Dreamcrusher Pseudogender       INCINERATOR noise  2633
+ 5 2023-11-06 13:36:34 Dreamcrusher Vulpeculae Freeze  INCINERATOR noise  2633
+ 6 2023-11-06 13:44:43 Dreamcrusher Vulpeculae Freeze  INCINERATOR noise  2633
+ 7 2023-11-06 13:44:43 Dreamcrusher Bane               INCINERATOR noise  2633
+ 8 2023-11-06 13:57:07 Merzbow      Promotion Man      Merzbeat    noise  2633
+ 9 2023-11-06 13:57:07 Dreamcrusher Bane               INCINERATOR noise  2633
+10 2023-11-06 14:06:04 Pharmakon    No Natural Order   Contact     noise  2633
+# ℹ 14,117 more rows
+</code></pre>
+<p>Finalmente hacemos el conteo de géneros musicales por semana:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">scrobbles_tags_6</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">scrobbles_tags_5</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">date</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">floor_date</span><span style="color:#908caa">(</span><span style="color:#ea9a97">date</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;week&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">count</span><span style="color:#908caa">(</span><span style="color:#ea9a97">date</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">tags</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">scrobbles_tags_6</span>
+</span></span></code></pre></div><pre><code># A tibble: 858 × 3
+# Groups:   date [90]
+   date                tags                  n
+   &lt;dttm&gt;              &lt;chr&gt;             &lt;int&gt;
+ 1 2023-11-05 00:00:00 ambient              23
+ 2 2023-11-05 00:00:00 avant-garde           1
+ 3 2023-11-05 00:00:00 black metal          60
+ 4 2023-11-05 00:00:00 death metal          16
+ 5 2023-11-05 00:00:00 grindcore             1
+ 6 2023-11-05 00:00:00 jazz                 21
+ 7 2023-11-05 00:00:00 noise                35
+ 8 2023-11-05 00:00:00 post-rock             4
+ 9 2023-11-05 00:00:00 progressive metal    12
+10 2023-11-05 00:00:00 sludge               17
+# ℹ 848 more rows
+</code></pre>
+
+
+
+
+<h2 id="visualización">Visualización
+  <a href="#visualizaci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para reproducir el gráfico usé 
+<a href="https://github.com/davidsjoberg/ggstream" target="_blank" rel="noopener">el paquete <code>{ggstream}</code></a> que facilita la creación de gráficos de áreas apiladas una sobre otra.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;ggstream&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggview</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">scales</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">stringr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggstream</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Primero creamos paletas de colores para el gráfico:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">paleta</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;#C490FF&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f6c177">&#34;#62D4B6&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f6c177">&#34;#223689&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f6c177">&#34;#5911AC&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f6c177">&#34;#894BD2&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f6c177">&#34;#165159&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f6c177">&#34;#3262B8&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">show_col</span><span style="color:#908caa">(</span><span style="color:#ea9a97">paleta</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">color_base</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#5911AC&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">color_fondo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">col_mix</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color_base</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;black&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">amount</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.8</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">color_texto</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">col_mix</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color_base</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">amount</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.7</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">color_detalle</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">col_mix</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color_base</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">amount</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_saturate</span><span style="color:#908caa">(</span><span style="color:#f6c177">-15</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">show_col</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color_base</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color_fondo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color_texto</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color_detalle</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-2.png" width="768" />
+<p>Luego definimos algunos elementos del tema del gráfico, como el fondo oscuro y las letras claras, y la eliminación de elementos del panel del gráfico que no necesitamos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">theme_set</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">panel.background</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_rect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_fondo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_fondo</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">plot.background</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_rect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_fondo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_fondo</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">legend.background</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_rect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_fondo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_fondo</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">panel.grid</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.ticks</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.text</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.title</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">text</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_texto</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">legend.key.size</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">unit</span><span style="color:#908caa">(</span><span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;mm&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">legend.key.spacing.y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">unit</span><span style="color:#908caa">(</span><span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;mm&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">legend.margin</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">margin</span><span style="color:#908caa">(</span><span style="color:#ea9a97">l</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">t</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">plot.margin</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">margin</span><span style="color:#908caa">(</span><span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;mm&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">scrobbles_tags_5</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">date</span> <span style="color:#908caa">&gt;</span> <span style="color:#f6c177">&#34;2024-08-1&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># límite inferior de fecha</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">date</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">n</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">tags</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">tags</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># geometría principal</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_stream</span><span style="color:#908caa">(</span><span style="color:#ea9a97">bw</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.7</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sorting</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;inside_out&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_fondo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">show.legend</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">F</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># puntos invisibles para hacer una leyenda con puntos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># texto del gráfico,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_stream_label</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">case_when</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tags</span> <span style="color:#908caa">%in%</span> <span style="color:#ea9a97">top_tags[1</span><span style="color:#908caa">:</span><span style="color:#f6c177">7</span><span style="color:#ea9a97">]</span> <span style="color:#908caa">~</span> <span style="color:#ea9a97">str_wrap</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tags</span><span style="color:#908caa">,</span> <span style="color:#f6c177">12</span><span style="color:#908caa">),</span> <span style="color:#6e6a86"># sólo texto del top 7 de tags</span>
+</span></span><span style="display:flex;"><span>                          <span style="color:#ea9a97">.default</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">)),</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">bw</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.7</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sorting</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;inside_out&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;white&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fontface</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;bold&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">lineheight</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.8</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">hjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.5</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">vjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.5</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">n_grid</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">200</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># escala de colores en base a la paleta</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_fill_manual</span><span style="color:#908caa">(</span><span style="color:#ea9a97">values</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">colorRampPalette</span><span style="color:#908caa">(</span><span style="color:#ea9a97">paleta</span><span style="color:#908caa">)(</span><span style="color:#ea9a97">n_tags</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#ea9a97">aesthetics</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;color&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;fill&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># escala horizontal de fechas</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">annotate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geom</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;text&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">as.POSIXct</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;2024-09-15&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;2024-12-15&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;2025-03-15&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;2025-06-15&#34;</span><span style="color:#908caa">)),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">format</span><span style="color:#908caa">(</span><span style="color:#ea9a97">as_date</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fechas</span><span style="color:#908caa">),</span> <span style="color:#f6c177">&#34;%m/%y&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-160</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_detalle</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_cartesian</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">F</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">clip</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;off&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># leyenda: sacar leyenda de relleno, y usar la de los puntos invisibles para que salga de puntos </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">guides</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_none</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_legend</span><span style="color:#908caa">(</span><span style="color:#ea9a97">title</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">override.aes</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">list</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># textos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">title</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Géneros musicales más escuchados&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">caption</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Last.fm/user/bastimapache&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">plot.title</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">face</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;bold&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">margin</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">margin</span><span style="color:#908caa">(</span><span style="color:#ea9a97">b</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-10</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">hjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">plot.caption</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">color_detalle</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">hjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">8</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">vjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">plot.caption.position</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;plot&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><a href="lastfm_tags_bastimapache.png" target="_blank">
+<img src="lastfm_tags_bastimapache.png" style="border-radius: 7px; width: 100%;display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+</a>
+<p>No se parece mucho el gráfico que quería copiar, quizá porque el original iba en un rango de tiempo mucho más breve, pero me gustó igual.</p>
+<p>Algunos comentarios sobre esta visualización:</p>
+<ul>
+<li>crear paletas de colores haciendo mezclas de colores es más conveniente que andarlos eligiendo con un programa</li>
+<li>es complicado clasificar la música por géneros, sobre todo cuando la música que te gusta es rara y está muy metida en combinaciones de subgéneros. Elegir la etiqueta más popular de cada artista quizá no es la mejor idea, pero elegir varias etiquetas por artista igual podría inflar la representación de ciertos géneros con respecto a otros</li>
+<li>siempre va a ser difícil ponerle colores a gráficos con más de ocho categorías, así que en este caso los colores son casi de adorno</li>
+<li>el paquete <code>{ggstream}</code> es súper conveniente para generar este tipo de visualizaciones, y tiene un montón de opciones para modificarlas y tener alternativas, pero realiza un montón de transformaciones de los datos por dentro, lo que dificulta su compatibilidad con algunas otras cosas de <code>{ggplot2}</code>; por ejemplo, cambia la escala de fechas para transformar los números, y eso te dificulta poder modificar la forma en que se ve la escala de fechas, lo que resolví simplemente agregando las fechas con <code>annotate()</code>.</li>
+<li>junto con lo anterior, se devuelve casi obligatorio tener que usar la función <code>geom_stream_label()</code> para agregar textos, lo que te quita harta libertad</li>
+<li>quizás relacionado a lo anterior: traté de 
+<a href="../../../blog/camcorder/">grabar la evolución del gráfico con <code>{camcorder}</code></a>, pero por alguna razón no pescaba al pasar a <code>{ggstream}</code></li>
+<li>el paquete <code>{lastfmR}</code> de obtención de datos solamente extrajo las últimas 17.000 canciones escuchadas, pero en mi caso eso fue un poco más de un año de datos, así que fue suficiente. De todos modos hay ene paquetes y tutoriales para sacar datos de Last.fm, y ambién 
+<a href="https://lastfm.ghan.nl/export/" target="_blank" rel="noopener">hay otras alternativas para bajar todos los datos de tu perfil</a>, pero en este caso no creí que fuera necesario, sobre todo porque tengo un lapsus de un par de años donde dejé de usar Last.fm!</li>
+</ul>
+<hr>
+<p>Después de esta, hice una variación de la misma visualización, pero en vez de mostrar géneros musicales, muestra artistas. Como ya tenía todo el código para hacer la visualización y procesar los datos, modificarlo para este nuevo fin fue muy fácil. Pueden ver todo el código que necesité 
+<a href="https://github.com/bastianolea/lastfm_graficos" target="_blank" rel="noopener">en el script <code>lastfm_artists.R</code> en el repositorio.</a>.</p>
+<a href="lastfm_artists_bastimapache.png" target="_blank">
+<img src="lastfm_artists_bastimapache.png" style="border-radius: 7px; width: 100%;display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+</a>
+<p>Al ver las marcadas tendencias que habían en mi rotación de artistas más escuchados, me entró la curiosidad y generé un ranking de artistas por semana:</p>
+<a href="lastfm_weekly_bastimapache_b.png" target="_blank">
+<img src="lastfm_weekly_bastimapache_b.png" style="border-radius: 7px; width: 100%;display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+</a>
+<p>Este fue bastante más complejo que los anteriores, porque tuve que programar toda la lógica para llegar a hacer un ranking que no tuviera empates<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>, y luego de eso, hacer el seguimiento de los artistas que iban repitiéndose semana a semana, para ver cómo iban cambiando en su posición de ranking entre las distintas semanas<sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>. Todo este código se puede ver 
+<a href="https://github.com/bastianolea/lastfm_graficos" target="_blank" rel="noopener">en el script <code>lastfm_weekly.R</code> en el repositorio.</a>.</p>
+<p>En términos visuales, este gráfico en realidad es una tabla hecha con <code>geom_tile()</code>, con líneas verticales con <code>annotate(&quot;segment&quot;)</code> que hacen una separación entre semanas, líneas que van conectando a los artistas consecutivos hechas con <code>geom_step()</code>, y efecto de sombra a medida que el ranking es menor que se hicieron con un <code>geom_tile()</code> donde la transparencia era ligada al ranking. También tiene distinto tamaño y grosor de letra para los artistas en el número 1, y colores que responden a recodificación de los géneros musicales en categorías más generales en vez de ponerle un color a cada subgénero del mundo. Mención especial al circulito con un 1 hecho con <code>annotate()</code>.</p>
+<p>Si bien a este gráfico tampoco lo grabé con <code>{camcorder}</code> mientras lo hacía, luego de terminarlo hice una especie de simulación paso por paso de cómo se genera la visualización de principio a fin:</p>
+<a href="camcorder4.webp" target="_blank">
+<img src="camcorder4.webp" style="border-radius: 7px; width: 100%;display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+</a>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Aquí la dificultad era que el ranking se define por el porcentaje semanal de canciones escuchadas que pertenecen a cada artista, pero ocurría que, si los números eran muy bajos, los porcentajes se repetían, porque un mismo artista era escuchado la misma cantidad de veces que otros. En estos casos, el desempate se hizo agregándole a los artistas un porcentaje que tenía que ver con el porcentaje de canciones escuchadas en total &mdash;de todos los tiempos&mdash; que del artista, y de esta manera dar privilegio al artista más escuchado en general en el ranking semanal. También se agrega un pequeñísimo número aleatorio para desempatar otros casos.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>El problema en estos casos era que se podía ir trazando una línea que muestre el cambio de posición semanal de un artista, pero la dificultad era hacer que la línea se cortara si el artista deja de ser escuchado una semana, pero que volviera a aparecer si vuelve a ser escuchado en una semana futura. La solución fue generar una variable que agrupa con un número único las escuchas consecutivas semanales de un artista, y si el artista no entra en el ranking en una o más semanas se genera un grupo distinto. Luego se usan estos grupos para que las líneas se unan solamente cuando las escuchas son consecutivas, en vez de qué se haga una línea que pase por encima de semanas donde el artista no entró al ranking.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">July 30, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">12 minute read, 2376 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/ggplot2">ggplot2</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/blog">blog</a>  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos">gráficos</a>  <a href="https://bastianoleah.netlify.app/tags/blog">blog</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/shiny_temas/">Temas de colores personalizados en apps Shiny</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ggplot_tipografias/">Tipografías personalizadas en gráficos {ggplot2}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ggplot_temas/">Temas de colores personalizados para tus gráficos {ggplot2}</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/validacion_basica/">&larr; Validación básica de datos con R</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/2025-07-27/">Descargar todos los archivos de la página web del Censo 2024 con {rvest} &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
