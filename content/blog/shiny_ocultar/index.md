@@ -10,13 +10,16 @@ format:
   hugo-md:
     output-file: index
     output-ext: md
+excerpt: "En este post vemos dos tutoriales para aprender a mostrar y ocultar elementos de una app Shiny a partir de datos o inputs del usuario, usando el paquete `{shinyjs}`. Se trata de una habilidad clave para crear aplicaciones que se adapten a datos complejos, cambiantes, o modificables por los usuarios."
 ---
 
-Gracias [al paquete `{shinyjs}`](https://deanattali.com/shinyjs/) podemos hacer que una app Shiny muestre u oculte elementos según los datos que correspondan o los inputs que haya seleccionado el usuario.
+Gracias [al paquete `{shinyjs}`](https://deanattali.com/shinyjs/) podemos hacer que una app Shiny muestre u oculte elementos según los datos que correspondan o los inputs que haya seleccionado el usuario. 
 
 **Por ejemplo:**
 - Si el/la usuario/a selecciona una opción en particular, mostrar un contenedor con información adicional.
 - Si no hay datos para graficar, ocultar el gráfico y mostrar un aviso.
+
+Se trata de una habilidad clave para crear aplicaciones que se adapten a datos complejos, cambiantes, o modificables por los usuarios.
 
 Lo primero que tenemos que hacer en nuestra app es activar el uso de `{shinyjs}` agregando la función `useShinyjs()` en nuestra UI:
 
@@ -31,6 +34,7 @@ ui <- page_fluid(
   useShinyjs()
   )
 ```
+
 ----
 
 ## Tutorial 1: mostrar/ocultar elementos según selección del usuario

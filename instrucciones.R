@@ -14,10 +14,10 @@ blogdown::new_post(title = "Generando ruido visual con R",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Personaliza fácilmente los colores de tus gráficos de {ggplot2} en R gracias a {thematic}", 
-                   file = "blog/ggplot_temas/index.qmd",
+blogdown::new_post(title = "Mostrar y ocultar elementos de una app Shiny según datos o inputs", 
+                   file = "blog/shiny_ocultar/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("visualización de datos", "ggplot2", "gráficos"),
+                   tags = c("shiny"),
                    categories = c() 
 )
 # draft: true

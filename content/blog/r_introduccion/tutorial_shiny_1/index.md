@@ -1,5 +1,5 @@
 ---
-title: 'Tutorial: crea una aplicación Shiny básica'
+title: 'Tutorial: introducción al desarrollo de apps con Shiny'
 subtitle: "Pasos para crear tu primera Shiny app en R, desde cero"
 author: Bastián Olea Herrera
 date: '2024-11-08'
