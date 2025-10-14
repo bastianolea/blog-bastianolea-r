@@ -498,6 +498,36 @@ iris |>
 
 <img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-36-3.png" width="768" />
 
+Algunas de las funciones para aplicar paletas de colores tienen funcionalidades extras. Por ejemplo, las funciones de `{colorspace}` permiten modificar sus paletas en términos de la saturación (*chroma*) y el brillo del color (*luminance*), entregándote más libertad al momento de definir una apariencia específica:
+
+``` r
+grafico <- iris |> 
+  ggplot() +
+  geom_point(aes(Sepal.Width, Sepal.Length, color = Petal.Width), size = 3, alpha = .8) +
+  theme_classic() +
+  guides(color = guide_colorsteps()) +
+  theme(legend.title = element_blank(),
+        axis.title = element_blank())
+
+grafico +
+  colorspace::scale_color_continuous_sequential(
+    palette = "TealGrn", 
+    c1 = 50, # intensidad del color
+    l1 = 60) # brillo del color
+```
+
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-37-1.png" width="768" />
+
+``` r
+grafico +
+  colorspace::scale_color_continuous_sequential(
+    palette = "TealGrn", 
+    c1 = 20, # intensidad del color
+    l1 = 30) # brillo del color
+```
+
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-37-2.png" width="768" />
+
 {{< aviso "Si quieres aprender visualización de datos con `{ggplot2}`, puedes revisar [este tutorial sobre visualización de datos desde cero!](/blog/r_introduccion/tutorial_visualizacion_ggplot/)" >}}
 
 ## Avanzado
@@ -508,13 +538,13 @@ iris |>
 colorspace::hclplot(sequential_hcl(7, h = 260, c = 80, l = c(35, 95), power = 1.5))
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-37-1.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-38-1.png" width="768" />
 
 ``` r
 colorspace::hclplot(sequential_hcl(7, h = c(260, 220), c = c(50, 75, 0), l = c(30, 95), power = 1))
 ```
 
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-37-2.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-38-2.png" width="768" />
 
 ------------------------------------------------------------------------
 

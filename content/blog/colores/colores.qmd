@@ -424,6 +424,33 @@ iris |>
         axis.title = element_blank())
 ```
 
+Algunas de las funciones para aplicar paletas de colores tienen funcionalidades extras. Por ejemplo, las funciones de `{colorspace}` permiten modificar sus paletas en términos de la saturación (_chroma_) y el brillo del color (_luminance_), entregándote más libertad al momento de definir una apariencia específica:
+
+```{r}
+grafico <- iris |> 
+  ggplot() +
+  geom_point(aes(Sepal.Width, Sepal.Length, color = Petal.Width), size = 3, alpha = .8) +
+  theme_classic() +
+  guides(color = guide_colorsteps()) +
+  theme(legend.title = element_blank(),
+        axis.title = element_blank())
+
+grafico +
+  colorspace::scale_color_continuous_sequential(
+    palette = "TealGrn", 
+    c1 = 50, # intensidad del color
+    l1 = 60) # brillo del color
+
+grafico +
+  colorspace::scale_color_continuous_sequential(
+    palette = "TealGrn", 
+    c1 = 20, # intensidad del color
+    l1 = 30) # brillo del color
+```
+
+
+
+
 {{< aviso "Si quieres aprender visualización de datos con `{ggplot2}`, puedes revisar [este tutorial sobre visualización de datos desde cero!](/blog/r_introduccion/tutorial_visualizacion_ggplot/)" >}}
 
 ## Avanzado
