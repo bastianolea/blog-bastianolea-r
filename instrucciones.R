@@ -14,11 +14,11 @@ blogdown::new_post(title = "Generando ruido visual con R",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Mostrar y ocultar elementos de una app Shiny según datos o inputs", 
-                   file = "blog/shiny_ocultar/index.qmd",
+blogdown::new_post(title = "Visualizar un mapa de Chile desde cartografías oficiales", 
+                   file = "blog/tutorial_mapa_chile_subdere/index.qmd",
                    author = "Bastián Olea Herrera",
                    tags = c("shiny"),
-                   categories = c() 
+                   categories = c("tutoriales") 
 )
 # draft: true
 # format:

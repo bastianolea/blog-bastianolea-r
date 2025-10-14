@@ -5,10 +5,16 @@ date: '2025-10-13'
 draft: true
 slug: []
 categories: []
+format:
+  hugo-md:
+    output-file: "index"
+    output-ext: "md"
 tags:
   - procesamiento de datos
   - consejos
   - automatización
+execute:
+  eval: false
 ---
 
 En un [post anterior](/blog/validacion_basica) hablé sobre cómo hacer validación básica de datos en R, creando simples funciones que dentro evaluavan condiciones para validar tus datos, como revisar cantidad de filas, cantidad de datos perdidos, y otros. En este post veremos `{pointblank}`, un **paquete diseñado para validación de datos**. En unos minutos aprenderás a usar este paquete para garantizar que tus datos cumplen con tus expectativas de calidad. 
@@ -78,11 +84,11 @@ Como un test individual
 # retorna TRUE si la validación es exitosa
 pointblank::test_col_vals_not_null(datos_2, columns = comuna)
 
-# retorna error si la validación falla
-pointblank::expect_col_vals_not_null(datos_3, comuna)
+# retorna error si la validación falla, como stopifnot
+pointblank::col_vals_not_null(datos_3, comuna)
 ```
 
-Como un paso en un pipeline
+Como un paso en un pipeline que no hace nada si es válido
 ```{r}
 
 datos_3 |> 

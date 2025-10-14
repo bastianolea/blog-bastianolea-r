@@ -1,50 +1,146 @@
 ---
-title: Validación avanzada de datos y código con {testthat} y {pointblank}
+title: Validación de datos con {testthat} y {pointblank}
 author: Bastián Olea Herrera
-date: '2025-08-08'
+date: '2025-10-13'
 draft: true
 slug: []
 categories: []
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
 tags:
   - procesamiento de datos
   - consejos
   - automatización
-  - control de flujo
-  - funciones
+execute:
+  eval: false
 ---
 
 
-``` r
-# install.packages("testthat")
+En un [post anterior](../../../blog/validacion_basica) hablé sobre cómo hacer validación básica de datos en R, creando simples funciones que dentro evaluavan condiciones para validar tus datos, como revisar cantidad de filas, cantidad de datos perdidos, y otros. En este post veremos `{pointblank}`, un **paquete diseñado para validación de datos**. En unos minutos aprenderás a usar este paquete para garantizar que tus datos cumplen con tus expectativas de calidad.
 
+***¿Para qué sirve la validación de datos?*** Para que, en cualquier punto de tus procesos de análisis de datos, puedas verificar si los datos vienen como esperas, o revisar si es que traen *sorpresas*. Te permite crear pruebas para, por ejemplo, confirmar que una columna no tenga datos perdidos, que los valores de una columna estén dentro de un rango esperado, etcétera.
+
+``` r
+library(dplyr)
+
+animales <- tribble(~animal,  ~patas, ~lindura,   ~color,
+                    "mapache",     4,      100,   "gris",
+                    "gato",       80,       90,  "negro",
+                    "gallina",     2,       NA, "plumas")
+```
+
+A pesar de que se usa en general para el desarrollo de paquetes, y se enfoca a validar que cálculos y métodos estadísticos funcionen como es esperado, se puede usar igual para análisis de datos.
+
+La idea general es **crear pruebas para cada script** que tenga nuestro proyecto, y **periodicamente ejecutar las pruebas** para confirmar que todo esté en orden.
+`test-{script}.R`
+
+Necesitamos crear una carpeta para los tests, y scripts con tests para cada script que queramos validar. Podemos crear una carpeta para las pruebas con `fs::dir_create()`, y dentro creamos los scripts que necesitemos con `fs::file_create()`, siguiendo la convención de anteponer `test` a cada script de pruebas.
+
+Ejemplos de pruebas:
+
+``` r
 library(testthat)
 
 test_that("mapache existe",
           expect_true(exists("mapache"))
           )
-```
 
-    ── Failure: mapache existe ─────────────────────────────────────────────────────
-    exists("mapache") is not TRUE
-
-    `actual`:   FALSE
-    `expected`: TRUE 
-
-    Error:
-    ! Test failed
-
-``` r
 test_that("numeritos",
           expect_equal(4, 4)
 )
-```
 
-    Test passed 🌈
-
-``` r
 test_that("tipo texto",
           expect_type("mapache", "character")
 )
 ```
 
-    Test passed 😀
+RStudio detecta que se trata de un script de pruebas unitarias, y aparece el botón *Run Tests* en la parte superior derecha del script.
+
+Cuando ya tengamos nuestras pruebas, podemos usar `test_file("tests/test-script.R")` para ejecutar las pruebas de un script, o `test_dir("tests.R")` para ejecutar todas las pruebas de la carpeta. Estas funciones que llevarán a cabo la validación podemos ejecutarlas desde donde más nos resulte conveniente: desde algún script principal de nuestro proyecto, desde un script `tests.R` específico para ejecutar las pruebas, al final de cada script del proyecto, al final de un script donde ejecutemos todo el procesamiento de nuestro proyecto, o manualmente.
+
+Un script que nos ayude a ejecutar las validaciones sería algo así:
+
+``` r
+# ejecutar pruebas
+test_file("tests/test-cargar.R")
+
+# ejecutar todas las pruebas en la carpeta
+test_dir("tests/")
+```
+
+mostrar pantallazo de como sale cuando se ejecutan todas
+
+------------------------------------------------------------------------
+
+Como un test individual
+
+``` r
+# retorna TRUE si la validación es exitosa
+pointblank::test_col_vals_not_null(datos_2, columns = comuna)
+
+# retorna error si la validación falla, como stopifnot
+pointblank::col_vals_not_null(datos_3, comuna)
+```
+
+Como un paso en un pipeline que no hace nada si es válido
+
+``` r
+datos_3 |> 
+  add_row(comuna = NA) |>
+  pointblank::col_vals_not_null(comuna)
+```
+
+Por medio de un reporte
+
+``` r
+library(pointblank)
+
+datos_3 |> 
+  add_row(comuna = NA) |>
+  pointblank::col_vals_not_null(columns = "comuna")
+
+agente <- create_agent(datos_3)
+
+agente <- agente |>
+  col_is_numeric(columns = codigo_comuna) |>
+  col_is_character(columns = c(nombre_comuna, nombre_region)) |>
+  col_vals_in_set(columns = codigo_region, set = 1:16) |> 
+  col_vals_not_null(columns = c(nombre_comuna, nombre_region))
+
+interrogate(agente)
+```
+
+``` r
+datos_sucios <- datos_3 |> 
+  messy::messy(messiness = 0.2)
+
+agente_b <- create_agent(tbl = datos_sucios,
+                         actions = action_levels(
+                           warn_at = 0.01,
+                           stop_at = 0.2
+                         ))
+
+agente_b <- agente_b |>
+  col_is_numeric(columns = codigo_comuna) |>
+  col_is_character(columns = c(nombre_comuna, nombre_region)) |>
+  col_vals_in_set(columns = codigo_region, set = 1:16) |> 
+  col_vals_not_null(columns = c(nombre_comuna, nombre_region))
+
+interrogate(agente_b)
+```
+
+Si no sabes cómo empezar:
+
+``` r
+draft_validation(
+  tbl = ~ datos_sucios,
+  filename = "validación"
+)
+```
+
+## Recursos
+
+Workshop: https://github.com/rich-iannone/pointblank-workshop
+Guía oficial introductoria: https://rstudio.github.io/pointblank/articles/VALID-I.html

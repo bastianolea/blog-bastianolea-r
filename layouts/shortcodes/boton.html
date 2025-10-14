@@ -1,10 +1,14 @@
+<!-- shortcode Hugo que agrega un botón con logo Font Awesome -->
+<!-- 0 es el enlace, 1 es el texto, y 2 es el logo -->
+<!-- El logo debe incluir "fab" si son logos de marcas, o "fas" si son los demás; por ejemplo, "fas fa-file-arrow-down" es un ícono de descarga -->
+
 <div class = "db pt1"
 style = "margin-bottom: 34px;">
 
 <a class = "btn-links mr2 ba dib"
 href = "{{.Get 1}}" target="_blank"
-style = "padding: 12px; text-decoration: none; border: 1px solid; color: #6e3998;">
-<i class="fab fa-github fa-lg fa-fw mr2"></i>
+style = "padding: 12px; padding-bottom: 8px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #6e3998;">
+<i class="{{.Get 2 | default "fab fa-github"}} fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
 {{.Get 0}}</a>
 
 </div>
