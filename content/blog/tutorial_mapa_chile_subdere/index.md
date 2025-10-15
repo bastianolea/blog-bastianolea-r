@@ -3,6 +3,7 @@ title: Crea un mapa de Chile desde datos geoespaciales oficiales en R
 author: Bastián Olea Herrera
 date: '2025-10-14'
 draft: false
+freeze: true
 slug: []
 categories:
   - tutoriales
