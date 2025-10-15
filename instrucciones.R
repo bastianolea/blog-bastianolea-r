@@ -14,10 +14,10 @@ blogdown::new_post(title = "Generando ruido visual con R",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Visualizar un mapa de Chile desde cartografías oficiales", 
-                   file = "blog/tutorial_mapa_chile_subdere/index.qmd",
+blogdown::new_post(title = "Mapas y visualización de datos geoespaciales en R con {sf}", 
+                   file = "blog/sf_mapas/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("shiny"),
+                   tags = c("mapas"),
                    categories = c("tutoriales") 
 )
 # draft: true
@@ -27,6 +27,7 @@ blogdown::new_post(title = "Visualizar un mapa de Chile desde cartografías ofic
 #     output-ext: "md"
 
 ## borradores ----
+"content/blog/sf_mapas/sf_mapas.qmd"
 "content/blog/shiny_tipografias/shiny_tipografias.qmd"
 "content/blog/diferencias/waldo.qmd"
 
