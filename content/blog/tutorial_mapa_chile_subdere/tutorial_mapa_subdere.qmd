@@ -3,6 +3,7 @@ title: Crea un mapa de Chile desde datos geoespaciales oficiales en R
 author: Bastián Olea Herrera
 date: '2025-10-14'
 draft: false
+freeze: true
 slug: []
 categories:
   - tutoriales
@@ -115,10 +116,10 @@ Algunos de estos mapas pueden ser muy detallados y/o complejos, por lo que puede
 
 library(sf)
 library(janitor)
-comunas <- read_sf("/Users/bolea/Documents/Fondo Nacional de Desarrollo Comunal 8%/fndr_ocho/shapes/DPA_2023/COMUNAS") |> clean_names()
-limites <- read_sf("/Users/bolea/Documents/Fondo Nacional de Desarrollo Comunal 8%/fndr_ocho/shapes/74_limites_dpa_2022") |> clean_names()
-municipios <- read_sf("/Users/bolea/Documents/Fondo Nacional de Desarrollo Comunal 8%/fndr_ocho/shapes/Municipios_15112022") |> clean_names()
-calles <- read_sf("/Users/bolea/Documents/Fondo Nacional de Desarrollo Comunal 8%/fndr_ocho/shapes/Red_Vial") |> clean_names()
+comunas <- read_sf("/Users/bolea/Documents/Fondo Nacional de Desarrollo Comunal/fndr_ocho/shapes/DPA_2023/COMUNAS") |> clean_names()
+limites <- read_sf("/Users/bolea/Documents/Fondo Nacional de Desarrollo Comunal/fndr_ocho/shapes/74_limites_dpa_2022") |> clean_names()
+municipios <- read_sf("/Users/bolea/Documents/Fondo Nacional de Desarrollo Comunal/fndr_ocho/shapes/Municipios_15112022") |> clean_names()
+calles <- read_sf("/Users/bolea/Documents/Fondo Nacional de Desarrollo Comunal/fndr_ocho/shapes/Red_Vial") |> clean_names()
 ```
 
 Si verificamos la clase de uno de los objetos geográficos cargados, vemos que una de sus clases es `sf`, pero al mismo tiempo `tbl` y `data.frame`:

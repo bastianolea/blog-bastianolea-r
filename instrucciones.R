@@ -27,6 +27,7 @@ blogdown::new_post(title = "Visualizar un mapa de Chile desde cartografías ofic
 #     output-ext: "md"
 
 ## borradores ----
+"content/blog/validacion_avanzada/validacion_avanzada.qmd"
 # https://github.com/rundel/livecode
 "https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html" # plagiar
 "content/blog/shiny_tipografias/shiny_tipografias.qmd"
