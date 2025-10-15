@@ -1,7 +1,7 @@
 ---
 title: Validación de datos con {testthat} y {pointblank}
 author: Bastián Olea Herrera
-date: '2025-10-13'
+date: '2025-10-15'
 draft: true
 slug: []
 categories: []
@@ -13,13 +13,20 @@ tags:
   - procesamiento de datos
   - consejos
   - automatización
-execute:
-  eval: false
+excerpt: La validación de datos sirve para verificar durante el proceso de análisis si los datos cumplen con requerimientos de calidad y con tus expectativas, con el objetivo de evitar problemas futuros relacionados a datos inesperados, incompletos, o erróneos. En este post veremos dos paquetes para validar el funcionamiento de tu código y para validar tus datos. 
 ---
 
-En un [post anterior](/blog/validacion_basica) hablé sobre cómo hacer validación básica de datos en R, creando simples funciones que dentro evaluavan condiciones para validar tus datos, como revisar cantidad de filas, cantidad de datos perdidos, y otros. En este post veremos `{pointblank}`, un **paquete diseñado para validación de datos**. En unos minutos aprenderás a usar este paquete para garantizar que tus datos cumplen con tus expectativas de calidad. 
+En un [post anterior](/blog/validacion_basica) hablé sobre cómo hacer validación básica de datos en R. A grandes razgos, se trataba de crear funciones que contengan pruebas simples para validar la calidad de tus datos, tales como revisar cantidad de filas, cantidad de datos perdidos, y otros. 
 
-_**¿Para qué sirve la validación de datos?**_ Para que, en cualquier punto de tus procesos de análisis de datos, puedas verificar si los datos vienen como esperas, o revisar si es que traen _sorpresas_. Te permite crear pruebas para, por ejemplo, confirmar que una columna no tenga datos perdidos, que los valores de una columna estén dentro de un rango esperado, etcétera. 
+Dado que R es un lenguaje enfocado en el análisis de datos, existen paquetes que nos pueden ayudar con la validación de datos. 
+
+En este post veremos [`{testthat}`](https://rstudio.github.io/pointblank/), un paquete que facilita implementar **pruebas unitarias** a tu código para validar su funcionamiento, y [`{pointblank}`](https://rstudio.github.io/pointblank/), un paquete diseñado para **validación de datos**. En unos minutos aprenderás a usar este paquete para garantizar que tus datos cumplen con tus expectativas de calidad. 
+
+----
+
+_**¿Para qué sirve la validación de datos?**_ Para que, en cualquier punto de tus procesos de análisis de datos, puedas verificar si los datos vienen como esperas, o revisar si es que traen _sorpresas_. En la validación de datos se crean **pruebas** para, por ejemplo, confirmar que una columna no tenga datos perdidos, que los valores de una columna estén dentro de un rango esperado, etcétera. 
+
+Creemos una pequeña tabla para aprender a validar datos:
 
 ```{r}
 #| message: false
@@ -27,53 +34,108 @@ _**¿Para qué sirve la validación de datos?**_ Para que, en cualquier punto de
 
 library(dplyr)
 
-animales <- tribble(~animal,  ~patas, ~lindura,   ~color,
-                    "mapache",     4,      100,   "gris",
-                    "gato",       80,       90,  "negro",
-                    "gallina",     2,       NA, "plumas")
+datos <- tribble(~animal,   ~patas, ~lindura,    ~color,
+                 "mapache",    "4",      100,    "gris",
+                 "gato",      "80",       90,   "negro",
+                 "pollo",      "2",       NA,  "plumas",
+                 "rata",  "cuatro",       90, "#CCCCCC")
 ```
 
+De inmediato podemos ver en esta tabla creada con `tribble()` que hay varios problemas: la columna `patas` viene como caracteres, hay datos perdidos en `lindura`, y hay un color hexadecimal en `color`.
 
-A pesar de que se usa en general para el desarrollo de paquetes, y se enfoca a validar que cálculos y métodos estadísticos funcionen como es esperado, se puede usar igual para análisis de datos.
 
-La idea general es **crear pruebas para cada script** que tenga nuestro proyecto, y **periodicamente ejecutar las pruebas** para confirmar que todo esté en orden.
-`test-{script}.R`
+## Validación con `{testthat}`
 
-Necesitamos crear una carpeta para los tests, y scripts con tests para cada script que queramos validar. Podemos crear una carpeta para las pruebas con `fs::dir_create()`, y dentro creamos los scripts que necesitemos con `fs::file_create()`, siguiendo la convención de anteponer `test` a cada script de pruebas.
+A pesar de que `{testthat}` se usa en general para el desarrollo de paquetes, y se enfoca a validar que cálculos y métodos estadísticos funcionen como es esperado, se puede usar igual para análisis de datos.
 
-Ejemplos de pruebas:
+Asumiendo que nuestro proyecto posee varios scripts donde se procesan los datos, la idea general será **crear pruebas para cada script**, y periodicamente ejecutar las pruebas para confirmar que todo esté en orden. Por cada script crearemos un script de pruebas.
+
+Primero necesitamos crear una carpeta para los tests, y scripts con tests para cada script que queramos validar. Podemos hacerlo a mano, o bien crear una carpeta para las pruebas con `fs::dir_create()`, y dentro creamos los scripts que necesitemos con `fs::file_create()`, siguiendo la convención de anteponer `test` a cada script de pruebas.
+
+Si tenemos un script llamado `datos.R`, creamos un script de pruebas llamado `test-datos.R` dentro de la carpeta `tests/`.
+
+Dentro de este script empezamos a diseñar las pruebas unitarias. Las **pruebas unitarias** son pruebas que validan que una unidad específica de código (una función, un cálculo, una transformación de datos) funcione como se espera. 
+
+Usamos la función `test_that()` para definir cada prueba, indicando primero el nombre de la prueba. Dentro, usamos funciones como `expect_true()`, `expect_equal()`, `expect_type()`, para declarar que _esperamos_ que luego de cierta operación ocurra algo. Por ejemplo: espero que mi tabla tenga una columna determinada, o que cierta columna sea de cierto tipo. Estas son las condiciones que deben cumplirse para que la prueba pase.
+
+Veamos un ejemplo de una prueba:
+
 ```{r}
 #| error: true
 
 library(testthat)
 
-test_that("mapache existe",
-          expect_true(exists("mapache"))
-          )
-
-test_that("numeritos",
+test_that("números iguales",
           expect_equal(4, 4)
 )
+```
+Esta prueba evalúa si dos números son iguales, y se cumple. Veamos la siguiente prueba:
 
-test_that("tipo texto",
-          expect_type("mapache", "character")
+```{r}
+#| error: true
+
+test_that("números desiguales",
+          expect_equal(4, 5)
 )
 ```
 
+Como la prueba no se cumple, la prueba nos dará un error explicando en dónde está el problema.
+
+Apliquemos pruebas similares a los datos de ejemplo, dentro de un script que se llame `tests/test-datos.R`, donde cargamos los datos y luego hacemos las pruebas:
+
+
+```{r}
+#| error: true
+
+# código para que el script de pruebas cargue los datos
+# datos <- readr::read_rds("datos.rds") 
+
+test_that("se cargaron los datos",
+          expect_true(exists("datos"))
+)
+
+test_that("suficientes columnas",
+          expect_equal(ncol(datos), 4)
+)
+
+test_that("columnas tipo texto",
+          expect_type(datos$animal, "character")
+)
+
+test_that("columnas tipo texto",
+          expect_type(datos$patas, "numeric")
+)
+```
+
+
 RStudio detecta que se trata de un script de pruebas unitarias, y aparece el botón _Run Tests_ en la parte superior derecha del script.
 
-Cuando ya tengamos nuestras pruebas, podemos usar `test_file("tests/test-script.R")` para ejecutar las pruebas de un script, o `test_dir("tests.R")` para ejecutar todas las pruebas de la carpeta. Estas funciones que llevarán a cabo la validación podemos ejecutarlas desde donde más nos resulte conveniente: desde algún script principal de nuestro proyecto, desde un script `tests.R` específico para ejecutar las pruebas, al final de cada script del proyecto, al final de un script donde ejecutemos todo el procesamiento de nuestro proyecto, o manualmente.
+Al crear una serie de pruebas, podemos **automatizar el proceso de validación de datos.** De esta forma, si modificamos nuestro código, o si cambian los datos, **no necesitamos revisar manualmente** que todo esté en orden, sino que **tenemos una especie de protocolo para certificar que los datos son los esperados.** Cada vez que hagamos cambios en el código, podemos ejecutar las pruebas para confirmar que todo sigue funcionando como se espera.
 
-Un script que nos ayude a ejecutar las validaciones sería algo así:
+Cuando ya tengamos nuestras pruebas en su script, podemos usar `test_file("tests/test-script.R")` para **ejecutar todas las pruebas de un script**, o `test_dir("tests.R")` para ejecutar todas las pruebas de la carpeta de pruebas, validando tu proyecto entero de una sola vez. Estas funciones que llevarán a cabo la validación podemos ejecutarlas desde donde más nos resulte conveniente: desde algún script principal de nuestro proyecto, desde un script `tests.R` específico para ejecutar las pruebas, al final de cada script del proyecto, al final de un script donde ejecutemos todo el procesamiento de nuestro proyecto, o manualmente.
+
+El código que nos ayude a ejecutar las validaciones sería algo así:
 ```{r}
+#| eval: false
+
 # ejecutar pruebas
-test_file("tests/test-cargar.R")
+test_file("tests/test-datos.R")
+
+test_file("tests/test-procesamiento.R")
+
+test_file("tests/test-reportes.R")
+```
+
+O bien, simplemente ejecutamos todos los scripts de pruebas, en cuyo caso `{testthat}` arroja un resumen de los resultados:
+
+```{r}
+#| eval: false
 
 # ejecutar todas las pruebas en la carpeta
 test_dir("tests/")
 ```
 
-mostrar pantallazo de como sale cuando se ejecutan todas
+
 
 ----
 
@@ -81,6 +143,7 @@ mostrar pantallazo de como sale cuando se ejecutan todas
 
 Como un test individual
 ```{r}
+#| eval: false
 # retorna TRUE si la validación es exitosa
 pointblank::test_col_vals_not_null(datos_2, columns = comuna)
 
@@ -90,6 +153,7 @@ pointblank::col_vals_not_null(datos_3, comuna)
 
 Como un paso en un pipeline que no hace nada si es válido
 ```{r}
+#| eval: false
 
 datos_3 |> 
   add_row(comuna = NA) |>
@@ -100,6 +164,8 @@ datos_3 |>
 Por medio de un reporte
 
 ```{r}
+#| eval: false
+
 library(pointblank)
 
 datos_3 |> 
@@ -118,6 +184,8 @@ interrogate(agente)
 ```
 
 ```{r}
+#| eval: false
+
 datos_sucios <- datos_3 |> 
   messy::messy(messiness = 0.2)
 
@@ -139,6 +207,8 @@ interrogate(agente_b)
 
 Si no sabes cómo empezar:
 ```{r}
+#| eval: false
+
 draft_validation(
   tbl = ~ datos_sucios,
   filename = "validación"
