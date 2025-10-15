@@ -2,7 +2,8 @@
 title: Validación de datos con {testthat} y {pointblank}
 author: Bastián Olea Herrera
 date: '2025-10-15'
-draft: true
+draft: false
+freeze: true
 slug: []
 categories: []
 format:
@@ -16,6 +17,9 @@ tags:
   - limpieza de datos
 excerpt: La validación de datos sirve para verificar durante el proceso de análisis si los datos cumplen con requerimientos de calidad y con tus expectativas, con el objetivo de evitar problemas futuros relacionados a datos inesperados, incompletos, o erróneos. En este post veremos dos paquetes para validar el funcionamiento de tu código y para validar tus datos. 
 ---
+
+{{< imagen "pointblank-1.png" >}}
+
 
 
 
@@ -99,7 +103,7 @@ test_that("números iguales",
 ```
 
 ```
-## Test passed 🌈
+## Test passed 🥳
 ```
 
 
@@ -162,7 +166,7 @@ test_that("suficientes columnas",
 ```
 
 ```
-## Test passed 🎉
+## Test passed 🥳
 ```
 
 ``` r
@@ -173,7 +177,7 @@ test_that("columnas tipo texto",
 ```
 
 ```
-## Test passed 🥇
+## Test passed 🎊
 ```
 
 ``` r
@@ -379,18 +383,18 @@ iris_sucio
 
 ```
 ## # A tibble: 150 × 5
-##    sepal_length sepal_width petal_length petal_width species    
-##    <chr>        <chr>       <chr>        <chr>       <chr>      
-##  1 "5.1"        "3.5"        <NA>        "0.2"       "se-t_osa "
-##  2  <NA>         <NA>        <NA>        "0.2"       "set)osa"  
-##  3 "4.7"        "3.2"       "1.3"        "0.2"       "s+et-osa" 
-##  4  <NA>        "3.1"       "1.5"        "0.2"       "s)etos%a "
-##  5  <NA>         <NA>       "1.4 "       "0.2"       "setosa"   
-##  6  <NA>        "3.9"       "1.7"        "0.4"        <NA>      
-##  7 "4.6"        "3.4 "      "1.4"         <NA>       "setosa "  
-##  8  <NA>        "3.4"       "1.5"        "0.2"        <NA>      
-##  9 "4.4"        "2.9 "       <NA>        "0.2 "      "&se!tosa" 
-## 10 "4.9 "       "3.1"       "1.5"        "0.1"       "setosa"   
+##    sepal_length sepal_width petal_length petal_width species   
+##    <chr>        <chr>       <chr>        <chr>       <chr>     
+##  1 "5.1 "       "3.5 "      "1.4"         <NA>       "setosa"  
+##  2 "4.9"        "3"          <NA>        "0.2"       "seto.sa "
+##  3 "4.7"        "3.2"       "1.3"        "0.2 "      "setosa"  
+##  4 "4.6 "       "3.1 "      "1.5"        "0.2 "       <NA>     
+##  5 "5"          "3.6"       "1.4"         <NA>        <NA>     
+##  6 "5.4"        "3.9"       "1.7 "       "0.4"        <NA>     
+##  7 "4.6"         <NA>       "1.4"        "0.3"       "se.tosa" 
+##  8  <NA>        "3.4 "      "1.5"        "0.2 "      "+setosa "
+##  9 "4.4"         <NA>        <NA>        "0.2"       "setosa"  
+## 10 "4.9"        "3.1"        <NA>        "0.1"        <NA>     
 ## # ℹ 140 more rows
 ```
 

@@ -2,7 +2,8 @@
 title: Validación de datos con {testthat} y {pointblank}
 author: Bastián Olea Herrera
 date: '2025-10-15'
-draft: true
+draft: false
+freeze: true
 slug: []
 categories: []
 format:
@@ -22,6 +23,8 @@ excerpt: >-
   funcionamiento de tu código y para validar tus datos.
 ---
 
+
+{{< imagen "pointblank-1.png" >}}
 
 En un [post anterior](../../../blog/validacion_basica) hablé sobre cómo hacer validación básica de datos en R. A grandes razgos, vimos la utilidad de crear funciones que contengan pruebas simples para validar la calidad de tus datos, tales como revisar cantidad de filas, cantidad de datos perdidos, y otros.
 
@@ -90,7 +93,7 @@ test_that("números iguales",
 )
 ```
 
-    Test passed 🌈
+    Test passed 🎉
 
 Esta prueba evalúa si dos números son iguales (`expect_equal()`), y en este ejemplo se cumple: `{testthat}` nos entrega un emoji de celebración 🎉 Veamos la siguiente prueba:
 
@@ -124,7 +127,7 @@ test_that("se cargaron los datos",
 )
 ```
 
-    Test passed 🎉
+    Test passed 😸
 
 ``` r
 # esperamos que el número de columnas sea 4
@@ -133,7 +136,7 @@ test_that("suficientes columnas",
 )
 ```
 
-    Test passed 🥳
+    Test passed 🎊
 
 ``` r
 # esperamos que la columna `animal` sea tipo caracter
@@ -299,18 +302,18 @@ iris_sucio
 ```
 
     # A tibble: 150 × 5
-       sepal_length sepal_width petal_length petal_width species   
-       <chr>        <chr>       <chr>        <chr>       <chr>     
-     1 "5.1 "       "3.5"       "1.4"        "0.2"       "+setosa" 
-     2  <NA>         <NA>        <NA>        "0.2"       "SETOSA"  
-     3  <NA>        "3.2"       "1.3 "       "0.2"        <NA>     
-     4 "4.6"        "3.1 "      "1.5"        "0.2"       "-setosa" 
-     5 "5"          "3.6"       "1.4"        "0.2 "       <NA>     
-     6 "5.4"         <NA>        <NA>        "0.4"        <NA>     
-     7 "4.6"        "3.4"       "1.4 "       "0.3"       "set@osa "
-     8  <NA>         <NA>       "1.5"         <NA>       "s&etosa" 
-     9 "4.4"         <NA>        <NA>        "0.2"        <NA>     
-    10 "4.9"        "3.1 "      "1.5"         <NA>       "s+etosa" 
+       sepal_length sepal_width petal_length petal_width species    
+       <chr>        <chr>       <chr>        <chr>       <chr>      
+     1 "5.1 "       "3.5 "      <NA>         "0.2"       "setosa "  
+     2  <NA>        "3"         <NA>         "0.2"       "set#osa"  
+     3  <NA>        "3.2"       1.3          "0.2"        <NA>      
+     4  <NA>         <NA>       <NA>         "0.2"        <NA>      
+     5 "5"          "3.6"       1.4          "0.2"        <NA>      
+     6  <NA>        "3.9 "      <NA>         "0.4"       "s.etosa"  
+     7 "4.6"        "3.4"       1.4          "0.3"       "SETOSA"   
+     8 "5"          "3.4 "      1.5          "0.2 "      "s-etosa"  
+     9 "4.4 "       "2.9"       1.4          "0.2"       "*set!osa" 
+    10 "4.9"         <NA>       <NA>         "0.1"       "se!t#os$a"
     # ℹ 140 more rows
 
 Luego creamos un agente para validar estos datos:
