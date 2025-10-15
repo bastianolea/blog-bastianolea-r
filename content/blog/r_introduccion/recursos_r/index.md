@@ -134,7 +134,8 @@ _Conoce a otras personas que usan R o únete a una comundad de usuarios/as!_
 - [Kennedy Mwavu](https://x.com/kennedymwavu)
 - [Rony Rodríguez-Ramírez](https://rrmaximiliano.github.io) 🇳🇮
 - [Deepali Kank](https://deepalikank.in) (visualizaciones de datos)
-- [Kyle Walker](https://walker-data.com) (desarrollador del paquete [MapGL](https://github.com/walkerke/mapgl) para mapas interactivos)
+- [Kyle Walker](https://walker-data.com) (desarrollador del paquete [mapGL](https://github.com/walkerke/mapgl) para mapas interactivos)
+- [Dominic Royé](https://dominicroye.github.io) (mapas y datos geoespaciales)
 
 ----
 
