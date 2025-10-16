@@ -17,6 +17,15 @@ format:
   hugo-md:
     output-file: index
     output-ext: md
+links:
+  - icon: github
+    icon_pack: fab
+    name: Código
+    url: https://gist.github.com/bastianolea/a9e7af5392a31251e33f68ca041e8dd6
+  - icon: link
+    icon_pack: fas
+    name: IDE Subdere
+    url: https://ide.subdere.gov.cl
 excerpt: >-
   En este tutorial aprenderemos a crear mapas de Chile en R usando datos
   geográficos o _shapes_ oficiales, obtenidos desde la Subsecretaría de

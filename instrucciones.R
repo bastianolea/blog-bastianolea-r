@@ -20,11 +20,18 @@ blogdown::new_post(title = "Mapas y visualización de datos geoespaciales en R c
                    tags = c("mapas"),
                    categories = c("tutoriales") 
 )
+
 # draft: true
 # format:
 #   hugo-md:
 #     output-file: "index"
 #     output-ext: "md"
+
+# links:
+#   - icon: github
+#     icon_pack: fab
+#     name: Código
+#     url: https://gist.github.com/bastianolea/8ea85fa8169b302d2144e05434668c89
 
 ## borradores ----
 "content/blog/sf_mapas/sf_mapas.qmd"
@@ -56,9 +63,10 @@ blogdown::new_post(title = "Mapas y visualización de datos geoespaciales en R c
 "config.toml" # configuración
 
 "themes/hugo-apero/layouts/partials/shared/summary.html" # html del blog (lista de posts)
-"themes/hugo-apero/layouts/taxonomy/taxonomy.html" # html de la página de tags
-"themes/hugo-apero/layouts/partials/shared/summary-thumbnail.html" # html de las páginas de cada tag
-"themes/hugo-apero/layouts/_default/single.html" # html de los post
+"themes/hugo-apero/layouts/_default/single.html" # html de los post 
+"themes/hugo-apero/layouts/taxonomy/taxonomy.html" # html de la página de tags (/tags/)
+"themes/hugo-apero/layouts/partials/shared/summary-thumbnail.html" # html de las páginas de cada tag (por ejemplo /tags/shiny/)
+
 
 ## utilidades ----
 

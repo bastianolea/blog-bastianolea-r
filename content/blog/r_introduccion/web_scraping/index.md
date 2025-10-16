@@ -6,6 +6,19 @@ weight: 25
 featured_image: ‘/blog/r_introduccion/web_scraping/featured.png’
 tags:
   - web scraping
+links:
+  - icon: link
+    icon_pack: fas
+    name: rvest
+    url: /blog/tutorial_scraping_rvest/
+  - icon: link
+    icon_pack: fas
+    name: RSelenium
+    url: /blog/tutorial_scraping_selenium/
+  - icon: link
+    icon_pack: fas
+    name: chromotee
+    url: /blog/tutorial_scraping_chromote/
 excerpt: "Se trata del conjunto de técnicas que permiten extraer datos e información alojada en páginas web, usualmente en formatos que no son fácilmente convertibles a tablas de datos. En este post vemos tres formas de extraer datos desde páginas web con R, cada una con ventajas y desventajas, y su propio tutorial para aprender desde cero a usarlas."
 ---
 

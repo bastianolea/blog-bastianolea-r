@@ -6,10 +6,15 @@ slug: []
 categories: []
 tags:
   - shiny
-format:
-  hugo-md:
-    output-file: index
-    output-ext: md
+links:
+  - icon: github
+    icon_pack: fab
+    name: Código 1
+    url: https://gist.github.com/bastianolea/4fd42f2e95bfd34deb386b3373960358
+  - icon: github
+    icon_pack: fab
+    name: Código 2
+    url: https://gist.github.com/bastianolea/31509ea2d6ed040fe61231e2247987a1
 excerpt: "En este post vemos dos tutoriales para aprender a mostrar y ocultar elementos de una app Shiny a partir de datos o inputs del usuario, usando el paquete `{shinyjs}`. Se trata de una habilidad clave para crear aplicaciones que se adapten a datos complejos, cambiantes, o modificables por los usuarios."
 ---
 

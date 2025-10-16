@@ -11,6 +11,11 @@ tags:
   - procesamiento de datos
   - automatización
   - tablas
+links:
+  - icon: registered
+    icon_pack: fas
+    name: openxlsx
+    url: https://ycphs.github.io/openxlsx/
 excerpt: >-
   El paquete `{openxlsx}` nos entrega funciones para generar archivos Excel
   desde R que contengan todo tipo de formato, estilo de tablas, y manipulación

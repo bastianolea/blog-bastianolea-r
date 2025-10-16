@@ -15,6 +15,11 @@ tags:
   - ggplot2
 execute:
   warning: false
+links:
+  - icon: github
+    icon_pack: fab
+    name: Código
+    url: https://gist.github.com/bastianolea/8ea85fa8169b302d2144e05434668c89
 excerpt: >-
   ¿Quieres darle un toque personalizado a tus gráficos? O tal vez alinearlos
   mejor al mensaje que quieres entregar, o a los lineamientos estéticos de tu

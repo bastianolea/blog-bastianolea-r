@@ -14,6 +14,11 @@ tags:
   - visualización de datos
   - ggplot2
   - gráficos
+links:
+  - icon: github
+    icon_pack: fab
+    name: Código
+    url: https://gist.github.com/bastianolea/23dee295aceb142fcd66ad29c21a51cb
 excerpt: >-
   Darle un toque de color a tus gráficos produce visualizaciones con más
   personalidad y mayor impacto. Pero cambiar el color de cada elemento puede ser
