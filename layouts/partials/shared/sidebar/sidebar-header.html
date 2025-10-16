@@ -2,19 +2,27 @@
 {{ with .Params.sidebar }}
   {{ with .title }}<h1 class="f3">{{ . | markdownify }}</h1>{{ end }}
   {{ with .description }}<p class="f6 lh-copy measure">{{ . | markdownify }}</p>{{ end }}
-  {{ with .author }}<p class="f7 measure lh-copy i mh0-l">Escrito por {{ . | markdownify }}</p>{{ end }}
+  <!--{{ with .author }}<p class="f7 measure lh-copy i mh0-l">Escrito por {{ . | markdownify }}</p>{{ end }}-->
 {{ end }}
 
-<!-- lista de etiquetas -->
-      <div style = "padding-top: 0px;">
-        
-        <h3>Temas</h3>
-    
-    {{ range .Site.Taxonomies.tags }}
-            <div>
-              <a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a> 
-              <span style = "opacity: 40%;">{{ .Count }} posts</span>
-              </div>
-    {{ end }}
-    
-    </div>
+
+ <!--lista de etiquetas-->
+      <div style="font-size: 95%;">
+<h2>Temas:</h2>
+{{ range $index, $var := (first 25 (sort .Site.Taxonomies.tags "Count" "desc")) }} <!-- ordenar de mayor a menor-->
+
+  <!--<div style="font-weight: bold; margin-bottom: 2px;">-->
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="{{ .Page.Permalink }}">{{ .Page.Title }}</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">{{ .Count }} posts</span>
+  </div>
+{{ end }}
+</div>
+
+<br>
