@@ -62,10 +62,11 @@ blogdown::new_post(title = "Mapas y visualización de datos geoespaciales en R c
 "assets/tema-morado-hex.scss" # tema
 "config.toml" # configuración
 
-"themes/hugo-apero/layouts/partials/shared/summary.html" # html del blog (lista de posts)
-"themes/hugo-apero/layouts/_default/single.html" # html de los post 
-"themes/hugo-apero/layouts/taxonomy/taxonomy.html" # html de la página de tags (/tags/)
-"themes/hugo-apero/layouts/partials/shared/summary-thumbnail.html" # html de las páginas de cada tag (por ejemplo /tags/shiny/)
+"layouts/index.html" #index
+"layouts/partials/shared/summary.html" # html del blog (lista de posts)
+"layouts/_default/single.html" # html de los post 
+"layouts/taxonomy/taxonomy.html" # html de la página de tags (/tags/)
+"layouts/partials/shared/summary-thumbnail.html" # html de las páginas de cada tag (por ejemplo /tags/shiny/)
 
 
 ## utilidades ----

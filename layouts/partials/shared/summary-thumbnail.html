@@ -1,0 +1,93 @@
+{{ $page := . }}                           <!--save current page-->
+{{ $section := $page.CurrentSection }}     <!--save branch section-->
+{{ $root := .Scratch.Get "$root" }}     <!--save root section-->
+<article class="mv4 mv5-l bb">
+  <!-- para que use thumbnails-->
+{{ $thumb := true }} 
+  <!--if show_post_thumbnail is TRUE in root-->
+  {{ if $thumb }}
+  <!--featured image for the leaf bundle-->
+  {{- $images := $page.Resources.ByType "image" -}}
+  {{ $leaf := $images.GetMatch "*feature*" }}
+  {{- $hex := $images.GetMatch "*hex*" -}}
+  {{- $thumbnail := cond (ne $hex nil) $hex $leaf -}}
+  <!--sidebar image for the branch bundle-->
+  {{ $branch := ($section.Resources.ByType "image").GetMatch "*feature*" }}
+  {{- $thumbnail := cond (ne $thumbnail nil) $thumbnail $branch -}}
+  <div class="flex flex-column mb4 mb5-l {{ if (ne $hex nil) }}items-center{{ end }} {{ if $root.Params.thumbnail_left }}flex-row-ns{{ else }}flex-row-reverse-ns{{ end }}">
+    <figure class="{{ if $root.Params.thumbnail_left }}mr4-ns{{ else }}ml4-ns{{ end }} ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="{{ .RelPermalink }}" class="db">
+        {{ with $thumbnail }}
+          <img src="{{ .RelPermalink | absURL }}" class="db ma0 dim" alt="">
+        {{ end }}
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns {{ if $root.Params.thumbnail_left }}pr3-ns{{ else }}pl3-ns{{ end }}">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="{{ .RelPermalink }}" class="db">{{ .Title | markdownify }}</a></h1> <!--aquí habría que poner conteo de posts -->
+        {{ range first 1 (.GetTerms "series") }}
+        <h2 class="f5"><i class="fas fa-stream fa-fw pr1"></i><small class="f5 ttu tracked">Series: </small><a class="link i dim" href="{{ $section.RelPermalink }}">{{ .LinkTitle }}</a></h2>
+        {{ end }}
+      </header>
+      {{ $summary := cond (ne .Params.excerpt nil) .Params.excerpt .Summary }}
+      {{ with $summary }}<p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">{{ . | markdownify | emojify }}</p>{{ end }}
+      <!-- agregar tags -->
+        {{ with .Params.tags }}
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0">{{ range . }} <a href="{{ "tags/" | absURL }}{{ . | urlize }}"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; "
+                 >{{ . }}</a> {{ end }}</dd></em>
+        </dl>
+        {{ end }}
+        <!-- /agregar tags -->
+      <footer class="w-100">
+        
+      <!--ensures section Params are respected-->
+      {{ if $root.Params.show_author_byline }}<p class="f7 db mv1">{{ if .Params.author }}Por {{ .Params.author }}{{ end }}{{ with .Params.categories }} in{{ range . }} <a href="{{ "categories/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}{{ end }}</p>{{ end }}
+      {{ if $root.Params.show_post_date }}<p class="f7 db mv1">{{ .PublishDate.Format "2/1/2006" }}</p>{{ end }}
+      {{ if and $root.Params.show_button_links .Params.links }}
+        <p class="db pt1">
+        {{ partial "shared/btn-links.html" . }}
+        </p>
+      {{ end }}
+    </footer>
+    </div>
+  </div>
+
+  <!--if show_post_thumbnail is FALSE in root-->
+  {{ else }}
+  <div class="measure-wide center mb4 mb5-l">
+    <header>
+      <h1 class="f3 mt0 mb2 lh-title underline fw4"><a href="{{ .RelPermalink }}" class="db">{{ .Title | markdownify }}</a></h1>
+      {{ range first 1 (.GetTerms "series") }}
+      <h2 class="f5"><i class="fas fa-stream fa-fw pr1"></i><small class="f5 ttu tracked">Series: </small><a class="link i dim" href="{{ $section.RelPermalink }}">{{ .LinkTitle }}</a></h2>
+      {{ end }}
+    </header>
+      {{ $summary := cond (ne .Params.excerpt nil) .Params.excerpt .Summary }}
+      {{ with $summary }}<p class="lh-copy mb4">{{ . | markdownify | emojify }}</p>{{ end }}
+    <footer>
+      <!-- agregar tags -->
+        {{ with .Params.tags }}
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0">{{ range . }} <a style = "font-size: 12px; color: #543A74 !important;", href="{{ "tags/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}</dd></em>
+        </dl>
+        {{ end }}
+        <!-- /agregar tags -->
+      {{ if $root.Params.show_author_byline }}<p class="f7 db mv2">{{ if .Params.author }}Por {{ .Params.author }}{{ end }}{{ with .Params.categories }} in{{ range . }} <a href="{{ "categories/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}{{ end }}</p>{{ end }}
+      {{ if $root.Params.show_post_date }}<p class="f7 db mv2">{{ .PublishDate.Format "2/1/2006" }}</p>{{ end }}
+      {{ if and $root.Params.show_button_links .Params.links }}
+        <p class="db pt1">
+        {{ partial "shared/btn-links.html" . }}
+        </p>
+      {{ end }}
+    </footer>
+  </div>
+  {{ end }}
+</article>

@@ -1,0 +1,65 @@
+{{ define "main" }}
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">{{ .Title }}</h1>
+        {{ if .Params.subtitle }}<h4 class="f4 mt0 mb4 lh-title measure">{{ .Params.subtitle }}</h4>{{ end }}
+        {{ if .Params.show_author_byline }}<p class="f6 measure lh-copy mv1">{{ if .Params.author }}Por {{ .Params.author }}{{ end }}{{ with .Params.categories }} in{{ range . }} <a href="{{ "categories/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}{{ end }}</p>{{ end }}
+        {{ if .Params.show_post_date }}<p class="f7 db mv0 ttu">{{ .PublishDate.Format "2/1/2006" }}</p>{{ end }}
+        
+        <!-- etiquetas -->
+        {{ with .Params.tags }}
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0">{{ range . }} <a href="{{ "tags/" | absURL }}{{ . | urlize }}"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      {{ . }}</a> {{ end }}</dd></em>
+  </dl>
+{{ end }} 
+<!-- etiquetas -->
+
+<!-- etiquetas con conteo, pero no suben desde cero :( -->
+<!-- 
+{{ if .Params.tags }}
+    <span class="list-timeline-tags em-alt">
+      <span class="type-dark-6">{{ if len .Params.tags | eq 1 }}Tag{{ else }}Tags{{ end }}: &nbsp;</span>
+      {{ $tagCount := 0 }}
+      {{ $nonDraft := where $.Site.RegularPages ".Draft" false }}
+      {{ $posts := where $nonDraft "Section" "==" "post" }}
+      {{ range .Params.tags }}
+        {{ $tagCount = len (where $posts "Params.tags" "intersect" (slice .)) }}
+        <a href="/tags/{{ . | urlize }}">{{ . }}</a> ({{ $tagCount }})&nbsp;&nbsp;
+      {{ end }}
+    </span>
+  {{ end }}
+  -->
+        
+      {{ if .Params.links }}
+      <div class="ph0 pt5">
+        {{ partial "shared/btn-links.html" . }}
+      </div>
+      {{ end }}
+
+      </header>
+      <section class="post-body pt5 pb4">
+        {{ .Content }}
+        {{ .Scratch.Set "details" "closed" }}
+        {{ partial "shared/post-details.html" . }}
+      </section>
+      <footer class="post-footer">
+        {{ partial "shared/post-pagination.html" . }}
+      </footer>
+    </article>
+    {{ if .Params.show_comments }}
+      {{ partial "shared/comments.html" . }}
+    {{ end }}
+  </section>
+</main>
+{{ end }}
