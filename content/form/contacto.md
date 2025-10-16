@@ -1,6 +1,6 @@
 ---
 date: "2019-02-25T13:38:41-06:00"
-description: Con este formulario puedes escribirme directamente cualquier duda, consulta, o propuesta. Haré lo posible por responderte a la brevedad. También puedes escribirme por medio de alguna de mis redes sociales.
+description: Puedes escribirme cualquier duda o consulta! Me gustan las preguntas ☺️ Haré lo posible por responderte a la brevedad
 draft: false
 formspree_form_id: xrbgprnw
 layout: split-right
@@ -10,7 +10,7 @@ show_social_links: true
 submit_button_label: Enviar mensaje
 title: Contacto
 type: form
-url: contact
+url: contacto
 ---
 
 ** Contact page don't contain a body, just the front matter above.

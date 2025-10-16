@@ -71,7 +71,7 @@ Algunas dificultades que tuve con el blog, y cómo las resolví:
 - En los chunks donde uses Shiny debes ponerles `#| output: asis` para que su resultado salga como HTML y se vea en el sitio.
 
 #### Cambiar textos del formulario de contacto
-- El [formulario de contacto](/contact/) aparece en inglés por defecto, y con texto rellenado en los campos (malo para la usabilidad), pero se puede cambiar directamente, modificando el archivo `themes/hugo-apero/layouts/partials/shared/contact-form.html`.
+- El [formulario de contacto](/contacto/) aparece en inglés por defecto, y con texto rellenado en los campos (malo para la usabilidad), pero se puede cambiar directamente, modificando el archivo `themes/hugo-apero/layouts/partials/shared/contact-form.html`.
 
 #### Traducir elementos del sitio
 - Hay varios elementos de texto del sitio que vienen por defecto en inglés, pero pueden ser traducidos si abres los archivos html y modificas `<p>El texto dentro de los tags</p>`. Los archivos están en `themes/hugo-apero/layouts/`.

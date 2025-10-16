@@ -13,7 +13,7 @@ title: Clases particulares de R
 
 **Actualmente no estoy impartiendo clases particulares! Lo siento 😔**
 
-~~[**Contáctame para agendar una clase particular**](/contact/), indicando tu experiencia con R (puede ser aprender desde cero), los temas que te interesan, y/o el proyecto que desees realizar.~~
+~~[**Contáctame para agendar una clase particular**](/contacto/), indicando tu experiencia con R (puede ser aprender desde cero), los temas que te interesan, y/o el proyecto que desees realizar.~~
 
 ![](clases_r_particulares-featured.jpg)
 
@@ -105,4 +105,4 @@ Temas avanzados:
 - Automatización de reportes
 - Desarrollo de aplicaciones interactivas
 
-~~[**Contáctame para agendar una clase particular**](/contact/)~~
+~~[**Contáctame para agendar una clase particular**](/contacto/)~~

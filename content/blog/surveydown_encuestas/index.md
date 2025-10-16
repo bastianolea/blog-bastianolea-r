@@ -12,6 +12,8 @@ tags:
   - datos
 ---
 
+{{< aviso "⚠️ Este tutorial está desactualizado! [`{surveydown}`](https://surveydown.org) cambió y ahora funciona distinto. Todavía no he tenido tiempo de actualizarlo para ajustaste al nuevo funcionamiento. Perdón 😔" >}}
+
 Con el paquete [`{surveydown}`](https://surveydown.org) es muy fácil crear una encuesta con R, creando tus propias preguntas personalizadas, y almacenando todas las respuestas de tus encuestados/as en una base de datos.
 
 La gracia de crear tu propia encuesta es que puedes personalizarla según tus necesidades, pero también es que no necesitas depender de un servicio para generar la encuesta, ni tampoco tener que pagar para poder crearla o publicarla. Por el contrario, podemos utilizar tecnologías gratuitas y de código abierto para crear nuestras encuestas, almacenar sus resultados y analizarlos.

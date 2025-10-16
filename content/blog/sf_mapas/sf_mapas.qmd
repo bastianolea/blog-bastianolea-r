@@ -8,6 +8,7 @@ categories:
   - tutoriales
 tags:
   - mapas
+  - visualización de datos
 format:
   hugo-md:
     output-file: index
@@ -99,7 +100,12 @@ mapa_region_comunas_areas |>
 
 ### Simplificar un polígono
 ```{r}
- rmapshaper::ms_simplify(geometry, keep = 0.8)) 
+https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#simplification
+st_simplify(dTolerance = 0.01)
+
+rmapshaper::ms_simplify(geometry, keep = 0.8)) 
+
+
 ```
 
 
@@ -135,6 +141,8 @@ st_union()
 ## Operaciones entre geometrías
 
 ### Recortar un polígono con otro
+https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#clipping
+
 ```{r}
 st_intersection()
 ```
@@ -144,6 +152,12 @@ st_intersection()
 st_difference()
 ```
  
+ 
+### unir dos polígonos
+```{r}
+st_union()
+```
+
 ### Spatial join
 
 
@@ -174,6 +188,18 @@ geom_sf()
 ```{r}
 geom_sf_text(data = nombres_areas |> filter(clase_topo == "Comuna"), color = "red", fontface = "bold",
             aes(label = nombre)) + 
+```
+
+### Texto con repel
+https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
+```{r}
+ ggrepel::geom_label_repel(data = comunas_region_conteo_urbanas,
+                            aes(label = comuna, geometry = geometry),
+                            stat = "sf_coordinates",
+                            size = 2, box.padding = 0,
+                            min.segment.length = unit(3, "mm"),
+                            label.padding = 0.15, label.size = 0
+  ) +
 ```
 
 
@@ -208,3 +234,10 @@ geom_sf_text(data = nombres_areas |> filter(clase_topo == "Comuna"), color = "re
 https://dominicroye.github.io/blog/inserted-map/
 ```
 
+
+----
+
+
+## Recursos
+https://r-spatial.org/r/2018/10/25/ggplot2-sf.html
+https://bookdown.org/robinlovelace/geocompr/
