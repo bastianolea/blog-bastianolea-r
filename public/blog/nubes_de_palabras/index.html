@@ -49,7 +49,7 @@
 En este post veremos dos formas de crear nubes de palabras con R: con {wordcloud2} y con {ggplot2}. Para empezar, necesitamos una base de datos que tenga información de texto; por ejemplo, una base donde cada fila contenga una respuesta abierta de una encuesta, una reseña de un producto, un párrafo de un texto, un capítulo de un libro, o un libro completo.">
   <meta itemprop="datePublished" content="2025-07-05T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-07-05T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1746">
+  <meta itemprop="wordCount" content="1733">
   <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/nubes_de_palabras/featured.png">
   <meta itemprop="keywords" content="Visualización de datos,Gráficos,Ggplot2,Análisis de texto">
   
@@ -64,7 +64,7 @@ En este post veremos dos formas de crear nubes de palabras con R: con {wordcloud
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
   
   
-  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+  <script src="/main.min.275ca2dcb3ce1d8540f2ac94c30dfdd4bd3b9d520b326846a6631c5403c03f8d.js" type="text/javascript"></script>
 </head>
 <body>
       <div class="grid-container">
@@ -157,21 +157,6 @@ En este post veremos dos formas de crear nubes de palabras con R: con {wordcloud
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
-      <i class="fab fa-bluesky fa-lg fa-fw"></i>
-    </a>
-  
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-    
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
       <i class="fab fa-twitter fa-lg fa-fw"></i>
     </a>
@@ -247,6 +232,36 @@ En este post veremos dos formas de crear nubes de palabras con R: con {wordcloud
     
       
     
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
       <i class="fas fa-envelope fa-lg fa-fw"></i>
     </a>
@@ -271,7 +286,43 @@ En este post veremos dos formas de crear nubes de palabras con R: con {wordcloud
         
         
   <dl class="f6 lh-copy">
-    <em><dd class="fw5 ml0">Temas:  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>,  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos">gráficos</a>,  <a href="https://bastianoleah.netlify.app/tags/ggplot2">ggplot2</a>,  <a href="https://bastianoleah.netlify.app/tags/an%C3%A1lisis-de-texto">análisis de texto</a>, </dd></em>
+    <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      gráficos</a>  <a href="https://bastianoleah.netlify.app/tags/ggplot2"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      ggplot2</a>  <a href="https://bastianoleah.netlify.app/tags/an%C3%A1lisis-de-texto"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      análisis de texto</a> </dd></em>
   </dl>
  
 
@@ -512,17 +563,7 @@ Some words could not fit on page. They have been removed.
 <img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png" width="768" />
 <p>Con esta aproximación podemos crear visualizaciones más personalizadas y complejas a partir de datos de texto, sobre todo si tenemos variables adicionales que nos digan más información sobre las palabras que queremos graficar, cómo puede ser alguna otro criterio de prevalencia de palabras en los documentos, alguna clasificación de las palabras en tópicos o temas, una agrupación de los documentos de donde provienen las palabras, etc.</p>
 <hr>
-<p><div style="margin-top:24px;">
-  
-<a href="/clases/spatiallab_introduccion_r_2/">
-<img src="/clases/spatiallab_introduccion_r_2/banner_curso_r.jpeg" style="border-radius: 7px; max-height: 240px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;" alt="¿Necesitas aprender R para análisis de datos desde cero? Inscríbete a mi curso!">
-</a>
-
-<div style="max-width: 320px; margin:auto; font-size:85%;opacity:60%;">
-  <p>¿Necesitas aprender R para análisis de datos desde cero? <a href="https://spatiallab.cl/2da-version-curso-introduccion-al-analisis-de-datos-con-r-para-principiantes?variant_id=109682226">Inscríbete a mi curso!</a></p>
-  </div>
-
-</div>
+<p>
 <div style = "height: 18px;">
 </div>
 <div>
@@ -548,7 +589,7 @@ Some words could not fit on page. They have been removed.
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">9 minute read, 1746 words</dd>
+    <dd class="fw5 ml0">9 minute read, 1733 words</dd>
   </dl>
   
   
@@ -561,11 +602,11 @@ Some words could not fit on page. They have been removed.
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/ggplot_purrr/">Generar múltiples gráficos automáticamente con R</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/tutorial_mapa_chile_subdere/">Crea un mapa de Chile desde datos geoespaciales oficiales en R</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/2025-07-11/">Gráfico de densidad tipo Joy Division en {ggplot2}</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/ggplot_tipografias/">Tipografías personalizadas en gráficos {ggplot2}</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/ggrepel/">Etiquetas de texto que se repelen entre sí con {ggrepel}</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/ggplot_temas/">Temas de colores personalizados para tus gráficos {ggplot2}</a></dd>
     
   </dl>
 </details>
@@ -589,18 +630,6 @@ Some words could not fit on page. They have been removed.
     </article>
     
       <div class="post-comments pa0 pa4-l mt4">
-  
-    
-      <script src="https://utteranc.es/client.js"
-              repo="bastianolea/blog-bastianolea-r"
-              issue-term="pathname"
-              theme="github-light"
-              label="comments"
-              crossorigin="anonymous"
-              async
-              type="text/javascript">
-      </script>
-    
   
 </div>
 
@@ -635,21 +664,6 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
       <i class="fab fa-github fa-lg fa-fw"></i>
-    </a>
-  
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-    
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
-      <i class="fab fa-bluesky fa-lg fa-fw"></i>
     </a>
   
     
@@ -725,6 +739,36 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
       <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
     </a>
   
     

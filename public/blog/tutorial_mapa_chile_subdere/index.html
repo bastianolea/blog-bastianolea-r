@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Crea un mapa de Chile desde datos geoespaciales oficiales en R | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="En este tutorial aprenderemos a crear mapas de Chile en R usando datos geográficos o _shapes_ oficiales, obtenidos desde la Subsecretaría de Desarrollo Regional y Administrativo (Subdere) y la Biblioteca del Congreso Nacional de Chile. El objetivo será aprender a visualizar mapas desde _shapefiles_ obtenidos de internet, y a procesar datos geográficos más complejos con R, para generar mapas de Chile con polígonos y límites geográficamente correctos.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Crea un mapa de Chile desde datos geoespaciales oficiales en R | Blog">
+<meta property="og:description" content="En este tutorial aprenderemos a crear mapas de Chile en R usando datos geográficos o _shapes_ oficiales, obtenidos desde la Subsecretaría de Desarrollo Regional y Administrativo (Subdere) y la Biblioteca del Congreso Nacional de Chile. El objetivo será aprender a visualizar mapas desde _shapefiles_ obtenidos de internet, y a procesar datos geográficos más complejos con R, para generar mapas de Chile con polígonos y límites geográficamente correctos." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/tutorial_mapa_chile_subdere/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/tutorial_mapa_chile_subdere/featured.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/tutorial_mapa_chile_subdere/featured.jpg" >
+    
+    
+  
+  <meta itemprop="name" content="Crea un mapa de Chile desde datos geoespaciales oficiales en R">
+  <meta itemprop="description" content="En post anteriores mostré cómo hacer mapas comunales y regionales de Chile con R, y a hacer mapas de los territorios urbanos del país.
+En este tutorial aprenderemos a crear mapas de Chile en R usando datos geográficos o shapes oficiales de Chile, obtenidos desde la Subsecretaría de Desarrollo Regional y Administrativo (Subdere) y la Biblioteca del Congreso Nacional de Chile (BCN).
+El objetivo será aprender a visualizar mapas desde shapefiles obtenidos de internet, y a procesar datos geográficos más complejos con R, para generar mapas de Chile con polígonos y límites geográficamente correctos.">
+  <meta itemprop="datePublished" content="2025-10-14T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-10-14T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1129">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/tutorial_mapa_chile_subdere/featured.jpg">
+  <meta itemprop="keywords" content="Mapas,Ggplot2,Gráficos,Ciencias sociales,Chile">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.275ca2dcb3ce1d8540f2ac94c30dfdd4bd3b9d520b326846a6631c5403c03f8d.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Crea un mapa de Chile desde datos geoespaciales oficiales en R</h1>
+        
+        
+        <p class="f7 db mv0 ttu">14/10/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/mapas"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      mapas</a>  <a href="https://bastianoleah.netlify.app/tags/ggplot2"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      ggplot2</a>  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      gráficos</a>  <a href="https://bastianoleah.netlify.app/tags/ciencias-sociales"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      ciencias sociales</a>  <a href="https://bastianoleah.netlify.app/tags/chile"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      Chile</a> </dd></em>
+  </dl>
+ 
+
+
+
+
+        
+      
+      <div class="ph0 pt5">
+        
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
+  href="https://gist.github.com/bastianolea/a9e7af5392a31251e33f68ca041e8dd6" target="_blank" rel="noopener"><i class="fab fa-github fa-lg fa-fw mr2"></i>Código</a>
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
+  href="https://ide.subdere.gov.cl" target="_blank" rel="noopener"><i class="fas fa-link fa-lg fa-fw mr2"></i>IDE Subdere</a>
+
+
+      </div>
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>En post anteriores mostré cómo hacer 
+<a href="../../../blog/tutorial_mapa_chile/">mapas comunales y regionales de Chile</a> con R, y a hacer 
+<a href="../../../blog/tutorial_mapa_urbano/">mapas de los territorios urbanos del país</a>.</p>
+<p>En este tutorial aprenderemos a crear mapas de Chile en R usando datos geográficos o <em>shapes</em> oficiales de Chile, obtenidos desde la 
+<a href="https://ide.subdere.gov.cl/descargas-con-filtros/" target="_blank" rel="noopener">Subsecretaría de Desarrollo Regional y Administrativo</a> (Subdere) y la 
+<a href="https://www.bcn.cl/siit/mapas_vectoriales" target="_blank" rel="noopener">Biblioteca del Congreso Nacional de Chile</a> (BCN).</p>
+<p>El objetivo será aprender a visualizar mapas desde <em>shapefiles</em> obtenidos de internet, y a procesar datos geográficos más complejos con R, para generar mapas de Chile con polígonos y límites geográficamente correctos.</p>
+
+
+
+
+<h2 id="obtener-datos-geográficos">Obtener datos geográficos
+  <a href="#obtener-datos-geogr%c3%a1ficos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>El primer paso para visualizar mapas es obtener los datos geográficos. Con esto nos referimos a los polígonos (figuras geométricas que usualmente representan territorios), líneas (que pueden representar límites o redes viales) y puntos (que pueden representar ubicaciones como municipios o capitales).</p>
+<p>Los datos geográficos suelen venir como <em>shapes</em>, que usualmente son carpetas que contienen archivos, principalmente <em>shapefiles</em> (.shp).</p>
+<p>Los siguientes botones ofrecen descargas directas de los datos que usaremos desde sus fuentes originales, la mayoría de ellos obtenidos desde la 
+<a href="https://ide.subdere.gov.cl/descargas-con-filtros/" target="_blank" rel="noopener">IDE Subdere</a>.</p>
+<hr>
+<p>La <strong>división político-administrativa</strong> contiene los polígonos a nivel comunal, provincial y regional que consituyen el territorio de Chile, y provienen de la Subdere (2023):</p>
+
+
+
+
+<div class = "db pt1"
+style = "margin-bottom: 34px;">
+
+<a class = "btn-links mr2 ba dib"
+href = "https://ide.subdere.gov.cl/descargas/SHP/Limite_DPA_03082023.rar" target="_blank"
+style = "padding: 12px; padding-bottom: 8px; border-radius: 3px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #8557AB;">
+<i class="fas fa-file-arrow-down fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
+Polígonos de división político-administrativa</a>
+
+</div>
+<p>Los <strong>límites comunales</strong> de la división político-administrativa contiene las líneas que limitan las unidades administrativas (comunas) del país, y provienen de la Subdere (2022):</p>
+
+
+
+
+<div class = "db pt1"
+style = "margin-bottom: 34px;">
+
+<a class = "btn-links mr2 ba dib"
+href = "https://ide.subdere.gov.cl/wp-content/uploads/74_limites_dpa_2022.zip" target="_blank"
+style = "padding: 12px; padding-bottom: 8px; border-radius: 3px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #8557AB;">
+<i class="fas fa-file-arrow-down fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
+Líneas de límites comunales</a>
+
+</div>
+<p>Las <strong>ubicaciones de los municipios</strong> marcan con puntos la localización de estas instituciones, y provienen de la Subdere (2022):</p>
+
+
+
+
+<div class = "db pt1"
+style = "margin-bottom: 34px;">
+
+<a class = "btn-links mr2 ba dib"
+href = "https://ide.subdere.gov.cl/descargas/SHP/Municipios_15112022.zip" target="_blank"
+style = "padding: 12px; padding-bottom: 8px; border-radius: 3px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #8557AB;">
+<i class="fas fa-file-arrow-down fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
+Puntos de ubicación de municipios del país</a>
+
+</div>
+<p>La <strong>red vial</strong> es el conjunto de líneas que representan las carreteras y caminos de todo el país, y provienen de la Bibioteca del Congreso Nacional de Chile (BCN):</p>
+
+
+
+
+<div class = "db pt1"
+style = "margin-bottom: 34px;">
+
+<a class = "btn-links mr2 ba dib"
+href = "https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10403/2/Red_Vial.zip" target="_blank"
+style = "padding: 12px; padding-bottom: 8px; border-radius: 3px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #8557AB;">
+<i class="fas fa-file-arrow-down fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
+Líneas de red vial del país</a>
+
+</div>
+<p>Alternativamente, puedes descargar los archivos desde R ejecutando este código:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">dir.create</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;shapes&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># crear carpeta</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># descargar</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">download.file</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;https://ide.subdere.gov.cl/wp-content/uploads/74_limites_dpa_2022.zip&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f6c177">&#34;shapes/74_limites_dpa_2022.zip&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">download.file</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;https://ide.subdere.gov.cl/descargas/SHP/Limite_DPA_03082023.rar&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f6c177">&#34;shapes/Limite_DPA_03082023.rar&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">download.file</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;https://ide.subdere.gov.cl/descargas/SHP/Municipios_15112022.zip&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f6c177">&#34;shapes/Municipios_15112022.zip&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">download.file</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10403/2/Red_Vial.zip&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f6c177">&#34;shapes/Red_Vial.zip&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Una vez que descargamos los archivos, debemos descomprimirlos para obtener las carpetas que contienen los <em>shapes.</em></p>
+
+
+
+
+<h2 id="cargar-datos-geográficos">Cargar datos geográficos
+  <a href="#cargar-datos-geogr%c3%a1ficos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para trabajar con datos geográficos usamos el paquete <code>{sf}</code>, abreviación de <em>simple features</em>, que es un estándar para manejar datos geoespaciales. Si no tienes instalado el paquete, instálalo con <code>install.packages(&quot;sf&quot;)</code>.</p>
+<p>Para leer un archivo geoespacial usamos la función <code>read_sf()</code> apuntada a la carpeta que contiene los <em>shapefiles</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sf</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">janitor</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># polígonos de comunas</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">comunas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_sf</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;shapes/DPA_2023/COMUNAS&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">clean_names</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># límites comunales</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">limites</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_sf</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;shapes/74_limites_dpa_2022&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">clean_names</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># ubicación de municipalidades</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">municipios</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_sf</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;shapes/Municipios_15112022&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">clean_names</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># red vial</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">calles</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_sf</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;shapes/Red_Vial&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">clean_names</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Algunos de estos mapas pueden ser muy detallados y/o complejos, por lo que pueden tardarse en cargar<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>Si verificamos la clase de uno de los objetos geográficos cargados, vemos que una de sus clases es <code>sf</code>, pero al mismo tiempo <code>tbl</code> y <code>data.frame</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">class</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comunas</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;sf&quot;         &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;
+</code></pre>
+<p>Si lo imprimimos en la consola, confirmamos que los objetos cargados desde los <em>shapefiles</em> son tablas de datos que arriba dicen <em>Simple feature collection</em>; es decir, son tablas de datos que además tienen información geográfica.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">comunas</span>
+</span></span></code></pre></div><pre><code>Simple feature collection with 345 features and 7 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -109.4549 ymin: -56.53777 xmax: -66.41559 ymax: -17.4984
+Geodetic CRS:  GCS_SIRGAS-Chile
+# A tibble: 345 × 8
+   cut_reg cut_prov cut_com region                   provincia comuna superficie
+   &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;                    &lt;chr&gt;     &lt;chr&gt;       &lt;dbl&gt;
+ 1 11      113      11302   Aysén del General Carlo… Capitán … O'Hig…      7785.
+ 2 05      055      05503   Valparaíso               Quillota  Hijue…       268.
+ 3 08      083      08308   Biobío                   Biobío    Quila…      1124.
+ 4 09      092      09209   La Araucanía             Malleco   Renai…       265.
+ 5 09      092      09202   La Araucanía             Malleco   Colli…      1306.
+ 6 15      152      15201   Arica y Parinacota       Parinaco… Putre       5890.
+ 7 07      071      07110   Maule                    Talca     San R…       263.
+ 8 08      083      08311   Biobío                   Biobío    Santa…      1251.
+ 9 12      121      12102   Magallanes y de la Antá… Magallan… Lagun…      3568.
+10 11      113      11303   Aysén del General Carlo… Capitán … Tortel     19991.
+# ℹ 335 more rows
+# ℹ 1 more variable: geometry &lt;MULTIPOLYGON [°]&gt;
+</code></pre>
+<p>Estas tablas de datos cuentan con una columna <code>geometry</code>, que contiene la información geográfica de los polígonos, puntos y/o líneas de cada observación. A su vez, encima de la tabla de datos vemos información especial, como el tipo de geometría, las dimensiones de la caja (<em>bounding box</em>), y el sistema de coordenadas de referencia (<em>CRS</em>), que indica el tipo de proyección usada.</p>
+
+
+
+
+<h2 id="visualizar-mapas">Visualizar mapas
+  <a href="#visualizar-mapas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Una vez cargados los <em>shapes</em>, simplemente es cosa de aplicarlos por capas a un gráfico de <code>{ggplot2}</code>. Las capas de datos geográficos se agregan con <code>geom_sf()</code>, y en este caso, que tenemos varios <em>shapes</em>, en cada capa habría que definir el objeto correspondiente en el argumento <code>data</code>; es decir, cada capa se basa en datos distintos, pero que coinciden en términos de coordenadas.</p>
+<p>Entonces, empezamos un gráfico con <code>ggplot()</code>, y luego vamos agregando capas de <code>geom_sf()</code>, recordando que el orden en que agreguemos las capas importa: las primeras (más arriba) serán los objetos en el fondo, y las siguientes capas (en sucesivas líneas) se visualizarán encima de las anteriores.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># capa de fondo: polígonos de comunas</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">comunas</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">region</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># límites regionales encima de las comunas</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">limites</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;peachpuff4&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.8</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># calles</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">calles</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">clase_ruta</span> <span style="color:#908caa">&lt;=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;peachpuff4&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.3</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># puntos de municipios</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">municipios</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;peachpuff4&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.7</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.6</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># borde oscuro</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">municipios</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;cornsilk1&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.9</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># centro claro</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># recortar Chile continental</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-76</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-66</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-56.2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-17</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># paleta de colores</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">colorspace</span><span style="color:#908caa">::</span><span style="color:#ea9a97">scale_fill_discrete_qualitative</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Warm&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">c1</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">40</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># intensidad del color</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">l1</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">85</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span> <span style="color:#6e6a86"># brillo del color</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">legend.position</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;none&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><a href="mapa_chile_subdere.jpeg" target="_blank">
+
+  <img src="mapa_chile_subdere.jpeg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>A las capas de objetos geográficos le especificamos el sistema de coordenadas con <code>coord_sf()</code> para recortar el mapa al territorio continental del país, y 
+<a href="../../../blog/colores/#usar-paletas-de-colores-en-ggplot2">además le pusimos una escala de colores</a> cálidos desde el paquete <code>{colorspace}</code>, que además tiene la cualidad de poder adaptar la intensidad y brillo de sus colores.</p>
+<p>Listo! La gracia de <code>{sf}</code> es poder entregar herramientas para cargar cualquier tipo de datos geográficos y habilitar que <code>{ggplot2}</code> los pueda graficar sin problemas. A menos que ocurran problemas. Lo cual veremos 
+<a href="../../../tags/mapas/">en otro post</a> 😬</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Al tratarse de mapas oficiales, estos datos geográficos contienen mucho nivel de detalle; usualmente mucho más del necesario para hacer mapas a nivel nacional, donde el nivel de detalle es visualmente imperceptible. Dado que una mayor calidad significa mapas más pesados y por ende procesos más lentos, podemos 
+<a href="../../../blog/simplificar_mapas/">simplificar las geometrías</a> con la función <code>ms_simplify()</code> del paquete <code>{rmapshaper}</code>, como detallamos 
+<a href="../../../blog/simplificar_mapas/">en este post.</a>&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">October 14, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">6 minute read, 1129 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categorías:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/categories/tutoriales">tutoriales</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/mapas">mapas</a>  <a href="https://bastianoleah.netlify.app/tags/ggplot2">ggplot2</a>  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos">gráficos</a>  <a href="https://bastianoleah.netlify.app/tags/ciencias-sociales">ciencias sociales</a>  <a href="https://bastianoleah.netlify.app/tags/chile">Chile</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/ggplot_tipografias/">Tipografías personalizadas en gráficos {ggplot2}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ggplot_temas/">Temas de colores personalizados para tus gráficos {ggplot2}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/2025-07-28/">Gráfico de mis artistas y géneros musicales más escuchados según Last.fm</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/validacion_avanzada/">&larr; Validación de datos con {testthat} y {pointblank}</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/shiny_ocultar/">Mostrar y ocultar elementos de una app Shiny a partir de datos o inputs &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Temas de colores personalizados en apps Shiny | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="En este post muestro lo básico para personalizar la apariencia de tus aplicaciones Shiny con temas de colores personalizados usando el paquete `{bslib}`, y además cómo hacer que los gráficos `{ggplot2}` se ajusten automáticamente al tema usando {thematic}. Recuerda que una app con un diseño atractivo puede marcar la diferencia entre que alguien la use o no, o bien, que alguien la recuerde o no!">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Temas de colores personalizados en apps Shiny | Blog">
+<meta property="og:description" content="En este post muestro lo básico para personalizar la apariencia de tus aplicaciones Shiny con temas de colores personalizados usando el paquete `{bslib}`, y además cómo hacer que los gráficos `{ggplot2}` se ajusten automáticamente al tema usando {thematic}. Recuerda que una app con un diseño atractivo puede marcar la diferencia entre que alguien la use o no, o bien, que alguien la recuerde o no!" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/shiny_temas/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/shiny_temas/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/shiny_temas/featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Temas de colores personalizados en apps Shiny">
+  <meta itemprop="description" content="Elevar tus aplicaciones Shiny al siguiente nivel es muy fácil! Una app con un diseño atractivo y profesional puede marcar la diferencia entre que alguien la use o no, o bien, que alguien la recuerde o no!
+En este tutorial veremos cómo personalizar los temas de colores en tus aplicaciones Shiny utilizando el paquete {bslib}, y además combinaremos esto con la capacidad para que nuestros gráficos {ggplot2} se ajusten automáticamente al tema gracias al paquete {thematic}.">
+  <meta itemprop="datePublished" content="2025-10-09T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-10-09T00:00:00+00:00">
+  <meta itemprop="wordCount" content="818">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/shiny_temas/featured.png">
+  <meta itemprop="keywords" content="Shiny">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.275ca2dcb3ce1d8540f2ac94c30dfdd4bd3b9d520b326846a6631c5403c03f8d.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Temas de colores personalizados en apps Shiny</h1>
+        
+        
+        <p class="f7 db mv0 ttu">9/10/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/shiny"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      shiny</a> </dd></em>
+  </dl>
+ 
+
+
+
+
+        
+      
+      <div class="ph0 pt5">
+        
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
+  href="https://gist.github.com/bastianolea/1c46fa94b71f167b927bc0a4a7399b41" target="_blank" rel="noopener"><i class="fab fa-github fa-lg fa-fw mr2"></i>código</a>
+
+
+      </div>
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>Elevar tus aplicaciones Shiny al siguiente nivel es muy fácil! Una app con un diseño atractivo y profesional puede marcar la diferencia entre que alguien la use o no, o bien, que alguien la recuerde o no!</p>
+<p>En este tutorial veremos cómo personalizar los temas de colores en tus aplicaciones Shiny utilizando el 
+<a href="https://rstudio.github.io/bslib/" target="_blank" rel="noopener">paquete <code>{bslib}</code></a>, y además combinaremos esto con la capacidad para que nuestros gráficos <code>{ggplot2}</code> se ajusten automáticamente al tema gracias 
+<a href="https://rstudio.github.io/thematic/" target="_blank" rel="noopener">al paquete <code>{thematic}</code></a>.</p>
+
+
+
+
+<h2 id="crear-una-aplicación-shiny-básica">Crear una aplicación Shiny básica
+  <a href="#crear-una-aplicaci%c3%b3n-shiny-b%c3%a1sica"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Comencemos con una aplicación Shiny muy básica, que no tiene ningún tema de colores personalizado. El código es el siguiente:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">shiny</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">bslib</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ui</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">page_fluid</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">h1</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;App Shiny ✨&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># selector de opciones </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">selectInput</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;animal&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Animalito&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">choices</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Gatito&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Gallineta&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Ratita&#34;</span><span style="color:#908caa">)),</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># deslizador de tamaño</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">sliderInput</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;tamaño&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Tamaño&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">min</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">16</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">max</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">128</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">value</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">48</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">ticks</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">htmlOutput</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;animales&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">server</span> <span style="color:#908caa">&lt;-</span> <span style="color:#3e8fb0">function</span><span style="color:#908caa">(</span><span style="color:#ea9a97">input</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">output</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">session</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">shinyApp</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ui</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">server</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>En esta aplicación extra básica tenemos un texto, un selector de alternativas, y un deslizador numérico para seleccionar valores.</p>
+<a href="app_shiny_sin_tema.png" target="_blank">
+
+  <img src="app_shiny_sin_tema.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+
+
+
+
+<h2 id="cambiar-los-colores-de-una-app-shiny">Cambiar los colores de una app Shiny
+  <a href="#cambiar-los-colores-de-una-app-shiny"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para cambiar el tema de colores, usaremos la función <code>bs_theme()</code> del paquete <code>{bslib}</code>. Esta función nos permite definir los colores principales de la aplicación, y luego aplicarlos a la interfaz de usuario con el argumento <code>theme</code> de la función que usemos para construir la UI o interfaz de nuestra app (en este caso, <code>page_fluid()</code>).</p>
+<p>Para definir los colores del tema, agregamos el argumento <code>theme</code> a <code>page_fluid()</code>, y definimos el tema de la siguiente manera:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">theme</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">bs_theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">bg</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EAD1FA&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">fg</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#553A74&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">primary</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#8557AB&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Aquí se configuran los tres colores principales: el fondo (<code>bg</code>), el color de los textos (<code>fg</code>), y el color principal (<code>primary</code>) que se usa en los botones, barras de navegación, y otros elementos interactivos.</p>
+<p>En este caso, pondremos los colores de este mismo sitio 💜</p>
+
+
+
+
+<h2 id="agregar-funcionalidad-a-la-app-shiny">Agregar funcionalidad a la app Shiny
+  <a href="#agregar-funcionalidad-a-la-app-shiny"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Antes de seguir, agreguemos alguna funcionalidad a nuestra app! En la función <code>server</code> agregaremos el siguiente código para hacer que la app muestre el emoji del animal seleccionado junto a un texto, y el deslizador nos permitirá cambiar el tamaño del animal elegido:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">server</span> <span style="color:#908caa">&lt;-</span> <span style="color:#3e8fb0">function</span><span style="color:#908caa">(</span><span style="color:#ea9a97">input</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">output</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">session</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># generar animalito con texto y emoji</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">output</span><span style="color:#908caa">$</span><span style="color:#ea9a97">animales</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">renderUI</span><span style="color:#908caa">({</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># animal y texto según selección</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">input</span><span style="color:#908caa">$</span><span style="color:#ea9a97">animal</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Gatito&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">animal</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">list</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;texto&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Miu&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                     <span style="color:#f6c177">&#34;emoji&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;🐈&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>    <span style="color:#908caa">}</span> <span style="color:#3e8fb0">else</span> <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">input</span><span style="color:#908caa">$</span><span style="color:#ea9a97">animal</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Gallineta&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">animal</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">list</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;texto&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Cocorocó&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                     <span style="color:#f6c177">&#34;emoji&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;🐓&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>    <span style="color:#908caa">}</span> <span style="color:#3e8fb0">else</span> <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">input</span><span style="color:#908caa">$</span><span style="color:#ea9a97">animal</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Ratita&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">animal</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">list</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;texto&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Mimimi&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                     <span style="color:#f6c177">&#34;emoji&#34;</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;🐁&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#908caa">}</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># generar interfaz para mostrar el animalito</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">div</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#6e6a86"># título del animal</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">h3</span><span style="color:#908caa">(</span><span style="color:#ea9a97">em</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animal</span><span style="color:#908caa">$</span><span style="color:#ea9a97">texto</span><span style="color:#908caa">)),</span>
+</span></span><span style="display:flex;"><span>      
+</span></span><span style="display:flex;"><span>      <span style="color:#6e6a86"># emoji del animal</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">div</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animal</span><span style="color:#908caa">$</span><span style="color:#ea9a97">emoji</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>          <span style="color:#6e6a86"># tamaño del animalito</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">style</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">css</span><span style="color:#908caa">(</span><span style="color:#ea9a97">font_size</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">paste0</span><span style="color:#908caa">(</span><span style="color:#ea9a97">input</span><span style="color:#908caa">$</span><span style="color:#ea9a97">tamaño</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;px&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">})</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span></code></pre></div><p>Ahora sí, <strong>veamos cómo cambia la app al aplicar este tema:</strong></p>
+<div style="margin:auto; max-width:70%;">
+<video src="app_shiny_tema.mov" style="border-radius:7px; max-width: 100%; margin:auto;" autoplay loop>
+</video>
+</div>
+
+<p>Queda súper bonito! ☺️ Encuentra el 
+<a href="https://gist.github.com/bastianolea/1c46fa94b71f167b927bc0a4a7399b41" target="_blank" rel="noopener">código completo de esta app en este Gist de Github.</a></p>
+
+
+
+
+<h2 id="aplicar-el-tema-de-tu-app-shiny-a-tus-gráficos">Aplicar el tema de tu app Shiny a tus gráficos
+  <a href="#aplicar-el-tema-de-tu-app-shiny-a-tus-gr%c3%a1ficos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Ahora que definimos colores base para el tema de la aplicación, podemos usar <code>{thematic}</code> para aplicar los mismos colores a los gráficos, tal como vimos 
+<a href="/blog/ggplot_temas/">en el tutorial de temas para <code>{ggplot2}</code>.</a>.</p>
+<p>Primero hagamos una app básica que muestre un gráfico:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">shiny</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">bslib</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ui</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">page_fluid</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">br</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">h1</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;App Shiny ✨&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># selector de números</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">sliderInput</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;filtro&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Filtrar&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">min</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">max</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">value</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># gráfico</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">plotOutput</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;grafico_barras&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">width</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">320</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">height</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">200</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">server</span> <span style="color:#908caa">&lt;-</span> <span style="color:#3e8fb0">function</span><span style="color:#908caa">(</span><span style="color:#ea9a97">input</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">output</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">session</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">reactive</span><span style="color:#908caa">({</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Length</span> <span style="color:#908caa">&gt;=</span> <span style="color:#ea9a97">input</span><span style="color:#908caa">$</span><span style="color:#ea9a97">filtro</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">})</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># generar un gráfico de barras</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">output</span><span style="color:#908caa">$</span><span style="color:#ea9a97">grafico_barras</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">renderPlot</span><span style="color:#908caa">({</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">datos</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Length</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">Sepal.Width</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">})</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">shinyApp</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ui</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">server</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Esta aplicación tiene un selector de números que filtran los datos, que a su vez alimentan el gráfico. Al cambiar la selección de números, el gráfico se actualiza gracias a la reactividad del objeto <code>datos()</code>.</p>
+<a href="app_shiny_2_sin_tema.png" target="_blank">
+
+  <img src="app_shiny_2_sin_tema.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Aplicar el tema es tan sencillo como agregar el tema en el argumento <code>theme</code> de <code>page_fluid()</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span> <span style="color:#ea9a97">theme</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">bs_theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">bg</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EAD1FA&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">fg</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#553A74&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">primary</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#8557AB&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Luego, para que el gráfico adopte la paleta de colores del tema, solamente tenemos que cargar el paquete <code>{thematic}</code> con <code>library(thematic)</code>, y luego activar el uso de temas con <code>thematic_shiny()</code> antes de la interfaz/UI, y listo! No es necesario cambiar nada en el código del gráfico ni del resto de la aplicación.<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<a href="app_shiny_2_con_tema.png" target="_blank">
+
+  <img src="app_shiny_2_con_tema.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>La parte superior de la aplicación quedaría así:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">shiny</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">bslib</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">thematic</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">thematic_shiny</span><span style="color:#908caa">()</span> <span style="color:#6e6a86"># activar el tema</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ui</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">page_fluid</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># definir los colores del tema</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">bs_theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">bg</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EAD1FA&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">fg</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#553A74&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">primary</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#8557AB&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>                   
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># el resto de la app...</span>
+</span></span></code></pre></div><p>Listo! Así de fácil. Ahora no hay excusas para hacer que tus aplicaciones se vean bonitas y dejen una buena impresión en sus usuarios.</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>a menos que el gráfico ya tenga aplicado un tema de <code>{ggplot2}</code> como <code>theme_minimal()</code>, en cuyo caso habría que eliminarlo para que el tema de <code>{thematic}</code> funcione correctamente.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">October 9, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">4 minute read, 818 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/shiny">shiny</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/shiny_ocultar/">Mostrar y ocultar elementos de una app Shiny a partir de datos o inputs</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/tutorial_quarto_github_pages/">Tutorial: crea páginas web y blogs con R&#43;Quarto, y publícalos online con GitHub Pages</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/tutorial_shinymanager/">Protege el acceso a tus aplicaciones Shiny con contraseña</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/shiny_ocultar/">&larr; Mostrar y ocultar elementos de una app Shiny a partir de datos o inputs</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/2025-08-27/">Generando ruido visual con R &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

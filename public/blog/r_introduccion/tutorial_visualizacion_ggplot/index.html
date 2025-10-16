@@ -49,7 +49,7 @@
 Otro beneficio de usarlo es propio de el uso de cualquier herramienta programática para generar resultados en el ámbito del análisis de datos: la reusabilidad del código, que nos permite especificar una sola vez el resultado que queremos y luego volver a aplicarlo infinitas veces con distintos datos, datos actualizados, o variaciones de un conjunto de datos, etc.">
   <meta itemprop="datePublished" content="2025-03-21T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-03-21T00:00:00+00:00">
-  <meta itemprop="wordCount" content="7457">
+  <meta itemprop="wordCount" content="7455">
   <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_visualizacion_ggplot/ggplot2-featured.jpg">
   <meta itemprop="keywords" content="Visualización de datos,Gráficos,Ggplot2">
   
@@ -64,7 +64,7 @@ Otro beneficio de usarlo es propio de el uso de cualquier herramienta programát
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
   
   
-  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+  <script src="/main.min.275ca2dcb3ce1d8540f2ac94c30dfdd4bd3b9d520b326846a6631c5403c03f8d.js" type="text/javascript"></script>
 </head>
 <body>
       <div class="grid-container single-series">
@@ -157,21 +157,6 @@ Otro beneficio de usarlo es propio de el uso de cualquier herramienta programát
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
-      <i class="fab fa-bluesky fa-lg fa-fw"></i>
-    </a>
-  
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-    
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
       <i class="fab fa-twitter fa-lg fa-fw"></i>
     </a>
@@ -247,6 +232,36 @@ Otro beneficio de usarlo es propio de el uso de cualquier herramienta programát
     
       
     
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
       <i class="fas fa-envelope fa-lg fa-fw"></i>
     </a>
@@ -279,10 +294,17 @@ Otro beneficio de usarlo es propio de el uso de cualquier herramienta programát
 <p>Otro beneficio de usarlo es propio de el uso de cualquier herramienta programática para generar resultados en el ámbito del análisis de datos: la reusabilidad del código, que nos permite especificar una sola vez el resultado que queremos y luego volver a aplicarlo infinitas veces con distintos datos, datos actualizados, o variaciones de un conjunto de datos, etc.</p>
 <hr>
 <p><em>Este tutorial está diseñado para empezar desde lo más básico, e ir avanzando de a poco por distintos tipos de visualizaciones para familiarizarse con el modo de uso de este paquete. A medida que tutorial avanza, se van introduciendo nuevos elementos es la medida que son relevantes y apropiados de introducir. También se van introduciendo distintos conjuntos de datos, y usando paquetes auxiliares que son introducidos secuencialmente. Por estas razones, se recomienda seguir el tutorial en orden.</em></p>
-<p>⚠️ Si aún no te manejas bien programando en R, te recomiendo revisar primero 
-<a href="../../../../blog/r_introduccion/dplyr_intro/">este tutorial sobre trabajar con datos usando <code>{dplyr}</code></a>, o bien, 
-<a href="../../../../blog/r_introduccion/r_basico/">este tutorial</a> y su 
-<a href="../../../../blog/r_introduccion/r_intermedio/">segunda parte</a> para aprender R desde cero.</p>
+<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
+
+⚠️ Si aún no te manejas bien programando en R, te recomiendo revisar primero 
+<a href="/blog/r_introduccion/dplyr_intro/">este tutorial sobre trabajar con datos usando <code>{dplyr}</code></a>, o bien, 
+<a href="/blog/r_introduccion/r_basico/">este tutorial</a> y su 
+<a href="/blog/r_introduccion/r_intermedio/">segunda parte</a> para aprender R desde cero.
+
+</div>
+
 <hr>
 
 
@@ -1237,10 +1259,12 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
 <p>El último paso para nuestra visualización es, probablemente, guardarla a nuestro equipo para poder insertarla en algún documento u ocuparla. Para ello, la función <code>ggsave()</code> guardará a tu computadora el último gráfico que hayas generado. Solamente debes especificar el nombre del archivo resultante, con su extensión (<code>jpg</code>, <code>png</code>, <code>pdf</code>, etc.).</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">ggsave</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;grafico.jpg&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">width</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">7</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">height</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span> 
 </span></span></code></pre></div><p>La extensión del archivo definirá el formato del archivo resultante. Si no especifica una ruta para archivo, lo más probable es que tu archivo aparezca en tu proyecto de R (si no estás usando proyectos de R 
-<a href="https://bastianolea.rbind.io/blog/r_introduccion/proyectos/" target="_blank" rel="noopener">(deberías)</a> Lo más probable es que no encuentres la imagen porque aparecerá en la <em>raíz</em> de tu disco).</p>
+<a href="../../../../blog/r_introduccion/proyectos/">(deberías)</a> Lo más probable es que no encuentres la imagen porque aparecerá en la <em>raíz</em> de tu disco).</p>
 <p>Si no específicas un ancho y alto, el gráfico tendrá el ancho y alto de la ventana de previsualización de RStudio. Si deseas ajustar el tamaño de los elementos de tu gráfico, puedes usar el argumento <code>scale</code>, que es un número que mientras más grande hará que los elementos sean más pequeños.</p>
 <hr>
-<p>Con esto concluye este tutorial inicial para aprender a visualizar datos en R con <code>{ggplot2}</code>. Cómo puedes ver, las nociones principales de <code>{ggplot2}</code> son pocas, pero es la combinación entre ellas y su uso creativo lo que nos permite crear visualizaciones interesantes!</p>
+<p>Con esto concluye este tutorial inicial para aprender a visualizar datos en R con <code>{ggplot2}</code>. Cómo puedes ver, las nociones principales de <code>{ggplot2}</code> son simples, pero es la combinación entre ellas y su uso creativo lo que nos permite crear visualizaciones interesantes! Revisa 
+<a href="../../../../tags/visualizaci%c3%b3n-de-datos/">otras publicaciones sobre visualización de datos</a> para seguir avanzando 🚀</p>
+<hr>
 <p>Si aprendiste con este tutorial, considera hacerme una pequeña donación en el siguiente enlace:</p>
 <p><div style = "height: 18px;">
 </div>
@@ -1250,17 +1274,7 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
   align-items: center;">
     <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
   </div>
-<div style="margin-top:24px;">
-  
-<a href="/clases/spatiallab_introduccion_r_2/">
-<img src="/clases/spatiallab_introduccion_r_2/banner_curso_r.jpeg" style="border-radius: 7px; max-height: 240px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;" alt="¿Necesitas aprender R para análisis de datos desde cero? Inscríbete a mi curso!">
-</a>
-
-<div style="max-width: 320px; margin:auto; font-size:85%;opacity:60%;">
-  <p>¿Necesitas aprender R para análisis de datos desde cero? <a href="https://spatiallab.cl/2da-version-curso-introduccion-al-analisis-de-datos-con-r-para-principiantes?variant_id=109682226">Inscríbete a mi curso!</a></p>
-  </div>
-
-</div></p>
+</p>
 <hr>
 <p>Para cerrar, dejo algunos enlaces útiles para ayudarte a usar <code>{ggplot2}</code>:</p>
 <p><strong>Paletas de colores</strong></p>
@@ -1312,7 +1326,7 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_shiny_1/">Tutorial: crea una aplicación Shiny básica &rarr;</a>
+    href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_shiny_1/">Tutorial: introducción al desarrollo de apps con Shiny &rarr;</a>
   
 </div>
 
@@ -1320,18 +1334,6 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
     </article>
     
       <div class="post-comments pa0 pa4-l mt4">
-  
-    
-      <script src="https://utteranc.es/client.js"
-              repo="bastianolea/blog-bastianolea-r"
-              issue-term="pathname"
-              theme="github-light"
-              label="comments"
-              crossorigin="anonymous"
-              async
-              type="text/javascript">
-      </script>
-    
   
 </div>
 
@@ -1370,11 +1372,343 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
 <p>Si tienes alguna duda con R, no entiendes alguno de los contenidos, o necesitas apoyo personalizado, puedes 
 <a href="/contact/">contactarme.</a></p>
 </p>
-  <p class="f7 measure lh-copy i mh0-l">Escrito por Bastián Olea Herrera</p>
-
-
   
 
+
+
+ 
+      <div style="font-size: 90%;">
+<h2>Temas:</h2>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">24 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/consejos/">Consejos</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">22 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/ggplot2/">Ggplot2</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">22 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos/">Gráficos</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">18 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/chile/">Chile</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">17 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/web-scraping/">Web scraping</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">15 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/datos/">Datos</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">13 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/shiny/">Shiny</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">11 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">11 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">11 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/quarto/">Quarto</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">10 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/blog/">Blog</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">10 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/mapas/">Mapas</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">9 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/loops/">Loops</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">8 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">8 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/an%C3%A1lisis-de-texto/">Análisis de texto</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">7 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/curiosidades/">Curiosidades</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">7 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/ciencias-sociales/">Ciencias sociales</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">6 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n/">Automatización</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">6 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/dplyr/">Dplyr</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">6 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/tablas/">Tablas</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">5 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n/">Optimización</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">5 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/texto/">Texto</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">4 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/purrr/">Purrr</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">4 posts</span>
+  </div>
+ 
+
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/estad%C3%ADstica/">Estadística</a></span>
+    <span style = "font-weight: normal; opacity: 40%;">4 posts</span>
+  </div>
+
+</div>
+
+<br>
+  
 </div>
 
 
@@ -1418,7 +1752,7 @@ $ p      &lt;dbl&gt; 0.4834645, 0.5165355, 0.4900875, 0.5099125, 0.4935063, 0.50
           <li class="active" hugo-nav="/blog/r_introduccion/tutorial_visualizacion_ggplot/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_visualizacion_ggplot/">Tutorial: visualización de datos con {ggplot2}</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shiny_1/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_shiny_1/">Tutorial: crea una aplicación Shiny básica</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shiny_1/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_shiny_1/">Tutorial: introducción al desarrollo de apps con Shiny</a></li>
         
           
           <li class="" hugo-nav="/blog/r_introduccion/tutorial_shinyapps/"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_shinyapps/">Tutorial: publicar una app Shiny en shinyapps.io</a></li>
@@ -1510,21 +1844,6 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
-      <i class="fab fa-bluesky fa-lg fa-fw"></i>
-    </a>
-  
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-    
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
       <i class="fab fa-twitter fa-lg fa-fw"></i>
     </a>
@@ -1587,6 +1906,36 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
       <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
     </a>
   
     

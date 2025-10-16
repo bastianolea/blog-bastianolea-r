@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Validación de datos con {testthat} y {pointblank} | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="La validación de datos sirve para verificar durante el proceso de análisis si los datos cumplen con requerimientos de calidad y con tus expectativas, con el objetivo de evitar problemas futuros relacionados a datos inesperados, incompletos, o erróneos. En este post veremos dos paquetes para validar el funcionamiento de tu código y para validar tus datos.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Validación de datos con {testthat} y {pointblank} | Blog">
+<meta property="og:description" content="La validación de datos sirve para verificar durante el proceso de análisis si los datos cumplen con requerimientos de calidad y con tus expectativas, con el objetivo de evitar problemas futuros relacionados a datos inesperados, incompletos, o erróneos. En este post veremos dos paquetes para validar el funcionamiento de tu código y para validar tus datos." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/validacion_avanzada/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/validacion_avanzada/pointblank-2-featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/validacion_avanzada/pointblank-2-featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Validación de datos con {testthat} y {pointblank}">
+  <meta itemprop="description" content="En un post anterior hablé sobre cómo hacer validación básica de datos en R. A grandes razgos, vimos la utilidad de crear funciones que contengan pruebas simples para validar la calidad de tus datos, tales como revisar cantidad de filas, cantidad de datos perdidos, y otros.
+Dado que R es un lenguaje enfocado en el análisis de datos, existen varios paquetes que nos pueden ayudar con la validación de datos!">
+  <meta itemprop="datePublished" content="2025-10-15T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-10-15T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2398">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/validacion_avanzada/pointblank-2-featured.png">
+  <meta itemprop="keywords" content="Procesamiento de datos,Consejos,Automatización,Limpieza de datos">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.275ca2dcb3ce1d8540f2ac94c30dfdd4bd3b9d520b326846a6631c5403c03f8d.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Validación de datos con {testthat} y {pointblank}</h1>
+        
+        
+        <p class="f7 db mv0 ttu">15/10/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      procesamiento de datos</a>  <a href="https://bastianoleah.netlify.app/tags/consejos"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      consejos</a>  <a href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      automatización</a>  <a href="https://bastianoleah.netlify.app/tags/limpieza-de-datos"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      limpieza de datos</a> </dd></em>
+  </dl>
+ 
+
+
+
+
+        
+      
+      <div class="ph0 pt5">
+        
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
+  href="https://rstudio.github.io/pointblank/" target="_blank" rel="noopener"><i class="fas fa-registered fa-lg fa-fw mr2"></i>pointblank</a>
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
+  href="https://testthat.r-lib.org" target="_blank" rel="noopener"><i class="fas fa-registered fa-lg fa-fw mr2"></i>testthat</a>
+
+
+      </div>
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <a href="pointblank-1.png" target="_blank">
+
+  <img src="pointblank-1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>En un 
+<a href="../../../blog/validacion_basica">post anterior</a> hablé sobre cómo hacer validación básica de datos en R. A grandes razgos, vimos la utilidad de crear funciones que contengan pruebas simples para validar la calidad de tus datos, tales como revisar cantidad de filas, cantidad de datos perdidos, y otros.</p>
+<p>Dado que R es un lenguaje enfocado en el análisis de datos, existen varios paquetes que nos pueden ayudar con la validación de datos!</p>
+<p>En este post veremos 
+<a href="https://testthat.r-lib.org" target="_blank" rel="noopener"><code>{testthat}</code></a>, un paquete que facilita implementar <strong>pruebas unitarias</strong> a tu código para validar su funcionamiento, y 
+<a href="https://rstudio.github.io/pointblank/" target="_blank" rel="noopener"><code>{pointblank}</code></a>, un paquete diseñado para la <strong>validación de datos</strong> con poderosas capacidades de reportabilidad. En unos minutos aprenderás a usar este paquete para garantizar que tus datos cumplen con tus expectativas de calidad.</p>
+<hr>
+<p><em><strong>¿Para qué sirve la validación de datos?</strong></em> Para que, en cualquier punto de tus procesos de análisis de datos, puedas <strong>verificar si los datos cumplen con los criterios de calidad que tú definas</strong>, y así enterarte de si vienen como esperas o si es que traen <em>sorpresas</em>. En la validación de datos se crean <strong>pruebas</strong> para, por ejemplo, confirmar que una columna no tenga datos perdidos, que los valores de una columna estén dentro de un rango esperado, etcétera.</p>
+<p>Al crear una serie de pruebas, podemos <strong>automatizar el proceso de validación de datos.</strong> De esta forma, si modificamos nuestro código, o si cambian los datos, <strong>no necesitamos revisar manualmente</strong> que todo esté en orden, sino que <strong>tenemos una especie de protocolo para certificar que los datos son los esperados.</strong> Cada vez que hagamos cambios en el código, podemos ejecutar las pruebas para confirmar que todo sigue funcionando como se espera.</p>
+<hr>
+
+
+
+
+<h2 id="datos-de-ejemplo">Datos de ejemplo
+  <a href="#datos-de-ejemplo"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Creemos una pequeña tabla para aprender a validar datos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tribble</span><span style="color:#908caa">(</span><span style="color:#908caa">~</span><span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span>   <span style="color:#908caa">~</span><span style="color:#ea9a97">patas</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">lindura</span><span style="color:#908caa">,</span>    <span style="color:#908caa">~</span><span style="color:#ea9a97">color</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#f6c177">&#34;mapache&#34;</span><span style="color:#908caa">,</span>    <span style="color:#f6c177">&#34;4&#34;</span><span style="color:#908caa">,</span>      <span style="color:#f6c177">100</span><span style="color:#908caa">,</span>    <span style="color:#f6c177">&#34;gris&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#f6c177">&#34;gato&#34;</span><span style="color:#908caa">,</span>      <span style="color:#f6c177">&#34;80&#34;</span><span style="color:#908caa">,</span>       <span style="color:#f6c177">90</span><span style="color:#908caa">,</span>   <span style="color:#f6c177">&#34;negro&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#f6c177">&#34;pollo&#34;</span><span style="color:#908caa">,</span>      <span style="color:#f6c177">&#34;2&#34;</span><span style="color:#908caa">,</span>       <span style="color:#3e8fb0">NA</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">&#34;plumas&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                 <span style="color:#f6c177">&#34;rata&#34;</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">&#34;cuatro&#34;</span><span style="color:#908caa">,</span>       <span style="color:#f6c177">90</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;#CCCCCC&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>De inmediato podemos ver en esta tabla creada con <code>tribble()</code> que hay varios problemas: la columna <code>patas</code> viene como caracteres, hay datos perdidos en <code>lindura</code>, y hay un color hexadecimal en <code>color</code>. Pero nos damos cuenta de ésto porque la tabla contiene pocos datos. <strong>Cuando trabajemos con miles o millones de observaciones, se vuelve más difícil detectar este tipo de problemas</strong>. Ahí es cuando la validación de datos nos puede ayudar!</p>
+<hr>
+
+
+
+
+<h2 id="validación-con-testthat">Validación con <code>{testthat}</code>
+  <a href="#validaci%c3%b3n-con-testthat"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>A pesar de que <code>{testthat}</code> se usa en general para el desarrollo de paquetes, y se enfoca a validar que cálculos y métodos estadísticos funcionen como es esperado, igual se puede usar para validar en proyectos de análisis de datos.</p>
+
+
+
+
+<h3 id="estructura-del-código">Estructura del código
+  <a href="#estructura-del-c%c3%b3digo"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Asumiendo que nuestro proyecto posee varios scripts donde se procesan los datos, la idea general será <strong>crear scripts con pruebas</strong>, y periodicamente ejecutar estos scripts de pruebas para confirmar que todo esté en orden.</p>
+<p>Primero necesitamos crear una carpeta para los tests, y scripts con pruebas para cada script o paso en nuestro flujo de trabajo que queramos validar. Podemos hacerlo a mano, o bien crear una carpeta para las pruebas con <code>fs::dir_create()</code>, y dentro creamos los scripts que necesitemos con <code>fs::file_create()</code>, siguiendo la convención de anteponer <code>test-</code> al nombre de cada script de pruebas.</p>
+<p>Se recomienda <strong>crear un script de pruebas por cada script de nuestro proyecto</strong>: si tenemos un script llamado <code>datos.R</code>, creamos un script de pruebas llamado <code>test-datos.R</code> dentro de la carpeta <code>tests/</code>. Dentro de este script empezamos a diseñar las pruebas unitarias. Las <strong>pruebas unitarias</strong> son pruebas que validan que una unidad específica de código (una función, un cálculo, una transformación de datos) funcione como se espera.</p>
+
+
+
+
+<h3 id="crear-pruebas-unitarias">Crear pruebas unitarias
+  <a href="#crear-pruebas-unitarias"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Usamos la función <code>test_that()</code> para definir cada prueba, indicando primero el nombre de la prueba. Dentro, usamos funciones como <code>expect_true()</code>, <code>expect_equal()</code>, <code>expect_type()</code>, para declarar que <em>esperamos</em> que luego de cierta operación ocurra algo. Por ejemplo: espero (<code>expect</code>) que mi tabla tenga una columna determinada, o que una columna sea de cierto tipo. Estas son las condiciones que deben cumplirse para que la prueba pase.</p>
+<p>Veamos un ejemplo de una prueba:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">testthat</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Attaching package: 'testthat'
+
+The following object is masked from 'package:dplyr':
+
+    matches
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">test_that</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;números iguales&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">expect_equal</span><span style="color:#908caa">(</span><span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Test passed 🎉
+</code></pre>
+<p>Esta prueba evalúa si dos números son iguales (<code>expect_equal()</code>), y en este ejemplo se cumple: <code>{testthat}</code> nos entrega un emoji de celebración 🎉 Veamos la siguiente prueba:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">test_that</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;números desiguales&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">expect_equal</span><span style="color:#908caa">(</span><span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>── Failure: números desiguales ─────────────────────────────────────────────────
+4 not equal to 5.
+1/1 mismatches
+[1] 4 - 5 == -1
+
+Error:
+! Test failed
+</code></pre>
+<p>Como la prueba no se cumple, porque <code>4</code> es distinto a <code>5</code>, y la prueba nos dará un error explicando en dónde está el problema.</p>
+
+
+
+
+<h3 id="ejemplos-de-pruebas-unitarias-para-validación-de-datos">Ejemplos de pruebas unitarias para validación de datos
+  <a href="#ejemplos-de-pruebas-unitarias-para-validaci%c3%b3n-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Apliquemos pruebas similares a los datos de ejemplo, dentro de un script que se llame <code>tests/test-datos.R</code>, donde cargamos los datos (es importante que el script sea reproducible, ya que no lee los datos desde tu entorno sino que los carga en su propio entorno) y luego hacemos las pruebas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># código para que el script de pruebas cargue los datos</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># datos &lt;- readr::read_rds(&#34;datos.rds&#34;) </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># esperamos que exista un objeto llamado &#34;datos&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">test_that</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;se cargaron los datos&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">expect_true</span><span style="color:#908caa">(</span><span style="color:#ea9a97">exists</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;datos&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Test passed 😸
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># esperamos que el número de columnas sea 4</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">test_that</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;suficientes columnas&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">expect_equal</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ncol</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">),</span> <span style="color:#f6c177">4</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Test passed 🎊
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># esperamos que la columna `animal` sea tipo caracter</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">test_that</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;columnas tipo texto&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">expect_type</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">$</span><span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;character&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Test passed 🥇
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># esperamos que la columna `patas` sea tipo numérico</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">test_that</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;columnas tipo texto&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">expect_type</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">$</span><span style="color:#ea9a97">patas</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;numeric&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>── Failure: columnas tipo texto ────────────────────────────────────────────────
+datos$patas has type 'character', not 'numeric'.
+
+Error:
+! Test failed
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># esperamos que los colores estén dentro de un conjunto determinado</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">test_that</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;colores factibles&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">expect_in</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">$</span><span style="color:#ea9a97">color</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;negro&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;gris&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;blanco&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;amarillo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;café&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>── Failure: colores factibles ──────────────────────────────────────────────────
+datos$color (`actual`) isn't fully contained within c(&quot;negro&quot;, &quot;gris&quot;, &quot;blanco&quot;, &quot;amarillo&quot;, &quot;café&quot;) (`expected`).
+* Missing from `expected`: &quot;plumas&quot;, &quot;#CCCCCC&quot;
+* Present in `expected`:   &quot;negro&quot;, &quot;gris&quot;, &quot;blanco&quot;, &quot;amarillo&quot;, &quot;café&quot;
+
+Error:
+! Test failed
+</code></pre>
+<p>Una vez que guardamos este script, podemos ejecutar sus pruebas manualmente, o bien podemos usar <code>test_file(&quot;tests/test-script.R&quot;)</code> para <strong>ejecutar todas las pruebas de un script</strong>, o <code>test_dir(&quot;tests.R&quot;)</code> para ejecutar todas las pruebas de la carpeta de pruebas, validando tu proyecto entero de una sola vez.</p>
+<p>A partir de las pruebas que definimos podemos <strong>confirmar que hay problemas</strong> en las columnas <code>patas</code> y <code>color</code>, ya que no cumplen con las expectativas que definimos en las pruebas.</p>
+<p>Podemos ejecutar las funciones que realizan la validación desde donde más nos resulte conveniente: desde algún script principal de nuestro proyecto, desde un script <code>tests.R</code> específico para ejecutar las pruebas, al final de cada script del proyecto, al final de un script donde ejecutemos todo el procesamiento de nuestro proyecto, o manualmente.</p>
+<p>💡 <em>Lo que yo haría</em> sería algo así como agregar un <code>test_file()</code> al final del script de limpieza de datos, que confirme que la limpieza salió bien, en otro script donde procese datos tendría otro <code>test_file()</code> con pruebas relacionadas a este paso, etcétera.</p>
+<p>Otra opción es guardar los scripts de pruebas en <code>tests</code> y ejecutar todos los scripts de pruebas con <code>test_dir(&quot;tests/&quot;)</code>, en cuyo caso <code>{testthat}</code> arroja un resumen de los resultados.</p>
+<p>También, al guardar un script con pruebas, RStudio se da cuenta y aparece el botón <em>Run Tests</em> en la parte superior derecha del script.</p>
+
+
+
+
+<h3 id="conclusión-de-testthat-para-validación-de-datos">Conclusión de <code>{testthat}</code> para validación de datos
+  <a href="#conclusi%c3%b3n-de-testthat-para-validaci%c3%b3n-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Con <code>{testthat}</code> podemos crear un flujo de trabajo que incluya la validación de datos a nuestros proyectos, con funciones e interfaz amigable que te dan un golpe de dopamina cuando aparece el mensajito verde con el emoji de felicitación. Si bien es ampliamente usado en la comunidad de R, su uso principal <em>no es</em> la validación de datos, por lo que ahora veremos un segundo paquete especialmente diseñado para ello.</p>
+<hr>
+
+
+
+
+<h2 id="validación-de-datos-con-pointblank">Validación de datos con <code>{pointblank}</code>
+  <a href="#validaci%c3%b3n-de-datos-con-pointblank"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>A diferencia de <code>{testthat}</code>, 
+<a href="https://rstudio.github.io/pointblank/articles/pointblank.html" target="_blank" rel="noopener">el paquete <code>{pointblank}</code></a> está <strong>diseñado para evaluar la calidad de conjuntos de datos.</strong> Sirve para definir pruebas que validen que los datos cumplen con ciertos estándares, integrando las pruebas en cadenas de comandos unidos por conectores o <em>pipes</em> (<code>|&gt;</code> o <code>%&gt;%</code>), y se destaca por su capacidad de <strong>crear <em>agentes</em> que generan reportes automáticos de validación de datos.</strong></p>
+<p>Las funciones de validación de <code>{pointblank}</code> sirven para integrarlas en <em>pipelines</em>. <strong>Si se <em>pasa</em> la prueba, el proceso continúa, pero si la prueba falla, el proceso se detiene y te avisa.</strong> Probemos la validación de algunos aspectos de la 
+<a href="#datos-de-ejemplo">tabla de ejemplo</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pointblank</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_is_numeric</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lindura</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_is_character</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_vals_in_set</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">set</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;perro&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;gato&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;sapo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pollo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;mapache&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pez&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;rata&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code># A tibble: 4 × 4
+  animal  patas  lindura color  
+  &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  
+1 mapache 4          100 gris   
+2 gato    80          90 negro  
+3 pollo   2           NA plumas 
+4 rata    cuatro      90 #CCCCCC
+</code></pre>
+<p>Obtenemos de vuelta la tabla de datos, porque implícitamente las tres pruebas se pasaron correctamente. Es decir, si todo está correcto, seguimos con nuestros procesos.</p>
+<p>Probemos qué pasa si incluimos pruebas más estrictas que nuestra humilde tabla no podrá pasar:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_is_numeric</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lindura</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_is_character</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_vals_in_set</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">set</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;perro&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;gato&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;sapo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pollo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;mapache&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pez&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;rata&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_vals_in_set</span><span style="color:#908caa">(</span><span style="color:#ea9a97">patas</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">set</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">:</span><span style="color:#f6c177">100</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_vals_not_null</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lindura</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Error: Exceedance of failed test units where values in `patas` should have been in the set of `2`, `3`, `4` (and 96 more).
+The `col_vals_in_set()` validation failed beyond the absolute threshold level (1).
+* failure level (1) &gt;= failure threshold (1)
+</code></pre>
+<p>Recibimos un aviso que indica un <em>exceso de test fallidos</em>, y una explicación de lo que falló. El paquete 
+<a href="https://rstudio.github.io/pointblank/articles/pointblank.html#using-action-levels" target="_blank" rel="noopener">ofrece la posibilidad de ajustar o soltar el nivel de dificultad de las pruebas,</a> por ejemplo, para permitir un cierto porcentaje de problemas, pero avisar si este nivel se supera.</p>
+<p>Veamos otro ejemplo de pruebas aplicadas a un <em>pipeline</em>: aquí intentamos corregir uno de los problemas con los datos, detectado con una de las pruebas anteriores, y aplicamos nuevamente la prueba para confirmar que quedó bien:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># corregir</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lindura</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">tidyr</span><span style="color:#908caa">::</span><span style="color:#ea9a97">replace_na</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lindura</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lindura</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">na.rm</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># probar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_vals_not_null</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lindura</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 4 × 4
+  animal  patas  lindura color  
+  &lt;chr&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;  
+1 mapache 4        100   gris   
+2 gato    80        90   negro  
+3 pollo   2         93.3 plumas 
+4 rata    cuatro    90   #CCCCCC
+</code></pre>
+<p>En otras palabras, corregimos los datos e <strong>inmediatamente probamos que la corrección funciona, sin necesidad de revisar manualmente.</strong></p>
+<p>Alternativamente existen variedades de las funciones de validación que empiezan con <code>test_</code>, y que retornan <code>TRUE</code> o <code>FALSE</code> dependiendo de si se cumple o no la prueba. Sirven para usarlas dentro de condicionales <code>if</code>, o dentro de funciones <code>if()</code> o <code>ifelse()</code>. Por ejemplo, puede usarse en un <code>if</code> para aplicar una corrección si la prueba no se cumple.</p>
+
+
+
+
+<h3 id="reportes-de-validación-de-datos">Reportes de validación de datos
+  <a href="#reportes-de-validaci%c3%b3n-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Aparte de las funciones de validación, el verdadero potencial de <code>{pointblank}</code> está en la <strong>creación de <em>agentes</em> que generan reportes automáticos de validación de datos.</strong> Por <em>agentes</em> se refieren a un objeto que contiene las pruebas que queremos aplicar a los datos, y que al <em>interrogarlo</em> genera un reporte con los resultados de las pruebas.</p>
+<p>Creamos un agente entregándole nuestros datos y opcionalmente el nivel de <em>acción</em>, que le indica cuándo actuar sobre los problemas en nuestros datos. Luego, le indicamos al agente las pruebas que queremos realizar. Finalmente, interrogamos al agente para que nos entregue su reporte.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pointblank</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># crear agente</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">agente</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">create_agent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                       <span style="color:#ea9a97">actions</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">action_levels</span><span style="color:#908caa">(</span><span style="color:#ea9a97">warn_at</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">stop_at</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># definir pruebas</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">agente</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">agente</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_is_numeric</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lindura</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">patas</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_is_character</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_vals_in_set</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">set</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;perro&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;gato&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;sapo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pollo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;mapache&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pez&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;rata&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_vals_between</span><span style="color:#908caa">(</span><span style="color:#ea9a97">patas</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">left</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">right</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">4</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_vals_not_null</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lindura</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># interrogar</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">interrogate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">agente</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Recibimos un reporte interactivo que indica la calidad de nuestros datos en base a las pruebas definidas:</p>
+<a href="pointblank-1.png" target="_blank">
+
+  <img src="pointblank-1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>En el reporte vemos los pasos de validación (las pruebas) hacia abajo en la columna <em>steps</em>, y los colores indican si la prueba se pasó (verde), si hubo advertencias (amarillo), o si la prueba falló (rojo). En la columna <em>units</em> se indica las unidades o pruebas individuales aplicadas en cada paso: probar el formato de una columna es una prueba, pero buscar datos perdidos corresponde a una prueba por cada observación de la tabla.</p>
+
+
+
+
+<h3 id="ejemplo-de-validación-de-datos-sucios">Ejemplo de validación de datos sucios
+  <a href="#ejemplo-de-validaci%c3%b3n-de-datos-sucios"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Probemos otro ejemplo con 
+<a href="https://nrennie.rbind.io/blog/introducing-messy-r-package/" target="_blank" rel="noopener">datos <em>ensuciados</em> gracias al paquete <code>{messy}</code></a>, que te permite agregar datos perdidos, errores gramaticales, símbolos raros y otras asquerosidades a cualquier conjunto de datos. Ensuciaremos el famoso dataset <code>iris</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris_sucio</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datasets</span><span style="color:#908caa">::</span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">tibble</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">janitor</span><span style="color:#908caa">::</span><span style="color:#ea9a97">clean_names</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">messy</span><span style="color:#908caa">::</span><span style="color:#ea9a97">messy</span><span style="color:#908caa">(</span><span style="color:#ea9a97">messiness</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">iris_sucio</span>
+</span></span></code></pre></div><pre><code># A tibble: 150 × 5
+   sepal_length sepal_width petal_length petal_width species    
+   &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;      
+ 1 &quot;5.1 &quot;       &quot;3.5 &quot;      &lt;NA&gt;         &quot;0.2&quot;       &quot;setosa &quot;  
+ 2  &lt;NA&gt;        &quot;3&quot;         &lt;NA&gt;         &quot;0.2&quot;       &quot;set#osa&quot;  
+ 3  &lt;NA&gt;        &quot;3.2&quot;       1.3          &quot;0.2&quot;        &lt;NA&gt;      
+ 4  &lt;NA&gt;         &lt;NA&gt;       &lt;NA&gt;         &quot;0.2&quot;        &lt;NA&gt;      
+ 5 &quot;5&quot;          &quot;3.6&quot;       1.4          &quot;0.2&quot;        &lt;NA&gt;      
+ 6  &lt;NA&gt;        &quot;3.9 &quot;      &lt;NA&gt;         &quot;0.4&quot;       &quot;s.etosa&quot;  
+ 7 &quot;4.6&quot;        &quot;3.4&quot;       1.4          &quot;0.3&quot;       &quot;SETOSA&quot;   
+ 8 &quot;5&quot;          &quot;3.4 &quot;      1.5          &quot;0.2 &quot;      &quot;s-etosa&quot;  
+ 9 &quot;4.4 &quot;       &quot;2.9&quot;       1.4          &quot;0.2&quot;       &quot;*set!osa&quot; 
+10 &quot;4.9&quot;         &lt;NA&gt;       &lt;NA&gt;         &quot;0.1&quot;       &quot;se!t#os$a&quot;
+# ℹ 140 more rows
+</code></pre>
+<p>Luego creamos un agente para validar estos datos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">agente_iris</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">create_agent</span><span style="color:#908caa">(</span><span style="color:#ea9a97">iris_sucio</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                         <span style="color:#ea9a97">actions</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">action_levels</span><span style="color:#908caa">(</span><span style="color:#ea9a97">warn_at</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.02</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">stop_at</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.5</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">agente_iris</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">agente_iris</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_is_numeric</span><span style="color:#908caa">(</span><span style="color:#ea9a97">columns</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">everything</span><span style="color:#908caa">())</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_is_character</span><span style="color:#908caa">(</span><span style="color:#ea9a97">species</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_vals_in_set</span><span style="color:#908caa">(</span><span style="color:#ea9a97">species</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;virginica&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;setosa&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;versicolor&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_vals_between</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sepal_length</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">6</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">col_vals_not_null</span><span style="color:#908caa">(</span><span style="color:#ea9a97">columns</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">everything</span><span style="color:#908caa">())</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">interrogate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">agente_iris</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><a href="pointblank-2-featured.png" target="_blank">
+
+  <img src="pointblank-2-featured.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Confirmamos que <code>{messy}</code> destruyó a nuestro querido <code>iris</code> 😔🕊️</p>
+
+
+
+
+<h3 id="crear-un-plan-básico-de-validación-de-datos">Crear un plan básico de validación de datos
+  <a href="#crear-un-plan-b%c3%a1sico-de-validaci%c3%b3n-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Si no sabes cómo empezar a validar tus datos, <code>{pointblank}</code> te ayuda a crear un plan básico de validación de datos con la función <code>draft_validation()</code>, la cual genera un script con pruebas básicas para que lo edites y adaptes a tus necesidades:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">draft_validation</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">tbl</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">datasets</span><span style="color:#908caa">::</span><span style="color:#ea9a97">iris</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filename</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;test-iris&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Este código nos crea un script que contiene 10 pruebas para el dataset en base a sus propios datos y características, y así tenemos material para definir los estándares para el conjunto de datos, y volver a validarlo en el futuro luego de que se apliquen cambios, actualizaciones o correcciones.</p>
+
+
+
+
+<h3 id="conclusiones">Conclusiones
+  <a href="#conclusiones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Aplicar principios de validación de datos a tus proyectos de análisis de datos te va a ayudar a tener <strong>mayor confianza en tus datos</strong>, dándote certeza de que no hay sorpresas inesperadas entre las miles o millones de observaciones con las que trabajas. También puede <strong>ahorrarte dolores de cabeza</strong>, ya que si los datos cambian y estos cambios se desajustan de tus estándares, te enterarás de inmediato en vez de darte cuenta cuando se eche a perder algún gráfico o tabla más adelante 😅</p>
+
+
+
+
+<h3 id="recursos-para-aprender-pointblank">Recursos para aprender <code>{pointblank}</code>
+  <a href="#recursos-para-aprender-pointblank"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<ul>
+<li>
+<a href="https://rstudio.github.io/pointblank/articles/pointblank.html" target="_blank" rel="noopener">Introducción a <code>{pointblank}</code></a></li>
+<li>
+<a href="https://rstudio.github.io/pointblank/articles/VALID-I.html" target="_blank" rel="noopener">Guía oficial de <code>{pointblank}</code></a></li>
+<li>
+<a href="https://github.com/rich-iannone/pointblank-workshop" target="_blank" rel="noopener">Workshop de <code>{pointblank}</code> por Richard Iannone</a> (requiere clonar el proyecto y generar los reportes Markdown)</li>
+</ul>
+<div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">October 15, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">12 minute read, 2398 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos">procesamiento de datos</a>  <a href="https://bastianoleah.netlify.app/tags/consejos">consejos</a>  <a href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n">automatización</a>  <a href="https://bastianoleah.netlify.app/tags/limpieza-de-datos">limpieza de datos</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/2025-08-22/">Convertir zonas horarias con R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/left_join/">Unir o cruzar datos con left_join()</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/visdat/">Echa un vistazo preliminar a tus datos con {visdat}</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/tutorial_mapa_chile_subdere/">Crea un mapa de Chile desde datos geoespaciales oficiales en R &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Tipografías personalizadas en gráficos {ggplot2} | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="¿Quieres darle un toque personalizado a tus gráficos? O tal vez alinearlos mejor al mensaje que quieres entregar, o a los lineamientos estéticos de tu organización. En esta breve guía te explico cómo cambiar las tipografías, tipos de letra o fuentes de tus gráficos hechos en R con `{ggplot2}`, incluyendo la posibilidad de usar cientos de tipografías web gratuitas directamente desde Google Fonts.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Tipografías personalizadas en gráficos {ggplot2} | Blog">
+<meta property="og:description" content="¿Quieres darle un toque personalizado a tus gráficos? O tal vez alinearlos mejor al mensaje que quieres entregar, o a los lineamientos estéticos de tu organización. En esta breve guía te explico cómo cambiar las tipografías, tipos de letra o fuentes de tus gráficos hechos en R con `{ggplot2}`, incluyendo la posibilidad de usar cientos de tipografías web gratuitas directamente desde Google Fonts." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/ggplot_tipografias/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/ggplot_tipografias/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/ggplot_tipografias/featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Tipografías personalizadas en gráficos {ggplot2}">
+  <meta itemprop="description" content="¿Quieres darle un toque personalizado a tus gráficos? O tal vez alinearlos mejor al mensaje que quieres entregar, o a los lineamientos estéticos de tu organización. En esta breve guía te explico cómo cambiar las tipografías, tipos de letra o fuentes de tus gráficos hechos en R con {ggplot2}.
+Para demostrar, primero creemos datos ficticios siguiento distribuciones normales:">
+  <meta itemprop="datePublished" content="2025-08-26T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-08-26T00:00:00+00:00">
+  <meta itemprop="wordCount" content="804">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/ggplot_tipografias/featured.png">
+  <meta itemprop="keywords" content="Visualización de datos,Ggplot2">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.275ca2dcb3ce1d8540f2ac94c30dfdd4bd3b9d520b326846a6631c5403c03f8d.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Tipografías personalizadas en gráficos {ggplot2}</h1>
+        
+        
+        <p class="f7 db mv0 ttu">26/8/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/ggplot2"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      ggplot2</a> </dd></em>
+  </dl>
+ 
+
+
+
+
+        
+      
+      <div class="ph0 pt5">
+        
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
+  href="https://gist.github.com/bastianolea/8ea85fa8169b302d2144e05434668c89" target="_blank" rel="noopener"><i class="fab fa-github fa-lg fa-fw mr2"></i>Código</a>
+
+
+      </div>
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>¿Quieres darle un toque personalizado a tus gráficos? O tal vez alinearlos mejor al mensaje que quieres entregar, o a los lineamientos estéticos de tu organización. En esta breve guía te explico cómo cambiar las tipografías, tipos de letra o fuentes de tus gráficos hechos en R 
+<a href="../../../tags/ggplot2/">con <code>{ggplot2}</code></a>.</p>
+<a href="featured.png" target="_blank">
+
+  <img src="featured.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Para demostrar, primero creemos datos ficticios siguiento distribuciones normales:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># crear datos al azar</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tibble</span><span style="color:#908caa">(</span><span style="color:#ea9a97">a</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">rnorm</span><span style="color:#908caa">(</span><span style="color:#f6c177">20</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">mean</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sd</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">b</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">rnorm</span><span style="color:#908caa">(</span><span style="color:#f6c177">20</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">mean</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sd</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">c</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">round</span><span style="color:#908caa">(</span><span style="color:#ea9a97">rnorm</span><span style="color:#908caa">(</span><span style="color:#f6c177">20</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">mean</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">sd</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">),</span> <span style="color:#f6c177">1</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><p>Ahora creemos un gráfico de dispersión como muestra, con un poco de texto extra:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">grafico</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">a</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">b</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_point</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.4</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">title</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Gráfico de dispersión&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">subtitle</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Números al azar&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Eje horizontal&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Eje vertical&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">caption</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Fuente: de los deseos&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_light</span><span style="color:#908caa">(</span><span style="color:#ea9a97">base_size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">12</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">plot.title</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">face</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;bold&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><p>Por defecto, <code>{ggplot2}</code> usa las tipografías Helvetica en Mac y Arial en Windows:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">grafico</span>
+</span></span></code></pre></div><img src="ggplot_tipografias.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="768" />
+<p>A pesar de no ser malas tipografías, se vuelven aburridas rápidamente.</p>
+<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
+
+Si necesitas aprender a usar <code>{ggplot2}</code> para gráficos en R, primero revisa 
+<a href="http://localhost:4321/blog/r_introduccion/tutorial_visualizacion_ggplot/" target="_blank" rel="noopener">este tutorial introductorio!</a>
+
+</div>
+
+
+
+
+
+<h2 id="tipografías-instaladas">Tipografías instaladas
+  <a href="#tipograf%c3%adas-instaladas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Podemos cambiar la tipografía de los gráficos <code>{ggplot2}</code> fácilmente si éstas se encuentran instaladas en tu computador. Por ejemplo, La tipografía <em>Menlo</em> que viene por defecto en Mac.</p>
+<p>Para establecer la tipografía de los gráficos, modificamos desde el tema (<code>theme()</code>) los elementos de texto (<code>text = element_text()</code>), especificando en el argumento <code>family</code> el nombre de la tipografía:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># especificar tipografía desde el tema</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">text</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">family</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Menlo&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="ggplot_tipografias.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png" width="768" />
+<p>Si agregamos capas de texto al gráfico (con <code>geom_text()</code>, <code>geom_label()</code> u otros), tenemos que especificar la tipografía que usaremos en cada capa. En el siguiente ejemplo, agregamos con <code>geom_text_repel()</code> una 
+<a href="../../../blog/ggrepel/">capa de texto que se repele de los puntos y otras etiquetas de texto automáticamente</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># especificar tipografía para geom_text() y también para el tema</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggrepel</span><span style="color:#908caa">::</span><span style="color:#ea9a97">geom_text_repel</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">family</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Menlo&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">text</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">family</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Menlo&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="ggplot_tipografias.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="768" />
+
+
+
+
+<h2 id="tipografías-web-desde-google-fonts">Tipografías web desde Google Fonts
+  <a href="#tipograf%c3%adas-web-desde-google-fonts"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Si no tienes la tipografía que buscas instalada en tu computadora, puedes usar tipografías web sin necesidad de instalar ni descargar nada. En la página 
+<a href="https://fonts.google.com/" target="_blank" rel="noopener">Google Fonts</a> existe un catálogo de cientos de tipografías de todo tipo, gratuitas y de código abierto.</p>
+<p>Entra a 
+<a href="https://fonts.google.com/" target="_blank" rel="noopener">Google Fonts</a> y busca una tipografía. Recomiendo seleccionar tipografías en Español (para que tengan soporte para tildes y eñes), y usar las opciones del lado izquierdo para encontrar tipografías por varias cualidades, como que evoquen <em>calma</em> o <em>innovación</em>, o según el estilo de fuente como <em>serif</em> (con terminaciones al final de los trazos) o <em>sans serif</em> (sin terminaciones al final de los trazos).</p>
+<a href="googlefonts0.png" target="_blank">
+
+  <img src="googlefonts0.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Cuando la encuentres, copia el nombre de la tipografía para agregarla a tu entorno de R con la función <code>font_add_google()</code> del 
+<a href="https://github.com/yixuan/showtext" target="_blank" rel="noopener">paquete <code>{showtext}</code></a>. Este paquete te permite agregar tipografías a R para usarlas en tus gráficos.</p>
+<p>Para usar la tipografía debes agregarla con <code>font_add_google()</code>, luego activar <code>{showtext}</code> ejecutando <code>showtext_auto()</code>, y finalmente especificar la resolución de tu pantalla con <code>showtext_opts(dpi = 300)</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">showtext</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># descargar una tipografía desde google fonts</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">font_add_google</span><span style="color:#908caa">(</span><span style="color:#ea9a97">name</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Pacifico&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># activar tipografías</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">showtext_auto</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">showtext_opts</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dpi</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">300</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># usar la tipografía desde Google Fonts</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggrepel</span><span style="color:#908caa">::</span><span style="color:#ea9a97">geom_text_repel</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">family</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Pacifico&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">text</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">family</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Pacifico&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="ggplot_tipografias.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.png" width="768" />
+<p>Ahora puedes usar cientos de tipografía con tus gráficos en R! 🥳 Solamente busca la que necesites en 
+<a href="https://fonts.google.com/" target="_blank" rel="noopener">Google Fonts</a> y podrás usarla en <code>{ggplot2}</code>.</p>
+
+
+
+
+<h2 id="tipografías-descargadas">Tipografías descargadas
+  <a href="#tipograf%c3%adas-descargadas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Si descargaste tipografías desde otros sitios (en formatos como <code>ttf</code>, <code>otf</code>, <code>woff</code> y otros) también puedes agregarlas a R con <code>{showtext}</code>. Para agregar las tipografías, usa <code>font_add()</code>, especificando los archivos que corresponden a los estilos de letras como <em>regular</em>, <em>bold</em> e <em>italic</em>.</p>
+<p>Por ejemplo, vamos a 
+<a href="https://fonts.google.com/" target="_blank" rel="noopener">Google Fonts</a> y descargamos la tipografía 
+<a href="https://fonts.google.com/specimen/Arvo" target="_blank" rel="noopener">Arvo</a>.</p>
+<a href="googlefonts1.png" target="_blank">
+
+  <img src="googlefonts1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>al descargarla obtendremos archivos como los siguientes:</p>
+<ul>
+<li><code>Arvo-Regular.ttf</code></li>
+<li><code>Arvo-Bold.ttf</code></li>
+<li><code>Arvo-Italic.ttf</code></li>
+</ul>
+<p>Agregamos las tipografías a R con <code>font_add()</code>, asumiendo que las guardamos en una carpeta llamada <code>tipografías</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># agregar una tipografía desde un archivo</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">font_add</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Arvo&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">regular</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;tipografías/Arvo-Regular.ttf&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">bold</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;tipografías/Arvo-Bold.ttf&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">italic</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;tipografías/Arvo-Italic.ttf&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Luego seguimos los mismos pasos de antes para usarlas en nuestros gráficos <code>{ggplot2}</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># activar tipografías</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">showtext_auto</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">showtext_opts</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dpi</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">300</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># probar tipografía descargada como archivo desde Google Fonts</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">grafico</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggrepel</span><span style="color:#908caa">::</span><span style="color:#ea9a97">geom_text_repel</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">family</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Arvo&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">text</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">family</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Arvo&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="ggplot_tipografias.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
+<p>Este método puede optimizar la ejecución de nuestros scripts, dado que la función <code>font_add_google()</code> descarga las tipografías cada vez que ejecutamos la función, mientras que si descargamos los archivos directamente no necesitamos descargar múltiples veces los archivos.</p>
+<p>También se puede usar la función <code>setup_font(&quot;arvo&quot;, &quot;tipografías&quot;)</code> del 
+<a href="https://github.com/dreamRs/gfonts" target="_blank" rel="noopener">paquete <code>{gfonts}</code></a> para descargar automáticamente las tipografías de Google Fonts en tu proyecto de R, y así usarlas sin descargas ni necesidad de conexión a internet. Para averiguar los nombres de las tipografías puedes ejecutar <code>gfonts::get_all_fonts()</code>.</p>
+<p><div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+</p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">August 26, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">4 minute read, 804 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/ggplot2">ggplot2</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/tutorial_mapa_chile_subdere/">Crea un mapa de Chile desde datos geoespaciales oficiales en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ggplot_temas/">Temas de colores personalizados para tus gráficos {ggplot2}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/visdat/">Echa un vistazo preliminar a tus datos con {visdat}</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/ggplot_temas/">&larr; Temas de colores personalizados para tus gráficos {ggplot2}</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/2025-08-22/">Convertir zonas horarias con R &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
