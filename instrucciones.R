@@ -58,6 +58,7 @@ blogdown::new_post(title = "Mapas y visualización de datos geoespaciales en R c
 "themes/hugo-apero/layouts/partials/shared/summary.html" # html del blog (lista de posts)
 "themes/hugo-apero/layouts/taxonomy/taxonomy.html" # html de la página de tags
 "themes/hugo-apero/layouts/partials/shared/summary-thumbnail.html" # html de las páginas de cada tag
+"themes/hugo-apero/layouts/_default/single.html" # html de los post
 
 ## utilidades ----
 
