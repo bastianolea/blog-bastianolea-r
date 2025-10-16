@@ -1037,6 +1037,19 @@ Con este posicionamiento de las barras obtenemos un gráfico que nos permite com
 
 ## Temas 
 
+Para cambiar el tema de un gráfico, contamos con temas predefinidos en funciones que empiezan con `theme_`, como `theme_minimal()` para un tema de fondo blanco con líneas grises, o `theme_classic()` para uno con bordes negros.
+
+```{r}
+grafico <- iris |> 
+  ggplot() +
+  aes(x = Sepal.Length, y = Sepal.Width, size = Petal.Length) +
+  geom_point(alpha = 0.5)
+
+grafico + theme_minimal()
+
+grafico + theme_classic()
+```
+
 Si queremos modificar elementos específicos de la visualización, usamos la capa `theme()`. Dentro de esta función, podemos individualizar cualquier elemento de la visualización. Para saber cómo se llama cada elemento, puedes empezar escribiendo su ubicación general (`plot`, `panel`, `axis`, `legend`, etc.) y RStudio/Positron debería sugerirte las distintas posibilidades, o bien puedes [entrar a esta guía](https://isabella-b.com/blog/ggplot2-theme-elements-reference/) para encontrar los nombres de cada uno de los elementos.
 
 En este caso, definiremos la tipografía general del gráfico al incluirla en el llamado a `theme_classic()`, y dentro de la especificación del tema (`theme()`) modificaremos la apariencia del subtítulo, de las líneas en el panel del gráfico correspondientes al eje horizontal, eliminaremos el título del eje vertical y las rayitas de los ejes, y especificaremos el tipo de letra del texto del eje vertical.
@@ -1054,6 +1067,9 @@ grafico_delincuencia_2 <- grafico_delincuencia_1 +
 
 grafico_delincuencia_2
 ```
+
+También podemos cambiar el tema de todos los gráficos que hagamos en la sesión (hasta que reiniciemos R o cambiemos el tema) ejecutando la función `theme_set()` con el tema (como `theme_minimal()` o `theme()` que queramos aplicar dentro.
+
 
 ## Tipografías 
 
@@ -1110,6 +1126,9 @@ Si aprendiste con este tutorial, considera hacerme una pequeña donación en el 
 ----
 
 Para cerrar, dejo algunos enlaces útiles para ayudarte a usar `{ggplot2}`:
+
+**Otros tutoriales**
+- [A ggplot2 Tutorial for Beautiful Plotting in R](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/)
 
 **Paletas de colores**
 - Tutorial sobre el uso de paletas de colores: https://datavizf24.classes.andrewheiss.com/resource/colors.html 
