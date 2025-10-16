@@ -15,6 +15,15 @@ tags:
   - consejos
   - automatización
   - limpieza de datos
+links:
+  - icon: registered
+    icon_pack: fas
+    name: pointblank
+    url: https://rstudio.github.io/pointblank/
+  - icon: registered
+    icon_pack: fas
+    name: testthat
+    url: https://testthat.r-lib.org
 excerpt: >-
   La validación de datos sirve para verificar durante el proceso de análisis si
   los datos cumplen con requerimientos de calidad y con tus expectativas, con el
@@ -30,7 +39,7 @@ En un [post anterior](../../../blog/validacion_basica) hablé sobre cómo hacer 
 
 Dado que R es un lenguaje enfocado en el análisis de datos, existen varios paquetes que nos pueden ayudar con la validación de datos!
 
-En este post veremos [`{testthat}`](https://rstudio.github.io/pointblank/), un paquete que facilita implementar **pruebas unitarias** a tu código para validar su funcionamiento, y [`{pointblank}`](https://rstudio.github.io/pointblank/), un paquete diseñado para la **validación de datos** con poderosas capacidades de reportabilidad. En unos minutos aprenderás a usar este paquete para garantizar que tus datos cumplen con tus expectativas de calidad.
+En este post veremos [`{testthat}`](https://testthat.r-lib.org), un paquete que facilita implementar **pruebas unitarias** a tu código para validar su funcionamiento, y [`{pointblank}`](https://rstudio.github.io/pointblank/), un paquete diseñado para la **validación de datos** con poderosas capacidades de reportabilidad. En unos minutos aprenderás a usar este paquete para garantizar que tus datos cumplen con tus expectativas de calidad.
 
 ------------------------------------------------------------------------
 

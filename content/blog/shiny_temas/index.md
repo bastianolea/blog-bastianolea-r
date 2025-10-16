@@ -7,6 +7,11 @@ slug: []
 categories: []
 tags:
   - shiny
+links:
+  - icon: github
+    icon_pack: fab
+    name: código
+    url: https://gist.github.com/bastianolea/1c46fa94b71f167b927bc0a4a7399b41
 excerpt: En este post muestro lo básico para personalizar la apariencia de tus aplicaciones Shiny con temas de colores personalizados usando el paquete `{bslib}`, y además cómo hacer que los gráficos `{ggplot2}` se ajusten automáticamente al tema usando {thematic}. Recuerda que una app con un diseño atractivo puede marcar la diferencia entre que alguien la use o no, o bien, que alguien la recuerde o no!
 ---
 
