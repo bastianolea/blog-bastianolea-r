@@ -4,17 +4,18 @@ cascade:
   author: Bastián Olea Herrera
   show_author_byline: false
   show_comments: false
-  show_post_date: false
+  show_button_links: true
+  show_post_date: true
   show_post_time: false
   sidebar:
     show_sidebar_adunit: true
     text_link_label: Posts por temática
     text_link_url: /tags/
 description: |
-  Categorías de las temáticas de mis posts sobre R. Elige un tema para ver las publicaciones relacionadas.
+  Categorías de las temáticas de mis posts sobre R (ordenadas por publicaciones recientes).
 
 show_author_byline: false
-show_button_links: false
+show_button_links: true
 show_post_date: true
 show_post_thumbnail: true
 show_post_time: false
