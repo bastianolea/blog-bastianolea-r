@@ -4,7 +4,8 @@ cascade:
   author: Bastián Olea Herrera
   show_author_byline: false
   show_comments: false
-  show_post_date: false
+  show_button_links: true
+  show_post_date: true
   show_post_time: false
   sidebar:
     show_sidebar_adunit: true
@@ -12,11 +13,11 @@ cascade:
     text_link_url: /tutoriales/
 description: |
   Publicaciones sobre R que contienen instrucciones detalladas y paso a paso para aprender algún aspecto del lenguaje. 
-layout: list
+
 show_author_byline: false
-show_button_links: false
-show_post_date: false
-show_post_thumbnail: false
+show_button_links: true
+show_post_date: true
+show_post_thumbnail: true
 show_post_time: false
 
 title: Tutoriales de R
