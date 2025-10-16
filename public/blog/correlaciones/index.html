@@ -24,12 +24,12 @@
   
     
   
-<meta name="description" content="El análisis de correlación es una técnica estadística de análisis exploratorio que nos permite identificar si existen relaciones lineales entre distintas variables. En este tutorial aprenderemos a realizar correlaciones entre múltiples variables, interpretarlas, y visualizarlas de tres maneras distintas.">
+<meta name="description" content="El análisis de correlación es una técnica estadística de análisis exploratorio que nos permite identificar si existen relaciones lineales entre distintas variables. En este tutorial aprenderemos a realizar correlaciones entre múltiples variables, interpretarlas, y visualizarlas de varias maneras distintas.">
 
 
 <meta property="og:site_name" content="Blog">
 <meta property="og:title" content="Análisis y visualización de correlaciones en R | Blog">
-<meta property="og:description" content="El análisis de correlación es una técnica estadística de análisis exploratorio que nos permite identificar si existen relaciones lineales entre distintas variables. En este tutorial aprenderemos a realizar correlaciones entre múltiples variables, interpretarlas, y visualizarlas de tres maneras distintas." />
+<meta property="og:description" content="El análisis de correlación es una técnica estadística de análisis exploratorio que nos permite identificar si existen relaciones lineales entre distintas variables. En este tutorial aprenderemos a realizar correlaciones entre múltiples variables, interpretarlas, y visualizarlas de varias maneras distintas." />
 <meta property="og:type" content="page" />
 <meta property="og:url" content="https://bastianoleah.netlify.app/blog/correlaciones/" />
 <meta property="og:locale" content="es-ES">
@@ -49,9 +49,9 @@
 Lo que hace una correlación es indicarnos si dos variables tienen una relación entre sí, en el sentido de que el aumento o disminución de una de las variables ocurra en concordancia con la otra variable, ya sea una correlación positiva (si una variable aumenta, la otra también) o correlación negativa (si una variable aumenta, la otra disminuye).">
   <meta itemprop="datePublished" content="2025-07-09T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-07-09T00:00:00+00:00">
-  <meta itemprop="wordCount" content="4088">
+  <meta itemprop="wordCount" content="4188">
   <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/correlaciones/correlacion-featured.png">
-  <meta itemprop="keywords" content="Estadísticas,Ggplot2,Gráficos,Visualización de datos">
+  <meta itemprop="keywords" content="Estadística,Ggplot2,Gráficos,Visualización de datos">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="false" type="image/x-icon">
@@ -64,7 +64,7 @@ Lo que hace una correlación es indicarnos si dos variables tienen una relación
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
   
   
-  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+  <script src="/main.min.275ca2dcb3ce1d8540f2ac94c30dfdd4bd3b9d520b326846a6631c5403c03f8d.js" type="text/javascript"></script>
 </head>
 <body>
       <div class="grid-container">
@@ -157,21 +157,6 @@ Lo que hace una correlación es indicarnos si dos variables tienen una relación
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
-      <i class="fab fa-bluesky fa-lg fa-fw"></i>
-    </a>
-  
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-    
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
       <i class="fab fa-twitter fa-lg fa-fw"></i>
     </a>
@@ -247,6 +232,36 @@ Lo que hace una correlación es indicarnos si dos variables tienen una relación
     
       
     
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
       <i class="fas fa-envelope fa-lg fa-fw"></i>
     </a>
@@ -271,7 +286,43 @@ Lo que hace una correlación es indicarnos si dos variables tienen una relación
         
         
   <dl class="f6 lh-copy">
-    <em><dd class="fw5 ml0">Temas:  <a href="https://bastianoleah.netlify.app/tags/estad%C3%ADsticas">estadísticas</a>,  <a href="https://bastianoleah.netlify.app/tags/ggplot2">ggplot2</a>,  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos">gráficos</a>,  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>, </dd></em>
+    <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/estad%C3%ADstica"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      estadística</a>  <a href="https://bastianoleah.netlify.app/tags/ggplot2"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      ggplot2</a>  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      gráficos</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      visualización de datos</a> </dd></em>
   </dl>
  
 
@@ -343,15 +394,19 @@ $ valor         &lt;dbl&gt; 34745945, 4107522, 3776040, 108439, 160661, 1067476,
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">glimpse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">siedu</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><pre><code>Rows: 6,701
-Columns: 8
-$ comuna     &lt;chr&gt; &quot;ALTO HOSPICIO&quot;, &quot;ALTO HOSPICIO&quot;, &quot;ALTO HOSPICIO&quot;, &quot;ALTO HO…
-$ cut_comuna &lt;chr&gt; &quot;1107&quot;, &quot;1107&quot;, &quot;1107&quot;, &quot;1107&quot;, &quot;1107&quot;, &quot;1107&quot;, &quot;1107&quot;, &quot;11…
-$ id         &lt;chr&gt; &quot;BPU_8&quot;, &quot;BPU_17&quot;, &quot;EA_34&quot;, &quot;EA_22a&quot;, &quot;EA_22&quot;, &quot;EA_33a&quot;, &quot;B…
-$ año        &lt;dbl&gt; 2018, 2019, 2019, 2021, 2021, 2022, 2018, 2018, 2018, 2018,…
-$ variable   &lt;chr&gt; &quot;Cantidad de jornadas diarias completas de trabajo de médic…
-$ valor      &lt;dbl&gt; 32.750000, 0.580000, 1.220618, 168.223082, 484.296058, 44.9…
-$ medida     &lt;chr&gt; &quot;Jornadas diarias / 10.000 habs&quot;, &quot;Relación (Número de lumi…
-$ estandar   &lt;chr&gt; &quot;Sin estándar&quot;, &quot;Sin estándar&quot;, &quot;Hasta 1 kilogramo / habita…
+Columns: 12
+$ codigo_comuna    &lt;dbl&gt; 1107, 1107, 1107, 1107, 1107, 1107, 1107, 1107, 1107,…
+$ codigo_region    &lt;chr&gt; &quot;01&quot;, &quot;01&quot;, &quot;01&quot;, &quot;01&quot;, &quot;01&quot;, &quot;01&quot;, &quot;01&quot;, &quot;01&quot;, &quot;01&quot;,…
+$ codigo_provincia &lt;chr&gt; &quot;011&quot;, &quot;011&quot;, &quot;011&quot;, &quot;011&quot;, &quot;011&quot;, &quot;011&quot;, &quot;011&quot;, &quot;011…
+$ nombre_region    &lt;chr&gt; &quot;Tarapacá&quot;, &quot;Tarapacá&quot;, &quot;Tarapacá&quot;, &quot;Tarapacá&quot;, &quot;Tara…
+$ nombre_provincia &lt;chr&gt; &quot;Iquique&quot;, &quot;Iquique&quot;, &quot;Iquique&quot;, &quot;Iquique&quot;, &quot;Iquique&quot;…
+$ nombre_comuna    &lt;chr&gt; &quot;Alto Hospicio&quot;, &quot;Alto Hospicio&quot;, &quot;Alto Hospicio&quot;, &quot;A…
+$ id               &lt;chr&gt; &quot;BPU_8&quot;, &quot;BPU_17&quot;, &quot;EA_34&quot;, &quot;EA_22a&quot;, &quot;EA_22&quot;, &quot;EA_33…
+$ año              &lt;dbl&gt; 2018, 2019, 2019, 2021, 2021, 2022, 2018, 2018, 2018,…
+$ variable         &lt;chr&gt; &quot;Cantidad de jornadas diarias completas de trabajo de…
+$ valor            &lt;dbl&gt; 32.750000, 0.580000, 1.220618, 168.223082, 484.296058…
+$ medida           &lt;chr&gt; &quot;Jornadas diarias / 10.000 habs&quot;, &quot;Relación (Número d…
+$ estandar         &lt;chr&gt; &quot;Sin estándar&quot;, &quot;Sin estándar&quot;, &quot;Hasta 1 kilogramo / …
 </code></pre>
 <p>Notamos que ambos conjuntos de datos vienen en el 
 <a href="https://r4ds.had.co.nz/tidy-data.html#longer" target="_blank" rel="noopener">formato <em>largo</em></a>, dónde tenemos una columna con los nombres de las variables o indicadores, y otra columna con los valores correspondientes. Así tenemos una tabla con menor cantidad de columnas,
@@ -381,7 +436,8 @@ donde cada fila es una observación que corresponde a una comuna del país, en u
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">sinim_3</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sinim_2</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cut_comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">variable</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">año</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ungroup</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ungroup</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cut_comuna</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">as.numeric</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cut_comuna</span><span style="color:#908caa">))</span>
 </span></span><span style="display:flex;"><span>  
 </span></span><span style="display:flex;"><span><span style="color:#6e6a86"># seleccionar columnas</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">sinim_4</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sinim_3</span> <span style="color:#908caa">|&gt;</span> 
@@ -401,44 +457,44 @@ donde cada fila es una observación que corresponde a una comuna del país, en u
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#6e6a86"># dejar sólo la medición más reciente de cada variable en cada comuna</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">siedu_3</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">siedu_2</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cut_comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">variable</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">codigo_comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">variable</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">año</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ungroup</span><span style="color:#908caa">()</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#6e6a86"># seleccionar columnas</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">siedu_4</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">siedu_3</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cut_comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">variable</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">valor</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cut_comuna</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">codigo_comuna</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">variable</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">valor</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><p>Veamos cómo van quedando los datos:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sinim_4</span>
 </span></span></code></pre></div><pre><code># A tibble: 3,806 × 3
    cut_comuna variable                                                     valor
-   &lt;chr&gt;      &lt;chr&gt;                                                        &lt;dbl&gt;
- 1 01101      Densidad de Población por Km2                               1.02e2
- 2 01101      Disponibilidad Presupuestaria Municipal por Habitante (M$)  4.27e2
- 3 01101      Ingresos Propios Permanentes per Cápita (IPPP)              1.92e2
- 4 01101      Inversión Municipal                                         2.57e6
- 5 01101      Participación de Ingresos por Transferencias en el Ingreso… 4.38e1
- 6 01101      Participación del Fondo Común Municipal en el Ingreso Total 6.4 e0
- 7 01101      Población Comunal, Estimada por el INE                      2.31e5
- 8 01101      Porcentaje de Ejecución Presupuestaria Devengada Municipal  7.58e1
- 9 01101      Porcentaje de Hogares de 0-40% de Ingresos respecto del To… 4.44e1
-10 01101      Porcentaje de Puntajes PSU Igual o Superior a 450 Puntos e… 7.61e1
+        &lt;dbl&gt; &lt;chr&gt;                                                        &lt;dbl&gt;
+ 1       1101 Densidad de Población por Km2                               1.02e2
+ 2       1101 Disponibilidad Presupuestaria Municipal por Habitante (M$)  4.27e2
+ 3       1101 Ingresos Propios Permanentes per Cápita (IPPP)              1.92e2
+ 4       1101 Inversión Municipal                                         2.57e6
+ 5       1101 Participación de Ingresos por Transferencias en el Ingreso… 4.38e1
+ 6       1101 Participación del Fondo Común Municipal en el Ingreso Total 6.4 e0
+ 7       1101 Población Comunal, Estimada por el INE                      2.31e5
+ 8       1101 Porcentaje de Ejecución Presupuestaria Devengada Municipal  7.58e1
+ 9       1101 Porcentaje de Hogares de 0-40% de Ingresos respecto del To… 4.44e1
+10       1101 Porcentaje de Puntajes PSU Igual o Superior a 450 Puntos e… 7.61e1
 # ℹ 3,796 more rows
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">siedu_4</span>
 </span></span></code></pre></div><pre><code># A tibble: 891 × 3
    cut_comuna variable                                                     valor
-   &lt;chr&gt;      &lt;chr&gt;                                                        &lt;dbl&gt;
- 1 10101      Consumo de energía eléctrica per cápita residencial        8.91e+2
- 2 10101      Número de microbasurales por cada 10.000 habitantes        1.5 e-1
- 3 10101      Población estimada de migrantes internacionales por comuna 1.27e+4
- 4 10101      Porcentaje de la población en situación de pobreza multid… 2.03e+1
- 5 10101      Porcentaje de viviendas en situación de hacinamiento       6.43e+0
- 6 10101      Superficie de áreas verdes públicas por habitante          7.92e+0
- 7 10101      Tasa de conexiones residenciales fijas de internet por ca… 1.89e+1
- 8 10101      Tasa de víctimas de delitos violentos por casos policiale… 7.71e+1
- 9 10101      Tiempo de viaje en hora punta mañana                       6   e+1
-10 10109      Consumo de energía eléctrica per cápita residencial        1.37e+3
+        &lt;dbl&gt; &lt;chr&gt;                                                        &lt;dbl&gt;
+ 1       1101 Consumo de energía eléctrica per cápita residencial         7.09e2
+ 2       1101 Número de microbasurales por cada 10.000 habitantes         1.21e1
+ 3       1101 Población estimada de migrantes internacionales por comuna  4.46e4
+ 4       1101 Porcentaje de la población en situación de pobreza multidi… 1.97e1
+ 5       1101 Porcentaje de viviendas en situación de hacinamiento        9.92e0
+ 6       1101 Superficie de áreas verdes públicas por habitante           2.13e0
+ 7       1101 Tasa de conexiones residenciales fijas de internet por cad… 2.14e1
+ 8       1101 Tasa de víctimas de delitos violentos por casos policiales… 1.46e2
+ 9       1101 Tiempo de viaje en hora punta mañana                        3   e1
+10       1107 Consumo de energía eléctrica per cápita residencial         4.84e2
 # ℹ 881 more rows
 </code></pre>
 
@@ -547,26 +603,26 @@ donde cada fila es una observación que corresponde a una comuna del país, en u
 </span></span></code></pre></div><pre><code># A tibble: 20 × 21
    term                                   Densidad de Població…¹ Disponibilidad Presu…² Ingresos Propios Per…³ `Inversión Municipal` Participación de Ing…⁴ Participación del Fo…⁵ Población Comunal, E…⁶ Porcentaje de Ejecuc…⁷ Porcentaje de Hogare…⁸ Porcentaje de Puntaj…⁹ Porcentaje de mujere…˟ Consumo de energía e…˟ Número de microbasur…˟ Población estimada d…˟ Porcentaje de la pob…˟ Porcentaje de vivien…˟ Superficie de áreas …˟ Tasa de conexiones r…˟ Tasa de víctimas de …˟ Tiempo de viaje en h…˟
    &lt;chr&gt;                                                   &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                 &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;                  &lt;dbl&gt;
- 1 Densidad de Población por Km2                         NA                     -0.0969                -0.0445               0.222                  0.0415                 -0.255                 0.480                  0.192                  -0.311                  0.0238               -0.0105                 -0.0514                -0.143                  0.567                 -0.0601                 0.410                 -0.249                 0.367                  0.740                 -0.0829 
- 2 Disponibilidad Presupuestaria Municip…                -0.0969                NA                      0.782               -0.0794                 0.110                   0.0764               -0.190                 -0.217                  -0.327                 -0.0743               -0.0905                  0.748                 -0.0984                -0.102                 -0.512                 -0.605                  0.472                 0.344                 -0.129                 -0.409  
- 3 Ingresos Propios Permanentes per Cápi…                -0.0445                 0.782                 NA                    0.0366                 0.0233                 -0.224                -0.0802                -0.117                  -0.359                 -0.106                -0.0711                  0.830                 -0.0682                -0.0125                -0.547                 -0.604                  0.576                 0.359                 -0.134                 -0.457  
- 4 Inversión Municipal                                    0.222                 -0.0794                 0.0366              NA                      0.00615                -0.290                 0.555                  0.0647                 -0.317                  0.153                -0.0946                  0.374                 -0.116                  0.134                 -0.547                 -0.482                  0.198                 0.478                 -0.0113                -0.234  
- 5 Participación de Ingresos por Transfe…                 0.0415                 0.110                  0.0233               0.00615               NA                      -0.331                 0.0326                -0.0573                 -0.0969                 0.0340                0.00478                -0.119                 -0.0619                -0.265                  0.112                  0.0431                -0.235                 0.00647                0.104                  0.163  
- 6 Participación del Fondo Común Municip…                -0.255                  0.0764                -0.224               -0.290                 -0.331                  NA                    -0.400                 -0.263                   0.511                 -0.100                -0.0315                 -0.637                 -0.0353                -0.167                  0.504                  0.443                 -0.295                -0.370                 -0.117                  0.358  
- 7 Población Comunal, Estimada por el INE                 0.480                 -0.190                 -0.0802               0.555                  0.0326                 -0.400                NA                      0.213                  -0.416                  0.110                -0.0592                 -0.0802                -0.113                  0.417                 -0.262                 -0.0987                -0.113                 0.413                  0.230                 -0.00621
- 8 Porcentaje de Ejecución Presupuestari…                 0.192                 -0.217                 -0.117                0.0647                -0.0573                 -0.263                 0.213                 NA                      -0.0976                 0.0992                0.00160                 0.0778                 0.135                  0.0863                -0.0491                 0.0899                 0.0296                0.0158                 0.00294                0.0366 
- 9 Porcentaje de Hogares de 0-40% de Ing…                -0.311                 -0.327                 -0.359               -0.317                 -0.0969                  0.511                -0.416                 -0.0976                 NA                     -0.143                -0.0263                 -0.767                  0.134                 -0.221                  0.852                  0.673                 -0.295                -0.755                 -0.123                  0.402  
-10 Porcentaje de Puntajes PSU Igual o Su…                 0.0238                -0.0743                -0.106                0.153                  0.0340                 -0.100                 0.110                  0.0992                 -0.143                 NA                    -0.0230                  0.474                 -0.0812                 0.314                 -0.718                 -0.500                  0.213                 0.553                  0.0376                -0.484  
-11 Porcentaje de mujeres funcionarias mu…                -0.0105                -0.0905                -0.0711              -0.0946                 0.00478                -0.0315               -0.0592                 0.00160                -0.0263                -0.0230               NA                      -0.248                  0.0473                -0.261                  0.406                  0.365                 -0.158                -0.169                  0.108                  0.351  
-12 Consumo de energía eléctrica per cápi…                -0.0514                 0.748                  0.830                0.374                 -0.119                  -0.637                -0.0802                 0.0778                 -0.767                  0.474                -0.248                  NA                      0.0685                 0.0691                -0.346                 -0.482                  0.450                 0.342                 -0.0319                -0.155  
-13 Número de microbasurales por cada 10.…                -0.143                 -0.0984                -0.0682              -0.116                 -0.0619                 -0.0353               -0.113                  0.135                   0.134                 -0.0812                0.0473                  0.0685                NA                     -0.0890                 0.0742                 0.0720                -0.120                -0.251                 -0.0503                -0.191  
-14 Población estimada de migrantes inter…                 0.567                 -0.102                 -0.0125               0.134                 -0.265                  -0.167                 0.417                  0.0863                 -0.221                  0.314                -0.261                   0.0691                -0.0890                NA                     -0.230                  0.246                 -0.145                 0.0871                 0.523                 -0.119  
-15 Porcentaje de la población en situaci…                -0.0601                -0.512                 -0.547               -0.547                  0.112                   0.504                -0.262                 -0.0491                  0.852                 -0.718                 0.406                  -0.346                  0.0742                -0.230                 NA                      0.628                 -0.169                -0.681                  0.0239                 0.301  
-16 Porcentaje de viviendas en situación …                 0.410                 -0.605                 -0.604               -0.482                  0.0431                  0.443                -0.0987                 0.0899                  0.673                 -0.500                 0.365                  -0.482                  0.0720                 0.246                  0.628                 NA                     -0.235                -0.505                  0.454                  0.266  
-17 Superficie de áreas verdes públicas p…                -0.249                  0.472                  0.576                0.198                 -0.235                  -0.295                -0.113                  0.0296                 -0.295                  0.213                -0.158                   0.450                 -0.120                 -0.145                 -0.169                 -0.235                 NA                     0.135                 -0.0458                -0.241  
-18 Tasa de conexiones residenciales fija…                 0.367                  0.344                  0.359                0.478                  0.00647                -0.370                 0.413                  0.0158                 -0.755                  0.553                -0.169                   0.342                 -0.251                  0.0871                -0.681                 -0.505                  0.135                NA                      0.172                 -0.338  
-19 Tasa de víctimas de delitos violentos…                 0.740                 -0.129                 -0.134               -0.0113                 0.104                  -0.117                 0.230                  0.00294                -0.123                  0.0376                0.108                  -0.0319                -0.0503                 0.523                  0.0239                 0.454                 -0.0458                0.172                 NA                     -0.0366 
-20 Tiempo de viaje en hora punta mañana                  -0.0829                -0.409                 -0.457               -0.234                  0.163                   0.358                -0.00621                0.0366                  0.402                 -0.484                 0.351                  -0.155                 -0.191                 -0.119                  0.301                  0.266                 -0.241                -0.338                 -0.0366                NA      
+ 1 Densidad de Población por Km2                         NA                     -0.0969                -0.0445               0.222                  0.0415                 -0.255                  0.480                0.192                   -0.311                  0.0238               -0.0105                0.0691                  -0.119                  0.516                -0.0295                  0.379                -0.112                   0.248                  0.657                  0.213 
+ 2 Disponibilidad Presupuestaria Municip…                -0.0969                NA                      0.782               -0.0794                 0.110                   0.0764                -0.190               -0.217                   -0.327                 -0.0743               -0.0905                0.681                   -0.0329                -0.0473               -0.247                  -0.371                 0.404                   0.148                 -0.0675                -0.232 
+ 3 Ingresos Propios Permanentes per Cápi…                -0.0445                 0.782                 NA                    0.0366                 0.0233                 -0.224                 -0.0802              -0.117                   -0.359                 -0.106                -0.0711                0.762                   -0.0139                 0.0200               -0.308                  -0.391                 0.512                   0.214                 -0.0761                -0.286 
+ 4 Inversión Municipal                                    0.222                 -0.0794                 0.0366              NA                      0.00615                -0.290                  0.555                0.0647                  -0.317                  0.153                -0.0946                0.222                   -0.113                  0.142                -0.409                  -0.297                 0.162                   0.375                  0.0877                -0.0957
+ 5 Participación de Ingresos por Transfe…                 0.0415                 0.110                  0.0233               0.00615               NA                      -0.331                  0.0326              -0.0573                  -0.0969                 0.0340                0.00478              -0.134                   -0.0293                -0.150                 0.00375                 0.0973               -0.188                   0.0971                 0.238                  0.0176
+ 6 Participación del Fondo Común Municip…                -0.255                  0.0764                -0.224               -0.290                 -0.331                  NA                     -0.400               -0.263                    0.511                 -0.1000               -0.0315               -0.543                   -0.0714                -0.220                 0.406                   0.273                -0.336                  -0.370                 -0.222                  0.238 
+ 7 Población Comunal, Estimada por el INE                 0.480                 -0.190                 -0.0802               0.555                  0.0326                 -0.400                 NA                    0.213                   -0.416                  0.110                -0.0592               -0.0770                  -0.0972                 0.404                -0.298                  -0.0503               -0.0699                  0.421                  0.313                 -0.0764
+ 8 Porcentaje de Ejecución Presupuestari…                 0.192                 -0.217                 -0.117                0.0647                -0.0573                 -0.263                  0.213               NA                       -0.0976                 0.0992                0.00160               0.000366                 0.0701                -0.0124               -0.0596                  0.0518                0.00593                 0.0264                 0.149                  0.182 
+ 9 Porcentaje de Hogares de 0-40% de Ing…                -0.311                 -0.327                 -0.359               -0.317                 -0.0969                  0.511                 -0.416               -0.0976                  NA                     -0.143                -0.0263               -0.487                    0.121                 -0.279                 0.733                   0.462                -0.260                  -0.664                 -0.195                  0.257 
+10 Porcentaje de Puntajes PSU Igual o Su…                 0.0238                -0.0743                -0.106                0.153                  0.0340                 -0.1000                 0.110                0.0992                  -0.143                 NA                    -0.0230                0.277                   -0.0532                 0.230                -0.572                  -0.316                 0.0845                  0.412                  0.0600                -0.235 
+11 Porcentaje de mujeres funcionarias mu…                -0.0105                -0.0905                -0.0711              -0.0946                 0.00478                -0.0315                -0.0592               0.00160                 -0.0263                -0.0230               NA                    -0.0355                   0.0486                -0.130                 0.206                   0.0925               -0.142                  -0.0206                -0.0459                 0.210 
+12 Consumo de energía eléctrica per cápi…                 0.0691                 0.681                  0.762                0.222                 -0.134                  -0.543                 -0.0770               0.000366                -0.487                  0.277                -0.0355               NA                        0.0685                 0.0691               -0.346                  -0.482                 0.450                   0.342                 -0.0319                -0.155 
+13 Número de microbasurales por cada 10.…                -0.119                 -0.0329                -0.0139              -0.113                 -0.0293                 -0.0714                -0.0972               0.0701                   0.121                 -0.0532                0.0486                0.0685                  NA                     -0.0890                0.0742                  0.0720               -0.120                  -0.251                 -0.0503                -0.191 
+14 Población estimada de migrantes inter…                 0.516                 -0.0473                 0.0200               0.142                 -0.150                  -0.220                  0.404               -0.0124                  -0.279                  0.230                -0.130                 0.0691                  -0.0890                NA                    -0.230                   0.246                -0.145                   0.0871                 0.523                 -0.119 
+15 Porcentaje de la población en situaci…                -0.0295                -0.247                 -0.308               -0.409                  0.00375                 0.406                 -0.298               -0.0596                   0.733                 -0.572                 0.206                -0.346                    0.0742                -0.230                NA                       0.628                -0.169                  -0.681                  0.0239                 0.301 
+16 Porcentaje de viviendas en situación …                 0.379                 -0.371                 -0.391               -0.297                  0.0973                  0.273                 -0.0503               0.0518                   0.462                 -0.316                 0.0925               -0.482                    0.0720                 0.246                 0.628                  NA                    -0.235                  -0.505                  0.454                  0.266 
+17 Superficie de áreas verdes públicas p…                -0.112                  0.404                  0.512                0.162                 -0.188                  -0.336                 -0.0699               0.00593                 -0.260                  0.0845               -0.142                 0.450                   -0.120                 -0.145                -0.169                  -0.235                NA                       0.135                 -0.0458                -0.241 
+18 Tasa de conexiones residenciales fija…                 0.248                  0.148                  0.214                0.375                  0.0971                 -0.370                  0.421                0.0264                  -0.664                  0.412                -0.0206                0.342                   -0.251                  0.0871               -0.681                  -0.505                 0.135                  NA                      0.172                 -0.338 
+19 Tasa de víctimas de delitos violentos…                 0.657                 -0.0675                -0.0761               0.0877                 0.238                  -0.222                  0.313                0.149                   -0.195                  0.0600               -0.0459               -0.0319                  -0.0503                 0.523                 0.0239                  0.454                -0.0458                  0.172                 NA                     -0.0366
+20 Tiempo de viaje en hora punta mañana                   0.213                 -0.232                 -0.286               -0.0957                 0.0176                  0.238                 -0.0764               0.182                    0.257                 -0.235                 0.210                -0.155                   -0.191                 -0.119                 0.301                   0.266                -0.241                  -0.338                 -0.0366                NA     
 # ℹ abbreviated names: ¹​`Densidad de Población por Km2`, ²​`Disponibilidad Presupuestaria Municipal por Habitante (M$)`, ³​`Ingresos Propios Permanentes per Cápita (IPPP)`, ⁴​`Participación de Ingresos por Transferencias en el Ingreso Total`, ⁵​`Participación del Fondo Común Municipal en el Ingreso Total`, ⁶​`Población Comunal, Estimada por el INE`, ⁷​`Porcentaje de Ejecución Presupuestaria Devengada Municipal`, ⁸​`Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH)`,
 #   ⁹​`Porcentaje de Puntajes PSU Igual o Superior a 450 Puntos en Establecimientos Municipales de Educación`, ˟​`Porcentaje de mujeres funcionarias municipales`, ˟​`Consumo de energía eléctrica per cápita residencial`, ˟​`Número de microbasurales por cada 10.000 habitantes`, ˟​`Población estimada de migrantes internacionales por comuna`, ˟​`Porcentaje de la población en situación de pobreza multidimensional`, ˟​`Porcentaje de viviendas en situación de hacinamiento`,
 #   ˟​`Superficie de áreas verdes públicas por habitante`, ˟​`Tasa de conexiones residenciales fijas de internet por cada 100 habitantes`, ˟​`Tasa de víctimas de delitos violentos por casos policiales cada 10.000 habitantes`, ˟​`Tiempo de viaje en hora punta mañana`
@@ -599,12 +655,12 @@ donde cada fila es una observación que corresponde a una comuna del país, en u
 </span></span></code></pre></div><pre><code># A tibble: 6 × 2
   y                                                                      r
   &lt;chr&gt;                                                              &lt;dbl&gt;
-1 Densidad de Población por Km2                                    -0.0829
-2 Disponibilidad Presupuestaria Municipal por Habitante (M$)       -0.409 
-3 Ingresos Propios Permanentes per Cápita (IPPP)                   -0.457 
-4 Inversión Municipal                                              -0.234 
-5 Participación de Ingresos por Transferencias en el Ingreso Total  0.163 
-6 Participación del Fondo Común Municipal en el Ingreso Total       0.358 
+1 Densidad de Población por Km2                                     0.213 
+2 Disponibilidad Presupuestaria Municipal por Habitante (M$)       -0.232 
+3 Ingresos Propios Permanentes per Cápita (IPPP)                   -0.286 
+4 Inversión Municipal                                              -0.0957
+5 Participación de Ingresos por Transferencias en el Ingreso Total  0.0176
+6 Participación del Fondo Común Municipal en el Ingreso Total       0.238 
 </code></pre>
 
 
@@ -628,12 +684,12 @@ donde cada fila es una observación que corresponde a una comuna del país, en u
 </span></span></code></pre></div><pre><code># A tibble: 6 × 2
   y                                                                                 r
   &lt;chr&gt;                                                                         &lt;dbl&gt;
-1 Porcentaje de Puntajes PSU Igual o Superior a 450 Puntos en Establecimiento… -0.484
-2 Ingresos Propios Permanentes per Cápita (IPPP)                               -0.457
-3 Disponibilidad Presupuestaria Municipal por Habitante (M$)                   -0.409
-4 Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH)  0.402
-5 Participación del Fondo Común Municipal en el Ingreso Total                   0.358
-6 Porcentaje de mujeres funcionarias municipales                                0.351
+1 Tasa de conexiones residenciales fijas de internet por cada 100 habitantes   -0.338
+2 Porcentaje de la población en situación de pobreza multidimensional           0.301
+3 Ingresos Propios Permanentes per Cápita (IPPP)                               -0.286
+4 Porcentaje de viviendas en situación de hacinamiento                          0.266
+5 Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH)  0.257
+6 Superficie de áreas verdes públicas por habitante                            -0.241
 </code></pre>
 <p>En las primeras 3 filas podemos ver <strong>correlaciones negativas fuertes</strong>: las comunas del país donde los <em>tiempos de viaje de viaje en hora punta por la mañana</em> son mayores, también son comunas donde los <em>puntajes en la prueba de selección universitaria (PSU)</em> son menores, y menores son los <em>recursos municipales por habitante</em>. Dicho de otro modo, a menores recursos municipales por habitantes, mayor tiempo de viaje en hora punta por la mañana.</p>
 <p>En las filas 4 y 5 vemos unas <strong>correlaciones positivas moderadas</strong>: los tiempos de viaje en horario punta por las mañanas también son más altos en las comunas donde existen más <em>hogares con ingresos bajos</em> (según el Registro Social de Hogares), y donde los <em>municipios dependen más del financiamiento del Fondo Común Municipal</em>.</p>
@@ -656,12 +712,12 @@ donde cada fila es una observación que corresponde a una comuna del país, en u
 </span></span></code></pre></div><pre><code># A tibble: 6 × 3
   x                                                                            y                                                                               r
   &lt;chr&gt;                                                                        &lt;chr&gt;                                                                       &lt;dbl&gt;
-1 Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH) Porcentaje de la población en situación de pobreza multidimensional         0.852
-2 Ingresos Propios Permanentes per Cápita (IPPP)                               Consumo de energía eléctrica per cápita residencial                         0.830
-3 Disponibilidad Presupuestaria Municipal por Habitante (M$)                   Ingresos Propios Permanentes per Cápita (IPPP)                              0.782
-4 Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH) Consumo de energía eléctrica per cápita residencial                        -0.767
-5 Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH) Tasa de conexiones residenciales fijas de internet por cada 100 habitantes -0.755
-6 Disponibilidad Presupuestaria Municipal por Habitante (M$)                   Consumo de energía eléctrica per cápita residencial                         0.748
+1 Disponibilidad Presupuestaria Municipal por Habitante (M$)                   Ingresos Propios Permanentes per Cápita (IPPP)                              0.782
+2 Ingresos Propios Permanentes per Cápita (IPPP)                               Consumo de energía eléctrica per cápita residencial                         0.762
+3 Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH) Porcentaje de la población en situación de pobreza multidimensional         0.733
+4 Porcentaje de la población en situación de pobreza multidimensional          Tasa de conexiones residenciales fijas de internet por cada 100 habitantes -0.681
+5 Disponibilidad Presupuestaria Municipal por Habitante (M$)                   Consumo de energía eléctrica per cápita residencial                         0.681
+6 Porcentaje de Hogares de 0-40% de Ingresos respecto del Total Regional (RSH) Tasa de conexiones residenciales fijas de internet por cada 100 habitantes -0.664
 </code></pre>
 <p>Evidentemente, las correlaciones más fuertes son entre variables similares: los hogares de menores ingresos correlacionan con la población en situación de pobreza, la disponibilidad de presupuesto municipal por habitante se correlaciona con los ingresos municipales percápita, y otras obviedades. Habría que afinar la selección de variables para remover aquellas que representan a un mismo fenómeno social subyacente.</p>
 
@@ -699,19 +755,35 @@ donde cada fila es una observación que corresponde a una comuna del país, en u
 
 
 
-<h3 id="alternativa">Alternativa
-  <a href="#alternativa"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h3 id="alternativas">Alternativas
+  <a href="#alternativas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
+<p>El paquete 
+<a href="https://github.com/kassambara/ggcorrplot" target="_blank" rel="noopener"><code>{ggcorrplot}</code></a> es muy usado para obener gráficos de correlaciones, y tiene opciones que permiten personalizar la forma de visualizarlas:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggcorrplot</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">corr</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">round</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cor</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mtcars</span><span style="color:#908caa">),</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ggcorrplot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">corr</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p><img src="/blog/correlaciones/index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.jpeg"></p>
+<p>También permite presentar con círculos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">ggcorrplot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">corr</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">method</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;circle&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p><img src="/blog/correlaciones/index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.jpeg"></p>
+<p>Y tiene la opción de entregar una matriz de correlación de los valores <em>p</em> para excluir las correlaciones con coeficientes que no sean estadísticamente significativos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">ggcorrplot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">corr</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">hc.order</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">type</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;lower&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">p.mat</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">cor_pmat</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mtcars</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><p><img src="/blog/correlaciones/index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.jpeg"></p>
 <p>Otra función de R que permite realizar correlaciones y visualizarlas de inmediato es <code>ggcor()</code> del paquete 
 <a href="https://ggobi.github.io/ggally/index.html" target="_blank" rel="noopener"><code>{GGally}</code></a>, que entrega varios tipos de gráficos estadísticos para análisis exploratorios de datos.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_ancho</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#908caa">-</span><span style="color:#ea9a97">cut_comuna</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">GGally</span><span style="color:#908caa">::</span><span style="color:#ea9a97">ggcorr</span><span style="color:#908caa">(</span><span style="color:#ea9a97">hjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">nbreaks</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">layout.exp</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>                 <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p><img src="/blog/correlaciones/index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.jpeg"></p>
+</span></span></code></pre></div><p><img src="/blog/correlaciones/index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-24-1.jpeg"></p>
 <p>El resultado es menos atractivo, pero si es bastante más legible.</p>
 
 
@@ -744,7 +816,7 @@ donde cada fila es una observación que corresponde a una comuna del país, en u
 </span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.text.x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">angle</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">40</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">hjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">),</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.title</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">(),</span>
 </span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">legend.key.width</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">unit</span><span style="color:#908caa">(</span><span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;mm&#34;</span><span style="color:#908caa">))</span>
-</span></span></code></pre></div><p><img src="/blog/correlaciones/index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.jpeg"></p>
+</span></span></code></pre></div><p><img src="/blog/correlaciones/index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-25-1.jpeg"></p>
 <p>También podemos aprovechar el vuelo para hacer una bonita obra de arte con nuestras correlaciones:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_ancho</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">correlate</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
@@ -757,7 +829,7 @@ donde cada fila es una observación que corresponde a una comuna del país, en u
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">guides</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_none</span><span style="color:#908caa">())</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_void</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_fixed</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><p><img src="/blog/correlaciones/index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.jpeg"></p>
+</span></span></code></pre></div><p><img src="/blog/correlaciones/index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-26-1.jpeg"></p>
 <p>Como siempre, <code>{ggplot2}</code> es una herramienta extremadamente versátil para visualizar cualquier tipo de información. Puedes 
 <a href="https://bastianolea.rbind.io/blog/r_introduccion/tutorial_visualizacion_ggplot/" target="_blank" rel="noopener">aprender a crear visualizaciones de datos desde cero en R siguiendo este tutorial de <code>{ggplot2}</code>.</a></p>
 <hr>
@@ -770,17 +842,7 @@ donde cada fila es una observación que corresponde a una comuna del país, en u
   align-items: center;">
     <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
   </div>
-<div style="margin-top:24px;">
-  
-<a href="/clases/spatiallab_introduccion_r_2/">
-<img src="/clases/spatiallab_introduccion_r_2/banner_curso_r.jpeg" style="border-radius: 7px; max-height: 240px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;" alt="¿Necesitas aprender R para análisis de datos desde cero? Inscríbete a mi curso!">
-</a>
-
-<div style="max-width: 320px; margin:auto; font-size:85%;opacity:60%;">
-  <p>¿Necesitas aprender R para análisis de datos desde cero? <a href="https://spatiallab.cl/2da-version-curso-introduccion-al-analisis-de-datos-con-r-para-principiantes?variant_id=109682226">Inscríbete a mi curso!</a></p>
-  </div>
-
-</div></p>
+</p>
 
         
         <details closed class="f6 fw7 input-reset">
@@ -790,7 +852,7 @@ donde cada fila es una observación que corresponde a una comuna del país, en u
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">20 minute read, 4088 words</dd>
+    <dd class="fw5 ml0">20 minute read, 4188 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -802,17 +864,17 @@ donde cada fila es una observación que corresponde a una comuna del país, en u
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/estad%C3%ADsticas">estadísticas</a>  <a href="https://bastianoleah.netlify.app/tags/ggplot2">ggplot2</a>  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos">gráficos</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a> </dd>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/estad%C3%ADstica">estadística</a>  <a href="https://bastianoleah.netlify.app/tags/ggplot2">ggplot2</a>  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos">gráficos</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/ggplot_purrr/">Generar múltiples gráficos automáticamente con R</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/tutorial_mapa_chile_subdere/">Crea un mapa de Chile desde datos geoespaciales oficiales en R</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/2025-07-11/">Gráfico de densidad tipo Joy Division en {ggplot2}</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/ggplot_tipografias/">Tipografías personalizadas en gráficos {ggplot2}</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/ggrepel/">Etiquetas de texto que se repelen entre sí con {ggrepel}</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/ggplot_temas/">Temas de colores personalizados para tus gráficos {ggplot2}</a></dd>
     
   </dl>
 </details>
@@ -836,18 +898,6 @@ donde cada fila es una observación que corresponde a una comuna del país, en u
     </article>
     
       <div class="post-comments pa0 pa4-l mt4">
-  
-    
-      <script src="https://utteranc.es/client.js"
-              repo="bastianolea/blog-bastianolea-r"
-              issue-term="pathname"
-              theme="github-light"
-              label="comments"
-              crossorigin="anonymous"
-              async
-              type="text/javascript">
-      </script>
-    
   
 </div>
 
@@ -882,21 +932,6 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
       <i class="fab fa-github fa-lg fa-fw"></i>
-    </a>
-  
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-    
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
-      <i class="fab fa-bluesky fa-lg fa-fw"></i>
     </a>
   
     
@@ -972,6 +1007,36 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
     <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
       <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
     </a>
   
     

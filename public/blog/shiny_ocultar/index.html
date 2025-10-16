@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Mostrar y ocultar elementos de una app Shiny a partir de datos o inputs | Blog</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="En este post vemos dos tutoriales para aprender a mostrar y ocultar elementos de una app Shiny a partir de datos o inputs del usuario, usando el paquete `{shinyjs}`. Se trata de una habilidad clave para crear aplicaciones que se adapten a datos complejos, cambiantes, o modificables por los usuarios.">
+
+
+<meta property="og:site_name" content="Blog">
+<meta property="og:title" content="Mostrar y ocultar elementos de una app Shiny a partir de datos o inputs | Blog">
+<meta property="og:description" content="En este post vemos dos tutoriales para aprender a mostrar y ocultar elementos de una app Shiny a partir de datos o inputs del usuario, usando el paquete `{shinyjs}`. Se trata de una habilidad clave para crear aplicaciones que se adapten a datos complejos, cambiantes, o modificables por los usuarios." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/shiny_ocultar/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/shiny_ocultar/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/shiny_ocultar/featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Mostrar y ocultar elementos de una app Shiny a partir de datos o inputs">
+  <meta itemprop="description" content="Gracias al paquete {shinyjs} podemos hacer que una app Shiny muestre u oculte elementos según los datos que correspondan o los inputs que haya seleccionado el usuario.
+Por ejemplo:
+Si el/la usuario/a selecciona una opción en particular, mostrar un contenedor con información adicional. Si no hay datos para graficar, ocultar el gráfico y mostrar un aviso. Se trata de una habilidad clave para crear aplicaciones que se adapten a datos complejos, cambiantes, o modificables por los usuarios.">
+  <meta itemprop="datePublished" content="2025-10-10T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-10-10T00:00:00+00:00">
+  <meta itemprop="wordCount" content="842">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/shiny_ocultar/featured.png">
+  <meta itemprop="keywords" content="Shiny">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.275ca2dcb3ce1d8540f2ac94c30dfdd4bd3b9d520b326846a6631c5403c03f8d.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Blog">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Mostrar y ocultar elementos de una app Shiny a partir de datos o inputs</h1>
+        
+        
+        <p class="f7 db mv0 ttu">10/10/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/shiny"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      shiny</a> </dd></em>
+  </dl>
+ 
+
+
+
+
+        
+      
+      <div class="ph0 pt5">
+        
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
+  href="https://gist.github.com/bastianolea/4fd42f2e95bfd34deb386b3373960358" target="_blank" rel="noopener"><i class="fab fa-github fa-lg fa-fw mr2"></i>Código 1</a>
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
+  href="https://gist.github.com/bastianolea/31509ea2d6ed040fe61231e2247987a1" target="_blank" rel="noopener"><i class="fab fa-github fa-lg fa-fw mr2"></i>Código 2</a>
+
+
+      </div>
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>Gracias 
+<a href="https://deanattali.com/shinyjs/" target="_blank" rel="noopener">al paquete <code>{shinyjs}</code></a> podemos hacer que una app Shiny muestre u oculte elementos según los datos que correspondan o los inputs que haya seleccionado el usuario.</p>
+<p><strong>Por ejemplo:</strong></p>
+<ul>
+<li>Si el/la usuario/a selecciona una opción en particular, mostrar un contenedor con información adicional.</li>
+<li>Si no hay datos para graficar, ocultar el gráfico y mostrar un aviso.</li>
+</ul>
+<p>Se trata de una habilidad clave para crear aplicaciones que se adapten a datos complejos, cambiantes, o modificables por los usuarios.</p>
+<p>Lo primero que tenemos que hacer en nuestra app es activar el uso de <code>{shinyjs}</code> agregando la función <code>useShinyjs()</code> en nuestra UI:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">shiny</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">bslib</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">shinyjs</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ui</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">page_fluid</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># activar javascript</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">useShinyjs</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
+</span></span></code></pre></div><hr>
+
+
+
+
+<h2 id="tutorial-1-mostrarocultar-elementos-según-selección-del-usuario">Tutorial 1: mostrar/ocultar elementos según selección del usuario
+  <a href="#tutorial-1-mostrarocultar-elementos-seg%c3%ban-selecci%c3%b3n-del-usuario"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para el primer ejemplo, <strong>haremos una app simple que muestre y oculte un elemento de acuerdo a lo que elija el/la usuario/a.</strong></p>
+<p>En esta app ponemos un título y un selector de opciones (<code>selectInput()</code>), una salida de texto (<code>textOutput()</code>) para mostrar la selección hecha, y un contenedor <code>div()</code> que contiene un aviso que queremos mostrar u ocultar según la selección del usuario. En este contenedor, el argumento <code>id</code> es lo que nos permitirá <strong>identificar el elemento</strong> para poder mostrarlo u ocultarlo.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">shiny</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">bslib</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">shinyjs</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ui</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">page_fluid</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># activar javascript</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">useShinyjs</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">h1</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Mostrar/ocultar&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># selector de opciones </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">selectInput</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;filtro&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Filtrar&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">choices</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;gato&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;perro&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;gallina&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">textOutput</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;animales&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># contenedor con un aviso para mostrar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">div</span><span style="color:#908caa">(</span><span style="color:#ea9a97">id</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;aviso&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">style</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">css</span><span style="color:#908caa">(</span><span style="color:#ea9a97">margin_top</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;8px&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">span</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">style</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">css</span><span style="color:#908caa">(</span><span style="color:#ea9a97">border</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;solid 1px #A085B7&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#ea9a97">border_radius</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;6px&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#ea9a97">padding</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;6px&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                  <span style="color:#ea9a97">font_weight</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;bold&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#f6c177">&#34;⚠️ Muy muy feo!&#34;</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>En la sección <code>server</code> de nuestra app vamos a <strong>programar la lógica que hará que se muestre u oculte el aviso</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">server</span> <span style="color:#908caa">&lt;-</span> <span style="color:#3e8fb0">function</span><span style="color:#908caa">(</span><span style="color:#ea9a97">input</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">output</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">session</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># texto con la selección del usuario/a</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">output</span><span style="color:#908caa">$</span><span style="color:#ea9a97">animales</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">renderText</span><span style="color:#908caa">({</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">paste</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Animal seleccionado:&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">input</span><span style="color:#908caa">$</span><span style="color:#ea9a97">filtro</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">})</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># mostrar contenedor sólo si se selecciona &#34;perro&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">observe</span><span style="color:#908caa">({</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#3e8fb0">if</span><span style="color:#908caa">(</span><span style="color:#ea9a97">input</span><span style="color:#908caa">$</span><span style="color:#ea9a97">filtro</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;perro&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">show</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;aviso&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#908caa">}</span> <span style="color:#3e8fb0">else</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">hide</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;aviso&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#908caa">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">})</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span></code></pre></div><p>Usamos <code>observe()</code> para que <strong>ocurra una acción en nuestra app si es que cambia algún objeto reactivo.</strong> En este caso, haremos que si se cambia <code>input$filtro</code>, se detecte si la selección es <code>&quot;perro&quot;</code>, y si es así, mostrar (<code>show()</code>) el elemento llamado <code>&quot;aviso&quot;</code>. Si la selección es cualquier otra, se oculta (<code>hide()</code>) el elemento.</p>
+<p><strong>Veamos la app en acción!</strong></p>
+<div style="margin:auto; max-width:70%;">
+<video src="shiny_app_a.mov" style="border-radius:7px; max-width: 100%; margin:auto;" autoplay loop>
+</video>
+</div>
+
+<p>Para este ejemplo, agregamos 
+<a href="/blog/shiny_temas/">un toque de color</a> para que se vea más bonita la aplicación, definido al principio de la UI:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">theme</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">bs_theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">bg</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EAD1FA&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">fg</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#553A74&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                   <span style="color:#ea9a97">primary</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#8557AB&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Para más información sobre 
+<a href="/blog/shiny_temas/">aplicar temas a apps Shiny, revisa este post.</a></p>
+<p>Puedes ver el 
+<a href="https://gist.github.com/bastianolea/4fd42f2e95bfd34deb386b3373960358" target="_blank" rel="noopener">código completo de esta aplicación en este Gist de Github.</a></p>
+<hr>
+
+
+
+
+<h2 id="tutorial-2-mostratocultar-elementos-según-los-datos">Tutorial 2: mostrat/ocultar elementos según los datos
+  <a href="#tutorial-2-mostratocultar-elementos-seg%c3%ban-los-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Crearemos una aplicación básica que muestre un gráfico, con un input encima que filtrará los datos del gráfico. Primero definimos la interfaz:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">shiny</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">bslib</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">shinyjs</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ui</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">page_fluid</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># activar javascript</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">useShinyjs</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">h1</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Mostrar/ocultar&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">sliderInput</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;filtro&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>              <span style="color:#f6c177">&#34;Filtrar&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">min</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">max</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">value</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># contenedor con el elemento a mostrar u ocultar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">div</span><span style="color:#908caa">(</span><span style="color:#ea9a97">id</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;grafico&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">plotOutput</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;grafico_barras&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">width</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">320</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">height</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">200</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># otro contenedor con un aviso para mostrar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">div</span><span style="color:#908caa">(</span><span style="color:#ea9a97">id</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;aviso&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">p</span><span style="color:#908caa">(</span><span style="color:#ea9a97">em</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;No hay datos para mostrar!&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>En la sección <code>server</code> de nuestra app vamos a crear un objeto reactivo con <code>reactive()</code> que filtre los datos a partir del selector <code>input$filtro</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">server</span> <span style="color:#908caa">&lt;-</span> <span style="color:#3e8fb0">function</span><span style="color:#908caa">(</span><span style="color:#ea9a97">input</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">output</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">session</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">reactive</span><span style="color:#908caa">({</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Length</span> <span style="color:#908caa">&gt;=</span> <span style="color:#ea9a97">input</span><span style="color:#908caa">$</span><span style="color:#ea9a97">filtro</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">})</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span></code></pre></div><p>Con este código, creamos el objeto reactivo <code>datos()</code> que se actualizará cada vez que la/el usuario cambie el input <code>input$filtro</code>, y por consiguiente actualizará los elementos que usen este objeto.</p>
+<p>Luego, definimos un gráfico sencillo en base a <code>datos()</code>, y que por consiguiente se actualizará automáticamente cuando cambien los datos reactivos:</p>
+<pre tabindex="0"><code> # generar un gráfico de barras
+  output$grafico_barras &lt;- renderPlot({
+    datos() |&gt; 
+      ggplot() +
+      aes(Sepal.Length, Sepal.Width) +
+      geom_point()
+  })
+</code></pre><p>Finalmente, programamos la lógica que hará que se muestren u oculten los elementos. La idea principal es que <strong>los elementos aparezcan y se oculten a partir de los datos</strong>, por lo que creamos un observador con <code>observe()</code> que <strong>ejecute código cada vez que los datos cambien</strong>. En este caso, el observador evaluará con un <code>if</code> si el número de filas de los datos (<code>nrow(datos())</code>) es cero, y si llega a ser cero, ocultar el gráfico (<code>hide(&quot;grafico&quot;)</code>) y mostrar un texto de aviso (<code>show(&quot;aviso&quot;)</code>).</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span>  <span style="color:#6e6a86"># mostrar y ocultar elementos en base a los datos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">observe</span><span style="color:#908caa">({</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">nrow</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">())</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">0</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">hide</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;grafico&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">show</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;aviso&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#908caa">}</span> <span style="color:#3e8fb0">else</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">show</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;grafico&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">hide</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;aviso&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#908caa">}</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">})</span>
+</span></span></code></pre></div><p>Vale mencionar que debemos especificar también la condición donde el gráfico debe volver a mostrarse, y el aviso debe volver a ocultarse, para que cuando el o la usuaria cambie el filtro y vuelvan a haber datos, el gráfico vuelva a aparecer.</p>
+<p><strong>Veamos la aplicación!</strong></p>
+<div style="margin:auto; max-width:70%;">
+<video src="shiny_app_b.mov" style="border-radius:7px; max-width: 100%; margin:auto;" autoplay loop>
+</video>
+</div>
+
+<p>Puedes ver el 
+<a href="https://gist.github.com/bastianolea/31509ea2d6ed040fe61231e2247987a1" target="_blank" rel="noopener">código completo de esta aplicación en este Gist de Github.</a></p>
+<p>Nuevamente, le 
+<a href="/blog/shiny_temas/">agregamos el tema a la aplicación Shiny</a> para que se vea bonita, y además agregamos la función <code>thematic_shiny()</code> del paquete <code>{thematic}</code> 
+<a href="/blog/shiny_temas/#aplicar-el-tema-de-tu-app-shiny-a-tus-gr%c3%a1ficos">para que los gráficos usen los colores del tema automáticamente.</a></p>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">October 10, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">4 minute read, 842 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/shiny">shiny</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/shiny_temas/">Temas de colores personalizados en apps Shiny</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/tutorial_quarto_github_pages/">Tutorial: crea páginas web y blogs con R&#43;Quarto, y publícalos online con GitHub Pages</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/tutorial_shinymanager/">Protege el acceso a tus aplicaciones Shiny con contraseña</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/tutorial_mapa_chile_subdere/">&larr; Crea un mapa de Chile desde datos geoespaciales oficiales en R</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/shiny_temas/">Temas de colores personalizados en apps Shiny &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+</div>
+
+    
+  </section>
+</main>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contact/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contact/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
