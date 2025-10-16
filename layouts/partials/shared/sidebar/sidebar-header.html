@@ -1,0 +1,20 @@
+<!--section level-->
+{{ with .Params.sidebar }}
+  {{ with .title }}<h1 class="f3">{{ . | markdownify }}</h1>{{ end }}
+  {{ with .description }}<p class="f6 lh-copy measure">{{ . | markdownify }}</p>{{ end }}
+  {{ with .author }}<p class="f7 measure lh-copy i mh0-l">Escrito por {{ . | markdownify }}</p>{{ end }}
+{{ end }}
+
+<!-- lista de etiquetas -->
+      <div style = "padding-top: 0px;">
+        
+        <h3>Temas</h3>
+    
+    {{ range .Site.Taxonomies.tags }}
+            <div>
+              <a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a> 
+              <span style = "opacity: 40%;">{{ .Count }} posts</span>
+              </div>
+    {{ end }}
+    
+    </div>
