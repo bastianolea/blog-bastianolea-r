@@ -1,0 +1,18 @@
+{{ define "main" }}
+{{ $caller := . }}
+<main class="page-main pa4" role="main">
+  <section class="blog-intro mw7 center mb5">
+    <h1 class="f2 f1-ns fw4 lh-solid tc center i">{{ .Title }}</h1>
+    <p class="f6 f5-ns measure lh-copy tc center">{{ .Description | markdownify }}</p>
+  </section>
+  <section class="blog-content mw7 center">
+    <!-- esto cambia la página de tags -->
+  {{ range .Pages.ByDate.Reverse }} <!-- byDate -->
+    {{ .Scratch.Set "$root" $caller }}
+  <!-- <div style="margin-bottom:-40px;margin-top:-40px;">  esto edita cada cuadro con el tag --> 
+    {{ partial "shared/summary" . }}
+  <!--   </div> -->
+  {{ end }}
+  </section>
+</main>
+{{ end }}

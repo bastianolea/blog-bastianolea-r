@@ -1,0 +1,27 @@
+{{ $page := . }}                       <!--save current page-->
+{{ $section := $page.CurrentSection }} <!--save current section-->
+{{ $is_root := eq .CurrentSection .FirstSection }}
+
+<div style = "padding: 12px;">
+{{ partial "shared/sidebar/sidebar-image.html" $page }}
+</div>
+
+<div class="blog-info ph4 pt4 pb4 pb0-l">
+  {{ partial "shared/sidebar/sidebar-header.html" $section }}
+  {{ partial "shared/sidebar/sidebar-link.html" .Params.sidebar }}
+</div>
+
+<!-- lista de etiquetas -->
+      <div style = "padding-top: 0px;">
+        
+        <h3>Temas</h3>
+    
+    {{ range .Site.Taxonomies.tags }}
+            <div>
+              <a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a> {{ .Count }}
+              </div>
+    {{ end }}
+    
+    </div>
+
+{{ partial "shared/sidebar/sidebar-adunit.html" .Params.sidebar }}

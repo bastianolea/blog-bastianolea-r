@@ -58,6 +58,10 @@ _Sitios con contenido educacional para que aprendas R._
 - [Tutorial para usar Quarto para generar blogs y sitios web](https://bastianolea.rbind.io/blog/tutorial_quarto_github_pages/)
 - [Crear, publicar y analizar sitios web personales usando R](https://r4sites-book.netlify.app) 📚 libro que detalla todas las instrucciones de crear un sitio web con R y Hugo.
 
+### Análisis de texto con R
+- [Cuentapalabras. Estilometría y análisis de texto con R para filólogos](https://aic.uva.es/cuentapalabras/)
+
+
 ### Cursos para aprender R
 - [SpatialLab](https://spatiallab.cl), cursos de R y más (algunos impartidos por mi! 😌)
 - [Estación R](https://estacion-r.com)
