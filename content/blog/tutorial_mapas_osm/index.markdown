@@ -339,5 +339,5 @@ Analista de datos, magíster en Sociología (PUC)
 
 [https://bastianolea.github.io/shiny_apps/](https://bastianolea.github.io/shiny_apps/)
 
-[https://bastian.olea.biz](https://bastian.olea.biz)
+[https://bastianolea.rbind.io](https://bastianolea.rbind.io)
 

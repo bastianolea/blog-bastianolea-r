@@ -68,7 +68,7 @@ Los datos son recopilados manualmente, y se obtienen desde fuentes periodística
 Los datos son organizados en una planilla con sus respectivas fuentes y la información disponible en casa caso. Accede a la carpeta `datos` para revisarlos.
 
 ### Fuente de los datos
-Los datos están siendo compilados manualmente en este repositorio, por lo que se trata de una aplicación en constante proceso. Si quieres complementar los datos existentes, ayudar con correcciones, agregar casos nuevos, o hacer cualquier comentario, puedes encontrar los datos en el [repositorio](https://github.com/bastianolea/corrupcion_chile), o bien, [contactarme](http://bastian.olea.biz) por alguno de los medios disponibles en mi sitio web.
+Los datos están siendo compilados manualmente en este repositorio, por lo que se trata de una aplicación en constante proceso. Si quieres complementar los datos existentes, ayudar con correcciones, agregar casos nuevos, o hacer cualquier comentario, puedes encontrar los datos en el [repositorio](https://github.com/bastianolea/corrupcion_chile), o bien, [contactarme](/contacto/) por alguno de los medios disponibles en mi sitio web.
 
 _Otras fuentes de datos:_
 - Encuesta CEP, cuyos datos son obtenidos a través del [Graficador CEP](https://www.cepchile.cl/opinion-publica/encuesta-cep/), visualizador de datos de la Encuesta CEP programado por Bastián Olea Herrera como parte del equipo DataUC.
@@ -114,7 +114,7 @@ El script `corrupcion_graficar.R` ejecuta varios otros scripts que producen grá
 
 Diseñado y programado en R por Bastián Olea Herrera. Magíster en Sociología, data scientist.
 
-https://bastian.olea.biz
+https://bastianolea.rbind.io
 
 bastianolea@gmail.com
 

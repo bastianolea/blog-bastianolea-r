@@ -494,6 +494,6 @@ ggplot() +
 
 Analista de datos, magíster en Sociología (PUC)
 
-<http://bastian.olea.biz>
+<http://bastianolea.rbind.io>
 
 [Ver más recursos de aprendizaje de R y visualizadores de datos sociales de código abierto programados en R](%5Bhttps://bastianolea.github.io/shiny_apps/)

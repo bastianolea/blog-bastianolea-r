@@ -13,6 +13,7 @@ tags:
   - visualización de datos
   - ggplot2
   - gráficos
+  - texto
 execute:
   message: false
   warning: false

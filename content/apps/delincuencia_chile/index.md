@@ -79,6 +79,6 @@ La base de datos de delitos denunciados en Chile del Centro de Estudio y Anális
 
 Diseñado y programado en R por Bastián Olea Herrera. Magíster en Sociología, data scientist.
 
-https://bastian.olea.biz
+https://bastianolea.rbind.io
 
 Puedes explorar mis otras [aplicaciones interactivas sobre datos sociales en mi portafolio.](https://bastianolea.github.io/shiny_apps/)

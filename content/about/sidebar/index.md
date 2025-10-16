@@ -14,11 +14,11 @@ link_list:
 - name: Portafolio de apps
   url: /blog/portafolio_apps/
 - name: Sitio web personal/académico
-  url: https://bastian.olea.biz
+  url: https://bastianolea.rbind.io
 - name: LinkedIn
   url: https://www.linkedin.com/in/bastianolea/
 - name: Escríbeme
-  url: /contact/
+  url: /contacto/
 ---
 
 ** index doesn't contain a body, just front matter above.
