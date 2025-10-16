@@ -8,10 +8,10 @@ blogdown::build_site()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Generando ruido visual con R", 
+blogdown::new_post(title = "Actualización del blog", 
                    file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
-                   tags = c("curiosidades", "arte generativo")
+                   tags = c("blog")
 )
 
 # crear un post tutorial
@@ -35,6 +35,9 @@ blogdown::new_post(title = "Mapas y visualización de datos geoespaciales en R c
 #     url: https://gist.github.com/bastianolea/8ea85fa8169b302d2144e05434668c89
 
 ## borradores ----
+
+# contador de visitas https://haseebmajid.dev/posts/2022-11-20-til-how-you-can-add-goatcounter-to-your-hugo-blog/
+  
 "content/blog/sf_mapas/sf_mapas.qmd"
 "content/blog/shiny_tipografias/shiny_tipografias.qmd"
 "content/blog/diferencias/waldo.qmd"
