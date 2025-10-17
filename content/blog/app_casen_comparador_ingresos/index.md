@@ -4,6 +4,7 @@ subtitle: Visualizador interactivo de ingresos
 tags:
   - apps
   - datos
+  - Chile
 categories:
   - Aplicaciones
 author: Bastián Olea Herrera

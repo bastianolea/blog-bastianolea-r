@@ -4,9 +4,8 @@ author: Bastián Olea Herrera
 date: '2025-09-11'
 slug: []
 tags:
-  - blog
-  - Quarto
   - apps
+  - Chile
 links:
   - icon: link
     icon_pack: fas

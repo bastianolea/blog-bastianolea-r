@@ -8,7 +8,7 @@ categories:
   - Tutoriales
 tags:
   - web scraping
-  - chile
+  - Chile
   - datos
   - ciencias sociales
 format: hugo-md

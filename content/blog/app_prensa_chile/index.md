@@ -5,6 +5,7 @@ tags:
   - análisis de texto
   - web scraping
   - apps
+  - Chile
 categories:
   - Aplicaciones
 author: Bastián Olea Herrera

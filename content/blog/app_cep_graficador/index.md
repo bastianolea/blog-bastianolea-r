@@ -3,6 +3,7 @@ title: "App: Graficador encuesta CEP"
 subtitle: Visualizador interactivo de resultados oficiales de la encuesta CEP
 tags:
   - apps
+  - Chile
   - ciencias sociales
 categories:
   - Aplicaciones
