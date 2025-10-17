@@ -4,6 +4,7 @@ subtitle: Visualizador de datos económicos
 tags:
   - apps
   - web scraping
+  - Chile
 categories:
   - Aplicaciones
 author: Bastián Olea Herrera

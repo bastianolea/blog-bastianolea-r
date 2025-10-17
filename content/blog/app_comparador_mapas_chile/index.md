@@ -3,6 +3,7 @@ title: "App: Comparador de mapas comunales de Chile"
 subtitle: Visualizador de múltiples variables georeferenciadas
 tags:
   - apps
+  - Chile
   - datos
 categories:
   - Aplicaciones

@@ -4,6 +4,9 @@ subtitle: Visualizador de datos de corrupción
 tags:
   - apps
   - datos
+  - Chile
+  - gráficos
+  - tablas 
 categories:
   - Aplicaciones
 author: Bastián Olea Herrera

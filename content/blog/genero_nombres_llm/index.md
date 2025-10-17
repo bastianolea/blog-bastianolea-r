@@ -8,6 +8,7 @@ tags:
   - procesamiento de datos
   - inteligencia artificial
   - análisis de texto
+  - género
 execute:
   freeze: true
 excerpt: >-

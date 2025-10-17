@@ -4,6 +4,7 @@ subtitle: Visualizador interactivo de datos oficiales sobre delincuencia
 tags:
   - apps
   - datos
+  - Chile
 categories:
   - Aplicaciones
 author: Bastián Olea Herrera
@@ -76,12 +77,3 @@ La base de datos de delitos denunciados en Chile del Centro de Estudio y Anális
 - Los datos ahora representan _casos policiales_ en vez de solo _denuncias._ Los casos policiales "consideran las denuncias de delitos que realiza la comunidad en las unidades policiales, más las detenciones que realizan las policías ante la ocurrencia de delitos flagrantes".
 - Se cambia el paquete que carga los datos a `nanoparquet`, que tiene menos dependencias que `arrow`
 - Se flexibiliza el código de la app para que se adapte a las fechas que vienen en los datos, para facilitar actualizaciones futuras
-
-
-----
-
-Diseñado y programado en R por Bastián Olea Herrera. Magíster en Sociología, data scientist.
-
-https://bastianolea.rbind.io
-
-Puedes explorar mis otras [aplicaciones interactivas sobre datos sociales en mi portafolio.](https://bastianolea.github.io/shiny_apps/)

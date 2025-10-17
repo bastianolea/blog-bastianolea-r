@@ -14,6 +14,8 @@ execute:
 excerpt: "El paquete {pal} te permite crear asistentes para programar en R, potenciados por modelos de lenguaje (LLM). La utilidad de estos asistentes es que pueden ayudarte a realizar tareas rápidamente a partir de tu código de R, o incluso a partir de un texto que describa lo que quieres hacer. En este post te enseño a crear dos asistentes para tareas que realizo frecuentemente: describir lo que hace un código de R, y traducir una instrucción a código de {dplyr}"
 ---
 
+{{< aviso "⚠️ este post está desactualizado, ya que es preferible usar `{gander}`" >}}
+
 El paquete [`{pal}`](https://simonpcouch.github.io/pal/) te permite crear _asistentes_ para programar en R, potenciados por modelos de lenguaje (LLM). La utilidad de estos asistentes es que pueden ayudarte a realizar tareas rápidamente a partir de tu código de R, o incluso a partir de un texto que describa lo que quieres hacer.
 
 En este post te enseño a crear y usar asistentes de `{pal}` para dos tareas que realizo frecuentemente: **describir lo que hace un código de R**, y **traducir una instrucción a código de `{dplyr}`**.

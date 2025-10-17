@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>App: Genocidio en Palestina | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Visualizador sobre cifras de la masacre que Israel está llevando a cabo en Palestina y la franja de Gaza">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="App: Genocidio en Palestina | Bastián Olea">
+<meta property="og:description" content="Visualizador sobre cifras de la masacre que Israel está llevando a cabo en Palestina y la franja de Gaza" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/app_palestina/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/app_palestina/featured.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/app_palestina/featured.jpg" >
+    
+    
+  
+  <meta itemprop="name" content="App: Genocidio en Palestina">
+  <meta itemprop="description" content="Visualizador de datos que busca reflejar el horror de la guerra y el exterminio que se están llevando a cabo en el territorio de Palestina por obra del estado de Israel y sus aliados. Los datos provienen de Palestine Datasets y de Armed Conflict Location &amp; Event Data, organizaciones que están documentando datos sobre identificación de víctimas y registro de sucesos de relevancia política en la región.
+Accede al visualizador de datos por este enlace.">
+  <meta itemprop="datePublished" content="2025-01-08T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-01-08T00:00:00+00:00">
+  <meta itemprop="wordCount" content="389">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/app_palestina/featured.jpg">
+  <meta itemprop="keywords" content="Apps">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.422a2363d11e9d6836a9931682c00abf3c5a2cb6d5460f3485cb54696b258be4.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container single">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">App: Genocidio en Palestina</h1>
+        <h4 class="f4 mt0 mb4 lh-title measure">Visualizador sobre cifras de la masacre que Israel está llevando a cabo en Palestina y la franja de Gaza</h4>
+        
+        <p class="f7 db mv0 ttu">8/1/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/apps"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      apps</a> </dd></em>
+  </dl>
+ 
+
+
+
+
+        
+      
+      <div class="ph0 pt5">
+        
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
+  href="https://bastianoleah.shinyapps.io/palestina" target="_blank" rel="noopener"><i class="fas fa-link fa-lg fa-fw mr2"></i>aplicación</a>
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
+  href="https://github.com/bastianolea/palestina" target="_blank" rel="noopener"><i class="fab fa-github fa-lg fa-fw mr2"></i>código</a>
+
+
+      </div>
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>
+<a href="https://bastianoleah.shinyapps.io/palestina" target="_blank" rel="noopener">Visualizador de datos</a> que busca reflejar el horror de la guerra y el exterminio que se están llevando a cabo en el territorio de Palestina por obra del estado de Israel y sus aliados. Los datos provienen de 
+<a href="https://data.techforpalestine.org/" target="_blank" rel="noopener">Palestine Datasets</a> y de 
+<a href="https://acleddata.com/" target="_blank" rel="noopener">Armed Conflict Location &amp; Event Data</a>, organizaciones que están documentando datos sobre identificación de víctimas y registro de sucesos de relevancia política en la región.</p>
+<p>
+<a href="https://bastianoleah.shinyapps.io/palestina" target="_blank" rel="noopener">Accede al visualizador de datos por este enlace.</a></p>
+<hr>
+<p>Desarrollé un nuevo visualizador de datos sobre un tema que puede ser polémico para algunas personas. Sé que compartir este tipo de cosas me hace aún menos empleable, y me puede hacer perder oportunidades laborales. Pero fue un ejercicio de contemplación y respeto a las víctimas de un conflicto de características colonialistas y genocidas.</p>
+<p>Se trata de un trabajo sencillo de visualización de datos a partir de dos fuentes de información, desarrollado completamente en el lenguaje R.</p>
+<p>El desarrollo tuvo un foco en la personalización de la apariencia de la aplicación usando CSS mediante funciones de R, para darle esa apariencia de interfaz gráfica militar vintage. De hecho, desarrollé primero la interfaz completa, con uno de cada uno de los elementos de prueba, para darles un estilo homogéneo, y solo después fui creando la aplicación real con esos bloques de la interfaz estilizada. Nunca había empezado a desarrollar algo por lo visual, antes de tener los datos procesados, y aprendí que se puede.</p>
+<p>Otro detalle que me gustó implementar, y que me gustaría hacer en su propia sección o app, es la de los nombres de víctimas que aparecen secuencialmente (es tan sólo un loop donde cada nombre tiene un retardo mayor que el anterior para su animación de entrada). En general no me gusta el uso de animaciones, porque implementar una animación te va llevando a tener que implementar animaciones en todo, pero en este caso daba un ritmo solemne a datos sensibles.</p>
+<p>Trabajar con datos sensibles siempre tiene un peso, en mi experiencia. Me cuesta digerir lo que veo, y me pesa el corazón. Varias veces tan sólo dictar los textos de la app me hizo nudos en la garganta. Pero creo que es importante intentar visibilizar estos temas, en memoria de las víctimas, y como un granito de arena.</p>
+<hr>
+<p><img style = "border-radius: 7px; width: 100%; max-width: 400px; 
+display: block; margin: auto;"
+src = "palestina_a.jpg"></p>
+<p><img style = "border-radius: 7px; width: 100%; max-width: 400px; 
+display: block; margin: auto;"
+src = "palestina_b.jpg"></p>
+<hr>
+
+
+
+
+<h2 id="fuentes">Fuentes
+  <a href="#fuentes"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<ul>
+<li>Palestine Datasets: 
+<a href="https://data.techforpalestine.org/docs/killed-in-gaza/" target="_blank" rel="noopener">https://data.techforpalestine.org/docs/killed-in-gaza/</a></li>
+<li>Armed Conflict Location &amp; Event Data (ACLED): 
+<a href="https://acleddata.com/israel-palestine/" target="_blank" rel="noopener">https://acleddata.com/israel-palestine/</a></li>
+</ul>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">January 8, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">2 minute read, 389 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categorías:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/categories/aplicaciones">Aplicaciones</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/apps">apps</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/app_mideso_ingresos_genero/">App: comparación de ingresos regionales y comunales</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/infografia_violaciones_ddhh_chile/">Infografía: Violaciones a los Derechos Humanos cometidas por la dictadura cívico-militar chilena</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/app_temperaturas_chile/">App: Temperaturas extremas en Chile</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/camcorder/">&larr; Graba el proceso de tus visualizaciones de datos con {camcorder}</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/portafolio_apps/">Portafolio de aplicaciones en R &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+</div>
+
+    
+  </section>
+</main>
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

@@ -3,6 +3,7 @@ title: "App: Millonarios de Chile"
 subtitle: Visualizador de riquezas extremas
 tags:
   - apps
+  - Chile
 categories:
   - Aplicaciones
 author: Bastián Olea Herrera

@@ -4,6 +4,8 @@ subtitle: Visualizador de estadísticas de femicidios
 tags:
   - apps
   - datos
+  - Chile
+  - género
 categories:
   - Aplicaciones
 author: Bastián Olea Herrera

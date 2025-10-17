@@ -4,6 +4,7 @@ subtitle: Visualizador interactivo variables socioeconómicas
 tags:
   - apps
   - datos
+  - Chile
   - ciencias sociales
 categories:
   - Aplicaciones

@@ -8,9 +8,9 @@ categories:
   - apps
 tags:
   - apps
-  - shiny
   - datos
   - Chile
+  - género
   - ciencias sociales
   - animaciones
 layout: single

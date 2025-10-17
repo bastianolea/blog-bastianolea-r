@@ -1,12 +1,13 @@
 ---
 title: "App: Temperaturas extremas en Chile"
 subtitle: Visualizador de datos sobre crisis climática
+author: Bastián Olea Herrera
+date: "2024-12-16"
 categories:
   - Aplicaciones
 tags:
   - apps
-author: Bastián Olea Herrera
-date: "2024-12-16"
+  - Chile
 draft: false
 excerpt: "Consulta datos históricos de temperaturas extremas en el país, desde 1970 hasta 2024, y visualiza los cambios históricos en las temperaturas producto de la crisis climática."
 

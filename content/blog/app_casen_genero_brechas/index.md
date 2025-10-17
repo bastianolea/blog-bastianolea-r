@@ -3,6 +3,8 @@ title: "App: Brechas de género Casen"
 subtitle: Visualizador de desigualdad de género
 tags:
   - apps
+  - Chile
+  - género
 categories:
   - Aplicaciones
 author: Bastián Olea Herrera
