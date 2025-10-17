@@ -242,4 +242,4 @@ En el argumento `additional_prompt` podemos especifiacr una instrucción extra p
 
 En conclusión, se trata de una herramienta muy fácil de implementar, que también es capaz de ahorrarnos bastante tiempo, por ejemplo, en el desarrollo de un algoritmo que detecte el nombre a partir de ciertas estructuras en la composición de cada uno, o bien, en tener que contrastar los nombres con alguna base de datos ya existente de nombres con un género asignado (si es que existe).
 
-{{< cafecito  >}}
+{{< cafecito >}}

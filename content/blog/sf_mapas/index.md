@@ -1,0 +1,246 @@
+---
+title: Mapas y visualización de datos geoespaciales en R con {sf}
+author: Bastián Olea Herrera
+date: '2025-10-16'
+draft: true
+slug: []
+categories:
+  - tutoriales
+tags:
+  - mapas
+  - visualización de datos
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+execute:
+  eval: false
+---
+
+
+intro
+
+en la medida que voy aprendiendo, agrego más cosas
+
+ejemplos
+
+sf
+
+operaciones con mapas
+
+## cargar shapes
+
+``` r
+read_sf()
+```
+
+cargar geoJSON
+
+## Operaciones sobre geometrías
+
+### Extraer latitud y longitud
+
+### Calcular caja de un polígono
+
+Bounding box
+
+``` r
+  st_bbox()
+```
+
+### Convertir caja a polígono
+
+``` r
+   st_as_sfc() |>
+st_as_sf()
+```
+
+### Crear un cuadrado
+
+Desde una coordenada
+
+``` r
+st_point(c(38.29782, -76.51390)) %>%
+  st_sfc() %>%
+  st_as_sf() %>%
+  st_buffer(dist = 30000) %>%
+  st_bbox() %>%
+  st_as_sfc() |>
+  st_as_sf()
+```
+
+Desde el centroide de un polígono
+
+``` r
+  st_centroid() |> 
+  st_buffer(dist = 30000) |> 
+  st_bbox() |> 
+  st_as_sfc() |>
+  st_as_sf()
+```
+
+### Calcular centroide
+
+### Calcular buffer
+
+``` r
+st_buffer()
+```
+
+### Calcular superficie o área
+
+``` r
+mapa_region_comunas_areas |> 
+  st_union() |> 
+  st_area() |> 
+  units::set_units("km^2")
+```
+
+### Recortar polígono a coordenadas
+
+``` r
+ st_crop(xmin = -74, ymin = -36, xmax = -65, ymax = -30) |> 
+```
+
+### Simplificar un polígono
+
+``` r
+https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#simplification
+st_simplify(dTolerance = 0.01)
+
+rmapshaper::ms_simplify(geometry, keep = 0.8)) 
+```
+
+### Extraer líneas internas de un polígono
+
+``` r
+ms_innerlines() # deja solo las líneas interiores de un coso
+```
+
+## Correcciones
+
+``` r
+st_as_sf()
+```
+
+``` r
+st_make_valid()
+```
+
+------------------------------------------------------------------------
+
+## Operaciones agrupadas
+
+### Unir polígonos
+
+``` r
+group_by() |> 
+st_union()
+```
+
+## Operaciones entre geometrías
+
+### Recortar un polígono con otro
+
+https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#clipping
+
+``` r
+st_intersection()
+```
+
+### Usar un polígono para eliminar partes de otro
+
+``` r
+st_difference()
+```
+
+### unir dos polígonos
+
+``` r
+st_union()
+```
+
+### Spatial join
+
+## Coordenadas
+
+### Extraer sistema de coordenadas
+
+``` r
+st_crs(comunas_region)
+```
+
+### Cambiar coordenadas
+
+``` r
+st_transform(crs = st_crs(comunas_region))
+```
+
+## Visualización
+
+### Visualizar por capas
+
+``` r
+geom_sf()
+```
+
+### Texto
+
+``` r
+geom_sf_text(data = nombres_areas |> filter(clase_topo == "Comuna"), color = "red", fontface = "bold",
+            aes(label = nombre)) + 
+```
+
+### Texto con repel
+
+https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
+
+``` r
+ ggrepel::geom_label_repel(data = comunas_region_conteo_urbanas,
+                            aes(label = comuna, geometry = geometry),
+                            stat = "sf_coordinates",
+                            size = 2, box.padding = 0,
+                            min.segment.length = unit(3, "mm"),
+                            label.padding = 0.15, label.size = 0
+  ) +
+```
+
+### Hacer zoom
+
+``` r
+#   coord_sf(xlim = c(-70.4, -70.2),
+#            ylim = c(-18.7, -18.4),
+```
+
+### Dibujar un cuadrado
+
+``` r
+#   annotate("rect", fill = NA, color = "black", linewidth = 1,
+#            xmin = bbox_area_met[1]-2000, xmax = bbox_area_met[2]+2000,
+#            ymin = bbox_area_met[3]+2000, ymax = bbox_area_met[4]-2000)+
+```
+
+### Escala de colores para mapa de calor
+
+``` r
+ scale_fill_gradient2(
+    low = color$bajo, mid = color$medio, high = color$alto,
+    midpoint = mean(comunas_region_conteo$n),
+    na.value = col_mix(color$fondo, color$principal, 0.1),
+    limits = c(0, NA)
+    # breaks = cortes
+  ) +
+```
+
+### Minimapa
+
+``` r
+https://dominicroye.github.io/blog/inserted-map/
+```
+
+------------------------------------------------------------------------
+
+## Recursos
+
+https://r-spatial.org/r/2018/10/25/ggplot2-sf.html
+https://bookdown.org/robinlovelace/geocompr/

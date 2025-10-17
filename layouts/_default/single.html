@@ -23,23 +23,6 @@
       {{ . }}</a> {{ end }}</dd></em>
   </dl>
 {{ end }} 
-<!-- etiquetas -->
-
-<!-- etiquetas con conteo, pero no suben desde cero :( -->
-<!-- 
-{{ if .Params.tags }}
-    <span class="list-timeline-tags em-alt">
-      <span class="type-dark-6">{{ if len .Params.tags | eq 1 }}Tag{{ else }}Tags{{ end }}: &nbsp;</span>
-      {{ $tagCount := 0 }}
-      {{ $nonDraft := where $.Site.RegularPages ".Draft" false }}
-      {{ $posts := where $nonDraft "Section" "==" "post" }}
-      {{ range .Params.tags }}
-        {{ $tagCount = len (where $posts "Params.tags" "intersect" (slice .)) }}
-        <a href="/tags/{{ . | urlize }}">{{ . }}</a> ({{ $tagCount }})&nbsp;&nbsp;
-      {{ end }}
-    </span>
-  {{ end }}
-  -->
         
       {{ if .Params.links }}
       <div class="ph0 pt5">

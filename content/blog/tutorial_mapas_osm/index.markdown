@@ -1,12 +1,21 @@
 ---
-title: "Tutorial: Mapa en `{ggplot2}` con calles desde Open Street Map"
+title: "Tutorial: Mapa en {ggplot2} con calles desde Open Street Map en R"
 author: "Bastián Olea Herrera"
 date: 2024-09-03
 categories: ['Tutoriales']
-tags: ['mapas', 'chile', 'gráficos']
+tags: ['mapas', 'Chile']
 format: hugo-md
 lang: es
+freeze: true
+links:
+- icon: github
+  icon_pack: fab
+  name: código
+  url: https://github.com/bastianolea/tutorial_r_mapa_openstreetmap
 ---
+
+{{< indice >}}
+
 
 
 
@@ -49,7 +58,7 @@ library(sf) #elementos espaciales
 ```
 
 ```
-## Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE
+## Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE
 ```
 
 ``` r
@@ -158,10 +167,16 @@ calles_medianas <- caja |>
 calles_chicas <- caja |>
     opq(timeout = 500) |>
     add_osm_feature(key = "highway",
-                    value = c("residential", "living_street",
-                              "unclassified", "service", "footway")) |>
+                    value = c("residential", "living_street")) |>
     osmdata_sf()
+```
 
+
+
+
+
+
+``` r
 calles_grandes
 ```
 
@@ -170,8 +185,8 @@ calles_grandes
 ##                  $bbox : -44.0449981164699,-74.4072159499999,-40.2730445289999,-71.6592646899999
 ##         $overpass_call : The call submitted to the overpass API
 ##                  $meta : metadata including timestamp and version numbers
-##            $osm_points : 'sf' Simple Features Collection with 34928 points
-##             $osm_lines : 'sf' Simple Features Collection with 3580 linestrings
+##            $osm_points : 'sf' Simple Features Collection with 29125 points
+##             $osm_lines : 'sf' Simple Features Collection with 3270 linestrings
 ##          $osm_polygons : 'sf' Simple Features Collection with 0 polygons
 ##        $osm_multilines : NULL
 ##     $osm_multipolygons : NULL
@@ -226,7 +241,7 @@ Finalmente, podemos aplicar las capas obtenidas a nuestro gráfico de `{ggplot2}
     theme_classic()
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 
 
@@ -253,91 +268,7 @@ ggplot() +
     theme_classic()
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
-
-
-
-
-## Ejemplo
-
-Realizamos el mismo proceso en un solo paso, para otra región del país, mostrando la diferencia entre visualizar un dato al azar con y sin calles.
-
-
-
-
-``` r
-# obtener mapa
-mapa_rm <- rnaturalearth::ne_states(country = "Chile") |> 
-    select(name, geometry) |> 
-    # filter(name == "Región Metropolitana de Santiago")
-    filter(name == "Maule")
-    
-# obtener calles
-calles_grandes_rm <- st_bbox(mapa_rm) |> 
-    opq(timeout = 500) |> 
-    add_osm_feature(key = "highway", 
-                    value = c("motorway", "primary", "motorway_link", "primary_link")) |> 
-    osmdata_sf()
-
-calles_medianas_rm <- st_bbox(mapa_rm) |> 
-    opq(timeout = 500) |> 
-    add_osm_feature(key = "highway", 
-                    value = c("secondary", "tertiary", "secondary_link", "tertiary_link")) |> 
-    osmdata_sf()
-
-# puntos para graficar
-puntos <- calles_grandes_rm$osm_points |> 
-    filter(highway == "stop") |> 
-    st_intersection(mapa_rm) |> 
-    rowwise() |> 
-    mutate(azar = sample(1:10, 1),
-           azar = ifelse(azar < 7, 1, azar)) |> 
-    ungroup()
-```
-
-
-``` r
-# visualizar sin calles
-ggplot() +
-    geom_sf(data = mapa_rm) +
-    geom_sf(data = puntos, 
-            aes(size = azar),
-            color = "purple3", alpha = .2) +
-    scale_size(range = c(3, 10)) +
-    theme_classic()
-```
-
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
-
-
-``` r
-# visualizar con calles
-ggplot() +
-    geom_sf(data = mapa_rm) +
-    geom_sf(data = st_intersection(calles_grandes_rm$osm_lines, mapa_rm),
-            linewidth = .2, alpha = .7) +
-    geom_sf(data = st_intersection(calles_medianas_rm$osm_lines, mapa_rm),
-            linewidth = .1, alpha = .3) +
-    geom_sf(data = puntos, 
-            aes(size = azar),
-            color = "purple3", alpha = .2) +
-    scale_size(range = c(3, 10)) +
-    theme_classic()
-```
-
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
-
-
-
-
-----
-
-**Bastián Olea Herrera**
-
-Analista de datos, magíster en Sociología (PUC)
-
-[https://bastianolea.github.io/shiny_apps/](https://bastianolea.github.io/shiny_apps/)
-
-[https://bastianolea.rbind.io](https://bastianolea.rbind.io)
+{{< cafecito >}}
 

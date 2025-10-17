@@ -11,8 +11,6 @@ excerpt: Por fin tuve un respiro del trabajo, así que aproveché de darle una m
 
 Por fin tuve un respiro en el trabajo, así que aproveché de darle una manito de gato a este sitio. Cambié algunas cosas estéticas menores y algunas funcionalidades que tenía pendientes de hace tiempo.
 
-### Novedades
-
 Agregué al [inicio](https://bastianolea.rbind.io) del sitio un panel que contiene las etiquetas o _tags_ más usados en el blog, para indicar los temas que trato en los posts y para que la gente interesada pueda llegar a los posts.
 
 {{< imagen "sitio_1-featured.png" >}}

@@ -7,8 +7,7 @@ categories:
 tags:
   - mapas
   - chile
-  - visualización de datos
-  - ggplot2
+  - gráficos
 format: hugo-md
 lang: es
 editor_options:
@@ -17,7 +16,7 @@ links:
   - icon: github
     icon_pack: fab
     name: código
-    url: 'https://github.com/bastianolea/tutorial_r_mapa_urbano_rm'
+    url: https://github.com/bastianolea/tutorial_r_mapa_urbano_rm
 ---
 
 
