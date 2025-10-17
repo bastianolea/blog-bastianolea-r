@@ -15,11 +15,11 @@ blogdown::new_post(title = "Actualización del blog",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Mapas y visualización de datos geoespaciales en R con {sf}", 
-                   file = "blog/sf_mapas/index.qmd",
+blogdown::new_post(title = "App: comparación de ingresos regionales y comunales", 
+                   file = "blog/mideso_ingresos_genero/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("mapas"),
-                   categories = c("tutoriales") 
+                   tags = c("apps", "shiny", "datos", "Chile", "ciencias sociales"),
+                   categories = c("apps") 
 )
 
 # draft: true
