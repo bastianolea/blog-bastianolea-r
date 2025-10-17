@@ -68,9 +68,10 @@ blogdown::new_post(title = "App: comparación de ingresos regionales y comunales
 
 "layouts/index.html" #index
 "layouts/partials/shared/summary.html" # posts individuales en página de blog
+"layouts/partials/shared/summary-thumbnail.html" # posts individuales en las páginas de cada tag 
 "layouts/_default/single.html" # html de los post 
 "layouts/taxonomy/taxonomy.html" # html de la página de tags (/tags/)
-"layouts/partials/shared/summary-thumbnail.html" # html de las páginas de cada tag (por ejemplo /tags/shiny/)
+
 "layouts/partials/shared/sidebar/sidebar-header.html" # sidebar con tags
 
 
