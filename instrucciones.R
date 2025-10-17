@@ -52,6 +52,7 @@ blogdown::new_post(title = "App: comparación de ingresos regionales y comunales
 "content/blog/tutorial_digitalocean/index.md"
 
 ## shortcodes ----
+# {{< indice >}}
 # {{< cafecito >}}
 # {{< cursos >}}
 # {{< bajada "x" >}}

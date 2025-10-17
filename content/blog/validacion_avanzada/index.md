@@ -39,7 +39,7 @@ En un [post anterior](../../../blog/validacion_basica) hablé sobre cómo hacer 
 
 Dado que R es un lenguaje enfocado en el análisis de datos, existen varios paquetes que nos pueden ayudar con la validación de datos!
 
-En este post veremos [`{testthat}`](https://testthat.r-lib.org), un paquete que facilita implementar **pruebas unitarias** a tu código para validar su funcionamiento, y [`{pointblank}`](https://rstudio.github.io/pointblank/), un paquete diseñado para la **validación de datos** con poderosas capacidades de reportabilidad. En unos minutos aprenderás a usar este paquete para garantizar que tus datos cumplen con tus expectativas de calidad.
+En este post veremos [`{testthat}`](https://rstudio.github.io/pointblank/), un paquete que facilita implementar **pruebas unitarias** a tu código para validar su funcionamiento, y [`{pointblank}`](https://rstudio.github.io/pointblank/), un paquete diseñado para la **validación de datos** con poderosas capacidades de reportabilidad. En unos minutos aprenderás a usar este paquete para garantizar que tus datos cumplen con tus expectativas de calidad.
 
 ------------------------------------------------------------------------
 

@@ -40,6 +40,7 @@ _Sitios con contenido educacional para que aprendas R._
 - [RStudio Education](https://education.rstudio.com), recursos oficiales para aprender R (en inglés)
 - [Torpedos o _cheat sheets_](https://posit.co/resources/cheatsheets/), hojas de referencia rápida para recordar aspectos de R y sus paquetes más populares
 - [Large Language Model tools for R](https://luisdva.github.io/llmsr-book/), Inteligencia artificial y modelos de lenguaje en R
+- [Learning statistics with R: A tutorial for psychology students and other beginners](https://learningstatisticswithr.com/book/) (en inglés)
 
 ### Visualización de datos en R
 - [R Graph Gallery](https://www.r-graph-gallery.com/), galería de gráficos y visualizaciones de datos hechas con R

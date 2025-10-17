@@ -11,7 +11,7 @@ cascade:
     text_link_url: /blog/
 description: "Publicaciones periódicas sobre el uso de R para análisis de datos, incluyendo tutoriales, reseñas, tips o consejos, novedades, y más."
 
-layout: list-sidebar
+layout: list-sidebar #define la estructura de la página de posts
 show_author_byline: false
 show_button_links: true
 show_post_date: true

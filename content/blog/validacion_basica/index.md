@@ -3,6 +3,7 @@ title: Validación básica de datos con R
 author: Bastián Olea Herrera
 date: '2025-08-07'
 slug: []
+freeze: true
 categories: []
 format:
   hugo-md:
@@ -24,6 +25,8 @@ excerpt: >-
   puntos de nuestros procesos de análisis de datos.
 ---
 
+
+{{< indice >}}
 
 Si estás procesando muchos datos y/o datos que vienen de distintas fuentes con R, validarlos puede ayudarte a encontrar problemas antes de que sea tarde! 😱
 
@@ -242,4 +245,4 @@ Estas pequeñas buenas prácticas te van a ayudar a reducir la incertidumbre en 
 
 ## Validación avanzada
 
-[El paquete de R `{pointblank}`](https://rstudio.github.io/pointblank/) se especializa en validación de datos, así que si requieres algo más avanzado para garantizar la calidad de tus datos y la estabilidad de tus procesos, [revísalo.](https://rstudio.github.io/pointblank/)
+[El paquete de R `{pointblank}`](https://rstudio.github.io/pointblank/) se especializa en validación de datos, así que si requieres algo más avanzado para garantizar la calidad de tus datos y la estabilidad de tus procesos, [revisa este post con un tutorial!](../../../blog/validacion_avanzada/)
