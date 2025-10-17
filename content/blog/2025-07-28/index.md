@@ -10,7 +10,7 @@ tags:
   - visualización de datos
   - blog
   - gráficos
-  - blog
+  - animaciones
 execute:
   message: false
 links:

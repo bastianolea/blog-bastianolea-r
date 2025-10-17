@@ -8,6 +8,7 @@ tags:
   - blog
   - ggplot2
   - web scraping
+  - animaciones
 links:
 - icon: github
   icon_pack: fab
