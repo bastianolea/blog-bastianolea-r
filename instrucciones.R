@@ -36,6 +36,8 @@ blogdown::new_post(title = "App: comparación de ingresos regionales y comunales
 
 ## borradores ----
 
+# {gander}
+
 # contador de visitas https://haseebmajid.dev/posts/2022-11-20-til-how-you-can-add-goatcounter-to-your-hugo-blog/
   
 "content/blog/sf_mapas/sf_mapas.qmd"
@@ -62,7 +64,6 @@ blogdown::new_post(title = "App: comparación de ingresos regionales y comunales
 
 
 ## archivos ----
-
 "content/blog/r_introduccion/recursos_r/index.md" # páginas
 "assets/tema-morado-hex.scss" # tema
 "config.toml" # configuración
