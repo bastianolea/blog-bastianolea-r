@@ -3,16 +3,15 @@ title: Crea un mapa de Chile y visualiza datos comunales y regionales con mapas 
 author: Bastián Olea Herrera
 date: '2024-11-25'
 draft: false
+freeze: true
 format: hugo-md
 slug: []
 categories:
   - tutoriales
 tags:
   - mapas
-  - ggplot2
   - gráficos
   - ciencias sociales
-  - visualización de datos
   - Chile
 editor_options:
   chunk_output_type: inline
@@ -26,8 +25,15 @@ excerpt: >-
   numéricas en las comunas y regiones del país. En pocos pasos puedes
   transformar tus datos territoriales en visualizaciones mucho más densas e
   informativas.
+links:
+  - icon: github
+    icon_pack: fab
+    name: código
+    url: https://gist.github.com/bastianolea/df03203e88534261ef831f2cb4fca254
 ---
 
+
+{{< indice >}}
 
 Visualizar datos geográficamente es una herramienta de comunicación y análisis de datos muy potente. En este tutorial te explico cómo obtener mapas comunales y regionales de Chile en R, y cómo crear un gráficos que visualizan variables numéricas en las comunas y regiones del país. En pocos pasos puedes transformar tus datos territoriales en visualizaciones mucho más densas e informativas.
 
@@ -235,9 +241,9 @@ datos_comunas
 
 Ahora que tenemos una tabla de datos que contiene la columna `codigo_comuna` con el código único territorial de las comunas, podemos unirla al mapa de comunas.
 
-#### Agregar datos a los mapas con `left_join()`
+#### Agregar datos a los mapas
 
-Esta operación de unir dos tablas de datos diferentes, pero que coinciden en una columna en común, se realiza con la función `left_join()`. El principio de `left_join()` es que tenemos dos tablas de datos, y ambas tablas de datos tienen una misma columna, que poseen los mismos valores (en nuestro caso, una columna con las comunas o los códigos únicos territoriales de las comunas). Entonces, ambas tablas se van a unir según la correspondencias de estas columnas en común.
+Esta operación de unir dos tablas de datos diferentes, pero que coinciden en una columna en común, se realiza [con la función `left_join()`](../../../blog/left_join/). El principio de `left_join()` es que tenemos dos tablas de datos, y ambas tablas de datos tienen una misma columna, que poseen los mismos valores (en nuestro caso, una columna con las comunas o los códigos únicos territoriales de las comunas). Entonces, ambas tablas se van a unir según la correspondencias de estas columnas en común.
 
 *Ejemplo:*
 
@@ -506,17 +512,10 @@ mapa_regiones_2 |>
 
 ------------------------------------------------------------------------
 
-Visualizar datos geográficamente es una herramienta de comunicación y análisis de datos muy potente. Personalmente, encuentro que el potencial de la visualización de datos en mapas radica mucho más allá de simplemente mapear una variable a un territorio, sino a crear el incentivo para que la persona que ve el mapa analice el mapa en relación a todo el conjunto de conocimientos que tenemos acerca del espacio que habitamos, sus características sociales, y las desigualdades distribuidas en el territorio.
+Visualizar datos geográficamente es una herramienta de comunicación y análisis de datos muy potente. Personalmente, encuentro que el potencial de la visualización de datos en mapas radica mucho más allá de simplemente mapear una variable a un territorio, sino a **incentivar que el público analice el mapa en relación a todo el conjunto de conocimientos que tenemos sobre del espacio que habitamos, sus características sociales, y las desigualdades distribuidas en el territorio.**
 
 ------------------------------------------------------------------------
 
 Si este tutorial te sirvió, por favor considera hacerme una pequeña donación para poder tomarme un cafecito mientras escribo el siguiente tutorial 🥺
 
-<div style = "height: 18px;">
-</div>
-<div>
-  <div style="display: flex;
-  justify-content: center;
-  align-items: center;">
-    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
-  </div>
+{{< cafecito >}}

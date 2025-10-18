@@ -40,16 +40,16 @@ blogdown::new_post(title = "App: comparación de ingresos regionales y comunales
   
 "content/blog/sf_mapas/sf_mapas.qmd"
 "content/blog/shiny_tipografias/shiny_tipografias.qmd"
+"content/blog/2025-07-06/index.qmd" # cargar y unir datos
 "content/blog/diferencias/waldo.qmd"
-
 
 "https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html" # plagiar
 # https://github.com/rundel/livecode
-"content/blog/2025-07-06/index.qmd" # cargar y unir datos
 "content/blog/2025-07-01/index.qmd" # st_join
 "content/blog/unpivotr/index.qmd"
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
 "content/blog/tutorial_digitalocean/index.md"
+
 
 ## shortcodes ----
 # {{< indice >}}
