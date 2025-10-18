@@ -12,7 +12,7 @@ link_list:
 - name: Portafolio laboral
   url: /blog/portafolio_trabajos_r/
 - name: Portafolio de apps
-  url: /blog/portafolio_apps/
+  url: https://bastianolea.github.io/shiny_apps/
 - name: Sitio web personal/académico
   url: https://bastianolea.rbind.io
 - name: LinkedIn
