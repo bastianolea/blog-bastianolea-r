@@ -29,4 +29,12 @@ Por fin le agregué un **contador de visitas** de código abierto y enfocado en 
 
 Finalmente, tengo algunos bocetos de posts grandes para el futuro próximo, principalmente uno sobre procesamiento de datos geoespaciales en R, que voy complementando a medida que aprendo yo misme 😌
 
+----
+
+Este sitio nació porque yo aprendí R de forma autodidacta, gracias a lo que compartían otras personas. Así que quise ayudar también a que más gente aprendiera a usar R para análisis de datos. 
+
+Con el tiempo, me di cuenta que el sitio también me sirve a mi como referencia: muy seguido entro a mi blog buscando mi propio código para copiarlo! Espero que les sirva 💜
+
+----
+
 Como siempre, el código entero de este sitio está [en su repositorio.](https://github.com/bastianolea/blog-bastianolea-r)
