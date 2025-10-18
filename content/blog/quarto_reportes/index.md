@@ -1,7 +1,7 @@
 ---
 title: >-
-  Tutorial Quarto: presenta los resultados de tus análisis de datos con R
-  creando reportes y documentos Quarto
+  Tutorial: presenta los resultados de tus análisis de datos con R creando
+  reportes y documentos Quarto
 author: Bastián Olea Herrera
 format: hugo-md
 date: '2025-04-14'
@@ -21,7 +21,9 @@ excerpt: >-
 ---
 
 
-[Quarto](https://quarto.org) es una herramienta de publicación de documentos que te permite generar reportes de manera muy sencilla, utilizando bloques de código de R. En estos reportes puedes incluir tablas, gráficos, y mucho más, de forma atractiva y simple, para poder compartir tus análisis y resultados con otras personas.
+{{< indice >}}
+
+[Quarto](https://quarto.org) es una herramienta de publicación de documentos que te permite **generar reportes** de manera muy sencilla, utilizando bloques de código de R. En estos reportes puedes incluir tablas, gráficos, y mucho más para poder compartir tus análisis y resultados con otras personas.
 
 {{< aviso "Puedes leer este mismo tutorial directamente desde un reporte Quarto [**en este enlace**](/reportes/quarto_clase_1.html), y también puedes ver un documento de ejemplo hecho siguiendo los pasos de este tutorial [en este otro enlace](/reportes/quarto_clase_1b.html)." >}}
 {{< imagen "quarto_themes.png" >}}

@@ -127,6 +127,10 @@ st_as_sf()
 st_make_valid()
 ```
 
+``` r
+st_drop_geometry() 
+```
+
 ------------------------------------------------------------------------
 
 ## Operaciones agrupadas

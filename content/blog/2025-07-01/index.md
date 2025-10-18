@@ -14,98 +14,151 @@ tags:
 ---
 
 
-<!-- library(dplyr) -->
-<!-- library(sf) -->
-<!-- library(ggplot2) -->
-<!-- library(janitor) -->
-<!-- library(readr) -->
-<!-- # comunas ide ---- -->
-<!-- # https://www.ide.cl/index.php/noticias/actualizacion-de-la-cartografia-de-division-politica-administrativa-en-chile -->
-<!-- # https://www.geoportal.cl/geoportal/catalog/download/912598ad-ac92-35f6-8045-098f214bd9c2 -->
-<!-- mapa_comunas_ide <- read_sf("shapes/ide_chile/DPA_2023/COMUNAS/") |> clean_names()  -->
-<!-- comunas_superficie <- mapa_comunas_ide |>  -->
-<!--   mutate(superficie = units::set_units(geometry |> st_area(), "km^2")) |>  -->
-<!--   st_drop_geometry() |>  -->
-<!--   mutate(across(starts_with("cut_"), as.numeric)) -->
-<!-- # areas ---- -->
-<!-- mapa_areas_pobladas <- read_sf("shapes/bcn/Areas_Pobladas/") |> clean_names() -->
-<!-- mapa_comunas_bcn <- read_sf("shapes/bcn/Comunas/") |> clean_names() -->
-<!-- mapa_areas_pobladas |>  -->
-<!--   ggplot() + -->
-<!--   aes() + -->
-<!--   geom_sf() -->
-<!-- mapa_comunas_bcn |>  -->
-<!--   ggplot() + -->
-<!--   aes() + -->
-<!--   geom_sf() -->
-<!-- mapa_comunas_bcn_filt <- mapa_comunas_bcn |>  -->
-<!--   filter(comuna == "Arica")  -->
-<!-- mapa_areas_pobladas_filt <- mapa_areas_pobladas |>  -->
-<!--   filter(comuna == "Arica") -->
-<!-- mapa_comunas_bcn_filt |>  -->
-<!--   ggplot() + -->
-<!--   geom_sf() + -->
-<!--   geom_sf(data = mapa_areas_pobladas_filt, fill = "grey30") -->
-<!-- #  -->
-<!-- # # unir areas pobladas en comunas -->
-<!-- # mapa_areas_pobladas_comunas <- mapa_areas_pobladas |>  -->
-<!-- #   mutate(superficie_area_poblada = units::set_units(geometry |> st_area(), "km^2")) |>  -->
-<!-- #   group_by(comuna) |>  -->
-<!-- #   summarize(superficie_area_poblada = sum(superficie_area_poblada), -->
-<!-- #             geometry = st_union(geometry)) -->
-<!-- # left_join(mapa_comunas_bcn |> st_drop_geometry(), -->
-<!-- #           mapa_areas_pobladas_comunas |> st_drop_geometry(), -->
-<!-- #           by = "comuna") |>  -->
-<!-- #   filter(is.na(cod_comuna)) -->
-<!-- # unir geográficamente mapa de comunas con el mapa de áreas pobladas -->
-<!-- # resultados <- st_join(mapa_comunas_bcn, mapa_areas_pobladas_comunas) -->
-<!-- mapas_unidos <- st_join(mapa_areas_pobladas, mapa_comunas_bcn) -->
-<!-- mapas_unidos_comunas <- mapas_unidos |>  -->
-<!--   group_by(comuna.y, cod_comuna, codregion) |> -->
-<!--   summarize(geometry = st_union(geometry)) |>  -->
-<!--   ungroup() -->
-<!-- superficie_comunas <- mapas_unidos_comunas |>  -->
-<!--   mutate(superficie_area_poblada = units::set_units(geometry |> st_area(), "km^2")) -->
-<!-- mapa_comunas_bcn |>  -->
-<!--   filter(!cod_comuna %in% resultado$cod_comuna) -->
-<!-- superficie_comunas |> filter(comuna.y == "Arica") -->
-<!-- mapa_comunas_bcn |> filter(comuna == "Arica") -->
-<!-- superficie_comunas |> filter(comuna.y == "San José de Maipo") -->
-<!-- superficie_comunas |>  -->
-<!--   filter(stringr::str_detect(comuna.y, "Dichato")) -->
-<!-- superficie_comunas |>  -->
-<!--   filter(stringr::str_detect(comuna.y, "Tom")) -->
-<!-- superficie_comunas |>  -->
-<!--   filter(stringr::str_detect(comuna.y, "Alhué")) -->
-<!-- superficie_comunas |>  -->
-<!--   filter(stringr::str_detect(comuna.y, "Puente")) -->
-<!-- # mapa_areas_pobladas |>  -->
-<!-- #   filter(stringr::str_detect(localidad, "Caleta")) -->
-<!-- comunas_superficie_area_poblada |>  -->
-<!--   filter(is.na(cut_com)) -->
-<!-- mapa_comunas_bcn |>  -->
-<!--   filter(comuna == "San José de Maipo") |>  -->
-<!--   ggplot() + -->
-<!--   geom_sf() + -->
-<!--   geom_sf(data = mapa_areas_pobladas |>  -->
-<!--             filter(comuna == "San José de Maipo"),  -->
-<!--           fill = "grey30") -->
-<!-- mapa_comunas_bcn |>  -->
-<!--   filter(comuna == "San José de Maipo") |>  -->
-<!--   ggplot() + -->
-<!--   geom_sf() + -->
-<!--   geom_sf(data = resultado |>  -->
-<!--             filter(comuna.y == "San José de Maipo"),  -->
-<!--           fill = "grey30") -->
-<!-- codigos_comunas_bcn |>  -->
-<!--   filter(stringr::str_detect(tolower(comuna), "puente")) -->
-<!-- mapa_areas_pobladas_comunas |>  -->
-<!--   filter(stringr::str_detect(tolower(comuna), "puente")) -->
-<!-- mapa_areas_pobladas_comunas |>  -->
-<!--   filter(!comuna %in% sort(codigos_comunas_bcn$comuna)) -->
-<!-- # pero pero pero y las zonas urbanas del censo??? -->
-<!-- # guardar -->
-<!-- superficie_comunas |>  -->
-<!--   st_drop_geometry() |>  -->
-<!--   select(codigo_comuna = cod_comuna, superficie_area_poblada) |>  -->
-<!--   readr::write_rds("datos/superficie_comunas_area_poblada.rds") -->
+``` r
+library(dplyr)
+library(sf)
+library(ggplot2)
+library(janitor)
+library(readr)
+
+# comunas ide ----
+# https://www.ide.cl/index.php/noticias/actualizacion-de-la-cartografia-de-division-politica-administrativa-en-chile
+# https://www.geoportal.cl/geoportal/catalog/download/912598ad-ac92-35f6-8045-098f214bd9c2
+
+mapa_comunas_ide <- read_sf("shapes/ide_chile/DPA_2023/COMUNAS/") |> clean_names()
+
+comunas_superficie <- mapa_comunas_ide |>
+  mutate(superficie = units::set_units(geometry |> st_area(), "km^2")) |>
+  st_drop_geometry() |>
+  mutate(across(starts_with("cut_"), as.numeric))
+
+
+
+
+
+# areas ----
+mapa_areas_pobladas <- read_sf("shapes/bcn/Areas_Pobladas/") |> clean_names()
+
+mapa_comunas_bcn <- read_sf("shapes/bcn/Comunas/") |> clean_names()
+
+mapa_areas_pobladas |>
+  ggplot() +
+  aes() +
+  geom_sf()
+
+mapa_comunas_bcn |>
+  ggplot() +
+  aes() +
+  geom_sf()
+
+mapa_comunas_bcn_filt <- mapa_comunas_bcn |>
+  filter(comuna == "Arica")
+
+mapa_areas_pobladas_filt <- mapa_areas_pobladas |>
+  filter(comuna == "Arica")
+
+mapa_comunas_bcn_filt |>
+  ggplot() +
+  geom_sf() +
+  geom_sf(data = mapa_areas_pobladas_filt, fill = "grey30")
+
+#
+# # unir areas pobladas en comunas
+# mapa_areas_pobladas_comunas <- mapa_areas_pobladas |>
+#   mutate(superficie_area_poblada = units::set_units(geometry |> st_area(), "km^2")) |>
+#   group_by(comuna) |>
+#   summarize(superficie_area_poblada = sum(superficie_area_poblada),
+#             geometry = st_union(geometry))
+
+
+# left_join(mapa_comunas_bcn |> st_drop_geometry(),
+#           mapa_areas_pobladas_comunas |> st_drop_geometry(),
+#           by = "comuna") |>
+#   filter(is.na(cod_comuna))
+
+
+
+# unir geográficamente mapa de comunas con el mapa de áreas pobladas
+# resultados <- st_join(mapa_comunas_bcn, mapa_areas_pobladas_comunas)
+mapas_unidos <- st_join(mapa_areas_pobladas, mapa_comunas_bcn)
+
+mapas_unidos_comunas <- mapas_unidos |>
+  group_by(comuna.y, cod_comuna, codregion) |>
+  summarize(geometry = st_union(geometry)) |>
+  ungroup()
+
+superficie_comunas <- mapas_unidos_comunas |>
+  mutate(superficie_area_poblada = units::set_units(geometry |> st_area(), "km^2"))
+
+
+
+
+
+mapa_comunas_bcn |>
+  filter(!cod_comuna %in% resultado$cod_comuna)
+
+
+superficie_comunas |> filter(comuna.y == "Arica")
+mapa_comunas_bcn |> filter(comuna == "Arica")
+
+superficie_comunas |> filter(comuna.y == "San José de Maipo")
+
+
+
+superficie_comunas |>
+  filter(stringr::str_detect(comuna.y, "Dichato"))
+
+superficie_comunas |>
+  filter(stringr::str_detect(comuna.y, "Tom"))
+
+superficie_comunas |>
+  filter(stringr::str_detect(comuna.y, "Alhué"))
+
+superficie_comunas |>
+  filter(stringr::str_detect(comuna.y, "Puente"))
+
+# mapa_areas_pobladas |>
+#   filter(stringr::str_detect(localidad, "Caleta"))
+
+comunas_superficie_area_poblada |>
+  filter(is.na(cut_com))
+
+
+
+mapa_comunas_bcn |>
+  filter(comuna == "San José de Maipo") |>
+  ggplot() +
+  geom_sf() +
+  geom_sf(data = mapa_areas_pobladas |>
+            filter(comuna == "San José de Maipo"),
+          fill = "grey30")
+
+mapa_comunas_bcn |>
+  filter(comuna == "San José de Maipo") |>
+  ggplot() +
+  geom_sf() +
+  geom_sf(data = resultado |>
+            filter(comuna.y == "San José de Maipo"),
+          fill = "grey30")
+
+
+
+codigos_comunas_bcn |>
+  filter(stringr::str_detect(tolower(comuna), "puente"))
+
+mapa_areas_pobladas_comunas |>
+  filter(stringr::str_detect(tolower(comuna), "puente"))
+
+
+mapa_areas_pobladas_comunas |>
+  filter(!comuna %in% sort(codigos_comunas_bcn$comuna))
+
+# pero pero pero y las zonas urbanas del censo???
+
+
+# guardar
+superficie_comunas |>
+  st_drop_geometry() |>
+  select(codigo_comuna = cod_comuna, superficie_area_poblada) |>
+  readr::write_rds("datos/superficie_comunas_area_poblada.rds")
+```
