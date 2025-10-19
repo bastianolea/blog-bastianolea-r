@@ -31,7 +31,7 @@ editor_options:
 ---
 
 
-Luego de haber aprendido las funcionalidades básicas del lenguaje y R, y habernos familiarizado con herramientas un poco más avanzadas de la programación en este lenguaje, ahora podemos aplicar estos aprendizajes a los datos. Aprenderemos a explorar, comprender, y navegar tablas de datos, tanto en la forma nativa de trabajar con R, como con la ayuda del paquete {dplyr}.
+Luego de haber aprendido las [funcionalidades básicas del lenguaje R](../../../../blog/r_introduccion/r_basico/), y habernos familiarizado con [herramientas un poco más avanzadas de la programación](../../../../blog/r_introduccion/r_intermedio/) en este lenguaje, ahora podemos aplicar estos aprendizajes a los datos. Aprenderemos a explorar, comprender, y navegar tablas de datos, tanto en la forma nativa de trabajar con R, como con la ayuda del paquete {dplyr}.
 
 ## {dplyr}
 
@@ -709,7 +709,7 @@ Simplemente escribe los nombres de las columnas con una colita de chancho antes 
 
 En ese tutorial nuevamente aprendimos herramientas básicas de R, esta vez orientadas a trabajar con datos en forma de tabla. Para esto, combinamos varios de los aprendizajes anteriores que habíamos aplicado a vectores, para reutilizarlos en esta nueva forma de organizar la información. Con los conocimientos obtenidos hasta ahora, ya sería posible llevar a cabo la mayor parte de las operaciones necesarias para la exploración de datos!
 
-Ahora puedes pasar a los siguientes tutoriales, donde practicaremos estos aprendizajes en conjunto de datos reales: con [datos de proyecciones de población provenientes del Censo](../../../../blog/r_introduccion/tutorial_dplyr_censo/), y con [datos de un catastro de asentamientos de viviendas rudimentarias](../../../../blog/r_introduccion/tutorial_dplyr_campamentos/)
+**El siguiente paso** es aprender a [transformar datos con `{dplyr}` y `{tidyr}`](../../../../blog/r_introduccion/dplyr_intermedio/), o bien puedes pasar a los tutoriales aplicados, donde practicaremos estos aprendizajes en conjunto de datos reales: con [datos de proyecciones de población provenientes del Censo](../../../../blog/r_introduccion/tutorial_dplyr_censo/), y con [datos de un catastro de asentamientos de vivienda informales](../../../../blog/r_introduccion/tutorial_dplyr_campamentos/).
 
 {{< cafecito >}}
 {{< cursos >}}

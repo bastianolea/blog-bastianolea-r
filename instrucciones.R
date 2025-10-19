@@ -2,7 +2,7 @@
 
 blogdown::serve_site()
 blogdown::stop_server()
-blogdown::build_site()
+blogdown::build_site() # reconstruir
 
 
 ## posts ----
@@ -15,11 +15,11 @@ blogdown::new_post(title = "Actualización del blog",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "App: comparación de ingresos regionales y comunales", 
-                   file = "blog/mideso_ingresos_genero/index.md",
+blogdown::new_post(title = "Acelera tu programación con {gander}, un asistente de IA integrado en RStudio", 
+                   file = "blog/gander/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("apps", "shiny", "datos", "Chile", "ciencias sociales"),
-                   categories = c("apps") 
+                   tags = c("inteligencia artificial", "consejos"),
+                   categories = c() 
 )
 
 # draft: true
@@ -36,10 +36,10 @@ blogdown::new_post(title = "App: comparación de ingresos regionales y comunales
 
 ## borradores ----
 
-# {gander}
+"content/blog/ellmer/ellmer.qmd"
+"content/blog/gander/gander.qmd"
 
-# contador de visitas https://haseebmajid.dev/posts/2022-11-20-til-how-you-can-add-goatcounter-to-your-hugo-blog/
-  
+"content/blog/r_introduccion/dplyr_intermedio/dplyr_intermedio.qmd"
 "content/blog/sf_mapas/sf_mapas.qmd"
 "content/blog/shiny_tipografias/shiny_tipografias.qmd"
 "content/blog/2025-07-06/index.qmd" # cargar y unir datos
