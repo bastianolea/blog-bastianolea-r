@@ -31,6 +31,9 @@ chat <- chat_github()
 chat$chat("en qué lenguaje de programación se programó Mario 64?")
 ```
 
+Datos estructurados
+https://ellmer.tidyverse.org/articles/structured-data.html
+
 ------------------------------------------------------------------------
 
 Para más paquetes y herramientas de modelos de lenguaje e IA en R, revisa [Large Language Model tools for R](https://luisdva.github.io/llmsr-book/), de Luis D. Verde Arregoitia.
