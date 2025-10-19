@@ -1,12 +1,12 @@
 ---
-title: Manejo y transformación de datos con {dplyr} y {tidyr}
+title: Transformación de datos con {dplyr} y {tidyr}
 author: Bastián Olea Herrera
 date: '2025-02-16'
 format:
   hugo-md:
     output-file: index
     output-ext: md
-weight: 8
+weight: 9
 draft: true
 series: Introducción a R
 slug: []
@@ -18,9 +18,13 @@ lang: es
 excerpt: Prueba
 execute:
   error: true
-  eval: false
+  eval: true
 ---
 
+
+En el [tutorial anterior vimos cómo transformar datos con `{dplyr}` y {tidyr}](../../../../blog/r_introduccion/dplyr_intermedio/), con lo que aprendimos a separar y unir columnas, y transformar tablas de datos a los formatos *largo* y *ancho*, lo que nos entrega una gran libertad al momento de manipular datos tabulares.
+
+------------------------------------------------------------------------
 
 conector/pipes
 
@@ -33,5 +37,7 @@ pivot_longer
 pivot_wider
 
 left_join
+[post](../../../../blog/left_join/)
 
 {{< cursos >}}
+{{< cafecito >}}

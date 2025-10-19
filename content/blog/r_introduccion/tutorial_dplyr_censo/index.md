@@ -3,6 +3,7 @@ title: 'Tutorial: introducción a {dplyr} con datos de población'
 author: Bastián Olea Herrera
 date: '2024-11-08'
 draft: false
+freeze: true
 weight: 14
 format: hugo-md
 slug: []
@@ -49,9 +50,15 @@ library(readxl) # carga de archivos Excel
 
 ## Cargar datos
 
-Antes que nada, debemos **descargar** el archivo que usaremos para el tutorial: [clic aquí para descargar el archivo Excel `censo_proyeccion_2024.xlsx`](https://raw.githubusercontent.com/bastianolea/blog-r/refs/heads/master/content/blog/r_introduccion/tutorial_dplyr_censo/censo_proyeccion_2024.xlsx)
+Antes que nada, debemos **descargar** el archivo que usaremos para el tutorial:
 
-Importamos los datos que usaremos con la funcion `read_excel()`, cuyo argumento es el nombre del archivo. Asignamos el resultado a un objeto, y así tenemos nuetros datos de Excel cargados en R:
+{{< boton "Descargar datos en Excel" "https://raw.githubusercontent.com/bastianolea/blog-r/refs/heads/master/content/blog/r_introduccion/tutorial_dplyr_censo/censo_proyeccion_2024.xlsx" "fas fa-file-arrow-down">}}
+
+Descargamos el archivo, y lo guardamos en una carpeta. Esta carpeta debe ser nuestro [proyecto de RStudio](../../../../blog/r_introduccion/proyectos/), o bien, [creamos un nuevo proyecto de RStudio apuntando a esa carpeta](../../../../blog/r_introduccion/proyectos/#crear-un-proyecto), para decirle a R que trabajaremos ahí.
+
+Importamos los datos que usaremos con la funcion `read_excel()`. Si el archivo que queremos cargar está dentro de nuestro [proyecto de RStudio](../../../../blog/r_introduccion/proyectos/), entonces solamente necesitamos poner el nombre del archivo entre comillas, y si no, indicar la subcarpeta del proyecto en donde esté guardado, o si no estamos trabajando en un proyecto, indicar la ruta completa del archivo.
+
+Asignamos el resultado a un objeto, y así tenemos nuestros datos de Excel cargados en R:
 
 ``` r
 censo <- read_excel("censo_proyeccion_2024.xlsx") # cargar
@@ -74,7 +81,7 @@ censo # ver los datos de dataframe o tabla
     10          2 Antofagasta            21 Antofagasta       2103 Sierra…      1800
     # ℹ 336 more rows
 
-Para ver más filas del dataframe, usamos la función `print()`:
+Para ver más filas del dataframe, usamos la función `print()` con el argumento `n`:
 
 ``` r
 print(censo, n = 20)
@@ -508,13 +515,13 @@ censo |>
 ```
 
     # A tibble: 5 × 1
-      comuna     
-      <chr>      
-    1 San Vicente
-    2 Toltén     
-    3 Papudo     
-    4 Cerro Navia
-    5 Freirina   
+      comuna       
+      <chr>        
+    1 Panquehue    
+    2 Independencia
+    3 Melipilla    
+    4 Peñalolén    
+    5 Chillán Viejo
 
 ## Selección de filas por grupos
 
