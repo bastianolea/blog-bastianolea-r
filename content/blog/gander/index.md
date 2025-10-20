@@ -1,7 +1,7 @@
 ---
 title: Acelera tus análisis con {gander}, un asistente de IA integrado en RStudio
 author: Bastián Olea Herrera
-date: '2025-10-18'
+date: '2025-10-20'
 draft: false
 slug: []
 categories: []
@@ -132,6 +132,8 @@ Personalmente uso Copilot, así que pongo `ellmer::chat_copilot()`.
 ## Configurar atajo de teclado
 
 Un paso clave para poder integrar rápidamente IA en tu flujo de trabajo es configurar un atajo de teclado para invocar a `{gander}`.
+
+{{< imagen "shortcuts.png" >}}
 
 Para esto, entra al menú _Tools_ de RStudio, presiona _Modify Keyboard Shortcuts_, y en la ventana que se abre busca _gander._ Se sugiere configurar algo como `shift+comando+G` en Mac[^1] o `control+alt+G` en Windows.
 
