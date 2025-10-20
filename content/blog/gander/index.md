@@ -44,6 +44,24 @@ Se trata de una herramienta capaz de acelerar tu trabajo escribiéndote código,
 La idea principal es que puedes seleccionar tu código en R, o invocarlo en una línea nueva, y presionar una combinación de teclas para abrir una ventana en la que puedes escribir tu solicitud. Presionas enter y el modelo te entrega el código directamente en RStudio, ya sea reemplazando el código que tenías seleccionado, o agregando código en el punto que le pediste.
 
 
+## Instalación
+
+Instala el paquete con:
+
+```r
+install.packages("gander")
+```
+
+Una vez instalado, aparecerá en el botón _Addins_, porque se trata de un paquete que entrega funcionalidades extras a RStudio.
+
+<div style="max-width:340px; margin: auto;">
+{{< imagen "addins.jpg" >}}
+</div>
+
+Pero antes de usarlo hay que configurar dos cosas: la IA que usará, y las teclas para invocarlo ✨
+
+
+
 ## Configurar un proveedor de IA/modelo de lenguaje
 
 Para conectar la IA a `{gander}`, tenemos dos opciones: [usar un **modelo de IA local**](#opción-a-instalar-un-modelo-de-lenguaje-local-desde-r), o [usar un **proveedor de IA en la nube.**](#opción-b-configurar-un-proveedor-de-ia-en-la-nube)
@@ -115,9 +133,11 @@ Personalmente uso Copilot, así que pongo `ellmer::chat_copilot()`.
 
 Un paso clave para poder integrar rápidamente IA en tu flujo de trabajo es configurar un atajo de teclado para invocar a `{gander}`.
 
-Para esto, entra al menú _Tools_ de RStudio, presiona _Modify Keyboard Shortcuts_, y en la ventana que se abre busca _gander._ Se sugiere configurar algo como `shift+comando+G` en Mac o `control+alt+G` en Windows.
+Para esto, entra al menú _Tools_ de RStudio, presiona _Modify Keyboard Shortcuts_, y en la ventana que se abre busca _gander._ Se sugiere configurar algo como `shift+comando+G` en Mac[^1] o `control+alt+G` en Windows.
 
 {{< imagen "gander_keys.png" >}}
+
+[^1]: el desarrollador recomienda `control` en vez de `shift`, pero yo encuentro que `shift` es más ergonómico y va más en línea con otros atajos de Mac.
 
 
 ## Usar `{gander}`
