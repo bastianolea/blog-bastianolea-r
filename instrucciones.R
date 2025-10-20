@@ -37,7 +37,6 @@ blogdown::new_post(title = "Acelera tu programación con {gander}, un asistente 
 ## borradores ----
 
 "content/blog/ellmer/ellmer.qmd"
-"content/blog/gander/gander.qmd"
 
 "content/blog/r_introduccion/dplyr_intermedio/dplyr_intermedio.qmd"
 "content/blog/sf_mapas/sf_mapas.qmd"
