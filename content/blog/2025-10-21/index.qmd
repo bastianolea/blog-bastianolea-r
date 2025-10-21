@@ -55,6 +55,26 @@ iris_m |>
   )
 ```
 
+El mismo código sirve si quieres contar todos los ceros, o todos los valores infinitos, etc.
+
+```{r}
+# contar los ceros
+indice_3 |> 
+  summarize(
+    across(everything(),
+           ~sum(.x == 0)
+           ))
+
+# contar infinitos
+indice_3 |> 
+  summarize(
+    across(everything(),
+           ~sum(is.infinite(.x))
+           ))
+# etc
+```
+
+
 Si quieres saber los datos perdidos sólo en las **columnas numéricas**, en vez de `everything()` puedes usar `where(is.numeric)`, o si necesitas saberlo en un conjunto de columnas específicas, usa `starts_with()` o pon sus nombres dentro de `c()`.
 
 También hay otras formas de revisar [datos perdidos](/tags/datos-perdidos/), como por ejemplo con [el paquete `{visdat}`](/blog/visdat/) que **resume tus datos visualmente**.
