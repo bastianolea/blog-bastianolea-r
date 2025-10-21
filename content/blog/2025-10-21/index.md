@@ -67,7 +67,37 @@ iris_m |>
 ```
 
       Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-    1           15          13           19          13      17
+    1           15          17           10          12      21
+
+El mismo código sirve si quieres contar todos los ceros, o todos los valores infinitos, etc.
+
+``` r
+# contar los ceros
+iris_m |> 
+  summarize(
+    across(everything(),
+           ~sum(.x == 0, na.omit = TRUE)
+           ))
+```
+
+      Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+    1           NA          NA           NA          NA      NA
+
+``` r
+# contar infinitos
+iris_m |> 
+  summarize(
+    across(everything(),
+           ~sum(is.infinite(.x))
+           ))
+```
+
+      Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+    1            0           0            0           0       0
+
+``` r
+# etc
+```
 
 Si quieres saber los datos perdidos sólo en las **columnas numéricas**, en vez de `everything()` puedes usar `where(is.numeric)`, o si necesitas saberlo en un conjunto de columnas específicas, usa `starts_with()` o pon sus nombres dentro de `c()`.
 

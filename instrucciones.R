@@ -8,15 +8,15 @@ blogdown::build_site() # reconstruir
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Actualización del blog", 
-                   file = paste0("blog/", lubridate::today(), "/index.qmd"),
+blogdown::new_post(title = "Redactar palabras en plural con R", 
+                   file = paste0("blog/", lubridate::today(), "b", "/index.qmd"),
                    author = "Bastián Olea Herrera",
-                   tags = c("blog")
+                   tags = c("texto")
 )
 
 # crear un post tutorial
 blogdown::new_post(title = "Acelera tu programación con {gander}, un asistente de IA integrado en RStudio", 
-                   file = "blog/gander/index.md",
+                   file = "blog/plurales/index.md",
                    author = "Bastián Olea Herrera",
                    tags = c("inteligencia artificial", "consejos"),
                    categories = c() 
