@@ -1,0 +1,74 @@
+---
+title: Contar datos perdidos en una o varias columnas
+author: Bastián Olea Herrera
+date: '2025-10-21'
+slug: []
+categories: []
+tags:
+  - datos perdidos
+  - limpieza de datos
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+excerpt: >-
+  Cuando estamos limpiando datos frecuentemente nos preguntamos cuántos datos
+  perdidos tiene una columna. La respuesta se obtiene pidiendo un resumen
+  (`summarize()`) que cuente la suma de datos perdidos (`sum(is.na())`) en una
+  columna específica. ¿Pero qué pasa si tienes muchas columnas? No vas a andar
+  escribiendo las columnas una por una... 😵‍💫 Usando las función `across()` de
+  `{dplyr}`, podemos aplicar la misma operación a todas las columnas de un
+  dataframe, y así obtener el conteo de datos perdidos de todas las columnas.
+---
+
+
+Cuando estamos limpiando datos frecuentemente nos preguntamos **cuántos [datos perdidos](../../../tags/datos-perdidos/) tiene una columna.** La respuesta se obtiene pidiendo un resumen (`summarize()`) que cuente la suma de datos perdidos (`sum(is.na())`) en una columna específica.
+
+``` r
+library(dplyr)
+
+# contar datos perdidos en una columna
+iris |> 
+  summarize(
+    missings = sum(is.na(Sepal.Length))
+  )
+```
+
+      missings
+    1        0
+
+¿Pero qué pasa si tienes muchas columnas y quieres revisarlo en todas? No vas a andar escribiendo las columnas una por una... 😵‍💫
+
+Usando las función `across()` de `{dplyr}`, podemos aplicar la misma operación a todas las columnas de un dataframe, y así obtener el **conteo de datos perdidos de todas las columnas.**
+
+Primero creemos datos perdidos al azar [con el paquete `{messy}` para ensuciar datos:](https://github.com/nrennie/messy)
+
+``` r
+library(messy)
+
+iris_m <- messy::make_missing(iris)
+```
+
+Ahora con `summarize()` calculamos un *resumen* de datos (es decir, reducir las filas de la tabla a un sólo resultado), especificando con `across()` que el resumen será *a través de* todas las columnas (`everything()`), y finalmente pedimos que el resumen sea la suma (`sum()`) de los datos de cada columna (`.x`) que son *missing* `is.na()`.
+
+``` r
+library(dplyr)
+
+iris_m |>
+  # resumir los datos
+  summarize(
+    # a través de todas las columnas
+    across(
+      everything(),
+      # contar la cantidad de missings
+      ~sum(is.na(.x))
+    )
+  )
+```
+
+      Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+    1           15          13           19          13      17
+
+Si quieres saber los datos perdidos sólo en las **columnas numéricas**, en vez de `everything()` puedes usar `where(is.numeric)`, o si necesitas saberlo en un conjunto de columnas específicas, usa `starts_with()` o pon sus nombres dentro de `c()`.
+
+También hay otras formas de revisar [datos perdidos](../../../tags/datos-perdidos/), como por ejemplo con [el paquete `{visdat}`](../../../blog/visdat/) que **resume tus datos visualmente**.
