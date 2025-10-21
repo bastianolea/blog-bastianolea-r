@@ -5,11 +5,12 @@ blogdown::stop_server()
 blogdown::build_site() # reconstruir
 
 
+
 ## posts ----
 
 # crear un post normal
 blogdown::new_post(title = "Redactar palabras en plural con R", 
-                   file = paste0("blog/", lubridate::today(), "b", "/index.qmd"),
+                   file = paste0("blog/", lubridate::today(), "/index.qmd"),
                    author = "Bastián Olea Herrera",
                    tags = c("texto")
 )
@@ -33,6 +34,17 @@ blogdown::new_post(title = "Acelera tu programación con {gander}, un asistente 
 #     icon_pack: fab
 #     name: Código
 #     url: https://gist.github.com/bastianolea/8ea85fa8169b302d2144e05434668c89
+
+
+
+## pendientes ----
+
+# last.fm https://blog.spacehey.com/entry?id=221954
+# búsqueda 
+  # https://aaronluna.dev/blog/add-search-to-static-site-lunrjs-hugo-vanillajs/
+  # https://palant.info/2020/06/04/the-easier-way-to-use-lunr-search-with-hugo/
+
+
 
 ## borradores ----
 
@@ -64,6 +76,7 @@ blogdown::new_post(title = "Acelera tu programación con {gander}, un asistente 
 # {{< aviso "x" >}}
 
 
+
 ## archivos ----
 "content/blog/r_introduccion/recursos_r/index.md" # páginas
 "assets/tema-morado-hex.scss" # tema
@@ -76,6 +89,7 @@ blogdown::new_post(title = "Acelera tu programación con {gander}, un asistente 
 "layouts/taxonomy/taxonomy.html" # html de la página de tags (/tags/)
 
 "layouts/partials/shared/sidebar/sidebar-header.html" # sidebar con tags
+
 
 
 ## utilidades ----
