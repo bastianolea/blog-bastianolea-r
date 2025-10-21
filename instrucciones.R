@@ -39,6 +39,8 @@ blogdown::new_post(title = "Acelera tu programación con {gander}, un asistente 
 "content/blog/ellmer/ellmer.qmd"
 
 "content/blog/r_introduccion/dplyr_intermedio/dplyr_intermedio.qmd"
+"content/blog/r_introduccion/dplyr_variables/dplyr_variables.qmd"
+
 "content/blog/sf_mapas/sf_mapas.qmd"
 "content/blog/shiny_tipografias/shiny_tipografias.qmd"
 "content/blog/2025-07-06/index.qmd" # cargar y unir datos

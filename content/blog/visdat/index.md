@@ -2,10 +2,12 @@
 title: Echa un vistazo preliminar a tus datos con {visdat}
 author: Bastián Olea Herrera
 date: '2025-08-08'
+freeze: true
 slug: []
 categories: []
 tags:
   - visualización de datos
+  - datos perdidos
   - limpieza de datos
   - consejos
 excerpt: >-
@@ -18,7 +20,7 @@ excerpt: >-
 ---
 
 
-En una clase reciente me preguntaron cómo saber de una dónde hay datos perdidos o *missing* en un conjunto de datos. La respuesta que di fue usar `summarize()` para contar la cantidad de datos perdidos en todas las columnas de un dataframe:
+En una clase reciente me preguntaron [cómo saber de una dónde hay datos perdidos o *missing*](../../../blog/2025-10-21/) en un conjunto de datos. La respuesta que di fue usar `summarize()` para contar la cantidad de datos perdidos en todas las columnas de un dataframe:
 
 ``` r
 library(dplyr) # manipulación de datos
@@ -40,7 +42,7 @@ iris_m |>
 ```
 
       Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-    1           10          13           11          17      12
+    1           12          21           16          21      11
 
 Pero hay formas más convenientes de hacerlo!
 
