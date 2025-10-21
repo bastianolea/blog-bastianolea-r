@@ -5,7 +5,6 @@ date: '2025-03-30'
 slug: []
 categories: []
 tags:
-  - consejos
   - texto
 excerpt: >-
   Aprende a generar un texto que redacte un vector de palabras sueltas en una

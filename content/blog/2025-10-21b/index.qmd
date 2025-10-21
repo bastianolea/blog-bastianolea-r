@@ -1,0 +1,125 @@
+---
+title: Redactar palabras en plural en R
+author: Bastián Olea Herrera
+date: '2025-10-21'
+slug: []
+categories: []
+tags:
+  - texto
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+excerpt: Cuando desarrollamos reportes, gráficos o aplicaciones en R, necesitamos hacer que nuestros textos se adapten a los datos que estamos analizando. En este post veremos cómo hacer que el texto se adapte según las cantidades para redactar palabras en singular o plural.
+---
+
+Cuando desarrollamos [reportes](/tags/quarto/), [gráficos](/tags/gráficos/) o [aplicaciones](/tags/shiny/) en R, necesitamos hacer que nuestros [textos](/tags/texto/) se adapten a los datos que estamos analizando.
+
+Si tenemos que poner texto sobre una cantidad de elementos, tenemos que escribir en singular o plural dependiendo de la cantidad (_1 gato, 2 gatos_).
+
+Por ejemplo, si tenemos un objeto `cantidad` que contiene el número de gatos, y queremos escribir un texto que diga "gato" o "gatos" dependiendo de la cantidad, podemos usar la función `ifelse()`:
+
+```{r}
+cantidad <- 12
+
+singular <- "gato"
+plural <- "gatos"
+
+texto <- ifelse(cantidad == 1,
+                yes = singular,
+                no = plural)
+
+texto
+```
+Para evitar repetir el código cada vez que necesitemos escribir en singular o plural, creamos una [función](/tags/funciones/) llamada `plural()`, que recibe como argumentos la cantidad `n`, y luego el texto en `singular` y en `plural`, y dependiendo de la cantidad se retornará el texto apropiado:
+
+```{r}
+plural <- function(n, singular, plural) {
+  
+  ifelse(n == 1,
+         singular,
+         plural)
+}
+```
+
+```{r}
+plural(1, "gato", "gatos")
+
+plural(3, "gato", "gatos")
+```
+Podemos mejorar esta función agregando una [validación](/blog/validacion_basica/) para chequear que la `cantidad` sea realmente un número, y podemos mejorar [el `ifelse()`](/tags/control-de-flujo/) haciendo que el argumento `plural` sea opcional, y si no se entrega, la función agregue una "s" al final del texto en `singular` para formar el plural.
+
+```{r}
+plural <- function(n, singular, plural = NULL) {
+  
+  # validación
+  if (!is.numeric(n)) stop("se requiere un valor numérico")
+  
+  # si la cantidad es 1, singular
+  ifelse(n == 1,
+         singular,
+         # si la cantidad es mayor a 1
+         ifelse(
+           # pero no se definió el plural, agregar "s"
+           is.null(plural),
+           paste0(singular, "s"),
+           # de lo contrario, usar el plural
+           plural)
+  )
+}
+
+plural(3, "gato")
+plural(1, "gato")
+```
+
+El uso de esta función sería más o menos algo así:
+
+```{r}
+n <- 23
+paste("Existe un total de", n, plural(n, "gato"), "en la vivienda.")
+```
+
+Para adecuarnos a la posibilidad de que **la cantidad sea cero**, creamos una nueva función que use la función anterior `plural()` si la cifra es igual o mayor a 1, o si no, retorna un texto distinto.
+
+```{r}
+n <- 4
+
+cantidad <- function(n, singular) {
+  # si la cantidad es missing o cero
+  ifelse(is.na(n) | n == 0,
+         # anteponer "ningún" a la cifra
+         paste("ningún", singular),
+         # si la cantidad es 1 o más, usar la función plural
+         # anteponiento la cifra
+         paste(n, plural(n, singular))
+  )
+}
+```
+
+Probemos distintos casos:
+
+```{r}
+n <- 6
+cantidad(n, "gato")
+
+n <- 1
+cantidad(n, "gato")
+
+n <- NA
+cantidad(n, "gato")
+```
+
+
+Todo lo anterior fue una excusa para ✨aprender✨, porque existe una mejor opción: usar [la función `pluralize()` del paquete `{cli}`](https://cli.r-lib.org/reference/pluralize.html), que soluciona el problema (a cambio de tener que cargar un paquete más).
+
+
+```{r}
+library(cli)
+
+cantidad <- 3
+pluralize("Total de {cantidad} gato{?s}.")
+
+cantidad <- 1
+pluralize("Total de {cantidad} gato{?s}.")
+```
+

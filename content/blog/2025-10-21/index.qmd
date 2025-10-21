@@ -59,14 +59,14 @@ El mismo código sirve si quieres contar todos los ceros, o todos los valores in
 
 ```{r}
 # contar los ceros
-indice_3 |> 
+iris_m |> 
   summarize(
     across(everything(),
-           ~sum(.x == 0)
+           ~sum(.x == 0, na.omit = TRUE)
            ))
 
 # contar infinitos
-indice_3 |> 
+iris_m |> 
   summarize(
     across(everything(),
            ~sum(is.infinite(.x))
