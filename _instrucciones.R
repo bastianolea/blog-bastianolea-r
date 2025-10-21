@@ -16,10 +16,10 @@ blogdown::new_post(title = "Redactar palabras en plural con R",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Acelera tu programación con {gander}, un asistente de IA integrado en RStudio", 
-                   file = "blog/plurales/index.md",
+blogdown::new_post(title = "Comandos comunes de Git", 
+                   file = "blog/git_atajos/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("inteligencia artificial", "consejos"),
+                   tags = c("git"),
                    categories = c() 
 )
 
@@ -49,17 +49,15 @@ blogdown::new_post(title = "Acelera tu programación con {gander}, un asistente 
 ## borradores ----
 
 "content/blog/ellmer/ellmer.qmd"
-
+"~/Documents/Otros/blog/content/blog/git_atajos/index.md"
 "content/blog/r_introduccion/dplyr_intermedio/dplyr_intermedio.qmd"
 "content/blog/r_introduccion/dplyr_variables/dplyr_variables.qmd"
-
 "content/blog/sf_mapas/sf_mapas.qmd"
 "content/blog/shiny_tipografias/shiny_tipografias.qmd"
 "content/blog/2025-07-06/index.qmd" # cargar y unir datos
 "content/blog/diferencias/waldo.qmd"
-
 "https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html" # plagiar
-# https://github.com/rundel/livecode
+"https://github.com/rundel/livecode"
 "content/blog/2025-07-01/index.qmd" # st_join
 "content/blog/unpivotr/index.qmd"
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
