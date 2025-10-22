@@ -17,10 +17,10 @@ blogdown::new_post(title = "Redactar palabras en plural con R",
 
 # crear un post tutorial
 blogdown::new_post(title = "Comandos comunes de Git", 
-                   file = "blog/git_atajos/index.md",
+                   file = "blog/ggiraph/ggiraph.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("git"),
-                   categories = c() 
+                   tags = c("visualización de datos"),
+                   categories = c("Tutoriales") 
 )
 
 # draft: true
@@ -48,6 +48,7 @@ blogdown::new_post(title = "Comandos comunes de Git",
 
 ## borradores ----
 
+"content/blog/ggiraph/ggiraph.qmd"
 "content/blog/ellmer/ellmer.qmd"
 "~/Documents/Otros/blog/content/blog/git_atajos/index.md"
 "content/blog/r_introduccion/dplyr_intermedio/dplyr_intermedio.qmd"

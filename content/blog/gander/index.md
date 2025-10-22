@@ -13,8 +13,8 @@ format:
     output-file: index
     output-ext: md
 links: 
-  - icon: github
-    icon_pack: fab
+  - icon: registered
+    icon_pack: fas
     name: Gander
     url: https://simonpcouch.github.io/gander/
   - icon: book
