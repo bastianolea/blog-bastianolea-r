@@ -1,0 +1,27 @@
+---
+title: Convierte gráficos {ggplot2} en visualizaciones interactivas con {ggiraph}
+author: Bastián Olea Herrera
+date: '2025-10-22'
+draft: true
+slug: []
+categories:
+  - Tutoriales
+tags:
+  - visualización de datos
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+excerpt: null
+links:
+  - icon: registered
+    icon_pack: fas
+    name: ggiraph
+    url: https://davidgohel.github.io/ggiraph/
+  - icon: github
+    icon_pack: fab
+    name: código
+    url: https://davidgohel.github.io/ggiraph/
+---
+
+

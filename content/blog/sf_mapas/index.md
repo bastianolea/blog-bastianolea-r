@@ -1,7 +1,7 @@
 ---
 title: Mapas y visualización de datos geoespaciales en R con {sf}
 author: Bastián Olea Herrera
-date: '2025-10-16'
+date: '2025-10-22'
 draft: true
 slug: []
 categories:
@@ -15,51 +15,103 @@ format:
     output-ext: md
 execute:
   eval: false
+excerpt: >-
+  R cuenta con un muy amplio ecosistema de paquetes para datos geoespaciales.
+  Uno de los paquetes más importantes es `{sf}`, que permite manipular datos
+  espaciales a partir del estándar _simple features_ (características simples),
+  ampliamente utilizado en sistemas de información geográfica (SIG/GIS). En esta
+  guía iré guardando los comandos que uso frecuentemente para manipular y
+  visualizar datos geoespaciales en R. En la medida que voy aprendiendo más
+  sobre hacer mapitas, iré actualizando y complementando.
 ---
 
 
-intro
+{{< imagen "mapa_rm_featured.png" >}}
 
-en la medida que voy aprendiendo, agrego más cosas
+R cuenta con un muy amplio [ecosistema](https://github.com/r-spatial/) de paquetes para datos geoespaciales. Uno de los [paquetes más importantes es `{sf}`](https://r-spatial.github.io/sf/), que permite manipular datos espaciales a partir del estándar *simple features* (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS).
 
-ejemplos
+En esta guía iré guardando los comandos que uso frecuentemente para **manipular, transformar y visualizar datos geoespaciales** en R. En la medida que voy aprendiendo más sobre hacer mapitas, iré actualizando y complementando.
 
-sf
-
-operaciones con mapas
-
-## cargar shapes
+Lo inicial es instalar `{sf}`:
 
 ``` r
-read_sf()
+install.packages("sf")
+library(sf)
 ```
 
-cargar geoJSON
+{{< indice >}}
+<!--
+## Carga de datos
+
+### Cargar shapes
+
+
+::: {.cell}
+
+```{.r .cell-code}
+read_sf()
+```
+:::
+
+
+ 
+### Cargar geoJSON
+
+
+### Cargar KMZ
+
+
+::: {.cell}
+
+```{.r .cell-code}
+unzip("~/Downloads/Mis lugares.kmz", exdir = "~/Downloads/Mis lugares")
+
+sf::read_sf("~/Downloads/Mis lugares/doc.kml")
+```
+:::
+
+
+
+
 
 ## Operaciones sobre geometrías
 
 ### Extraer latitud y longitud
 
 ### Calcular caja de un polígono
-
 Bounding box
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
   st_bbox()
 ```
+:::
 
+
+ 
 ### Convertir caja a polígono
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
    st_as_sfc() |>
 st_as_sf()
 ```
+:::
 
+
+  
 ### Crear un cuadrado
 
 Desde una coordenada
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 st_point(c(38.29782, -76.51390)) %>%
   st_sfc() %>%
   st_as_sf() %>%
@@ -68,138 +120,265 @@ st_point(c(38.29782, -76.51390)) %>%
   st_as_sfc() |>
   st_as_sf()
 ```
+:::
 
+
+ 
 Desde el centroide de un polígono
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
   st_centroid() |> 
   st_buffer(dist = 30000) |> 
   st_bbox() |> 
   st_as_sfc() |>
   st_as_sf()
 ```
+:::
 
+
+ 
 ### Calcular centroide
 
 ### Calcular buffer
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 st_buffer()
 ```
+:::
+
+
+ 
 
 ### Calcular superficie o área
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 mapa_region_comunas_areas |> 
   st_union() |> 
   st_area() |> 
   units::set_units("km^2")
 ```
+:::
+
+
+ 
+
 
 ### Recortar polígono a coordenadas
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
  st_crop(xmin = -74, ymin = -36, xmax = -65, ymax = -30) |> 
 ```
+:::
+
+
+
 
 ### Simplificar un polígono
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#simplification
 st_simplify(dTolerance = 0.01)
 
 rmapshaper::ms_simplify(geometry, keep = 0.8)) 
 ```
+:::
+
+
+
 
 ### Extraer líneas internas de un polígono
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 ms_innerlines() # deja solo las líneas interiores de un coso
 ```
+:::
+
+
+
 
 ## Correcciones
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 st_as_sf()
 ```
+:::
 
-``` r
+::: {.cell}
+
+```{.r .cell-code}
 st_make_valid()
 ```
+:::
 
-``` r
+::: {.cell}
+
+```{.r .cell-code}
 st_drop_geometry() 
 ```
+:::
 
-------------------------------------------------------------------------
+
+
+
+----
+
 
 ## Operaciones agrupadas
 
 ### Unir polígonos
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 group_by() |> 
 st_union()
 ```
+:::
+
+
+ 
 
 ## Operaciones entre geometrías
 
 ### Recortar un polígono con otro
-
 https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#clipping
 
-``` r
+
+
+::: {.cell}
+
+```{.r .cell-code}
 st_intersection()
 ```
+:::
 
+
+ 
 ### Usar un polígono para eliminar partes de otro
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 st_difference()
 ```
+:::
 
+
+ 
+ 
 ### unir dos polígonos
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 st_union()
 ```
+:::
+
+
 
 ### Spatial join
+
+### Filter
+
+
+::: {.cell}
+
+```{.r .cell-code}
+https://cengel.github.io/R-spatial/spatialops.html#topological-subsetting-select-polygons-by-location
+```
+:::
+
+
+
+
 
 ## Coordenadas
 
 ### Extraer sistema de coordenadas
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 st_crs(comunas_region)
 ```
+:::
+
+
 
 ### Cambiar coordenadas
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 st_transform(crs = st_crs(comunas_region))
 ```
+:::
+
+
+
 
 ## Visualización
 
 ### Visualizar por capas
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 geom_sf()
 ```
+:::
+
+
+
 
 ### Texto
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 geom_sf_text(data = nombres_areas |> filter(clase_topo == "Comuna"), color = "red", fontface = "bold",
             aes(label = nombre)) + 
 ```
+:::
+
+
 
 ### Texto con repel
-
 https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
  ggrepel::geom_label_repel(data = comunas_region_conteo_urbanas,
                             aes(label = comuna, geometry = geometry),
                             stat = "sf_coordinates",
@@ -208,43 +387,82 @@ https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
                             label.padding = 0.15, label.size = 0
   ) +
 ```
+:::
+
+
+
 
 ### Hacer zoom
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 #   coord_sf(xlim = c(-70.4, -70.2),
 #            ylim = c(-18.7, -18.4),
 ```
+:::
+
+
 
 ### Dibujar un cuadrado
 
-``` r
+
+::: {.cell}
+
+```{.r .cell-code}
 #   annotate("rect", fill = NA, color = "black", linewidth = 1,
 #            xmin = bbox_area_met[1]-2000, xmax = bbox_area_met[2]+2000,
 #            ymin = bbox_area_met[3]+2000, ymax = bbox_area_met[4]-2000)+
 ```
+:::
+
+
 
 ### Escala de colores para mapa de calor
 
-``` r
+
+
+::: {.cell}
+
+```{.r .cell-code}
  scale_fill_gradient2(
     low = color$bajo, mid = color$medio, high = color$alto,
     midpoint = mean(comunas_region_conteo$n),
     na.value = col_mix(color$fondo, color$principal, 0.1),
     limits = c(0, NA)
     # breaks = cortes
-  ) +
+  )
 ```
+:::
+
+
+
 
 ### Minimapa
-
-``` r
 https://dominicroye.github.io/blog/inserted-map/
-```
+
+
+::: {.cell}
+
+:::
+
+
+
+-->
 
 ------------------------------------------------------------------------
 
-## Recursos
+## Recursos para aprender más
 
-https://r-spatial.org/r/2018/10/25/ggplot2-sf.html
-https://bookdown.org/robinlovelace/geocompr/
+### Apuntes
+
+{{< imagen "sf_cheatsheet_1.jpeg" >}}
+{{< imagen "sf_cheatsheet_2.jpeg" >}}
+
+### Libros
+
+-   [Drawing beautiful maps programmatically with R, sf and ggplot2](https://r-spatial.org/r/2018/10/25/ggplot2-sf.html)
+-   [Geocomputation with R](https://bookdown.org/robinlovelace/geocompr/)
+-   [Spatial Data Science With Applications in R](https://r-spatial.org/book/)
+-   [Using Spatial Data with R](https://cengel.github.io/R-spatial/)
