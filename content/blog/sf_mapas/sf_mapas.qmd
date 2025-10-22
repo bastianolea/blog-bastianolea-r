@@ -1,7 +1,7 @@
 ---
 title: Mapas y visualización de datos geoespaciales en R con {sf}
 author: Bastián Olea Herrera
-date: '2025-10-16'
+date: '2025-10-22'
 draft: true
 slug: []
 categories:
@@ -15,35 +15,44 @@ format:
     output-ext: md
 execute:
   eval: false
+excerpt: "R cuenta con un muy amplio ecosistema de paquetes para datos geoespaciales. Uno de los paquetes más importantes es `{sf}`, que permite manipular datos espaciales a partir del estándar _simple features_ (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS). En esta guía iré guardando los comandos que uso frecuentemente para manipular y visualizar datos geoespaciales en R. En la medida que voy aprendiendo más sobre hacer mapitas, iré actualizando y complementando."
 ---
 
-intro
+{{< imagen "mapa_rm_featured.png" >}}
 
-en la medida que voy aprendiendo, agrego más cosas
+R cuenta con un muy amplio [ecosistema](https://github.com/r-spatial/) de paquetes para datos geoespaciales. Uno de los [paquetes más importantes es `{sf}`](https://r-spatial.github.io/sf/), que permite manipular datos espaciales a partir del estándar _simple features_ (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS).
 
-ejemplos
+En esta guía iré guardando los comandos que uso frecuentemente para **manipular, transformar y visualizar datos geoespaciales** en R. En la medida que voy aprendiendo más sobre hacer mapitas, iré actualizando y complementando.
 
-sf
+Lo inicial es instalar `{sf}`:
 
-operaciones con mapas
+```{r}
+#| eval: false
+install.packages("sf")
+library(sf)
+```
 
 
-## Cargar shapes
+{{< indice >}}
+
+<!--
+## Carga de datos
+
+### Cargar shapes
 ```{r}
 read_sf()
 ```
  
-## Cargar geoJSON
+### Cargar geoJSON
 
 
-## Cargar KMZ
+### Cargar KMZ
 ```{r}
 unzip("~/Downloads/Mis lugares.kmz", exdir = "~/Downloads/Mis lugares")
 
 sf::read_sf("~/Downloads/Mis lugares/doc.kml")
 
 ```
-
 
 
 
@@ -175,6 +184,10 @@ st_union()
 
 ### Spatial join
 
+### Filter
+```{r}
+https://cengel.github.io/R-spatial/spatialops.html#topological-subsetting-select-polygons-by-location
+```
 
 
 
@@ -240,19 +253,33 @@ https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
     na.value = col_mix(color$fondo, color$principal, 0.1),
     limits = c(0, NA)
     # breaks = cortes
-  ) +
+  )
 ```
 
 
 ### Minimapa
-```{r}
 https://dominicroye.github.io/blog/inserted-map/
+```{r}
+
 ```
 
+-->
 
 ----
 
 
-## Recursos
-https://r-spatial.org/r/2018/10/25/ggplot2-sf.html
-https://bookdown.org/robinlovelace/geocompr/
+## Recursos para aprender más
+
+### Apuntes
+<div style="display: flex; margin:auto;">
+  {{< imagen "sf_cheatsheet_1.jpeg" >}}
+  {{< imagen "sf_cheatsheet_2.jpeg" >}}
+</div>
+
+
+### Libros
+
+- [Drawing beautiful maps programmatically with R, sf and ggplot2](https://r-spatial.org/r/2018/10/25/ggplot2-sf.html)
+- [Geocomputation with R](https://bookdown.org/robinlovelace/geocompr/)
+- [Spatial Data Science With Applications in R](https://r-spatial.org/book/)
+- [Using Spatial Data with R](https://cengel.github.io/R-spatial/)
