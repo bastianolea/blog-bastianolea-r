@@ -53,7 +53,7 @@ blogdown::new_post(title = "Comandos comunes de Git",
 "~/Documents/Otros/blog/content/blog/git_atajos/index.md"
 "content/blog/r_introduccion/dplyr_intermedio/dplyr_intermedio.qmd"
 "content/blog/r_introduccion/dplyr_variables/dplyr_variables.qmd"
-"content/blog/sf_mapas/sf_mapas.qmd"
+"content/blog/mapas_sf/mapas_sf.qmd"
 "content/blog/shiny_tipografias/shiny_tipografias.qmd"
 "content/blog/2025-07-06/index.qmd" # cargar y unir datos
 "content/blog/diferencias/waldo.qmd"

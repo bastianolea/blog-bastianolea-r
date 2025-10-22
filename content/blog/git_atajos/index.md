@@ -56,5 +56,10 @@ git push origin main --force
 ```
 
 
+Deshacer `git add .`
+```
+git reset
+```
+
 
 ohshitgit.com
