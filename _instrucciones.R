@@ -43,7 +43,7 @@ blogdown::new_post(title = "Comandos comunes de Git",
 # búsqueda 
   # https://aaronluna.dev/blog/add-search-to-static-site-lunrjs-hugo-vanillajs/
   # https://palant.info/2020/06/04/the-easier-way-to-use-lunr-search-with-hugo/
-
+  # https://dev.to/fajarwz/create-search-feature-for-hugo-static-site-with-lunr-4dbl
 
 
 ## borradores ----
