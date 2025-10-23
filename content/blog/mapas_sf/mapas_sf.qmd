@@ -43,22 +43,25 @@ library(sf)
 library(dplyr)
 ```
 
-
+<br>
 
 {{< indice >}}
+
+----
 
 
 ## Carga de datos
 
 {{< boton "Mapoteca Biblioteca del Congreso Nacional" "https://www.bcn.cl/siit/mapas_vectoriales" "fas fa-map">}}
 
-En este enlace podemos descargar un _shapefile_ con los límites político-administrativos de Chile, como el titulado _[Division regional: polígonos de las regiones de Chile](https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip)_.
+En este enlace podemos descargar un _shapefile_ con los límites político-administrativos de Chile, como el titulado _[Division regional: polígonos de las regiones de Chile](https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip)_. También puedes descargarlo en el script con `download.file()`.
 
 Una vez descargado, descomprimimos el archivo (podemos usar `unzip()`) y obtendremos una **carpeta**. Es importante que la carpeta esté en nuestro [proyecto de RStudio](/blog/r_introduccion/proyectos/). Personalmente prefiero guardar los _shapes_ en su propia carpeta, así que pondré la carpeta del _shape_ descargado dentro de `shapes/`
 
 ### Cargar _shapes_
 ```{r}
-mapa <- read_sf("shapes/Regiones") |> 
+
+mapa <- read_sf("Regiones") |> 
   janitor::clean_names()
 
 mapa

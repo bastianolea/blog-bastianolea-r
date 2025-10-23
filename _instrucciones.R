@@ -16,11 +16,11 @@ blogdown::new_post(title = "Redactar palabras en plural con R",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Comandos comunes de Git", 
-                   file = "blog/ggiraph/ggiraph.qmd",
+blogdown::new_post(title = "Visualizar un mapa de Chile separado en tres secciones", 
+                   file = "blog/mapa_chile_triple/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("visualización de datos"),
-                   categories = c("Tutoriales") 
+                   tags = c("mapas"),
+                   categories = c() 
 )
 
 # draft: true

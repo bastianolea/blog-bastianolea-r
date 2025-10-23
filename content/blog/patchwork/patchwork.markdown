@@ -1,8 +1,9 @@
 ---
-title: Unir y combinar gráficos {ggplot2} en R
+title: Unir y combinar gráficos {ggplot2} con {patchwork}
 author: Bastián Olea Herrera
 date: '2025-03-08'
 draft: false
+freeze: true
 format:
   hugo-md:
     output-file: "index"
@@ -18,13 +19,21 @@ editor_options:
 execute:
   message: false
   warning: false
-excerpt: El paquete {patchwork} ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas, por medio de la combinación de gráficos en una sola visualización, y la inserción de gráficos dentro de otros.
+links:
+  - icon: registered
+    icon_pack: fas
+    name: Patchwork
+    url: https://patchwork.data-imaginist.com/index.html
+excerpt: El paquete `{patchwork}` ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas, por medio de la combinación de gráficos en una sola visualización, y la inserción de gráficos dentro de otros.
 ---
 
 
 
-El paquete {patchwork} ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas.
+[El paquete `{patchwork}`](https://patchwork.data-imaginist.com/articles/patchwork.html) ayuda a **unir y combinar gráficos** de `{ggplot2}`. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más complejas
 
+
+
+{{< indice >}}
 
 
 
@@ -94,8 +103,9 @@ grafico_b <- iris |>
 ```
 
 
+
 ### Combinar dos gráficos lado a lado
-Gracias a {patchwork}, unir dos gráficos uno al lado del otro es tan sencillo como ”sumarlos”:
+Gracias a `{patchwork}`, unir dos gráficos uno al lado del otro es tan sencillo como ”sumarlos”:
 
 
 
@@ -307,7 +317,6 @@ Podemos usar esta técnica para insertar cualquier texto en cualquier posición 
 
 La gracia de usar `inset_element()` es que posicionamos los elementos con respecto al tamaño del gráfico (donde el borde izquierdo es 0 y el derecho es 1, y el borde inferior es 0 y el superior es 1) y no a las coordenadas de las variables `x` e `y`, lo que nos permite ubicar los elementos de forma independiente al sistema de coordenadas del gráfico.
 
-----
 
 
 

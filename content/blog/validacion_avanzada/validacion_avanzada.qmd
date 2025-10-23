@@ -27,7 +27,6 @@ links:
 excerpt: La validación de datos sirve para verificar durante el proceso de análisis si los datos cumplen con requerimientos de calidad y con tus expectativas, con el objetivo de evitar problemas futuros relacionados a datos inesperados, incompletos, o erróneos. En este post veremos dos paquetes para validar el funcionamiento de tu código y para validar tus datos. 
 ---
 
-{{< indice >}}
 
 {{< imagen "pointblank-1.png" >}}
 
@@ -37,11 +36,14 @@ Dado que R es un lenguaje enfocado en el análisis de datos, existen varios paqu
 
 En este post veremos [`{testthat}`](https://testthat.r-lib.org), un paquete que facilita implementar **pruebas unitarias** a tu código para validar su funcionamiento, y [`{pointblank}`](https://rstudio.github.io/pointblank/), un paquete diseñado para la **validación de datos** con poderosas capacidades de reportabilidad. En unos minutos aprenderás a usar este paquete para garantizar que tus datos cumplen con tus expectativas de calidad. 
 
+
 ----
 
 _**¿Para qué sirve la validación de datos?**_ Para que, en cualquier punto de tus procesos de análisis de datos, puedas **verificar si los datos cumplen con los criterios de calidad que tú definas**, y así enterarte de si vienen como esperas o si es que traen _sorpresas_. En la validación de datos se crean **pruebas** para, por ejemplo, confirmar que una columna no tenga datos perdidos, que los valores de una columna estén dentro de un rango esperado, etcétera. 
 
 Al crear una serie de pruebas, podemos **automatizar el proceso de validación de datos.** De esta forma, si modificamos nuestro código, o si cambian los datos, **no necesitamos revisar manualmente** que todo esté en orden, sino que **tenemos una especie de protocolo para certificar que los datos son los esperados.** Cada vez que hagamos cambios en el código, podemos ejecutar las pruebas para confirmar que todo sigue funcionando como se espera.
+
+{{< indice >}}
 
 ----
 
@@ -150,11 +152,21 @@ A partir de las pruebas que definimos podemos **confirmar que hay problemas** en
 
 Podemos ejecutar las funciones que realizan la validación desde donde más nos resulte conveniente: desde algún script principal de nuestro proyecto, desde un script `tests.R` específico para ejecutar las pruebas, al final de cada script del proyecto, al final de un script donde ejecutemos todo el procesamiento de nuestro proyecto, o manualmente. 
 
+#### Uso completo
 💡 _Lo que yo haría_ sería algo así como agregar un `test_file()` al final del script de limpieza de datos, que confirme que la limpieza salió bien, en otro script donde procese datos tendría otro `test_file()` con pruebas relacionadas a este paso, etcétera.
 
 Otra opción es guardar los scripts de pruebas en `tests` y ejecutar todos los scripts de pruebas con `test_dir("tests/")`, en cuyo caso `{testthat}` arroja un resumen de los resultados.
 
 También, al guardar un script con pruebas, RStudio se da cuenta y aparece el botón _Run Tests_ en la parte superior derecha del script.
+
+#### Uso simple
+Si queremos hacerlo todo más simple, simplemente usemos las funciones `testthat::expect_x()` entremedio del código, de modo que si la prueba falla, arroja error, pero si no falla, no pasa nada. En este sentido, funciona igual que `stopifnot()`, pero para mi resulta mucho más claro (esa función me confunde mucho 😣). Con `expect_x()` declaramos: _esperamos que_ lo siguiente retorne `TRUE`, y si las cosas se dan así, no pasa nada y la vida sigue.
+
+```{r}
+#| error: true
+testthat::expect_equal(n_distinct(iris$Species), 3)
+testthat::expect_equal(n_distinct(iris$Species), 4)
+```
 
 
 ### Conclusión de `{testthat}` para validación de datos
