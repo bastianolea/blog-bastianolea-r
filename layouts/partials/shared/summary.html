@@ -31,22 +31,8 @@
       </header>
       {{ $summary := cond (ne .Params.excerpt nil) .Params.excerpt .Summary }}
       {{ with $summary }}<p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">{{ . | markdownify | emojify }}</p>{{ end }}
-      <!-- agregar tags -->
-        {{ with .Params.tags }}
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0">{{ range . }} <a href="{{ "tags/" | absURL }}{{ . | urlize }}"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            {{ . }}</a> {{ end }}</dd></em>
-        </dl>
-        {{ end }}
+      <!-- tags de cada post -->
+        {{ partial "shared/tags.html" . }}
         <!-- /agregar tags -->
       <footer class="w-100">
         

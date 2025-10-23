@@ -6,20 +6,4 @@
 {{ end }}
 
 
-<!--lista de etiquetas-->
-<div style="font-size: 90%;">
-  <h2>Temas:</h2>
-  {{ range $index, $var := (sort .Site.Taxonomies.tags "Count" "desc") }} <!-- ordenar de mayor a menor-->
-  <!--(first 25 antes de (sort para elegir un máximo de tags-->
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="{{ .Page.Permalink }}">{{ .Page.Title }}</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">{{ .Count }} posts</span>
-  </div>
-{{ end }}
-</div>
+{{ partial "shared/tags-long.html" . }}
