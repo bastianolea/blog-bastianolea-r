@@ -87,7 +87,7 @@ blogdown::new_post(title = "Visualizar un mapa de Chile separado en tres seccion
 "layouts/_default/single.html" # html de los post 
 "layouts/taxonomy/taxonomy.html" # html de la página de tags (/tags/)
 
-"layouts/partials/shared/sidebar/sidebar-header.html" # sidebar con tags
+"layouts/partials/shared/sidebar/sidebar-header.html" # sidebar del blog
 
 
 
