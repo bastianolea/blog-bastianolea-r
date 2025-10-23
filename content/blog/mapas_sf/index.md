@@ -49,20 +49,24 @@ library(sf)
 library(dplyr)
 ```
 
+<br>
+
 {{< indice >}}
+
+------------------------------------------------------------------------
 
 ## Carga de datos
 
 {{< boton "Mapoteca Biblioteca del Congreso Nacional" "https://www.bcn.cl/siit/mapas_vectoriales" "fas fa-map">}}
 
-En este enlace podemos descargar un *shapefile* con los límites político-administrativos de Chile, como el titulado *[Division regional: polígonos de las regiones de Chile](https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip)*.
+En este enlace podemos descargar un *shapefile* con los límites político-administrativos de Chile, como el titulado *[Division regional: polígonos de las regiones de Chile](https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip)*. También puedes descargarlo en el script con `download.file()`.
 
 Una vez descargado, descomprimimos el archivo (podemos usar `unzip()`) y obtendremos una **carpeta**. Es importante que la carpeta esté en nuestro [proyecto de RStudio](../../../blog/r_introduccion/proyectos/). Personalmente prefiero guardar los *shapes* en su propia carpeta, así que pondré la carpeta del *shape* descargado dentro de `shapes/`
 
 ### Cargar *shapes*
 
 ``` r
-mapa <- read_sf("shapes/Regiones") |> 
+mapa <- read_sf("Regiones") |> 
   janitor::clean_names()
 
 mapa
@@ -75,6 +79,7 @@ mapa
 ### Cargar KMZ
 
 
+
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -83,6 +88,7 @@ unzip("~/Downloads/Mis lugares.kmz", exdir = "~/Downloads/Mis lugares")
 sf::read_sf("~/Downloads/Mis lugares/doc.kml")
 ```
 :::
+
 
 
 
@@ -156,6 +162,7 @@ coordenadas |>
 Desde el centroide de un polígono
 
 
+
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -170,9 +177,11 @@ mapa |>
 :::
 
 
+
 -->
 <!--
 ### Calcular superficie o área
+
 
 
 ::: {.cell}
@@ -186,10 +195,12 @@ mapa_region_comunas_areas |>
 :::
 
 
+
  
 
 
 ### Recortar polígono a coordenadas
+
 
 
 ::: {.cell}
@@ -202,7 +213,9 @@ mapa_region_comunas_areas |>
 
 
 
+
 ### Simplificar un polígono
+
 
 
 ::: {.cell}
@@ -218,7 +231,9 @@ rmapshaper::ms_simplify(geometry, keep = 0.8))
 
 
 
+
 ### Extraer líneas internas de un polígono
+
 
 
 ::: {.cell}
@@ -231,7 +246,9 @@ ms_innerlines() # deja solo las líneas interiores de un coso
 
 
 
+
 ## Correcciones
+
 
 
 ::: {.cell}
@@ -258,12 +275,14 @@ st_drop_geometry()
 
 
 
+
 ----
 
 
 ## Operaciones agrupadas
 
 ### Unir polígonos
+
 
 
 ::: {.cell}
@@ -275,12 +294,14 @@ st_union()
 :::
 
 
+
  
 
 ## Operaciones entre geometrías
 
 ### Recortar un polígono con otro
 https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#clipping
+
 
 
 
@@ -292,8 +313,10 @@ st_intersection()
 :::
 
 
+
  
 ### Usar un polígono para eliminar partes de otro
+
 
 
 ::: {.cell}
@@ -304,9 +327,11 @@ st_difference()
 :::
 
 
+
  
  
 ### unir dos polígonos
+
 
 
 ::: {.cell}
@@ -318,9 +343,11 @@ st_union()
 
 
 
+
 ### Spatial join
 
 ### Filter
+
 
 
 ::: {.cell}
@@ -334,9 +361,11 @@ https://cengel.github.io/R-spatial/spatialops.html#topological-subsetting-select
 
 
 
+
 ## Coordenadas
 
 ### Extraer sistema de coordenadas
+
 
 
 ::: {.cell}
@@ -348,7 +377,9 @@ st_crs(comunas_region)
 
 
 
+
 ### Cambiar coordenadas
+
 
 
 ::: {.cell}
@@ -361,9 +392,11 @@ st_transform(crs = st_crs(comunas_region))
 
 
 
+
 ## Visualización
 
 ### Visualizar por capas
+
 
 
 ::: {.cell}
@@ -376,7 +409,9 @@ geom_sf()
 
 
 
+
 ### Texto
+
 
 
 ::: {.cell}
@@ -389,8 +424,10 @@ geom_sf_text(data = nombres_areas |> filter(clase_topo == "Comuna"), color = "re
 
 
 
+
 ### Texto con repel
 https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
+
 
 
 ::: {.cell}
@@ -409,7 +446,9 @@ https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
 
 
 
+
 ### Hacer zoom
+
 
 
 ::: {.cell}
@@ -422,7 +461,9 @@ https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
 
 
 
+
 ### Dibujar un cuadrado
+
 
 
 ::: {.cell}
@@ -436,7 +477,9 @@ https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
 
 
 
+
 ### Escala de colores para mapa de calor
+
 
 
 
@@ -456,13 +499,16 @@ https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
 
 
 
+
 ### Minimapa
 https://dominicroye.github.io/blog/inserted-map/
+
 
 
 ::: {.cell}
 
 :::
+
 
 
 

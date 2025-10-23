@@ -39,13 +39,15 @@ En un [post anterior](../../../blog/validacion_basica) hablé sobre cómo hacer 
 
 Dado que R es un lenguaje enfocado en el análisis de datos, existen varios paquetes que nos pueden ayudar con la validación de datos!
 
-En este post veremos [`{testthat}`](https://rstudio.github.io/pointblank/), un paquete que facilita implementar **pruebas unitarias** a tu código para validar su funcionamiento, y [`{pointblank}`](https://rstudio.github.io/pointblank/), un paquete diseñado para la **validación de datos** con poderosas capacidades de reportabilidad. En unos minutos aprenderás a usar este paquete para garantizar que tus datos cumplen con tus expectativas de calidad.
+En este post veremos [`{testthat}`](https://testthat.r-lib.org), un paquete que facilita implementar **pruebas unitarias** a tu código para validar su funcionamiento, y [`{pointblank}`](https://rstudio.github.io/pointblank/), un paquete diseñado para la **validación de datos** con poderosas capacidades de reportabilidad. En unos minutos aprenderás a usar este paquete para garantizar que tus datos cumplen con tus expectativas de calidad.
 
 ------------------------------------------------------------------------
 
 ***¿Para qué sirve la validación de datos?*** Para que, en cualquier punto de tus procesos de análisis de datos, puedas **verificar si los datos cumplen con los criterios de calidad que tú definas**, y así enterarte de si vienen como esperas o si es que traen *sorpresas*. En la validación de datos se crean **pruebas** para, por ejemplo, confirmar que una columna no tenga datos perdidos, que los valores de una columna estén dentro de un rango esperado, etcétera.
 
 Al crear una serie de pruebas, podemos **automatizar el proceso de validación de datos.** De esta forma, si modificamos nuestro código, o si cambian los datos, **no necesitamos revisar manualmente** que todo esté en orden, sino que **tenemos una especie de protocolo para certificar que los datos son los esperados.** Cada vez que hagamos cambios en el código, podemos ejecutar las pruebas para confirmar que todo sigue funcionando como se espera.
+
+{{< indice >}}
 
 ------------------------------------------------------------------------
 
@@ -102,7 +104,7 @@ test_that("números iguales",
 )
 ```
 
-    Test passed 🎉
+    Test passed 🌈
 
 Esta prueba evalúa si dos números son iguales (`expect_equal()`), y en este ejemplo se cumple: `{testthat}` nos entrega un emoji de celebración 🎉 Veamos la siguiente prueba:
 
@@ -136,7 +138,7 @@ test_that("se cargaron los datos",
 )
 ```
 
-    Test passed 😸
+    Test passed 😀
 
 ``` r
 # esperamos que el número de columnas sea 4
@@ -145,7 +147,7 @@ test_that("suficientes columnas",
 )
 ```
 
-    Test passed 🎊
+    Test passed 🥇
 
 ``` r
 # esperamos que la columna `animal` sea tipo caracter
@@ -190,11 +192,26 @@ A partir de las pruebas que definimos podemos **confirmar que hay problemas** en
 
 Podemos ejecutar las funciones que realizan la validación desde donde más nos resulte conveniente: desde algún script principal de nuestro proyecto, desde un script `tests.R` específico para ejecutar las pruebas, al final de cada script del proyecto, al final de un script donde ejecutemos todo el procesamiento de nuestro proyecto, o manualmente.
 
+#### Uso completo
+
 💡 *Lo que yo haría* sería algo así como agregar un `test_file()` al final del script de limpieza de datos, que confirme que la limpieza salió bien, en otro script donde procese datos tendría otro `test_file()` con pruebas relacionadas a este paso, etcétera.
 
 Otra opción es guardar los scripts de pruebas en `tests` y ejecutar todos los scripts de pruebas con `test_dir("tests/")`, en cuyo caso `{testthat}` arroja un resumen de los resultados.
 
 También, al guardar un script con pruebas, RStudio se da cuenta y aparece el botón *Run Tests* en la parte superior derecha del script.
+
+#### Uso simple
+
+Si queremos hacerlo todo más simple, simplemente usemos las funciones `testthat::expect_x()` entremedio del código, de modo que si la prueba falla, arroja error, pero si no falla, no pasa nada. En este sentido, funciona igual que `stopifnot()`, pero para mi resulta mucho más claro (esa función me confunde mucho 😣). Con `expect_x()` declaramos: *esperamos que* lo siguiente retorne `TRUE`, y si las cosas se dan así, no pasa nada y la vida sigue.
+
+``` r
+testthat::expect_equal(n_distinct(iris$Species), 3)
+testthat::expect_equal(n_distinct(iris$Species), 4)
+```
+
+    Error: n_distinct(iris$Species) not equal to 4.
+    1/1 mismatches
+    [1] 3 - 4 == -1
 
 ### Conclusión de `{testthat}` para validación de datos
 
@@ -313,16 +330,16 @@ iris_sucio
     # A tibble: 150 × 5
        sepal_length sepal_width petal_length petal_width species    
        <chr>        <chr>       <chr>        <chr>       <chr>      
-     1 "5.1 "       "3.5 "      <NA>         "0.2"       "setosa "  
-     2  <NA>        "3"         <NA>         "0.2"       "set#osa"  
-     3  <NA>        "3.2"       1.3          "0.2"        <NA>      
-     4  <NA>         <NA>       <NA>         "0.2"        <NA>      
-     5 "5"          "3.6"       1.4          "0.2"        <NA>      
-     6  <NA>        "3.9 "      <NA>         "0.4"       "s.etosa"  
-     7 "4.6"        "3.4"       1.4          "0.3"       "SETOSA"   
-     8 "5"          "3.4 "      1.5          "0.2 "      "s-etosa"  
-     9 "4.4 "       "2.9"       1.4          "0.2"       "*set!osa" 
-    10 "4.9"         <NA>       <NA>         "0.1"       "se!t#os$a"
+     1 "5.1 "       "3.5"       "1.4"         <NA>       "S!ETOSA"  
+     2  <NA>        "3"         "1.4 "       "0.2"       "se^tosa"  
+     3 "4.7"        "3.2"       "1.3"        "0.2"       "se+tos.a "
+     4 "4.6 "        <NA>       "1.5"        "0.2"       "seto%sa"  
+     5  <NA>        "3.6"        <NA>        "0.2"       "se#tosa " 
+     6 "5.4"        "3.9 "       <NA>        "0.4 "       <NA>      
+     7 "4.6 "       "3.4"       "1.4"        "0.3"       "SETOSA"   
+     8 "5"           <NA>       "1.5"        "0.2"       "SETO$SA"  
+     9 "4.4 "       "2.9 "      "1.4"         <NA>       ".SETOSA"  
+    10 "4.9"        "3.1"       "1.5"        "0.1"       "set(o$s@a"
     # ℹ 140 more rows
 
 Luego creamos un agente para validar estos datos:
