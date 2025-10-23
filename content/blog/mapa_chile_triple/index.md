@@ -7,6 +7,7 @@ slug: []
 categories: []
 tags:
   - mapas
+  - Chile
 format:
   hugo-md:
     output-file: index
