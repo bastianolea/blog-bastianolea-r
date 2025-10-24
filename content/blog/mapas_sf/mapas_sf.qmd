@@ -3,6 +3,7 @@ title: Mapas y visualización de datos geoespaciales en R con {sf}
 author: Bastián Olea Herrera
 date: '2025-10-22'
 draft: false
+freeze: false
 slug: []
 categories:
   - tutoriales
@@ -20,6 +21,7 @@ links:
     url: https://r-spatial.github.io/sf/
 execute:
   eval: false
+  cache: false
 excerpt: "R cuenta con un muy amplio ecosistema de paquetes para datos geoespaciales. Uno de los paquetes más importantes es `{sf}`, que permite manipular datos espaciales a partir del estándar _simple features_ (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS). En esta guía iré guardando los comandos que uso frecuentemente para manipular y visualizar datos geoespaciales en R. En la medida que voy aprendiendo más sobre hacer mapitas, iré actualizando y complementando."
 ---
 
@@ -38,10 +40,58 @@ Lo inicial es instalar `{sf}`:
 install.packages("sf")
 ```
 
+Y cargarlo junto a `{dplyr}` para empezar a trabajar con datos geoespaciales.
 ```{r}
+#| message: false
+#| eval: true
+
 library(sf)
 library(dplyr)
 ```
+
+```{r}
+#| echo: false
+#| eval: true
+
+library(ggplot2)
+
+```
+
+{{< detalles "Ver código para los gráficos" >}}
+```{r tema}
+#| eval: true
+#| echo: false
+
+library(ggplot2)
+
+# tema de colores
+thematic::thematic_on(fg = "#553A74",
+                      bg = "#EAD2FA",
+                      accent = "#9069C0")
+
+# especificar temas
+theme_set(
+  # fondo transparente para mapas
+  theme(plot.background = element_rect(fill = "transparent", color = "transparent")) +
+  # borrar líneas feas
+  theme(axis.ticks = element_blank())
+)
+```
+
+```r
+# tema de colores
+thematic::thematic_on(fg = "#553A74",
+                      bg = "#EAD2FA",
+                      accent = "#9069C0")
+
+theme_set(
+  # fondo transparente para mapas
+  theme(plot.background = element_rect(fill = "transparent", color = "transparent")) +
+  # borrar líneas feas
+  theme(axis.ticks = element_blank())
+)
+```
+{{< /detalles >}}
 
 <br>
 
@@ -59,13 +109,50 @@ En este enlace podemos descargar un _shapefile_ con los límites político-admin
 Una vez descargado, descomprimimos el archivo (podemos usar `unzip()`) y obtendremos una **carpeta**. Es importante que la carpeta esté en nuestro [proyecto de RStudio](/blog/r_introduccion/proyectos/). Personalmente prefiero guardar los _shapes_ en su propia carpeta, así que pondré la carpeta del _shape_ descargado dentro de `shapes/`
 
 ### Cargar _shapes_
-```{r}
 
-mapa <- read_sf("Regiones") |> 
+```{r cargar_verdadero}
+#| echo: false
+#| eval: false
+
+# cargar
+mapa <- read_sf("shapes/Regiones") |> 
+  janitor::clean_names()
+
+# simplificar
+mapa <- mapa |> rmapshaper::ms_simplify(keep = 0.02)
+
+# reproyectar
+# mapa <- mapa |> st_transform(crs = 5360)
+
+# guardar
+readr::write_rds(mapa, "mapa.rds")
+```
+
+```{r}
+#| echo: false
+#| eval: true
+mapa <- readr::read_rds("mapa.rds")
+```
+
+
+```{r cargar_falso}
+#| eval: false
+#| echo: true
+
+mapa <- read_sf("shapes/Regiones") |> 
   janitor::clean_names()
 
 mapa
 ```
+```{r}
+#| eval: true
+#| echo: false
+#| output: true
+mapa
+```
+
+
+
 
 <!--
 ### Cargar geoJSON
@@ -81,37 +168,150 @@ sf::read_sf("~/Downloads/Mis lugares/doc.kml")
 
 -->
 
+
+Como vemos, una vez que cargamos los datos geoespaciales obtenemos una **tabla con características especiales**. arriba de la tabla vemos una descripción de las características del mapa, el tipo de geometrías, la caja o _bounding box_ que enmarca los polígonos, y el sistema de referencia de coordenadas del mapa.
+
+En `{sf}` los datos geoespaciales además contienen una columna `geometry`, que contiene las geometrías (puntos, líneas o polígonos) que definen la forma y ubicación de los elementos geográficos. Vamos a trabajar con esta columna si queremos **modificar la geometría** de los elementos geoespaciales o calcular algo a partir de ellos. **Cada fila de la tabla representa un objeto geográfico** (una región, comuna, país, etc.) y las demás columnas son variables relacionadas al objeto geográfico (población, superficie, nombre, etc.)
+
+
+
+## Glosario
+
+- **Simple features**: estándar para representar datos geoespaciales en forma de tablas con una columna especial de geometría.
+- **Shapefile**: formato de archivo común para datos geoespaciales, que en realidad consiste en varios archivos relacionados.
+- **Polígono**: forma geométrica que representa áreas en un mapa.
+
+
+----
+
+
+
+
 ## Operaciones sobre geometrías
 
+Las operaciones sobre geometrías permiten manipular y analizar las formas y ubicaciones de los objetos geográficos. A continuación veremos algunas operaciones comunes que se pueden realizar con el paquete `{sf}` en R.
 
 ### Calcular centroide
-```{r}
-mapa |> 
-  select(region, geometry) |> 
-  mutate(centroide = st_centroid(geometry))
-```
 
+El centroide es el punto central de un polígono. Calcularlo sirve, por ejemplo, para ubicar una etiqueta de texto sobre un polígono, poner un punto sobre un territorio que crece con respecto a una variable, etc.
 
-### Extraer longitud y latitud
 ```{r}
+#| eval: true
+
 mapa_centroide <- mapa |> 
   select(region, geometry) |> 
   mutate(centroide = st_centroid(geometry))
 
+mapa_centroide
+```
+```{r}
+#| eval: true
+#| echo: false
+
 mapa_centroide |> 
-  mutate(lon = st_coordinates(centroide)[,1],
-         lat = st_coordinates(centroide)[,2])
+  filter(region == "Región de Atacama") |> 
+  ggplot() +
+  geom_sf(fill = "#9069C0", 
+          linewidth = NA) +
+  geom_sf(
+    aes(geometry = centroide),
+    size = 3, alpha = .6) +
+  geom_sf_text(
+    aes(geometry = centroide),
+    label = "centroide", size = 3,
+    vjust = 2)
 ```
 
+{{< detalles "Ver código del gráfico" >}}
+```r
+mapa_centroide |> 
+filter(region == "Región de Atacama") |> 
+ggplot() +
+geom_sf(fill = "#9069C0", 
+linewidth = NA) +
+geom_sf(
+aes(geometry = centroide),
+size = 3, alpha = .6) +
+geom_sf_text(
+aes(geometry = centroide),
+label = "centroide", size = 3,
+nudge_y = -20000)
+```
+{{< /detalles >}}
+
+
+----
+
+### Extraer longitud y latitud
+Para obtener las coordenadas (longitud y latitud) de un elemento espacial, necesitamos primero que sea un punto, porque un polígono es una figura compleja que no tiene solamente una latitud y una longitud. Si tenemos un polígono, [primero calculamos el centroide](#calcular-centroide), y luego extraemos las coordenadas con `st_coordinates()`. Como esta función retorna la longitud y latitud de cada punto al mismo tiempo, tenemos que pedirle que entregue la una o la otra usando corchetes.
+
+```{r}
+#| eval: true
+
+mapa_centroide_coordenadas <- mapa_centroide |> 
+  mutate(lon = st_coordinates(centroide)[,1],
+         lat = st_coordinates(centroide)[,2])
+
+mapa_centroide_coordenadas |> 
+  select(region, lon, lat)
+```
+
+```{r}
+#| echo: false
+#| eval: true
+
+mapa_centroide_coordenadas |> 
+  mutate(region = forcats::fct_reorder(region, lat)) |> # ordenar regiones
+  ggplot() +
+  aes(lat, region) +
+  geom_col(width = 0.7, fill = "#9069C0") +
+  geom_text(
+    aes(label = region),
+    size = 3, hjust = -0.05, color = "#EAD2FA") +
+  scale_y_discrete(labels = NULL) +
+  labs(y = NULL, x = "Latitud")
+```
+
+{{< detalles "Ver código del gráfico" >}}
+```r
+mapa_centroide_coordenadas |> 
+mutate(region = forcats::fct_reorder(region, lat)) |> # ordenar regiones
+ggplot() +
+aes(lat, region) +
+geom_col(width = 0.7, fill = "#9069C0") +
+geom_text(
+aes(label = region),
+size = 3, hjust = -0.05, color = "#EAD2FA") +
+scale_y_discrete(labels = NULL) +
+labs(y = NULL, x = "Latitud")
+```
+{{< /detalles >}}
+
+----
+
+
+### Calcular buffer
+```{r}
+st_buffer()
+```
+
+----
 
 ### Calcular caja de un polígono
 Bounding box
 ```{r}
+#| eval: true
+
 st_bbox(mapa)
 ```
- 
+
+
+----
+
 ### Convertir caja a polígono
 ```{r}
+#| eval: false
+
 caja <- st_bbox(mapa)
 
 caja_poli <- caja |> 
@@ -120,18 +320,13 @@ caja_poli <- caja |>
 
 caja_poli
 ```
-  
- 
- 
 
 
-### Calcular buffer
-```{r}
-st_buffer()
-```
- 
- 
- 
+
+
+----
+
+
 ### Crear un cuadrado
 Desde una coordenada
 ```{r}
@@ -150,12 +345,12 @@ coordenadas |>
 Desde el centroide de un polígono
 ```{r}
 mapa |> 
-  filter(region == "Región de Antofagasta") |>
-  st_centroid() |> 
-  st_buffer(dist = 8000) |> 
-  st_bbox() |> 
-  st_as_sfc() |>
-  st_as_sf()
+filter(region == "Región de Antofagasta") |>
+st_centroid() |> 
+st_buffer(dist = 8000) |> 
+st_bbox() |> 
+st_as_sfc() |>
+st_as_sf()
 ```
 -->
 
@@ -163,16 +358,16 @@ mapa |>
 ### Calcular superficie o área
 ```{r}
 mapa_region_comunas_areas |> 
-  st_union() |> 
-  st_area() |> 
-  units::set_units("km^2")
+st_union() |> 
+st_area() |> 
+units::set_units("km^2")
 ```
- 
+
 
 
 ### Recortar polígono a coordenadas
 ```{r}
- st_crop(xmin = -74, ymin = -36, xmax = -65, ymax = -30) |> 
+st_crop(xmin = -74, ymin = -36, xmax = -65, ymax = -30) |> 
 ```
 
 
@@ -218,7 +413,7 @@ st_drop_geometry()
 group_by() |> 
 st_union()
 ```
- 
+
 
 ## Operaciones entre geometrías
 
@@ -228,13 +423,13 @@ https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#clipping
 ```{r}
 st_intersection()
 ```
- 
+
 ### Usar un polígono para eliminar partes de otro
 ```{r}
 st_difference()
 ```
- 
- 
+
+
 ### unir dos polígonos
 ```{r}
 st_union()
@@ -273,19 +468,19 @@ geom_sf()
 ### Texto
 ```{r}
 geom_sf_text(data = nombres_areas |> filter(clase_topo == "Comuna"), color = "red", fontface = "bold",
-            aes(label = nombre)) + 
+aes(label = nombre)) + 
 ```
 
 ### Texto con repel
 https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
 ```{r}
- ggrepel::geom_label_repel(data = comunas_region_conteo_urbanas,
-                            aes(label = comuna, geometry = geometry),
-                            stat = "sf_coordinates",
-                            size = 2, box.padding = 0,
-                            min.segment.length = unit(3, "mm"),
-                            label.padding = 0.15, label.size = 0
-  ) +
+ggrepel::geom_label_repel(data = comunas_region_conteo_urbanas,
+aes(label = comuna, geometry = geometry),
+stat = "sf_coordinates",
+size = 2, box.padding = 0,
+min.segment.length = unit(3, "mm"),
+label.padding = 0.15, label.size = 0
+) +
 ```
 
 
@@ -305,13 +500,13 @@ https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
 ### Escala de colores para mapa de calor
 
 ```{r}
- scale_fill_gradient2(
-    low = color$bajo, mid = color$medio, high = color$alto,
-    midpoint = mean(comunas_region_conteo$n),
-    na.value = col_mix(color$fondo, color$principal, 0.1),
-    limits = c(0, NA)
-    # breaks = cortes
-  )
+scale_fill_gradient2(
+low = color$bajo, mid = color$medio, high = color$alto,
+midpoint = mean(comunas_region_conteo$n),
+na.value = col_mix(color$fondo, color$principal, 0.1),
+limits = c(0, NA)
+# breaks = cortes
+)
 ```
 
 
@@ -330,8 +525,8 @@ https://dominicroye.github.io/blog/inserted-map/
 
 ### Apuntes
 <div style="display: flex; margin:auto;">
-  {{< imagen "sf_cheatsheet_1.jpeg" >}}
-  {{< imagen "sf_cheatsheet_2.jpeg" >}}
+{{< imagen "sf_cheatsheet_1.jpeg" >}}
+{{< imagen "sf_cheatsheet_2.jpeg" >}}
 </div>
 
 

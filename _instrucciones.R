@@ -16,8 +16,8 @@ blogdown::new_post(title = "Redactar palabras en plural con R",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Visualizar un mapa de Chile separado en tres secciones", 
-                   file = "blog/mapa_chile_triple/index.qmd",
+blogdown::new_post(title = "Pruebita", 
+                   file = "blog/prueba/index.qmd",
                    author = "Bastián Olea Herrera",
                    tags = c("mapas"),
                    categories = c() 
@@ -73,6 +73,7 @@ blogdown::new_post(title = "Visualizar un mapa de Chile separado en tres seccion
 # {{< imagen "x" >}}
 # {{< video "x" >}}
 # {{< aviso "x" >}}
+# {{< detalles "Hola" >}} {{< /detalles >}}
 
 
 
