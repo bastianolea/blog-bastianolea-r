@@ -34,7 +34,7 @@ excerpt: >-
 
 
 {{< imagen "mapa_rm_featured.png" >}}
-{{< aviso "⚠️ post en construcción! ⚠️" >}}
+{{< aviso "⚠️ Este tutorial se encuentra en construcción! ⚠️" >}}
 
 R cuenta con un muy amplio [ecosistema](https://github.com/r-spatial/) de paquetes para datos geoespaciales. Uno de los [paquetes más importantes es `{sf}`](https://r-spatial.github.io/sf/), que permite manipular datos espaciales a partir del estándar *simple features* (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS).
 
@@ -53,19 +53,23 @@ library(sf)
 library(dplyr)
 ```
 
-{{< detalles "Ver código para los gráficos" >}}
+**Nota:** para simplificar, en este tutorial voy a ocultar el código de los gráficos, pero siempre estará disponible bajo flechitas que despliegan el código, como la siguiente:
+
+{{< detalles "**Ver código para los gráficos**" >}}
 
 ``` r
+library(ggplot2)
+
 # tema de colores
 thematic::thematic_on(fg = "#553A74",
-                      bg = "#EAD2FA",
-                      accent = "#9069C0")
+bg = "#EAD2FA",
+accent = "#9069C0")
 
 theme_set(
-  # fondo transparente para mapas
-  theme(plot.background = element_rect(fill = "transparent", color = "transparent")) +
-  # borrar líneas feas
-  theme(axis.ticks = element_blank())
+# fondo transparente para mapas
+theme(plot.background = element_rect(fill = "transparent", color = "transparent")) +
+# borrar líneas feas
+theme(axis.ticks = element_blank())
 )
 ```
 
@@ -77,15 +81,83 @@ theme_set(
 
 ------------------------------------------------------------------------
 
-## Carga de datos
+## Carga de mapas
 
-{{< boton "Mapoteca Biblioteca del Congreso Nacional" "https://www.bcn.cl/siit/mapas_vectoriales" "fas fa-map">}}
+Una de las fuentes principales de datos geoespaciales son los *shapefiles*. Pero también existen **paquetes de R que contienen información geoespacial**, para mayor conveniencia. Exploraremos ambas opciones a continuación.
 
-En este enlace podemos descargar un *shapefile* con los límites político-administrativos de Chile, como el titulado *[Division regional: polígonos de las regiones de Chile](https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip)*. También puedes descargarlo en el script con `download.file()`.
+### Cargar mapas de cualquier país
 
-Una vez descargado, descomprimimos el archivo (podemos usar `unzip()`) y obtendremos una **carpeta**. Es importante que la carpeta esté en nuestro [proyecto de RStudio](../../../blog/r_introduccion/proyectos/). Personalmente prefiero guardar los *shapes* en su propia carpeta, así que pondré la carpeta del *shape* descargado dentro de `shapes/`
+Si no tenemos o no queremos descargar *shapes*, podemos **cargar mapas de cualquier país directo en R** gracias a [`{rnaturalearth}`](http://ropensci.github.io/rnaturalearth/). Con este paquete obtenemos directamente mapas de cualquier país del mundo, incluyendo sus estados o regiones internos, sin necesidad de descargas.
+
+Instala `{rnaturalearth}` si no lo tienes:
+
+``` r
+install.packages("rnaturalearth")
+```
+
+Puedes insertar el nombre de tu país para seguir con este tutorial usando ejemplos de tu territorio.
+
+``` r
+# install.packages("rnaturalearth")
+library(rnaturalearth)
+
+pais <- ne_states("Argentina")
+# pais <- ne_states("Mexico")
+# pais <- ne_states("Colombia")
+
+mapa <- pais |> 
+  # seleccionar columnas
+  select(pais = admin,
+         region = name_es,
+         geometry)
+
+mapa
+```
+
+    Simple feature collection with 24 features and 2 fields
+    Geometry type: MULTIPOLYGON
+    Dimension:     XY
+    Bounding box:  xmin: -73.57274 ymin: -55.05202 xmax: -53.66155 ymax: -21.78694
+    Geodetic CRS:  WGS 84
+    First 10 features:
+              pais     region                       geometry
+    1    Argentina Entre Ríos MULTIPOLYGON (((-58.20011 -...
+    12   Argentina      Salta MULTIPOLYGON (((-68.49647 -...
+    13   Argentina      Jujuy MULTIPOLYGON (((-67.25133 -...
+    741  Argentina    Formosa MULTIPOLYGON (((-62.34136 -...
+    746  Argentina   Misiones MULTIPOLYGON (((-54.66497 -...
+    749  Argentina      Chaco MULTIPOLYGON (((-58.35127 -...
+    750  Argentina Corrientes MULTIPOLYGON (((-58.6042 -2...
+    1318 Argentina  Catamarca MULTIPOLYGON (((-68.33776 -...
+    1320 Argentina   La Rioja MULTIPOLYGON (((-69.65405 -...
+    1321 Argentina   San Juan MULTIPOLYGON (((-69.95766 -...
 
 ### Cargar *shapes*
+
+Un *shapefile* es un formato de archivo común para datos geoespaciales, que en realidad consiste en una **carpeta** con archivos relacionados (`.shp`, `.shx`, `.dbf`, entre otros) que juntos representan la geometría y atributos de los objetos geográficos.
+
+Teniendo la carpeta, basta con cargarla con la función `read_sf()`.
+
+{{< detalles "**Ejemplo de descarga y carga de un _shapefile_ de Chile**" >}}
+
+Para aprender, podemos descargar un *shape* y usarlo para practicar. Si no tienes uno a mano, en el siguiente botón podemos bajar un *shapefile* de Chile por regiones, que proviene de la [Mapoteca de la Biblioteca del Congreso Nacional](https://www.bcn.cl/siit/mapas_vectoriales).
+
+{{< boton "Division regional: polígonos de las regiones de Chile" "https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip" "fas fa-map">}}
+
+También puedes descargarlo directamente desde R con `download.file()` y luego `unzip()`, [como se indica en este post](../../../blog/mapa_chile_triple/#descargar-mapas).
+
+Una vez descargado, descomprimimos el archivo y obtenemos una **carpeta**. Esta carpeta es nuestro *shapefile*, así que la guardamos dentro de nuestro [proyecto de RStudio](../../../blog/r_introduccion/proyectos/), idealmente dentro de una carpeta donde guardemos nuestros mapas.
+
+``` r
+# descargar
+download.file("https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip",
+"Regiones.zip")
+
+# descomprimir
+unzip("Regiones.zip", exdir = "shapes/Regiones")
+```
+
+En el siguiente ejemplo, guardamos el *shapefile* en una carpeta `shapes`, y lo cargamos con `read_sf()`.
 
 ``` r
 mapa <- read_sf("shapes/Regiones") |> 
@@ -121,6 +193,8 @@ mapa
     17     1100        0         0   3937.   9306245194.   388722. Zona sin demarcar
     # ℹ 1 more variable: geometry <GEOMETRY [m]>
 
+{{< /detalles >}}
+{{< aviso "Puedes seguir este tutorial independientemente del mapa que hayas cargado (el _shape_ de Chile, con `rnaturalearth`, u otro _shape_ que tú elijas); lo importante es que cargues un objeto `mapa` que tenga columna `geometry` y `region`." >}}
 <!--
 ### Cargar geoJSON
 
@@ -141,15 +215,38 @@ sf::read_sf("~/Downloads/Mis lugares/doc.kml")
 
 -->
 
-Como vemos, una vez que cargamos los datos geoespaciales obtenemos una **tabla con características especiales**. arriba de la tabla vemos una descripción de las características del mapa, el tipo de geometrías, la caja o *bounding box* que enmarca los polígonos, y el sistema de referencia de coordenadas del mapa.
+------------------------------------------------------------------------
+
+Como vemos, una vez que cargamos los datos geoespaciales obtenemos una **tabla con características especiales**. Arriba de la tabla vemos una descripción de las características del mapa, el tipo de geometrías, la caja o *bounding box* que enmarca los polígonos, y el sistema de referencia de coordenadas del mapa.
 
 En `{sf}` los datos geoespaciales además contienen una columna `geometry`, que contiene las geometrías (puntos, líneas o polígonos) que definen la forma y ubicación de los elementos geográficos. Vamos a trabajar con esta columna si queremos **modificar la geometría** de los elementos geoespaciales o calcular algo a partir de ellos. **Cada fila de la tabla representa un objeto geográfico** (una región, comuna, país, etc.) y las demás columnas son variables relacionadas al objeto geográfico (población, superficie, nombre, etc.)
 
+<!--
 ## Glosario
 
--   **Simple features**: estándar para representar datos geoespaciales en forma de tablas con una columna especial de geometría.
--   **Shapefile**: formato de archivo común para datos geoespaciales, que en realidad consiste en varios archivos relacionados.
--   **Polígono**: forma geométrica que representa áreas en un mapa.
+- **Simple features**: estándar para representar datos geoespaciales en forma de tablas con una columna especial de geometría.
+- **Shapefile**: formato de archivo común para datos geoespaciales, que en realidad consiste en varios archivos relacionados.
+- **Polígono**: forma geométrica que representa áreas en un mapa.
+
+-->
+
+------------------------------------------------------------------------
+
+## Visualización básica de mapas
+
+Para visualizar un mapa con `{sf}` usamos la geometría `geom_sf()` dentro de un gráfico de `{ggplot2}`. Esta función reconoce automáticamente la columna `geometry` del objeto espacial, y dibuja las formas geográficas correspondientes.
+
+``` r
+mapa |> 
+  ggplot() +
+  geom_sf(fill = "#9069C0", 
+          color = "#EBD2FA",
+          linewidth = 0.1)
+```
+
+<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/mapa_basico-1.png" width="768" />
+
+{{< aviso "Si necesitas aprender lo básico de `{ggplot2}` para visualización de datos, [revisa este completo tutorial](/blog/r_introduccion/tutorial_visualizacion_ggplot/)." >}}
 
 ------------------------------------------------------------------------
 
@@ -169,40 +266,35 @@ mapa_centroide <- mapa |>
 mapa_centroide
 ```
 
-    Simple feature collection with 17 features and 1 field
+    Simple feature collection with 24 features and 1 field
     Active geometry column: geometry
-    Geometry type: GEOMETRY
+    Geometry type: MULTIPOLYGON
     Dimension:     XY
-    Bounding box:  xmin: -12183900 ymin: -7554306 xmax: -7393644 ymax: -1978920
-    Projected CRS: WGS 84 / Pseudo-Mercator
-    # A tibble: 17 × 3
-       region                                     geometry           centroide
-     * <chr>                                <GEOMETRY [m]>         <POINT [m]>
-     1 Región de Arica y Parina… POLYGON ((-7675501 -2147… (-7751019 -2095927)
-     2 Región de Tarapacá        POLYGON ((-7807680 -2295… (-7724797 -2299134)
-     3 Región de Antofagasta     MULTIPOLYGON (((-7859947… (-7694561 -2698986)
-     4 Región de Magallanes y A… MULTIPOLYGON (((-7494058… (-7996444 -6899731)
-     5 Región de Aysén del Gral… MULTIPOLYGON (((-8395076… (-8155537 -5856280)
-     6 Región de Atacama         MULTIPOLYGON (((-7868801… (-7782778 -3174679)
-     7 Región de Coquimbo        MULTIPOLYGON (((-7956099… (-7888264 -3584743)
-     8 Región de Valparaíso      MULTIPOLYGON (((-8991646… (-7944452 -3860933)
-     9 Región Metropolitana de … POLYGON ((-7857118 -3892… (-7862170 -3976036)
-    10 Región de Los Lagos       MULTIPOLYGON (((-8128795… (-8114468 -5170738)
-    11 Región de Los Ríos        MULTIPOLYGON (((-8156461… (-8078476 -4867034)
-    12 Región de La Araucanía    POLYGON ((-7929978 -4593… (-8045539 -4672201)
-    13 Región del Bío-Bío        MULTIPOLYGON (((-8231986… (-8058771 -4509385)
-    14 Región de Ñuble           POLYGON ((-8053807 -4431… (-8012110 -4389990)
-    15 Región del Maule          POLYGON ((-8018823 -4121… (-7953282 -4249088)
-    16 Región del Libertador Be… POLYGON ((-8015044 -4051… (-7908857 -4087567)
-    17 Zona sin demarcar         POLYGON ((-8197676 -6303… (-8154871 -6357913)
+    Bounding box:  xmin: -73.57274 ymin: -55.05202 xmax: -53.66155 ymax: -21.78694
+    Geodetic CRS:  WGS 84
+    First 10 features:
+             region                       geometry                   centroide
+    1    Entre Ríos MULTIPOLYGON (((-58.20011 -... POINT (-59.20493 -32.03189)
+    12        Salta MULTIPOLYGON (((-68.49647 -... POINT (-64.80661 -24.28824)
+    13        Jujuy MULTIPOLYGON (((-67.25133 -... POINT (-65.77985 -23.31783)
+    741     Formosa MULTIPOLYGON (((-62.34136 -... POINT (-59.94839 -24.89604)
+    746    Misiones MULTIPOLYGON (((-54.66497 -... POINT (-54.65212 -26.86956)
+    749       Chaco MULTIPOLYGON (((-58.35127 -... POINT (-60.77109 -26.39039)
+    750  Corrientes MULTIPOLYGON (((-58.6042 -2... POINT (-57.79471 -28.76018)
+    1318  Catamarca MULTIPOLYGON (((-68.33776 -...  POINT (-66.99006 -27.3092)
+    1320   La Rioja MULTIPOLYGON (((-69.65405 -... POINT (-67.21371 -29.66235)
+    1321   San Juan MULTIPOLYGON (((-69.95766 -... POINT (-68.88199 -30.82274)
 
-<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
+    Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not
+    give correct results for longitude/latitude data
+
+<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/mapa_centroide-1.png" width="768" />
 
 {{< detalles "Ver código del gráfico" >}}
 
 ``` r
 mapa_centroide |> 
-filter(region == "Región de Atacama") |> 
+filter(region == mapa$region[3]) |> 
 ggplot() +
 geom_sf(fill = "#9069C0", 
 linewidth = NA) +
@@ -232,38 +324,31 @@ mapa_centroide_coordenadas |>
   select(region, lon, lat)
 ```
 
-    Simple feature collection with 17 features and 3 fields
-    Geometry type: GEOMETRY
+    Simple feature collection with 24 features and 3 fields
+    Geometry type: MULTIPOLYGON
     Dimension:     XY
-    Bounding box:  xmin: -12183900 ymin: -7554306 xmax: -7393644 ymax: -1978920
-    Projected CRS: WGS 84 / Pseudo-Mercator
-    # A tibble: 17 × 4
-       region                                  lon     lat                  geometry
-       <chr>                                 <dbl>   <dbl>            <GEOMETRY [m]>
-     1 Región de Arica y Parinacota        -7.75e6 -2.10e6 POLYGON ((-7675501 -2147…
-     2 Región de Tarapacá                  -7.72e6 -2.30e6 POLYGON ((-7807680 -2295…
-     3 Región de Antofagasta               -7.69e6 -2.70e6 MULTIPOLYGON (((-7859947…
-     4 Región de Magallanes y Antártica C… -8.00e6 -6.90e6 MULTIPOLYGON (((-7494058…
-     5 Región de Aysén del Gral.Ibañez de… -8.16e6 -5.86e6 MULTIPOLYGON (((-8395076…
-     6 Región de Atacama                   -7.78e6 -3.17e6 MULTIPOLYGON (((-7868801…
-     7 Región de Coquimbo                  -7.89e6 -3.58e6 MULTIPOLYGON (((-7956099…
-     8 Región de Valparaíso                -7.94e6 -3.86e6 MULTIPOLYGON (((-8991646…
-     9 Región Metropolitana de Santiago    -7.86e6 -3.98e6 POLYGON ((-7857118 -3892…
-    10 Región de Los Lagos                 -8.11e6 -5.17e6 MULTIPOLYGON (((-8128795…
-    11 Región de Los Ríos                  -8.08e6 -4.87e6 MULTIPOLYGON (((-8156461…
-    12 Región de La Araucanía              -8.05e6 -4.67e6 POLYGON ((-7929978 -4593…
-    13 Región del Bío-Bío                  -8.06e6 -4.51e6 MULTIPOLYGON (((-8231986…
-    14 Región de Ñuble                     -8.01e6 -4.39e6 POLYGON ((-8053807 -4431…
-    15 Región del Maule                    -7.95e6 -4.25e6 POLYGON ((-8018823 -4121…
-    16 Región del Libertador Bernardo O'H… -7.91e6 -4.09e6 POLYGON ((-8015044 -4051…
-    17 Zona sin demarcar                   -8.15e6 -6.36e6 POLYGON ((-8197676 -6303…
+    Bounding box:  xmin: -73.57274 ymin: -55.05202 xmax: -53.66155 ymax: -21.78694
+    Geodetic CRS:  WGS 84
+    First 10 features:
+             region       lon       lat                       geometry
+    1    Entre Ríos -59.20493 -32.03189 MULTIPOLYGON (((-58.20011 -...
+    12        Salta -64.80661 -24.28824 MULTIPOLYGON (((-68.49647 -...
+    13        Jujuy -65.77985 -23.31783 MULTIPOLYGON (((-67.25133 -...
+    741     Formosa -59.94839 -24.89604 MULTIPOLYGON (((-62.34136 -...
+    746    Misiones -54.65212 -26.86956 MULTIPOLYGON (((-54.66497 -...
+    749       Chaco -60.77109 -26.39039 MULTIPOLYGON (((-58.35127 -...
+    750  Corrientes -57.79471 -28.76018 MULTIPOLYGON (((-58.6042 -2...
+    1318  Catamarca -66.99006 -27.30920 MULTIPOLYGON (((-68.33776 -...
+    1320   La Rioja -67.21371 -29.66235 MULTIPOLYGON (((-69.65405 -...
+    1321   San Juan -68.88199 -30.82274 MULTIPOLYGON (((-69.95766 -...
 
-<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
+<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/barras_latitud-1.png" width="768" />
 
 {{< detalles "Ver código del gráfico" >}}
 
 ``` r
 mapa_centroide_coordenadas |> 
+distinct(region, .keep_all = TRUE) |> 
 mutate(region = forcats::fct_reorder(region, lat)) |> # ordenar regiones
 ggplot() +
 aes(lat, region) +
@@ -281,9 +366,36 @@ labs(y = NULL, x = "Latitud")
 
 ### Calcular buffer
 
+Un *buffer* es una zona alrededor de un objeto geográfico, definida por una distancia específica. Calcular un *buffer* es útil para analizar áreas de influencia, proximidad a ciertos puntos o regiones, o para hacer modificiones sobre mapas con fines de visualización.
+
+Con la función `st_buffer()` definimos el espacio en torno a un polígono, especificando en el argumento `dist` la **distancia** del *buffer* en las unidades del sistema de coordenadas del mapa (por ejemplo, metros si el mapa está en UTM), y con `max_cells` podemos controlar la calidad del polígono resultante.
+
 ``` r
-st_buffer()
+mapa_buffer <- mapa |> 
+  # filtrar una región/polígono
+  filter(region == mapa$region[3]) |> 
+  # crear buffer
+  mutate(buffer = st_buffer(geometry, 
+                            dist = 20000,
+                            max_cells = 10000))
 ```
+
+<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/mapa_buffer-1.png" width="768" />
+
+{{< detalles "Ver código del gráfico" >}}
+
+``` r
+mapa_buffer |> 
+ggplot() +
+# capa de la región
+geom_sf(aes(geometry = geometry), 
+fill = "#9069C0", linewidth = NA) +
+# capa del buffer
+geom_sf(aes(geometry = buffer), 
+fill = "#9069C0", alpha = 0.5, linewidth = NA)
+```
+
+{{< /detalles >}}
 
 ------------------------------------------------------------------------
 
@@ -296,7 +408,7 @@ st_bbox(mapa)
 ```
 
          xmin      ymin      xmax      ymax 
-    -12183903  -7554306  -7393644  -1978920 
+    -73.57274 -55.05202 -53.66155 -21.78694 
 
 ------------------------------------------------------------------------
 
@@ -311,6 +423,36 @@ caja_poli <- caja |>
 
 caja_poli
 ```
+
+    Simple feature collection with 1 feature and 0 fields
+    Geometry type: POLYGON
+    Dimension:     XY
+    Bounding box:  xmin: -73.57274 ymin: -55.05202 xmax: -53.66155 ymax: -21.78694
+    Geodetic CRS:  WGS 84
+                                   x
+    1 POLYGON ((-73.57274 -55.052...
+
+<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png" width="768" />
+
+{{< detalles "Ver código del gráfico" >}}
+
+``` r
+ggplot() +
+  # mapa de fondo
+  geom_sf(data = mapa,
+          fill = "#9069C0", color = "#EBD2FB",
+          linewidth = 0.3) +
+  # capa con la caja encima
+  geom_sf(data = caja_poli,
+          fill = "#9069C0", color = "#9069C0", 
+          linewidth = 0.8,
+          alpha = 0.4) +
+  # tema
+  theme(axis.text = element_blank(),
+        panel.background = element_blank())
+```
+
+{{< /detalles >}}
 
 ------------------------------------------------------------------------
 
@@ -645,6 +787,7 @@ https://dominicroye.github.io/blog/inserted-map/
 
 
 -->
+{{< aviso "⚠️ Este tutorial se encuentra en construcción ⚠️" >}}
 
 ------------------------------------------------------------------------
 
