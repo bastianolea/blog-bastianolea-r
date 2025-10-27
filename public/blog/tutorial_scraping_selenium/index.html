@@ -58,7 +58,7 @@ En este tutorial aprenderemos a usar {RSelenium} para programar scripts de R que
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  <link rel="stylesheet" href="/style.main.min.9dae2888bc53e1aef239ba1add77b8a61bb249ad5c068c5464836ceb4111eb2c.css" integrity="sha256-na4oiLxT4a7yOboa3Xe4phuySa1cBoxUZINs60ER6yw=" media="screen">
   
   
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -307,10 +307,6 @@ En este tutorial aprenderemos a usar {RSelenium} para programar scripts de R que
       datos</a> </dd></em>
   </dl>
  
-
-
-
-
         
       
 
@@ -350,7 +346,7 @@ Si necesitas aprender lo básico del web scraping, primero
 </span></span></code></pre></div><p>Éste código pondrá a descargar el navegador y lo abrirá:</p>
 <a href="rselenium_1.png" target="_blank">
 
-  <img src="rselenium_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="rselenium_1.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>Aparece una ventana de navegador con la barra superior en rojo, indicando que está siendo controlado por otro programa, en este caso por R.</p>
@@ -371,7 +367,7 @@ Si necesitas aprender lo básico del web scraping, primero
 </span></span></code></pre></div><p>Si nos vamos a ver el navegador, vemos que la página efectivamente se ha cargado.</p>
 <a href="rselenium_2.png" target="_blank">
 
-  <img src="rselenium_2.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="rselenium_2.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>Desde esta página web de Transparencia podemos extraer datos sobre la gestión de organismos públicos, pero para llegar a ellos tenemos que hacer clic en varios enlaces. Usaremos <code>{RSelenium}</code> para navegar el sitio y obtener los datos, generando un script que podremos reutilizar para actualizar los datos, obtener datos de manera masiva de este sitio, u obtener los datos del mismo portal pero de otro organismo público, dado que funcionan igual.</p>
@@ -389,20 +385,20 @@ Si necesitas aprender lo básico del web scraping, primero
 <p>Si hacemos clic derecho sobre cualquier elemento del sitio y elegimos <em>Inspeccionar</em>, se abrirá el panel de herramientas de desarrollador web.</p>
 <a href="rselenium_3.png" target="_blank">
 
-  <img src="rselenium_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="rselenium_3.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>Con este panel podemos inspeccionar el código fuente del sitio web, desde donde podremos extraer texto, enlaces, imágenes, tablas, y más.</p>
 <p>En el panel de herramientas de desarrollador apretamos el <em>botón de selección</em> (destacado con un círculo en la imagen anterior, o <code>comando + shift + C</code>) para que cuando pasemos el cursor sobre los elementos del sitio web, se destaque el código fuente correspondiente.</p>
 <a href="rselenium_4.png" target="_blank">
 
-  <img src="rselenium_4.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="rselenium_4.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>Cuándo identificamos el elemento que necesitamos, vamos al código correspondiente, hacemos clic derecho, y copiamos el <code>xpath</code> o el <code>selector css</code>. Ambas son formas de identificar de manera única elementos en un sitio web, pero esta vez copiaremos el <code>xpath</code>.</p>
 <a href="rselenium_5.png" target="_blank">
 
-  <img src="rselenium_5.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="rselenium_5.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 
@@ -422,7 +418,7 @@ Si necesitas aprender lo básico del web scraping, primero
 </span></span></code></pre></div><p>Funcionó! El navegador navegó al enlace que le pedimos.</p>
 <a href="rselenium_6.png" target="_blank">
 
-  <img src="rselenium_6.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="rselenium_6.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>Ahora repetimos el proceso para navegar al enlace <em>Municipal</em>:</p>
@@ -432,7 +428,7 @@ Si necesitas aprender lo básico del web scraping, primero
 </span></span></code></pre></div><p>Ahora el sitio muestra una selección de todos los años que tienen datos. Si volvemos a repetir el proceso, nos damos cuenta de que el <code>xpath</code> del año 2025 termina con un <code>0</code>, y el del año 2024 termina en <code>1</code>, el de 2023 en <code>2</code>, y así sucesivamente.</p>
 <a href="rselenium_7.png" target="_blank">
 
-  <img src="rselenium_7.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="rselenium_7.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>Esto significa que podríamos automatizar el acceso a todos los años simplemente creando un loop que vaya desde 0 a 10 (año 2015). Pero por ahora accedamos al segundo año:</p>
@@ -442,7 +438,7 @@ Si necesitas aprender lo básico del web scraping, primero
 </span></span></code></pre></div><p>Ahora llegamos a una página con los meses, donde se repita el mismo patrón: todos los meses comparten un <code>xpath</code> que termina con el número del cero a la cantidad de meses presentes.</p>
 <a href="rselenium_8.png" target="_blank">
 
-  <img src="rselenium_8.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="rselenium_8.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>Si navegamos alguno de los meses, finalmente llegamos a los datos que estábamos buscando:</p>
@@ -451,7 +447,7 @@ Si necesitas aprender lo básico del web scraping, primero
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">clickElement</span><span style="color:#908caa">()</span>
 </span></span></code></pre></div><a href="rselenium_9.png" target="_blank">
 
-  <img src="rselenium_9.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="rselenium_9.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 
@@ -595,7 +591,7 @@ Si necesitas aprender a usar <code>{rvest}</code>,
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">screenshot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">file</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#39;pantallazo_1.jpg&#39;</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><a href="pantallazo_1.jpg" target="_blank">
 
-  <img src="pantallazo_1.jpg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="pantallazo_1.jpg" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>Este tipo de acciones no es posible con herramientas de web scraping como <code>{rvest}</code>, que funcionan navegando directamente el código fuente del sitio, sin cargarlo como normalmente haría un navegador web.</p>
@@ -614,7 +610,7 @@ Si necesitas aprender a usar <code>{rvest}</code>,
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">remote</span><span style="color:#908caa">$</span><span style="color:#ea9a97">screenshot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">file</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#39;pantallazo_2.jpg&#39;</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><a href="pantallazo_2.jpg" target="_blank">
 
-  <img src="pantallazo_2.jpg" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="pantallazo_2.jpg" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 

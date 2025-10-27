@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.136.5">
-<title>Tutorial: Mapa en {ggplot2} con calles desde Open Street Map | Bastián Olea</title>
+<title>Tutorial: Mapa en {ggplot2} con calles desde Open Street Map en R | Bastián Olea</title>
 
 
 <meta property="twitter:site" content="@bastimapache">
@@ -28,7 +28,7 @@
 
 
 <meta property="og:site_name" content="Bastián Olea">
-<meta property="og:title" content="Tutorial: Mapa en {ggplot2} con calles desde Open Street Map | Bastián Olea">
+<meta property="og:title" content="Tutorial: Mapa en {ggplot2} con calles desde Open Street Map en R | Bastián Olea">
 <meta property="og:description" content="Blog y portafolio de proyectos de Bastián Olea, sociólogx y analista de datos" />
 <meta property="og:type" content="page" />
 <meta property="og:url" content="https://bastianoleah.netlify.app/blog/tutorial_mapas_osm/" />
@@ -44,22 +44,20 @@
     
     
   
-  <meta itemprop="name" content="Tutorial: Mapa en {ggplot2} con calles desde Open Street Map">
-  <meta itemprop="description" content="En este tutorial crearemos un mapa de una región de Chile, y sobre el polígono geográfico aplicaremos otros elementos geográficos como calles, avenidas y carreteras, obtenidos desde Open Street Map (proveedor de mapas online abierto y comunitario).
-Esto puede servir para crear visualizaciones de datos espaciales minimalistas que de todos modos entreguen elementos urbanos de referencia para que les usuaries puedan ubicarse mejor espacialmente.
-Usaremos {dplyr} para manipular los datos, el paquete {ggplot2} para visualización de datos, {sf} para tratamiento de elementos espaciales, {rnaturalearth} para obtener mapas de cualquier país o región del mundo, y {osmdata} para obtener datos estaciales desde Open Street Map (OSM) por medio de su API pública.">
+  <meta itemprop="name" content="Tutorial: Mapa en {ggplot2} con calles desde Open Street Map en R">
+  <meta itemprop="description" content="Índice Cargar paquetes Obtener mapa de país y de región Obtener datos geográficos desde Open Street Map Visualizar mapa con calles En este tutorial crearemos un mapa de una región de Chile, y sobre el polígono geográfico aplicaremos otros elementos geográficos como calles, avenidas y carreteras, obtenidos desde Open Street Map (proveedor de mapas online abierto y comunitario).">
   <meta itemprop="datePublished" content="2024-09-03T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-09-03T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1136">
+  <meta itemprop="wordCount" content="943">
   <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/tutorial_mapas_osm/mapa-featured.png">
-  <meta itemprop="keywords" content="Mapas,Chile,Visualización de datos,Ggplot2">
+  <meta itemprop="keywords" content="Mapas,Chile">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="false" type="image/x-icon">
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  <link rel="stylesheet" href="/style.main.min.9dae2888bc53e1aef239ba1add77b8a61bb249ad5c068c5464836ceb4111eb2c.css" integrity="sha256-na4oiLxT4a7yOboa3Xe4phuySa1cBoxUZINs60ER6yw=" media="screen">
   
   
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -279,7 +277,7 @@ Usaremos {dplyr} para manipular los datos, el paquete {ggplot2} para visualizaci
   <section class="page-content mw7 center">
     <article class="post-content pa0 ph4-l">
       <header class="post-header">
-        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Tutorial: Mapa en {ggplot2} con calles desde Open Street Map</h1>
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Tutorial: Mapa en {ggplot2} con calles desde Open Street Map en R</h1>
         
         
         <p class="f7 db mv0 ttu">3/9/2024</p>
@@ -305,35 +303,15 @@ Usaremos {dplyr} para manipular los datos, el paquete {ggplot2} para visualizaci
                  background-color: #9069C0; 
                  border-radius: 3px; 
                  padding: 2px 6px; ">
-      chile</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos"
-    style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 10pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px; ">
-      visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/ggplot2"
-    style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 10pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px; ">
-      ggplot2</a> </dd></em>
+      Chile</a> </dd></em>
   </dl>
  
-
-
-
-
         
       
       <div class="ph0 pt5">
         
+
+
     
     
     
@@ -346,7 +324,9 @@ Usaremos {dplyr} para manipular los datos, el paquete {ggplot2} para visualizaci
       
       
   <a class="btn-links mr2 ba dib" 
-  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
+  style = "background-color: #9069C0; border-radius: 4px; color: #EAD2FA; 
+  font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; margin-right: 1px;"
   href="https://github.com/bastianolea/tutorial_r_mapa_openstreetmap" target="_blank" rel="noopener"><i class="fab fa-github fa-lg fa-fw mr2"></i>código</a>
 
 
@@ -355,7 +335,30 @@ Usaremos {dplyr} para manipular los datos, el paquete {ggplot2} para visualizaci
 
       </header>
       <section class="post-body pt5 pb4">
-        <p>En este tutorial crearemos un mapa de una región de Chile, y sobre el polígono geográfico aplicaremos otros elementos geográficos como calles, avenidas y carreteras, obtenidos desde Open Street Map (proveedor de mapas online abierto y comunitario).</p>
+        <div style = "margin-left: -16px;">
+  
+  <details open id="PageTableOfContents">
+    <summary>
+      <h2 class="mv0 f5 fw7 ttu tracked dib" style = "margin-left: 6px; font-size: 120%;">Índice</h2>
+      </summary>
+    <div class="pl2 pr0 mh0" style = "margin-top: -8px; margin-left: 12px; margin-bottom: 32px;">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#cargar-paquetes">Cargar paquetes</a></li>
+      </ul>
+    </li>
+    <li><a href="#obtener-mapa-de-país-y-de-región">Obtener mapa de país y de región</a></li>
+    <li><a href="#obtener-datos-geográficos-desde-open-street-map">Obtener datos geográficos desde Open Street Map</a></li>
+    <li><a href="#visualizar-mapa-con-calles">Visualizar mapa con calles</a></li>
+  </ul>
+</nav>
+    </div>
+  </details>
+  
+</div>
+<p>En este tutorial crearemos un mapa de una región de Chile, y sobre el polígono geográfico aplicaremos otros elementos geográficos como calles, avenidas y carreteras, obtenidos desde Open Street Map (proveedor de mapas online abierto y comunitario).</p>
 <p>Esto puede servir para crear visualizaciones de datos espaciales minimalistas que de todos modos entreguen elementos urbanos de referencia para que les usuaries puedan ubicarse mejor espacialmente.</p>
 <p>Usaremos <code>{dplyr}</code> para manipular los datos, el paquete <code>{ggplot2}</code> para visualización de datos, <code>{sf}</code> para tratamiento de elementos espaciales, <code>{rnaturalearth}</code> para obtener mapas de cualquier país o región del mundo, y <code>{osmdata}</code> para obtener datos estaciales desde Open Street Map (OSM) por medio de su API pública.</p>
 
@@ -446,17 +449,15 @@ Geodetic CRS:  WGS 84
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">calles_chicas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">caja</span> <span style="color:#908caa">|&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">opq</span><span style="color:#908caa">(</span><span style="color:#ea9a97">timeout</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">500</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">add_osm_feature</span><span style="color:#908caa">(</span><span style="color:#ea9a97">key</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;highway&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#ea9a97">value</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;residential&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;living_street&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                              <span style="color:#f6c177">&#34;unclassified&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;service&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;footway&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>                    <span style="color:#ea9a97">value</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;residential&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;living_street&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">osmdata_sf</span><span style="color:#908caa">()</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">calles_grandes</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">calles_grandes</span>
 </span></span></code></pre></div><pre><code>Object of class 'osmdata' with:
                  $bbox : -44.0449981164699,-74.4072159499999,-40.2730445289999,-71.6592646899999
         $overpass_call : The call submitted to the overpass API
                  $meta : metadata including timestamp and version numbers
-           $osm_points : 'sf' Simple Features Collection with 34928 points
-            $osm_lines : 'sf' Simple Features Collection with 3580 linestrings
+           $osm_points : 'sf' Simple Features Collection with 29125 points
+            $osm_lines : 'sf' Simple Features Collection with 3270 linestrings
          $osm_polygons : 'sf' Simple Features Collection with 0 polygons
        $osm_multilines : NULL
     $osm_multipolygons : NULL
@@ -500,7 +501,7 @@ Geodetic CRS:  WGS 84
 </span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">caja</span><span style="color:#ea9a97">[c</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">3</span><span style="color:#908caa">)</span><span style="color:#ea9a97">]</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-42.4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-40.3</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-1.png" width="768" />
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
 <p>Otro ejemplo del mapa visto desde más cerca, incluyendo la capa de calles interiores:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># capa del mapa</span>
@@ -517,74 +518,15 @@ Geodetic CRS:  WGS 84
 </span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-73.18</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-73.09</span><span style="color:#908caa">),</span>
 </span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-40.6</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-40.55</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
-
-
-
-
-<h2 id="ejemplo">Ejemplo
-  <a href="#ejemplo"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h2>
-<p>Realizamos el mismo proceso en un solo paso, para otra región del país, mostrando la diferencia entre visualizar un dato al azar con y sin calles.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># obtener mapa</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_rm</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">rnaturalearth</span><span style="color:#908caa">::</span><span style="color:#ea9a97">ne_states</span><span style="color:#908caa">(</span><span style="color:#ea9a97">country</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Chile&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">name</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">geometry</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># filter(name == &#34;Región Metropolitana de Santiago&#34;)</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">name</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Maule&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># obtener calles</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">calles_grandes_rm</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">st_bbox</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa_rm</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">opq</span><span style="color:#908caa">(</span><span style="color:#ea9a97">timeout</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">500</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">add_osm_feature</span><span style="color:#908caa">(</span><span style="color:#ea9a97">key</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;highway&#34;</span><span style="color:#908caa">,</span> 
-</span></span><span style="display:flex;"><span>                    <span style="color:#ea9a97">value</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;motorway&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;primary&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;motorway_link&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;primary_link&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">osmdata_sf</span><span style="color:#908caa">()</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">calles_medianas_rm</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">st_bbox</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa_rm</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">opq</span><span style="color:#908caa">(</span><span style="color:#ea9a97">timeout</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">500</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">add_osm_feature</span><span style="color:#908caa">(</span><span style="color:#ea9a97">key</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;highway&#34;</span><span style="color:#908caa">,</span> 
-</span></span><span style="display:flex;"><span>                    <span style="color:#ea9a97">value</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;secondary&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;tertiary&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;secondary_link&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;tertiary_link&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">osmdata_sf</span><span style="color:#908caa">()</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># puntos para graficar</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">puntos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">calles_grandes_rm</span><span style="color:#908caa">$</span><span style="color:#ea9a97">osm_points</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">highway</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;stop&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">st_intersection</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa_rm</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">rowwise</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">azar</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">sample</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">:</span><span style="color:#f6c177">10</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">azar</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">ifelse</span><span style="color:#908caa">(</span><span style="color:#ea9a97">azar</span> <span style="color:#908caa">&lt;</span> <span style="color:#f6c177">7</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">azar</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">ungroup</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># visualizar sin calles</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mapa_rm</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">puntos</span><span style="color:#908caa">,</span> 
-</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">azar</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;purple3&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.2</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">scale_size</span><span style="color:#908caa">(</span><span style="color:#ea9a97">range</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">10</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># visualizar con calles</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mapa_rm</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_intersection</span><span style="color:#908caa">(</span><span style="color:#ea9a97">calles_grandes_rm</span><span style="color:#908caa">$</span><span style="color:#ea9a97">osm_lines</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">mapa_rm</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.7</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_intersection</span><span style="color:#908caa">(</span><span style="color:#ea9a97">calles_medianas_rm</span><span style="color:#908caa">$</span><span style="color:#ea9a97">osm_lines</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">mapa_rm</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.3</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">puntos</span><span style="color:#908caa">,</span> 
-</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">azar</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;purple3&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.2</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">scale_size</span><span style="color:#908caa">(</span><span style="color:#ea9a97">range</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">10</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span>
 </span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png" width="768" />
-<hr>
-<p><strong>Bastián Olea Herrera</strong></p>
-<p>Analista de datos, magíster en Sociología (PUC)</p>
-<p>
-<a href="https://bastianolea.github.io/shiny_apps/" target="_blank" rel="noopener">https://bastianolea.github.io/shiny_apps/</a></p>
-<p>
-<a href="https://bastianolea.rbind.io" target="_blank" rel="noopener">https://bastianolea.rbind.io</a></p>
+<div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
 
         
         <details closed class="f6 fw7 input-reset">
@@ -594,7 +536,7 @@ Geodetic CRS:  WGS 84
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">6 minute read, 1136 words</dd>
+    <dd class="fw5 ml0">5 minute read, 943 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -606,17 +548,17 @@ Geodetic CRS:  WGS 84
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/mapas">mapas</a>  <a href="https://bastianoleah.netlify.app/tags/chile">chile</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/ggplot2">ggplot2</a> </dd>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/mapas">mapas</a>  <a href="https://bastianoleah.netlify.app/tags/chile">Chile</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
+    <dd class="fw5 ml0"><a href="/blog/mapa_chile_triple/">Visualizar un mapa de Chile separado en tres secciones</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/mapas_sf/">Mapas y visualización de datos geoespaciales en R con {sf}</a></dd>
+    
     <dd class="fw5 ml0"><a href="/blog/tutorial_mapa_chile_subdere/">Crea un mapa de Chile desde datos geoespaciales oficiales en R</a></dd>
-    
-    <dd class="fw5 ml0"><a href="/blog/ggplot_tipografias/">Tipografías personalizadas en gráficos {ggplot2}</a></dd>
-    
-    <dd class="fw5 ml0"><a href="/blog/ggplot_temas/">Temas de colores personalizados para tus gráficos {ggplot2}</a></dd>
     
   </dl>
 </details>

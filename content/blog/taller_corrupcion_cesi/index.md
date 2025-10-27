@@ -4,7 +4,7 @@ title: 'Video: Taller Medición y Análisis de la Corrupción en Chile desde el 
 author: Bastián Olea Herrera
 date: '2025-07-23'
 slug: []
-categories: ["tutoriales"]
+categories: []
 tags:
   - web scraping
   - Chile

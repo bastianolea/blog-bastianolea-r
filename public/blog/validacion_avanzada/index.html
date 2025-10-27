@@ -49,7 +49,7 @@
 Dado que R es un lenguaje enfocado en el análisis de datos, existen varios paquetes que nos pueden ayudar con la validación de datos!">
   <meta itemprop="datePublished" content="2025-10-15T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-10-15T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2398">
+  <meta itemprop="wordCount" content="2557">
   <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/validacion_avanzada/pointblank-2-featured.png">
   <meta itemprop="keywords" content="Procesamiento de datos,Consejos,Automatización,Limpieza de datos">
   
@@ -58,7 +58,7 @@ Dado que R es un lenguaje enfocado en el análisis de datos, existen varios paqu
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  <link rel="stylesheet" href="/style.main.min.9dae2888bc53e1aef239ba1add77b8a61bb249ad5c068c5464836ceb4111eb2c.css" integrity="sha256-na4oiLxT4a7yOboa3Xe4phuySa1cBoxUZINs60ER6yw=" media="screen">
   
   
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -325,14 +325,12 @@ Dado que R es un lenguaje enfocado en el análisis de datos, existen varios paqu
       limpieza de datos</a> </dd></em>
   </dl>
  
-
-
-
-
         
       
       <div class="ph0 pt5">
         
+
+
     
     
     
@@ -345,7 +343,9 @@ Dado que R es un lenguaje enfocado en el análisis de datos, existen varios paqu
       
       
   <a class="btn-links mr2 ba dib" 
-  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
+  style = "background-color: #9069C0; border-radius: 4px; color: #EAD2FA; 
+  font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; margin-right: 1px;"
   href="https://rstudio.github.io/pointblank/" target="_blank" rel="noopener"><i class="fas fa-registered fa-lg fa-fw mr2"></i>pointblank</a>
 
     
@@ -360,7 +360,9 @@ Dado que R es un lenguaje enfocado en el análisis de datos, existen varios paqu
       
       
   <a class="btn-links mr2 ba dib" 
-  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
+  style = "background-color: #9069C0; border-radius: 4px; color: #EAD2FA; 
+  font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; margin-right: 1px;"
   href="https://testthat.r-lib.org" target="_blank" rel="noopener"><i class="fas fa-registered fa-lg fa-fw mr2"></i>testthat</a>
 
 
@@ -371,7 +373,7 @@ Dado que R es un lenguaje enfocado en el análisis de datos, existen varios paqu
       <section class="post-body pt5 pb4">
         <a href="pointblank-1.png" target="_blank">
 
-  <img src="pointblank-1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="pointblank-1.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>En un 
@@ -383,6 +385,44 @@ Dado que R es un lenguaje enfocado en el análisis de datos, existen varios paqu
 <hr>
 <p><em><strong>¿Para qué sirve la validación de datos?</strong></em> Para que, en cualquier punto de tus procesos de análisis de datos, puedas <strong>verificar si los datos cumplen con los criterios de calidad que tú definas</strong>, y así enterarte de si vienen como esperas o si es que traen <em>sorpresas</em>. En la validación de datos se crean <strong>pruebas</strong> para, por ejemplo, confirmar que una columna no tenga datos perdidos, que los valores de una columna estén dentro de un rango esperado, etcétera.</p>
 <p>Al crear una serie de pruebas, podemos <strong>automatizar el proceso de validación de datos.</strong> De esta forma, si modificamos nuestro código, o si cambian los datos, <strong>no necesitamos revisar manualmente</strong> que todo esté en orden, sino que <strong>tenemos una especie de protocolo para certificar que los datos son los esperados.</strong> Cada vez que hagamos cambios en el código, podemos ejecutar las pruebas para confirmar que todo sigue funcionando como se espera.</p>
+<div style = "margin-left: -16px;">
+  
+  <details open id="PageTableOfContents">
+    <summary>
+      <h2 class="mv0 f5 fw7 ttu tracked dib" style = "margin-left: 6px; font-size: 120%;">Índice</h2>
+      </summary>
+    <div class="pl2 pr0 mh0" style = "margin-top: -8px; margin-left: 12px; margin-bottom: 32px;">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#datos-de-ejemplo">Datos de ejemplo</a></li>
+    <li><a href="#validación-con-testthat">Validación con <code>{testthat}</code></a>
+      <ul>
+        <li><a href="#estructura-del-código">Estructura del código</a></li>
+        <li><a href="#crear-pruebas-unitarias">Crear pruebas unitarias</a></li>
+        <li><a href="#ejemplos-de-pruebas-unitarias-para-validación-de-datos">Ejemplos de pruebas unitarias para validación de datos</a>
+          <ul>
+            <li><a href="#uso-completo">Uso completo</a></li>
+            <li><a href="#uso-simple">Uso simple</a></li>
+          </ul>
+        </li>
+        <li><a href="#conclusión-de-testthat-para-validación-de-datos">Conclusión de <code>{testthat}</code> para validación de datos</a></li>
+      </ul>
+    </li>
+    <li><a href="#validación-de-datos-con-pointblank">Validación de datos con <code>{pointblank}</code></a>
+      <ul>
+        <li><a href="#reportes-de-validación-de-datos">Reportes de validación de datos</a></li>
+        <li><a href="#ejemplo-de-validación-de-datos-sucios">Ejemplo de validación de datos sucios</a></li>
+        <li><a href="#crear-un-plan-básico-de-validación-de-datos">Crear un plan básico de validación de datos</a></li>
+        <li><a href="#conclusiones">Conclusiones</a></li>
+        <li><a href="#recursos-para-aprender-pointblank">Recursos para aprender <code>{pointblank}</code></a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </details>
+  
+</div>
 <hr>
 
 
@@ -450,7 +490,7 @@ The following object is masked from 'package:dplyr':
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">test_that</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;números iguales&#34;</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">expect_equal</span><span style="color:#908caa">(</span><span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><pre><code>Test passed 🎉
+</span></span></code></pre></div><pre><code>Test passed 🌈
 </code></pre>
 <p>Esta prueba evalúa si dos números son iguales (<code>expect_equal()</code>), y en este ejemplo se cumple: <code>{testthat}</code> nos entrega un emoji de celebración 🎉 Veamos la siguiente prueba:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">test_that</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;números desiguales&#34;</span><span style="color:#908caa">,</span>
@@ -483,13 +523,13 @@ Error:
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">test_that</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;se cargaron los datos&#34;</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">expect_true</span><span style="color:#908caa">(</span><span style="color:#ea9a97">exists</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;datos&#34;</span><span style="color:#908caa">))</span>
 </span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><pre><code>Test passed 😸
+</span></span></code></pre></div><pre><code>Test passed 😀
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># esperamos que el número de columnas sea 4</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">test_that</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;suficientes columnas&#34;</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">expect_equal</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ncol</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">),</span> <span style="color:#f6c177">4</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><pre><code>Test passed 🎊
+</span></span></code></pre></div><pre><code>Test passed 🥇
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># esperamos que la columna `animal` sea tipo caracter</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">test_that</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;columnas tipo texto&#34;</span><span style="color:#908caa">,</span>
@@ -522,9 +562,30 @@ Error:
 <p>Una vez que guardamos este script, podemos ejecutar sus pruebas manualmente, o bien podemos usar <code>test_file(&quot;tests/test-script.R&quot;)</code> para <strong>ejecutar todas las pruebas de un script</strong>, o <code>test_dir(&quot;tests.R&quot;)</code> para ejecutar todas las pruebas de la carpeta de pruebas, validando tu proyecto entero de una sola vez.</p>
 <p>A partir de las pruebas que definimos podemos <strong>confirmar que hay problemas</strong> en las columnas <code>patas</code> y <code>color</code>, ya que no cumplen con las expectativas que definimos en las pruebas.</p>
 <p>Podemos ejecutar las funciones que realizan la validación desde donde más nos resulte conveniente: desde algún script principal de nuestro proyecto, desde un script <code>tests.R</code> específico para ejecutar las pruebas, al final de cada script del proyecto, al final de un script donde ejecutemos todo el procesamiento de nuestro proyecto, o manualmente.</p>
+
+
+
+
+<h4 id="uso-completo">Uso completo
+  <a href="#uso-completo"></a>
+</h4>
 <p>💡 <em>Lo que yo haría</em> sería algo así como agregar un <code>test_file()</code> al final del script de limpieza de datos, que confirme que la limpieza salió bien, en otro script donde procese datos tendría otro <code>test_file()</code> con pruebas relacionadas a este paso, etcétera.</p>
 <p>Otra opción es guardar los scripts de pruebas en <code>tests</code> y ejecutar todos los scripts de pruebas con <code>test_dir(&quot;tests/&quot;)</code>, en cuyo caso <code>{testthat}</code> arroja un resumen de los resultados.</p>
 <p>También, al guardar un script con pruebas, RStudio se da cuenta y aparece el botón <em>Run Tests</em> en la parte superior derecha del script.</p>
+
+
+
+
+<h4 id="uso-simple">Uso simple
+  <a href="#uso-simple"></a>
+</h4>
+<p>Si queremos hacerlo todo más simple, simplemente usemos las funciones <code>testthat::expect_x()</code> entremedio del código, de modo que si la prueba falla, arroja error, pero si no falla, no pasa nada. En este sentido, funciona igual que <code>stopifnot()</code>, pero para mi resulta mucho más claro (esa función me confunde mucho 😣). Con <code>expect_x()</code> declaramos: <em>esperamos que</em> lo siguiente retorne <code>TRUE</code>, y si las cosas se dan así, no pasa nada y la vida sigue.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">testthat</span><span style="color:#908caa">::</span><span style="color:#ea9a97">expect_equal</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n_distinct</span><span style="color:#908caa">(</span><span style="color:#ea9a97">iris</span><span style="color:#908caa">$</span><span style="color:#ea9a97">Species</span><span style="color:#908caa">),</span> <span style="color:#f6c177">3</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">testthat</span><span style="color:#908caa">::</span><span style="color:#ea9a97">expect_equal</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n_distinct</span><span style="color:#908caa">(</span><span style="color:#ea9a97">iris</span><span style="color:#908caa">$</span><span style="color:#ea9a97">Species</span><span style="color:#908caa">),</span> <span style="color:#f6c177">4</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Error: n_distinct(iris$Species) not equal to 4.
+1/1 mismatches
+[1] 3 - 4 == -1
+</code></pre>
 
 
 
@@ -626,7 +687,7 @@ The `col_vals_in_set()` validation failed beyond the absolute threshold level (1
 </span></span></code></pre></div><p>Recibimos un reporte interactivo que indica la calidad de nuestros datos en base a las pruebas definidas:</p>
 <a href="pointblank-1.png" target="_blank">
 
-  <img src="pointblank-1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="pointblank-1.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>En el reporte vemos los pasos de validación (las pruebas) hacia abajo en la columna <em>steps</em>, y los colores indican si la prueba se pasó (verde), si hubo advertencias (amarillo), o si la prueba falló (rojo). En la columna <em>units</em> se indica las unidades o pruebas individuales aplicadas en cada paso: probar el formato de una columna es una prueba, pero buscar datos perdidos corresponde a una prueba por cada observación de la tabla.</p>
@@ -651,16 +712,16 @@ The `col_vals_in_set()` validation failed beyond the absolute threshold level (1
 </span></span></code></pre></div><pre><code># A tibble: 150 × 5
    sepal_length sepal_width petal_length petal_width species    
    &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;       &lt;chr&gt;      
- 1 &quot;5.1 &quot;       &quot;3.5 &quot;      &lt;NA&gt;         &quot;0.2&quot;       &quot;setosa &quot;  
- 2  &lt;NA&gt;        &quot;3&quot;         &lt;NA&gt;         &quot;0.2&quot;       &quot;set#osa&quot;  
- 3  &lt;NA&gt;        &quot;3.2&quot;       1.3          &quot;0.2&quot;        &lt;NA&gt;      
- 4  &lt;NA&gt;         &lt;NA&gt;       &lt;NA&gt;         &quot;0.2&quot;        &lt;NA&gt;      
- 5 &quot;5&quot;          &quot;3.6&quot;       1.4          &quot;0.2&quot;        &lt;NA&gt;      
- 6  &lt;NA&gt;        &quot;3.9 &quot;      &lt;NA&gt;         &quot;0.4&quot;       &quot;s.etosa&quot;  
- 7 &quot;4.6&quot;        &quot;3.4&quot;       1.4          &quot;0.3&quot;       &quot;SETOSA&quot;   
- 8 &quot;5&quot;          &quot;3.4 &quot;      1.5          &quot;0.2 &quot;      &quot;s-etosa&quot;  
- 9 &quot;4.4 &quot;       &quot;2.9&quot;       1.4          &quot;0.2&quot;       &quot;*set!osa&quot; 
-10 &quot;4.9&quot;         &lt;NA&gt;       &lt;NA&gt;         &quot;0.1&quot;       &quot;se!t#os$a&quot;
+ 1 &quot;5.1 &quot;       &quot;3.5&quot;       &quot;1.4&quot;         &lt;NA&gt;       &quot;S!ETOSA&quot;  
+ 2  &lt;NA&gt;        &quot;3&quot;         &quot;1.4 &quot;       &quot;0.2&quot;       &quot;se^tosa&quot;  
+ 3 &quot;4.7&quot;        &quot;3.2&quot;       &quot;1.3&quot;        &quot;0.2&quot;       &quot;se+tos.a &quot;
+ 4 &quot;4.6 &quot;        &lt;NA&gt;       &quot;1.5&quot;        &quot;0.2&quot;       &quot;seto%sa&quot;  
+ 5  &lt;NA&gt;        &quot;3.6&quot;        &lt;NA&gt;        &quot;0.2&quot;       &quot;se#tosa &quot; 
+ 6 &quot;5.4&quot;        &quot;3.9 &quot;       &lt;NA&gt;        &quot;0.4 &quot;       &lt;NA&gt;      
+ 7 &quot;4.6 &quot;       &quot;3.4&quot;       &quot;1.4&quot;        &quot;0.3&quot;       &quot;SETOSA&quot;   
+ 8 &quot;5&quot;           &lt;NA&gt;       &quot;1.5&quot;        &quot;0.2&quot;       &quot;SETO$SA&quot;  
+ 9 &quot;4.4 &quot;       &quot;2.9 &quot;      &quot;1.4&quot;         &lt;NA&gt;       &quot;.SETOSA&quot;  
+10 &quot;4.9&quot;        &quot;3.1&quot;       &quot;1.5&quot;        &quot;0.1&quot;       &quot;set(o$s@a&quot;
 # ℹ 140 more rows
 </code></pre>
 <p>Luego creamos un agente para validar estos datos:</p>
@@ -677,7 +738,7 @@ The `col_vals_in_set()` validation failed beyond the absolute threshold level (1
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">interrogate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">agente_iris</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><a href="pointblank-2-featured.png" target="_blank">
 
-  <img src="pointblank-2-featured.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="pointblank-2-featured.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>Confirmamos que <code>{messy}</code> destruyó a nuestro querido <code>iris</code> 😔🕊️</p>
@@ -743,7 +804,7 @@ The `col_vals_in_set()` validation failed beyond the absolute threshold level (1
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">12 minute read, 2398 words</dd>
+    <dd class="fw5 ml0">13 minute read, 2557 words</dd>
   </dl>
   
   
@@ -756,11 +817,11 @@ The `col_vals_in_set()` validation failed beyond the absolute threshold level (1
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
+    <dd class="fw5 ml0"><a href="/blog/2025-10-21/">Contar datos perdidos en una o varias columnas</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/gander/">Acelera tus análisis con {gander}, un asistente de IA integrado en RStudio</a></dd>
+    
     <dd class="fw5 ml0"><a href="/blog/2025-08-22/">Convertir zonas horarias con R</a></dd>
-    
-    <dd class="fw5 ml0"><a href="/blog/left_join/">Unir o cruzar datos con left_join()</a></dd>
-    
-    <dd class="fw5 ml0"><a href="/blog/visdat/">Echa un vistazo preliminar a tus datos con {visdat}</a></dd>
     
   </dl>
 </details>

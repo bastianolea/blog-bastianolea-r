@@ -50,7 +50,7 @@ En este tutorial veremos:
 carga de datos de Excel seleccionar columnas ordenar tablas de datos seleccionar filas de una tabla de datos filtrar datos Los datos usados en este tutorial son las Proyecciones de población para 2024 de Chile, calculadas por el Instituto Nacional de Estadísticas (INE). La obtención, procesamiento y visualización de estos datos puede encontrarse en este repositorio, junto a una aplicación web desarrollada en R para visualizar los datos.">
   <meta itemprop="datePublished" content="2024-11-08T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-11-08T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2565">
+  <meta itemprop="wordCount" content="2642">
   <meta itemprop="keywords" content="Dplyr">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -58,7 +58,7 @@ carga de datos de Excel seleccionar columnas ordenar tablas de datos seleccionar
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  <link rel="stylesheet" href="/style.main.min.9dae2888bc53e1aef239ba1add77b8a61bb249ad5c068c5464836ceb4111eb2c.css" integrity="sha256-na4oiLxT4a7yOboa3Xe4phuySa1cBoxUZINs60ER6yw=" media="screen">
   
   
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -327,9 +327,27 @@ carga de datos de Excel seleccionar columnas ordenar tablas de datos seleccionar
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>Antes que nada, debemos <strong>descargar</strong> el archivo que usaremos para el tutorial: 
-<a href="https://raw.githubusercontent.com/bastianolea/blog-r/refs/heads/master/content/blog/r_introduccion/tutorial_dplyr_censo/censo_proyeccion_2024.xlsx" target="_blank" rel="noopener">clic aquí para descargar el archivo Excel <code>censo_proyeccion_2024.xlsx</code></a></p>
-<p>Importamos los datos que usaremos con la funcion <code>read_excel()</code>, cuyo argumento es el nombre del archivo. Asignamos el resultado a un objeto, y así tenemos nuetros datos de Excel cargados en R:</p>
+<p>Antes que nada, debemos <strong>descargar</strong> el archivo que usaremos para el tutorial:</p>
+
+
+
+
+<div class = "db pt1"
+style = "margin-bottom: 34px;">
+
+<a class = "btn-links mr2 ba dib"
+href = "https://raw.githubusercontent.com/bastianolea/blog-r/refs/heads/master/content/blog/r_introduccion/tutorial_dplyr_censo/censo_proyeccion_2024.xlsx" target="_blank"
+style = "padding: 12px; padding-bottom: 8px; border-radius: 5px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #9069C0; margin-bottom: -12px;">
+<i class="fas fa-file-arrow-down fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
+Descargar datos en Excel</a>
+
+</div>
+<p>Descargamos el archivo, y lo guardamos en una carpeta. Esta carpeta debe ser nuestro 
+<a href="../../../../blog/r_introduccion/proyectos/">proyecto de RStudio</a>, o bien, 
+<a href="../../../../blog/r_introduccion/proyectos/#crear-un-proyecto">creamos un nuevo proyecto de RStudio apuntando a esa carpeta</a>, para decirle a R que trabajaremos ahí.</p>
+<p>Importamos los datos que usaremos con la funcion <code>read_excel()</code>. Si el archivo que queremos cargar está dentro de nuestro 
+<a href="../../../../blog/r_introduccion/proyectos/">proyecto de RStudio</a>, entonces solamente necesitamos poner el nombre del archivo entre comillas, y si no, indicar la subcarpeta del proyecto en donde esté guardado, o si no estamos trabajando en un proyecto, indicar la ruta completa del archivo.</p>
+<p>Asignamos el resultado a un objeto, y así tenemos nuestros datos de Excel cargados en R:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_excel</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;censo_proyeccion_2024.xlsx&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># cargar</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">censo</span> <span style="color:#6e6a86"># ver los datos de dataframe o tabla</span>
@@ -348,7 +366,7 @@ carga de datos de Excel seleccionar columnas ordenar tablas de datos seleccionar
 10          2 Antofagasta            21 Antofagasta       2103 Sierra…      1800
 # ℹ 336 more rows
 </code></pre>
-<p>Para ver más filas del dataframe, usamos la función <code>print()</code>:</p>
+<p>Para ver más filas del dataframe, usamos la función <code>print()</code> con el argumento <code>n</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">print</span><span style="color:#908caa">(</span><span style="color:#ea9a97">censo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">20</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><pre><code># A tibble: 346 × 7
    cut_region region      cut_provincia provincia   cut_comuna comuna  población
@@ -732,13 +750,13 @@ carga de datos de Excel seleccionar columnas ordenar tablas de datos seleccionar
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">comuna</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><pre><code># A tibble: 5 × 1
-  comuna     
-  &lt;chr&gt;      
-1 San Vicente
-2 Toltén     
-3 Papudo     
-4 Cerro Navia
-5 Freirina   
+  comuna       
+  &lt;chr&gt;        
+1 Panquehue    
+2 Independencia
+3 Melipilla    
+4 Peñalolén    
+5 Chillán Viejo
 </code></pre>
 
 
@@ -816,506 +834,8 @@ carga de datos de Excel seleccionar columnas ordenar tablas de datos seleccionar
 </main>
 
 <aside class="page-sidebar" role="complementary">
-                         
- 
 
-
-<div style = "padding: 12px;">
-                       
- 
-
-
-
-
-
-
-
-
-
-
-
-  <img src="/blog/r_introduccion/sidebar-featured.jpg" style = "border-radius: 8px;" class="db ma0">
-
-</div>
-
-<div class="blog-info ph4 pt4 pb4 pb0-l">
-  
-
-  <h1 class="f3">Introducción a R</h1>
-  <p class="f6 lh-copy measure"><p>Contenido para principiantes en R. Serie de posts y tutoriales del nivel más básico, para quienes quieran adentrarse por primera vez en el análisis de datos con R.</p>
-<p>Si tienes alguna duda con R, no entiendes alguno de los contenidos, o necesitas apoyo personalizado, puedes 
-<a href="/contact/">contactarme.</a></p>
-</p>
-  
-
-
-
-
-<div style="font-size: 90%;">
-  <h2>Temas:</h2>
    
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/chile/">Chile</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">32 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">24 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/ggplot2/">Ggplot2</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">22 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/consejos/">Consejos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">22 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/datos/">Datos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">20 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos/">Gráficos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">19 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/apps/">Apps</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">16 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/web-scraping/">Web scraping</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">15 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/blog/">Blog</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">11 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">11 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/shiny/">Shiny</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">11 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/limpieza-de-datos/">Limpieza de datos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">11 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/quarto/">Quarto</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">10 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/mapas/">Mapas</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">9 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/ciencias-sociales/">Ciencias sociales</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">9 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/loops/">Loops</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">8 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">8 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/an%C3%A1lisis-de-texto/">Análisis de texto</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">7 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/curiosidades/">Curiosidades</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">7 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n/">Automatización</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">6 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/dplyr/">Dplyr</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">6 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/tablas/">Tablas</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">6 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n/">Optimización</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">5 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/texto/">Texto</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">5 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/purrr/">Purrr</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">4 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/g%C3%A9nero/">Género</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">4 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/estad%C3%ADstica/">Estadística</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">4 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/funciones/">Funciones</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">3 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/animaciones/">Animaciones</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">3 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/git/">Git</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">3 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/videos/">Videos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">3 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/aplicaciones/">Aplicaciones</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">3 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/control-de-flujo/">Control de flujo</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">2 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/fechas/">Fechas</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">2 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/temas/">Temas</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">2 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/arte-generativo/">Arte generativo</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">2 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/datos-perdidos/">Datos perdidos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">1 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/github/">GitHub</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">1 posts</span>
-  </div>
-
-</div>
-
-  
-</div>
-
-
                          
  
 
@@ -1390,7 +910,8 @@ carga de datos de Excel seleccionar columnas ordenar tablas de datos seleccionar
     </div>
   </details>
   
-</div>
+</div> 
+  
 </aside>
 
 

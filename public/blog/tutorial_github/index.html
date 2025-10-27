@@ -45,10 +45,10 @@
     
   
   <meta itemprop="name" content="Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub">
-  <meta itemprop="description" content="En este tutorial aprenderás a empezar a usar Git con tus proyectos de R, mediante la creación de repositorios. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas, descargar el código de otros, y colaborar en un mismo proyecto.">
+  <meta itemprop="description" content="Índice Git y GitHub Clonar un repositorio código de R en GitHub Navega al repositorio Crea un proyecto de R a partir del repositorio Crear un repositorio local para tu proyecto de R Instalar Git Instalar {usethis} Crear repositorio Hacer commits Hacer commit desde el panel de Git de RStudio Hacer commit desde la terminal Configurar GitHub en R Configurar tu cuenta Crear un repositorio remoto en GitHub para tu proyecto de R Recursos En este tutorial aprenderás a empezar a usar Git con tus proyectos de R, mediante la creación de repositorios. Git te permite llevar un registro de versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas, descargar el código de otros, y colaborar en un mismo proyecto.">
   <meta itemprop="datePublished" content="2025-02-07T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-02-07T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1630">
+  <meta itemprop="wordCount" content="1703">
   <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/tutorial_github/titulo_github-featured.png">
   <meta itemprop="keywords" content="Git,Consejos">
   
@@ -57,7 +57,7 @@
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  <link rel="stylesheet" href="/style.main.min.9dae2888bc53e1aef239ba1add77b8a61bb249ad5c068c5464836ceb4111eb2c.css" integrity="sha256-na4oiLxT4a7yOboa3Xe4phuySa1cBoxUZINs60ER6yw=" media="screen">
   
   
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -306,10 +306,6 @@
       Consejos</a> </dd></em>
   </dl>
  
-
-
-
-
         
       
 
@@ -317,12 +313,61 @@
       <section class="post-body pt5 pb4">
         <a href="titulo_github-featured.png" target="_blank">
 
-  <img src="titulo_github-featured.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="titulo_github-featured.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <br>
 <br>
-<p>En este tutorial aprenderás a empezar a usar Git con tus proyectos de R, mediante la creación de repositorios. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas, descargar el código de otros, y colaborar en un mismo proyecto.</p>
+<div style = "margin-left: -16px;">
+  
+  <details open id="PageTableOfContents">
+    <summary>
+      <h2 class="mv0 f5 fw7 ttu tracked dib" style = "margin-left: 6px; font-size: 120%;">Índice</h2>
+      </summary>
+    <div class="pl2 pr0 mh0" style = "margin-top: -8px; margin-left: 12px; margin-bottom: 32px;">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#git-y-github">Git y GitHub</a></li>
+      </ul>
+    </li>
+    <li><a href="#clonar-un-repositorio-código-de-r-en-github">Clonar un repositorio código de R en GitHub</a>
+      <ul>
+        <li><a href="#navega-al-repositorio">Navega al repositorio</a></li>
+        <li><a href="#crea-un-proyecto-de-r-a-partir-del-repositorio">Crea un proyecto de R a partir del repositorio</a></li>
+      </ul>
+    </li>
+    <li><a href="#crear-un-repositorio-local-para-tu-proyecto-de-r">Crear un repositorio local para tu proyecto de R</a>
+      <ul>
+        <li><a href="#instalar-git">Instalar Git</a></li>
+        <li><a href="#instalar-usethis">Instalar <code>{usethis}</code></a></li>
+        <li><a href="#crear-repositorio">Crear repositorio</a></li>
+        <li><a href="#hacer-_commits_">Hacer <em>commits</em></a>
+          <ul>
+            <li><a href="#hacer-commit-desde-el-panel-de-git-de-rstudio">Hacer commit desde el panel de Git de RStudio</a></li>
+            <li><a href="#hacer-commit-desde-la-terminal">Hacer commit desde la terminal</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#configurar-github-en-r">Configurar GitHub en R</a>
+      <ul>
+        <li><a href="#configurar-tu-cuenta">Configurar tu cuenta</a></li>
+      </ul>
+    </li>
+    <li><a href="#crear-un-repositorio-remoto-en-github-para-tu-proyecto-de-r">Crear un repositorio remoto en GitHub para tu proyecto de R</a>
+      <ul>
+        <li><a href="#recursos">Recursos</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </details>
+  
+</div>
+<p>En este tutorial aprenderás a empezar a usar Git con tus proyectos de R, mediante la creación de repositorios. Git te permite llevar un <strong>registro de versiones</strong> y un <strong>control de cambios</strong> en tu código, mientras que GitHub te permite <strong>subir tus repositorios a un servicio online</strong>, en el cual puedes <strong>compartir tu código</strong> con otras personas, descargar el código de otros, y <strong>colaborar</strong> en un mismo proyecto.</p>
 
 
 
@@ -373,7 +418,7 @@
 <p>El primer paso es navegar al repositorio que te interesa, y encontrar el botón verde que dice <em>Code</em>, en el tendrás que copiar un enlace justo arriba del texto que dice <em>clone using the web URL</em>.</p>
 <a href="tutorial_github_1.png" target="_blank">
 
-  <img src="tutorial_github_1.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="tutorial_github_1.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 
@@ -389,19 +434,19 @@
 <p>Con el enlace al repositorio copiado, ve a RStudio y crea un nuevo proyecto. Dentro de las tres opciones que te presenta para crear un nuevo proyecto, elige la tercera, que es para <strong>crear un proyecto desde un repositorio de control de versiones</strong>:</p>
 <a href="tutorial_github_2.png" target="_blank">
 
-  <img src="tutorial_github_2.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="tutorial_github_2.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>Luego elige la opción Git:</p>
 <a href="tutorial_github_3.png" target="_blank">
 
-  <img src="tutorial_github_3.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="tutorial_github_3.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>Finalmente, pega el enlace del repositorio en el primer campo de texto, y ajusta el nombre que le darás y la ubicación donde quieres que se guarde.</p>
 <a href="tutorial_github_4.png" target="_blank">
 
-  <img src="tutorial_github_4.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="tutorial_github_4.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>Al presionar <em>Crear proyecto</em>, RStudio descargará todo el código y datos del repositorio y los incluirá en el proyecto que creaste. Luego podrás ejecutar el código y navegar en repositorio localmente en tu computador. Recuerda que la mayoría de los repositorios contienen un archivo <code>README.md</code>, en el cual sus autores explican de qué se trata y usualmente incluyen instrucciones, y también un archivo de licencias que especifica qué puedes hacer con el código y que no puedes hacer con él, si es que planeas modificar el código o usarlo para otros fines.</p>
@@ -478,13 +523,13 @@
 <p>En la parte superior de RStudio, <strong>presiona el icono de Git</strong> y elige la opción <em>commit</em>:
 <a href="tutorial_github_5.png" target="_blank">
 
-  <img src="tutorial_github_5.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="tutorial_github_5.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a></p>
 <p>Se abrirá una nueva ventana donde aparecerán los archivos y datos nuevos en tu proyecto desde la última vez que hiciste <em>commit</em>.</p>
 <a href="tutorial_github_6.png" target="_blank">
 
-  <img src="tutorial_github_6.png" style="border-radius: 7px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  <img src="tutorial_github_6.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
 <p>Para todos los archivos nuevos que desees incluir en este guardado, debes <strong>seleccionar las casillas</strong> de cada uno para hacer el <em>stage</em> (considerarlos para el <em>commit</em>), y luego tienes que <strong>escribir un mensaje</strong> que describa cuál es tu nuevo cambio. Este mensaje servirá para que tú puedas identificar en el futuro qué cambios contiene este <em>commit.</em> Luego presiona el botón <em>commit.</em></p>
@@ -575,7 +620,7 @@
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">8 minute read, 1630 words</dd>
+    <dd class="fw5 ml0">8 minute read, 1703 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">

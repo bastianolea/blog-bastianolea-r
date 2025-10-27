@@ -46,19 +46,19 @@
   
   <meta itemprop="name" content="Echa un vistazo preliminar a tus datos con {visdat}">
   <meta itemprop="description" content="En una clase reciente me preguntaron cómo saber de una dónde hay datos perdidos o missing en un conjunto de datos. La respuesta que di fue usar summarize() para contar la cantidad de datos perdidos en todas las columnas de un dataframe:
-library(dplyr) # manipulación de datos library(messy) # ensuciar datos # agregar datos perdidos al azar iris_m &lt;- iris |&gt; messy::make_missing(cols = names(iris)) iris_m |&gt; # resumir los datos summarize( # en todas las columnas across(everything(), # contar la cantidad de missing ~sum(is.na(.x)) ) ) Sepal.Length Sepal.Width Petal.Length Petal.Width Species 1 10 13 11 17 12 Pero hay formas más convenientes de hacerlo!">
+library(dplyr) # manipulación de datos library(messy) # ensuciar datos # agregar datos perdidos al azar iris_m &lt;- iris |&gt; messy::make_missing(cols = names(iris)) iris_m |&gt; # resumir los datos summarize( # en todas las columnas across(everything(), # contar la cantidad de missing ~sum(is.na(.x)) ) ) Sepal.Length Sepal.Width Petal.Length Petal.Width Species 1 12 21 16 21 11 Pero hay formas más convenientes de hacerlo!">
   <meta itemprop="datePublished" content="2025-08-08T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-08-08T00:00:00+00:00">
   <meta itemprop="wordCount" content="352">
   <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/visdat/featured.png">
-  <meta itemprop="keywords" content="Visualización de datos,Limpieza de datos,Consejos">
+  <meta itemprop="keywords" content="Visualización de datos,Datos perdidos,Limpieza de datos,Consejos">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="false" type="image/x-icon">
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  <link rel="stylesheet" href="/style.main.min.9dae2888bc53e1aef239ba1add77b8a61bb249ad5c068c5464836ceb4111eb2c.css" integrity="sha256-na4oiLxT4a7yOboa3Xe4phuySa1cBoxUZINs60ER6yw=" media="screen">
   
   
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -295,7 +295,16 @@ library(dplyr) # manipulación de datos library(messy) # ensuciar datos # agrega
                  background-color: #9069C0; 
                  border-radius: 3px; 
                  padding: 2px 6px; ">
-      visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/limpieza-de-datos"
+      visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/datos-perdidos"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      datos perdidos</a>  <a href="https://bastianoleah.netlify.app/tags/limpieza-de-datos"
     style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -316,16 +325,13 @@ library(dplyr) # manipulación de datos library(messy) # ensuciar datos # agrega
       consejos</a> </dd></em>
   </dl>
  
-
-
-
-
         
       
 
       </header>
       <section class="post-body pt5 pb4">
-        <p>En una clase reciente me preguntaron cómo saber de una dónde hay datos perdidos o <em>missing</em> en un conjunto de datos. La respuesta que di fue usar <code>summarize()</code> para contar la cantidad de datos perdidos en todas las columnas de un dataframe:</p>
+        <p>En una clase reciente me preguntaron 
+<a href="../../../blog/2025-10-21/">cómo saber de una dónde hay datos perdidos o <em>missing</em></a> en un conjunto de datos. La respuesta que di fue usar <code>summarize()</code> para contar la cantidad de datos perdidos en todas las columnas de un dataframe:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># manipulación de datos</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">messy</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># ensuciar datos</span>
 </span></span><span style="display:flex;"><span>
@@ -343,7 +349,7 @@ library(dplyr) # manipulación de datos library(messy) # ensuciar datos # agrega
 </span></span><span style="display:flex;"><span>           <span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#908caa">)</span>
 </span></span></code></pre></div><pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-1           10          13           11          17      12
+1           12          21           16          21      11
 </code></pre>
 <p>Pero hay formas más convenientes de hacerlo!</p>
 <hr>
@@ -438,17 +444,17 @@ library(dplyr) # manipulación de datos library(messy) # ensuciar datos # agrega
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/limpieza-de-datos">limpieza de datos</a>  <a href="https://bastianoleah.netlify.app/tags/consejos">consejos</a> </dd>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/datos-perdidos">datos perdidos</a>  <a href="https://bastianoleah.netlify.app/tags/limpieza-de-datos">limpieza de datos</a>  <a href="https://bastianoleah.netlify.app/tags/consejos">consejos</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/validacion_avanzada/">Validación de datos con {testthat} y {pointblank}</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/mapas_sf/">Mapas y visualización de datos geoespaciales en R con {sf}</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/ggplot_tipografias/">Tipografías personalizadas en gráficos {ggplot2}</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/2025-10-21/">Contar datos perdidos en una o varias columnas</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/ggplot_temas/">Temas de colores personalizados para tus gráficos {ggplot2}</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/gander/">Acelera tus análisis con {gander}, un asistente de IA integrado en RStudio</a></dd>
     
   </dl>
 </details>
