@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Visualizar un mapa de Chile separado en tres secciones | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Como Chile es un país tan largo, a veces cuesta publicar mapas que se vean bien por el espacio que requiere. En otro post [intentamos resolver esto girando Chile para que quede horizontal o _acostado_](/blog/mapa_chile_horizontal/). Ahora veremos otra opción: partir Chile en tres secciones, norte centro y sur, que podemos disponer lado a lado para ocupar mejor el espacio.">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="Visualizar un mapa de Chile separado en tres secciones | Bastián Olea">
+<meta property="og:description" content="Como Chile es un país tan largo, a veces cuesta publicar mapas que se vean bien por el espacio que requiere. En otro post [intentamos resolver esto girando Chile para que quede horizontal o _acostado_](/blog/mapa_chile_horizontal/). Ahora veremos otra opción: partir Chile en tres secciones, norte centro y sur, que podemos disponer lado a lado para ocupar mejor el espacio." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/mapa_chile_triple/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/mapa_chile_triple/mapa_chile_tres_featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/mapa_chile_triple/mapa_chile_tres_featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Visualizar un mapa de Chile separado en tres secciones">
+  <meta itemprop="description" content="Como Chile es un país tan largo, a veces cuesta publicar mapas que se vean bien por el espacio que requiere. En otro post intentamos resolver esto girando Chile para que quede horizontal o acostado. Ahora veremos otra opción: partir Chile en tres secciones, norte centro y sur, que podemos disponer lado a lado para ocupar mejor el espacio.">
+  <meta itemprop="datePublished" content="2025-10-23T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-10-23T00:00:00+00:00">
+  <meta itemprop="wordCount" content="992">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/mapa_chile_triple/mapa_chile_tres_featured.png">
+  <meta itemprop="keywords" content="Mapas,Chile">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9dae2888bc53e1aef239ba1add77b8a61bb249ad5c068c5464836ceb4111eb2c.css" integrity="sha256-na4oiLxT4a7yOboa3Xe4phuySa1cBoxUZINs60ER6yw=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.422a2363d11e9d6836a9931682c00abf3c5a2cb6d5460f3485cb54696b258be4.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Visualizar un mapa de Chile separado en tres secciones</h1>
+        
+        
+        <p class="f7 db mv0 ttu">23/10/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/mapas"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      mapas</a>  <a href="https://bastianoleah.netlify.app/tags/chile"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      Chile</a> </dd></em>
+  </dl>
+ 
+        
+      
+      <div class="ph0 pt5">
+        
+
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; color: #EAD2FA; 
+  font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; margin-right: 1px;"
+  href="https://gist.github.com/bastianolea/52259ec4964891b2d11c5ad59c010246" target="_blank" rel="noopener"><i class="fab fa-github fa-lg fa-fw mr2"></i>Código</a>
+
+
+      </div>
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <a href="mapa_chile_tres_featured.png" target="_blank">
+
+  <img src="mapa_chile_tres_featured.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Como Chile es un país tan largo, a veces cuesta publicar mapas que se vean bien por el espacio que requiere. En otro post 
+<a href="../../../blog/mapa_chile_horizontal/">intentamos resolver esto girando Chile para que quede horizontal o <em>acostado</em></a>. Ahora veremos otra opción: partir Chile en tres secciones, norte centro y sur, que podemos disponer lado a lado para ocupar mejor el espacio.</p>
+<div style = "margin-left: -16px;">
+  
+  <details open id="PageTableOfContents">
+    <summary>
+      <h2 class="mv0 f5 fw7 ttu tracked dib" style = "margin-left: 6px; font-size: 120%;">Índice</h2>
+      </summary>
+    <div class="pl2 pr0 mh0" style = "margin-top: -8px; margin-left: 12px; margin-bottom: 32px;">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#descargar-mapas">Descargar mapas</a></li>
+    <li><a href="#cargar-mapa">Cargar mapa</a></li>
+    <li><a href="#visualizar-mapa">Visualizar mapa</a></li>
+    <li><a href="#cortar-mapa-de-chile-continental">Cortar mapa de Chile continental</a></li>
+    <li><a href="#calcular-recortes">Calcular recortes</a></li>
+    <li><a href="#cortar-mapas">Cortar mapas</a></li>
+    <li><a href="#unir-mapas">Unir mapas</a></li>
+  </ul>
+</nav>
+    </div>
+  </details>
+  
+</div>
+
+
+
+
+<h2 id="descargar-mapas">Descargar mapas
+  <a href="#descargar-mapas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>En el siguiente botón descargaremos un <em>shapefile</em> de Chile por regiones, que proviene de la 
+<a href="https://www.bcn.cl/siit/mapas_vectoriales" target="_blank" rel="noopener">Mapoteca de la Biblioteca del Congreso Nacional</a>. También puedes descargarlo en el script con <code>download.file()</code>.</p>
+
+
+
+
+<div class = "db pt1"
+style = "margin-bottom: 34px;">
+
+<a class = "btn-links mr2 ba dib"
+href = "https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip" target="_blank"
+style = "padding: 12px; padding-bottom: 8px; border-radius: 5px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #9069C0; margin-bottom: -12px;">
+<i class="fas fa-map fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
+Division regional: polígonos de las regiones de Chile</a>
+
+</div>
+<p>Una vez descargado, descomprimimos el archivo (podemos usar <code>unzip()</code>) y obtendremos una <strong>carpeta</strong>. Como siempre, es importante que estemos trabajando en un 
+<a href="../../../blog/r_introduccion/proyectos/">proyecto de RStudio</a>, y que guardemos los datos y <em>shapes</em> dentro de la carpeta del proyecto.</p>
+<p>Puedes hacer esto mediante código:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># descargar</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">download.file</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f6c177">&#34;Regiones.zip&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># descomprimir</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">unzip</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Regiones.zip&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">exdir</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Regiones&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+
+
+
+<h2 id="cargar-mapa">Cargar mapa
+  <a href="#cargar-mapa"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Cargamos el <em>shape</em> con la función <code>read_sf()</code> 
+<a href="../../../blog/mapas_sf/">del paquete <code>{sf}</code></a>. Si es tu primera vez haciendo mapas, revisa 
+<a href="../../../blog/mapas_sf/">esta guía</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sf</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_sf</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Regiones&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+
+
+
+<h2 id="visualizar-mapa">Visualizar mapa
+  <a href="#visualizar-mapa"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Primero veamos el mapa tal como viene desde el <em>shapefile</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png" width="768" />
+<p>Aquí se nota al tiro el problema: el país es tan delgado y alto 🫦 que si contamos con poco espacio vertical, no se notan los detalles y dejamos márgenes sin uso.</p>
+<p>Si la visualización se demora mucho en generar en tu computador, prueba 
+<a href="../../../blog/simplificar_mapas/">simplificando los detalles del mapa.</a></p>
+
+
+
+
+<h2 id="cortar-mapa-de-chile-continental">Cortar mapa de Chile continental
+  <a href="#cortar-mapa-de-chile-continental"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Un primer ajuste para la visualización es cortar los márgenes del mapa para enfocarnos en Chile <em>continental</em>. Perdón, Rapa Nui 😔</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># reproyectar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_transform</span><span style="color:#908caa">(</span><span style="color:#ea9a97">crs</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5360</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># visualizar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># recortar Chile continental</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-79</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-62</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-56.2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-17.3</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">(</span><span style="color:#ea9a97">base_size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">8</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="768" />
+<p>Uno de los pasos para el recorte fue <em>reproyectar</em> el mapa, dado que vienen con un sistema de coordenadas distinto al que típicamente se usa. Al reproyectar, las coordenadas pasan a estar en grados decimales.</p>
+
+
+
+
+<h2 id="calcular-recortes">Calcular recortes
+  <a href="#calcular-recortes"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Ahora toca sacar la calculadora (también se puede hace a mano, pero acá nos gusta el código reproducible y sobrecomplejizar todo) 🤓</p>
+<p>La idea es: medir cuánto mide cada sección del país, y calcular los cortes que hay que hacerle al mapa para dividirlo en tres.</p>
+<p>Primero tomamos el límite superior o norte del país, y el límite sur, y calculamos el <em>largo</em> en término de grados de latitud. Dividimos ese largo en tres partes para saber cuánto va a medir cada una de las tres secciones.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">limite_sur</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-56.2</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">limite_norte</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-17.3</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">largo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">abs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">limite_sur</span><span style="color:#908caa">)</span> <span style="color:#908caa">-</span> <span style="color:#ea9a97">abs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">limite_norte</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">parte</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">largo</span> <span style="color:#908caa">/</span> <span style="color:#f6c177">3</span>
+</span></span></code></pre></div><p>Obtenemos que cada sección medirá 12.9666667 grados de latitud.</p>
+<p>Si empezamos desde el norte del país (<code>n</code>, que equivale a -17.3), la primera sección llegará hasta <code>n - parte</code> (-30.3). Luego la segunda sección empieza donde termina la anterior, y llega hasta <code>n - parte*2</code> (-43), y la tercera sección llegará hasta <code>n - parte*2</code> (-56.2), que coincide con el límite sur del país.</p>
+<table>
+  <thead>
+      <tr>
+          <th>secciones</th>
+          <th>norte</th>
+          <th>sur</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>n</td>
+          <td>n-p</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>n-p</td>
+          <td>n-p*2</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>n-p*2</td>
+          <td>n-p*3</td>
+      </tr>
+  </tbody>
+</table>
+<p>Podemos calcular esto a mano, o hacerlo <em>al ojo</em>, pero vamos a creamor una tablita mejor.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">cortes</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tibble</span><span style="color:#908caa">(</span><span style="color:#ea9a97">secciones</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">3</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">cortes</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">cortes</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">norte</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">limite_norte</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">sur</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">limite_norte</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">cortes</span>
+</span></span></code></pre></div><pre><code># A tibble: 3 × 3
+  secciones norte   sur
+      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1         1 -17.3 -17.3
+2         2 -17.3 -17.3
+3         3 -17.3 -17.3
+</code></pre>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">cortes</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">cortes</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">norte</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">norte</span> <span style="color:#908caa">-</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">parte</span> <span style="color:#908caa">*</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">secciones</span> <span style="color:#908caa">-</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)),</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">sur</span>   <span style="color:#908caa">=</span> <span style="color:#ea9a97">sur</span> <span style="color:#908caa">-</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">parte</span> <span style="color:#908caa">*</span> <span style="color:#ea9a97">secciones</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">cortes</span>
+</span></span></code></pre></div><pre><code># A tibble: 3 × 3
+  secciones norte   sur
+      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1         1 -17.3 -30.3
+2         2 -30.3 -43.2
+3         3 -43.2 -56.2
+</code></pre>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: right">secciones</th>
+          <th style="text-align: right">norte</th>
+          <th style="text-align: right">sur</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: right">1</td>
+          <td style="text-align: right">-17.30000</td>
+          <td style="text-align: right">-30.26667</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">-30.26667</td>
+          <td style="text-align: right">-43.23333</td>
+      </tr>
+      <tr>
+          <td style="text-align: right">3</td>
+          <td style="text-align: right">-43.23333</td>
+          <td style="text-align: right">-56.20000</td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+
+<h2 id="cortar-mapas">Cortar mapas
+  <a href="#cortar-mapas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Creamos un mapa base, y definimos un objeto que contiene los cortes horizontales, que en este caso serán iguales para los tres mapas.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_base</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># reproyectar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_transform</span><span style="color:#908caa">(</span><span style="color:#ea9a97">crs</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5360</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># visualizar</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_minimal</span><span style="color:#908caa">(</span><span style="color:#ea9a97">base_size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">8</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">limites_continental</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-78</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-64</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Ahora, usando el <code>mapa_base</code>, aplicamos el corte de coordenadas con <code>coors_sf()</code> a partir de la tabla <code>cortes</code>, seleccionando la columna de la tabla que corresponde (norte o sur), y la posición del elemento para cada sección (1, 2 o 3).</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_norte</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_base</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">limites_continental</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cortes</span><span style="color:#908caa">$</span><span style="color:#ea9a97">norte[1]</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">cortes</span><span style="color:#908caa">$</span><span style="color:#ea9a97">sur[1]</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_centro</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_base</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">limites_continental</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cortes</span><span style="color:#908caa">$</span><span style="color:#ea9a97">norte[2]</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">cortes</span><span style="color:#908caa">$</span><span style="color:#ea9a97">sur[2]</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_sur</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_base</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">limites_continental</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cortes</span><span style="color:#908caa">$</span><span style="color:#ea9a97">norte[3]</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">cortes</span><span style="color:#908caa">$</span><span style="color:#ea9a97">sur[3]</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div>
+
+
+
+<h2 id="unir-mapas">Unir mapas
+  <a href="#unir-mapas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>El paso final es <strong>unir</strong> los tres gráficos: 
+<a href="../../../blog/patchwork/">como detallamos en un post anterior</a>, con el paquete 
+<a href="https://patchwork.data-imaginist.com/articles/patchwork.html" target="_blank" rel="noopener"><code>{patchwork}</code></a> podemos unir y combinar gráficos de <code>{ggplot2}</code>, y la sintaxis es muy simple: si conectas los gráficos con el signo <code>+</code> se unirán lado a lado, si los <em>divides</em> con <code>/</code> aparecerán uno sobre otro. Con el signo <code>&amp;</code> puedes agregar capas a todos los gráficos de una.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">patchwork</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_norte</span> <span style="color:#908caa">+</span> <span style="color:#ea9a97">mapa_centro</span> <span style="color:#908caa">+</span> <span style="color:#ea9a97">mapa_sur</span> <span style="color:#908caa">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">plot_annotation</span><span style="color:#908caa">(</span><span style="color:#ea9a97">title</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Mapa de Chile&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">subtitle</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;dividido en tres secciones&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">&amp;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">axis.text.x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">())</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="1800" />
+<p>Listo! Ahora el mapa cabe mucho mejor en una hoja, página o imagen.</p>
+<p>También podemos ajustar los cortes horizontales del mapa, para que cada sección tenga un espaciado similar. Acá dejo el código con los números exactos para copiar y pegar, o bien, 
+<a href="https://gist.github.com/bastianolea/52259ec4964891b2d11c5ad59c010246" target="_blank" rel="noopener">revisa el script completo en este Gist.</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_norte</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_base</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-74</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-65</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-17.3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-30.2</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_centro</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_base</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-76</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-68</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-30.2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-43.2</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_sur</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_base</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">expand</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">FALSE</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-78</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-65</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-43.2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-56.2</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_norte</span> <span style="color:#908caa">+</span> <span style="color:#ea9a97">mapa_centro</span> <span style="color:#908caa">+</span> <span style="color:#ea9a97">mapa_sur</span> <span style="color:#908caa">+</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">plot_annotation</span><span style="color:#908caa">(</span><span style="color:#ea9a97">title</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Mapa de Chile&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">subtitle</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;dividido en tres secciones&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">&amp;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">axis.text.x</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">())</span>
+</span></span></code></pre></div><img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">October 23, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">5 minute read, 992 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/mapas">mapas</a>  <a href="https://bastianoleah.netlify.app/tags/chile">Chile</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/mapas_sf/">Mapas y visualización de datos geoespaciales en R con {sf}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/tutorial_mapa_chile_subdere/">Crea un mapa de Chile desde datos geoespaciales oficiales en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/app_mideso_ingresos_genero/">App: comparación de ingresos regionales y comunales</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/git_comandos/">&larr; Comandos comunes de Git</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/mapas_sf/">Mapas y visualización de datos geoespaciales en R con {sf} &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+</div>
+
+    
+  </section>
+</main>
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.136.5">
-<title>Unir y combinar gráficos {ggplot2} en R | Bastián Olea</title>
+<title>Unir y combinar gráficos {ggplot2} con {patchwork} | Bastián Olea</title>
 
 
 <meta property="twitter:site" content="@bastimapache">
@@ -24,12 +24,12 @@
   
     
   
-<meta name="description" content="El paquete {patchwork} ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas, por medio de la combinación de gráficos en una sola visualización, y la inserción de gráficos dentro de otros.">
+<meta name="description" content="El paquete `{patchwork}` ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas, por medio de la combinación de gráficos en una sola visualización, y la inserción de gráficos dentro de otros.">
 
 
 <meta property="og:site_name" content="Bastián Olea">
-<meta property="og:title" content="Unir y combinar gráficos {ggplot2} en R | Bastián Olea">
-<meta property="og:description" content="El paquete {patchwork} ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas, por medio de la combinación de gráficos en una sola visualización, y la inserción de gráficos dentro de otros." />
+<meta property="og:title" content="Unir y combinar gráficos {ggplot2} con {patchwork} | Bastián Olea">
+<meta property="og:description" content="El paquete `{patchwork}` ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas, por medio de la combinación de gráficos en una sola visualización, y la inserción de gráficos dentro de otros." />
 <meta property="og:type" content="page" />
 <meta property="og:url" content="https://bastianoleah.netlify.app/blog/patchwork/" />
 <meta property="og:locale" content="es-ES">
@@ -44,13 +44,12 @@
     
     
   
-  <meta itemprop="name" content="Unir y combinar gráficos {ggplot2} en R">
-  <meta itemprop="description" content="El paquete {patchwork} ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas.
-library(dplyr) library(ggplot2) library(patchwork) Primero crearemos dos gráficos de muestra, a partir del dataset iris.
-grafico_a &lt;- iris |&gt; # calcular promedios por especie group_by(Species) |&gt; summarize(Sepal.Length = mean(Sepal.Length)) |&gt; # gráfico ggplot() &#43; aes(x = Sepal.Length, y = Species) &#43; # barras geom_col(fill = &#34;darkslategray3&#34;, width = 0.6) &#43; theme_void() grafico_b &lt;- iris |&gt; # conteo por especies count(Species) |&gt; # porcentaje mutate(p = n/sum(n)) |&gt; # gráfico ggplot() &#43; aes(x = 1, y = p, fill = Species) &#43; geom_col() &#43; # escala de color scale_fill_brewer(name = &#34;Set2&#34;, type = &#34;qual&#34;) &#43; # gráfico de torta coord_polar(theta = &#34;y&#34;) &#43; theme_void() &#43; guides(fill = guide_legend(title = NULL)) Combinar dos gráficos lado a lado Gracias a {patchwork}, unir dos gráficos uno al lado del otro es tan sencillo como “sumarlos”:">
+  <meta itemprop="name" content="Unir y combinar gráficos {ggplot2} con {patchwork}">
+  <meta itemprop="description" content="El paquete {patchwork} ayuda a unir y combinar gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más complejas
+Índice Combinar dos gráficos lado a lado Combinar dos gráficos uno arriba del otro Combinar más de dos gráficos Poner un gráfico dentro de otro library(dplyr) library(ggplot2) library(patchwork) Primero crearemos dos gráficos de muestra, a partir del dataset iris.">
   <meta itemprop="datePublished" content="2025-03-08T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-03-08T00:00:00+00:00">
-  <meta itemprop="wordCount" content="996">
+  <meta itemprop="wordCount" content="1020">
   <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/patchwork/featured.png">
   <meta itemprop="keywords" content="Visualización de datos,Gráficos,Ggplot2">
   
@@ -59,7 +58,7 @@ grafico_a &lt;- iris |&gt; # calcular promedios por especie group_by(Species) |&
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  <link rel="stylesheet" href="/style.main.min.9dae2888bc53e1aef239ba1add77b8a61bb249ad5c068c5464836ceb4111eb2c.css" integrity="sha256-na4oiLxT4a7yOboa3Xe4phuySa1cBoxUZINs60ER6yw=" media="screen">
   
   
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -279,7 +278,7 @@ grafico_a &lt;- iris |&gt; # calcular promedios por especie group_by(Species) |&
   <section class="page-content mw7 center">
     <article class="post-content pa0 ph4-l">
       <header class="post-header">
-        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Unir y combinar gráficos {ggplot2} en R</h1>
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Unir y combinar gráficos {ggplot2} con {patchwork}</h1>
         
         
         <p class="f7 db mv0 ttu">8/3/2025</p>
@@ -317,16 +316,60 @@ grafico_a &lt;- iris |&gt; # calcular promedios por especie group_by(Species) |&
       ggplot2</a> </dd></em>
   </dl>
  
-
-
-
-
         
+      
+      <div class="ph0 pt5">
+        
+
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; color: #EAD2FA; 
+  font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; margin-right: 1px;"
+  href="https://patchwork.data-imaginist.com/index.html" target="_blank" rel="noopener"><i class="fas fa-registered fa-lg fa-fw mr2"></i>Patchwork</a>
+
+
+      </div>
       
 
       </header>
       <section class="post-body pt5 pb4">
-        <p>El paquete {patchwork} ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas.</p>
+        <p>
+<a href="https://patchwork.data-imaginist.com/articles/patchwork.html" target="_blank" rel="noopener">El paquete <code>{patchwork}</code></a> ayuda a <strong>unir y combinar gráficos</strong> de <code>{ggplot2}</code>. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más complejas</p>
+<div style = "margin-left: -16px;">
+  
+  <details open id="PageTableOfContents">
+    <summary>
+      <h2 class="mv0 f5 fw7 ttu tracked dib" style = "margin-left: 6px; font-size: 120%;">Índice</h2>
+      </summary>
+    <div class="pl2 pr0 mh0" style = "margin-top: -8px; margin-left: 12px; margin-bottom: 32px;">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#combinar-dos-gráficos-lado-a-lado">Combinar dos gráficos lado a lado</a></li>
+        <li><a href="#combinar-dos-gráficos-uno-arriba-del-otro">Combinar dos gráficos uno arriba del otro</a></li>
+        <li><a href="#combinar-más-de-dos-gráficos">Combinar más de dos gráficos</a></li>
+      </ul>
+    </li>
+    <li><a href="#poner-un-gráfico-dentro-de-otro">Poner un gráfico dentro de otro</a></li>
+  </ul>
+</nav>
+    </div>
+  </details>
+  
+</div>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">patchwork</span><span style="color:#908caa">)</span>
@@ -366,7 +409,7 @@ grafico_a &lt;- iris |&gt; # calcular promedios por especie group_by(Species) |&
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
-<p>Gracias a {patchwork}, unir dos gráficos uno al lado del otro es tan sencillo como &ldquo;sumarlos&rdquo;:</p>
+<p>Gracias a <code>{patchwork}</code>, unir dos gráficos uno al lado del otro es tan sencillo como &ldquo;sumarlos&rdquo;:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">grafico_a</span> <span style="color:#908caa">+</span> <span style="color:#ea9a97">grafico_b</span>
 </span></span></code></pre></div><img src="patchwork.markdown_strict_files/figure-markdown_strict/plot1-1.png" width="768" />
 <p>Si queremos ajustar las proporciones de los gráficos, agregamos la función <code>plot_layout()</code> para especificar las proporciones. Haremos que uno de los gráficos sea el doble de ancho que el otro:</p>
@@ -470,7 +513,6 @@ grafico_a &lt;- iris |&gt; # calcular promedios por especie group_by(Species) |&
 </span></span></code></pre></div><img src="patchwork.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="768" />
 <p>Podemos usar esta técnica para insertar cualquier texto en cualquier posición de un gráfico, incluso fuera de los límites de las escalas (que sería una limitación de hacer lo mismo con <code>annotate()</code>.</p>
 <p>La gracia de usar <code>inset_element()</code> es que posicionamos los elementos con respecto al tamaño del gráfico (donde el borde izquierdo es 0 y el derecho es 1, y el borde inferior es 0 y el superior es 1) y no a las coordenadas de las variables <code>x</code> e <code>y</code>, lo que nos permite ubicar los elementos de forma independiente al sistema de coordenadas del gráfico.</p>
-<hr>
 <div style = "height: 18px;">
 </div>
 <div>
@@ -488,7 +530,7 @@ grafico_a &lt;- iris |&gt; # calcular promedios por especie group_by(Species) |&
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">5 minute read, 996 words</dd>
+    <dd class="fw5 ml0">5 minute read, 1020 words</dd>
   </dl>
   
   
@@ -501,11 +543,11 @@ grafico_a &lt;- iris |&gt; # calcular promedios por especie group_by(Species) |&
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
+    <dd class="fw5 ml0"><a href="/blog/mapas_sf/">Mapas y visualización de datos geoespaciales en R con {sf}</a></dd>
+    
     <dd class="fw5 ml0"><a href="/blog/tutorial_mapa_chile_subdere/">Crea un mapa de Chile desde datos geoespaciales oficiales en R</a></dd>
     
     <dd class="fw5 ml0"><a href="/blog/ggplot_tipografias/">Tipografías personalizadas en gráficos {ggplot2}</a></dd>
-    
-    <dd class="fw5 ml0"><a href="/blog/ggplot_temas/">Temas de colores personalizados para tus gráficos {ggplot2}</a></dd>
     
   </dl>
 </details>

@@ -51,7 +51,7 @@ blogdown::new_post(title = "Pruebita",
 "content/blog/mapas_sf/mapas_sf.qmd"
 "content/blog/ggiraph/ggiraph.qmd"
 "content/blog/ellmer/ellmer.qmd"
-"~/Documents/Otros/blog/content/blog/git_atajos/index.md"
+"~/Documents/Otros/blog/content/blog/git_comandos/index.md"
 "content/blog/r_introduccion/dplyr_intermedio/dplyr_intermedio.qmd"
 "content/blog/r_introduccion/dplyr_variables/dplyr_variables.qmd"
 "content/blog/shiny_tipografias/shiny_tipografias.qmd"

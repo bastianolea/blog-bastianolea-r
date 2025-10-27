@@ -46,8 +46,8 @@
   
   <meta itemprop="name" content="Blog: análisis de datos en R">
   <meta itemprop="description" content="Publicaciones periódicas sobre el uso de R para análisis de datos, incluyendo tutoriales, reseñas, tips o consejos, novedades, y más.">
-  <meta itemprop="datePublished" content="2025-10-16T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-10-16T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2025-10-27T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-10-27T00:00:00+00:00">
   <meta itemprop="wordCount" content="56">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -57,7 +57,7 @@
     <link rel="alternate" type="application/rss+xml" href="https://bastianoleah.netlify.app/blog/index.xml" title="Bastián Olea" />
   
   
-  <link rel="stylesheet" href="/style.main.min.9d5c87e81c085758ed752869711b0ed2bf329f49c2cfe70421c6045bd3ec0aee.css" integrity="sha256-nVyH6BwIV1jtdShpcRsO0r8yn0nCz&#43;cEIcYEW9PsCu4=" media="screen">
+  <link rel="stylesheet" href="/style.main.min.9dae2888bc53e1aef239ba1add77b8a61bb249ad5c068c5464836ceb4111eb2c.css" integrity="sha256-na4oiLxT4a7yOboa3Xe4phuySa1cBoxUZINs60ER6yw=" media="screen">
   
   
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -290,21 +290,387 @@
   
   <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
-      <a href="/blog/2025-03-30/" class="db">
+      <a href="/blog/quarto_loop/" class="db">
         
-          <img src="https://bastianoleah.netlify.app/blog/2025-03-30/featured.png" class="db ma0 dim" alt="">
+          <img src="https://bastianoleah.netlify.app/blog/quarto_loop/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
         
       </a>
     </figure>
     <div class="flex flex-column w-100 w-60-ns pl3-ns">
       <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="/blog/2025-03-30/" class="db">Redactar una lista de palabras separadas por comas en R</a></h1> 
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/quarto_loop/" class="db">Generar contenido en serie usando loops en un reporte Quarto</a></h1> 
         
         
       </header>
       
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Aprende a generar un texto que redacte un vector de palabras sueltas en una oración separada por comas y con el separador <em>y</em> al final; por ejemplo: ’uno, dos y tres’. Útil para escribir programáticamente títulos, subtítulos y textos para reportes.</p>
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;"><p>Una de las gracias de generar documentos en Quarto es que podemos combinar la redacción con el código. Pero esto puede ir más allá que simplemente escribir un párrafo de texto y seguido de un párrafo de código. Podemos usar código para literalmente generar texto, títulos y más.</p>
+<p>En otros tutoriales vimos cómo podemos 
+<a href="../../../blog/quarto_reportes/#c%c3%b3digo-entre-el-texto">incluir resultados del código dentro de nuestros párrafos de texto</a>, por ejemplo, para que una cifra que esté dentro de una oración venga directamente del resultado de un cálculo en vez de tener que escribirle de forma manual. Pero en esta guía vamos a ver cómo podemos programar la generación masiva de títulos, párrafos y gráficos en base a una 
+<a href="../../../blog/r_introduccion/r_intermedio/#bucles">iteración, bucle o <em>loop</em>.</a></p></p>
       
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/quarto"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            quarto</a>  <a href="https://bastianoleah.netlify.app/tags/loops"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            loops</a>  <a href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            automatización</a>  <a href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            gráficos</a> </dd></em>
+        </dl>
+        
+        
+      <footer class="w-100">
+        
+      
+      
+      <p class="f7 db mv1">8/6/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/ordenar_regiones/" class="db">
+        
+          <img src="https://bastianoleah.netlify.app/blog/ordenar_regiones/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/ordenar_regiones/" class="db">Ordenar las regiones de Chile de norte a sur en R</a></h1> 
+        
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">La franja larga y angosta que es Chile tiene el beneficio de que sus regiones se ubican casi perfectamente una sobre la otra, de norte a sur. Este orgen geográfico natural de sus regiones resulta familiar para sus habitantes, por lo que se vuelve recomendable ordenar los datos a nivel regional siguiendo este orden geográfico.</p>
+      
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/consejos"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            consejos</a>  <a href="https://bastianoleah.netlify.app/tags/mapas"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            mapas</a>  <a href="https://bastianoleah.netlify.app/tags/chile"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            Chile</a> </dd></em>
+        </dl>
+        
+        
+      <footer class="w-100">
+        
+      
+      
+      <p class="f7 db mv1">6/6/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/datapasta/" class="db">
+        
+          <img src="https://bastianoleah.netlify.app/blog/datapasta/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/datapasta/" class="db">Copia y pega datos en R con {datapasta} y {clipr}</a></h1> 
+        
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;"><code>{datapasta}</code> es un paquete para R que te ayuda a copiar y pegar datos desde y hacia R. Este paquete convierte tus datos en texto que puedes copiar y pegar en otro script, o editar manualmente. Usa la función <code>dpasta()</code> sobre un dataframe para hacer que los datos aparezcan como en texto directamente debajo de donde la ejecutaste. Por otro lado, <code>{clipr}</code> nos va a permitir copiar un dataframe desde R para poder pegarlo en programas como Excel.</p>
+      
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/consejos"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            consejos</a>  <a href="https://bastianoleah.netlify.app/tags/datos"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            datos</a> </dd></em>
+        </dl>
+        
+        
+      <footer class="w-100">
+        
+      
+      
+      <p class="f7 db mv1">6/6/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/quarto_params/" class="db">
+        
+          <img src="https://bastianoleah.netlify.app/blog/quarto_params/quarto_params_2-featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/quarto_params/" class="db">Automatiza la generación de reportes creando documentos parametrizados con Quarto y R</a></h1> 
+        
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;"><p>En este tutorial aprenderemos a crear 
+<a href="https://posit.co/blog/parameterized-quarto/" target="_blank" rel="noopener">reportes parametrizados</a> con Quarto. Un reporte parametrizado es un reporte diseñado para que el contenido, incluyendo textos, gráficos y más, cambien al modificar una variable en su encabezado. En este sentido, por <em>parámetro</em> nos referimos a un valor que podremos cambiar para alterar el resultado obtenido por un mismo reporte.</p>
+<p>De esta manera, podemos <strong>generar múltiples versiones de un mismo reporte simplemente cambiando el parámetro</strong>, por ejemplo, para diseñar un reporte con datos para un país, en base a un conjuntos de datos de múltiples países, y luego obtener múltiples versiones del mismo reporte pero para distintos países. O generar un reporte con datos de un año específico, y luego generar versiones del mismo reporte para distintos años.</p></p>
+      
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/quarto"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            quarto</a>  <a href="https://bastianoleah.netlify.app/tags/loops"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            loops</a> </dd></em>
+        </dl>
+        
+        
+      <footer class="w-100">
+        
+      
+      
+      <p class="f7 db mv1">15/4/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/quarto_reportes/" class="db">
+        
+          <img src="https://bastianoleah.netlify.app/blog/quarto_reportes/quarto_theme_cosmo-featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/quarto_reportes/" class="db">Tutorial: presenta los resultados de tus análisis de datos con R creando reportes y documentos Quarto</a></h1> 
+        
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Quarto es una herramienta que te permite generar documentos y reportes de manera muy sencilla utilizando bloques de código de R. En estos reportes puedes incluir tablas, gráficos, y mucho más, de forma atractiva, para poder compartir tus análisis y resultados con otras personas. Aprender a generar documentos Quarto es una herramienta que puede llevar tus habilidades de análisis de datos al siguiente nivel!</p>
+      
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/quarto"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            quarto</a> </dd></em>
+        </dl>
+        
+        
+      <footer class="w-100">
+        
+      
+      
+      <p class="f7 db mv1">14/4/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/2025-03-31/" class="db">
+        
+          <img src="https://bastianoleah.netlify.app/blog/2025-03-31/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/2025-03-31/" class="db">Limpiar textos con símbolos, tildes o eñes en R</a></h1> 
+        
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Amamos el castellano, con sus tildes y eñes, y nos encanta que R no tenga problemas para usar estos símbolos en cualquier parte del lenguaje. Pero hay veces en las que necesitamos deshacernos de estos símbolos especiales, como tildes, eñes, e incluso mayúsculas. En este post te muestro varias opciones de limpieza de texto con R.</p>
+      
+        
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/consejos"
@@ -318,6 +684,74 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
             consejos</a>  <a href="https://bastianoleah.netlify.app/tags/texto"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            texto</a>  <a href="https://bastianoleah.netlify.app/tags/limpieza-de-datos"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            limpieza de datos</a> </dd></em>
+        </dl>
+        
+        
+      <footer class="w-100">
+        
+      
+      
+      <p class="f7 db mv1">31/3/2025</p>
+      
+    </footer>
+    </div>
+  </div>
+
+  
+  
+</article>
+
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="/blog/2025-03-30/" class="db">
+        
+          <img src="https://bastianoleah.netlify.app/blog/2025-03-30/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+        
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/2025-03-30/" class="db">Redactar una lista de palabras separadas por comas en R</a></h1> 
+        
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Aprende a generar un texto que redacte un vector de palabras sueltas en una oración separada por comas y con el separador <em>y</em> al final; por ejemplo: ’uno, dos y tres’. Útil para escribir programáticamente títulos, subtítulos y textos para reportes.</p>
+      
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/texto"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -359,7 +793,7 @@
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="/blog/tutorial_quarto_github_pages/" class="db">
         
-          <img src="https://bastianoleah.netlify.app/blog/tutorial_quarto_github_pages/afiche-featured.jpg" class="db ma0 dim" alt="">
+          <img src="https://bastianoleah.netlify.app/blog/tutorial_quarto_github_pages/afiche-featured.jpg" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
         
       </a>
     </figure>
@@ -372,6 +806,7 @@
       
       <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">En este tutorial veremos cuatro formas relativamente sencillas para crear nuestros propios espacios en internet con R para poder compartir nuestras creaciones y aprendizajes, de forma completamente gratuita. ¡En una tarde podrías tener tu propio sitio web para presentarte, para subir las cosas que has aprendido, o para destacar tu trabajo!</p>
       
+        
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/quarto"
@@ -446,7 +881,7 @@
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="/blog/r_introduccion/tutorial_visualizacion_ggplot/" class="db">
         
-          <img src="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_visualizacion_ggplot/ggplot2-featured.jpg" class="db ma0 dim" alt="">
+          <img src="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_visualizacion_ggplot/ggplot2-featured.jpg" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
         
       </a>
     </figure>
@@ -461,6 +896,7 @@
       
       <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;"><code>{ggplot2}</code> es una librería de visualización de datos bastante popular en el mundo de la ciencia de datos. Sus principales características son su atractivo, su conveniencia para la exploración de datos, un gran potencial de personalización, y un extenso ecosistema de extensiones que nos permiten generar visualizaciones prácticamente de cualquier tipo. Sigue este tutorial para aprender desde lo más básico a utilizar <code>{ggplot2}</code></p>
       
+        
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos"
@@ -525,19 +961,20 @@
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="/blog/patchwork/" class="db">
         
-          <img src="https://bastianoleah.netlify.app/blog/patchwork/featured.png" class="db ma0 dim" alt="">
+          <img src="https://bastianoleah.netlify.app/blog/patchwork/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
         
       </a>
     </figure>
     <div class="flex flex-column w-100 w-60-ns pl3-ns">
       <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="/blog/patchwork/" class="db">Unir y combinar gráficos {ggplot2} en R</a></h1> 
+        <h1 class="f3 mv2 lh-title underline"><a href="/blog/patchwork/" class="db">Unir y combinar gráficos {ggplot2} con {patchwork}</a></h1> 
         
         
       </header>
       
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">El paquete {patchwork} ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas, por medio de la combinación de gráficos en una sola visualización, y la inserción de gráficos dentro de otros.</p>
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">El paquete <code>{patchwork}</code> ayuda a unir y combinar múltiples gráficos de {ggplot2}. En esta guía veremos los principios del uso de este paquete, que nos permitirá construir visualizaciones más densas, por medio de la combinación de gráficos en una sola visualización, y la inserción de gráficos dentro de otros.</p>
       
+        
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos"
@@ -580,6 +1017,30 @@
       
       <p class="f7 db mv1">8/3/2025</p>
       
+        <p class="db pt1">
+        
+
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; color: #EAD2FA; 
+  font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; margin-right: 1px;"
+  href="https://patchwork.data-imaginist.com/index.html" target="_blank" rel="noopener"><i class="fas fa-registered fa-lg fa-fw mr2"></i>Patchwork</a>
+
+
+        </p>
+      
     </footer>
     </div>
   </div>
@@ -602,7 +1063,7 @@
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="/blog/colores/" class="db">
         
-          <img src="https://bastianoleah.netlify.app/blog/colores/featured.png" class="db ma0 dim" alt="">
+          <img src="https://bastianoleah.netlify.app/blog/colores/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
         
       </a>
     </figure>
@@ -617,6 +1078,7 @@
 <p>En R, los colores se escriben como código, y a grandes rasgos pueden ser colores con nombre (por ejemplo, <code>&quot;purple&quot;</code>), colores hexadecimales (escritos como códigos de al menos 6 dígitos, como <code>#FFFFFF</code>), o como parte de funciones que producen paletas de colores.</p>
 <p>A lo largo de este post usaremos la función <code>swatch()</code> del paquete <code>{shades}</code>, que genera un gráfico que presenta el color o la paleta de colores a partir de un vector de colores, lo que nos ayudará a visualizar nuestros colores más fácil. Una alternativa es la función <code>show_col()</code> de <code>{scales}</code>, que hace lo mismo.</p></p>
       
+        
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos"
@@ -681,7 +1143,7 @@
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="/blog/mapa_chile_horizontal/" class="db">
         
-          <img src="https://bastianoleah.netlify.app/blog/mapa_chile_horizontal/featured.png" class="db ma0 dim" alt="">
+          <img src="https://bastianoleah.netlify.app/blog/mapa_chile_horizontal/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
         
       </a>
     </figure>
@@ -694,6 +1156,7 @@
       
       <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Visualizar un mapa de Chile puede ser complicado debido a su largo. Muchas veces cuesta ubicar correctamente el mapa por el espacio vertical que requiere. Pero en ciertos casos puede ser conveniente visualizar a Chile <em>de lado</em>, para aprovechar el espacio horizontal. En esta guía veremos cómo rotar un mapa de Chile 90° hacia la izquierda en R para que quede acostado.</p>
       
+        
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/mapas"
@@ -758,7 +1221,7 @@
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="/blog/simplificar_mapas/" class="db">
         
-          <img src="https://bastianoleah.netlify.app/blog/simplificar_mapas/featured.png" class="db ma0 dim" alt="">
+          <img src="https://bastianoleah.netlify.app/blog/simplificar_mapas/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
         
       </a>
     </figure>
@@ -771,6 +1234,7 @@
       
       <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Un problema común al visualizar datos georeferenciados o mapas coropléticos (con colores en las zonas geográficas que se corresponden con los datos) yace en que usamos mapas que tienen geometrías o características geográficas mucho más detalladas de lo que necesitamos. Este exceso de detalle puede jugarle en contra a la visualización que estamos intentando crear, ya sea porque dificulta la interpretación, o complejiza visualmente el gráfico. En esta guía aprenderemos a simplificar mapas en R para producir visualizaciones con el nivel apropiado de detalle, y hacer más rápida la generación de mapas.</p>
       
+        
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/mapas"
@@ -825,7 +1289,7 @@
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="/blog/genero_nombres_llm/" class="db">
         
-          <img src="https://bastianoleah.netlify.app/blog/genero_nombres_llm/featured.png" class="db ma0 dim" alt="">
+          <img src="https://bastianoleah.netlify.app/blog/genero_nombres_llm/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
         
       </a>
     </figure>
@@ -838,6 +1302,7 @@
       
       <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Aprende a usar modelos extensos de lenguaje (LLM) para clasificar datos con un caso de uso real, donde se necesita asumir el género de las personas a partir de sus nombres para poder realizar análisis con perspectiva de género. Aplicar inteligencia artificial en R para este tipo de tareas es puede ahorrarte muchísimo tiempo, y dependiendo de como ajustes los datos y el <em>prompt</em> puede entregar buenos resultados.</p>
       
+        
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos"
@@ -912,7 +1377,7 @@
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="/blog/tutorial_shinymanager/" class="db">
         
-          <img src="https://bastianoleah.netlify.app/blog/tutorial_shinymanager/shinymanager_2-featured.png" class="db ma0 dim" alt="">
+          <img src="https://bastianoleah.netlify.app/blog/tutorial_shinymanager/shinymanager_2-featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
         
       </a>
     </figure>
@@ -927,6 +1392,7 @@
 <a href="/blog/r_introduccion/tutorial_shiny_1">creaste una aplicación Shiny</a> y quieres 
 <a href="/blog/r_introduccion/tutorial_shinyapps">compartirla con otros/as</a>, pero tu app contiene información que no puede ser vista por cualquiera, ¡entonces sigue estos pasos! En unos minutos tendrás una aplicación que requiere de usuario y contraseña para poder usarla.</p>
       
+        
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/shiny"
@@ -981,7 +1447,7 @@
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="/blog/r_introduccion/dplyr_intro/" class="db">
         
-          <img src="https://bastianoleah.netlify.app/blog/r_introduccion/sidebar-featured.jpg" class="db ma0 dim" alt="">
+          <img src="https://bastianoleah.netlify.app/blog/r_introduccion/sidebar-featured.jpg" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
         
       </a>
     </figure>
@@ -996,6 +1462,7 @@
       
       <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Luego de haber aprendido las funcionalidades básicas del lenguaje y R, y habernos familiarizado con herramientas un poco más avanzadas de la programación en este lenguaje, ahora podemos aplicar estos aprendizajes a los datos. Aprenderemos a explorar, comprender, y navegar tablas de datos, tanto en la forma nativa de trabajar con R, como con la ayuda del paquete {dplyr}.</p>
       
+        
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/dplyr"
@@ -1060,7 +1527,7 @@
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="/blog/2025-02-14/" class="db">
         
-          <img src="https://bastianoleah.netlify.app/blog/2025-02-14/featured.png" class="db ma0 dim" alt="">
+          <img src="https://bastianoleah.netlify.app/blog/2025-02-14/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
         
       </a>
     </figure>
@@ -1073,6 +1540,7 @@
       
       <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">¿Te ha pasado que tienes una tabla con datos perdidos, y otra tabla con una columna que coincide con la primera tabla, que además cuenta con datos que quieres usar para rellenar las observaciones perdidas? Antes pensaba que esto se resolvía con <code>left_join()</code> y algún ajuste para reemplazar los perdidos con los datos anexados. Pero ayer conocí una función que resuelve este problema de inmediato: <code>rows_update()</code>!</p>
       
+        
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/dplyr"
@@ -1137,7 +1605,7 @@
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="/blog/r_introduccion/r_intermedio/" class="db">
         
-          <img src="https://bastianoleah.netlify.app/blog/r_introduccion/sidebar-featured.jpg" class="db ma0 dim" alt="">
+          <img src="https://bastianoleah.netlify.app/blog/r_introduccion/sidebar-featured.jpg" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
         
       </a>
     </figure>
@@ -1152,6 +1620,7 @@
       
       <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">En guía aprenderemos herramientas de programación poderosas que flexibilizarán mucho nuestras capacidades de análisis de datos, abriendo infinitas posibilidades. Con ellas, podremos crear nuevas herramientas que nos permitan hacer lo que necesitamos (funciones), condicionar lo que queremos que ocurra en nuestros procesos (controlar el flujo), y realizar operaciones repetidamente (iteraciones o loops).</p>
       
+        
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/funciones"
@@ -1216,7 +1685,7 @@
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="/blog/2025-02-12/" class="db">
         
-          <img src="https://bastianoleah.netlify.app/blog/2025-02-12/featured.png" class="db ma0 dim" alt="">
+          <img src="https://bastianoleah.netlify.app/blog/2025-02-12/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
         
       </a>
     </figure>
@@ -1230,6 +1699,7 @@
       <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;"><p>Los archivos <code>csv</code> (<em>comma-separated values,</em> valores separados por comas) suelen ser el formato más básico para guardar datos. Los beneficios que tienen los csv con respecto a compatibilidad y accesibilidad son a su vez la causa de sus desventajas: son más pesados porque sus datos no se guardan comprimidos, y suelen ser <strong>más lentos de cargar</strong>, porque los datos no vienen codificados de una forma optimizada.</p>
 <p>Sin embargo, usualmente grandes bases de datos son guardadas en archivos csv, con varios millones de filas, lo que puede hacer que la carga de un archivo dure entre varios segundos a <strong>minutos</strong>.</p></p>
       
+        
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/consejos"
@@ -1294,7 +1764,7 @@
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="/blog/datos_sociales/" class="db">
         
-          <img src="https://bastianoleah.netlify.app/blog/datos_sociales/featured.png" class="db ma0 dim" alt="">
+          <img src="https://bastianoleah.netlify.app/blog/datos_sociales/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
         
       </a>
     </figure>
@@ -1310,6 +1780,7 @@
 <p>La idea de esta página es poder compartir fácilmente datos sociales sobre Chile que vienen limpios y procesados, para facilitar el trabajo de otras personas, y también ayudarles a aprender análisis de datos.</p>
 <p>Se trata de una tabla que se genera automáticamente, la cual contiene una lista de repositorios enfocados en datos sociales, con clasificación según la temática del dato, y varias columnas que indican las características del conjunto de datos, como si es que el dato contiene variables de género, si está desagregado a nivel comunal, si existe una aplicación de visualización de datos asociada, la temporalidad (anual/mensual/semanal) de las observaciones, y más.</p></p>
       
+        
         
         <dl class="f6 lh-copy">
           <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/blog"
@@ -1374,6 +1845,8 @@
       
         <p class="db pt1">
         
+
+
     
     
     
@@ -1386,606 +1859,10 @@
       
       
   <a class="btn-links mr2 ba dib" 
-  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
+  style = "background-color: #9069C0; border-radius: 4px; color: #EAD2FA; 
+  font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; margin-right: 1px;"
   href="https://bastianolea.github.io/datos_sociales/" target="_blank" rel="noopener"><i class="fas fa-link fa-lg fa-fw mr2"></i>datos sociales</a>
-
-
-        </p>
-      
-    </footer>
-    </div>
-  </div>
-
-  
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  
-  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
-    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
-      <a href="/blog/resumir_texto_llm/" class="db">
-        
-          <img src="https://bastianoleah.netlify.app/blog/resumir_texto_llm/featured.png" class="db ma0 dim" alt="">
-        
-      </a>
-    </figure>
-    <div class="flex flex-column w-100 w-60-ns pl3-ns">
-      <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="/blog/resumir_texto_llm/" class="db">Resumir textos usando modelos de lenguaje (LLM) locales en R</a></h1> 
-        
-        
-      </header>
-      
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Los modelos de lenguaje (LLM) son herramientas muy útiles para analizar texto, y usarlos en tus análisis de datos con R es sencillo. En este tutorial, te enseño a utilizar modelos de lenguaje locales, instalados en tu propio computador, para obtener resúmenes de textos.</p>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/an%C3%A1lisis-de-texto"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            análisis de texto</a>  <a href="https://bastianoleah.netlify.app/tags/inteligencia-artificial"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            inteligencia artificial</a> </dd></em>
-        </dl>
-        
-        
-      <footer class="w-100">
-        
-      
-      
-      <p class="f7 db mv1">8/2/2025</p>
-      
-    </footer>
-    </div>
-  </div>
-
-  
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  
-  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
-    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
-      <a href="/blog/tutorial_github/" class="db">
-        
-          <img src="https://bastianoleah.netlify.app/blog/tutorial_github/titulo_github-featured.png" class="db ma0 dim" alt="">
-        
-      </a>
-    </figure>
-    <div class="flex flex-column w-100 w-60-ns pl3-ns">
-      <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="/blog/tutorial_github/" class="db">Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub</a></h1> 
-        
-        
-      </header>
-      
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">En este tutorial se entregan los pasos para empezar a usar Git con tus proyectos de R. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas, descargar el código de otros, y colaborar en un mismo proyecto.</p>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/git"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            Git</a>  <a href="https://bastianoleah.netlify.app/tags/consejos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            Consejos</a> </dd></em>
-        </dl>
-        
-        
-      <footer class="w-100">
-        
-      
-      
-      <p class="f7 db mv1">7/2/2025</p>
-      
-    </footer>
-    </div>
-  </div>
-
-  
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  
-  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
-    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
-      <a href="/blog/r_introduccion/tutorial_github/" class="db">
-        
-          <img src="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_github/titulo_github-featured.png" class="db ma0 dim" alt="">
-        
-      </a>
-    </figure>
-    <div class="flex flex-column w-100 w-60-ns pl3-ns">
-      <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="/blog/r_introduccion/tutorial_github/" class="db">Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub</a></h1> 
-        
-        
-        <h2 class="f5"><i class="fas fa-stream fa-fw pr1"></i><small class="f5 ttu tracked">Series: </small><a class="link i dim" href="/blog/r_introduccion/">Introducción a R</a></h2>
-        
-      </header>
-      
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">En este tutorial se entregan los pasos para empezar a usar Git con tus proyectos de R. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas, descargar el código de otros, y colaborar en un mismo proyecto.</p>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/git"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            Git</a>  <a href="https://bastianoleah.netlify.app/tags/consejos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            Consejos</a> </dd></em>
-        </dl>
-        
-        
-      <footer class="w-100">
-        
-      
-      
-      <p class="f7 db mv1">7/2/2025</p>
-      
-    </footer>
-    </div>
-  </div>
-
-  
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  
-  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
-    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
-      <a href="/blog/unim/taller_ciencia_de_datos_gestion_municipal/" class="db">
-        
-          <img src="https://bastianoleah.netlify.app/blog/unim/taller_ciencia_de_datos_gestion_municipal/featured.png" class="db ma0 dim" alt="">
-        
-      </a>
-    </figure>
-    <div class="flex flex-column w-100 w-60-ns pl3-ns">
-      <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="/blog/unim/taller_ciencia_de_datos_gestion_municipal/" class="db">Video: Taller Aplicación de la Ciencia de Datos en la Gestión Municipal</a></h1> 
-        
-        
-      </header>
-      
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;"><p>Tuve el privilegio de exponer en la <strong>Universidad Internacional de la Municipalidad de Rancagua</strong>, un espacio de diálogo, aprendizaje y colaboración, organizado por el <strong>Programa de Gobierno Local Abierto</strong> (GOBLA) de la Municipalidad de Rancagua.</p>
-<p>Presenté un taller dirigido a funcionarios y funcionarias municipales sobre Aplicación de la ciencia de datos en la Gestión Municipal, donde comuniqué la importancia de manejar herramientas de progamación para le análisis de datos, favoreciendo el desarrollo de herramientas reutilizables, reproducibles, transparentes y abiertas.</p></p>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/dplyr"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            dplyr</a>  <a href="https://bastianoleah.netlify.app/tags/web-scraping"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            web scraping</a>  <a href="https://bastianoleah.netlify.app/tags/datos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            datos</a>  <a href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            procesamiento de datos</a>  <a href="https://bastianoleah.netlify.app/tags/limpieza-de-datos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            limpieza de datos</a>  <a href="https://bastianoleah.netlify.app/tags/chile"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            Chile</a>  <a href="https://bastianoleah.netlify.app/tags/videos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            videos</a> </dd></em>
-        </dl>
-        
-        
-      <footer class="w-100">
-        
-      
-      
-      <p class="f7 db mv1">24/1/2025</p>
-      
-        <p class="db pt1">
-        
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-      
-  <a class="btn-links mr2 ba dib" 
-  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
-  href="https://youtu.be/ShVSzH7herA" target="_blank" rel="noopener"><i class="fab fa-youtube fa-lg fa-fw mr2"></i>ver video</a>
-
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-      
-  <a class="btn-links mr2 ba dib" 
-  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
-  href="https://github.com/bastianolea/taller_ciencia_de_datos_gestion_municipal_unim" target="_blank" rel="noopener"><i class="fab fa-github fa-lg fa-fw mr2"></i>código</a>
-
-
-        </p>
-      
-    </footer>
-    </div>
-  </div>
-
-  
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  
-  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
-    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
-      <a href="/blog/unim/presentacion_visualizador_datos_corrupcion/" class="db">
-        
-          <img src="https://bastianoleah.netlify.app/blog/unim/presentacion_visualizador_datos_corrupcion/featured.png" class="db ma0 dim" alt="">
-        
-      </a>
-    </figure>
-    <div class="flex flex-column w-100 w-60-ns pl3-ns">
-      <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="/blog/unim/presentacion_visualizador_datos_corrupcion/" class="db">Video: Presentación de Visualizador de datos de Corrupción en Chile</a></h1> 
-        
-        
-      </header>
-      
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;"><p>Exposición en la <strong>Universidad Internacional de la Municipalidad de Rancagua</strong>, instancia organizada por el <strong>Programa de Gobierno Local Abierto</strong> (GOBLA) de la Municipalidad de Rancagua.</p>
-<p>En esta presentación doy a conocer el 
-<a href="/apps/corrupcion_chile">visualizador de datos de Corrupción</a>, explicando cómo fue el proceso de inspirarme a hacerlo, los desafíos que tuve durante su desarrollo, y la experiencia de colaboración y discusión en torno a un proyecto de datos que pueden ser polémicos.</p></p>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/shiny"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            shiny</a>  <a href="https://bastianoleah.netlify.app/tags/chile"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            Chile</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/aplicaciones"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            aplicaciones</a>  <a href="https://bastianoleah.netlify.app/tags/videos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            videos</a> </dd></em>
-        </dl>
-        
-        
-      <footer class="w-100">
-        
-      
-      
-      <p class="f7 db mv1">24/1/2025</p>
-      
-        <p class="db pt1">
-        
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-      
-  <a class="btn-links mr2 ba dib" 
-  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
-  href="https://youtu.be/46Hlm7hfKsQ" target="_blank" rel="noopener"><i class="fab fa-youtube fa-lg fa-fw mr2"></i>ver video</a>
-
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-      
-  <a class="btn-links mr2 ba dib" 
-  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
-  href="/apps/corrupcion_chile" ><i class="fas fa-link fa-lg fa-fw mr2"></i>aplicación</a>
-
-
-        </p>
-      
-    </footer>
-    </div>
-  </div>
-
-  
-  
-</article>
-
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  
-  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
-    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
-      <a href="/blog/2025-01-14/" class="db">
-        
-          <img src="https://bastianoleah.netlify.app/blog/2025-01-14/analisis_sentimiento_2-featured.png" class="db ma0 dim" alt="">
-        
-      </a>
-    </figure>
-    <div class="flex flex-column w-100 w-60-ns pl3-ns">
-      <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="/blog/2025-01-14/" class="db">Actualización de app Análisis de prensa: visualización de análisis de sentimiento de noticias recientes</a></h1> 
-        
-        
-      </header>
-      
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Nuevo gráfico de análisis de sentimiento: elige un tema y revisa si las noticias recientes fueron mayormente positivas o negativas. Compara cómo distintos medios abordan las temáticas. Para agregar esta funcionalidad a la app tuve que 
-<a href="/blog/analisis_sentimiento_llm/">desarrollar un proceso automatizado de análisis de datos usando modelos extensos de lenguaje (LLM)</a>. Luego de que se obtienen las noticias por web scraping, se deja ejecutando el modelo de lenguaje sobre las noticias recientes para analizar el sentimiento del texto, clasificar la noticia en temáticas, y producir un resumen de su contenido.</p>
-      
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/web-scraping"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            web scraping</a>  <a href="https://bastianoleah.netlify.app/tags/inteligencia-artificial"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            inteligencia artificial</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/shiny"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            shiny</a> </dd></em>
-        </dl>
-        
-        
-      <footer class="w-100">
-        
-      
-      
-      <p class="f7 db mv1">14/1/2025</p>
-      
-        <p class="db pt1">
-        
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-      
-  <a class="btn-links mr2 ba dib" 
-  style = "background-color: #9069C0; border-radius: 3px; color: #EAD2FA; padding-top: 10px; padding-left: 8px; padding-right: 8px; margin-right: 2px;"
-  href="/apps/prensa_chile/" ><i class="fas fa-link fa-lg fa-fw mr2"></i>aplicación</a>
 
 
         </p>
@@ -2057,463 +1934,308 @@
 
 
 
+
 <div style="font-size: 90%;">
   <h2>Temas:</h2>
    
   
-  <div style="margin-bottom: 10px;">
+  <div style="margin-bottom: 8px;">
     <span style = "margin-right: 2px; 
                  font-style: normal;
+                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/chile/">Chile</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">32 posts</span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">33 posts</span>
   </div>
  
   
-  <div style="margin-bottom: 10px;">
+  <div style="margin-bottom: 8px;">
     <span style = "margin-right: 2px; 
                  font-style: normal;
+                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">24 posts</span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">22 posts</span>
   </div>
  
   
-  <div style="margin-bottom: 10px;">
+  <div style="margin-bottom: 8px;">
     <span style = "margin-right: 2px; 
                  font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/ggplot2/">Ggplot2</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">22 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
+                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/consejos/">Consejos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">22 posts</span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">21 posts</span>
   </div>
  
   
-  <div style="margin-bottom: 10px;">
+  <div style="margin-bottom: 8px;">
     <span style = "margin-right: 2px; 
                  font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/datos/">Datos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">20 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
+                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos/">Gráficos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">19 posts</span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">20 posts</span>
   </div>
  
   
-  <div style="margin-bottom: 10px;">
+  <div style="margin-bottom: 8px;">
     <span style = "margin-right: 2px; 
                  font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/datos/">Datos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">20 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/ggplot2/">Ggplot2</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">19 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/apps/">Apps</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">16 posts</span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">16 posts</span>
   </div>
  
   
-  <div style="margin-bottom: 10px;">
+  <div style="margin-bottom: 8px;">
     <span style = "margin-right: 2px; 
                  font-style: normal;
+                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/web-scraping/">Web scraping</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">15 posts</span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">15 posts</span>
   </div>
  
   
-  <div style="margin-bottom: 10px;">
+  <div style="margin-bottom: 8px;">
     <span style = "margin-right: 2px; 
                  font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/blog/">Blog</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">11 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">11 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/shiny/">Shiny</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">11 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
+                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/limpieza-de-datos/">Limpieza de datos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">11 posts</span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">12 posts</span>
   </div>
  
   
-  <div style="margin-bottom: 10px;">
+  <div style="margin-bottom: 8px;">
     <span style = "margin-right: 2px; 
                  font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/quarto/">Quarto</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">10 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/ciencias-sociales/">Ciencias sociales</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">9 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
+                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/mapas/">Mapas</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">9 posts</span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">11 posts</span>
   </div>
  
   
-  <div style="margin-bottom: 10px;">
+  <div style="margin-bottom: 8px;">
     <span style = "margin-right: 2px; 
                  font-style: normal;
+                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/loops/">Loops</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">8 posts</span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/shiny/">Shiny</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">11 posts</span>
   </div>
  
   
-  <div style="margin-bottom: 10px;">
+  <div style="margin-bottom: 8px;">
     <span style = "margin-right: 2px; 
                  font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/blog/">Blog</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">11 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">11 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/quarto/">Quarto</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">10 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">8 posts</span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">9 posts</span>
   </div>
  
   
-  <div style="margin-bottom: 10px;">
+  <div style="margin-bottom: 8px;">
     <span style = "margin-right: 2px; 
                  font-style: normal;
+                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/curiosidades/">Curiosidades</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">7 posts</span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/ciencias-sociales/">Ciencias sociales</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">9 posts</span>
   </div>
  
   
-  <div style="margin-bottom: 10px;">
+  <div style="margin-bottom: 8px;">
     <span style = "margin-right: 2px; 
                  font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/loops/">Loops</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">8 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/an%C3%A1lisis-de-texto/">Análisis de texto</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">7 posts</span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">7 posts</span>
   </div>
  
   
-  <div style="margin-bottom: 10px;">
+  <div style="margin-bottom: 8px;">
     <span style = "margin-right: 2px; 
                  font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/curiosidades/">Curiosidades</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">7 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n/">Automatización</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">6 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/dplyr/">Dplyr</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">6 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/tablas/">Tablas</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">6 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n/">Optimización</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">5 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/texto/">Texto</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">5 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/purrr/">Purrr</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">4 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/g%C3%A9nero/">Género</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">4 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/estad%C3%ADstica/">Estadística</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">4 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/animaciones/">Animaciones</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">3 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/git/">Git</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">3 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/aplicaciones/">Aplicaciones</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">3 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/videos/">Videos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">3 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/funciones/">Funciones</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">3 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/arte-generativo/">Arte generativo</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">2 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/fechas/">Fechas</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">2 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/temas/">Temas</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">2 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/control-de-flujo/">Control de flujo</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">2 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/datos-perdidos/">Datos perdidos</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">1 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 10px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/github/">GitHub</a></span>
-    <span style = "font-weight: normal; opacity: 40%;">1 posts</span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">6 posts</span>
   </div>
 
 </div>

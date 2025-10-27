@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Mapas y visualización de datos geoespaciales en R con {sf} | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="R cuenta con un muy amplio ecosistema de paquetes para datos geoespaciales. Uno de los paquetes más importantes es `{sf}`, que permite manipular datos espaciales a partir del estándar _simple features_ (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS). En esta guía iré guardando los comandos que uso frecuentemente para manipular y visualizar datos geoespaciales en R. En la medida que voy aprendiendo más sobre hacer mapitas, iré actualizando y complementando.">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="Mapas y visualización de datos geoespaciales en R con {sf} | Bastián Olea">
+<meta property="og:description" content="R cuenta con un muy amplio ecosistema de paquetes para datos geoespaciales. Uno de los paquetes más importantes es `{sf}`, que permite manipular datos espaciales a partir del estándar _simple features_ (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS). En esta guía iré guardando los comandos que uso frecuentemente para manipular y visualizar datos geoespaciales en R. En la medida que voy aprendiendo más sobre hacer mapitas, iré actualizando y complementando." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/mapas_sf/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/mapas_sf/mapa_rm_featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/mapas_sf/mapa_rm_featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Mapas y visualización de datos geoespaciales en R con {sf}">
+  <meta itemprop="description" content="⚠️ post en construcción! ⚠️ R cuenta con un muy amplio ecosistema de paquetes para datos geoespaciales. Uno de los paquetes más importantes es {sf}, que permite manipular datos espaciales a partir del estándar simple features (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS).
+En esta guía iré guardando los comandos que uso frecuentemente para manipular, transformar y visualizar datos geoespaciales en R. En la medida que voy aprendiendo más sobre hacer mapitas, iré actualizando y complementando.">
+  <meta itemprop="datePublished" content="2025-10-22T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-10-22T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1439">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/mapas_sf/mapa_rm_featured.png">
+  <meta itemprop="keywords" content="Mapas,Visualización de datos">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9dae2888bc53e1aef239ba1add77b8a61bb249ad5c068c5464836ceb4111eb2c.css" integrity="sha256-na4oiLxT4a7yOboa3Xe4phuySa1cBoxUZINs60ER6yw=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.422a2363d11e9d6836a9931682c00abf3c5a2cb6d5460f3485cb54696b258be4.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Mapas y visualización de datos geoespaciales en R con {sf}</h1>
+        
+        
+        <p class="f7 db mv0 ttu">22/10/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/mapas"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      mapas</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      visualización de datos</a> </dd></em>
+  </dl>
+ 
+        
+      
+      <div class="ph0 pt5">
+        
+
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; color: #EAD2FA; 
+  font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; margin-right: 1px;"
+  href="https://r-spatial.github.io/sf/" target="_blank" rel="noopener"><i class="fas fa-registered fa-lg fa-fw mr2"></i>SF</a>
+
+
+      </div>
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <p><a href="mapa_rm_featured.png" target="_blank">
+
+  <img src="mapa_rm_featured.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
+
+⚠️ post en construcción! ⚠️
+
+</div>
+</p>
+<p>R cuenta con un muy amplio 
+<a href="https://github.com/r-spatial/" target="_blank" rel="noopener">ecosistema</a> de paquetes para datos geoespaciales. Uno de los 
+<a href="https://r-spatial.github.io/sf/" target="_blank" rel="noopener">paquetes más importantes es <code>{sf}</code></a>, que permite manipular datos espaciales a partir del estándar <em>simple features</em> (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS).</p>
+<p>En esta guía iré guardando los comandos que uso frecuentemente para <strong>manipular, transformar y visualizar datos geoespaciales</strong> en R. En la medida que voy aprendiendo más sobre hacer mapitas, iré actualizando y complementando.</p>
+<p>Lo inicial es instalar <code>{sf}</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;sf&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Y cargarlo junto a <code>{dplyr}</code> para empezar a trabajar con datos geoespaciales.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sf</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+
+<details>
+  <summary>Ver código para los gráficos</summary>
+  <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># tema de colores</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">thematic</span><span style="color:#908caa">::</span><span style="color:#ea9a97">thematic_on</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fg</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#553A74&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#ea9a97">bg</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EAD2FA&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                      <span style="color:#ea9a97">accent</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">theme_set</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># fondo transparente para mapas</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">plot.background</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_rect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;transparent&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;transparent&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># borrar líneas feas</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">axis.ticks</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">())</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+</details>
+<br>
+<div style = "margin-left: -16px;">
+  
+  <details open id="PageTableOfContents">
+    <summary>
+      <h2 class="mv0 f5 fw7 ttu tracked dib" style = "margin-left: 6px; font-size: 120%;">Índice</h2>
+      </summary>
+    <div class="pl2 pr0 mh0" style = "margin-top: -8px; margin-left: 12px; margin-bottom: 32px;">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#carga-de-datos">Carga de datos</a>
+      <ul>
+        <li><a href="#cargar-shapes">Cargar <em>shapes</em></a></li>
+      </ul>
+    </li>
+    <li><a href="#glosario">Glosario</a></li>
+    <li><a href="#operaciones-sobre-geometrías">Operaciones sobre geometrías</a>
+      <ul>
+        <li><a href="#calcular-centroide">Calcular centroide</a></li>
+        <li><a href="#extraer-longitud-y-latitud">Extraer longitud y latitud</a></li>
+        <li><a href="#calcular-buffer">Calcular buffer</a></li>
+        <li><a href="#calcular-caja-de-un-polígono">Calcular caja de un polígono</a></li>
+        <li><a href="#convertir-caja-a-polígono">Convertir caja a polígono</a></li>
+        <li><a href="#crear-un-cuadrado">Crear un cuadrado</a></li>
+      </ul>
+    </li>
+    <li><a href="#recursos-para-aprender-más">Recursos para aprender más</a>
+      <ul>
+        <li><a href="#apuntes">Apuntes</a></li>
+        <li><a href="#libros">Libros</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </details>
+  
+</div>
+<hr>
+
+
+
+
+<h2 id="carga-de-datos">Carga de datos
+  <a href="#carga-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+
+
+
+
+<div class = "db pt1"
+style = "margin-bottom: 34px;">
+
+<a class = "btn-links mr2 ba dib"
+href = "https://www.bcn.cl/siit/mapas_vectoriales" target="_blank"
+style = "padding: 12px; padding-bottom: 8px; border-radius: 5px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #9069C0; margin-bottom: -12px;">
+<i class="fas fa-map fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
+Mapoteca Biblioteca del Congreso Nacional</a>
+
+</div>
+<p>En este enlace podemos descargar un <em>shapefile</em> con los límites político-administrativos de Chile, como el titulado <em>
+<a href="https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip" target="_blank" rel="noopener">Division regional: polígonos de las regiones de Chile</a></em>. También puedes descargarlo en el script con <code>download.file()</code>.</p>
+<p>Una vez descargado, descomprimimos el archivo (podemos usar <code>unzip()</code>) y obtendremos una <strong>carpeta</strong>. Es importante que la carpeta esté en nuestro 
+<a href="../../../blog/r_introduccion/proyectos/">proyecto de RStudio</a>. Personalmente prefiero guardar los <em>shapes</em> en su propia carpeta, así que pondré la carpeta del <em>shape</em> descargado dentro de <code>shapes/</code></p>
+
+
+
+
+<h3 id="cargar-shapes">Cargar <em>shapes</em>
+  <a href="#cargar-shapes"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_sf</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;shapes/Regiones&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">janitor</span><span style="color:#908caa">::</span><span style="color:#ea9a97">clean_names</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa</span>
+</span></span></code></pre></div><pre><code>Simple feature collection with 17 features and 7 fields
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: -12183900 ymin: -7554306 xmax: -7393644 ymax: -1978920
+Projected CRS: WGS 84 / Pseudo-Mercator
+# A tibble: 17 × 8
+   objectid cir_sena codregion area_km    st_area_sh st_length region           
+ *    &lt;dbl&gt;    &lt;int&gt;     &lt;int&gt;   &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;            
+ 1     1084        1        15  16867.  18868687744.   750530. Región de Arica …
+ 2     1085        2         1  42285.  48306372203.  1213713. Región de Tarapa…
+ 3     1086        3         2 126071. 150845155633   2516112. Región de Antofa…
+ 4     1087       15        12 133053. 358131609833  90498304. Región de Magall…
+ 5     1088       14        11 106703. 224274263072  41444811. Región de Aysén …
+ 6     1089        4         3  75661.  96439063562.  2401741. Región de Atacama
+ 7     1090        5         4  40576.  54980818749.  2065933. Región de Coquim…
+ 8     1091        6         5  16323.  23014748571.  1679609. Región de Valpar…
+ 9     1092        7        13  15392.  22252038246.  1064253. Región Metropoli…
+10     1093       13        10  48408.  87718341940.  7874158. Región de Los La…
+11     1094       12        14  18245.  31086613540.  1844423. Región de Los Rí…
+12     1095       11         9  31838.  52215073344.  1501025. Región de La Ara…
+13     1096       10         8  24022.  38176117509.  2097147. Región del Bío-B…
+14     1097       10        16  13104.  20376298459.  1074094. Región de Ñuble  
+15     1098        9         7  30322.  45969426092.  1388328. Región del Maule 
+16     1099        8         6  16349.  24090278437.   984853. Región del Liber…
+17     1100        0         0   3937.   9306245194.   388722. Zona sin demarcar
+# ℹ 1 more variable: geometry &lt;GEOMETRY [m]&gt;
+</code></pre>
+<!--
+### Cargar geoJSON
+
+
+### Cargar KMZ
+
+
+::: {.cell}
+
+```{.r .cell-code}
+unzip("~/Downloads/Mis lugares.kmz", exdir = "~/Downloads/Mis lugares")
+
+sf::read_sf("~/Downloads/Mis lugares/doc.kml")
+```
+:::
+
+
+
+-->
+<p>Como vemos, una vez que cargamos los datos geoespaciales obtenemos una <strong>tabla con características especiales</strong>. arriba de la tabla vemos una descripción de las características del mapa, el tipo de geometrías, la caja o <em>bounding box</em> que enmarca los polígonos, y el sistema de referencia de coordenadas del mapa.</p>
+<p>En <code>{sf}</code> los datos geoespaciales además contienen una columna <code>geometry</code>, que contiene las geometrías (puntos, líneas o polígonos) que definen la forma y ubicación de los elementos geográficos. Vamos a trabajar con esta columna si queremos <strong>modificar la geometría</strong> de los elementos geoespaciales o calcular algo a partir de ellos. <strong>Cada fila de la tabla representa un objeto geográfico</strong> (una región, comuna, país, etc.) y las demás columnas son variables relacionadas al objeto geográfico (población, superficie, nombre, etc.)</p>
+
+
+
+
+<h2 id="glosario">Glosario
+  <a href="#glosario"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<ul>
+<li><strong>Simple features</strong>: estándar para representar datos geoespaciales en forma de tablas con una columna especial de geometría.</li>
+<li><strong>Shapefile</strong>: formato de archivo común para datos geoespaciales, que en realidad consiste en varios archivos relacionados.</li>
+<li><strong>Polígono</strong>: forma geométrica que representa áreas en un mapa.</li>
+</ul>
+<hr>
+
+
+
+
+<h2 id="operaciones-sobre-geometrías">Operaciones sobre geometrías
+  <a href="#operaciones-sobre-geometr%c3%adas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Las operaciones sobre geometrías permiten manipular y analizar las formas y ubicaciones de los objetos geográficos. A continuación veremos algunas operaciones comunes que se pueden realizar con el paquete <code>{sf}</code> en R.</p>
+
+
+
+
+<h3 id="calcular-centroide">Calcular centroide
+  <a href="#calcular-centroide"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>El centroide es el punto central de un polígono. Calcularlo sirve, por ejemplo, para ubicar una etiqueta de texto sobre un polígono, poner un punto sobre un territorio que crece con respecto a una variable, etc.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_centroide</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">geometry</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">centroide</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_centroid</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_centroide</span>
+</span></span></code></pre></div><pre><code>Simple feature collection with 17 features and 1 field
+Active geometry column: geometry
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: -12183900 ymin: -7554306 xmax: -7393644 ymax: -1978920
+Projected CRS: WGS 84 / Pseudo-Mercator
+# A tibble: 17 × 3
+   region                                     geometry           centroide
+ * &lt;chr&gt;                                &lt;GEOMETRY [m]&gt;         &lt;POINT [m]&gt;
+ 1 Región de Arica y Parina… POLYGON ((-7675501 -2147… (-7751019 -2095927)
+ 2 Región de Tarapacá        POLYGON ((-7807680 -2295… (-7724797 -2299134)
+ 3 Región de Antofagasta     MULTIPOLYGON (((-7859947… (-7694561 -2698986)
+ 4 Región de Magallanes y A… MULTIPOLYGON (((-7494058… (-7996444 -6899731)
+ 5 Región de Aysén del Gral… MULTIPOLYGON (((-8395076… (-8155537 -5856280)
+ 6 Región de Atacama         MULTIPOLYGON (((-7868801… (-7782778 -3174679)
+ 7 Región de Coquimbo        MULTIPOLYGON (((-7956099… (-7888264 -3584743)
+ 8 Región de Valparaíso      MULTIPOLYGON (((-8991646… (-7944452 -3860933)
+ 9 Región Metropolitana de … POLYGON ((-7857118 -3892… (-7862170 -3976036)
+10 Región de Los Lagos       MULTIPOLYGON (((-8128795… (-8114468 -5170738)
+11 Región de Los Ríos        MULTIPOLYGON (((-8156461… (-8078476 -4867034)
+12 Región de La Araucanía    POLYGON ((-7929978 -4593… (-8045539 -4672201)
+13 Región del Bío-Bío        MULTIPOLYGON (((-8231986… (-8058771 -4509385)
+14 Región de Ñuble           POLYGON ((-8053807 -4431… (-8012110 -4389990)
+15 Región del Maule          POLYGON ((-8018823 -4121… (-7953282 -4249088)
+16 Región del Libertador Be… POLYGON ((-8015044 -4051… (-7908857 -4087567)
+17 Zona sin demarcar         POLYGON ((-8197676 -6303… (-8154871 -6357913)
+</code></pre>
+<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
+
+
+<details>
+  <summary>Ver código del gráfico</summary>
+  <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_centroide</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Región de Atacama&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NA</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">centroide</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.6</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">geom_sf_text</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">centroide</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;centroide&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">nudge_y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-20000</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+</details>
+<hr>
+
+
+
+
+<h3 id="extraer-longitud-y-latitud">Extraer longitud y latitud
+  <a href="#extraer-longitud-y-latitud"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Para obtener las coordenadas (longitud y latitud) de un elemento espacial, necesitamos primero que sea un punto, porque un polígono es una figura compleja que no tiene solamente una latitud y una longitud. Si tenemos un polígono, 
+<a href="#calcular-centroide">primero calculamos el centroide</a>, y luego extraemos las coordenadas con <code>st_coordinates()</code>. Como esta función retorna la longitud y latitud de cada punto al mismo tiempo, tenemos que pedirle que entregue la una o la otra usando corchetes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_centroide_coordenadas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_centroide</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lon</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_coordinates</span><span style="color:#908caa">(</span><span style="color:#ea9a97">centroide</span><span style="color:#908caa">)</span><span style="color:#ea9a97">[</span><span style="color:#908caa">,</span><span style="color:#f6c177">1</span><span style="color:#ea9a97">]</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">lat</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_coordinates</span><span style="color:#908caa">(</span><span style="color:#ea9a97">centroide</span><span style="color:#908caa">)</span><span style="color:#ea9a97">[</span><span style="color:#908caa">,</span><span style="color:#f6c177">2</span><span style="color:#ea9a97">]</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_centroide_coordenadas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">lon</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">lat</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>Simple feature collection with 17 features and 3 fields
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: -12183900 ymin: -7554306 xmax: -7393644 ymax: -1978920
+Projected CRS: WGS 84 / Pseudo-Mercator
+# A tibble: 17 × 4
+   region                                  lon     lat                  geometry
+   &lt;chr&gt;                                 &lt;dbl&gt;   &lt;dbl&gt;            &lt;GEOMETRY [m]&gt;
+ 1 Región de Arica y Parinacota        -7.75e6 -2.10e6 POLYGON ((-7675501 -2147…
+ 2 Región de Tarapacá                  -7.72e6 -2.30e6 POLYGON ((-7807680 -2295…
+ 3 Región de Antofagasta               -7.69e6 -2.70e6 MULTIPOLYGON (((-7859947…
+ 4 Región de Magallanes y Antártica C… -8.00e6 -6.90e6 MULTIPOLYGON (((-7494058…
+ 5 Región de Aysén del Gral.Ibañez de… -8.16e6 -5.86e6 MULTIPOLYGON (((-8395076…
+ 6 Región de Atacama                   -7.78e6 -3.17e6 MULTIPOLYGON (((-7868801…
+ 7 Región de Coquimbo                  -7.89e6 -3.58e6 MULTIPOLYGON (((-7956099…
+ 8 Región de Valparaíso                -7.94e6 -3.86e6 MULTIPOLYGON (((-8991646…
+ 9 Región Metropolitana de Santiago    -7.86e6 -3.98e6 POLYGON ((-7857118 -3892…
+10 Región de Los Lagos                 -8.11e6 -5.17e6 MULTIPOLYGON (((-8128795…
+11 Región de Los Ríos                  -8.08e6 -4.87e6 MULTIPOLYGON (((-8156461…
+12 Región de La Araucanía              -8.05e6 -4.67e6 POLYGON ((-7929978 -4593…
+13 Región del Bío-Bío                  -8.06e6 -4.51e6 MULTIPOLYGON (((-8231986…
+14 Región de Ñuble                     -8.01e6 -4.39e6 POLYGON ((-8053807 -4431…
+15 Región del Maule                    -7.95e6 -4.25e6 POLYGON ((-8018823 -4121…
+16 Región del Libertador Bernardo O'H… -7.91e6 -4.09e6 POLYGON ((-8015044 -4051…
+17 Zona sin demarcar                   -8.15e6 -6.36e6 POLYGON ((-8197676 -6303…
+</code></pre>
+<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
+
+
+<details>
+  <summary>Ver código del gráfico</summary>
+  <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_centroide_coordenadas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">forcats</span><span style="color:#908caa">::</span><span style="color:#ea9a97">fct_reorder</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">lat</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># ordenar regiones</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lat</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">region</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">geom_col</span><span style="color:#908caa">(</span><span style="color:#ea9a97">width</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.7</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">geom_text</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">region</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">hjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-0.05</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EAD2FA&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">scale_y_discrete</span><span style="color:#908caa">(</span><span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Latitud&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+</details>
+<hr>
+
+
+
+
+<h3 id="calcular-buffer">Calcular buffer
+  <a href="#calcular-buffer"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">st_buffer</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><hr>
+
+
+
+
+<h3 id="calcular-caja-de-un-polígono">Calcular caja de un polígono
+  <a href="#calcular-caja-de-un-pol%c3%adgono"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Bounding box</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">st_bbox</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>     xmin      ymin      xmax      ymax 
+-12183903  -7554306  -7393644  -1978920 
+</code></pre>
+<hr>
+
+
+
+
+<h3 id="convertir-caja-a-polígono">Convertir caja a polígono
+  <a href="#convertir-caja-a-pol%c3%adgono"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">caja</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">st_bbox</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">caja_poli</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">caja</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sfc</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sf</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">caja_poli</span>
+</span></span></code></pre></div><hr>
+
+
+
+
+<h3 id="crear-un-cuadrado">Crear un cuadrado
+  <a href="#crear-un-cuadrado"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Desde una coordenada</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">38.29782</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-76.51390</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_point</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_sfc</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_buffer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dist</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">30000</span><span style="color:#908caa">)</span>  <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_bbox</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sfc</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sf</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><!--
+Desde el centroide de un polígono
+
+
+::: {.cell}
+
+```{.r .cell-code}
+mapa |> 
+filter(region == "Región de Antofagasta") |>
+st_centroid() |> 
+st_buffer(dist = 8000) |> 
+st_bbox() |> 
+st_as_sfc() |>
+st_as_sf()
+```
+:::
+
+
+-->
+<!--
+### Calcular superficie o área
+
+
+::: {.cell}
+
+```{.r .cell-code}
+mapa_region_comunas_areas |> 
+st_union() |> 
+st_area() |> 
+units::set_units("km^2")
+```
+:::
+
+
+
+
+
+### Recortar polígono a coordenadas
+
+
+::: {.cell}
+
+```{.r .cell-code}
+st_crop(xmin = -74, ymin = -36, xmax = -65, ymax = -30) |> 
+```
+:::
+
+
+
+
+### Simplificar un polígono
+
+
+::: {.cell}
+
+```{.r .cell-code}
+https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#simplification
+st_simplify(dTolerance = 0.01)
+
+rmapshaper::ms_simplify(geometry, keep = 0.8)) 
+```
+:::
+
+
+
+
+### Extraer líneas internas de un polígono
+
+
+::: {.cell}
+
+```{.r .cell-code}
+ms_innerlines() # deja solo las líneas interiores de un coso
+```
+:::
+
+
+
+
+## Correcciones
+
+
+::: {.cell}
+
+```{.r .cell-code}
+st_as_sf()
+```
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
+st_make_valid()
+```
+:::
+
+::: {.cell}
+
+```{.r .cell-code}
+st_drop_geometry() 
+```
+:::
+
+
+
+
+----
+
+
+## Operaciones agrupadas
+
+### Unir polígonos
+
+
+::: {.cell}
+
+```{.r .cell-code}
+group_by() |> 
+st_union()
+```
+:::
+
+
+
+
+## Operaciones entre geometrías
+
+### Recortar un polígono con otro
+https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#clipping
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+st_intersection()
+```
+:::
+
+
+
+### Usar un polígono para eliminar partes de otro
+
+
+::: {.cell}
+
+```{.r .cell-code}
+st_difference()
+```
+:::
+
+
+
+
+### unir dos polígonos
+
+
+::: {.cell}
+
+```{.r .cell-code}
+st_union()
+```
+:::
+
+
+
+### Spatial join
+
+### Filter
+
+
+::: {.cell}
+
+```{.r .cell-code}
+https://cengel.github.io/R-spatial/spatialops.html#topological-subsetting-select-polygons-by-location
+```
+:::
+
+
+
+
+
+## Coordenadas
+
+### Extraer sistema de coordenadas
+
+
+::: {.cell}
+
+```{.r .cell-code}
+st_crs(comunas_region)
+```
+:::
+
+
+
+### Cambiar coordenadas
+
+
+::: {.cell}
+
+```{.r .cell-code}
+st_transform(crs = st_crs(comunas_region))
+```
+:::
+
+
+
+
+## Visualización
+
+### Visualizar por capas
+
+
+::: {.cell}
+
+```{.r .cell-code}
+geom_sf()
+```
+:::
+
+
+
+
+### Texto
+
+
+::: {.cell}
+
+```{.r .cell-code}
+geom_sf_text(data = nombres_areas |> filter(clase_topo == "Comuna"), color = "red", fontface = "bold",
+aes(label = nombre)) + 
+```
+:::
+
+
+
+### Texto con repel
+https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
+
+
+::: {.cell}
+
+```{.r .cell-code}
+ggrepel::geom_label_repel(data = comunas_region_conteo_urbanas,
+aes(label = comuna, geometry = geometry),
+stat = "sf_coordinates",
+size = 2, box.padding = 0,
+min.segment.length = unit(3, "mm"),
+label.padding = 0.15, label.size = 0
+) +
+```
+:::
+
+
+
+
+### Hacer zoom
+
+
+::: {.cell}
+
+```{.r .cell-code}
+#   coord_sf(xlim = c(-70.4, -70.2),
+#            ylim = c(-18.7, -18.4),
+```
+:::
+
+
+
+### Dibujar un cuadrado
+
+
+::: {.cell}
+
+```{.r .cell-code}
+#   annotate("rect", fill = NA, color = "black", linewidth = 1,
+#            xmin = bbox_area_met[1]-2000, xmax = bbox_area_met[2]+2000,
+#            ymin = bbox_area_met[3]+2000, ymax = bbox_area_met[4]-2000)+
+```
+:::
+
+
+
+### Escala de colores para mapa de calor
+
+
+
+::: {.cell}
+
+```{.r .cell-code}
+scale_fill_gradient2(
+low = color$bajo, mid = color$medio, high = color$alto,
+midpoint = mean(comunas_region_conteo$n),
+na.value = col_mix(color$fondo, color$principal, 0.1),
+limits = c(0, NA)
+# breaks = cortes
+)
+```
+:::
+
+
+
+
+### Minimapa
+https://dominicroye.github.io/blog/inserted-map/
+
+
+::: {.cell}
+
+:::
+
+
+
+-->
+<hr>
+
+
+
+
+<h2 id="recursos-para-aprender-más">Recursos para aprender más
+  <a href="#recursos-para-aprender-m%c3%a1s"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+
+
+
+
+<h3 id="apuntes">Apuntes
+  <a href="#apuntes"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p><a href="sf_cheatsheet_1.jpeg" target="_blank">
+
+  <img src="sf_cheatsheet_1.jpeg" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<a href="sf_cheatsheet_2.jpeg" target="_blank">
+
+  <img src="sf_cheatsheet_2.jpeg" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a></p>
+
+
+
+
+<h3 id="libros">Libros
+  <a href="#libros"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<ul>
+<li>
+<a href="https://r-spatial.org/r/2018/10/25/ggplot2-sf.html" target="_blank" rel="noopener">Drawing beautiful maps programmatically with R, sf and ggplot2</a></li>
+<li>
+<a href="https://bookdown.org/robinlovelace/geocompr/" target="_blank" rel="noopener">Geocomputation with R</a></li>
+<li>
+<a href="https://r-spatial.org/book/" target="_blank" rel="noopener">Spatial Data Science With Applications in R</a></li>
+<li>
+<a href="https://cengel.github.io/R-spatial/" target="_blank" rel="noopener">Using Spatial Data with R</a></li>
+</ul>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">October 22, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">7 minute read, 1439 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categorías:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/categories/tutoriales">tutoriales</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/mapas">mapas</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/mapa_chile_triple/">Visualizar un mapa de Chile separado en tres secciones</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/tutorial_mapa_chile_subdere/">Crea un mapa de Chile desde datos geoespaciales oficiales en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/ggplot_tipografias/">Tipografías personalizadas en gráficos {ggplot2}</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/mapa_chile_triple/">&larr; Visualizar un mapa de Chile separado en tres secciones</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/2025-10-21/">Contar datos perdidos en una o varias columnas &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+</div>
+
+    
+  </section>
+</main>
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
