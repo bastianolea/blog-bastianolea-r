@@ -13,7 +13,7 @@ cascade:
     text_link_label: Ver clases
     text_link_url: /clases/
 description: |
-  Como desarrollador de R, me interesa poder compartir conocimientos con otras personas, y mostrarles herramientas que pueden ayudarles en sus proyectos personales o laborales. En esta sección puedes encontrar un listado de clases y cursos que he impartido o estoy impartiendo. Accede a cada uno para mayor información.
+  Aquí hay un listado de clases y cursos que he impartido o estoy impartiendo. Accede a cada uno para mayor información sobre inscripciones, contenidos y/o grabaciones.
 layout: list
 show_author_byline: false
 show_button_links: true

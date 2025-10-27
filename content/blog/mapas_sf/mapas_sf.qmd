@@ -27,7 +27,7 @@ excerpt: "R cuenta con un muy amplio ecosistema de paquetes para datos geoespaci
 
 {{< imagen "mapa_rm_featured.png" >}}
 
-{{< aviso "⚠️ post en construcción! ⚠️" >}}
+{{< aviso "⚠️ Este tutorial se encuentra en construcción! ⚠️" >}}
 
 R cuenta con un muy amplio [ecosistema](https://github.com/r-spatial/) de paquetes para datos geoespaciales. Uno de los [paquetes más importantes es `{sf}`](https://r-spatial.github.io/sf/), que permite manipular datos espaciales a partir del estándar _simple features_ (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS).
 
@@ -72,24 +72,28 @@ thematic::thematic_on(fg = "#553A74",
 theme_set(
   # fondo transparente para mapas
   theme(plot.background = element_rect(fill = "transparent", color = "transparent")) +
-  # borrar líneas feas
-  theme(axis.ticks = element_blank())
+    # borrar líneas feas
+    theme(axis.ticks = element_blank())
 )
 ```
 
-{{< detalles "Ver código para los gráficos" >}}
+**Nota:** para simplificar, en este tutorial voy a ocultar el código de los gráficos, pero siempre estará disponible bajo flechitas que despliegan el código, como la siguiente:
+
+{{< detalles "**Ver código para los gráficos**" >}}
 
 ```r
+library(ggplot2)
+
 # tema de colores
 thematic::thematic_on(fg = "#553A74",
-                      bg = "#EAD2FA",
-                      accent = "#9069C0")
+bg = "#EAD2FA",
+accent = "#9069C0")
 
 theme_set(
-  # fondo transparente para mapas
-  theme(plot.background = element_rect(fill = "transparent", color = "transparent")) +
-  # borrar líneas feas
-  theme(axis.ticks = element_blank())
+# fondo transparente para mapas
+theme(plot.background = element_rect(fill = "transparent", color = "transparent")) +
+# borrar líneas feas
+theme(axis.ticks = element_blank())
 )
 ```
 {{< /detalles >}}
@@ -101,17 +105,72 @@ theme_set(
 ----
 
 
-## Carga de datos
+## Carga de mapas
 
-{{< boton "Mapoteca Biblioteca del Congreso Nacional" "https://www.bcn.cl/siit/mapas_vectoriales" "fas fa-map">}}
+Una de las fuentes principales de datos geoespaciales son los _shapefiles_. Pero también existen **paquetes de R que contienen información geoespacial**, para mayor conveniencia. Exploraremos ambas opciones a continuación.
 
-En este enlace podemos descargar un _shapefile_ con los límites político-administrativos de Chile, como el titulado _[Division regional: polígonos de las regiones de Chile](https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip)_. También puedes descargarlo en el script con `download.file()`.
 
-Una vez descargado, descomprimimos el archivo (podemos usar `unzip()`) y obtendremos una **carpeta**. Es importante que la carpeta esté en nuestro [proyecto de RStudio](/blog/r_introduccion/proyectos/). Personalmente prefiero guardar los _shapes_ en su propia carpeta, así que pondré la carpeta del _shape_ descargado dentro de `shapes/`
+### Cargar mapas de cualquier país
+
+Si no tenemos o no queremos descargar _shapes_, podemos **cargar mapas de cualquier país directo en R** gracias a [`{rnaturalearth}`](http://ropensci.github.io/rnaturalearth/). Con este paquete obtenemos directamente mapas de cualquier país del mundo, incluyendo sus estados o regiones internos, sin necesidad de descargas.
+
+Instala `{rnaturalearth}` si no lo tienes:
+
+```r
+install.packages("rnaturalearth")
+```
+
+Puedes insertar el nombre de tu país para seguir con este tutorial usando ejemplos de tu territorio.
+
+```{r rnaturalearth}
+#| eval: true
+
+# install.packages("rnaturalearth")
+library(rnaturalearth)
+
+pais <- ne_states("Argentina")
+# pais <- ne_states("Mexico")
+# pais <- ne_states("Colombia")
+
+mapa <- pais |> 
+  # seleccionar columnas
+  select(pais = admin,
+         region = name_es,
+         geometry)
+
+mapa
+```
+
 
 ### Cargar _shapes_
 
-```{r cargar_verdadero}
+Un _shapefile_ es un formato de archivo común para datos geoespaciales, que en realidad consiste en una **carpeta** con archivos relacionados (`.shp`, `.shx`, `.dbf`, entre otros) que juntos representan la geometría y atributos de los objetos geográficos.
+
+Teniendo la carpeta, basta con cargarla con la función `read_sf()`.
+
+{{< detalles "**Ejemplo de descarga y carga de un _shapefile_ de Chile**" >}}
+
+Para aprender, podemos descargar un _shape_ y usarlo para practicar. Si no tienes uno a mano, en el siguiente botón podemos bajar un _shapefile_ de Chile por regiones, que proviene de la [Mapoteca de la Biblioteca del Congreso Nacional](https://www.bcn.cl/siit/mapas_vectoriales).
+
+{{< boton "Division regional: polígonos de las regiones de Chile" "https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip" "fas fa-map">}}
+
+También puedes descargarlo directamente desde R con `download.file()` y luego `unzip()`, [como se indica en este post](/blog/mapa_chile_triple/#descargar-mapas).
+
+
+Una vez descargado, descomprimimos el archivo y obtenemos una **carpeta**. Esta carpeta es nuestro _shapefile_, así que la guardamos dentro de nuestro [proyecto de RStudio](/blog/r_introduccion/proyectos/), idealmente dentro de una carpeta donde guardemos nuestros mapas. 
+
+```r
+# descargar
+download.file("https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip",
+"Regiones.zip")
+
+# descomprimir
+unzip("Regiones.zip", exdir = "shapes/Regiones")
+```
+
+En el siguiente ejemplo, guardamos el _shapefile_ en una carpeta `shapes`, y lo cargamos con `read_sf()`.
+
+```{r preprocesar}
 #| echo: false
 #| eval: false
 
@@ -129,12 +188,11 @@ mapa <- mapa |> rmapshaper::ms_simplify(keep = 0.02)
 readr::write_rds(mapa, "mapa.rds")
 ```
 
-```{r}
+```{r carga_rapida}
 #| echo: false
 #| eval: true
-mapa <- readr::read_rds("mapa.rds")
+mapa_chile <- readr::read_rds("mapa.rds")
 ```
-
 
 ```{r cargar_falso}
 #| eval: false
@@ -145,15 +203,17 @@ mapa <- read_sf("shapes/Regiones") |>
 
 mapa
 ```
+
 ```{r}
 #| eval: true
 #| echo: false
 #| output: true
-mapa
+mapa_chile
 ```
 
+{{< /detalles >}}
 
-
+{{< aviso "Puedes seguir este tutorial independientemente del mapa que hayas cargado (el _shape_ de Chile, con `rnaturalearth`, u otro _shape_ que tú elijas); lo importante es que cargues un objeto `mapa` que tenga columna `geometry` y `region`." >}}
 
 <!--
 ### Cargar geoJSON
@@ -169,24 +229,43 @@ sf::read_sf("~/Downloads/Mis lugares/doc.kml")
 
 -->
 
+----
 
-Como vemos, una vez que cargamos los datos geoespaciales obtenemos una **tabla con características especiales**. arriba de la tabla vemos una descripción de las características del mapa, el tipo de geometrías, la caja o _bounding box_ que enmarca los polígonos, y el sistema de referencia de coordenadas del mapa.
+Como vemos, una vez que cargamos los datos geoespaciales obtenemos una **tabla con características especiales**. Arriba de la tabla vemos una descripción de las características del mapa, el tipo de geometrías, la caja o _bounding box_ que enmarca los polígonos, y el sistema de referencia de coordenadas del mapa.
 
 En `{sf}` los datos geoespaciales además contienen una columna `geometry`, que contiene las geometrías (puntos, líneas o polígonos) que definen la forma y ubicación de los elementos geográficos. Vamos a trabajar con esta columna si queremos **modificar la geometría** de los elementos geoespaciales o calcular algo a partir de ellos. **Cada fila de la tabla representa un objeto geográfico** (una región, comuna, país, etc.) y las demás columnas son variables relacionadas al objeto geográfico (población, superficie, nombre, etc.)
 
 
-
+<!--
 ## Glosario
 
 - **Simple features**: estándar para representar datos geoespaciales en forma de tablas con una columna especial de geometría.
 - **Shapefile**: formato de archivo común para datos geoespaciales, que en realidad consiste en varios archivos relacionados.
 - **Polígono**: forma geométrica que representa áreas en un mapa.
 
+-->
 
 ----
 
 
+## Visualización básica de mapas
 
+Para visualizar un mapa con `{sf}` usamos la geometría `geom_sf()` dentro de un gráfico de `{ggplot2}`. Esta función reconoce automáticamente la columna `geometry` del objeto espacial, y dibuja las formas geográficas correspondientes.
+
+```{r mapa_basico}
+#| eval: true
+
+mapa |> 
+  ggplot() +
+  geom_sf(fill = "#9069C0", 
+          color = "#EBD2FA",
+          linewidth = 0.1)
+```
+
+{{< aviso "Si necesitas aprender lo básico de `{ggplot2}` para visualización de datos, [revisa este completo tutorial](/blog/r_introduccion/tutorial_visualizacion_ggplot/)." >}}
+
+
+----
 
 ## Operaciones sobre geometrías
 
@@ -205,12 +284,12 @@ mapa_centroide <- mapa |>
 
 mapa_centroide
 ```
-```{r}
+```{r mapa_centroide}
 #| eval: true
 #| echo: false
 
 mapa_centroide |> 
-  filter(region == "Región de Atacama") |> 
+  filter(region == mapa$region[3]) |> 
   ggplot() +
   geom_sf(fill = "#9069C0", 
           linewidth = NA) +
@@ -226,7 +305,7 @@ mapa_centroide |>
 {{< detalles "Ver código del gráfico" >}}
 ```r
 mapa_centroide |> 
-filter(region == "Región de Atacama") |> 
+filter(region == mapa$region[3]) |> 
 ggplot() +
 geom_sf(fill = "#9069C0", 
 linewidth = NA) +
@@ -257,18 +336,19 @@ mapa_centroide_coordenadas |>
   select(region, lon, lat)
 ```
 
-```{r}
+```{r barras_latitud}
 #| echo: false
 #| eval: true
 
 mapa_centroide_coordenadas |> 
+  distinct(region, .keep_all = TRUE) |> 
   mutate(region = forcats::fct_reorder(region, lat)) |> # ordenar regiones
   ggplot() +
-  aes(lat, region) +
+  aes(abs(lat), region) +
   geom_col(width = 0.7, fill = "#9069C0") +
   geom_text(
     aes(label = region),
-    size = 3, hjust = -0.05, color = "#EAD2FA") +
+    size = 3, hjust = 1.05, color = "#EAD2FA") +
   scale_y_discrete(labels = NULL) +
   labs(y = NULL, x = "Latitud")
 ```
@@ -276,6 +356,7 @@ mapa_centroide_coordenadas |>
 {{< detalles "Ver código del gráfico" >}}
 ```r
 mapa_centroide_coordenadas |> 
+distinct(region, .keep_all = TRUE) |> 
 mutate(region = forcats::fct_reorder(region, lat)) |> # ordenar regiones
 ggplot() +
 aes(lat, region) +
@@ -288,13 +369,53 @@ labs(y = NULL, x = "Latitud")
 ```
 {{< /detalles >}}
 
+
 ----
 
 
 ### Calcular buffer
+Un _buffer_ es una zona alrededor de un objeto geográfico, definida por una distancia específica. Calcular un _buffer_ es útil para analizar áreas de influencia, proximidad a ciertos puntos o regiones, o para hacer modificiones sobre mapas con fines de visualización.
+
+Con la función `st_buffer()` definimos el espacio en torno a un polígono, especificando en el argumento `dist` la **distancia** del _buffer_ en las unidades del sistema de coordenadas del mapa (por ejemplo, metros si el mapa está en UTM), y con `max_cells` podemos controlar la calidad del polígono resultante.
+
 ```{r}
-st_buffer()
+#| eval: true
+
+mapa_buffer <- mapa |> 
+  # filtrar una región/polígono
+  filter(region == mapa$region[3]) |> 
+  # crear buffer
+  mutate(buffer = st_buffer(geometry, 
+                            dist = 20000,
+                            max_cells = 10000))
 ```
+
+```{r mapa_buffer}
+#| eval: true
+#| echo: false
+
+mapa_buffer |> 
+  ggplot() +
+  # capa de la región
+  geom_sf(aes(geometry = geometry), 
+          fill = "#9069C0", linewidth = NA) +
+  # capa del buffer
+  geom_sf(aes(geometry = buffer), 
+          fill = "#9069C0", alpha = 0.5, linewidth = NA)
+```
+
+{{< detalles "Ver código del gráfico" >}}
+```r
+mapa_buffer |> 
+ggplot() +
+# capa de la región
+geom_sf(aes(geometry = geometry), 
+fill = "#9069C0", linewidth = NA) +
+# capa del buffer
+geom_sf(aes(geometry = buffer), 
+fill = "#9069C0", alpha = 0.5, linewidth = NA)
+```
+{{< /detalles >}}
 
 ----
 
@@ -311,7 +432,7 @@ st_bbox(mapa)
 
 ### Convertir caja a polígono
 ```{r}
-#| eval: false
+#| eval: true
 
 caja <- st_bbox(mapa)
 
@@ -321,6 +442,43 @@ caja_poli <- caja |>
 
 caja_poli
 ```
+
+```{r}
+#| eval: true
+#| echo: false
+
+ggplot() +
+  # mapa de fondo
+  geom_sf(data = mapa,
+          fill = "#9069C0", color = "#EBD2FB",
+          linewidth = 0.3) +
+  # capa con la caja encima
+  geom_sf(data = caja_poli,
+          fill = "#9069C0", color = "#9069C0", 
+          linewidth = 0.8,
+          alpha = 0.4) +
+  # tema
+  theme(axis.text = element_blank(),
+        panel.background = element_blank())
+```
+
+{{< detalles "Ver código del gráfico" >}}
+```r
+ggplot() +
+  # mapa de fondo
+  geom_sf(data = mapa,
+          fill = "#9069C0", color = "#EBD2FB",
+          linewidth = 0.3) +
+  # capa con la caja encima
+  geom_sf(data = caja_poli,
+          fill = "#9069C0", color = "#9069C0", 
+          linewidth = 0.8,
+          alpha = 0.4) +
+  # tema
+  theme(axis.text = element_blank(),
+        panel.background = element_blank())
+```
+{{< /detalles >}}
 
 
 
@@ -518,6 +676,8 @@ https://dominicroye.github.io/blog/inserted-map/
 ```
 
 -->
+
+{{< aviso "⚠️ Este tutorial se encuentra en construcción ⚠️" >}}
 
 ----
 
