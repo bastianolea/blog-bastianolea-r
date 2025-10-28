@@ -306,7 +306,7 @@ mapa_centroide |>
   geom_sf_text(
     aes(geometry = centroide),
     label = "centroide", size = 3,
-    nudge_y = -20000)
+    vjust = 2)
 ```
 
 {{< /detalles >}}
@@ -437,7 +437,7 @@ ggplot() +
   # mapa de fondo
   geom_sf(data = mapa,
           fill = "#9069C0", color = "#EBD2FB",
-          linewidth = 0.3) +
+          linewidth = 0.1) +
   # capa con la caja encima
   geom_sf(data = rectangulo,
           fill = "#9069C0", color = "#9069C0", 
@@ -475,7 +475,7 @@ ggplot() +
   # mapa de fondo
   geom_sf(data = mapa,
           fill = "#9069C0", color = "#EBD2FB",
-          linewidth = 0.3) +
+          linewidth = 0.1) +
   # capa con el punto
   geom_sf(data = punto,
           size = 3, alpha = .5)
@@ -508,7 +508,7 @@ ggplot() +
   # mapa de fondo
   geom_sf(data = mapa,
           fill = "#9069C0", color = "#EBD2FB",
-          linewidth = 0.3) +
+          linewidth = 0.1) +
   # capa con puntos
   geom_sf(data = puntos,
           aes(size = n),
@@ -556,11 +556,11 @@ ggplot() +
   # mapa de fondo
   geom_sf(data = mapa,
           fill = "#9069C0", color = "#EBD2FB",
-          linewidth = 0.1) +
+          linewidth = 0.1, alpha = .7) +
   # capa con puntos
   geom_sf(data = cuadrado,
           fill = NA,
-          linewidth = 0.7, 
+          linewidth = 0.8, 
           linejoin = "mitre", #linejoin = "round",
           color = "#402E5A") +
   coord_sf(xlim = c(-72, -56),
@@ -636,12 +636,108 @@ ggplot() +
   # mapa de fondo
   geom_sf(data = mapa,
           fill = "#9069C0", color = "#EBD2FB",
-          linewidth = 0.1) +
+          linewidth = 0.2, alpha = .7) +
   # capa con puntos
   geom_sf(data = puntos,
           alpha = .5) +
   geom_sf(data = rectangulo,
           fill = NA, color = "#402E5A", lwd = 0.7)
+```
+
+{{< /detalles >}}
+
+------------------------------------------------------------------------
+
+### Crear un polígono a partir de coordenadas
+
+Teniendo una tabla con un conjunto de coordenadas, podemos unirlas para formar un polígono. Es decir, **unir los puntos** para conformar una figura geométrica cerrada. Para ello, usamos `st_combine()` para combinar las coordenadas en un solo elemento, y luego `st_cast()` para convertir esos puntos combinados en un polígono.
+
+``` r
+coordenadas <- tribble(~nombre, ~lon, ~lat,
+                           "A", -68,  -36,
+                           "B", -64,  -31,
+                           "C", -60,  -36)
+
+# convertir tabla a sf
+puntos <- coordenadas |> 
+  st_as_sf(coords = c("lon", "lat"), 
+           crs = st_crs(mapa))
+
+poligono <- puntos |> 
+  # combinar coordenadas en un solo elemento
+  summarise(geometry = st_combine(geometry)) |> 
+  # convertir puntos a polígono
+  st_cast("POLYGON")
+```
+
+<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/poligonos_1-1.png" width="768" />
+
+{{< detalles "Ver código del gráfico" >}}
+
+``` r
+ggplot() +
+  # mapa de fondo
+  geom_sf(data = mapa,
+          fill = "#9069C0", color = "#E0C7F0",
+          linewidth = 0.2, alpha = 0.7) +
+  # capa con puntos
+  geom_sf(data = puntos,
+          alpha = .6) +
+  # capa con polígono
+  geom_sf(data = poligono,
+          fill = "#402E5A", color = "#402E5A",
+          lwd = 0.7, alpha = 0.7)
+```
+
+{{< /detalles >}}
+
+#### Crear varios polígonos a partir de coordenadas
+
+Podemos realizar el mismo proceso anterior, pero agrupando los datos con `group_by()` para crear varios polígonos a la vez, de acuerdo a la variable de agrupación (en este caso, `tipo`). Entonces, cuando usemos `st_combine()`, se combinarán las coordenadas de cada grupo por separado, y luego `st_cast()` convertirá cada grupo de puntos combinados en un polígono distinto.
+
+``` r
+coordenadas <- tribble(~tipo,    ~lon, ~lat,
+                       "Triángulo", -68,  -30,
+                       "Triángulo", -64,  -25,
+                       "Triángulo", -60,  -30,
+                        "Cuadrado", -68,  -38,
+                        "Cuadrado", -60,  -38,
+                        "Cuadrado", -60,  -32,
+                        "Cuadrado", -68,  -32)
+
+# convertir tabla a sf
+puntos <- coordenadas |> 
+  st_as_sf(coords = c("lon", "lat"), 
+           crs = st_crs(mapa))
+
+poligono <- puntos |> 
+  # combinar coordenadas en elementos únicos agrupados por una variable
+  group_by(tipo) |> 
+  summarise(geometry = st_combine(geometry)) |> 
+  # convertir puntos a polígono
+  st_cast("POLYGON")
+```
+
+<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/poligonos_2-1.png" width="768" />
+
+{{< detalles "Ver código del gráfico" >}}
+
+``` r
+ggplot() +
+  # mapa de fondo
+  geom_sf(data = mapa,
+          fill = "#9069C0", color = "#E0C7F0",
+          linewidth = 0.2, alpha = 0.7) +
+  # capa con polígonos de color
+  geom_sf(data = poligono,
+          aes(fill = tipo, color = tipo),
+          lwd = 0.6, alpha = .7) +
+  # capa con puntos
+  geom_sf(data = puntos,
+          alpha = .4) +
+  # escala de colores
+  labs(fill = "Tipo", color = "Tipo") +
+  theme(legend.key.spacing.y = unit(1, "mm"))
 ```
 
 {{< /detalles >}}
