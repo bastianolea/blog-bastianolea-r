@@ -16,10 +16,10 @@ blogdown::new_post(title = "Redactar palabras en plural con R",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Pruebita", 
-                   file = "blog/prueba/index.qmd",
+blogdown::new_post(title = "Taller: Compartir y colaborar desde el cruce entre las ciencias de datos y las ciencias sociales", 
+                   file = "blog/taller_marca_personal_unam/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("mapas"),
+                   tags = c("videos"),
                    categories = c() 
 )
 
