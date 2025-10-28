@@ -17,6 +17,10 @@ links:
   icon_pack: fas
   name: diapositivas
   url: https://bastianolea.github.io/taller_datos_unam/taller.html
+- icon: youtube
+  icon_pack: fab
+  name: grabación
+  url: https://youtu.be/2E71ONRPMXo
 ---
 
 El viernes 22 de agosto tengo el honor de participar en las clases magistrales del Diplomado de Ciencia de Datos para Ciencias Sociales y Humanidades de la Facultad de Estudios Superiores Acatlán, Universidad Nacional Autónoma de México.
@@ -29,4 +33,4 @@ El taller tendrá como título **Creando tu marca como científico/a de datos**,
 
 {{< imagen "unam_2-featured.jpeg" >}}
 
-Las inscripciones están abiertas [en este formulario.](https://forms.gle/UvvAumruGJFEoWkZ7)
+~~Las inscripciones están abiertas [en este formulario.](https://forms.gle/UvvAumruGJFEoWkZ7)~~
