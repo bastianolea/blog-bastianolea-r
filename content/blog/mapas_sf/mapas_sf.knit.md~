@@ -71,23 +71,21 @@ library(dplyr)
 
 
 
-
-```r
+``` r
 library(ggplot2)
 
 # tema de colores
 thematic::thematic_on(fg = "#553A74",
-bg = "#EAD2FA",
-accent = "#9069C0")
+                      bg = "#EAD2FA",
+                      accent = "#9069C0")
 
 theme_set(
-# fondo transparente para mapas
-theme(plot.background = element_rect(fill = "transparent", color = "transparent")) +
-# borrar líneas feas
-theme(axis.ticks = element_blank())
+  # fondo transparente para mapas
+  theme(plot.background = element_rect(fill = "transparent", color = "transparent")) +
+    # borrar líneas feas
+    theme(axis.ticks = element_blank())
 )
 ```
-
 
 {{< /detalles >}}
 
@@ -117,9 +115,14 @@ Si no tenemos o no queremos descargar _shapes_, podemos **cargar mapas de cualqu
 
 Instala `{rnaturalearth}` si no lo tienes:
 
-```r
+
+
+
+``` r
 install.packages("rnaturalearth")
 ```
+
+
 
 Puedes insertar el nombre de tu país para seguir con este tutorial usando ejemplos de tu territorio.
 
@@ -188,14 +191,19 @@ También puedes descargarlo directamente desde R con `download.file()` y luego `
 
 Una vez descargado, descomprimimos el archivo y obtenemos una **carpeta**. Esta carpeta es nuestro _shapefile_, así que la guardamos dentro de nuestro [proyecto de RStudio](/blog/r_introduccion/proyectos/), idealmente dentro de una carpeta donde guardemos nuestros mapas. 
 
-```r
+
+
+
+``` r
 # descargar
 download.file("https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip",
-"Regiones.zip")
+              "Regiones.zip")
 
 # descomprimir
 unzip("Regiones.zip", exdir = "shapes/Regiones")
 ```
+
+
 
 En el siguiente ejemplo, guardamos el _shapefile_ en una carpeta `shapes`, y lo cargamos con `read_sf()`.
 
@@ -345,35 +353,35 @@ El centroide es el punto central de un polígono. Calcularlo sirve, por ejemplo,
 mapa_centroide <- mapa |> 
   select(region, geometry) |> 
   mutate(centroide = st_centroid(geometry))
-
-mapa_centroide
-```
-
-```
-## Simple feature collection with 24 features and 1 field
-## Active geometry column: geometry
-## Geometry type: MULTIPOLYGON
-## Dimension:     XY
-## Bounding box:  xmin: -73.57274 ymin: -55.05202 xmax: -53.66155 ymax: -21.78694
-## Geodetic CRS:  WGS 84
-## First 10 features:
-##          region                       geometry                   centroide
-## 1    Entre Ríos MULTIPOLYGON (((-58.20011 -... POINT (-59.20493 -32.03189)
-## 12        Salta MULTIPOLYGON (((-68.49647 -... POINT (-64.80661 -24.28824)
-## 13        Jujuy MULTIPOLYGON (((-67.25133 -... POINT (-65.77985 -23.31783)
-## 741     Formosa MULTIPOLYGON (((-62.34136 -... POINT (-59.94839 -24.89604)
-## 746    Misiones MULTIPOLYGON (((-54.66497 -... POINT (-54.65212 -26.86956)
-## 749       Chaco MULTIPOLYGON (((-58.35127 -... POINT (-60.77109 -26.39039)
-## 750  Corrientes MULTIPOLYGON (((-58.6042 -2... POINT (-57.79471 -28.76018)
-## 1318  Catamarca MULTIPOLYGON (((-68.33776 -...  POINT (-66.99006 -27.3092)
-## 1320   La Rioja MULTIPOLYGON (((-69.65405 -... POINT (-67.21371 -29.66235)
-## 1321   San Juan MULTIPOLYGON (((-69.95766 -... POINT (-68.88199 -30.82274)
 ```
 
 
 ```
-## Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not
-## give correct results for longitude/latitude data
+##                   region                   centroide
+## 1             Entre Ríos POINT (-59.20493 -32.03189)
+## 12                 Salta POINT (-64.80661 -24.28824)
+## 13                 Jujuy POINT (-65.77985 -23.31783)
+## 741              Formosa POINT (-59.94839 -24.89604)
+## 746             Misiones POINT (-54.65212 -26.86956)
+## 749                Chaco POINT (-60.77109 -26.39039)
+## 750           Corrientes POINT (-57.79471 -28.76018)
+## 1318           Catamarca  POINT (-66.99006 -27.3092)
+## 1320            La Rioja POINT (-67.21371 -29.66235)
+## 1321            San Juan POINT (-68.88199 -30.82274)
+## 1323             Mendoza POINT (-68.60826 -34.58944)
+## 1328             Neuquén POINT (-70.11374 -38.62865)
+## 1333              Chubut POINT (-68.51499 -43.78523)
+## 1335           Río Negro POINT (-67.21765 -40.40738)
+## 1337          Santa Cruz  POINT (-69.8981 -48.76187)
+## 1339    Tierra del Fuego  POINT (-67.4401 -54.32625)
+## 1726        Buenos Aires POINT (-60.54573 -36.66279)
+## 1746        Buenos Aires POINT (-58.45093 -34.64272)
+## 3852            Santa Fe POINT (-60.93513 -30.66904)
+## 3853             Tucumán  POINT (-65.36557 -26.9491)
+## 3854 Santiago del Estero  POINT (-63.2909 -27.71835)
+## 3855            San Luis POINT (-66.03363 -33.74238)
+## 3856            La Pampa POINT (-65.44562 -37.12691)
+## 3857             Córdoba POINT (-63.76859 -32.07319)
 ```
 
 <img src="mapas_sf_files/figure-html/mapa_centroide-1.png" width="672" />
@@ -382,21 +390,27 @@ mapa_centroide
 
 
 
-```r
+``` r
 mapa_centroide |> 
-filter(region == mapa$region[3]) |> 
-ggplot() +
-geom_sf(fill = "#9069C0", 
-linewidth = NA) +
-geom_sf(
-aes(geometry = centroide),
-size = 3, alpha = .6) +
-geom_sf_text(
-aes(geometry = centroide),
-label = "centroide", size = 3,
-nudge_y = -20000)
+  filter(region == mapa$region[3]) |> 
+  ggplot() +
+  geom_sf(fill = "#9069C0", 
+          linewidth = NA) +
+  geom_sf(
+    aes(geometry = centroide),
+    size = 3, alpha = .6) +
+  geom_sf_text(
+    aes(geometry = centroide),
+    label = "centroide", size = 3,
+    nudge_y = -20000)
 ```
 
+```
+## Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not
+## give correct results for longitude/latitude data
+```
+
+<img src="mapas_sf_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 {{< /detalles >}}
 
@@ -416,29 +430,35 @@ Para obtener las coordenadas (longitud y latitud) de un elemento espacial, neces
 mapa_centroide_coordenadas <- mapa_centroide |> 
   mutate(lon = st_coordinates(centroide)[,1],
          lat = st_coordinates(centroide)[,2])
-
-mapa_centroide_coordenadas |> 
-  select(region, lon, lat)
 ```
 
+
 ```
-## Simple feature collection with 24 features and 3 fields
-## Geometry type: MULTIPOLYGON
-## Dimension:     XY
-## Bounding box:  xmin: -73.57274 ymin: -55.05202 xmax: -53.66155 ymax: -21.78694
-## Geodetic CRS:  WGS 84
-## First 10 features:
-##          region       lon       lat                       geometry
-## 1    Entre Ríos -59.20493 -32.03189 MULTIPOLYGON (((-58.20011 -...
-## 12        Salta -64.80661 -24.28824 MULTIPOLYGON (((-68.49647 -...
-## 13        Jujuy -65.77985 -23.31783 MULTIPOLYGON (((-67.25133 -...
-## 741     Formosa -59.94839 -24.89604 MULTIPOLYGON (((-62.34136 -...
-## 746    Misiones -54.65212 -26.86956 MULTIPOLYGON (((-54.66497 -...
-## 749       Chaco -60.77109 -26.39039 MULTIPOLYGON (((-58.35127 -...
-## 750  Corrientes -57.79471 -28.76018 MULTIPOLYGON (((-58.6042 -2...
-## 1318  Catamarca -66.99006 -27.30920 MULTIPOLYGON (((-68.33776 -...
-## 1320   La Rioja -67.21371 -29.66235 MULTIPOLYGON (((-69.65405 -...
-## 1321   San Juan -68.88199 -30.82274 MULTIPOLYGON (((-69.95766 -...
+##                   region       lon       lat
+## 1             Entre Ríos -59.20493 -32.03189
+## 12                 Salta -64.80661 -24.28824
+## 13                 Jujuy -65.77985 -23.31783
+## 741              Formosa -59.94839 -24.89604
+## 746             Misiones -54.65212 -26.86956
+## 749                Chaco -60.77109 -26.39039
+## 750           Corrientes -57.79471 -28.76018
+## 1318           Catamarca -66.99006 -27.30920
+## 1320            La Rioja -67.21371 -29.66235
+## 1321            San Juan -68.88199 -30.82274
+## 1323             Mendoza -68.60826 -34.58944
+## 1328             Neuquén -70.11374 -38.62865
+## 1333              Chubut -68.51499 -43.78523
+## 1335           Río Negro -67.21765 -40.40738
+## 1337          Santa Cruz -69.89810 -48.76187
+## 1339    Tierra del Fuego -67.44010 -54.32625
+## 1726        Buenos Aires -60.54573 -36.66279
+## 1746        Buenos Aires -58.45093 -34.64272
+## 3852            Santa Fe -60.93513 -30.66904
+## 3853             Tucumán -65.36557 -26.94910
+## 3854 Santiago del Estero -63.29090 -27.71835
+## 3855            San Luis -66.03363 -33.74238
+## 3856            La Pampa -65.44562 -37.12691
+## 3857             Córdoba -63.76859 -32.07319
 ```
 
 <img src="mapas_sf_files/figure-html/barras_latitud-1.png" width="672" />
@@ -447,20 +467,21 @@ mapa_centroide_coordenadas |>
 
 
 
-```r
+``` r
 mapa_centroide_coordenadas |> 
-distinct(region, .keep_all = TRUE) |> 
-mutate(region = forcats::fct_reorder(region, lat)) |> # ordenar regiones
-ggplot() +
-aes(lat, region) +
-geom_col(width = 0.7, fill = "#9069C0") +
-geom_text(
-aes(label = region),
-size = 3, hjust = -0.05, color = "#EAD2FA") +
-scale_y_discrete(labels = NULL) +
-labs(y = NULL, x = "Latitud")
+  distinct(region, .keep_all = TRUE) |> 
+  mutate(region = forcats::fct_reorder(region, lat)) |> # ordenar regiones
+  ggplot() +
+  aes(lat, region) +
+  geom_col(width = 0.7, 
+           fill = "#9069C0") +
+  geom_text(aes(label = region),
+            size = 3, hjust = -0.05, color = "#EAD2FA") +
+  scale_y_discrete(labels = NULL) +
+  labs(y = NULL, x = "Latitud")
 ```
 
+<img src="mapas_sf_files/figure-html/unnamed-chunk-14-1.png" width="672" />
 
 {{< /detalles >}}
 
@@ -495,17 +516,18 @@ mapa_buffer <- mapa |>
 
 
 
-```r
+``` r
 mapa_buffer |> 
-ggplot() +
-# capa de la región
-geom_sf(aes(geometry = geometry), 
-fill = "#9069C0", linewidth = NA) +
-# capa del buffer
-geom_sf(aes(geometry = buffer), 
-fill = "#9069C0", alpha = 0.5, linewidth = NA)
+  ggplot() +
+  # capa de la región
+  geom_sf(aes(geometry = geometry), 
+          fill = "#9069C0", linewidth = NA) +
+  # capa del buffer
+  geom_sf(aes(geometry = buffer), 
+          fill = "#9069C0", alpha = 0.5, linewidth = NA)
 ```
 
+<img src="mapas_sf_files/figure-html/unnamed-chunk-16-1.png" width="672" />
 
 {{< /detalles >}}
 
@@ -515,12 +537,16 @@ fill = "#9069C0", alpha = 0.5, linewidth = NA)
 ----
 
 ### Calcular caja de un polígono
-Bounding box
+
+Con la función `st_bbox()` obtenemos las coordenadas de la caja que envuelve a un polígono o conjunto de polígonos. Esta caja está definida por las coordenadas mínimas y máximas en los ejes _x_ (longitud) e _y_ (latitud).
+
 
 
 
 ``` r
-st_bbox(mapa)
+caja <- st_bbox(mapa)
+
+caja
 ```
 
 ```
@@ -531,54 +557,89 @@ st_bbox(mapa)
 
 
 
-----
 
-### Convertir caja a polígono
+#### Convertir caja a polígono
+
+Teniendo una caja con sus coordenadas, podemos convertirla a un polígono para aplicarlo sobre (o debajo de) un mapa.
+
 
 
 
 ``` r
-caja <- st_bbox(mapa)
-
-caja_poli <- caja |> 
-  st_as_sfc() |>
-  st_as_sf()
-
-caja_poli
+rectangulo <- caja |> 
+  st_as_sfc(crs = st_crs(mapa))
 ```
 
-```
-## Simple feature collection with 1 feature and 0 fields
-## Geometry type: POLYGON
-## Dimension:     XY
-## Bounding box:  xmin: -73.57274 ymin: -55.05202 xmax: -53.66155 ymax: -21.78694
-## Geodetic CRS:  WGS 84
-##                                x
-## 1 POLYGON ((-73.57274 -55.052...
-```
-
-<img src="mapas_sf_files/figure-html/unnamed-chunk-11-1.png" width="672" />
+<img src="mapas_sf_files/figure-html/unnamed-chunk-19-1.png" width="672" />
 
 {{< detalles "Ver código del gráfico" >}}
 
 
 
-```r
+``` r
 ggplot() +
   # mapa de fondo
   geom_sf(data = mapa,
           fill = "#9069C0", color = "#EBD2FB",
           linewidth = 0.3) +
   # capa con la caja encima
-  geom_sf(data = caja_poli,
+  geom_sf(data = rectangulo,
           fill = "#9069C0", color = "#9069C0", 
-          linewidth = 0.8,
-          alpha = 0.4) +
+          linewidth = 0.8, alpha = 0.4) +
   # tema
   theme(axis.text = element_blank(),
         panel.background = element_blank())
 ```
 
+<img src="mapas_sf_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+
+{{< /detalles >}}
+
+
+
+
+
+----
+
+
+### Poner un punto en un mapa
+
+Si queremos poner puntos en posiciones específicas de un mapa, sólo necesitamos crear una tabla con las coordenadas de los puntos y convertir la tabla a `sf` con `st_as_sf()`. Al hacer esto, es necesario especificar el sistema de referencia de coordenadas (CRS) del mapa, para que los puntos se ubiquen correctamente. Hacemos esto extrayendo el CRS del mapa con `st_crs()` y aplicándolo a nuestra nueva tabla `sf`.
+
+
+
+
+``` r
+# definir coordenadas
+coordenadas <- tibble(longitud = -70, 
+                      latitud = -38)
+
+# convertir tabla a sf
+punto <- coordenadas |> 
+  st_as_sf(coords = c("longitud", "latitud"), 
+           crs = st_crs(mapa))
+```
+
+<img src="mapas_sf_files/figure-html/unnamed-chunk-22-1.png" width="672" />
+
+
+
+{{< detalles "Ver código del gráfico">}}
+
+
+
+``` r
+ggplot() +
+  # mapa de fondo
+  geom_sf(data = mapa,
+          fill = "#9069C0", color = "#EBD2FB",
+          linewidth = 0.3) +
+  # capa con el punto
+  geom_sf(data = punto,
+          size = 3, alpha = .5)
+```
+
+<img src="mapas_sf_files/figure-html/unnamed-chunk-23-1.png" width="672" />
 
 {{< /detalles >}}
 
@@ -587,38 +648,221 @@ ggplot() +
 
 
 
+#### Poner varios puntos en un mapa
+
+Si necesitamos agregar más de un punto, simplemente hacemos una tabla con todos los que necesitemos. Obviamente también podemos especificar otras columnas que podemos usar para etiquetar los puntos, especificar sus colores, y más.
+
+
+
+
+``` r
+coordenadas <- tribble(~nombre, ~lon, ~lat, ~n,
+                       "A",  -69,  -38,  4,
+                       "B",  -65,  -37,  6,
+                       "C",  -61,  -36,  9)
+
+puntos <- coordenadas |> 
+  # convertir tabla a sf
+  st_as_sf(coords = c("lon", "lat"), 
+           crs = st_crs(mapa))
+```
+
+<img src="mapas_sf_files/figure-html/unnamed-chunk-25-1.png" width="672" />
+
+
+{{< detalles "Ver código del gráfico">}}
+
+
+
+``` r
+ggplot() +
+  # mapa de fondo
+  geom_sf(data = mapa,
+          fill = "#9069C0", color = "#EBD2FB",
+          linewidth = 0.3) +
+  # capa con puntos
+  geom_sf(data = puntos,
+          aes(size = n),
+          alpha = .5) +
+  # capa con textos
+  geom_sf_label(data = puntos,
+                aes(label = nombre),
+                size = 3, vjust = -0.8,
+                fontface = "bold") +
+  # escala de tamaño
+  scale_size(range = c(3, 6),
+             breaks = scales::breaks_pretty(n = 3)) +
+  guides(size = guide_legend(override.aes = list(color = "#9069C0", 
+                                                 alpha = 1)))
+```
+
+```
+## Warning in st_point_on_surface.sfc(sf::st_zm(x)): st_point_on_surface may not
+## give correct results for longitude/latitude data
+```
+
+<img src="mapas_sf_files/figure-html/unnamed-chunk-26-1.png" width="672" />
+
+{{< /detalles >}}
+
+
+
 
 ----
 
 
 ### Crear un cuadrado
-Desde una coordenada
+
+Para poner un cuadrado encima de una ubicación del mapa, primero creamos un punto, luego lo [expandimos con un _buffer_](#calcular-buffer), calculamos [la caja que envuelve a dicho punto](#calcular-caja-de-un-polígono), y finalmente convertimos la caja en un polígono `sf`.
+
 
 
 
 ``` r
-coordenadas <- c(38.29782, -76.51390)
+coordenadas <- tibble(longitud = -58, latitud = -38)
 
-coordenadas |> 
-  st_point() |>
-  st_sfc() |>
-  st_buffer(dist = 30000)  |> 
+punto <- coordenadas |> 
+  # convertir tabla a sf
+  st_as_sf(coords = c("longitud", "latitud"), 
+           crs = st_crs(mapa))
+
+cuadrado <- punto |> 
+  st_buffer(dist = 100000) |> # agrandar punto
+  st_bbox() |> # crear caja al rededor
+  st_as_sfc(crs = st_crs(mapa)) # convertir a sf
+```
+
+<img src="mapas_sf_files/figure-html/unnamed-chunk-28-1.png" width="672" />
+
+
+
+{{< detalles "Ver código del gráfico">}}
+
+
+
+``` r
+ggplot() +
+  # mapa de fondo
+  geom_sf(data = mapa,
+          fill = "#9069C0", color = "#EBD2FB",
+          linewidth = 0.1) +
+  # capa con puntos
+  geom_sf(data = cuadrado,
+          fill = NA,
+          linewidth = 0.7, 
+          linejoin = "mitre", #linejoin = "round",
+          color = "#402E5A") +
+  coord_sf(xlim = c(-72, -56),
+           ylim = c(-40, -30))
+```
+
+<img src="mapas_sf_files/figure-html/unnamed-chunk-29-1.png" width="672" />
+
+{{< /detalles >}}
+
+
+
+
+Paso a paso, el proceso de crear el punto, agrandarlo, y formarlo en un cuadrado se vería así:
+
+
+
+<img src="mapas_sf_files/figure-html/unnamed-chunk-30-1.png" width="672" />
+
+
+
+{{< detalles "Ver código del proceso y del gráfico">}}
+
+
+
+``` r
+punto_grande <- punto |> 
+  st_buffer(dist = 100000, max_cells = 10000)
+
+cuadrado <- punto_grande |> 
+  st_bbox(crs = st_crs(mapa)) |> 
+  st_as_sfc() |> 
+  st_as_sf(crs = st_crs(mapa))
+
+ggplot() +
+  # mapa de fondo
+  geom_sf(data = mapa,
+          fill = "#9069C0", color = "#EBD2FB",
+          linewidth = 0.1) +
+  # capas 
+  geom_sf(data = punto, 
+          color = "#402E5A", size = 3) +
+  geom_sf(data = punto_grande,
+          fill = NA, color = "#402E5A", lwd = 0.7) +
+  geom_sf(data = cuadrado,
+          fill = NA, color = "#402E5A", lwd = 0.7) +
+  # acercar mapa
+  coord_sf(xlim = c(-61, -55),
+           ylim = c(-40, -35.7))
+```
+
+<img src="mapas_sf_files/figure-html/unnamed-chunk-31-1.png" width="672" />
+
+{{< /detalles >}}
+
+
+
+
+
+#### Crear un rectángulo a partir de puntos
+Si tenemos varios puntos y necesitamos crear un rectángulo que los contenga a todos, podemos repetir lo anterior pero partiendo de varios puntos a la vez.
+
+
+
+
+``` r
+# tabla con coordenadas
+coordenadas <- tribble(~nombre, ~lon, ~lat, ~n,
+                       "A",  -69,  -38,  4,
+                       "B",  -65,  -37,  6,
+                       "C",  -61,  -36,  9)
+
+# convertir coordenadas a puntos
+puntos <- coordenadas |> 
+  # convertir tabla a sf
+  st_as_sf(coords = c("lon", "lat"), 
+           crs = st_crs(mapa))
+
+# convertir puntos a rectándulo
+rectangulo <- puntos |> 
+  st_buffer(dist = 80000) |> # ampliar
   st_bbox() |> 
-  st_as_sfc() |>
-  st_as_sf()
+  st_as_sfc(crs = st_crs(mapa))
 ```
 
-```
-## Simple feature collection with 1 feature and 0 fields
-## Geometry type: POLYGON
-## Dimension:     XY
-## Bounding box:  xmin: -29961.7 ymin: -30076.51 xmax: 30038.3 ymax: 29923.49
-## CRS:           NA
-##                                x
-## 1 POLYGON ((-29961.7 -30076.5...
-```
+<img src="mapas_sf_files/figure-html/unnamed-chunk-33-1.png" width="672" />
 
 
+{{< detalles "Ver código del gráfico">}}
+
+
+
+``` r
+ggplot() +
+  # mapa de fondo
+  geom_sf(data = mapa,
+          fill = "#9069C0", color = "#EBD2FB",
+          linewidth = 0.1) +
+  # capa con puntos
+  geom_sf(data = puntos,
+          alpha = .5) +
+  geom_sf(data = rectangulo,
+          fill = NA, color = "#402E5A", lwd = 0.7)
+```
+
+<img src="mapas_sf_files/figure-html/unnamed-chunk-34-1.png" width="672" />
+
+{{< /detalles >}}
+
+
+
+
+----
 
 <!--
 Desde el centroide de un polígono
