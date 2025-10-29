@@ -9,17 +9,17 @@ blogdown::build_site() # reconstruir
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Redactar palabras en plural con R", 
-                   file = paste0("blog/", lubridate::today(), "/index.qmd"),
+blogdown::new_post(title = "Crea una carpeta inteligente con todos tus proyectos de R en Mac", 
+                   file = paste0("blog/", lubridate::today(), "/index.md"),
                    author = "Bastián Olea Herrera",
-                   tags = c("texto")
+                   tags = c("consejos")
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Taller: Compartir y colaborar desde el cruce entre las ciencias de datos y las ciencias sociales", 
-                   file = "blog/taller_marca_personal_unam/index.qmd",
+blogdown::new_post(title = "Validación y testeo automatizado de aplicaciones Shiny con {shinytest2}", 
+                   file = "blog/shiny_validacion/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("videos"),
+                   tags = c("shiny", "automatización"),
                    categories = c() 
 )
 
@@ -37,17 +37,9 @@ blogdown::new_post(title = "Taller: Compartir y colaborar desde el cruce entre l
 
 
 
-## pendientes ----
-
-# last.fm https://blog.spacehey.com/entry?id=221954
-# búsqueda 
-  # https://aaronluna.dev/blog/add-search-to-static-site-lunrjs-hugo-vanillajs/
-  # https://palant.info/2020/06/04/the-easier-way-to-use-lunr-search-with-hugo/
-  # https://dev.to/fajarwz/create-search-feature-for-hugo-static-site-with-lunr-4dbl
-
-
 ## borradores ----
 
+"content/blog/shiny_validacion/index.md"
 "content/blog/mapas_sf/mapas_sf.qmd"
 "content/blog/ggiraph/ggiraph.qmd"
 "content/blog/ellmer/ellmer.qmd"
@@ -65,7 +57,19 @@ blogdown::new_post(title = "Taller: Compartir y colaborar desde el cruce entre l
 "content/blog/tutorial_digitalocean/index.md"
 
 
+
+## pendientes ----
+
+# last.fm https://blog.spacehey.com/entry?id=221954
+# búsqueda 
+# https://aaronluna.dev/blog/add-search-to-static-site-lunrjs-hugo-vanillajs/
+# https://palant.info/2020/06/04/the-easier-way-to-use-lunr-search-with-hugo/
+# https://dev.to/fajarwz/create-search-feature-for-hugo-static-site-with-lunr-4dbl
+
+
+
 ## shortcodes ----
+
 # {{< indice >}}
 # {{< cafecito >}}
 # {{< cursos >}}

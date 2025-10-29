@@ -21,3 +21,6 @@ options(
 
 # fix Hugo version
 options(blogdown.hugo.version = "0.136.5")
+
+# abrir script
+file.edit("_instrucciones.R")
