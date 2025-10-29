@@ -37,9 +37,18 @@ Me pidieron hacer un taller acerca de cómo crear una _marca personal_ como cien
 
 En la clase hablo de mi trayectoria, mi salto desde la sociología al análisis de datos, y voy dando consejos (mezclados con ejemplos de código) para tomar una postura participativa y solidaria con respecto a la programación, el trabajo con datos, y la creación de comunidades en torno al código abierto.
 
+## Grabación
+
 {{< youtube 2E71ONRPMXo >}}
 
-Para la ocasión hice unas **diapositivas con Quarto** [que puedes revisar aquí.](https://bastianolea.github.io/taller_datos_unam/)
+## Diapositivas
+
+{{< embed "Diapositivas" "https://bastianolea.github.io/taller_datos_unam/taller.html#/title-slide" >}}
+
+Para la ocasión hice unas **diapositivas con Quarto** [que también puedes revisar aquí.](https://bastianolea.github.io/taller_datos_unam/). El código de las diapositivas está [en este repositorio.](https://github.com/bastianolea/taller_datos_unam)
+
+
+## Resúmen
 
 Las **ideas principales del taller** fueron:
 1. Mantenerse **creando** desde la experticia, la experiencia, y la relevancia social ✊🏼
@@ -49,6 +58,7 @@ Las **ideas principales del taller** fueron:
 Recibí muy lindos comentarios de las y los participantes, que agradezco de corazón 💜
 
 Las y los invito a crear su propio lugar en la internet, destinado a visibilizar su trabajo y compartir sus aprendizajes!
+
 
 ### Enlaces
 

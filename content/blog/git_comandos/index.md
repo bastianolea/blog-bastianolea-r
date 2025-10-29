@@ -136,3 +136,7 @@ Busca el índice de la versión a la cual quieres volver, y usa `git reset` para
 git reflog
 git reset HEAD@{index}
 ```
+
+### Ramas
+
+Aprende a [hacer ramas online aquí](https://learngitbranching.js.org/)

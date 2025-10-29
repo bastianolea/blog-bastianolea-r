@@ -25,3 +25,9 @@ links:
 ---
 
 
+{ggiraph} es un paquete de R que permite convertir gráficos estáticos creados con {ggplot2} en visualizaciones interactivas. Esto es especialmente útil para explorar datos de manera más dinámica, permitiendo a los usuarios interactuar con los gráficos mediante herramientas como zoom, desplazamiento y la visualización de información adicional al pasar el cursor sobre elementos específicos.
+
+https://z3tt.github.io/ggiraph-user-2025/slides.html#/title-slide
+
+<iframe class="frame" title="Example site" src="https://z3tt.github.io/ggiraph-user-2025/slides.html#/title-slide" width="100%" height="500px" loading="lazy" style="border: 1px solid #B293D7; border-radius: 5px;">
+</iframe>
