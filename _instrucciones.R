@@ -16,11 +16,11 @@ blogdown::new_post(title = "Crea una carpeta inteligente con todos tus proyectos
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Validación y testeo automatizado de aplicaciones Shiny con {shinytest2}", 
-                   file = "blog/shiny_validacion/index.md",
+blogdown::new_post(title = "Tablas interactivas en R con DT", 
+                   file = "blog/dt_tablas/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("shiny", "automatización"),
-                   categories = c() 
+                   tags = c("tablas"),
+                   categories = c("Tutoriales") 
 )
 
 # draft: true
@@ -39,6 +39,7 @@ blogdown::new_post(title = "Validación y testeo automatizado de aplicaciones Sh
 
 ## borradores ----
 
+"content/blog/dt_tablas/index.qmd"
 "content/blog/shiny_testeo/index.md"
 "content/blog/mapas_sf/mapas_sf.qmd"
 "content/blog/ggiraph/ggiraph.qmd"
