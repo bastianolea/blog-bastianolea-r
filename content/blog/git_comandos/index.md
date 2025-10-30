@@ -89,11 +89,16 @@ usethis::use_github()
 ```
 
 
-### Deshacer `git add`
+### Deshacer `git add archivo.R`
 Por si la embarraste y agregaste un archivo incorrecto a la zona de preparación:
 
 ```
-git rm archivo_muy_grande.zip
+git rm archivo.R
+```
+
+### Deshacer `git add .`
+```
+git reset
 ```
 
 ### Deshacer `commit`

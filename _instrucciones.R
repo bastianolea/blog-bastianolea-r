@@ -16,11 +16,11 @@ blogdown::new_post(title = "Crea una carpeta inteligente con todos tus proyectos
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Tablas interactivas en R con DT", 
-                   file = "blog/dt_tablas/index.md",
+blogdown::new_post(title = "Optimiza la velocidad de tus aplicaciones Shiny con bindCache()", 
+                   file = "blog/shiny_cache/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("tablas"),
-                   categories = c("Tutoriales") 
+                   tags = c("shiny"),
+                   categories = c() 
 )
 
 # draft: true
@@ -39,12 +39,14 @@ blogdown::new_post(title = "Tablas interactivas en R con DT",
 
 ## borradores ----
 
+"content/blog/shiny_cache/index.md"
 "content/blog/dt_tablas/index.qmd"
-"content/blog/shiny_testeo/index.md"
-"content/blog/mapas_sf/mapas_sf.qmd"
+"content/blog/shiny_validacion/index.md"
 "content/blog/ggiraph/ggiraph.qmd"
 "content/blog/ellmer/ellmer.qmd"
-"~/Documents/Otros/blog/content/blog/git_comandos/index.md"
+"content/blog/git_comandos/index.md"
+
+"content/blog/mapas_sf/mapas_sf.qmd"
 
 "content/blog/r_introduccion/dplyr_intermedio/dplyr_intermedio.qmd"
 "content/blog/r_introduccion/dplyr_variables/dplyr_variables.qmd"
