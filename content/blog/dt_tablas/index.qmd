@@ -21,6 +21,7 @@ links:
 
 ```{r}
 #| eval: false
+
   datos |> 
     datatable(
       options = list(
@@ -32,6 +33,7 @@ links:
           lengthMenu = "Mostrar _MENU_ comunas",
           emptyTable = "No hay comunas con datos",
           infoEmpty = "Mostrando 0 comunas",
+          zeroRecords = "Sin resultados",
           infoFiltered = "(filtrando de un total de _MAX_ comunas)"
         ),
         pageLength = 15),
@@ -51,38 +53,80 @@ links:
 
 
 ```css
-/* colores de datatable */
 
-/* color de fila de nombres de columnas */
-table.dataTable thead th, table.dataTable thead td, table.dataTable tfoot th, table.dataTable tfoot td {
-  background-color: red !important;
-  color: yellow !important;
+
+/* estilo de datatable */
+
+
+/* header */
+.tabla_dt th {
+  font-size: 90% !important;
+  padding: 8px;
+  text-align: left;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
-/* colores de filas */
-table.dataTable td, table.dataTable th {
-  background-color: green !important;
+/* celdas */
+.tabla_dt td {
+  word-break: normal;
+  text-align: left;
+  font-size: 80% !important;
+  padding: 6px !important;
 }
 
-/* colores de filas pares */
-.table.dataTable.dataTable.table-striped>tbody>tr.odd>* {
-  background-color: green !important;
+/* colores de datatable indicadores */
+  
+/* header */
+#tabla_indicador .tabla_dt th {
+  background-color: var(--color_2_fondo);
+  color: var(--color_2_texto);
 }
 
-/* colores de filas impares */
-.table.dataTable.dataTable.table-striped>tbody>tr.even>* {
-  background-color: orange;
-  color: white;
+/* celdas */
+#tabla_indicador .tabla_dt td {
+  background-color: var(--color_2_fondo);
+  color: var(--color_2_texto);
+  border-bottom: 1px solid var(--color_2b) !important;
 }
+
+/*
+  #tabla_indicador .tabla_dt tbody tr:nth-child(odd) {
+  background-color: var(--color_2_fondo) !important;
+}
+*/
+  
+/* Styling alternate rows */
+#tabla_indicador .tabla_dt tbody tr:nth-child(even) {
+  background-color: #EDC7E0; !important;
+}
+
+
 
 /* color de cuadros de texto fuera de tabla */
-.datatables .dataTables_wrapper .dataTables_length select, .datatables .dataTables_wrapper .dataTables_filter input {
-  background-color: blue !important;
-  color: white !important;
+#tabla_indicador .datatables .dataTables_wrapper .dataTables_length select, #tabla_indicador .datatables .dataTables_wrapper .dataTables_filter input {
+  background-color: var(--color_2_fondo) !important;
+  color: var(--color_2_texto) !important;
+  border-bottom: 1px solid var(--color_2_texto) !important;
 }
 
 /* color de botonera de páginas fuera de tabla */ 
-.datatables .paginate_button a {
-  background-color: purple !important;
+#tabla_indicador .datatables .paginate_button a {
+  background-color: var(--color_2_fondo) !important;
+  border: 1px solid #D998C4 !important;
+  font-size: 85%;
+/*color: #541D31FF;*/
+  }
+
+#tabla_indicador .pagination {
+--bs-pagination-padding-x: .75rem;
+--bs-pagination-padding-y: .3rem;
+--bs-pagination-color: var(--color_2c);
+--bs-pagination-active-color: var(--color_2_texto);
+--bs-pagination-hover-color: var(--color_2b);
+--bs-pagination-bg: var(--color_2_fondo);
 }
+
+
 ```
