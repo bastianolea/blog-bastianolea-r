@@ -39,7 +39,7 @@ blogdown::new_post(title = "Optimiza la velocidad de tus aplicaciones Shiny con 
 
 ## borradores ----
 
-"content/blog/shiny_cache/index.md"
+"content/blog/shiny_optimizar/index.md"
 "content/blog/dt_tablas/index.qmd"
 "content/blog/shiny_validacion/index.md"
 "content/blog/ggiraph/ggiraph.qmd"

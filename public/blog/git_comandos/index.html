@@ -49,7 +49,7 @@
 Otro recurso mucho más completo es ohshitgit.com, que como su nombre indica, está enfocado en resolver problemas comunes con git.">
   <meta itemprop="datePublished" content="2025-10-27T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-10-27T00:00:00+00:00">
-  <meta itemprop="wordCount" content="611">
+  <meta itemprop="wordCount" content="625">
   <meta itemprop="keywords" content="Git">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -303,7 +303,7 @@ Otro recurso mucho más completo es ohshitgit.com, que como su nombre indica, es
       </header>
       <section class="post-body pt5 pb4">
         <p><code>git</code> es una herramienta para el control de versiones de código, respaldo de código, y colaboración. En otro post hice un tutorial para 
-<a href="/blog/tutorial_github/">aprender a usar <code>git</code> y GitHub con R y RStudio</a>. En este post voy a mantener una lista<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> de los comandos que más uso en <code>git</code>, así como los comandos que necesito para resolver los <strong>problemas más frecuentes.</strong></p>
+<a href="/blog/r_introduccion/tutorial_github/">aprender a usar <code>git</code> y GitHub con R y RStudio</a>. En este post voy a mantener una lista<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> de los comandos que más uso en <code>git</code>, así como los comandos que necesito para resolver los <strong>problemas más frecuentes.</strong></p>
 <p>Otro recurso mucho más completo es 
 <a href="https://ohshitgit.com/es" target="_blank" rel="noopener">ohshitgit.com</a>, que como su nombre indica, está enfocado en resolver problemas comunes con <code>git</code>.</p>
 
@@ -319,7 +319,7 @@ Otro recurso mucho más completo es ohshitgit.com, que como su nombre indica, es
 <pre tabindex="0"><code>git init
 </code></pre><div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">usethis</span><span style="color:#908caa">::</span><span style="color:#ea9a97">use_git</span><span style="color:#908caa">()</span>
 </span></span></code></pre></div><p>Para más información sobre la integración de R con <code>git</code>, 
-<a href="/blog/tutorial_github/">revisa este post</a>. También existe el libro 
+<a href="/blog/r_introduccion/tutorial_github/">revisa este post</a>. También existe el libro 
 <a href="https://happygitwithr.com" target="_blank" rel="noopener">Happy Git with R</a>, que detalla todos los pasos necesarios para poder usar <code>git</code> con R, incluyendo soluciones a problemas comunes.</p>
 
 
@@ -384,7 +384,7 @@ Otro recurso mucho más completo es ohshitgit.com, que como su nombre indica, es
     </svg></a>
 </h3>
 <p>Asumiendo que tu proyecto de RStudio tiene un repositorio <code>git</code>, que has hecho <code>commit</code> de tus cambios, y que 
-<a href="/blog/tutorial_github/#crear-un-repositorio-remoto-en-github-para-tu-proyecto-de-r">ya conectaste el repositorio local con un repositorio remoto</a> en GitHub o GitLab:</p>
+<a href="/blog/r_introduccion/tutorial_github/#crear-un-repositorio-remoto-en-github-para-tu-proyecto-de-r">ya conectaste el repositorio local con un repositorio remoto</a> en GitHub o GitLab:</p>
 <pre tabindex="0"><code>git push
 </code></pre><p>Si no has creado una versión remota de tu repositorio aún, puedes usar el comando <code>use_github()</code> para crear una rápidamente.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">usethis</span><span style="color:#908caa">::</span><span style="color:#ea9a97">use_github</span><span style="color:#908caa">()</span>
@@ -392,14 +392,25 @@ Otro recurso mucho más completo es ohshitgit.com, que como su nombre indica, es
 
 
 
-<h3 id="deshacer-git-add">Deshacer <code>git add</code>
-  <a href="#deshacer-git-add"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h3 id="deshacer-git-add-archivor">Deshacer <code>git add archivo.R</code>
+  <a href="#deshacer-git-add-archivor"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
 <p>Por si la embarraste y agregaste un archivo incorrecto a la zona de preparación:</p>
-<pre tabindex="0"><code>git rm archivo_muy_grande.zip
+<pre tabindex="0"><code>git rm archivo.R
+</code></pre>
+
+
+
+<h3 id="deshacer-git-add-">Deshacer <code>git add .</code>
+  <a href="#deshacer-git-add-"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<pre tabindex="0"><code>git reset
 </code></pre>
 
 
@@ -463,7 +474,19 @@ Otro recurso mucho más completo es ohshitgit.com, que como su nombre indica, es
 <p>Busca el índice de la versión a la cual quieres volver, y usa <code>git reset</code> para regresar a esa versión:</p>
 <pre tabindex="0"><code>git reflog
 git reset HEAD@{index}
-</code></pre><div class="footnotes" role="doc-endnotes">
+</code></pre>
+
+
+
+<h3 id="ramas">Ramas
+  <a href="#ramas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Aprende a 
+<a href="https://learngitbranching.js.org/" target="_blank" rel="noopener">hacer ramas online aquí</a></p>
+<div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
 <li id="fn:1">
@@ -480,7 +503,7 @@ git reset HEAD@{index}
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">3 minute read, 611 words</dd>
+    <dd class="fw5 ml0">3 minute read, 625 words</dd>
   </dl>
   
   
@@ -503,10 +526,13 @@ git reset HEAD@{index}
         <div class="post-pagination dt w-100 mt4 mb2">
   
   
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/2025-10-29/">&larr; Crea una carpeta inteligente con todos tus proyectos de R en Mac</a>
+  
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="https://bastianoleah.netlify.app/blog/mapa_chile_triple/">Visualizar un mapa de Chile separado en tres secciones &rarr;</a>
+    href="https://bastianoleah.netlify.app/blog/taller_datos_unam/">Taller: Compartir y colaborar desde el cruce entre las ciencias de datos y las ciencias sociales &rarr;</a>
   
 </div>
 
