@@ -45,11 +45,10 @@
     
   
   <meta itemprop="name" content="Mapas y visualización de datos geoespaciales en R con {sf}">
-  <meta itemprop="description" content="⚠️ post en construcción! ⚠️ R cuenta con un muy amplio ecosistema de paquetes para datos geoespaciales. Uno de los paquetes más importantes es {sf}, que permite manipular datos espaciales a partir del estándar simple features (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS).
-En esta guía iré guardando los comandos que uso frecuentemente para manipular, transformar y visualizar datos geoespaciales en R. En la medida que voy aprendiendo más sobre hacer mapitas, iré actualizando y complementando.">
+  <meta itemprop="description" content="⚠️ Este tutorial se encuentra en construcción! ⚠️ R cuenta con un muy amplio ecosistema de paquetes para datos geoespaciales. Uno de los paquetes más importantes es {sf}, que permite manipular datos espaciales a partir del estándar simple features (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS).">
   <meta itemprop="datePublished" content="2025-10-22T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-10-22T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1439">
+  <meta itemprop="wordCount" content="3038">
   <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/mapas_sf/mapa_rm_featured.png">
   <meta itemprop="keywords" content="Mapas,Visualización de datos">
   
@@ -345,7 +344,7 @@ En esta guía iré guardando los comandos que uso frecuentemente para manipular,
 margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
 font-size:90%;">
 
-⚠️ post en construcción! ⚠️
+⚠️ Este tutorial se encuentra en construcción! ⚠️
 
 </div>
 </p>
@@ -358,11 +357,14 @@ font-size:90%;">
 </span></span></code></pre></div><p>Y cargarlo junto a <code>{dplyr}</code> para empezar a trabajar con datos geoespaciales.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sf</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div>
+</span></span></code></pre></div><p><strong>Nota:</strong> para simplificar, en este tutorial voy a ocultar el código de los gráficos, pero siempre estará disponible bajo flechitas que despliegan el código, como la siguiente:</p>
+
 
 <details>
-  <summary>Ver código para los gráficos</summary>
-  <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># tema de colores</span>
+  <summary><strong>Ver código para los gráficos</strong></summary>
+  <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># tema de colores</span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">thematic</span><span style="color:#908caa">::</span><span style="color:#ea9a97">thematic_on</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fg</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#553A74&#34;</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>                      <span style="color:#ea9a97">bg</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EAD2FA&#34;</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>                      <span style="color:#ea9a97">accent</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">)</span>
@@ -370,8 +372,8 @@ font-size:90%;">
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">theme_set</span><span style="color:#908caa">(</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># fondo transparente para mapas</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">plot.background</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_rect</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;transparent&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;transparent&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># borrar líneas feas</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">axis.ticks</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">())</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># borrar líneas feas</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">axis.ticks</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">())</span>
 </span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
 </span></span></code></pre></div>
 </details>
@@ -385,20 +387,38 @@ font-size:90%;">
     <div class="pl2 pr0 mh0" style = "margin-top: -8px; margin-left: 12px; margin-bottom: 32px;">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#carga-de-datos">Carga de datos</a>
+    <li><a href="#carga-de-mapas">Carga de mapas</a>
       <ul>
+        <li><a href="#cargar-mapas-de-cualquier-país">Cargar mapas de cualquier país</a></li>
         <li><a href="#cargar-shapes">Cargar <em>shapes</em></a></li>
       </ul>
     </li>
-    <li><a href="#glosario">Glosario</a></li>
+    <li><a href="#visualización-básica-de-mapas">Visualización básica de mapas</a></li>
     <li><a href="#operaciones-sobre-geometrías">Operaciones sobre geometrías</a>
       <ul>
         <li><a href="#calcular-centroide">Calcular centroide</a></li>
         <li><a href="#extraer-longitud-y-latitud">Extraer longitud y latitud</a></li>
         <li><a href="#calcular-buffer">Calcular buffer</a></li>
-        <li><a href="#calcular-caja-de-un-polígono">Calcular caja de un polígono</a></li>
-        <li><a href="#convertir-caja-a-polígono">Convertir caja a polígono</a></li>
-        <li><a href="#crear-un-cuadrado">Crear un cuadrado</a></li>
+        <li><a href="#calcular-caja-de-un-polígono">Calcular caja de un polígono</a>
+          <ul>
+            <li><a href="#convertir-caja-a-polígono">Convertir caja a polígono</a></li>
+          </ul>
+        </li>
+        <li><a href="#poner-un-punto-en-un-mapa">Poner un punto en un mapa</a>
+          <ul>
+            <li><a href="#poner-varios-puntos-en-un-mapa">Poner varios puntos en un mapa</a></li>
+          </ul>
+        </li>
+        <li><a href="#crear-un-cuadrado">Crear un cuadrado</a>
+          <ul>
+            <li><a href="#crear-un-rectángulo-a-partir-de-puntos">Crear un rectángulo a partir de puntos</a></li>
+          </ul>
+        </li>
+        <li><a href="#crear-un-polígono-a-partir-de-coordenadas">Crear un polígono a partir de coordenadas</a>
+          <ul>
+            <li><a href="#crear-varios-polígonos-a-partir-de-coordenadas">Crear varios polígonos a partir de coordenadas</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><a href="#recursos-para-aprender-más">Recursos para aprender más</a>
@@ -418,30 +438,60 @@ font-size:90%;">
 
 
 
-<h2 id="carga-de-datos">Carga de datos
-  <a href="#carga-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="carga-de-mapas">Carga de mapas
+  <a href="#carga-de-mapas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
+<p>Una de las fuentes principales de datos geoespaciales son los <em>shapefiles</em>. Pero también existen <strong>paquetes de R que contienen información geoespacial</strong>, para mayor conveniencia. Exploraremos ambas opciones a continuación.</p>
 
 
 
 
-<div class = "db pt1"
-style = "margin-bottom: 34px;">
-
-<a class = "btn-links mr2 ba dib"
-href = "https://www.bcn.cl/siit/mapas_vectoriales" target="_blank"
-style = "padding: 12px; padding-bottom: 8px; border-radius: 5px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #9069C0; margin-bottom: -12px;">
-<i class="fas fa-map fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
-Mapoteca Biblioteca del Congreso Nacional</a>
-
-</div>
-<p>En este enlace podemos descargar un <em>shapefile</em> con los límites político-administrativos de Chile, como el titulado <em>
-<a href="https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip" target="_blank" rel="noopener">Division regional: polígonos de las regiones de Chile</a></em>. También puedes descargarlo en el script con <code>download.file()</code>.</p>
-<p>Una vez descargado, descomprimimos el archivo (podemos usar <code>unzip()</code>) y obtendremos una <strong>carpeta</strong>. Es importante que la carpeta esté en nuestro 
-<a href="../../../blog/r_introduccion/proyectos/">proyecto de RStudio</a>. Personalmente prefiero guardar los <em>shapes</em> en su propia carpeta, así que pondré la carpeta del <em>shape</em> descargado dentro de <code>shapes/</code></p>
+<h3 id="cargar-mapas-de-cualquier-país">Cargar mapas de cualquier país
+  <a href="#cargar-mapas-de-cualquier-pa%c3%ads"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Si no tenemos o no queremos descargar <em>shapes</em>, podemos <strong>cargar mapas de cualquier país directo en R</strong> gracias a 
+<a href="http://ropensci.github.io/rnaturalearth/" target="_blank" rel="noopener"><code>{rnaturalearth}</code></a>. Con este paquete obtenemos directamente mapas de cualquier país del mundo, incluyendo sus estados o regiones internos, sin necesidad de descargas.</p>
+<p>Instala <code>{rnaturalearth}</code> si no lo tienes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;rnaturalearth&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Puedes insertar el nombre de tu país para seguir con este tutorial usando ejemplos de tu territorio.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># install.packages(&#34;rnaturalearth&#34;)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">rnaturalearth</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">pais</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">ne_states</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Argentina&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># pais &lt;- ne_states(&#34;Mexico&#34;)</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># pais &lt;- ne_states(&#34;Colombia&#34;)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">pais</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># seleccionar columnas</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">pais</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">admin</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">region</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">name_es</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">geometry</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa</span>
+</span></span></code></pre></div><pre><code>Simple feature collection with 24 features and 2 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -73.57274 ymin: -55.05202 xmax: -53.66155 ymax: -21.78694
+Geodetic CRS:  WGS 84
+First 10 features:
+          pais     region                       geometry
+1    Argentina Entre Ríos MULTIPOLYGON (((-58.20011 -...
+12   Argentina      Salta MULTIPOLYGON (((-68.49647 -...
+13   Argentina      Jujuy MULTIPOLYGON (((-67.25133 -...
+741  Argentina    Formosa MULTIPOLYGON (((-62.34136 -...
+746  Argentina   Misiones MULTIPOLYGON (((-54.66497 -...
+749  Argentina      Chaco MULTIPOLYGON (((-58.35127 -...
+750  Argentina Corrientes MULTIPOLYGON (((-58.6042 -2...
+1318 Argentina  Catamarca MULTIPOLYGON (((-68.33776 -...
+1320 Argentina   La Rioja MULTIPOLYGON (((-69.65405 -...
+1321 Argentina   San Juan MULTIPOLYGON (((-69.95766 -...
+</code></pre>
 
 
 
@@ -452,6 +502,33 @@ Mapoteca Biblioteca del Congreso Nacional</a>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
+<p>Un <em>shapefile</em> es un formato de archivo común para datos geoespaciales, que en realidad consiste en una <strong>carpeta</strong> con archivos relacionados (<code>.shp</code>, <code>.shx</code>, <code>.dbf</code>, entre otros) que juntos representan la geometría y atributos de los objetos geográficos.</p>
+<p>Teniendo la carpeta, basta con cargarla con la función <code>read_sf()</code>.</p>
+<p>
+
+<details>
+  <summary><strong>Ejemplo de descarga y carga de un <em>shapefile</em> de Chile</strong></summary>
+  <p>Para aprender, podemos descargar un <em>shape</em> y usarlo para practicar. Si no tienes uno a mano, en el siguiente botón podemos bajar un <em>shapefile</em> de Chile por regiones, que proviene de la 
+<a href="https://www.bcn.cl/siit/mapas_vectoriales" target="_blank" rel="noopener">Mapoteca de la Biblioteca del Congreso Nacional</a>.</p>
+<div class = "db pt1"
+style = "margin-bottom: 34px;">
+<p><a class = "btn-links mr2 ba dib"
+href = "https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip" target="_blank"
+style = "padding: 12px; padding-bottom: 8px; border-radius: 5px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #9069C0; margin-bottom: -12px;">
+<i class="fas fa-map fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
+Division regional: polígonos de las regiones de Chile</a></p>
+</div>
+<p>También puedes descargarlo directamente desde R con <code>download.file()</code> y luego <code>unzip()</code>, 
+<a href="../../../blog/mapa_chile_triple/#descargar-mapas">como se indica en este post</a>.</p>
+<p>Una vez descargado, descomprimimos el archivo y obtenemos una <strong>carpeta</strong>. Esta carpeta es nuestro <em>shapefile</em>, así que la guardamos dentro de nuestro 
+<a href="../../../blog/r_introduccion/proyectos/">proyecto de RStudio</a>, idealmente dentro de una carpeta donde guardemos nuestros mapas.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># descargar</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">download.file</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>              <span style="color:#f6c177">&#34;Regiones.zip&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># descomprimir</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">unzip</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Regiones.zip&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">exdir</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;shapes/Regiones&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>En el siguiente ejemplo, guardamos el <em>shapefile</em> en una carpeta <code>shapes</code>, y lo cargamos con <code>read_sf()</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_sf</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;shapes/Regiones&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">janitor</span><span style="color:#908caa">::</span><span style="color:#ea9a97">clean_names</span><span style="color:#908caa">()</span>
 </span></span><span style="display:flex;"><span>
@@ -483,6 +560,16 @@ Projected CRS: WGS 84 / Pseudo-Mercator
 17     1100        0         0   3937.   9306245194.   388722. Zona sin demarcar
 # ℹ 1 more variable: geometry &lt;GEOMETRY [m]&gt;
 </code></pre>
+
+</details>
+<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
+
+Puedes seguir este tutorial independientemente del mapa que hayas cargado (el <em>shape</em> de Chile, con <code>rnaturalearth</code>, u otro <em>shape</em> que tú elijas); lo importante es que cargues un objeto <code>mapa</code> que tenga columna <code>geometry</code> y <code>region</code>.
+
+</div>
+</p>
 <!--
 ### Cargar geoJSON
 
@@ -502,23 +589,44 @@ sf::read_sf("~/Downloads/Mis lugares/doc.kml")
 
 
 -->
-<p>Como vemos, una vez que cargamos los datos geoespaciales obtenemos una <strong>tabla con características especiales</strong>. arriba de la tabla vemos una descripción de las características del mapa, el tipo de geometrías, la caja o <em>bounding box</em> que enmarca los polígonos, y el sistema de referencia de coordenadas del mapa.</p>
+<hr>
+<p>Como vemos, una vez que cargamos los datos geoespaciales obtenemos una <strong>tabla con características especiales</strong>. Arriba de la tabla vemos una descripción de las características del mapa, el tipo de geometrías, la caja o <em>bounding box</em> que enmarca los polígonos, y el sistema de referencia de coordenadas del mapa.</p>
 <p>En <code>{sf}</code> los datos geoespaciales además contienen una columna <code>geometry</code>, que contiene las geometrías (puntos, líneas o polígonos) que definen la forma y ubicación de los elementos geográficos. Vamos a trabajar con esta columna si queremos <strong>modificar la geometría</strong> de los elementos geoespaciales o calcular algo a partir de ellos. <strong>Cada fila de la tabla representa un objeto geográfico</strong> (una región, comuna, país, etc.) y las demás columnas son variables relacionadas al objeto geográfico (población, superficie, nombre, etc.)</p>
+<!--
+## Glosario
+
+- **Simple features**: estándar para representar datos geoespaciales en forma de tablas con una columna especial de geometría.
+- **Shapefile**: formato de archivo común para datos geoespaciales, que en realidad consiste en varios archivos relacionados.
+- **Polígono**: forma geométrica que representa áreas en un mapa.
+
+-->
+<hr>
 
 
 
 
-<h2 id="glosario">Glosario
-  <a href="#glosario"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="visualización-básica-de-mapas">Visualización básica de mapas
+  <a href="#visualizaci%c3%b3n-b%c3%a1sica-de-mapas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<ul>
-<li><strong>Simple features</strong>: estándar para representar datos geoespaciales en forma de tablas con una columna especial de geometría.</li>
-<li><strong>Shapefile</strong>: formato de archivo común para datos geoespaciales, que en realidad consiste en varios archivos relacionados.</li>
-<li><strong>Polígono</strong>: forma geométrica que representa áreas en un mapa.</li>
-</ul>
+<p>Para visualizar un mapa con <code>{sf}</code> usamos la geometría <code>geom_sf()</code> dentro de un gráfico de <code>{ggplot2}</code>. Esta función reconoce automáticamente la columna <code>geometry</code> del objeto espacial, y dibuja las formas geográficas correspondientes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EBD2FA&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><img src="mapas_sf.markdown_strict_files/figure-markdown_strict/mapa_basico-1.png" width="768" />
+<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
+
+Si necesitas aprender lo básico de <code>{ggplot2}</code> para visualización de datos, 
+<a href="/blog/r_introduccion/tutorial_visualizacion_ggplot/">revisa este completo tutorial</a>.
+
+</div>
+
 <hr>
 
 
@@ -545,52 +653,49 @@ sf::read_sf("~/Downloads/Mis lugares/doc.kml")
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_centroide</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">geometry</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">centroide</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_centroid</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span><span style="color:#908caa">))</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_centroide</span>
-</span></span></code></pre></div><pre><code>Simple feature collection with 17 features and 1 field
-Active geometry column: geometry
-Geometry type: GEOMETRY
-Dimension:     XY
-Bounding box:  xmin: -12183900 ymin: -7554306 xmax: -7393644 ymax: -1978920
-Projected CRS: WGS 84 / Pseudo-Mercator
-# A tibble: 17 × 3
-   region                                     geometry           centroide
- * &lt;chr&gt;                                &lt;GEOMETRY [m]&gt;         &lt;POINT [m]&gt;
- 1 Región de Arica y Parina… POLYGON ((-7675501 -2147… (-7751019 -2095927)
- 2 Región de Tarapacá        POLYGON ((-7807680 -2295… (-7724797 -2299134)
- 3 Región de Antofagasta     MULTIPOLYGON (((-7859947… (-7694561 -2698986)
- 4 Región de Magallanes y A… MULTIPOLYGON (((-7494058… (-7996444 -6899731)
- 5 Región de Aysén del Gral… MULTIPOLYGON (((-8395076… (-8155537 -5856280)
- 6 Región de Atacama         MULTIPOLYGON (((-7868801… (-7782778 -3174679)
- 7 Región de Coquimbo        MULTIPOLYGON (((-7956099… (-7888264 -3584743)
- 8 Región de Valparaíso      MULTIPOLYGON (((-8991646… (-7944452 -3860933)
- 9 Región Metropolitana de … POLYGON ((-7857118 -3892… (-7862170 -3976036)
-10 Región de Los Lagos       MULTIPOLYGON (((-8128795… (-8114468 -5170738)
-11 Región de Los Ríos        MULTIPOLYGON (((-8156461… (-8078476 -4867034)
-12 Región de La Araucanía    POLYGON ((-7929978 -4593… (-8045539 -4672201)
-13 Región del Bío-Bío        MULTIPOLYGON (((-8231986… (-8058771 -4509385)
-14 Región de Ñuble           POLYGON ((-8053807 -4431… (-8012110 -4389990)
-15 Región del Maule          POLYGON ((-8018823 -4121… (-7953282 -4249088)
-16 Región del Libertador Be… POLYGON ((-8015044 -4051… (-7908857 -4087567)
-17 Zona sin demarcar         POLYGON ((-8197676 -6303… (-8154871 -6357913)
+</span></span></code></pre></div><pre><code>                  region                   centroide
+1             Entre Ríos POINT (-59.20493 -32.03189)
+12                 Salta POINT (-64.80661 -24.28824)
+13                 Jujuy POINT (-65.77985 -23.31783)
+741              Formosa POINT (-59.94839 -24.89604)
+746             Misiones POINT (-54.65212 -26.86956)
+749                Chaco POINT (-60.77109 -26.39039)
+750           Corrientes POINT (-57.79471 -28.76018)
+1318           Catamarca  POINT (-66.99006 -27.3092)
+1320            La Rioja POINT (-67.21371 -29.66235)
+1321            San Juan POINT (-68.88199 -30.82274)
+1323             Mendoza POINT (-68.60826 -34.58944)
+1328             Neuquén POINT (-70.11374 -38.62865)
+1333              Chubut POINT (-68.51499 -43.78523)
+1335           Río Negro POINT (-67.21765 -40.40738)
+1337          Santa Cruz  POINT (-69.8981 -48.76187)
+1339    Tierra del Fuego  POINT (-67.4401 -54.32625)
+1726        Buenos Aires POINT (-60.54573 -36.66279)
+1746        Buenos Aires POINT (-58.45093 -34.64272)
+3852            Santa Fe POINT (-60.93513 -30.66904)
+3853             Tucumán  POINT (-65.36557 -26.9491)
+3854 Santiago del Estero  POINT (-63.2909 -27.71835)
+3855            San Luis POINT (-66.03363 -33.74238)
+3856            La Pampa POINT (-65.44562 -37.12691)
+3857             Córdoba POINT (-63.76859 -32.07319)
 </code></pre>
-<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
+<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/mapa_centroide-1.png" width="768" />
 
 
 <details>
   <summary>Ver código del gráfico</summary>
   <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_centroide</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;Región de Atacama&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> 
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NA</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">centroide</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.6</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">geom_sf_text</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">centroide</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;centroide&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">nudge_y</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-20000</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">==</span> <span style="color:#ea9a97">mapa</span><span style="color:#908caa">$</span><span style="color:#ea9a97">region[3]</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NA</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">centroide</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.6</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf_text</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">centroide</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;centroide&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">vjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div>
 </details>
 <hr>
@@ -609,50 +714,48 @@ Projected CRS: WGS 84 / Pseudo-Mercator
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_centroide_coordenadas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_centroide</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lon</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_coordinates</span><span style="color:#908caa">(</span><span style="color:#ea9a97">centroide</span><span style="color:#908caa">)</span><span style="color:#ea9a97">[</span><span style="color:#908caa">,</span><span style="color:#f6c177">1</span><span style="color:#ea9a97">]</span><span style="color:#908caa">,</span>
 </span></span><span style="display:flex;"><span>         <span style="color:#ea9a97">lat</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_coordinates</span><span style="color:#908caa">(</span><span style="color:#ea9a97">centroide</span><span style="color:#908caa">)</span><span style="color:#ea9a97">[</span><span style="color:#908caa">,</span><span style="color:#f6c177">2</span><span style="color:#ea9a97">]</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_centroide_coordenadas</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">lon</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">lat</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><pre><code>Simple feature collection with 17 features and 3 fields
-Geometry type: GEOMETRY
-Dimension:     XY
-Bounding box:  xmin: -12183900 ymin: -7554306 xmax: -7393644 ymax: -1978920
-Projected CRS: WGS 84 / Pseudo-Mercator
-# A tibble: 17 × 4
-   region                                  lon     lat                  geometry
-   &lt;chr&gt;                                 &lt;dbl&gt;   &lt;dbl&gt;            &lt;GEOMETRY [m]&gt;
- 1 Región de Arica y Parinacota        -7.75e6 -2.10e6 POLYGON ((-7675501 -2147…
- 2 Región de Tarapacá                  -7.72e6 -2.30e6 POLYGON ((-7807680 -2295…
- 3 Región de Antofagasta               -7.69e6 -2.70e6 MULTIPOLYGON (((-7859947…
- 4 Región de Magallanes y Antártica C… -8.00e6 -6.90e6 MULTIPOLYGON (((-7494058…
- 5 Región de Aysén del Gral.Ibañez de… -8.16e6 -5.86e6 MULTIPOLYGON (((-8395076…
- 6 Región de Atacama                   -7.78e6 -3.17e6 MULTIPOLYGON (((-7868801…
- 7 Región de Coquimbo                  -7.89e6 -3.58e6 MULTIPOLYGON (((-7956099…
- 8 Región de Valparaíso                -7.94e6 -3.86e6 MULTIPOLYGON (((-8991646…
- 9 Región Metropolitana de Santiago    -7.86e6 -3.98e6 POLYGON ((-7857118 -3892…
-10 Región de Los Lagos                 -8.11e6 -5.17e6 MULTIPOLYGON (((-8128795…
-11 Región de Los Ríos                  -8.08e6 -4.87e6 MULTIPOLYGON (((-8156461…
-12 Región de La Araucanía              -8.05e6 -4.67e6 POLYGON ((-7929978 -4593…
-13 Región del Bío-Bío                  -8.06e6 -4.51e6 MULTIPOLYGON (((-8231986…
-14 Región de Ñuble                     -8.01e6 -4.39e6 POLYGON ((-8053807 -4431…
-15 Región del Maule                    -7.95e6 -4.25e6 POLYGON ((-8018823 -4121…
-16 Región del Libertador Bernardo O'H… -7.91e6 -4.09e6 POLYGON ((-8015044 -4051…
-17 Zona sin demarcar                   -8.15e6 -6.36e6 POLYGON ((-8197676 -6303…
+</span></span></code></pre></div><pre><code>                  region       lon       lat
+1             Entre Ríos -59.20493 -32.03189
+12                 Salta -64.80661 -24.28824
+13                 Jujuy -65.77985 -23.31783
+741              Formosa -59.94839 -24.89604
+746             Misiones -54.65212 -26.86956
+749                Chaco -60.77109 -26.39039
+750           Corrientes -57.79471 -28.76018
+1318           Catamarca -66.99006 -27.30920
+1320            La Rioja -67.21371 -29.66235
+1321            San Juan -68.88199 -30.82274
+1323             Mendoza -68.60826 -34.58944
+1328             Neuquén -70.11374 -38.62865
+1333              Chubut -68.51499 -43.78523
+1335           Río Negro -67.21765 -40.40738
+1337          Santa Cruz -69.89810 -48.76187
+1339    Tierra del Fuego -67.44010 -54.32625
+1726        Buenos Aires -60.54573 -36.66279
+1746        Buenos Aires -58.45093 -34.64272
+3852            Santa Fe -60.93513 -30.66904
+3853             Tucumán -65.36557 -26.94910
+3854 Santiago del Estero -63.29090 -27.71835
+3855            San Luis -66.03363 -33.74238
+3856            La Pampa -65.44562 -37.12691
+3857             Córdoba -63.76859 -32.07319
 </code></pre>
-<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
+<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/barras_latitud-1.png" width="768" />
 
 
 <details>
   <summary>Ver código del gráfico</summary>
   <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_centroide_coordenadas</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">forcats</span><span style="color:#908caa">::</span><span style="color:#ea9a97">fct_reorder</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">lat</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># ordenar regiones</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lat</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">region</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">geom_col</span><span style="color:#908caa">(</span><span style="color:#ea9a97">width</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.7</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">geom_text</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">region</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">hjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-0.05</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EAD2FA&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">scale_y_discrete</span><span style="color:#908caa">(</span><span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Latitud&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">distinct</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">.keep_all</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">forcats</span><span style="color:#908caa">::</span><span style="color:#ea9a97">fct_reorder</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">lat</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># ordenar regiones</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">lat</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">region</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_col</span><span style="color:#908caa">(</span><span style="color:#ea9a97">width</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.7</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_text</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">region</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">hjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-0.05</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EAD2FA&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_y_discrete</span><span style="color:#908caa">(</span><span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">y</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NULL</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">x</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Latitud&#34;</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div>
 </details>
 <hr>
@@ -666,8 +769,31 @@ Projected CRS: WGS 84 / Pseudo-Mercator
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">st_buffer</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><hr>
+<p>Un <em>buffer</em> es una zona alrededor de un objeto geográfico, definida por una distancia específica. Calcular un <em>buffer</em> es útil para analizar áreas de influencia, proximidad a ciertos puntos o regiones, o para hacer modificiones sobre mapas con fines de visualización.</p>
+<p>Con la función <code>st_buffer()</code> definimos el espacio en torno a un polígono, especificando en el argumento <code>dist</code> la <strong>distancia</strong> del <em>buffer</em> en las unidades del sistema de coordenadas del mapa (por ejemplo, metros si el mapa está en UTM), y con <code>max_cells</code> podemos controlar la calidad del polígono resultante.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_buffer</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># filtrar una región/polígono</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">region</span> <span style="color:#908caa">==</span> <span style="color:#ea9a97">mapa</span><span style="color:#908caa">$</span><span style="color:#ea9a97">region[3]</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># crear buffer</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">buffer</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_buffer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                            <span style="color:#ea9a97">dist</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">20000</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                            <span style="color:#ea9a97">max_cells</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10000</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="mapas_sf.markdown_strict_files/figure-markdown_strict/mapa_buffer-1.png" width="768" />
+
+
+<details>
+  <summary>Ver código del gráfico</summary>
+  <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_buffer</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># capa de la región</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">geometry</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NA</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># capa del buffer</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">buffer</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.5</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NA</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+</details>
+<hr>
 
 
 
@@ -678,30 +804,121 @@ Projected CRS: WGS 84 / Pseudo-Mercator
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
-<p>Bounding box</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">st_bbox</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">)</span>
+<p>Con la función <code>st_bbox()</code> obtenemos las coordenadas de la caja que envuelve a un polígono o conjunto de polígonos. Esta caja está definida por las coordenadas mínimas y máximas en los ejes <em>x</em> (longitud) e <em>y</em> (latitud).</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">caja</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">st_bbox</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">caja</span>
 </span></span></code></pre></div><pre><code>     xmin      ymin      xmax      ymax 
--12183903  -7554306  -7393644  -1978920 
+-73.57274 -55.05202 -53.66155 -21.78694 
 </code></pre>
+
+
+
+
+<h4 id="convertir-caja-a-polígono">Convertir caja a polígono
+  <a href="#convertir-caja-a-pol%c3%adgono"></a>
+</h4>
+<p>Teniendo una caja con sus coordenadas, podemos convertirla a un polígono para aplicarlo sobre (o debajo de) un mapa.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">rectangulo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">caja</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sfc</span><span style="color:#908caa">(</span><span style="color:#ea9a97">crs</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_crs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-19-1.png" width="768" />
+
+
+<details>
+  <summary>Ver código del gráfico</summary>
+  <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># mapa de fondo</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mapa</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EBD2FB&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># capa con la caja encima</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">rectangulo</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.8</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.4</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># tema</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">axis.text</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">panel.background</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">())</span>
+</span></span></code></pre></div>
+</details>
 <hr>
 
 
 
 
-<h3 id="convertir-caja-a-polígono">Convertir caja a polígono
-  <a href="#convertir-caja-a-pol%c3%adgono"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h3 id="poner-un-punto-en-un-mapa">Poner un punto en un mapa
+  <a href="#poner-un-punto-en-un-mapa"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">caja</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">st_bbox</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">)</span>
+<p>Si queremos poner puntos en posiciones específicas de un mapa, sólo necesitamos crear una tabla con las coordenadas de los puntos y convertir la tabla a <code>sf</code> con <code>st_as_sf()</code>. Al hacer esto, es necesario especificar el sistema de referencia de coordenadas (CRS) del mapa, para que los puntos se ubiquen correctamente. Hacemos esto extrayendo el CRS del mapa con <code>st_crs()</code> y aplicándolo a nuestra nueva tabla <code>sf</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># definir coordenadas</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tibble</span><span style="color:#908caa">(</span><span style="color:#ea9a97">longitud</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-70</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                      <span style="color:#ea9a97">latitud</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-38</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">caja_poli</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">caja</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sfc</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sf</span><span style="color:#908caa">()</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># convertir tabla a sf</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">punto</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">coords</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;longitud&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;latitud&#34;</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">crs</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_crs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.png" width="768" />
+
+
+<details>
+  <summary>Ver código del gráfico</summary>
+  <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># mapa de fondo</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mapa</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EBD2FB&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># capa con el punto</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">punto</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.5</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+</details>
+
+
+
+
+<h4 id="poner-varios-puntos-en-un-mapa">Poner varios puntos en un mapa
+  <a href="#poner-varios-puntos-en-un-mapa"></a>
+</h4>
+<p>Si necesitamos agregar más de un punto, simplemente hacemos una tabla con todos los que necesitemos. Obviamente también podemos especificar otras columnas que podemos usar para etiquetar los puntos, especificar sus colores, y más.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tribble</span><span style="color:#908caa">(</span><span style="color:#908caa">~</span><span style="color:#ea9a97">nombre</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">lon</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">lat</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">n</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;A&#34;</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-69</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-38</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">4</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;B&#34;</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-65</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-37</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">6</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;C&#34;</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-61</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-36</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">9</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">caja_poli</span>
-</span></span></code></pre></div><hr>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">puntos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># convertir tabla a sf</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">coords</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;lon&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;lat&#34;</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">crs</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_crs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-25-1.png" width="768" />
+
+
+<details>
+  <summary>Ver código del gráfico</summary>
+  <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># mapa de fondo</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mapa</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EBD2FB&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># capa con puntos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">puntos</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">n</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.5</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># capa con textos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf_label</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">puntos</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">nombre</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">vjust</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-0.8</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">fontface</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;bold&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># escala de tamaño</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_size</span><span style="color:#908caa">(</span><span style="color:#ea9a97">range</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">6</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">breaks</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">scales</span><span style="color:#908caa">::</span><span style="color:#ea9a97">breaks_pretty</span><span style="color:#908caa">(</span><span style="color:#ea9a97">n</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">guides</span><span style="color:#908caa">(</span><span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_legend</span><span style="color:#908caa">(</span><span style="color:#ea9a97">override.aes</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">list</span><span style="color:#908caa">(</span><span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>                                                 <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">1</span><span style="color:#908caa">)))</span>
+</span></span></code></pre></div>
+</details>
+<hr>
 
 
 
@@ -712,17 +929,211 @@ Projected CRS: WGS 84 / Pseudo-Mercator
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
-<p>Desde una coordenada</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">38.29782</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-76.51390</span><span style="color:#908caa">)</span>
+<p>Para poner un cuadrado encima de una ubicación del mapa, primero creamos un punto, luego lo 
+<a href="#calcular-buffer">expandimos con un <em>buffer</em></a>, calculamos 
+<a href="#calcular-caja-de-un-pol%c3%adgono">la caja que envuelve a dicho punto</a>, y finalmente convertimos la caja en un polígono <code>sf</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tibble</span><span style="color:#908caa">(</span><span style="color:#ea9a97">longitud</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-58</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">latitud</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">-38</span><span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_point</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_sfc</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_buffer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dist</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">30000</span><span style="color:#908caa">)</span>  <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">punto</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># convertir tabla a sf</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">coords</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;longitud&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;latitud&#34;</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">crs</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_crs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">cuadrado</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">punto</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_buffer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dist</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">100000</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># agrandar punto</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_bbox</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># crear caja al rededor</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sfc</span><span style="color:#908caa">(</span><span style="color:#ea9a97">crs</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_crs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">))</span> <span style="color:#6e6a86"># convertir a sf</span>
+</span></span></code></pre></div><img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-28-1.png" width="768" />
+
+
+<details>
+  <summary>Ver código del gráfico</summary>
+  <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># mapa de fondo</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mapa</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EBD2FB&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.7</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># capa con puntos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">cuadrado</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NA</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.8</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">linejoin</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;mitre&#34;</span><span style="color:#908caa">,</span> <span style="color:#6e6a86">#linejoin = &#34;round&#34;,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#402E5A&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-72</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-56</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-40</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-30</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div>
+</details>
+<p>Paso a paso, el proceso de crear el punto, agrandarlo, y formarlo en un cuadrado se vería así:</p>
+<img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-30-1.png" width="768" />
+
+
+<details>
+  <summary>Ver código del proceso y del gráfico</summary>
+  <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">punto_grande</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">punto</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_buffer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dist</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">100000</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">max_cells</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">10000</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">cuadrado</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">punto_grande</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_bbox</span><span style="color:#908caa">(</span><span style="color:#ea9a97">crs</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_crs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sfc</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">crs</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_crs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># mapa de fondo</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mapa</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EBD2FB&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.1</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># capas </span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">punto</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#402E5A&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">size</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">3</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">punto_grande</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NA</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#402E5A&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">lwd</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.7</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">cuadrado</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NA</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#402E5A&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">lwd</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.7</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># acercar mapa</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-61</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-55</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-40</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-35.7</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div>
+</details>
+
+
+
+
+<h4 id="crear-un-rectángulo-a-partir-de-puntos">Crear un rectángulo a partir de puntos
+  <a href="#crear-un-rect%c3%a1ngulo-a-partir-de-puntos"></a>
+</h4>
+<p>Si tenemos varios puntos y necesitamos crear un rectángulo que los contenga a todos, podemos repetir lo anterior pero partiendo de varios puntos a la vez.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># tabla con coordenadas</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tribble</span><span style="color:#908caa">(</span><span style="color:#908caa">~</span><span style="color:#ea9a97">nombre</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">lon</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">lat</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">n</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;A&#34;</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-69</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-38</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">4</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;B&#34;</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-65</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-37</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">6</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;C&#34;</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-61</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-36</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">9</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># convertir coordenadas a puntos</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">puntos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># convertir tabla a sf</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">coords</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;lon&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;lat&#34;</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">crs</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_crs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># convertir puntos a rectándulo</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">rectangulo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">puntos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_buffer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dist</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">80000</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># ampliar</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_bbox</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sfc</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sf</span><span style="color:#908caa">()</span>
-</span></span></code></pre></div><!--
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sfc</span><span style="color:#908caa">(</span><span style="color:#ea9a97">crs</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_crs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-33-1.png" width="768" />
+
+
+<details>
+  <summary>Ver código del gráfico</summary>
+  <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># mapa de fondo</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mapa</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#EBD2FB&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.7</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># capa con puntos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">puntos</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.5</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">rectangulo</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">NA</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#402E5A&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">lwd</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.7</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+</details>
+<hr>
+
+
+
+
+<h3 id="crear-un-polígono-a-partir-de-coordenadas">Crear un polígono a partir de coordenadas
+  <a href="#crear-un-pol%c3%adgono-a-partir-de-coordenadas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Teniendo una tabla con un conjunto de coordenadas, podemos unirlas para formar un polígono. Es decir, <strong>unir los puntos</strong> para conformar una figura geométrica cerrada. Para ello, usamos <code>st_combine()</code> para combinar las coordenadas en un solo elemento, y luego <code>st_cast()</code> para convertir esos puntos combinados en un polígono.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tribble</span><span style="color:#908caa">(</span><span style="color:#908caa">~</span><span style="color:#ea9a97">nombre</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">lon</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">lat</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                           <span style="color:#f6c177">&#34;A&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-68</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-36</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                           <span style="color:#f6c177">&#34;B&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-64</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-31</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                           <span style="color:#f6c177">&#34;C&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-60</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-36</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># convertir tabla a sf</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">puntos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">coords</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;lon&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;lat&#34;</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">crs</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_crs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">poligono</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">puntos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># combinar coordenadas en un solo elemento</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarise</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_combine</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># convertir puntos a polígono</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_cast</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;POLYGON&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><img src="mapas_sf.markdown_strict_files/figure-markdown_strict/poligonos_1-1.png" width="768" />
+
+
+<details>
+  <summary>Ver código del gráfico</summary>
+  <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># mapa de fondo</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mapa</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#E0C7F0&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.7</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># capa con puntos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">puntos</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.6</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># capa con polígono</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">poligono</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#402E5A&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#402E5A&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">lwd</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.7</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.7</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+</details>
+
+
+
+
+<h4 id="crear-varios-polígonos-a-partir-de-coordenadas">Crear varios polígonos a partir de coordenadas
+  <a href="#crear-varios-pol%c3%adgonos-a-partir-de-coordenadas"></a>
+</h4>
+<p>Podemos realizar el mismo proceso anterior, pero agrupando los datos con <code>group_by()</code> para crear varios polígonos a la vez, de acuerdo a la variable de agrupación (en este caso, <code>tipo</code>). Entonces, cuando usemos <code>st_combine()</code>, se combinarán las coordenadas de cada grupo por separado, y luego <code>st_cast()</code> convertirá cada grupo de puntos combinados en un polígono distinto.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tribble</span><span style="color:#908caa">(</span><span style="color:#908caa">~</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">,</span>    <span style="color:#908caa">~</span><span style="color:#ea9a97">lon</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">lat</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;Triángulo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-68</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-30</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;Triángulo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-64</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-25</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                       <span style="color:#f6c177">&#34;Triángulo&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-60</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-30</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#f6c177">&#34;Cuadrado&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-68</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-38</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#f6c177">&#34;Cuadrado&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-60</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-38</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#f6c177">&#34;Cuadrado&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-60</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-32</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>                        <span style="color:#f6c177">&#34;Cuadrado&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-68</span><span style="color:#908caa">,</span>  <span style="color:#f6c177">-32</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># convertir tabla a sf</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">puntos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">coordenadas</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_as_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">coords</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;lon&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;lat&#34;</span><span style="color:#908caa">),</span> 
+</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">crs</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_crs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">poligono</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">puntos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># combinar coordenadas en elementos únicos agrupados por una variable</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tipo</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarise</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">st_combine</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># convertir puntos a polígono</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">st_cast</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;POLYGON&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><img src="mapas_sf.markdown_strict_files/figure-markdown_strict/poligonos_2-1.png" width="768" />
+
+
+<details>
+  <summary>Ver código del gráfico</summary>
+  <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># mapa de fondo</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mapa</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#9069C0&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;#E0C7F0&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.7</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># capa con polígonos de color</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">poligono</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">tipo</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">tipo</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">lwd</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.6</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.7</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># capa con puntos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">data</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">puntos</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#ea9a97">alpha</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">.4</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># escala de colores</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Tipo&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Tipo&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">legend.key.spacing.y</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">unit</span><span style="color:#908caa">(</span><span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;mm&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div>
+</details>
+<hr>
+<!--
 Desde el centroide de un polígono
 
 
@@ -1037,6 +1448,14 @@ https://dominicroye.github.io/blog/inserted-map/
 
 
 -->
+<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
+
+⚠️ Este tutorial se encuentra en construcción ⚠️
+
+</div>
+
 <hr>
 
 
@@ -1097,7 +1516,7 @@ https://dominicroye.github.io/blog/inserted-map/
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">7 minute read, 1439 words</dd>
+    <dd class="fw5 ml0">15 minute read, 3038 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">

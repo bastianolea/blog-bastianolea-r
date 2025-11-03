@@ -1,8 +1,8 @@
 ---
-title: Testeo automatizado de aplicaciones Shiny con {shinytest2}
+title: "Testeo automatizado de aplicaciones Shiny con {shinytest2}"
 author: Bastián Olea Herrera
-date: '2025-10-29'
-draft: true
+date: '2025-11-02'
+draft: false
 slug: []
 categories: []
 tags:
@@ -17,9 +17,12 @@ links:
     icon_pack: fab
     name: shinytest2
     url: https://rstudio.github.io/shinytest2/index.html
+excerpt: "Validar aplicaciones te permite crear un conjunto de pruebas para confirmar que tus aplicaciones funcionan bien sin tener que probarlas manualmente. Por ejemplo, puedes programar un _bot_ que apriete todos los botones de tu aplicación y obtener capturas de pantalla que te confirmen que todo se ve bien. En esta guía aprenderás a utilizar `{shinytest2}` para automatizar el testeo de tus aplicaciones Shiny, asegurando su correcto funcionamiento a través de capturas de pantalla y otras validaciones automáticas."
 ---
 
-https://rstudio.github.io/shinytest2/index.html
+{{< aviso "⚠️ post en construcción ⚠️">}}
+
+Al igual que la [validación de datos](/blog/validacion_avanzada/), validar aplicaciones te permite crear un conjunto de pruebas para **confirmar que tus aplicaciones funcionan bien sin tener que probarlas manualmente**. Por ejemplo, puedes programar un _bot_ que apriete todos los botones de tu aplicación y obtener capturas de pantalla que te confirmen que todo se ve bien. En esta guía aprenderás a utilizar `{shinytest2}` para automatizar el testeo de tus aplicaciones Shiny, asegurando su correcto funcionamiento a través de capturas de pantalla y otras validaciones automáticas.
 
 
 lo primero
@@ -82,3 +85,5 @@ Para ejecutar todos los tests
 ```r
 shinytest2::test_app("app/icbg/")
 ```
+
+{{< video "apps.mov" >}}
