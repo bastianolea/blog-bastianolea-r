@@ -1,0 +1,129 @@
+---
+title: Tablas interactivas en R con DataTables (DT)
+author: Bastián Olea Herrera
+date: '2025-10-29'
+draft: true
+slug: []
+categories:
+  - Tutoriales
+tags:
+  - tablas
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+links:
+  - icon: registered
+    icon_pack: fas
+    name: DT
+    url: https://rstudio.github.io/DT/
+---
+
+
+``` r
+  datos |> 
+    datatable(
+      options = list(
+        # traducir al español
+        language = list(
+          info = 'Total de _TOTAL_ comunas, mostrando desde a _START_ a la _END_',
+          paginate = list(previous = 'Atrás', `next` = 'Adelante', fist = "Primera", last = "Última"),
+          search = "Buscar:",
+          lengthMenu = "Mostrar _MENU_ comunas",
+          emptyTable = "No hay comunas con datos",
+          infoEmpty = "Mostrando 0 comunas",
+          zeroRecords = "Sin resultados",
+          infoFiltered = "(filtrando de un total de _MAX_ comunas)"
+        ),
+        pageLength = 15),
+      selection = "none",
+      rownames = FALSE, 
+      # nombres de columnas
+      colnames = c("Región", "Comuna",
+                   paste0("Masculino (", tolower(unidad), ")"),
+                   paste0("Femenino (", tolower(unidad), ")"),
+                   "Brecha",
+                   "Proporción (%)",
+                   "Brecha que afecte a mujeres")
+    ) |> 
+    DT::formatPercentage("proporcion",
+                         digits = 1, dec.mark = ",")
+```
+
+``` css
+
+
+/* estilo de datatable */
+
+
+/* header */
+.tabla_dt th {
+  font-size: 90% !important;
+  padding: 8px;
+  text-align: left;
+  white-space: nowrap;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+/* celdas */
+.tabla_dt td {
+  word-break: normal;
+  text-align: left;
+  font-size: 80% !important;
+  padding: 6px !important;
+}
+
+/* colores de datatable indicadores */
+  
+/* header */
+#tabla_indicador .tabla_dt th {
+  background-color: var(--color_2_fondo);
+  color: var(--color_2_texto);
+}
+
+/* celdas */
+#tabla_indicador .tabla_dt td {
+  background-color: var(--color_2_fondo);
+  color: var(--color_2_texto);
+  border-bottom: 1px solid var(--color_2b) !important;
+}
+
+/*
+  #tabla_indicador .tabla_dt tbody tr:nth-child(odd) {
+  background-color: var(--color_2_fondo) !important;
+}
+*/
+  
+/* Styling alternate rows */
+#tabla_indicador .tabla_dt tbody tr:nth-child(even) {
+  background-color: #EDC7E0; !important;
+}
+
+
+
+/* color de cuadros de texto fuera de tabla */
+#tabla_indicador .datatables .dataTables_wrapper .dataTables_length select, #tabla_indicador .datatables .dataTables_wrapper .dataTables_filter input {
+  background-color: var(--color_2_fondo) !important;
+  color: var(--color_2_texto) !important;
+  border-bottom: 1px solid var(--color_2_texto) !important;
+}
+
+/* color de botonera de páginas fuera de tabla */ 
+#tabla_indicador .datatables .paginate_button a {
+  background-color: var(--color_2_fondo) !important;
+  border: 1px solid #D998C4 !important;
+  font-size: 85%;
+/*color: #541D31FF;*/
+  }
+
+#tabla_indicador .pagination {
+--bs-pagination-padding-x: .75rem;
+--bs-pagination-padding-y: .3rem;
+--bs-pagination-color: var(--color_2c);
+--bs-pagination-active-color: var(--color_2_texto);
+--bs-pagination-hover-color: var(--color_2b);
+--bs-pagination-bg: var(--color_2_fondo);
+}
+
+```

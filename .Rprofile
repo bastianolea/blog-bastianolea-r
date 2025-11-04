@@ -23,4 +23,4 @@ options(
 options(blogdown.hugo.version = "0.136.5")
 
 # abrir script
-file.edit("_instrucciones.R")
+# utils::file.edit("_instrucciones.R")

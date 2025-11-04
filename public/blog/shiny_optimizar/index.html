@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Optimiza la velocidad de tus aplicaciones Shiny con bindCache() | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Mejora la velocidad de carga de tus aplicaciones Shiny aplicando una sola función a tus outputs. En este post veremos la función `bindCache()` que permite que los resultados de los cálculos de tu app se guarden, evitando que deban volver a calcularse y por consiguiente acelerando significativamente tus aplicaciones.">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="Optimiza la velocidad de tus aplicaciones Shiny con bindCache() | Bastián Olea">
+<meta property="og:description" content="Mejora la velocidad de carga de tus aplicaciones Shiny aplicando una sola función a tus outputs. En este post veremos la función `bindCache()` que permite que los resultados de los cálculos de tu app se guarden, evitando que deban volver a calcularse y por consiguiente acelerando significativamente tus aplicaciones." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/shiny_optimizar/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/shiny_optimizar/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/shiny_optimizar/featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Optimiza la velocidad de tus aplicaciones Shiny con bindCache()">
+  <meta itemprop="description" content="En una aplicación Shiny, cada interacción que la/el usuario hace suele conllevar un cálculo de R que se ejecuta para producir un output, como una tabla o un gráfico. Dependiendo de la cantidad de datos, de la complejidad del cálculo o del output, estas interacciones pueden tomar más tiempo del esperado.
+Una forma de optimizar la velocidad de una aplicación Shiny es implementando un cache. Un cache significa que los resultados de los cálculos realizados por la app se guardan, de modo que si el cálculo se repite, el resultado se obtiene desde el cache, sin necesidad de volver a ejecutar el cálculo. En la mayoría de los casos esto significa una gran mejora de velocidad! 🚀">
+  <meta itemprop="datePublished" content="2025-11-04T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-11-04T00:00:00+00:00">
+  <meta itemprop="wordCount" content="929">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/shiny_optimizar/featured.png">
+  <meta itemprop="keywords" content="Shiny,Optimización">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9dae2888bc53e1aef239ba1add77b8a61bb249ad5c068c5464836ceb4111eb2c.css" integrity="sha256-na4oiLxT4a7yOboa3Xe4phuySa1cBoxUZINs60ER6yw=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.422a2363d11e9d6836a9931682c00abf3c5a2cb6d5460f3485cb54696b258be4.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Optimiza la velocidad de tus aplicaciones Shiny con bindCache()</h1>
+        
+        
+        <p class="f7 db mv0 ttu">4/11/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/shiny"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      shiny</a>  <a href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      optimización</a> </dd></em>
+  </dl>
+ 
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <a href="shiny_esquema_3.png" target="_blank">
+
+  <img src="shiny_esquema_3.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>En una aplicación Shiny, cada interacción que la/el usuario hace suele conllevar un <strong>cálculo</strong> de R que se ejecuta para producir un <em>output</em>, como una tabla o un gráfico. Dependiendo de la cantidad de datos, de la complejidad del cálculo o del <em>output</em>, estas interacciones pueden tomar más tiempo del esperado.</p>
+<p>Una forma de <strong>optimizar la velocidad</strong> de una aplicación Shiny es implementando un <em>cache</em>. Un cache significa que <strong>los resultados de los cálculos realizados por la app se guardan</strong>, de modo que si el cálculo se repite, el resultado se obtiene desde el cache, <strong>sin necesidad de volver a ejecutar el cálculo</strong>. En la mayoría de los casos esto significa una gran mejora de velocidad! 🚀</p>
+
+
+
+
+<h2 id="consideraciones-previas">Consideraciones previas
+  <a href="#consideraciones-previas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Antes que nada, hay que ver si es posible (o si vale la pena) implementar un <em>cache</em> para cada situación.</p>
+<p><em>¿Cuándo agregar un cache?</em></p>
+<ul>
+<li>Si los cálculos son <strong>repetitivos</strong>; es decir, que uno o varios usuarios pueden volver a solicitar el mismo cálculo varias veces.</li>
+<li>Si los cálculos son <strong>determinísticos</strong>; es decir, que para los mismos inputs siempre se produzca el mismo output. No tiene sentido si el cálculo implica azar o variables fuera del control de la app, como la fecha u hora.</li>
+<li>Si la <strong>cantidad de <em>inputs</em></strong> que definen el cálculo es baja, porque si son demasiados inputs, no tiene sentido agregar un cache para interacciones que escasamente se van a repetir.</li>
+<li>Si los inputs son <strong>limitados</strong>, ya que si son muy específicos (como un campo de texto o el subir un archivo) tampoco tiene sentido <em>cachear</em> un input que no se va a repetir.</li>
+</ul>
+
+
+
+
+<h2 id="implementando-el-cache">Implementando el cache
+  <a href="#implementando-el-cache"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Con la función <code>bindCache()</code> podemos hacer que un <em>output</em> (gráficos, tablas, textos dinámicos) o un <em>objeto reactivo</em> (creado con <code>reactive()</code> y que se actualiza según su dependencia de <em>inputs</em> u otros objetos reactivos) guarden sus resultados en un cache.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">calculo_lento</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">reactive</span><span style="color:#908caa">({</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># cálculo que demora mucho</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">})</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">bindCache</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Al especificar que queremos <em>cachear</em> un objeto/output, también debemos que <strong>explicitar sus dependencias</strong>: los inputs u objetos cuyo valor hace que el cálculo cambie.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">calculo_lento</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">reactive</span><span style="color:#908caa">({</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># cálculo que demora mucho</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">})</span> <span style="color:#908caa">|&gt;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">bindCache</span><span style="color:#908caa">(</span><span style="color:#ea9a97">input</span><span style="color:#908caa">$</span><span style="color:#ea9a97">selector_1</span><span style="color:#908caa">,</span> 
+</span></span><span style="display:flex;"><span>            <span style="color:#ea9a97">input</span><span style="color:#908caa">$</span><span style="color:#ea9a97">selector_2</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>En este ejemplo, el objeto reactivo <code>calculo_lento</code> depende de los valores de <code>input$selector_1</code> e <code>input$selector_2</code>, definidos por el/la usuario/a de la app.</p>
+<a href="shiny_esquema_1.png" target="_blank">
+
+  <img src="shiny_esquema_1.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Cuando un usuario/a elija estos inputs y por consiguiente obtenga un resultado de <code>calculo_lento()</code>, <strong>el cache se guardará</strong> para la combinación de valores de estos dos inputs.</p>
+<a href="shiny_esquema_2b.png" target="_blank">
+
+  <img src="shiny_esquema_2b.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Entonces: si el usuario/a selecciona una combinación que ya ha sido calculada antes, <strong>se omite el cálculo y el resultado se carga desde el cache</strong>, y si es una combinación nueva, el resultado <strong>se calcula y se guarda</strong> en el cache para futuras solicitudes.</p>
+<a href="shiny_esquema_3.png" target="_blank">
+
+  <img src="shiny_esquema_3.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+
+
+
+
+<h2 id="comparación-de-desempeño">Comparación de desempeño
+  <a href="#comparaci%c3%b3n-de-desempe%c3%b1o"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>En este ejemplo, vemos una aplicación Shiny con varios outputs, los cuales tienen agregado <code>bindCache()</code>.</p>
+<p>En la primera ejecución, la app demora aproximadamente 3 segundos en cargar los outputs por primera vez:</p>
+<div style="margin:auto; max-width:70%;">
+<video src="sin_cache.mp4" style="border-radius:7px; max-width: 100%; margin:auto;" autoplay loop>
+</video>
+</div>
+
+<p>Pero en una segunda ejecución, la carga es <strong>casi instantánea</strong>, dado que los resultados de los cálculos estaban preguardados:</p>
+<div style="margin:auto; max-width:70%;">
+<video src="con_cache.mp4" style="border-radius:7px; max-width: 100%; margin:auto;" autoplay loop>
+</video>
+</div>
+
+<p>Una vez que las combinaciones se cargaron, las siguientes veces que se soliciten la carga es mucho más rápida! 🔥</p>
+<p>En este ejemplo, el <code>bindCache()</code> se puso en cada output, en la misma función <code>render_x()</code> que general el objeto <code>output$grafico_x</code>, con una dependencia al <code>input$region</code> que hace cambiar los gráficos. Entonces, cuando la/el usuaria/o cambia el input, <strong>Shiny se salta todos los cálculos</strong> y carga el <code>output</code> correspondiente. Pero puedes experimentar con poner el <code>bindCache()</code> en distintos lugares que puedan ser <em>cuello de botella</em> de tu app.</p>
+
+
+
+
+<h2 id="configurar-el-almacenamiento-del-cache">Configurar el almacenamiento del cache
+  <a href="#configurar-el-almacenamiento-del-cache"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Por defecto, el cache se guarda en memoria, lo que significa que al cerrar la aplicación, el cache se pierde. Si queremos que el cache persista entre sesiones, podemos <strong>configurar el almacenamiento del cache en disco</strong>, agregando la siguiente línea en el archivo <code>app.R</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">shinyOptions</span><span style="color:#908caa">(</span><span style="color:#ea9a97">cache</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">cachem</span><span style="color:#908caa">::</span><span style="color:#ea9a97">cache_disk</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;./cache&#34;</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><p>De este modo, el cache quedará guardado en la carpeta <code>cache</code> de la app, y podremos ver en tiempo real que los archivos del cache se van generando a medida que los usuarios interactúan con la app.</p>
+<p>Esto entrega el beneficio de poder ampliar el cache a múltiples usuarios, porque si varios usuarios solicitan el mismo cálculo, el segundo usuario en adelante obtendrá el resultado desde el cache en disco. También te permite evitar que el primer usuario tenga que esperar la carga de los elementos, al poder subir una app que ya venga con su cache generado.</p>
+<a href="caches.png" target="_blank">
+
+  <img src="caches.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Otro beneficio es que te entrega el control sobre el cache, en el sentido que simplemente puedes borrar los archivos para obligar que Shiny re-calcule los outputs. Esto sirve para ayudarte cuando cambies el código pero no veas cambios y después te des cuenta que era porque los gráficos se estaban cargando desde el cache 😅</p>
+
+
+
+
+<h2 id="bonus-generando-el-cache-de-antemano">Bonus: generando el cache de antemano
+  <a href="#bonus-generando-el-cache-de-antemano"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Si quieres evitar que el primer usuario de tu app tenga que esperar a que se generen los cálculos y el cache, puedes <strong>generar el cache de antemano</strong>. Para esto simplemente configuras que el cache se guarde en el disco, y manualmente exploras las combinaciones de inputs de tu app&hellip; lo cual sería bastante aburrido de hacer.</p>
+<p>Puedes combinar la generación de cache con el 
+<a href="/blog/shiny_validacion/">testeo de aplicaciones Shiny con <code>{shinytest2}</code></a> para automatizar el uso de tu aplicación, con el doble objetivo de probar que cada interacción de tu app funcione correctamente, y en tanto la app es puesta a prueba, generar un cache de todos los cálculos sin tener que esperar que el usuario realice las interacciones manualmente.</p>
+<hr>
+
+
+
+
+<h3 id="recursos">Recursos
+  <a href="#recursos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<ul>
+<li>
+<a href="https://shiny.posit.co/r/articles/improve/caching/" target="_blank" rel="noopener">Guía oficial de Posit para optimizar aplicaciones Shiny</a></li>
+</ul>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">November 4, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">5 minute read, 929 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/shiny">shiny</a>  <a href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n">optimización</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/shiny_validacion/">Testeo automatizado de aplicaciones Shiny con {shinytest2}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/shiny_ocultar/">Mostrar y ocultar elementos de una app Shiny a partir de datos o inputs</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/shiny_temas/">Temas de colores personalizados en apps Shiny</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/shiny_validacion/">Testeo automatizado de aplicaciones Shiny con {shinytest2} &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+</div>
+
+    
+  </section>
+</main>
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
