@@ -3,8 +3,9 @@ title: "Tutorial: Mapa de la zona urbana de la Región Metropolitana de Santiago
 author: "Bastián Olea Herrera"
 date: 2024-06-12
 categories: ['Tutoriales']
-tags: ['mapas', 'chile', 'gráficos']
+tags: ['mapas', 'Chile']
 format: hugo-md
+freeze: true
 lang: es
 editor_options: 
   chunk_output_type: inline
@@ -13,24 +14,35 @@ links:
   icon_pack: fab
   name: código
   url: https://github.com/bastianolea/tutorial_r_mapa_urbano_rm
+- icon: registered
+  icon_pack: fas
+  name: chilemapas
+  url: https://github.com/pachadotdev/chilemapas
 ---
-
 
 
 
 Este tutorial de R te explicará paso a paso a cómo obtener mapas de todo Chile usando el paquete [`{chilemapas}` desarrollado por Mauricio Vargas](https://github.com/pachadotdev/chilemapas), y hacer gráficos con estos mapas usando `{ggplot2}`.
 
-En la primera parte veremos cómo **obtener los mapas** y cómo **visualizar datos comunales** usando mapas en R.
+En la primera parte veremos cómo **obtener los mapas** y cómo **visualizar datos comunales** usando mapas en R. Si necesitas una guía sobre mapas en R, [revisa este post.](/blog/mapas_sf/)
 
-Luego, nos enfrentaremos a un problema común que se tiene al graficar un mapa de la Región Metropolitana de Santiago, que tiene que ver con la diferencia entre los límites comunales reales de cada comuna y los **límites urbanos** de las comunas. Es la diferencia entre tener un mapa de la RM que abarque sectores rurales como Paine y que llegue hasta Argentina, o un mapa que demarque la zona urbana de Santiago, aproximadamente correspondiente a la zona que atravieza el anillo Vespucio.
+Luego, nos enfrentaremos a un problema común que se tiene al graficar un mapa de la Región Metropolitana de Santiago, que tiene que ver con la diferencia entre los límites comunales reales de cada comuna y los **límites urbanos** de las comunas. Es la diferencia entre tener un mapa de la RM que abarque sectores rurales como Paine y que llegue hasta Argentina, o un mapa que demarque la zona urbana de Santiago, aproximadamente correspondiente a la zona que atravieza el anillo de la autopista Américo Vespucio.
 
-Graficando un mapa de la superficie urbana de la Región Metropolitana, obtenemos una figura que es más familiar al habitante promedio de la RM, y que es la que usalmente vemos en la cotidianeidad, en contraste con un mapa geográficamente correcto de todo el territorio abarcado por la región.
+Con un mapa de la superficie urbana de la Región Metropolitana, obtenemos una figura que es más familiar al habitante promedio de la región, y que es la que usalmente vemos en la cotidianeidad, en contraste con un mapa geográficamente correcto de todo el territorio regional.
 
+
+
+{{< indice >}}
+
+
+
+
+
+## Introducción
 
 ### Paquetes
 
-Primero cargamos los paquetes que usaremos en este tutorial:
-
+Primero cargamos los paquetes que usaremos en este tutorial. Si no tienes alguno de ellos, intálalo con `install.packages()`.
 
 
 
@@ -56,7 +68,6 @@ library(rvest) #obtener datos desde páginas de internet
 
 
 
-
 ### Obtener un mapa regional
 
 Primero, usaremos `{chilemapas}` para obtener los datos geográficos (polígonos o shapes) necesarios para producir un mapa de la Región Metropolitana:
@@ -64,22 +75,33 @@ Primero, usaremos `{chilemapas}` para obtener los datos geográficos (polígonos
 
 
 
-
 ``` r
-mapa <- chilemapas::mapa_comunas |> 
-  left_join(
-    chilemapas::codigos_territoriales |> 
-      select(matches("comuna")), 
-    by = "codigo_comuna") |> 
-  filter(codigo_region=="13")
+# obtener mapa comunal
+mapa_comunas <- chilemapas::mapa_comunas
 
-print(mapa)
+nombres_comunas <- chilemapas::codigos_territoriales |> select(matches("comuna"))
+
+# mapa de la región metropolitana
+mapa <- mapa_comunas |> 
+  # especificar la geometría
+  st_set_geometry(mapa_comunas$geometry) |> 
+  # agregar nombres de comunas
+  left_join(nombres_comunas, by = "codigo_comuna") |> 
+  # filtrar la región metropolitana
+  filter(codigo_region == "13")
+
+mapa
 ```
 
 ```
+## Simple feature collection with 52 features and 4 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -71.71523 ymin: -34.29093 xmax: -69.76999 ymax: -32.92194
+## Geodetic CRS:  SIRGAS 2000
 ## # A tibble: 52 × 5
 ##    codigo_comuna codigo_provincia codigo_region                         geometry
-##    <chr>         <chr>            <chr>                       <MULTIPOLYGON [°]>
+##  * <chr>         <chr>            <chr>                       <MULTIPOLYGON [°]>
 ##  1 13404         134              13            (((-70.61396 -33.73862, -70.609…
 ##  2 13402         134              13            (((-70.61396 -33.73862, -70.623…
 ##  3 13124         131              13            (((-70.75679 -33.38348, -70.780…
@@ -96,37 +118,43 @@ print(mapa)
 
 
 
-
 Podemos ver que obtuvimos un _dataframe_ donde cada fila es una comuna, individualizada por su nombre y su código único territorial (`codigo_comuna`). 
 
 En esta tabla de datos, la columna `geometry` contiene la información geográfica de cada comuna, lo que permite visualizarlas como un mapa. 
 
 Por lo tanto, en cada fila tenemos información geográfica que representa polígonos comunales, donde cada polígono (o conjuto de polígonos) se corresponde con los datos existentes en las demás columnas, que pueden ser información como sus nombres, su población, o cualquier otra.
 
-Podemos visualizar este mapa de manera sencilla, usando `{ggplot2}`:
 
+## Visualización
+
+### Mapa básico de la región
+
+Podemos visualizar este mapa de manera con `{ggplot2}`:
 
 
 
 
 ``` r
 mapa |> 
+  # iniciar gráfico
   ggplot() +
-  geom_sf(aes(geometry = geometry),
-          fill = "grey60", col = "white") +
+  # agregar capa con el mapa
+  geom_sf(fill = "grey60", col = "white") +
+  # tema
   theme_void()
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/region_prueba-1.png" width="672" />
 
 
-
 Obtuvimos un mapa básico de todas las comunas de la Región Metropolitana de Santiago. 
+
+
+### Mapa de la región con datos ficticios
 
 Ahora, hagamos una prueba para aprender a visualizar datos en la di este mapa. Para esto, crearemos una nueva variable donde algunas comunas tengan valores distintos. Podemos crear la nueva variable a partir de la columna `nombre_comuna`, aunque siempre es preferible hacerlo en base a la columna `codigo_comuna`, dado que los códigos únicos territoriales son identificadores únicos para cada comuna, mientras que los nombres de las comunas son más impredecibles (por ejemplo, pueden venir sin tilde, pueden venir en mayúsculas, o derechamente mal escritos).
 
 Usamos la función `case_when()` para asignar valores ficticios sobre algunas comunas, y los visualizamos en el mapa:
-
 
 
 
@@ -141,10 +169,15 @@ mapa_datos <- mapa |>
                               nombre_comuna == "Nunoa" ~ "Penca")) |> 
   select(nombre_comuna, codigo_comuna, variable, geometry)
 
-print(mapa_datos)
+mapa_datos
 ```
 
 ```
+## Simple feature collection with 52 features and 3 fields
+## Geometry type: MULTIPOLYGON
+## Dimension:     XY
+## Bounding box:  xmin: -71.71523 ymin: -34.29093 xmax: -69.76999 ymax: -32.92194
+## Geodetic CRS:  SIRGAS 2000
 ## # A tibble: 52 × 4
 ##    nombre_comuna codigo_comuna variable                                 geometry
 ##    <chr>         <chr>         <chr>                          <MULTIPOLYGON [°]>
@@ -165,9 +198,8 @@ print(mapa_datos)
 # visualizar
 mapa_datos |> 
   ggplot() +
-  geom_sf(aes(geometry = geometry, 
-              fill = variable), #usamos la variable que creamos como relleno de las comunas
-          col = "white") +
+  aes(fill = variable) + #usamos la variable que creamos como relleno de las comunas
+  geom_sf(col = "white") +
   theme_void()
 ```
 
@@ -175,9 +207,9 @@ mapa_datos |>
 
 
 
+### Agregar datos obtenidos desde internet al mapa
 
-Ahora, pasaremos a usar datos reales sobre nuestro mapa comunal. Pero vez de entregarles datos copiados y pegados, obtendremos directamente los datos desde internet, usando el paquete `{rvest}` que sirve para hacer scraping desde páginas web; es decir, descargar datos presentes en sitios de internet para usarlos directamente en R.
-
+Ahora, pasaremos a usar datos reales sobre nuestro mapa comunal. Pero en vez de entregarles datos copiados y pegados, obtendremos directamente los datos desde internet, [usando el paquete `{rvest}`](/blog/tutorial_scraping_rvest/) que sirve para hacer [web scraping](/blog/r_introduccion/web_scraping/) desde páginas web; es decir, descargar datos presentes en sitios de internet para usarlos directamente en R.
 
 
 
@@ -189,12 +221,18 @@ tabla_comunas <- session("https://es.wikipedia.org/wiki/Anexo:Comunas_de_Chile")
   read_html() |> # leemos el contenido del sitio web 
   html_table() # extraemos las tablas del sitio web
 
-datos_comunas <- tabla_comunas[[1]] |> # elegimos la primera tabla obtenida
-  clean_names() |> # limpiamos los nombres de la tabla usando {janitor}
-  filter(region == "Metropolitana de Santiago") |> 
+tabla_comunas_2 <- tabla_comunas[[1]] |> # elegimos la primera tabla obtenida
+  clean_names() # limpiamos los nombres de la tabla usando {janitor}
+
+tabla_comunas_3 <- tabla_comunas_2 |> 
+  filter(region == "Metropolitana de Santiago") # filtrar la región
+
+tabla_comunas_4 <- tabla_comunas_3 |>
   # convertir los códigos comunales a texto
   rename(codigo_comuna = 1) |> 
-  mutate(codigo_comuna = as.character(codigo_comuna)) |>
+  mutate(codigo_comuna = as.character(codigo_comuna))
+
+datos_comunas <- tabla_comunas_4 |> 
   # limpiar variables numéricas para estén disponibles en formato numérico en vez de como texto
   mutate(poblacion2020 = str_remove(poblacion2020, " "), # borrar espacios
          poblacion2020 = as.numeric(poblacion2020)) |>  # transformar texto a numérico
@@ -207,7 +245,7 @@ datos_comunas <- tabla_comunas[[1]] |> # elegimos la primera tabla obtenida
          densidad_hab_km2 = str_replace(densidad_hab_km2, ",", "."), # reemplazar comas por puntos
          densidad_hab_km2 = as.numeric(densidad_hab_km2)) # transformar texto a numérico
 
-print(datos_comunas)
+datos_comunas
 ```
 
 ```
@@ -231,9 +269,7 @@ print(datos_comunas)
 
 
 
-
-Así quedó el resultado de nuestro web scraping. A continuación, usamos `left_join()` para adjuntar estas columnas nuevas a nuestro data frame que contiene los nombres y códigos de las comunas, además de la geometría o información geográfica de las comunas, usando como columna de unión los códigos comunales:
-
+Así quedó el resultado de nuestro web scraping. A continuación, [usamos la función `left_join()`](/blog/left_join/) para adjuntar estas columnas nuevas a nuestro data frame que contiene los nombres y códigos de las comunas, además de la geometría o información geográfica de las comunas, usando como columna de unión los códigos comunales:
 
 
 
@@ -268,13 +304,13 @@ glimpse(mapa_datos_2)
 
 
 
-
-Lo que hicimos en la operación anterior fue unir dos tablas distintas en base a una variable común que ambas tablas poseen: `codigo_comuna`. De este modo, obtenemos un nuevo data frame que contiene tanto la información geográfica como los datos comunales que necesitamos. 
+Lo que hicimos en la operación anterior fue [unir dos tablas distintas en base a una variable común](/blog/left_join/) que ambas tablas poseen: `codigo_comuna`. De este modo, obtenemos un nuevo data frame que contiene tanto la información geográfica como los datos comunales que necesitamos. 
 
 Habiendo hecho esto, ahora podemos crear gráficos comunales usando cualquier variable que queramos, siempre y cuando podamos hacer coincidir los datos con el mapa en base a los códigos comunales o los nombres de comuna.
 
-#### Mapa comunal de población, Región Metropolitana de Santiago, Chile
+### Visualizar datos
 
+#### Mapa comunal de población
 
 
 
@@ -292,9 +328,7 @@ mapa_datos_2 |>
 
 
 
-
-#### Mapa comunal del índice de desarrollo humano, Región Metropolitana de Santiago, Chile
-
+#### Mapa comunal del índice de desarrollo humano
 
 
 
@@ -320,7 +354,6 @@ mapa_datos_2 |>
 
 
 
-
 Sin embargo, podemos ver que estos mapas no se ajustan perfectamente a la imagen mental que tiene un ciudadano común acerca de cómo se ve la Región Metropolitana. Por ejemplo, vemos cómo la comuna de San José de Maipo abarca una superficie enorme dado que limita en la cordillera de los Andes con Argentina, o que comunas como Lo Barnechea se expanden hacia superficies cordilleranas de gran extensión.
 
 Esto se debe a que ususalmente nos encontramos frente a mapas que representan el "Gran Santiago", es decir, sólo la superficie urbana de las comunas urbanas de la región, omitiendo sectores rurales, cordilleranos o deshabitados.
@@ -330,10 +363,9 @@ Por lo tanto, a continuación veremos cómo obtener un mapa urbano de la Región
 
 ## Mapa urbano de la región Metropolitana
 
-En los siguientes pasos, pasaremos de un mapa comunal a un mapa comunal urbano; es decir, un mapa que sólo considere la superficie urbana de las comunas, en vez de la superficie total de las comunas. 
+En los siguientes pasos, pasaremos de un mapa comunal a un mapa comunal urbano; es decir, un mapa que **sólo considere la superficie urbana de las comunas**, en vez de la superficie total de las comunas. 
 
 Usando `{chilemapas}`, podemos obtener un mapa de la Región Metropolitana con un nivel de detalle mayor, que divide internamente las comunas en superficies más pequeñas que sólo corresponden a zonas urbanas:
-
 
 
 
@@ -341,9 +373,13 @@ Usando `{chilemapas}`, podemos obtener un mapa de la Región Metropolitana con u
 ``` r
 # obtener mapa por zonas rural/urbano
 mapa_zonas_urbanas <- chilemapas::mapa_zonas |> 
+  # definir geometrías
+  st_set_geometry(chilemapas::mapa_zonas$geometry) |>
+  # filtrar región
   filter(codigo_region == 13) |> 
+  # agregar nombres de comunas
   left_join(chilemapas::codigos_territoriales |> 
-      select(matches("comuna")))
+              select(matches("comuna")))
 ```
 
 ```
@@ -362,9 +398,7 @@ mapa_zonas_urbanas |>
 
 
 
-
-Podemos mejorar esta visualización uniendo las zonas urbanas intra-comunales en sus respectivas comunas, para volver a obtener un mapa comunal, pero que recorta las comunas para que sólo consideren su la superficie urbana de cada una: 
-
+Podemos mejorar esta visualización **uniendo** con `st_union()` las zonas urbanas intra-comunales en sus respectivas comunas, para volver a obtener un mapa comunal, pero que recorta las comunas para que sólo consideren su la superficie urbana de cada una: 
 
 
 
@@ -376,7 +410,7 @@ mapa_zonas_urbanas |>
   group_by(nombre_comuna, codigo_comuna) %>% 
   summarise(geometry = st_union(geometry), .groups = "drop") |>
   # visualizar
-  ggplot(aes(geometry = geometry)) +
+  ggplot() +
   geom_sf(fill = "grey60", color = "white") +
   theme_void()
 ```
@@ -385,15 +419,13 @@ mapa_zonas_urbanas |>
 
 
 
-
 De inmediato, podemos ver que emerge una figura más familiar de lo que es el _Gran Santiago,_ pero ahora tenemos otro problema: el mapa también contiene las zonas urbanas de comunas menos céntricas de la región, tales como Buin, Curacaví, Talagante y otras. Esto se debe a que nuestro mapa aún contiene comunas que no son mayoritariamente urbanas, dado que poseen sectores despoblados o de actividad agrícola, minera u otras, y que por consiguiente dan una apariencia discontinua a nuestro mapa.
 
 Para resolver esto y dejar sólo las comunas urbanas del Gran Santiago, tenemos varias opciones: podemos filtrar específicamente las comunas que queremos, o bien, podemos filtrar en base a privincias, dejando sólo las provincias Santiago y Cordillera.
 
-#### Mapa urbano de la región Metropolitana (comunas exactas)
+#### Definir contorno urbano por comunas exactas
 
 **Opción 1:** seleccionar específicamente las comunas que queremos incluir: 
-
 
 
 
@@ -416,7 +448,7 @@ mapa_zonas_urbanas |>
   group_by(nombre_comuna, codigo_comuna) %>% 
   summarise(geometry = st_union(geometry)) |> 
   # graficar
-  ggplot(aes(geometry = geometry)) +
+  ggplot() +
   geom_sf(fill = "grey60", color = "white") +
   theme_void()
 ```
@@ -430,10 +462,9 @@ mapa_zonas_urbanas |>
 
 
 
-#### Mapa urbano de la región Metropolitana (provincias Santiago y Cordillera)
+#### Definir contorno urbano en base a provincias
 
 **Opción 2:** seleccionar las dos provincias que conforman el Gran Santiago, y agregar los ajustes que sean necesarios (incluir San Bernardo, excluir Pirque)
-
 
 
 
@@ -446,7 +477,7 @@ mapa_zonas_urbanas |>
   group_by(nombre_comuna, codigo_comuna) %>% 
   summarise(geometry = st_union(geometry)) |> 
   # graficar
-  ggplot(aes(geometry = geometry)) +
+  ggplot() +
   geom_sf(fill = "grey60", color = "white") +
   theme_void()
 ```
@@ -460,9 +491,9 @@ mapa_zonas_urbanas |>
 
 
 
-
 La decisión que tomes depende de los objetivos del usuario y de tu visualzación, pero dejo ambas aproximaciones a modo de aprendizaje.
 
+### Excluir islas urbanas
 Luego de haber seleccionado las comunas urbanas que necesitamos, notamos que aún quedan algunas "islas urbanas" fuera de la zona principal del Gran Santiago. Usualmente vemos los mapas del Gran Santiago como una sola unidad geográfica contínua, sin separaciones ni islas a su alrededor. Por lo tanto, vamos a eliminar estos elementos externos a la superficie urbana contínua de forma manual.
 
 Para identificar los polígonos que queramos remover, podemos visualizar una fracción del mapa y agregar etiquetas para dar con sus códigos geográficos, y así poder excluirlos. Por ejemplo, aquí lo haremos con Pudahuel:
@@ -470,13 +501,13 @@ Para identificar los polígonos que queramos remover, podemos visualizar una fra
 
 
 
-
 ``` r
 mapa_zonas_urbanas |>
   filter(nombre_comuna == "Pudahuel") |>
-  ggplot(aes(geometry = geometry)) +
+  ggplot() +
   geom_sf(fill = "lightblue", color = "white") +
-  geom_sf_text(aes(label = geocodigo), color = "black", size = 3)
+  geom_sf_text(aes(label = geocodigo), color = "black", size = 3) +
+  theme_void()
 ```
 
 ```
@@ -495,14 +526,13 @@ Entonces, en el siguiente paso removeremos estas pequeñas zonas urbanas de form
 
 
 
-
 ``` r
 # vector con geocódigos que deseamor remover
 islas_urbanas <- c("13124071004", "13124071005", "13124081001", "13124071001", "13124071002", "13124071003", #Pudahuel
-                           "13401121001", #San Bernardo
-                           "13119131001", #Maipú
-                           "13203031000", "13203031001", "13203031002", "13203011001", "13203011002" #San José de Maipo
-                           )
+                   "13401121001", #San Bernardo
+                   "13119131001", #Maipú
+                   "13203031000", "13203031001", "13203031002", "13203011001", "13203011002" #San José de Maipo
+)
 
 # crear nuevo mapa
 mapa_urbano <- mapa_zonas_urbanas |> 
@@ -522,12 +552,12 @@ mapa_urbano <- mapa_zonas_urbanas |>
 ```
 
 ``` r
-  # simplificar bordes del mapa (opcional)
-  # mutate(geometry = rmapshaper::ms_simplify(geometry,  keep = 0.4))
+# simplificar bordes del mapa (opcional)
+# mutate(geometry = rmapshaper::ms_simplify(geometry,  keep = 0.4))
 
 # graficar
 mapa_urbano |> 
-  ggplot(aes(geometry = geometry)) +
+  ggplot() +
   geom_sf(fill = "blueviolet", color = "white") +
   theme_void()
 ```
@@ -535,11 +565,10 @@ mapa_urbano |>
 <img src="{{< blogdown/postref >}}index_files/figure-html/remover_islas-1.png" width="672" />
 
 
-
 De esta forma ya logramos graficar un mapa del Gran Santiago mucho más definido y limpio.
 
+### Visualizar datos en el mapa urbano
 Teniendo este mapa, procedemos a visualizar nuestros datos tal como hicimos al principio de este tutorial:
-
 
 
 
@@ -551,8 +580,8 @@ mapa_urbano_2 <- mapa_urbano |>
 
 mapa_urbano_2 |> 
   ggplot() +
-  geom_sf(aes(geometry = geometry, fill = densidad_hab_km2),
-          col = "white") +
+  aes(fill = densidad_hab_km2) +
+  geom_sf(col = "white") +
   viridis::scale_fill_viridis(labels = label_number(big.mark = ".", decimal.mark = ","),
                               option = "magma") +
   theme_void() +
@@ -563,9 +592,7 @@ mapa_urbano_2 |>
 
 
 
-
 Finalmente, podemos poner nuestro nuevo mapa urbano de la Región Metropolitana de Santiago sobre el mapa de la región completa:
-
 
 
 
@@ -573,10 +600,9 @@ Finalmente, podemos poner nuestro nuevo mapa urbano de la Región Metropolitana 
 ``` r
 ggplot() +
   geom_sf(data = mapa,
-          aes(geometry = geometry), 
           fill = "grey95", color = "white", linewidth = 0.5) +
   geom_sf(data = mapa_urbano_2,
-          aes(geometry = geometry, fill = poblacion2020),
+          aes(fill = poblacion2020),
           color = "white", linewidth = 0.2) +
   viridis::scale_fill_viridis(labels = label_number(big.mark = ".", decimal.mark = ","), 
                               option = "mako") +
@@ -592,37 +618,42 @@ ggplot() +
 <img src="{{< blogdown/postref >}}index_files/figure-html/region_urbana_fill_continuo_contexto-1.png" width="672" />
 
 
+También podemos recortar el mapa con `coord_sf()` para hacerle un poco de zoom a la zona urbana dentro del contexto de la región completa:
+
+
+
+
 ``` r
-# ggplot() +
-#   geom_sf(data = mapa,
-#           aes(geometry = geometry), 
-#           fill = "grey90", color = "white", linewidth = 0.4) +
-#   geom_sf(data = mapa_urbano_2,
-#           aes(geometry = geometry, fill = poblacion2020),
-#           color = "white", linewidth = 0.2) +
-#   coord_sf(xlim = c(-70.95, -70.3), ylim = c(-33.86, -33.13), expand = F) +
-#   viridis::scale_fill_viridis(labels = label_number(big.mark = ".", decimal.mark = ","), 
-#                               option = "mako") +
-#   theme_void() +
-#   labs(fill = "Población") +
-#   theme(legend.position.inside = c(.5, .08),
-#         legend.direction = "horizontal", 
-#         legend.key.width = unit(15, "mm"), 
-#         legend.key.height = unit(3, "mm"), legend.ticks = element_blank(), legend.title.position = "top")
+ggplot() +
+  geom_sf(data = mapa,
+          aes(geometry = geometry),
+          fill = "grey90", color = "white", linewidth = 0.4) +
+  geom_sf(data = mapa_urbano_2,
+          aes(geometry = geometry, fill = poblacion2020),
+          color = "white", linewidth = 0.2) +
+  coord_sf(xlim = c(-70.95, -70.33), 
+           ylim = c(-33.75, -33.2), 
+           expand = F) +
+  viridis::scale_fill_viridis(labels = label_number(big.mark = ".", decimal.mark = ","),
+                              option = "mako") +
+  theme_void() +
+  labs(fill = "Población") +
+  theme(legend.position.inside = c(.1, .7),
+        legend.key.width = unit(3, "mm"),
+        legend.key.height = unit(10, "mm"),
+        legend.ticks.length = unit(0.4, "mm"))
 ```
 
-
+<img src="{{< blogdown/postref >}}index_files/figure-html/region_urbana_fill_continuo_contexto_zoom-1.png" width="672" />
 
 
 
 ----
 
-**Bastián Olea Herrera**
 
-Analista de datos, magíster en Sociología (PUC)
 
-[http://bastianolea.rbind.io](http://bastianolea.rbind.io)
+{{< cafecito >}}
 
-[Ver más recursos de aprendizaje de R y visualizadores de datos sociales de código abierto programados en R]([https://bastianolea.github.io/shiny_apps/)
 
+{{< cursos >}}
 
