@@ -1,0 +1,83 @@
+---
+title: Crear y conectarse a una base de datos Postgres en R
+author: Bastián Olea Herrera
+date: '2025-11-05'
+draft: true
+slug: []
+categories: []
+tags:
+  - datos
+  - optimización
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+---
+
+cuándo
+para qué
+beneficios
+
+
+
+## Crear una base de datos en Supabase
+
+## Conectarse a la base de datos Postgres
+```{r}
+usethis::edit_r_environ(scope = "project")
+# agregar a .gitignore
+
+library(DBI)
+
+# conexión
+
+db_con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname = "postgres",
+  host = Sys.getenv("db_host"),
+  port = Sys.getenv("db_port"),
+  user = Sys.getenv("db_user"),
+  password = Sys.getenv("db_pass")
+)
+
+# con dbi
+
+db_con
+dbListTables(db_con)
+
+dbWriteTable(conn = db_con, 
+             name = "prueba",
+             iris, 
+             overwrite = TRUE)
+
+# opcional: indexes = list(c("semana", "fecha"))
+
+dbListTables(db_con)
+
+dbReadTable(db_con, "prueba")
+
+# con dbplyr
+
+# install.packages("dbplyr")
+library(dplyr)
+
+copy_to(db_con, iris, "prueba",
+        overwrite = TRUE)
+
+db_iris <- tbl(db_con, "prueba")
+
+datos <- db_iris |> 
+  filter(Species == "setosa") |> 
+  summarise(mean_sepal_length = mean(Sepal.Length))
+
+# All dplyr calls are evaluated lazily, generating SQL that is only sent to the database when you request the data.
+
+datos
+
+datos |> show_query()
+datos_df <- datos |> collect()
+```
+
+
+
+https://www.r-bloggers.com/2020/08/a-crash-course-on-postgresql-for-r-users-2/

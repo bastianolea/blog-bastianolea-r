@@ -17,9 +17,9 @@ blogdown::new_post(title = "Crea una carpeta inteligente con todos tus proyectos
 
 # crear un post tutorial
 blogdown::new_post(title = "Optimiza la velocidad de tus aplicaciones Shiny con bindCache()", 
-                   file = "blog/shiny_cache/index.md",
+                   file = "blog/db_supabase/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("shiny"),
+                   tags = c("datos", "optimización"),
                    categories = c() 
 )
 
