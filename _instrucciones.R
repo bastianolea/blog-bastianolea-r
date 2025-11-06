@@ -17,9 +17,9 @@ blogdown::new_post(title = "Crea una carpeta inteligente con todos tus proyectos
 
 # crear un post tutorial
 blogdown::new_post(title = "Optimiza la velocidad de tus aplicaciones Shiny con bindCache()", 
-                   file = "blog/db_supabase/index.qmd",
+                   file = "blog/shiny_cache/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("datos", "optimización"),
+                   tags = c("shiny"),
                    categories = c() 
 )
 
@@ -39,27 +39,34 @@ blogdown::new_post(title = "Optimiza la velocidad de tus aplicaciones Shiny con 
 
 ## borradores ----
 
-"content/blog/shiny_validacion/index.md"
-"content/blog/dt_tablas/index.qmd"
-"content/blog/ggiraph/ggiraph.qmd"
-"content/blog/ellmer/ellmer.qmd"
+# constantes
+"content/blog/mapas_sf/mapas_sf.qmd"
 "content/blog/git_comandos/index.md"
 
-"content/blog/mapas_sf/mapas_sf.qmd"
+# en construcción
+"content/blog/shiny_validacion/index.md"
+"content/blog/tutorial_digitalocean/index.md"
 
+# casi listos
+"content/blog/shiny_tipografias/shiny_tipografias.qmd"
+
+# pendientes importantes
 "content/blog/r_introduccion/dplyr_intermedio/dplyr_intermedio.qmd"
 "content/blog/r_introduccion/dplyr_variables/dplyr_variables.qmd"
 
-"content/blog/shiny_tipografias/shiny_tipografias.qmd"
-
+# ideas
+"content/blog/dt_tablas/index.qmd"
+"content/blog/ggiraph/ggiraph.qmd"
+"content/blog/ellmer/ellmer.qmd"
 "content/blog/2025-07-06/index.qmd" # cargar y unir datos
+
 "content/blog/diferencias/waldo.qmd"
 "https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html" # plagiar
 "https://github.com/rundel/livecode"
 "content/blog/2025-07-01/index.qmd" # st_join
 "content/blog/unpivotr/index.qmd"
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
-"content/blog/tutorial_digitalocean/index.md"
+
 
 
 
