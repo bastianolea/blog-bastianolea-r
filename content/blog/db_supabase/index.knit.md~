@@ -83,16 +83,16 @@ Necesitamos los parámetros `host`, `port`, `database` y `user`. Ahora iremos a 
 
 Para interactuar con bases de datos, necesitamos el paquete `{DBI}`, que gestiona las conexiones con bases de datos, y en nuestro caso el paquete `{RPostgres}`, que es el motor para trabajar con bases de datos Postgres.
 
-```{r}
-#| eval: false
+
+``` r
 install.packages("DBI")
 install.packages("RPostgres")
 ```
 
 Para conectarnos a una base de datos desde R usamos la función `dbConnect()`. Dentro de esta función explicitamos el _driver_ de la base de datos (en este caso `Postgres()`), y los parámetros de conexión que obtuvimos en Supabase: `dbname`, `host`, `port`, `user` y `password`.
 
-```{r}
-#| eval: false
+
+``` r
 db_con <- DBI::dbConnect(
   RPostgres::Postgres(),
   dbname = "postgres",
@@ -112,8 +112,8 @@ Vamos a crear un script donde podamos guardar **variables de entorno**, que son 
 
 **Creamos un script de entorno** llamado `.Renviron` en la raíz de nuestro proyecto ejecutando una función que lo hace por nosotres:
 
-```{r}
-#| eval: false
+
+``` r
 usethis::edit_r_environ(scope = "project")
 ```
 
@@ -135,14 +135,10 @@ Una vez guardadas las credenciales, **reiniciamos la sesión de R** para que se 
 
 Procedemos a hacer la conexión a la base de datos de forma segura, usando `Sys.getenv()` para obtener las variables de entorno que guardamos en `.Renviron`:
 
-```{r}
-#| echo: false
-readRenviron(here::here("content/blog/db_supabase/.Renviron"))
-```
 
-```{r}
-#| warning: false
 
+
+``` r
 library(DBI)
 library(RPostgres)
 
@@ -158,8 +154,13 @@ db_con <- DBI::dbConnect(
 
 Al conectarnos creamos un objeto que representa nuestra conexión a la base de datos.
 
-```{r}
+
+``` r
 db_con
+```
+
+```
+## <PqConnection> postgres@db.ybqnpazmjvictxbevqqk.supabase.co:5432
 ```
 
 Usaremos este objeto para interactuar con la base de datos.
@@ -168,152 +169,29 @@ Usaremos este objeto para interactuar con la base de datos.
 
 Con la función `dbWriteTable()` creamos en la base de datos una tabla nueva a partir de un dataframe; por ejemplo, usando el conjunto de datos `iris` que viene por defecto en R.
 
-```{r borrar}
-#| echo: false
-library(DBI)
-
-if ("prueba" %in% dbListTables(db_con)) {
-  dbRemoveTable(db_con, "prueba")
-}
-```
-
-```{r crear}
-library(DBI)
-
-# crear tabla
-dbWriteTable(conn = db_con, # conexión a la base
-             name = "prueba", # nombre de la tabla a crear
-             iris # datos a escribir
-             )
-```
-
-Confirmamos que la tabla se subió a la base de datos consultándole a la base los **nombres de las tablas existentes**:
-
-```{r}
-dbListTables(db_con)
-```
-
-También podemos confirmar en Supabase que la tabla existe:
-
-{{< imagen "supabase_6.png" >}}
-
-Ahora nuestros datos están almacenados remotamente en la base de datos! Acaso ésta será la mística nube de la que tanto hablan? ☁️
 
 
-## Leer una tabla desde la base de datos
-
-Podemos leer las tablas existentes en la base de datos con `dbReadTable()` tan solo indicando el nombre de la tabla:
-
-```{r}
-datos_db <- dbReadTable(db_con, # conexión a la base
-            "prueba" # nombre de la tabla a leer
-            )
-
-head(datos_db)
-```
-
-De esta manera solicitamos a la base que nos entregue los datos de la tabla, y los cargamos en la sesión de R como un dataframe. Desde este punto podemos usar los datos normalmente, pero a continuación veremos una forma mejor de hacerlo 🫢
-
-## Procesar desde la base de datos con `{dplyr}`
-
-Una de las ventajas de una base de datos es **solicitar y obtener datos procesados desde la base de datos** 🏭 Normalmente esto se hace con el lenguaje `SQL`, pero en R hay formas más sencillas: [usando directamente `{dplyr}`](/tags/dplyr/) para **interactuar con la base de datos**.
-
-Para ello [instalamos `{dbplyr}`](https://dbplyr.tidyverse.org), paquete que traducirá el código de `{dplyr}` en SQL.
-
-```{r}
-#| eval: false
-install.packages("dbplyr")
-```
-
-Esta funcionalidad se carga automáticamente al cargar `{dplyr}`.
-
-Para **obtener datos** desde la base de datos, usamos `tbl()` con el objeto de conexión y el nombre de la tabla, y recibiremos los datos en el formato `tibble` de `{dplyr}`:
-
-```{r}
-#| eval: true
-#| message: false
-
-library(dplyr)
-
-datos_db <- tbl(db_con, "prueba")
-
-datos_db
-```
-
-Esta tabla generada desde la base de datos **no es un dataframe normal** 😱 sino que es una **conexión abierta con la base de datos**:
-
-```{r}
-class(datos_db)
-```
-
-Esto nos permite seguir pidiéndole instrucciones que se procesarán en la base, no en nuestra sesión local de R. Esto es lo que nos permite realizar **cálculos con datos de grandes volúmenes** o **manejar bases de datos gigantes que no caben en la memoria de tu computador** 😲
-
-Usemos la tabla obtenida desde la base de datos para hacer un filtro y calcular un promedio:
-
-```{r}
-calculo_db <- datos_db |> 
-  filter(Species == "setosa") |> 
-  summarise(mean_sepal_length = mean(Sepal.Length))
-```
-
-Estas operaciones se realizan remotamente en la base, y con una evaluación _perezosa_ 🦥 (_lazy evaluation_); es decir, solamente se calcula el resultado cuando es estrictamente necesario. Entonces, recién al solicitar el resultado **la base de datos va a realizar el cálculo requerido**:
-
-```{r}
-calculo_db
-```
-Podemos confirmar que el cálculo se hizo en la base de datos usando `show_query()` para ver el código `SQL` que se usó para hacer el cálculo:
-
-```{r}
-calculo_db |> show_query()
-```
-🪄✨ Magia! Es como si hubiéramos aprendido SQL: combinamos el poder de SQL con la conveniencia de R.
-
-Si necesitamos _traer_ los datos desde la base a tu computador, los **cargamos en la memoria** con la función `collect()`:
-
-```{r}
-datos_df <- datos_db |> 
-  filter(Species == "setosa") |> 
-  collect()
-```
-
-Ahora sí que sí el objeto `datos_df` se encuentra cargado en tu sesión local de R como un dataframe normal.
-
-Como los cálculos que hagamos sobre los datos se **traducen** desde R a SQL y luego se nos entregan, un uso importante de `collect()` es para anteponerlo a **operaciones que no tienen traducción a SQL**. 
-
-Por ejemplo, me consta que las funciones de `{forcats}` no se traducen a SQL:
-
-```{r}
-#| error: true
-datos_db |> 
-  group_by(Species) |> 
-  summarise(Sepal.Width = mean(Sepal.Width)) |> 
-  mutate(Species = forcats::fct_reorder(Species, Sepal.Width))
-```
-
-En este caso, anteponemos `collect()` para pasar de SQL a R en medio del proceso y listo.
-
-```{r}
-datos_db |> 
-  group_by(Species) |> 
-  summarise(Sepal.Width = mean(Sepal.Width)) |> 
-  collect() |> # cargar a la memoria
-  mutate(Species = forcats::fct_reorder(Species, Sepal.Width)) |> 
-  arrange(Species)
-```
-
-De esta forma, aprovechamos la base de datos SQL lo más posible, y cuando necesitemos operaciones más complejas nos pasamos a R! 😉
 
 
-----
-
-Ya sea porque necesitas la **capacidad de almacenamiento**, porque requieres **procesamiento optimizado de grandes volúmenes de datos**, o porque vas a **usar tus datos en una aplicación o plataforma**, aprender a manejar bases de datos es una habilidad crucial para escalar tus capacidades y pasar al siguiente nivel ✨
-
-----
-
-## Recursos
-- [A Crash Course on PostgreSQL for R Users](https://pacha.dev/blog/2020/08/09/postgresql-for-r-users/), por [Mauricio Vargas S.](https://pacha.dev)
 
 
-{{< cafecito >}}
 
-{{< cursos >}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
