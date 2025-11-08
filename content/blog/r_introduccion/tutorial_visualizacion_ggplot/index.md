@@ -57,7 +57,7 @@ Para entender cómo funciona `{ggplot2}`, veamos primero los principales tipos d
 
 -   **datos:** usualmente la primera capa, que entrega los datos a `{ggplot2}` para poder usar variables como elementos de la visualización
 -   **estéticas:** (`aes()`) capa donde se realiza el *mapeo[^1]* de variables a objetos geométricos, leyendas, ejes y escalas
--   \*geometrías:\*\* (`geom_x()`)
+-   **geometrías:** (`geom_x()`)
 -   **escalas:** (`scale_x_y()`) definición de las dimensiones que adquirirán las estéticas, tales como rangos de valores, paletas de colores, límites de los ejes, etc.
 -   **coordenadas:** (`coord_x()`): configuración del plano de coordenadas donde se grafican los datos; por ejemplo, definir los límites del gráfico, la proyección de los datos si es que se trata de un mapa, etc.
 -   **facetas:** (`facet_x()`) distribución de los datos en matrices de gráficos; son una forma de especificar que queremos dividir la visualización en tantos gráficos como valores tenga una variable
@@ -1126,6 +1126,25 @@ Con este posicionamiento de las barras obtenemos un gráfico que nos permite com
 
 ## Temas
 
+Para cambiar el tema de un gráfico, contamos con temas predefinidos en funciones que empiezan con `theme_`, como `theme_minimal()` para un tema de fondo blanco con líneas grises, o `theme_classic()` para uno con bordes negros.
+
+``` r
+grafico <- iris |> 
+  ggplot() +
+  aes(x = Sepal.Length, y = Sepal.Width, size = Petal.Length) +
+  geom_point(alpha = 0.5)
+
+grafico + theme_minimal()
+```
+
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-61-1.png" width="768" />
+
+``` r
+grafico + theme_classic()
+```
+
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-61-2.png" width="768" />
+
 Si queremos modificar elementos específicos de la visualización, usamos la capa `theme()`. Dentro de esta función, podemos individualizar cualquier elemento de la visualización. Para saber cómo se llama cada elemento, puedes empezar escribiendo su ubicación general (`plot`, `panel`, `axis`, `legend`, etc.) y RStudio/Positron debería sugerirte las distintas posibilidades, o bien puedes [entrar a esta guía](https://isabella-b.com/blog/ggplot2-theme-elements-reference/) para encontrar los nombres de cada uno de los elementos.
 
 En este caso, definiremos la tipografía general del gráfico al incluirla en el llamado a `theme_classic()`, y dentro de la especificación del tema (`theme()`) modificaremos la apariencia del subtítulo, de las líneas en el panel del gráfico correspondientes al eje horizontal, eliminaremos el título del eje vertical y las rayitas de los ejes, y especificaremos el tipo de letra del texto del eje vertical.
@@ -1144,7 +1163,9 @@ grafico_delincuencia_2 <- grafico_delincuencia_1 +
 grafico_delincuencia_2
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-61-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-62-1.png" width="768" />
+
+También podemos cambiar el tema de todos los gráficos que hagamos en la sesión (hasta que reiniciemos R o cambiemos el tema) ejecutando la función `theme_set()` con el tema (como `theme_minimal()` o `theme()` que queramos aplicar dentro.
 
 ## Tipografías
 
@@ -1171,7 +1192,7 @@ grafico_delincuencia_2 +
   theme_classic(base_family = "Montserrat")
 ```
 
-<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-64-1.png" width="768" />
+<img src="tutorial_ggplot.markdown_strict_files/figure-markdown_strict/unnamed-chunk-65-1.png" width="768" />
 
 Vale mencionar que el tipo grafías descargadas por este método solamente estarán disponibles durante la sesión de R, por lo que la próxima vez que quieras usarlas deberán ser descargadas de la misma manera. Si tienes algún problema con esas tipografías, basta con reiniciar la sesión de R para dejar de utilizarlas.
 
@@ -1201,6 +1222,9 @@ Si aprendiste con este tutorial, considera hacerme una pequeña donación en el 
 ------------------------------------------------------------------------
 
 Para cerrar, dejo algunos enlaces útiles para ayudarte a usar `{ggplot2}`:
+
+**Otros tutoriales**
+- [A ggplot2 Tutorial for Beautiful Plotting in R](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/)
 
 **Paletas de colores**
 - Tutorial sobre el uso de paletas de colores: https://datavizf24.classes.andrewheiss.com/resource/colors.html
