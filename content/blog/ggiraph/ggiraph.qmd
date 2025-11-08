@@ -1,18 +1,19 @@
 ---
 title: Convierte gráficos {ggplot2} en visualizaciones interactivas con {ggiraph}
 author: Bastián Olea Herrera
-date: '2025-10-22'
-draft: true
+date: '2025-11-07'
+draft: false
+freeze: true
 slug: []
 categories:
   - Tutoriales
 tags:
   - visualización de datos
+  - ggplot2
 format:
   hugo-md:
     output-file: index
     output-ext: md
-excerpt:
 links: 
   - icon: registered
     icon_pack: fas
@@ -21,18 +22,237 @@ links:
   - icon: github
     icon_pack: fab
     name: código
-    url: https://davidgohel.github.io/ggiraph/
+    url: https://gist.github.com/bastianolea/f51c59c3937544ae5fb235d6eb522fd1
+excerpt: "`{ggiraph}` es un paquete de R que permite agregar interactividad a gráficos `{ggplot2}`. Esto significa que tus gráficos podrán mostrar información extra al pasar el cursor encima (_tooltips_), hacer que se destaquen u oculten elementos al pasar el cursor, hacer clic en elementos del gráfico para generar cambios en aplicaciones, y más. También es posible combinar la interactividad de dos o más gráficos, lo que permite crear visualizaciones más complejas y reveladoras."
 ---
 
-`{ggiraph}` es un paquete de R que permite agregar interactividad a gráficos {ggplot2}. Al agregar interactividad puedes hacer que tus gráficos muestren información extra al pasar el cursor encima, hacer que se destaquen u oculten elementos al pasar el cursor, hacer clic en elementos para generar cambios en aplicaciones, y más.
+{{< imagen "featured.png" >}}
 
-Otro beneficio de `{ggiraph}` es que, a diferencia de opciones como `{plotly}` o `{highcharter}`, **no necesitas aprender a usar un paquete de visualización nuevo**, porque `{ggiraph}` usa los gráficos generados por `{ggplot2}` y **mantiene al 100% su apariencia**. Esto significa que tu gráfico interactivo se verá idéntico a tu gráfico de `{ggplot2}` (a diferencia de soluciones como `ggplotly()`). Esto es gracias a que `{ggiraph}` toma el gráfico que hiciste y lo genera en `SVG`, un formato de imagen vectorial que es compatible con HTML y CSS, lo que permite la interactividad.
+`{ggiraph}` es un paquete de R que permite agregar **interactividad** a gráficos `{ggplot2}`. Esto significa que tus gráficos podrán mostrar información extra al pasar el cursor encima (_tooltips_), hacer que se destaquen u oculten elementos al pasar el cursor, hacer clic en elementos del gráfico para generar cambios en aplicaciones, y más.
+
+Un beneficio de `{ggiraph}` es que, a diferencia de alternativas como `{plotly}` o `{highcharter}`, **no necesitas aprender a usar un paquete de visualización nuevo**, porque `{ggiraph}` usa los gráficos generados por `{ggplot2}` y **mantiene al 100% su apariencia**. Esto significa que tu gráfico interactivo se verá idéntico a tu gráfico de `{ggplot2}` (a diferencia de con `ggplotly()` 😒). Esto es gracias a que `{ggiraph}` toma el gráfico que hiciste y lo convierte a `SVG`, un formato de imagen vectorial que es compatible con HTML y CSS, lo que permite la interactividad.
+
+## Introducción
+
+Lo primero es instalar el paquete:
+
+```{r}
+#| eval: false
+install.packages("ggiraph")
+```
+
+En términos generales, el procedimiento para crear gráficos interactivos con `{ggiraph}` es:
+
+1. Hacer un gráfico con `{ggplot2}`
+2. Cambiar las funciones `geom_x()` por `geom_x_interactive()`
+3. Usar la función `girafe()` en vez de `plot()` para generar el gráfico interactivo.
+
+Veámoslo con un ejemplo:
+
+## Adaptar gráficos
+
+Para entender el proceso, crearemos un gráfico básico y luego lo adaptaremos para incluir interactividad.
+
+Vamos a crear un [gráfico de dispersión con `{ggplot2}`](/blog/r_introduccion/tutorial_visualizacion_ggplot/#dispersión), agregándole un [tema de colores personalizado con `{thematic}`](/blog/ggplot_temas/).
 
 
-{{< embed "Sitio" "https://z3tt.github.io/ggiraph-user-2025/slides.html#/title-slide" >}}
+```{r}
+library(ggplot2)
+library(thematic)
 
+thematic_on(bg = "#EAD1FA",
+            fg = "#6E3998",
+            accent = "#9069C0")
+
+iris |> 
+  ggplot(aes(Sepal.Length, Sepal.Width, color = Species)) +
+  geom_point(size = 2) +
+  scale_color_brewer(palette = "Dark2")
+```
+Ahora convertimos el gráfico en interactivo usando `{ggiraph}`. Para ello, identificaremos las [funciones de geometrías](/blog/r_introduccion/tutorial_visualizacion_ggplot/#introducción) del gráfico (en este caso `geom_point()` y la cambiaremos a `geom_point_interactive()`. Esta capa del gráfico seguirá funcionando igual que antes, pero ahora podremos agregarle nuevos argumentos:
+
+- En el argumento `data_id`, dentro de `aes()` indicaremos una variable que identifique los elementos del gráfico. Esto puede ser un **identificador único** si queremos que la interactividad se aplique a cada elemento de manera independiente, o una variable que **agrupe las observaciones** para aplicar interactividad que opere a varios elementos a la vez.
+- El argumento `tooltip` dentro de `aes()` será donde definamos el **texto que aparecerá al pasar el cursor** sobre un elemento del gráfico. En este texto podemos usar `paste()` o `glue()` para agregar información de otras variables que correspondan al elemento destacado, y también podemos usar HTML para dar estilo al texto.
+
+
+```{r}
+#| message: false
+library(ggiraph)
+library(dplyr)
+library(glue)
+
+grafico <- iris |> 
+  mutate(id = row_number()) |> # identificador de observaciones
+  ggplot(aes(Sepal.Length, Sepal.Width, color = Species)) +
+  # geom point(size = 3) +
+  geom_point_interactive(
+    size = 3,
+    aes(data_id = id,
+        tooltip = glue("<b>Largo:</b> {Sepal.Length}
+                        <b>Ancho:</b> {Sepal.Width}
+                        <b>Especie:</b> {Species}"))
+  ) +
+  scale_color_brewer(palette = "Dark2")
+```
+
+Una vez hechas las modificaciones, en vez de usar `plot(grafico)`, usaremos la función `girafe()` para generar el gráfico interactivo:
+
+```{r}
+girafe(ggobj = grafico)
+```
+
+Pasa el cursor sobre el gráfico para ver la interactividad!
+
+## Tooltips
+
+Una de las funcionalidades principales en la interactividad de gráficos es el _tooltip_, que es el cuadro de texto que aparece al pasar el cursor sobre un elemento del gráfico. Sirven para poder mostrar **datos extra sobre los elementos del gráfico** sin saturar la visualización, tales como cifras exactas, textos que describen la observación, etc.
+
+Para modificar el estilo del _tooltip_, usamos la función `opts_tooltip()` dentro del argumento `options` de `girafe()`. Ahí podemos escribir código CSS para configurar el estilo, como color de fondo y texto, tipografía, tamaños y espaciados, y más.
+
+```{r}
+
+estilo_tooltip <- "background-color: #EAD1FA;
+                  color: black;
+                  font-family: sans-serif;
+                  font-size: 9pt;
+                  padding: 6px; padding-left: 8px; padding-right: 8px;
+                  border-radius: 4px;"
+
+girafe(ggobj = grafico,
+       options = list(
+         # estilo de tooltip
+         opts_tooltip(css = estilo_tooltip),
+         # ocultar botones
+         opts_toolbar(saveaspng = FALSE))
+)
+```
+
+Dentro de `opts_tooltip()`, el argumento `use_fill` hace que el color del _tooltip_ coincida con el color del elemento del gráfico, definido por la paleta de colores y la variable asignada al color.
+
+```{r}
+girafe(ggobj = grafico,
+       options = list(
+         opts_toolbar(saveaspng = FALSE),
+         # estilo de tooltip
+         opts_tooltip(use_fill = TRUE,
+                      css = estilo_tooltip))
+)
+```
+
+
+## Hover
+
+El _hover_ es el efecto visual que ocurre cuando pasamos el cursor sobre un elemento del gráfico. Podemos usarlo para destacar un punto, agrandarlo, cambiar su color, o hacer que el resto de los puntos pasen a segundo plano.
+
+Con `opts_hover()` definimos el estilo CSS para los puntos en estado de _hover_, mientras que con `opts_hover_inv()` definimos el estilo CSS para los puntos que no están en estado de _hover_; es decir, el resto de los puntos.
+
+Podemos cambiar el color del punto bajo el cursor:
+
+```{r}
+girafe(ggobj = grafico,
+       options = list(
+         opts_toolbar(saveaspng = FALSE),
+         opts_tooltip(use_fill = TRUE, css = estilo_tooltip),
+         # opciones de hover
+         opts_hover(css = "stroke: #6E3998; fill: #6E3998;")
+       ))
+```
+
+Agrandar el punto y hacer que el resto de los puntos se transparenten:
+
+```{r}
+girafe(ggobj = grafico,
+       options = list(
+         # estilo de tooltip
+         opts_tooltip(use_fill = TRUE, css = estilo_tooltip),
+         # ocultar botones
+         opts_toolbar(saveaspng = FALSE),
+         # opciones de hover
+         opts_hover(css = "stroke-width: 4px;"),
+         opts_hover_inv(css = "opacity: 0.3;")
+       ))
+```
+
+Hacer que el resto de los elementos cambien de color al posar el cursor sobre un punto:
+
+```{r}
+girafe(ggobj = grafico,
+       options = list(
+         # estilo de tooltip
+         opts_tooltip(use_fill = TRUE, css = estilo_tooltip),
+         # ocultar botones
+         opts_toolbar(saveaspng = FALSE),
+         # opciones de hover
+         opts_hover(css = "stroke: none;"),
+         opts_hover_inv(css = "stroke: grey; fill: grey; opacity: 0.3;")
+       ))
+```
+
+
+
+## Combinar gráficos interactivos
+
+Otra funcionalidad clave de la interactividad es la posibilidad de que **las interacciones en un gráfico afecten a otros gráficos**. Por ejemplo, posar el cursor sobre un elemento del gráfico revela información extra sobre el mismo elemento en un segundo gráfico, o posar el cursor sobre una observación indica su ubicación en una segunda visualización.
+
+[Para **combinar gráficos** usaremos `{patchwork}`](/blog/patchwork/), paquete que nos permite unir dos o más gráficos en R. Si necesitas una guía más completa sobre combinación de gráficos, [revisa este tutorial.]((/blog/patchwork/))
+
+En el siguiente ejemplo, crearemos un gráfico de dispersión como el que hemos visto, pero con un `data_id` que agrupe los puntos por una variable categórica, y un segundo gráfico de barras donde dicha variable categórica se use para calcular promedios de los elementos del primer gráfico. Entonces, al pasar el cursor sobre puntos de un valor de la variable categórica, se destacará su valor promedio en el gráfico de barras, y viceversa.
+
+```{r}
+library(patchwork)
+
+# gráfico de dispersión
+puntos <- iris |> 
+  ggplot() +
+  aes(Sepal.Length, Sepal.Width, color = Species) +
+  geom_point_interactive(
+    size = 3,
+    aes(data_id = Species,
+        tooltip = glue("<b>Largo:</b> {Sepal.Length}
+                        <b>Ancho:</b> {Sepal.Width}
+                        <b>Especie:</b> {Species}"))) +
+  scale_color_brewer(palette = "Dark2") +
+  guides(color = guide_legend(position = "top"))
+
+# gráfico de barras
+barras <- iris |> 
+  group_by(Species) |> 
+  summarize(Sepal.Length = mean(Sepal.Length)) |> 
+  ggplot() +
+  aes(Species, Sepal.Length, fill = Species) +
+  geom_col_interactive(
+    width = 0.4,
+    aes(data_id = Species,
+        tooltip = glue("<b>Largo:</b> {Sepal.Length}
+                        <b>Especie:</b> {Species}"))) +
+  scale_fill_brewer(palette = "Dark2") +
+  guides(fill = "none")
+
+# combinar ambos gráficos
+combinado <- barras + puntos +
+  plot_layout(widths = c(1, 3))
+
+# interactividad
+girafe(ggobj = combinado,
+       options = list(
+         opts_tooltip(use_fill = TRUE, css = estilo_tooltip),
+         opts_toolbar(saveaspng = FALSE),
+         opts_hover(css = "stroke: none;"),
+         opts_hover_inv(css = "opacity: 0.3;")
+       ))
+```
+
+Listo! Con pocas líneas de código convertimos un par de visualizaciones sencillas en algo bastante más interesante e informativo.
+
+Para conocer ejemplos más interesantes sobre las posibilidades de `{ggplot2}` con `{ggiraph}`, recomiendo [revisar este conjunto de diapositivas](https://z3tt.github.io/ggiraph-user-2025/slides.html#/title-slide) presentadas por Tanya Shapiro y Cédric Scherer en la [conferencia UseR 2025](https://user2025.r-project.org).
 
 ## Recursos
 
 - [Libro de `{ggiraph}`](http://ardata.fr/ggiraph-book/), por David Gohel
 - Diapositivas: [Plot Twist. Adding Interactivity to the Elegance of {ggplot2} with {ggiraph}](https://z3tt.github.io/ggiraph-user-2025/slides.html#/title-slide), por Tanya Shapiro y Cédric Scherer
+
+----
+
+{{< cafecito >}}
+
+{{< cursos >}}
