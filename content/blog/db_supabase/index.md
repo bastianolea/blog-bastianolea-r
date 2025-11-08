@@ -1,5 +1,5 @@
 ---
-title: Crear y conectarse a una base de datos Postgres en R
+title: Crear y conectarse a una base de datos en R
 author: Bastián Olea Herrera
 date: '2025-11-06'
 draft: false
@@ -21,7 +21,7 @@ excerpt: >-
   sistema de almacenamiento y procesamiento de datos que puede contener
   múltiples tablas, alojado en un computador, servidor o en la nube, que puede
   entregar datos de forma rápida y eficiente de acuerdo a las solicitudes que se
-  le hagan. En este post veremos cómo crear una base de datos gratuita, cómo
+  le hagan. En este post veremos cómo crear una base de datos **gratuita**, cómo
   conectarnos a ella desde R, a leer y escribir tablas, y procesar datos desde
   la base de datos remota.
 ---
@@ -343,6 +343,18 @@ De esta forma, aprovechamos la base de datos SQL lo más posible, y cuando neces
 ------------------------------------------------------------------------
 
 Ya sea porque necesitas la **capacidad de almacenamiento**, porque requieres **procesamiento optimizado de grandes volúmenes de datos**, o porque vas a **usar tus datos en una aplicación o plataforma**, aprender a manejar bases de datos es una habilidad crucial para escalar tus capacidades y pasar al siguiente nivel ✨
+
+------------------------------------------------------------------------
+
+## Avanzado
+
+### Conexión por IPv4
+
+Las bases de Supabase usan IPv6 por defecto, pero algunos servicios requieren de conexiones IPv4 por limitaciones técnicas o de infraestructura. Uno de estos servicios [es ShinyApps.io](../../../blog/r_introduccion/tutorial_shinyapps/), el servicio que uso yo para alojar [mis aplicaciones Shiny](https://bastianolea.github.io/shiny_apps/).
+
+Para usar IPv4 en conexiones a bases de datos Supabase, en el panel de Conexión (el mismo que usaste para [obtener las credenciales](../../../blog/db_supabase/#conectarse-a-la-base-de-datos)), en la opción *Method* puedes elegir *Session pooler* para obtener credenciales IPv4.
+
+{{< imagen "supabase_ipv4.png" >}}
 
 ------------------------------------------------------------------------
 
