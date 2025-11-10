@@ -1,5 +1,5 @@
 ---
-title: 'Limpieza y recodificación de datos de texto en R con {stringr}'
+title: Limpieza y recodificación de datos de texto en R con {stringr}
 author: Bastián Olea Herrera
 date: '2025-06-08'
 draft: false
@@ -19,7 +19,7 @@ excerpt: >-
   tutorial usamos el paquete `{stringr}` para limpiar y ordenar unos datos de
   texto.
 editor_options:
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 
@@ -33,15 +33,15 @@ Sigamos un ejemplo con una columna que viene con textos sobre compras en un serv
 library(dplyr)
 library(stringr) # para trabajar con textos
 
-datos <- tibble::tribble(
-  ~texto, 
-  "Licitación pública N°3432",
-  "Trato directo #3341",
-  "Licitación privada 876",
-  "LICITACION PUBLICA N3430",
-  "Licitacion publica 3526 concluida",
-  "licitación pública 2986 ok",
-  "sin información")
+datos <- tibble(
+  texto = c("Licitación pública N°3432",
+            "Trato directo #3341",
+            "Licitación privada 876",
+            "LICITACION PUBLICA N3430",
+            "Licitacion publica 3526 concluida",
+            "licitación pública 2986 ok",
+            "sin información")
+)
 ```
 
 | texto                             |
@@ -90,7 +90,54 @@ datos |>
     6 licitación pública 2986 ok        FALSE     
     7 sin información                   FALSE     
 
-Vemos que sólo entrega dos `TRUE`, siendo que en las filas 4, 5 y 6 también debería encontrar coincidencias. Usualmente esto se debe a **diferencias en las mayúsculas** de las palabras. Para prevenirlo, primero convertimos el texto a minúsculas con `str_to_lower()`, y buscamos el término en minúsculas:
+Vemos que sólo entrega dos `TRUE`, siendo que en las filas 4, 5 y 6 también debería encontrar coincidencias. Esto se debe a que existen diferencias en las letras minúsculas y mayúsculas.
+
+## Cambiar la capitalización de un texto
+
+Un problema común con la limpieza de texto es encontrar **diferencias en las mayúsculas** de las palabras. `{stringr}` tiene varias funciones para ayudarnos a cambiar textos a mayúsculas, minúsculas, y más.
+
+``` r
+str_to_lower("HOLA, cómo estás?")
+```
+
+    [1] "hola, cómo estás?"
+
+``` r
+str_to_upper("hola, cómo estás?!")
+```
+
+    [1] "HOLA, CÓMO ESTÁS?!"
+
+``` r
+str_to_sentence("hola, cómo estás?")
+```
+
+    [1] "Hola, cómo estás?"
+
+Pero a veces necesitamos corregir la capitalización de textos que en su interior contienen palabras que empiezan con mayúsculas, o siglas/acrónimos, en cuyo caso convertir a minúsculas o a oración arruinarían la gramática correcta.
+
+``` r
+# texto que no empieza con mayúscula
+texto <- "mi nombre es Cecilia y trabajo en la ONU."
+
+# agregar mayúscula inicial, pero se pierden las demás mayúsculas
+str_to_sentence(texto)
+```
+
+    [1] "Mi nombre es cecilia y trabajo en la onu."
+
+En estos casos podemos realizar un reemplazo de texto con `str_replace()` que solamente reemplace la primera letra del texto por su versión mayúscula, y deje las demás intactas:
+
+``` r
+# reemplazar sólo primera letra de la primera palabra
+str_replace(texto, "^.", toupper)
+```
+
+    [1] "Mi nombre es Cecilia y trabajo en la ONU."
+
+Aquí usamos una **expresión regular** (`^.`) para indicar que queremos reemplazar solamente la primera letra del texto (el símbolo `^` indica el inicio del texto, y `.` indica cualquier símbolo).
+
+Volviendo al ejemplo de los datos, para corregir la detección de datos con `str_detect()` cuando hay diferencias de mayúsculas, primero convertimos el texto a minúsculas con `str_to_lower()`, y buscamos el término en minúsculas:
 
 ``` r
 datos |> 
@@ -110,7 +157,7 @@ datos |>
 
 Obtenemos una coincidencia más! Pero siguen faltando dos casos (casos 4 y 5) que deberían retornar `TRUE`. En estos casos, el problema está con **diferencias en los tildes** de las palabras. Para solucionar esto, podemos hacer una búsqueda de texto usando *regex*.
 
-#### Expresiones regulares
+## Expresiones regulares
 
 Las [expresiones regulares o *regex*](https://stringr.tidyverse.org/articles/regular-expressions.html) son formas de escribir patrones de búsqueda, y son soportadas por todas las funciones de `{stringr}`. Uno de estos patrones es el operador *o* (`|`). El operador *o* puede usarse para encontrar coincidencias con varias palabras distintas separadas con `|`:
 
@@ -238,9 +285,11 @@ datos |>
     6 licitación pública 2986 ok        licitación pública 2986 ok  TRUE       Lici…
     7 sin información                   sin información             FALSE      Otros
 
-### Extraer textos desde un texto
+### Extraer caracteres desde un texto
 
-Una última alternativa para limpiar estos datos sería *extraer* texto específico desde la variable de texto. Para esto podemos usar la función `str_extract()` combinada con un operador *regex* para extraer secuencias de números (`\\d+`):
+Una última alternativa para limpiar estos datos sería *extraer* texto específico desde la variable de texto. Es decir, encontrar un tipo de texto dentro de otro texto, y solamente dejar ese texto extraído. Por ejemplo: entre un texto extenso, extraer solamente una palabra específica, si es que existe, o extraer solamente los números que esténdentro del texto.
+
+Para esto podemos usar la función `str_extract()` combinada con un operador *regex* para extraer secuencias de números (`\\d+`):
 
 ``` r
 datos |> 
@@ -267,7 +316,7 @@ datos_limpios <- datos |>
   # limpiar el texto de antemano
   mutate(texto_2 = str_to_lower(texto)) |> 
   # detectar licitaciones
-    mutate(licitacion = ifelse(str_detect(str_to_lower(texto), "licitaci(ó|o)n"), 
+  mutate(licitacion = ifelse(str_detect(str_to_lower(texto), "licitaci(ó|o)n"), 
                              yes = "Licitación",
                              no = "Otros")) |> 
   # detectar si son públicas, privadas, o de otro tipo
@@ -297,4 +346,4 @@ datos_limpios <- datos |>
 | Licitación | Licitación pública |   2986 |
 | Otros      | Otros              |     NA |
 
-{{< cafecito  >}}
+{{< cafecito >}}

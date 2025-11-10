@@ -56,11 +56,10 @@ blogdown::new_post(title = "Optimiza la velocidad de tus aplicaciones Shiny con 
 
 # ideas
 "content/blog/dt_tablas/index.qmd"
-"content/blog/ggiraph/ggiraph.qmd"
 "content/blog/ellmer/ellmer.qmd"
 "content/blog/2025-07-06/index.qmd" # cargar y unir datos
 
-"content/blog/diferencias/waldo.qmd"
+"content/blog/waldo/waldo.qmd"
 "https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html" # plagiar
 "https://github.com/rundel/livecode"
 "content/blog/2025-07-01/index.qmd" # st_join
