@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Crear y conectarse a una base de datos en R | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Coloquialmente se usa el término _base de datos_ para referirse a datos que están en Excel. Pero en realidad una base de datos es algo distinto: un sistema de almacenamiento y procesamiento de datos que puede contener múltiples tablas, alojado en un computador, servidor o en la nube, que puede entregar datos de forma rápida y eficiente de acuerdo a las solicitudes que se le hagan. En este post veremos cómo crear una base de datos **gratuita**, cómo conectarnos a ella desde R, a leer y escribir tablas, y procesar datos desde la base de datos remota.">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="Crear y conectarse a una base de datos en R | Bastián Olea">
+<meta property="og:description" content="Coloquialmente se usa el término _base de datos_ para referirse a datos que están en Excel. Pero en realidad una base de datos es algo distinto: un sistema de almacenamiento y procesamiento de datos que puede contener múltiples tablas, alojado en un computador, servidor o en la nube, que puede entregar datos de forma rápida y eficiente de acuerdo a las solicitudes que se le hagan. En este post veremos cómo crear una base de datos **gratuita**, cómo conectarnos a ella desde R, a leer y escribir tablas, y procesar datos desde la base de datos remota." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/db_supabase/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/db_supabase/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/db_supabase/featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Crear y conectarse a una base de datos en R">
+  <meta itemprop="description" content="Índice Qué es una base de datos Cuándo usar una base de datos Crear una base de datos en Supabase Conectarse a la base de datos Credenciales de acceso Variables de entorno Conexión a la base de datos Crear una tabla en la base de datos Leer una tabla desde la base de datos Procesar desde la base de datos con {dplyr} Avanzado Conexión por IPv4 Recursos Qué es una base de datos Cuando se habla de datos, mucha gente (me incluyo) usa coloquialmente el término base de datos para referirse a datos que están en Excel o csv 😣 Pero la realidad es que una base de datos es algo distinto: un sistema de almacenamiento y procesamiento de datos que puede contener múltiples tablas, que está hosteado en un computador, servidor o en la nube, y que entrega datos de acuerdo a las solicitudes que se le hagan. En este sentido una base de datos es distinto a leer un archivo, porque la base de datos siempre tiene cargados los datos, y está esperando que se los pidan para entregarlos de manera optimizada.">
+  <meta itemprop="datePublished" content="2025-11-06T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-11-06T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2180">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/db_supabase/featured.png">
+  <meta itemprop="keywords" content="Datos,Optimización,Dplyr">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.9dae2888bc53e1aef239ba1add77b8a61bb249ad5c068c5464836ceb4111eb2c.css" integrity="sha256-na4oiLxT4a7yOboa3Xe4phuySa1cBoxUZINs60ER6yw=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.422a2363d11e9d6836a9931682c00abf3c5a2cb6d5460f3485cb54696b258be4.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Bastián Olea: Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Bastián Olea: Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Bastián Olea: Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Bastián Olea: Blog">Temas</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Bastián Olea: Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Bastián Olea: Tutoriales">Intro a R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Bastián Olea: Recursos">Recursos R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 ph4-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Crear y conectarse a una base de datos en R</h1>
+        
+        
+        <p class="f7 db mv0 ttu">6/11/2025</p>
+        
+        
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/datos"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      datos</a>  <a href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      optimización</a>  <a href="https://bastianoleah.netlify.app/tags/dplyr"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      dplyr</a> </dd></em>
+  </dl>
+ 
+        
+      
+
+      </header>
+      <section class="post-body pt5 pb4">
+        <div style = "margin-left: -16px;">
+  
+  <details open id="PageTableOfContents">
+    <summary>
+      <h2 class="mv0 f5 fw7 ttu tracked dib" style = "margin-left: 6px; font-size: 120%;">Índice</h2>
+      </summary>
+    <div class="pl2 pr0 mh0" style = "margin-top: -8px; margin-left: 12px; margin-bottom: 32px;">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#qué-es-una-base-de-datos">Qué es una base de datos</a></li>
+    <li><a href="#cuándo-usar-una-base-de-datos">Cuándo usar una base de datos</a></li>
+    <li><a href="#crear-una-base-de-datos-en-supabase">Crear una base de datos en Supabase</a></li>
+    <li><a href="#conectarse-a-la-base-de-datos">Conectarse a la base de datos</a>
+      <ul>
+        <li><a href="#credenciales-de-acceso">Credenciales de acceso</a></li>
+        <li><a href="#variables-de-entorno">Variables de entorno</a></li>
+        <li><a href="#conexión-a-la-base-de-datos">Conexión a la base de datos</a></li>
+      </ul>
+    </li>
+    <li><a href="#crear-una-tabla-en-la-base-de-datos">Crear una tabla en la base de datos</a></li>
+    <li><a href="#leer-una-tabla-desde-la-base-de-datos">Leer una tabla desde la base de datos</a></li>
+    <li><a href="#procesar-desde-la-base-de-datos-con-dplyr">Procesar desde la base de datos con <code>{dplyr}</code></a></li>
+    <li><a href="#avanzado">Avanzado</a>
+      <ul>
+        <li><a href="#conexión-por-ipv4">Conexión por IPv4</a></li>
+      </ul>
+    </li>
+    <li><a href="#recursos">Recursos</a></li>
+  </ul>
+</nav>
+    </div>
+  </details>
+  
+</div>
+
+
+
+
+<h2 id="qué-es-una-base-de-datos">Qué es una base de datos
+  <a href="#qu%c3%a9-es-una-base-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Cuando se habla de datos, mucha gente (me incluyo) usa coloquialmente el término <em>base de datos</em> para referirse a datos que están en Excel o <code>csv</code> 😣 Pero la realidad es que una base de datos es algo distinto: un <strong>sistema de almacenamiento y procesamiento de datos</strong> que puede contener múltiples tablas, que está <em>hosteado</em> en un computador, servidor o en la nube, y que entrega datos de acuerdo a las solicitudes que se le hagan. En este sentido <strong>una base de datos es distinto a <em>leer</em> un archivo</strong>, porque la base de datos siempre tiene <em>cargados</em> los datos, y está esperando que se los pidan para entregarlos de manera optimizada.</p>
+<p>Una de las diferencias principales al usar bases de datos es que <strong>no necesitas <em>cargar</em> los datos</strong> en tu computador, porque se encuentran en la base de datos remota. En vez de cargarlos, los puedes <strong>solicitar</strong> para que la base los procese y te los entregue. Solamente cuando los necesitas en memoria, los cargas localmente.</p>
+<p>Pero además, una base de datos puede hacer más que simplemente almacenar los datos. Las solicitudes que hacemos a la base, usualmente hechas por medio del lenguaje SQL, son <strong>procesadas de forma rápida y eficiente</strong>, entregándote solamente lo necesario. De este modo puedes acceder a conjuntos de <strong>muchos millones de observaciones</strong> sin que tu computador explote 💥</p>
+
+
+
+
+<h2 id="cuándo-usar-una-base-de-datos">Cuándo usar una base de datos
+  <a href="#cu%c3%a1ndo-usar-una-base-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<ul>
+<li>Cuando la <strong>cantidad de observaciones es muy grande</strong>, y te encuentras con límites de memoria</li>
+<li>Cuando necesitas <strong>acceder a los datos desde varios equipos o aplicaciones</strong></li>
+<li>Cuando tus datos <strong>ocupan mucho almacenamiento local</strong> y preferirías que estuvieran en la nube</li>
+<li>Cuando tienes muchos datos, y solo los cargas para obtener subconjuntos o resúmenes de los mismos</li>
+<li>Cuando quieres <strong>optimizar la velocidad</strong> de acceso a los datos, sobre todo la velocidad de cargar archivos</li>
+<li>Cuando tienes un conjunto de datos complejos que requieren de <strong>múltiples tablas relacionadas entre sí</strong></li>
+<li>Cuando no puedes mantener todos los datos en memoria</li>
+</ul>
+<p>A continuación veremos cómo <strong>crear</strong> una base de datos gratuita, cómo <strong>conectarnos</strong> a ella desde R, y cómo subir y trabajar con los datos en la base de datos remota.</p>
+<hr>
+
+
+
+
+<h2 id="crear-una-base-de-datos-en-supabase">Crear una base de datos en Supabase
+  <a href="#crear-una-base-de-datos-en-supabase"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Como una base de datos requiere estar instalada en un computador o servidor, necesitamos un proveedor que nos permita alojar la base de datos<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>. Una opción es 
+<a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a>, una plataforma para bases de datos que se basa en código abierto, y que ofrece <strong>bases de datos Postgres gratuitas</strong> para proyectos pequeños.</p>
+<p>Para empezar, 
+<a href="https://supabase.com/dashboard/sign-up" target="_blank" rel="noopener">crea una cuenta en Supabase</a>.</p>
+<p>Una vez en tu cuenta, en la sección <em><strong>Projects</strong></em>, crea un nuevo proyecto:</p>
+<a href="supabase_1.png" target="_blank">
+
+  <img src="supabase_1.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Un proyecto es una instancia en el servidor de Supabase con su propia <strong>base de datos Postgres</strong><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>, donde podrás escribir tus tablas de datos. Ponle un nombre y define una contraseña segura. Con esta contraseña podrás acceder a tus datos.</p>
+<a href="supabase_2.png" target="_blank">
+
+  <img src="supabase_2.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Luego de crear el proyecto se abrirá el panel principal, donde te indica que (por ahora) tienes cero tablas 👎🏻</p>
+
+
+
+
+<h2 id="conectarse-a-la-base-de-datos">Conectarse a la base de datos
+  <a href="#conectarse-a-la-base-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Con el proyecto creado, ahora podemos conectarnos a la base de datos. Pero necesitamos crear una conexión con la misma, y para ello requerimos ciertas credenciales y datos para que tu computador conecte con el servidor donde está tu base de datos.</p>
+<p>Presiona <em><strong>Connect</strong></em> en la parte superior. para ver los parámetros de conexión.</p>
+<a href="supabase_3.png" target="_blank">
+
+  <img src="supabase_3.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Se abrirá un panel donde se nos entregarán los <strong>parámetros de acceso</strong> a la base de datos. Presiona <em>View parameters</em> para desplegar la información:</p>
+<a href="supabase_5.png" target="_blank">
+
+  <img src="supabase_5.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Necesitamos los parámetros <code>host</code>, <code>port</code>, <code>database</code> y <code>user</code>. Ahora iremos a R para introducirlos y conectarnos.</p>
+
+
+
+
+<h3 id="credenciales-de-acceso">Credenciales de acceso
+  <a href="#credenciales-de-acceso"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Para interactuar con bases de datos, necesitamos el paquete <code>{DBI}</code>, que gestiona las conexiones con bases de datos, y en nuestro caso el paquete <code>{RPostgres}</code>, que es el motor para trabajar con bases de datos Postgres.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;DBI&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;RPostgres&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Para conectarnos a una base de datos desde R usamos la función <code>dbConnect()</code>. Dentro de esta función explicitamos el <em>driver</em> de la base de datos (en este caso <code>Postgres()</code>), y los parámetros de conexión que obtuvimos en Supabase: <code>dbname</code>, <code>host</code>, <code>port</code>, <code>user</code> y <code>password</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">db_con</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">DBI</span><span style="color:#908caa">::</span><span style="color:#ea9a97">dbConnect</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">RPostgres</span><span style="color:#908caa">::</span><span style="color:#ea9a97">Postgres</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">dbname</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;postgres&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">host</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;host&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">port</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5432</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">user</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;postgres&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">password</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;contraseña&#34;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>⚠️ ¡Pero espera! <strong>No es seguro escribir credenciales privadas en un script.</strong> Así que vamos a seguir las <em>buenas prácticas</em> y vamos a <strong>guardar las credenciales de forma segura</strong>.</p>
+<p>Una opción es no escribir la contraseña y en su lugar usar <code>rstudioapi::askForPassword()</code> para ingresar la contraseña manualmente pero de forma segura. Sin embargo, no queremos estar escribiendo la contraseña cada vez que necesitemos los datos!</p>
+
+
+
+
+<h3 id="variables-de-entorno">Variables de entorno
+  <a href="#variables-de-entorno"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Vamos a crear un script donde podamos guardar <strong>variables de entorno</strong>, que son variables que R puede leer pero que <strong>no quedan en el código</strong>, y que además <strong>siempre se cargan cuando abrimos el proyecto</strong>. Es decir, quedan disponibles para poder usarlas, pero estarán ocultas. Así podemos compartir y respaldar nuestro código sin exponer información sensible, y podemos conectarnos a la base de datos sin tener que volver a introducir las credenciales.</p>
+<p><strong>Creamos un script de entorno</strong> llamado <code>.Renviron</code> en la raíz de nuestro proyecto ejecutando una función que lo hace por nosotres:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">usethis</span><span style="color:#908caa">::</span><span style="color:#ea9a97">edit_r_environ</span><span style="color:#908caa">(</span><span style="color:#ea9a97">scope</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;project&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>En el script que se abre <strong>guardamos las credenciales</strong> de la siguiente manera:</p>
+<pre><code>db_host=db.blablablabla.supabase.co
+db_port=5432
+db_user=postgres
+db_pass=clavebasededatosprueba
+</code></pre>
+<p>Una vez guardadas las credenciales, <strong>reiniciamos la sesión de R</strong> para que se lean las variables de entorno (siempre se leerán al iniciar R), o podemos ejecutar <code>readRenviron(&quot;.Renviron&quot;)</code> para cargarlas.</p>
+<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
+
+<strong>⚠️ Importante:</strong> Si usas 
+<a href="/tags/git/">git</a>, no olvides agregar el archivo <code>.Renviron</code> a tu <code>.gitignore</code> para evitar subir a internet credenciales privadas!
+
+</div>
+
+
+
+
+
+<h3 id="conexión-a-la-base-de-datos">Conexión a la base de datos
+  <a href="#conexi%c3%b3n-a-la-base-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Procedemos a hacer la conexión a la base de datos de forma segura, usando <code>Sys.getenv()</code> para obtener las variables de entorno que guardamos en <code>.Renviron</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">DBI</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">RPostgres</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">db_con</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">DBI</span><span style="color:#908caa">::</span><span style="color:#ea9a97">dbConnect</span><span style="color:#908caa">(</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">RPostgres</span><span style="color:#908caa">::</span><span style="color:#ea9a97">Postgres</span><span style="color:#908caa">(),</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">dbname</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;postgres&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">host</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sys.getenv</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;db_host&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">port</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sys.getenv</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;db_port&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">user</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sys.getenv</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;db_user&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">password</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sys.getenv</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;db_pass&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Al conectarnos creamos un objeto que representa nuestra conexión a la base de datos.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">db_con</span>
+</span></span></code></pre></div><pre><code>&lt;PqConnection&gt; postgres@db.ybqnpazmjvictxbevqqk.supabase.co:5432
+</code></pre>
+<p>Usaremos este objeto para interactuar con la base de datos.</p>
+
+
+
+
+<h2 id="crear-una-tabla-en-la-base-de-datos">Crear una tabla en la base de datos
+  <a href="#crear-una-tabla-en-la-base-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Con la función <code>dbWriteTable()</code> creamos en la base de datos una tabla nueva a partir de un dataframe; por ejemplo, usando el conjunto de datos <code>iris</code> que viene por defecto en R.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">DBI</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># crear tabla</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">dbWriteTable</span><span style="color:#908caa">(</span><span style="color:#ea9a97">conn</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">db_con</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># conexión a la base</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">name</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;prueba&#34;</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># nombre de la tabla a crear</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">iris</span> <span style="color:#6e6a86"># datos a escribir</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Confirmamos que la tabla se subió a la base de datos consultándole a la base los <strong>nombres de las tablas existentes</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">dbListTables</span><span style="color:#908caa">(</span><span style="color:#ea9a97">db_con</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;prueba&quot;                  &quot;pg_stat_statements&quot;     
+[3] &quot;pg_stat_statements_info&quot;
+</code></pre>
+<p>También podemos confirmar en Supabase que la tabla existe:</p>
+<a href="supabase_6.png" target="_blank">
+
+  <img src="supabase_6.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Ahora nuestros datos están almacenados remotamente en la base de datos! Acaso ésta será la mística nube de la que tanto hablan? ☁️</p>
+
+
+
+
+<h2 id="leer-una-tabla-desde-la-base-de-datos">Leer una tabla desde la base de datos
+  <a href="#leer-una-tabla-desde-la-base-de-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Podemos leer las tablas existentes en la base de datos con <code>dbReadTable()</code> tan solo indicando el nombre de la tabla:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_db</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">dbReadTable</span><span style="color:#908caa">(</span><span style="color:#ea9a97">db_con</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># conexión a la base</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#f6c177">&#34;prueba&#34;</span> <span style="color:#6e6a86"># nombre de la tabla a leer</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">head</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos_db</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+1          5.1         3.5          1.4         0.2  setosa
+2          4.9         3.0          1.4         0.2  setosa
+3          4.7         3.2          1.3         0.2  setosa
+4          4.6         3.1          1.5         0.2  setosa
+5          5.0         3.6          1.4         0.2  setosa
+6          5.4         3.9          1.7         0.4  setosa
+</code></pre>
+<p>De esta manera solicitamos a la base que nos entregue los datos de la tabla, y los cargamos en la sesión de R como un dataframe. Desde este punto podemos usar los datos normalmente, pero a continuación veremos una forma mejor de hacerlo 🫢</p>
+
+
+
+
+<h2 id="procesar-desde-la-base-de-datos-con-dplyr">Procesar desde la base de datos con <code>{dplyr}</code>
+  <a href="#procesar-desde-la-base-de-datos-con-dplyr"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Una de las ventajas de una base de datos es <strong>solicitar y obtener datos procesados desde la base de datos</strong> 🏭 Normalmente esto se hace con el lenguaje <code>SQL</code>, pero en R hay formas más sencillas: 
+<a href="../../../tags/dplyr/">usando directamente <code>{dplyr}</code></a> para <strong>interactuar con la base de datos</strong>.</p>
+<p>Para ello 
+<a href="https://dbplyr.tidyverse.org" target="_blank" rel="noopener">instalamos <code>{dbplyr}</code></a>, paquete que traducirá el código de <code>{dplyr}</code> en SQL.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;dbplyr&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Esta funcionalidad se carga automáticamente al cargar <code>{dplyr}</code>.</p>
+<p>Para <strong>obtener datos</strong> desde la base de datos, usamos <code>tbl()</code> con el objeto de conexión y el nombre de la tabla, y recibiremos los datos en el formato <code>tibble</code> de <code>{dplyr}</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos_db</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tbl</span><span style="color:#908caa">(</span><span style="color:#ea9a97">db_con</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;prueba&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos_db</span>
+</span></span></code></pre></div><pre><code># Source:   table&lt;&quot;prueba&quot;&gt; [?? x 5]
+# Database: postgres  [postgres@db.ybqnpazmjvictxbevqqk.supabase.co:5432/postgres]
+   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;  
+ 1          5.1         3.5          1.4         0.2 setosa 
+ 2          4.9         3            1.4         0.2 setosa 
+ 3          4.7         3.2          1.3         0.2 setosa 
+ 4          4.6         3.1          1.5         0.2 setosa 
+ 5          5           3.6          1.4         0.2 setosa 
+ 6          5.4         3.9          1.7         0.4 setosa 
+ 7          4.6         3.4          1.4         0.3 setosa 
+ 8          5           3.4          1.5         0.2 setosa 
+ 9          4.4         2.9          1.4         0.2 setosa 
+10          4.9         3.1          1.5         0.1 setosa 
+# ℹ more rows
+</code></pre>
+<p>Esta tabla generada desde la base de datos <strong>no es un dataframe normal</strong> 😱 sino que es una <strong>conexión abierta con la base de datos</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">class</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos_db</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;tbl_PqConnection&quot; &quot;tbl_dbi&quot;          &quot;tbl_sql&quot;          &quot;tbl_lazy&quot;        
+[5] &quot;tbl&quot;             
+</code></pre>
+<p>Esto nos permite seguir pidiéndole instrucciones que se procesarán en la base, no en nuestra sesión local de R. Esto es lo que nos permite realizar <strong>cálculos con datos de grandes volúmenes</strong> o <strong>manejar bases de datos gigantes que no caben en la memoria de tu computador</strong> 😲</p>
+<p>Usemos la tabla obtenida desde la base de datos para hacer un filtro y calcular un promedio:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">calculo_db</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datos_db</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;setosa&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarise</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mean_sepal_length</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Length</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><p>Estas operaciones se realizan remotamente en la base, y con una evaluación <em>perezosa</em> 🦥 (<em>lazy evaluation</em>); es decir, solamente se calcula el resultado cuando es estrictamente necesario. Entonces, recién al solicitar el resultado <strong>la base de datos va a realizar el cálculo requerido</strong>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">calculo_db</span>
+</span></span></code></pre></div><pre><code>Warning: Missing values are always removed in SQL aggregation functions.
+Use `na.rm = TRUE` to silence this warning
+This warning is displayed once every 8 hours.
+
+# Source:   SQL [?? x 1]
+# Database: postgres  [postgres@db.ybqnpazmjvictxbevqqk.supabase.co:5432/postgres]
+  mean_sepal_length
+              &lt;dbl&gt;
+1              5.01
+</code></pre>
+<p>Podemos confirmar que el cálculo se hizo en la base de datos usando <code>show_query()</code> para ver el código <code>SQL</code> que se usó para hacer el cálculo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">calculo_db</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">show_query</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><pre><code>&lt;SQL&gt;
+SELECT AVG(&quot;Sepal.Length&quot;) AS &quot;mean_sepal_length&quot;
+FROM (
+  SELECT &quot;prueba&quot;.*
+  FROM &quot;prueba&quot;
+  WHERE (&quot;Species&quot; = 'setosa')
+) AS &quot;q01&quot;
+</code></pre>
+<p>🪄✨ Magia! Es como si hubiéramos aprendido SQL: combinamos el poder de SQL con la conveniencia de R.</p>
+<p>Si necesitamos <em>traer</em> los datos desde la base a tu computador, los <strong>cargamos en la memoria</strong> con la función <code>collect()</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_df</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datos_db</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;setosa&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">collect</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Ahora sí que sí el objeto <code>datos_df</code> se encuentra cargado en tu sesión local de R como un dataframe normal.</p>
+<p>Como los cálculos que hagamos sobre los datos se <strong>traducen</strong> desde R a SQL y luego se nos entregan, un uso importante de <code>collect()</code> es para anteponerlo a <strong>operaciones que no tienen traducción a SQL</strong>.</p>
+<p>Por ejemplo, me consta que las funciones de <code>{forcats}</code> no se traducen a SQL:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_db</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarise</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Width</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Width</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">forcats</span><span style="color:#908caa">::</span><span style="color:#ea9a97">fct_reorder</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">Sepal.Width</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre><code>Error in `forcats::fct_reorder()`:
+! No known SQL translation
+</code></pre>
+<p>En este caso, anteponemos <code>collect()</code> para pasar de SQL a R en medio del proceso y listo.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_db</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarise</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Width</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Width</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">collect</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># cargar a la memoria</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">forcats</span><span style="color:#908caa">::</span><span style="color:#ea9a97">fct_reorder</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">Sepal.Width</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 3 × 2
+  Species    Sepal.Width
+  &lt;fct&gt;            &lt;dbl&gt;
+1 versicolor        2.77
+2 virginica         2.97
+3 setosa            3.43
+</code></pre>
+<p>De esta forma, aprovechamos la base de datos SQL lo más posible, y cuando necesitemos operaciones más complejas nos pasamos a R! 😉</p>
+<hr>
+<p>Ya sea porque necesitas la <strong>capacidad de almacenamiento</strong>, porque requieres <strong>procesamiento optimizado de grandes volúmenes de datos</strong>, o porque vas a <strong>usar tus datos en una aplicación o plataforma</strong>, aprender a manejar bases de datos es una habilidad crucial para escalar tus capacidades y pasar al siguiente nivel ✨</p>
+<hr>
+
+
+
+
+<h2 id="avanzado">Avanzado
+  <a href="#avanzado"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+
+
+
+
+<h3 id="conexión-por-ipv4">Conexión por IPv4
+  <a href="#conexi%c3%b3n-por-ipv4"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Las bases de Supabase usan IPv6 por defecto, pero algunos servicios requieren de conexiones IPv4 por limitaciones técnicas o de infraestructura. Uno de estos servicios 
+<a href="../../../blog/r_introduccion/tutorial_shinyapps/">es ShinyApps.io</a>, el servicio que uso yo para alojar 
+<a href="https://bastianolea.github.io/shiny_apps/" target="_blank" rel="noopener">mis aplicaciones Shiny</a>.</p>
+<p>Para usar IPv4 en conexiones a bases de datos Supabase, en el panel de Conexión (el mismo que usaste para 
+<a href="../../../blog/db_supabase/#conectarse-a-la-base-de-datos">obtener las credenciales</a>), en la opción <em>Method</em> puedes elegir <em>Session pooler</em> para obtener credenciales IPv4.</p>
+<a href="supabase_ipv4.png" target="_blank">
+
+  <img src="supabase_ipv4.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<hr>
+
+
+
+
+<h2 id="recursos">Recursos
+  <a href="#recursos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<ul>
+<li>
+<a href="https://pacha.dev/blog/2020/08/09/postgresql-for-r-users/" target="_blank" rel="noopener">A Crash Course on PostgreSQL for R Users</a>, por 
+<a href="https://pacha.dev" target="_blank" rel="noopener">Mauricio Vargas S.</a></li>
+</ul>
+<p><div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>También se puede correr la base de datos en tu mismo computador, pero eso lo dejamos para otro post 🤓&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>Postgres es un sistema de gestión de bases de datos relacionales , uno de los más usados, pero existen muchos otros más, como SQLite, MariaDB, y más.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+        
+        <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">November 6, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">11 minute read, 2180 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categorías:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/categories/tutoriales">Tutoriales</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/datos">datos</a>  <a href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n">optimización</a>  <a href="https://bastianoleah.netlify.app/tags/dplyr">dplyr</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/shiny_optimizar/">Optimiza la velocidad de tus aplicaciones Shiny con bindCache()</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/app_mideso_ingresos_genero/">App: comparación de ingresos regionales y comunales</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/2025-07-27/">Descargar todos los archivos de la página web del Censo 2024 con {rvest}</a></dd>
+    
+  </dl>
+</details>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/ggiraph/">&larr; Convierte gráficos {ggplot2} en visualizaciones interactivas con {ggiraph}</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/shiny_optimizar/">Optimiza la velocidad de tus aplicaciones Shiny con bindCache() &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+</div>
+
+    
+  </section>
+</main>
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" >
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

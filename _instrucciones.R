@@ -2,7 +2,7 @@
 
 blogdown::serve_site()
 blogdown::stop_server()
-blogdown::build_site() # reconstruir
+blogdown::build_site()
 
 
 
