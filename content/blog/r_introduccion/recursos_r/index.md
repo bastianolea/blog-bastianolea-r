@@ -87,7 +87,7 @@ _Conoce a otras personas que usan R o únete a una comundad de usuarios/as!_
 
 ### Usuarios de R destacados
 - [Julia Silge](https://juliasilge.com) (análisis de texto, machine learning)
-- [Yanina Bellini Saibene](https://yabellini.netlify.app)
+- [Yanina Bellini Saibene](https://yabellini.netlify.app) 🇦🇷 (organizadora, traductora)
 - [Josiah Parry](https://josiahparry.com) (geoespacial, Rust)
 - [Danielle Navarro](https://blog.djnavarro.net) (data scientist, arte generativo)
 - [Nicola Rennie](https://nrennie.rbind.io) (visualización, salud)
@@ -96,14 +96,16 @@ _Conoce a otras personas que usan R o únete a una comundad de usuarios/as!_
 - [Mauricio "Pacha" Vargas](https://pacha.dev/blog/) 🇨🇱 (estadística, econometría)
 - [Riva Quiroga](https://rivaquiroga.cl/ahora/) 🇨🇱 (humanidades computacionales, lingüística)
 - [Bruno Rodrigues](https://www.brodrigues.co) (reproducibilidad)
-- [Luis D. Verde Arregoitia](https://luisdva.github.io) (biólogo)
-- [Rosana Ferrero](https://x.com/RosanaFerrero) (comparte mucho contenido sobre estadísticas y R)
+- [Luis D. Verde Arregoitia](https://luisdva.github.io) 🇲🇽 (biólogo)
+- [Rosana Ferrero](https://x.com/RosanaFerrero) 🇪🇸 (comparte mucho contenido sobre estadísticas y R)
+- [Lesly Flores](https://x.com/lesssflo) 🇲🇽 (comparte contenido de estadísticas en R)
 - [Joachim Schork](https://statisticsglobe.com)
 - [Kennedy Mwavu](https://x.com/kennedymwavu)
 - [Rony Rodríguez-Ramírez](https://rrmaximiliano.github.io) 🇳🇮
 - [Deepali Kank](https://deepalikank.in) (visualizaciones de datos)
 - [Kyle Walker](https://walker-data.com) (desarrollador del paquete [mapGL](https://github.com/walkerke/mapgl) para mapas interactivos)
 - [Dominic Royé](https://dominicroye.github.io) (mapas y datos geoespaciales)
+
 
 
 ### Blogs sobre R
