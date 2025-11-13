@@ -9,10 +9,10 @@ blogdown::build_site()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "Crea una carpeta inteligente con todos tus proyectos de R en Mac", 
+blogdown::new_post(title = "¿Por qué programar para trabajar con datos?", 
                    file = paste0("blog/", lubridate::today(), "/index.md"),
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos")
+                   tags = c("blog")
 )
 
 # crear un post tutorial
