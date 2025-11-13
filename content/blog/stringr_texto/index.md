@@ -23,6 +23,8 @@ editor_options:
 ---
 
 
+{{< indice >}}
+
 [El paquete `{stringr}`](https://stringr.tidyverse.org/index.html) facilita todo tipo de trabajo que implique texto en R.
 
 En general, los datos que vienen como texto suelen necesitar una limpieza previa, y adicionalmente un procesamiento para poder aprovecharlos mejor.
