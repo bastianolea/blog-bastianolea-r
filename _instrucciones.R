@@ -16,10 +16,10 @@ blogdown::new_post(title = "¿Por qué programar para trabajar con datos?",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Optimiza la velocidad de tus aplicaciones Shiny con bindCache()", 
-                   file = "blog/shiny_cache/index.md",
+blogdown::new_post(title = "Desarrollando un buscador para mi blog con Shiny", 
+                   file = "blog/buscador/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("shiny"),
+                   tags = c("blog", "Shiny"),
                    categories = c() 
 )
 
