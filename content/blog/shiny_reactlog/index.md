@@ -16,6 +16,7 @@ links:
     icon_pack: fas
     name: reactlog
     url: https://rstudio.github.io/reactlog/
+excerpt: "Las aplicaciones Shiny funcionan con _reactividad_: una cadena de causalidad que va desde los _inputs_ de tu app, pasando por las expresiones reactivas (objetos de R que se actualizan automáticamente cuando cambian sus dependencias), hasta los _outputs_ que se muestran en la interfaz de usuario. Con `{reactlog}` puedes explorar visualmente esta cadena o red de dependencias, para entender cómo tu aplicación se va generando, analizar las dependencias entre elementos, y buscar posibles optimizaciones."
 ---
 
 Las aplicaciones Shiny funcionan con **[reactividad](https://shiny.posit.co/r/articles/build/reactivity-overview/)**: una cadena de causalidad que va desde los _inputs_ de tu app, pasando por las expresiones reactivas (objetos de R que se actualizan automáticamente cuando cambian sus dependencias), hasta los _outputs_ que se muestran en la interfaz de usuario. 
