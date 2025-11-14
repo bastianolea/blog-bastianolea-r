@@ -1,7 +1,7 @@
 ---
 
 title: Bastián Olea Herrera
-subtitle: 
+subtitle: Sociólogx, analista de datos
 type: home
 
 description: '**Análisis y visualización de datos en R**, con un foco en las ciencias sociales. Visita el [**blog**](/blog/) para encontrar tutoriales, guías y consejos para aprender R.'

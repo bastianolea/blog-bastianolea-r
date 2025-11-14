@@ -7,14 +7,8 @@ show_social_links: true
 
 link_list_label: "Enlaces"
 link_list:
-- name: GitHub (proyectos y código)
-  url: https://github.com/bastianolea
-- name: Portafolio laboral
-  url: /blog/portafolio_trabajos_r/
-- name: Portafolio de apps
-  url: https://bastianolea.github.io/shiny_apps/
-- name: Sitio web personal/académico
-  url: https://bastianolea.rbind.io
+- name: Sitio web académico
+  url: https://bastian.olea.biz
 - name: LinkedIn
   url: https://www.linkedin.com/in/bastianolea/
 - name: Escríbeme
