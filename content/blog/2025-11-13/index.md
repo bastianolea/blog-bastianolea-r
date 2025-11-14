@@ -13,6 +13,10 @@ format:
 excerpt: "Llevo varios años trabajando con datos, tanto en el sector privado, como independiente y en el sector público, y hay algo que es una constante: siempre te van a pedir hacer cambios! Por eso, para estos trabajos no basta con “hacer” el resultado de principio a fin (un reporte, etc.), porque cualquier cambio (en datos/cálculo/salidas) implicaría “re-hacer” el trabajo..."
 ---
 
+<div style="width: 100%; text-align: center;">
+<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7394772684074541056?collapsed=1" height="262" width="80%" margin="auto" frameborder="0" allowfullscreen="" title="Publicación integrada"></iframe>
+</div>
+
 Llevo varios años trabajando con datos, tanto en el sector privado, como independiente y en el sector público, y hay algo que es una constante: **siempre** te van a pedir hacer cambios!
 
 Ya sea porque los datos cambian/se actualizan, porque hay que modificar los cálculos, porque hay que generar nuevos productos, o porque hay que cambiar los resultados (textos, gráficos, tablas).
