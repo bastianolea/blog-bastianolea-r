@@ -166,6 +166,7 @@ Sitios para encontrar combinaciones de colores para tus gráficos o aplicaciones
 - [HTML Color Picker](https://www.w3schools.com/colors/colors_picker.asp)
 - [Pigment](https://pigment.shapefactory.co), paletas de colores
 - [2 Color Combinations](https://2colors.colorion.co), pares de colores
+- [Palette Visualizer](https://coolors.co/visualizer/cdb4db-ffc8dd-ffafcc-bde0fe-a2d2ff), previsualiza paletas con ejemplos de cómo se verían aplicadas 
 - [Realtime Colors](https://www.realtimecolors.com), simulador de interfaz web con paletas de colores
 - [Color Buddy](https://color-buddy.netlify.app/)
 
