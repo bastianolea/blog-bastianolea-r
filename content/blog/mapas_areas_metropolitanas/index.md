@@ -23,7 +23,7 @@ excerpt: "Comparto un poco de mi trabajo como analista de datos. En esta oportun
 
 Comparto un poco de mi trabajo como analista de datos en la Subsecretaría de Desarrollo Regional y Administrativo (Subdere). 
 
-{{< imagen_tamaño "areas_metropolitanas_mapa_6.jpg" "60%" >}}
+{{< imagen_tamaño "areas_metropolitanas_mapa_4.jpg" "60%" >}}
 
 En esta oportunidad me pidieron hacer mapas que visualizaran las propuestas de Áreas Metropolitanas en distintas regiones de Chile, junto a algunas estadísticas relacionadas.
 
