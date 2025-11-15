@@ -17,11 +17,9 @@ En esta página voy guardando enlaces a sitios web útiles para otros usuarios d
 ## Aprender
 _Sitios con contenido educacional para que aprendas R._
 
-### R aplicado a las ciencias sociales
+### Recursos para aprender R
 - [Ciencia de Datos para Gente Sociable](https://bitsandbricks.github.io/ciencia_de_datos_gente_sociable/) 📚 libro introductorio de R enfocado en personas de las ciencias sociales
 - [Taller de Métodos y Técnicas de Investigación I](https://fransofia.github.io/metodos-mgsocio-uah/), materiales de un curso de sociología sobre aplicación práctica de técnicas estadísticas usando R
-
-### Recursos para aprender R
 - [Tutorial de R desde cero](https://bastianolea.rbind.io/blog/r_introduccion/), con niveles [básico](/blog/r_introduccion/r_basico/), [intermedio](/blog/r_introduccion/r_intermedio/), y foco en [`aprender {dplyr}`](/blog/r_introduccion/dplyr_intro/)
 - [R para ciencia de datos](https://es.r4ds.hadley.nz) 📚 traducción al español del libro "R for Data Science", recomendado para entrar a R
 - [Big Book of R](https://www.bigbookofr.com/index.html#live-stats) 📚 colección de cientos de libros sobre R, organizada por temas
@@ -39,28 +37,30 @@ _Sitios con contenido educacional para que aprendas R._
 - [Tutorial de visualización de datos con `{ggplot2}`](/blog/r_introduccion/tutorial_visualizacion_ggplot/)
 - [A ggplot2 Tutorial for Beautiful Plotting in R](https://cedricscherer.netlify.app/2019/08/05/a-ggplot2-tutorial-for-beautiful-plotting-in-r/), tutorial recomendado de `{ggplot2}` (en inglés)
 
-### Desarrollo de aplicaciones con Shiny en R
+### Desarrollo de apps en R
 - [Shiny Assistant](https://shiny.posit.co/blog/posts/shiny-assistant/), asistente de inteligencia artificial para desarrollar, corregir y revisar aplicaciones Shiny
 - [Galería de Shiny Widgets](http://shinyapps.dreamrs.fr/shinyWidgets/), paquete que ofrece muchas inputs nuevos para Shiny
 - [Extensiones de Shiny](https://github.com/nanxstats/awesome-shiny-extensions), colección de paquetes que extienden Shiny
 - [Documentación de `{bslib}`](https://rstudio.github.io/bslib/index.html), paquete para construir interfaces en Shiny
 
-### Reportes Quarto
+### Otros
+
+#### Reportes Quarto
 - [Tutorial para crear documentos Quarto](https://bastianolea.rbind.io/blog/quarto_reportes/)
 - [Tutorial para usar Quarto para generar blogs y sitios web](https://bastianolea.rbind.io/blog/tutorial_quarto_github_pages/)
 - [Crear, publicar y analizar sitios web personales usando R](https://r4sites-book.netlify.app) 📚 libro que detalla todas las instrucciones de crear un sitio web con R y Hugo.
 
-### Análisis de texto con R
+#### Análisis de texto con R
 - [Cuentapalabras. Estilometría y análisis de texto con R para filólogos](https://aic.uva.es/cuentapalabras/)
 
-### Cursos para aprender R
+#### Cursos para aprender R
 - [SpatialLab](https://spatiallab.cl), cursos de R y más (algunos impartidos por mi! 😌)
 - [Estación R](https://estacion-r.com)
 - [DataCamp](https://www.datacamp.com), cursos asíncronos interactivos para aprender R (así aprendí yo)
 - [Hazla con Datos](https://hazlacondatos.com) 🩺
 - [Escuela de Datos](https://escueladedatos.online)
 
-### Obtener ayuda sobre R
+#### Obtener ayuda sobre R
 - [StackOverflow](https://stackoverflow.com/collectives/r-language), sitio web dedicado a preguntas y respuestas
 - [Comunidad de R en Reddit](https://www.reddit.com/r/rstats), donde también se pueden hacer consultas
 
@@ -71,44 +71,47 @@ _Sitios con contenido educacional para que aprendas R._
 ## Conectar
 _Conoce a otras personas que usan R o únete a una comundad de usuarios/as!_
 
-### Comunidades de R en Chile 🇨🇱
+### Comunidades de R
+
+#### Comunidades de R en Chile 🇨🇱
 - [RLadies Santiago](https://www.meetup.com/rladies-scl/), grupo por la diversidad de género en la comunidad R
 - [RLadies Chile](https://linktr.ee/rladieschile) 
 
 
-### Comunidades de R en Latinoamérica o hipanohablantes
+#### Comunidades de R en Latinoamérica o hipanohablantes
 - [Latin R](https://latinr.org), Conferencia Latinoamericana de R para investigación y desarrollo
 - [Escuela de Datos](https://escueladedatos.online)
 - [Grupo de usuarios de R de Madrid](https://madrid.r-es.org) 🇪🇸
 - [R en Buenos Aires](https://www.meetup.com/renbaires/?_xtd=gqFyqTIxOTE0ODE0MqFwp2FuZHJvaWQ%253D&from=ref) 🇦🇷
 
-### Otras comunidades de R
+#### Otras comunidades de R
 - [rainbowR](https://rainbowr.org) 🏳️‍🌈 comunidad de usuarixs de R enfocada en diversidad y disidencias sexo-genéricas y activismo de datos
 
-### Usuarios de R destacados
+### Usuarios de R
 - [Julia Silge](https://juliasilge.com) (análisis de texto, machine learning)
 - [Yanina Bellini Saibene](https://yabellini.netlify.app) 🇦🇷 (organizadora, traductora)
 - [Josiah Parry](https://josiahparry.com) (geoespacial, Rust)
 - [Danielle Navarro](https://blog.djnavarro.net) (data scientist, arte generativo)
-- [Nicola Rennie](https://nrennie.rbind.io) (visualización, salud)
-- [Yihui Xie](https://yihui.org/en/) (RMarkdown, `{knitr}`)
+- [Nicola Rennie](https://nrennie.rbind.io) (visualización de datos, salud)
+- [Deepali Kank](https://deepalikank.in) (visualización de datos)
+- [Yan Holtz](https://blog.yan-holtz.com) (visualización de datos)
+- [Georgios Karamanis](https://karaman.is) (visualización de datos y mapas)
+- [Kyle Walker](https://walker-data.com) (desarrollador del paquete [mapGL](https://github.com/walkerke/mapgl) para mapas interactivos)
+- [Dominic Royé](https://dominicroye.github.io) (mapas y datos geoespaciales)
 - [Albert Rapp](https://albert-rapp.de/blog) (tips y tutoriales)
 - [Mauricio "Pacha" Vargas](https://pacha.dev/blog/) 🇨🇱 (estadística, econometría)
+- [Rosana Ferrero](https://x.com/RosanaFerrero) 🇪🇸 (comparte mucho contenido sobre estadísticas y R)
+- [Lesly Flores](https://x.com/lesssflo) 🇲🇽 (comparte contenido de estadísticas en R)
 - [Riva Quiroga](https://rivaquiroga.cl/ahora/) 🇨🇱 (humanidades computacionales, lingüística)
 - [Bruno Rodrigues](https://www.brodrigues.co) (reproducibilidad)
 - [Luis D. Verde Arregoitia](https://luisdva.github.io) 🇲🇽 (biólogo)
-- [Rosana Ferrero](https://x.com/RosanaFerrero) 🇪🇸 (comparte mucho contenido sobre estadísticas y R)
-- [Lesly Flores](https://x.com/lesssflo) 🇲🇽 (comparte contenido de estadísticas en R)
 - [Joachim Schork](https://statisticsglobe.com)
 - [Kennedy Mwavu](https://x.com/kennedymwavu)
 - [Rony Rodríguez-Ramírez](https://rrmaximiliano.github.io) 🇳🇮
-- [Deepali Kank](https://deepalikank.in) (visualizaciones de datos)
-- [Kyle Walker](https://walker-data.com) (desarrollador del paquete [mapGL](https://github.com/walkerke/mapgl) para mapas interactivos)
-- [Dominic Royé](https://dominicroye.github.io) (mapas y datos geoespaciales)
 
 
 
-### Blogs sobre R
+#### Blogs sobre R
 - [Blog R-Bloggers](https://www.r-bloggers.com/), blog que reúne cientos de posts desde blogs de usuarios y desarrolladores de R
 - [R Weekly](https://rweekly.org), curatoría de noticias y posts sobre R
 - [Blog del Tidyverse](https://www.tidyverse.org/blog/)
@@ -129,6 +132,7 @@ _Sitios donde puedes encontrar datos que puedes usar para explorar o aprender._
 - [infoactivismo.org](https://infoactivismo.org/), sitio sobre activismo de datos, tecnología e información en Latinoamérica
 - [Vivir sin violencia](https://www.vivirsinviolencia.org) 🏳️‍🌈 datos abiertos sobre violencia de género y contra el colectivo LGBTIQ+
 - [Abriendo Datos](https://www.abriendodatos.org) 🇨🇱 fundación chilena que promueve una cultura de datos abiertos
+- [Unholster: Chile en 30 años](https://www.decidechile.cl/chile-en-30-anos)
 
 
 ### Fuentes de datos
@@ -140,6 +144,7 @@ _Sitios donde puedes encontrar datos que puedes usar para explorar o aprender._
 - [Banco Central de Chile](https://si3.bcentral.cl/siete), repositorio de datos estadísticos sobre economía y trabajo
 - [Estadísticas sociales del Instituto Nacional de Estadísticas (INE)](https://www.ine.gob.cl/estadisticas/)
 - [Estadísticas y datos abiertos de salud pública en Chile: Departamento de Estadísticas e Información de Salud (DEIS)](https://deis.minsal.cl/#estadisticas)
+- [Datos abiertos de educación en Chile: Centro de estudios Mineduc](https://datosabiertos.mineduc.cl)
 - [`{guaguas}`](https://rivaquiroga.github.io/guaguas/index.html), paquete de R con base de datos de nombres inscritos en Chile
 - [Observa](https://observa.minciencia.gob.cl), observatorio del Sistema Nacional de Ciencia, Tecnología, Conocimiento e Innovación
 - [Data Observatory](https://dataobservatory.net), plataforma de datos integrado por el Ministerio de Ciencia, Agencia Nacional de Investigación y Desarrollo, Ministerio de Economía y Universidad Adolfo Ibáñez
@@ -154,7 +159,12 @@ _Sitios donde puedes encontrar datos que puedes usar para explorar o aprender._
 ----
 
 
-## Otros
+## Otros recursos
+
+#### Imágenes de código
+Crear capturas de código en imágenes para compartir
+- [Carbon](https://carbon.now.sh)
+- [Code Images](https://ray.so)
 
 #### Tipografías
 - [Tipografías de Google](https://fonts.google.com/)
