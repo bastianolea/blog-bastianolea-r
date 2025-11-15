@@ -40,7 +40,16 @@
         
       <!--ensures section Params are respected-->
       {{ if $root.Params.show_author_byline }}<p class="f7 db mv1">{{ if .Params.author }}Por {{ .Params.author }}{{ end }}{{ with .Params.categories }} in{{ range . }} <a href="{{ "categories/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}{{ end }}</p>{{ end }}
-      {{ if $root.Params.show_post_date }}<p class="f7 db mv1">{{ .PublishDate.Format "2/1/2006" }}</p>{{ end }}
+      
+      <div>{{ if $root.Params.show_post_date }}<div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">{{ .PublishDate.Format "2/1/2006" }}</div>{{ end }}
+      <!-- contador de visitas -->
+        <span>
+          {{ if $root.Params.show_page_views }}
+        {{- partial "page_views.html" . -}}
+        {{ end }}
+        </span>
+      </div>
+      
       {{ if and $root.Params.show_button_links .Params.links }}
         <p class="db pt1">
         {{ partial "shared/btn-links.html" . }}
@@ -69,7 +78,16 @@
         
       <!--ensures section Params are respected-->
       {{ if $root.Params.show_author_byline }}<p class="f7 db mv1">{{ if .Params.author }}Por {{ .Params.author }}{{ end }}{{ with .Params.categories }} in{{ range . }} <a href="{{ "categories/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}{{ end }}</p>{{ end }}
-      {{ if $root.Params.show_post_date }}<p class="f7 db mv1">{{ .PublishDate.Format "2/1/2006" }}</p>{{ end }}
+      
+      <div>{{ if $root.Params.show_post_date }}<div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">{{ .PublishDate.Format "2/1/2006" }}</div>{{ end }}
+      <!-- contador de visitas -->
+        <span>
+          {{ if $root.Params.show_page_views }}
+        {{- partial "page_views.html" . -}}
+        {{ end }}
+        </span>
+      </div>
+      
       {{ if and $root.Params.show_button_links .Params.links }}
         <p class="db pt1">
         {{ partial "shared/btn-links.html" . }}

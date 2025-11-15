@@ -5,6 +5,7 @@ cascade:
   show_author_byline: false
   show_comments: true
   show_post_date: true
+  show_page_views: true
   sidebar:
     show_sidebar_adunit: false
     text_link_label: Publicaciones recientes
