@@ -56,7 +56,19 @@ Los datos de la aplicación se obtienen mediante [web scraping](/tags/web-scrapi
 
 {{< bajada "Captura de mi sesión de R obteniendo los datos actualizados" >}}
 
+La extracción de datos automatizada recibe las tablas en formato HTML, y las guarda tal cual para luego ser limpiadas en otro script, también automáticamente. En este punto el único inconveniente fue pasar de una tabla con múltiples encabezados, y grupos y subgrupos que solamente se distinguen de las filas de datos por su color o el tamaño de las letras 😣
+
+{{< imagen "cead_tabla.png" >}}
+
+{{< bajada "Odiamos los datos sucios" >}}
+
+[En el repositorio](https://github.com/bastianolea/delincuencia_chile) hay más información sobre el proceso y un breve apartado metodológico sobre los delitos considerados (porque este año actualizaron las categorías de delitos incluidos).
+
 ----
+
+{{< cafecito >}}
+
+<br>
 
 <div style="width: 100%; text-align: center; margin:auto;">
 <iframe src="https://platform.twitter.com/embed/Tweet.html?creatorScreenName=bastimapache&dnt=true&embedId=twitter-widget-0&features=eyJ0ZndfdGltZWxpbmVfbGlzdCI6eyJidWNrZXQiOltdLCJ2ZXJzaW9uIjpudWxsfSwidGZ3X2ZvbGxvd2VyX2NvdW50X3N1bnNldCI6eyJidWNrZXQiOnRydWUsInZlcnNpb24iOm51bGx9LCJ0ZndfdHdlZXRfZWRpdF9iYWNrZW5kIjp7ImJ1Y2tldCI6Im9uIiwidmVyc2lvbiI6bnVsbH0sInRmd19yZWZzcmNfc2Vzc2lvbiI6eyJidWNrZXQiOiJvbiIsInZlcnNpb24iOm51bGx9LCJ0ZndfZm9zbnJfc29mdF9pbnRlcnZlbnRpb25zX2VuYWJsZWQiOnsiYnVja2V0Ijoib24iLCJ2ZXJzaW9uIjpudWxsfSwidGZ3X21peGVkX21lZGlhXzE1ODk3Ijp7ImJ1Y2tldCI6InRyZWF0bWVudCIsInZlcnNpb24iOm51bGx9LCJ0ZndfZXhwZXJpbWVudHNfY29va2llX2V4cGlyYXRpb24iOnsiYnVja2V0IjoxMjA5NjAwLCJ2ZXJzaW9uIjpudWxsfSwidGZ3X3Nob3dfYmlyZHdhdGNoX3Bpdm90c19lbmFibGVkIjp7ImJ1Y2tldCI6Im9uIiwidmVyc2lvbiI6bnVsbH0sInRmd19kdXBsaWNhdGVfc2NyaWJlc190b19zZXR0aW5ncyI6eyJidWNrZXQiOiJvbiIsInZlcnNpb24iOm51bGx9LCJ0ZndfdXNlX3Byb2ZpbGVfaW1hZ2Vfc2hhcGVfZW5hYmxlZCI6eyJidWNrZXQiOiJvbiIsInZlcnNpb24iOm51bGx9LCJ0ZndfdmlkZW9faGxzX2R5bmFtaWNfbWFuaWZlc3RzXzE1MDgyIjp7ImJ1Y2tldCI6InRydWVfYml0cmF0ZSIsInZlcnNpb24iOm51bGx9LCJ0ZndfbGVnYWN5X3RpbWVsaW5lX3N1bnNldCI6eyJidWNrZXQiOnRydWUsInZlcnNpb24iOm51bGx9LCJ0ZndfdHdlZXRfZWRpdF9mcm9udGVuZCI6eyJidWNrZXQiOiJvbiIsInZlcnNpb24iOm51bGx9fQ%3D%3D&frame=false&hideCard=false&hideThread=false&id=1989499507894014463&lang=es&origin=http%3A%2F%2Flocalhost%3A4321%2Fblog%2F2025-11-14%2F&sessionId=176886ace112c1e8632f95795406d94a9a4a2c69&siteScreenName=bastimapache&theme=light&widgetsVersion=2615f7e52b7e0%3A1702314776716&width=550px" 
