@@ -104,7 +104,7 @@ blogdown::new_post(title = "Analiza el funcionamiento de tus aplicaciones Shiny 
 
 "layouts/partials/shared/sidebar/sidebar-header.html" # sidebar del blog
 
-
+"assets/custom.scss" # css del sitio
 
 ## utilidades ----
 
