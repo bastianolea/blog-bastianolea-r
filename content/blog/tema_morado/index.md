@@ -5,7 +5,6 @@ format: hugo-md
 date: 2024-07-23
 tags:
   - curiosidades
-  - temas
 lang: es
 excerpt: >-
   Tema para RStudio enfocado en una paleta de colores morada y rosada, basado en el tema _base16 Default Dark_ de [`{rsthemes}`](https://github.com/gadenbuie/rsthemes?tab=readme-ov-file), el cual a su vez se basa en [base16](https://github.com/chriskempson/base16).
