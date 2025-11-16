@@ -7,7 +7,7 @@ slug: []
 categories: []
 tags:
   - consejos
-  - temas
+  - curiosidades
 excerpt: La idea de usar un tema oscuro en una pantalla no es que se vea más bonito y profesional todo de negro, sino ayudarte a reducir el contraste de la pantalla con respecto al espacio en el que estás trabajando. Para resolver esto, sólo se necesitan dos paquetes y una pequeña configuración.
 ---
 
