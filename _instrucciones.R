@@ -16,10 +16,10 @@ blogdown::new_post(title = "¿Por qué programar para trabajar con datos?",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Analiza el funcionamiento de tus aplicaciones Shiny con {reactlog}", 
-                   file = "blog/elecciones_presidenciales_2025/index.md",
+blogdown::new_post(title = "Mensajes de desconexión personalizados en Shiny", 
+                   file = "blog/shiny_desconexion/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("shiny", "optimización"),
+                   tags = c("shiny"),
                    categories = c() 
 )
 
