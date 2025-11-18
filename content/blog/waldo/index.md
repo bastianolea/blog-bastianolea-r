@@ -16,7 +16,7 @@ tags:
 links:
   - icon: registered
     icon_pack: fas
-    name: waldo
+    name: Paquete
     url: https://waldo.r-lib.org
 excerpt: >-
   `{waldo}` es un paquete de R para encontrar diferencias entre objetos y

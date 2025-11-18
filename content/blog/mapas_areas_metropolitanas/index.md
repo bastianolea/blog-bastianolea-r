@@ -13,11 +13,11 @@ format:
   hugo-md:
     output-file: index
     output-ext: md
-links:
-  - icon: gitlab
-    icon_pack: fab
-    name: Código
-    url: https://gitlab.subdere.gob.cl/bolea/areas_metropolitanas_2
+# links:
+#   - icon: gitlab
+#     icon_pack: fab
+#     name: Código
+#     url: https://gitlab.subdere.gob.cl/bolea/areas_metropolitanas_2
 excerpt: "Comparto un poco de mi trabajo como analista de datos. En esta oportunidad me pidieron hacer mapas que visualizaran las propuestas de Áreas Metropolitanas en distintas regiones de Chile, junto a algunas estadísticas relacionadas."
 ---
 
