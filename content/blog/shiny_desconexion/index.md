@@ -13,12 +13,12 @@ format:
 links:
   - icon: registered
     icon_pack: fas
-    name: shinydisconnect
+    name: Paquete
     url: https://github.com/daattali/shinydisconnect
-  # - icon: github
-  #   icon_pack: fab
-  #   name: Código
-  #   url: https://github.com/daattali/shinydisconnect
+  - icon: github
+    icon_pack: fab
+    name: Código
+    url: https://gist.github.com/bastianolea/c7b20dbffd5658a3a8aeed53efb884d7
 excerpt: "Las aplicaciones Shiny funcionan con un servidor detrás, que es el proceso de R que realiza los cálculos necesarios para mostrar tus contenidos. Por lo mismo, estas aplicaciones no pueden estar conectadas por siempre. Lo bueno es que podemos personalizar el mensaje de desconexión de la app para que les usaries entiendan mejor que la app requiere recargarse."
 ---
 
