@@ -22,6 +22,7 @@ links:
 execute:
   eval: true
   cache: false
+  warning: false
 excerpt: "R cuenta con un muy amplio ecosistema de paquetes para datos geoespaciales. Uno de los paquetes más importantes es `{sf}`, que permite manipular datos espaciales a partir del estándar _simple features_ (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS). En esta guía iré guardando los comandos que uso frecuentemente para manipular y visualizar datos geoespaciales en R. En la medida que voy aprendiendo más sobre hacer mapitas, iré actualizando y complementando."
 ---
 
@@ -940,6 +941,8 @@ También podemos hacer recortes que pasen por encima de los polígonos, eliminan
 
 ```{r}
 #| echo: false
+#| message: false
+#| warning: false
 chile |> 
   st_crop(xmin = -78, ymax = -38,
           xmax = -72, ymin = -41) |> 
@@ -992,6 +995,7 @@ Ahora que tenemos la caja, la usamos dentro de `st_crop()` para recortar el mapa
 
 ```{r}
 #| message: false
+#| warning: false
 chile_recorte <- chile |> 
   # ajustar crs para que coincidan
   st_transform(crs = st_crs(puntos)) |>

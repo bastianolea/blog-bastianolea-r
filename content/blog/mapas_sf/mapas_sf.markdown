@@ -22,6 +22,7 @@ links:
 execute:
   eval: true
   cache: false
+  warning: false
 excerpt: "R cuenta con un muy amplio ecosistema de paquetes para datos geoespaciales. Uno de los paquetes más importantes es `{sf}`, que permite manipular datos espaciales a partir del estándar _simple features_ (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS). En esta guía iré guardando los comandos que uso frecuentemente para manipular y visualizar datos geoespaciales en R. En la medida que voy aprendiendo más sobre hacer mapitas, iré actualizando y complementando."
 ---
 
@@ -1023,12 +1024,6 @@ También podemos hacer recortes que pasen por encima de los polígonos, eliminan
 
 
 
-
-```
-## Warning: attribute variables are assumed to be spatially constant throughout
-## all geometries
-```
-
 <img src="/blog/mapas_sf/mapas_sf_files/figure-html/unnamed-chunk-42-1.png" width="672" />
 
 
@@ -1093,11 +1088,6 @@ chile_recorte <- chile |>
   st_transform(crs = st_crs(puntos)) |>
   # recortar con la caja (bounding box)
   st_crop(caja_puntos)
-```
-
-```
-## Warning: attribute variables are assumed to be spatially constant throughout
-## all geometries
 ```
 
 <img src="/blog/mapas_sf/mapas_sf_files/figure-html/unnamed-chunk-47-1.png" width="672" />
