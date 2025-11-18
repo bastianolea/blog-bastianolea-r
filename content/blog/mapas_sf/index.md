@@ -22,6 +22,7 @@ links:
 execute:
   eval: true
   cache: false
+  warning: false
 excerpt: >-
   R cuenta con un muy amplio ecosistema de paquetes para datos geoespaciales.
   Uno de los paquetes más importantes es `{sf}`, que permite manipular datos
@@ -786,12 +787,6 @@ Ahora lo recortamos con `st_crop()`. Recomiendo hacerlo terminando el recorte co
 chile_recortado <- chile |> 
   st_crop(xmin = -78, ymax = -17,
           xmax = -65, ymin = -56) # |> 
-```
-
-    Warning: attribute variables are assumed to be spatially constant throughout
-    all geometries
-
-``` r
   # ggplot() +
   # geom_sf()
 ```
@@ -819,9 +814,6 @@ mapa_completo + mapa_recortado
 {{< /detalles >}}
 
 También podemos hacer recortes que pasen por encima de los polígonos, eliminando la geografía que quede fuera del recorte. En este caso hacemos un recorte más cercano a la zona costera de Temuco y Valdivia:
-
-    Warning: attribute variables are assumed to be spatially constant throughout
-    all geometries
 
 <img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-42-1.png" width="768" />
 
@@ -869,9 +861,6 @@ chile_recorte <- chile |>
   # recortar con la caja (bounding box)
   st_crop(caja_puntos)
 ```
-
-    Warning: attribute variables are assumed to be spatially constant throughout
-    all geometries
 
 <img src="mapas_sf.markdown_strict_files/figure-markdown_strict/unnamed-chunk-47-1.png" width="768" />
 
