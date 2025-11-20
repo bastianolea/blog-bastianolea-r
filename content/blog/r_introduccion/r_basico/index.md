@@ -33,9 +33,11 @@ Entender estos aspectos básicos del lenguaje es fundamental para que, en un fut
 
 La idea de esta guía es aproximarnos a los principios más básicos de R, en partes pequeñas y con ejemplos simples, para poder entenderlos más fácilmente. Una vez que entendamos estos principios básicos, veremos que son aplicables a bases de datos de cientos o millones de observaciones simultáneamente, sin demasiada diferencia.
 
-### Instalación
+### Instalación de R
 
 Para **instalar R**, el lenguaje de programación, y además RStudio, el programa que te ayuda a trabajar con el lenguaje, dirígete a este post donde doy todas las instrucciones: [Primer paso: Instalar R](../../../../blog/r_introduccion/instalar_r/)
+
+### RStudio
 
 Una vez que [hayamos instalado R y R Studio](../../../../blog/r_introduccion/instalar_r/), abrimos RStudio.
 
@@ -724,7 +726,7 @@ numeros <- 1:10000000
 sample(numeros, size = 1)
 ```
 
-    [1] 8470837
+    [1] 4838168
 
 La función recibe como primer argumento el vector de elementos, y como segundo argumento la cantidad de elementos que queremos obtener al azar.
 
@@ -798,7 +800,7 @@ animales <- c("gato", "mapache", "castor", "pollo", "ratón", "pudú")
 paste("el animal más lindo es el", sample(animales, 1))
 ```
 
-    [1] "el animal más lindo es el pollo"
+    [1] "el animal más lindo es el gato"
 
 ### Redondear datos
 
