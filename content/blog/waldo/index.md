@@ -112,11 +112,11 @@ Para terminar, veamos un ejemplo más práctico: acá hay dos tablas de datos co
 
 | var_ead32 | var_efe23 | var_eea31 | var_edr52 | var_ead30 | var_eae31 |
 |----------:|----------:|----------:|----------:|----------:|----------:|
-| 0.6445493 | 0.7915215 | 0.4051289 | 0.6173781 | 0.5126542 | 0.2135513 |
+| 0.9629587 |  0.186854 |  0.743411 | 0.1829925 | 0.3855037 | 0.0135598 |
 
 | var_ead32 | var_efe23 | var_eae31 | var_ede52 | var_ead30 | var_eae30 |
 |----------:|----------:|----------:|----------:|----------:|----------:|
-| 0.5498182 | 0.0864707 | 0.8429734 | 0.0750443 | 0.3870897 | 0.0301285 |
+| 0.2636705 | 0.3516496 | 0.8207743 | 0.4509701 | 0.3146321 | 0.1663455 |
 
 Así a la rápida es casi imposible saber si las columnas son las mismas, o si no lo son, cuáles sobran y cuáles faltan! 😭
 
