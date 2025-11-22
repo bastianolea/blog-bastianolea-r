@@ -10,7 +10,6 @@ cascade:
     show_sidebar_adunit: false
     text_link_label: Publicaciones recientes
     text_link_url: /blog/
-description: "Publicaciones periódicas sobre el uso de R para análisis de datos, incluyendo tutoriales, reseñas, tips o consejos, novedades, y más. Usa el [buscador](https://bastianoleah.shinyapps.io/buscador/) para encontrar publicaciones."
 
 layout: list-sidebar #define la estructura de la página de posts
 show_author_byline: false
@@ -18,10 +17,10 @@ show_button_links: true
 show_post_date: true
 show_post_thumbnail: true
 sidebar:
-  title: Análisis de datos en R
+  title: Blog
   author: Bastián Olea Herrera
   categories_link: false
-  description: "Publicaciones sobre R para análisis de datos, incluyendo tutoriales, guías, consejos y más. Usa el [buscador](https://bastianoleah.shinyapps.io/buscador/) para encontrar publicaciones."
+  description: "Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el [buscador](https://bastianoleah.shinyapps.io/buscador/) para encontrar publicaciones o navega los [temas](/tags/)."
   series_link: true
   show_sidebar_adunit: false
   tags_link: true
