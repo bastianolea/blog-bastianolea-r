@@ -1,5 +1,5 @@
 ---
-title: Calcular variables nuevas y resúmenes de datos con {dplyr}
+title: Crear y calcular variables nuevas con `dplyr::mutate()`
 author: Bastián Olea Herrera
 date: '2025-02-16'
 format:
@@ -22,8 +22,6 @@ execute:
 ---
 
 
-En el [tutorial anterior de introducción a `{dplyr}`](../../../../blog/r_introduccion/dplyr_intro/) aprendimos a ordenar, seleccionar, y filtrar datos tabulares. Con estas operaciones básicas deberíamos poder desenvolvernos con tablas de datos.
-
 En esta ocasión, avanzaremos hacia las herramientas que nos permiten **crear datos nuevos** a partir de los datos que ya aprendimos a manejar.
 
 ------------------------------------------------------------------------
@@ -38,10 +36,6 @@ mutate group_by
 mutate case_when
 
 mutate across
-
-summarize
-
-summarize across
 
 {{< cursos >}}
 {{< cafecito >}}

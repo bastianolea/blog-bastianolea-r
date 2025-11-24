@@ -22,7 +22,7 @@ execute:
 ---
 
 
-En el [tutorial anterior vimos cómo transformar datos con `{dplyr}` y {tidyr}](../../../../blog/r_introduccion/dplyr_intermedio/), con lo que aprendimos a separar y unir columnas, y transformar tablas de datos a los formatos *largo* y *ancho*, lo que nos entrega una gran libertad al momento de manipular datos tabulares.
+transformar tablas de datos a los formatos *largo* y *ancho*, lo que nos entrega una gran libertad al momento de manipular datos tabulares.
 
 ------------------------------------------------------------------------
 
@@ -35,9 +35,6 @@ unite
 pivot_longer
 
 pivot_wider
-
-left_join
-[post](../../../../blog/left_join/)
 
 {{< cursos >}}
 {{< cafecito >}}

@@ -726,7 +726,7 @@ numeros <- 1:10000000
 sample(numeros, size = 1)
 ```
 
-    [1] 4838168
+    [1] 3036468
 
 La función recibe como primer argumento el vector de elementos, y como segundo argumento la cantidad de elementos que queremos obtener al azar.
 
@@ -800,7 +800,7 @@ animales <- c("gato", "mapache", "castor", "pollo", "ratón", "pudú")
 paste("el animal más lindo es el", sample(animales, 1))
 ```
 
-    [1] "el animal más lindo es el gato"
+    [1] "el animal más lindo es el mapache"
 
 ### Redondear datos
 

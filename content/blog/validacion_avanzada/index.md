@@ -24,6 +24,11 @@ links:
     icon_pack: fas
     name: testthat
     url: https://testthat.r-lib.org
+  - icon: youtube
+    icon_pack: fab
+    name: Workshop
+    url: >-
+      https://r-consortium.org/webinars/how-to-use-pointblank-to-understand-validate-and-document-your-data.html
 excerpt: >-
   La validación de datos sirve para verificar durante el proceso de análisis si
   los datos cumplen con requerimientos de calidad y con tus expectativas, con el
@@ -104,7 +109,7 @@ test_that("números iguales",
 )
 ```
 
-    Test passed 🌈
+    Test passed 🥳
 
 Esta prueba evalúa si dos números son iguales (`expect_equal()`), y en este ejemplo se cumple: `{testthat}` nos entrega un emoji de celebración 🎉 Veamos la siguiente prueba:
 
@@ -138,7 +143,7 @@ test_that("se cargaron los datos",
 )
 ```
 
-    Test passed 😀
+    Test passed 😸
 
 ``` r
 # esperamos que el número de columnas sea 4
@@ -147,7 +152,7 @@ test_that("suficientes columnas",
 )
 ```
 
-    Test passed 🥇
+    Test passed 😀
 
 ``` r
 # esperamos que la columna `animal` sea tipo caracter
@@ -156,7 +161,7 @@ test_that("columnas tipo texto",
 )
 ```
 
-    Test passed 🥇
+    Test passed 😸
 
 ``` r
 # esperamos que la columna `patas` sea tipo numérico
@@ -328,18 +333,18 @@ iris_sucio
 ```
 
     # A tibble: 150 × 5
-       sepal_length sepal_width petal_length petal_width species    
-       <chr>        <chr>       <chr>        <chr>       <chr>      
-     1 "5.1 "       "3.5"       "1.4"         <NA>       "S!ETOSA"  
-     2  <NA>        "3"         "1.4 "       "0.2"       "se^tosa"  
-     3 "4.7"        "3.2"       "1.3"        "0.2"       "se+tos.a "
-     4 "4.6 "        <NA>       "1.5"        "0.2"       "seto%sa"  
-     5  <NA>        "3.6"        <NA>        "0.2"       "se#tosa " 
-     6 "5.4"        "3.9 "       <NA>        "0.4 "       <NA>      
-     7 "4.6 "       "3.4"       "1.4"        "0.3"       "SETOSA"   
-     8 "5"           <NA>       "1.5"        "0.2"       "SETO$SA"  
-     9 "4.4 "       "2.9 "      "1.4"         <NA>       ".SETOSA"  
-    10 "4.9"        "3.1"       "1.5"        "0.1"       "set(o$s@a"
+       sepal_length sepal_width petal_length petal_width species   
+       <chr>        <chr>       <chr>        <chr>       <chr>     
+     1 "5.1"        "3.5"       1.4          "0.2"       "se#tosa "
+     2 "4.9"        "3"         <NA>         "0.2 "      "se_tos*a"
+     3 "4.7"        "3.2"       1.3          "0.2 "      "se%tosa" 
+     4  <NA>        "3.1"       1.5          "0.2 "       <NA>     
+     5 "5"          "3.6"       <NA>         "0.2"       "se+tosa" 
+     6 "5.4"        "3.9 "      1.7          "0.4"       "set!osa" 
+     7 "4.6 "       "3.4"       1.4          "0.3"       "set$osa" 
+     8 "5"           <NA>       1.5           <NA>        <NA>     
+     9  <NA>        "2.9 "      1.4          "0.2 "      "SETO@SA" 
+    10 "4.9"        "3.1"       1.5           <NA>       "set)osa "
     # ℹ 140 more rows
 
 Luego creamos un agente para validar estos datos:

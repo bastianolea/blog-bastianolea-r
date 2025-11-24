@@ -175,7 +175,7 @@ Con este código, creamos el objeto reactivo `datos()` que se actualizará cada 
 
 Luego, definimos un gráfico sencillo en base a `datos()`, y que por consiguiente se actualizará automáticamente cuando cambien los datos reactivos:
 
-```
+```r
  # generar un gráfico de barras
   output$grafico_barras <- renderPlot({
     datos() |> 

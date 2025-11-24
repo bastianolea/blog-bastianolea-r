@@ -24,6 +24,10 @@ links:
     icon_pack: fas
     name: testthat
     url: https://testthat.r-lib.org
+  - icon: youtube
+    icon_pack: fab
+    name: Workshop
+    url: https://r-consortium.org/webinars/how-to-use-pointblank-to-understand-validate-and-document-your-data.html
 excerpt: La validación de datos sirve para verificar durante el proceso de análisis si los datos cumplen con requerimientos de calidad y con tus expectativas, con el objetivo de evitar problemas futuros relacionados a datos inesperados, incompletos, o erróneos. En este post veremos dos paquetes para validar el funcionamiento de tu código y para validar tus datos. 
 ---
 
@@ -172,7 +176,7 @@ test_that("se cargaron los datos",
 ```
 
 ```
-## Test passed 🎉
+## Test passed 🎊
 ```
 
 ``` r
@@ -183,7 +187,7 @@ test_that("suficientes columnas",
 ```
 
 ```
-## Test passed 🎉
+## Test passed 🌈
 ```
 
 ``` r
@@ -420,18 +424,18 @@ iris_sucio
 
 ```
 ## # A tibble: 150 × 5
-##    sepal_length sepal_width petal_length petal_width species    
-##    <chr>        <chr>       <chr>        <chr>       <chr>      
-##  1  <NA>         <NA>       "1.4"        "0.2"       "set%osa"  
-##  2 "4.9"        "3"         "1.4"         <NA>       "+se.to+sa"
-##  3 "4.7"        "3.2"       "1.3"        "0.2"       "setosa "  
-##  4 "4.6"        "3.1"        <NA>        "0.2 "      "setos(a"  
-##  5  <NA>        "3.6"       "1.4"        "0.2"       "s%etos$a "
-##  6 "5.4 "       "3.9"       "1.7 "       "0.4"       "setosa"   
-##  7  <NA>         <NA>       "1.4"        "0.3 "      "s)etosa"  
-##  8 "5"          "3.4"       "1.5 "       "0.2"       "setos_a"  
-##  9 "4.4"        "2.9"       "1.4"         <NA>       "setosa"   
-## 10 "4.9"        "3.1 "      "1.5"        "0.1"       ".setos.a" 
+##    sepal_length sepal_width petal_length petal_width species     
+##    <chr>        <chr>       <chr>        <chr>       <chr>       
+##  1 "5.1"         <NA>       "1.4"        "0.2 "      "@s)e+tosa" 
+##  2  <NA>        "3 "        "1.4"        "0.2"       "set)osa"   
+##  3 "4.7 "       "3.2"       "1.3"        "0.2"       "setosa"    
+##  4 "4.6"        "3.1"       "1.5 "        <NA>       "setosa"    
+##  5 "5"          "3.6"       "1.4"        "0.2"       "se&to*sa"  
+##  6 "5.4"        "3.9"       "1.7 "       "0.4"       "seto_sa"   
+##  7 "4.6"        "3.4"       "1.4"        "0.3 "      "set%osa"   
+##  8 "5"          "3.4"       "1.5"        "0.2 "      "@se^tosa"  
+##  9 "4.4"         <NA>       "1.4 "       "0.2"       "setosa"    
+## 10 "4.9"        "3.1"       "1.5"        "0.1"       "$s&etos@a "
 ## # ℹ 140 more rows
 ```
 
