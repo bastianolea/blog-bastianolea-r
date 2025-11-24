@@ -1,7 +1,7 @@
 ---
 title: Transformación de datos con {dplyr} y {tidyr}
 author: Bastián Olea Herrera
-date: '2025-02-16'
+date: '2025-11-24'
 format:
   hugo-md:
     output-file: index
