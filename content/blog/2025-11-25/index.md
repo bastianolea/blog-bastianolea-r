@@ -41,6 +41,9 @@ Puedes confirmarlo **reiniciando la sesión de R** (menú _Session_, opción _Re
 
 Podemos usar esto para definir configuraciones, o ejecutar cualquier tarea que necesitemos que se realice apenas abramos R.
 
+----
+
+
 Por ejemplo, podemos configurar la cantidad de decimales de los números antes de pasar a notación científica agregando:
 
 ```r
@@ -48,6 +51,15 @@ options(scipen = 999)
 
 # probar:
 1/900000
+```
+
+```
+[1] 0.000001111111
+```
+
+O cambiar el lenguaje de R:
+```r
+Sys.setenv(LANG = "es")
 ```
  
 O podemos configurar globalmente el lenguaje de las fechas de R:
@@ -59,6 +71,44 @@ Sys.setlocale("LC_TIME", "es_ES.UTF-8")
 # pedirle una fecha para confirmar que usa meses en español
 lubridate::today() |> format("%d de %B")
 ```
+
+```
+[1] "25 de noviembre"
+```
+
+Podemos hacer que R nos de un saludo personalizado al azar:
+
+```r
+saludos <- c("Holi 💕",
+             "Te extrañaba 🥺",
+             "Holi polli 🐥",
+             "Hoy es un buen día para la ciencia",
+             "Que tengas un bonito día, nerd 🤓")
+             
+message(sample(saludos, 1))
+```
+
+```
+Holi 💕
+```
+
+O podemos hacer algo más útil; que R nos entregue información al iniciarse; por ejemplo, que nos diga la fecha de actualización del último archivo modificado en una carpeta:
+
+```r
+# obtener información del contenido de una carpeta
+directorio <- fs::dir_info("datos/")
+# obtener la fecha de la última modificación
+ultimo <- max(directorio$modification_time)
+# formatear fecha
+fecha <- format(ultimo, "%d de %B a las %H:%M")
+
+message("Bienvenidx! ☺️ Última actualización: ", fecha)
+```
+
+```
+Bienvenidx! ☺️ Última actualización: 25 de noviembre a las 15:10
+```
+
 
 Pero siempre tenemos que tener cuidado de no agregar al _perfil_ código que haga que nuestros proyectos dejen de ser reproducibles! Si el proyecto _depende_ de código que está en el _perfil_, alguien más que abra el proyecto no podrá correrlo correctamente.
 

@@ -40,7 +40,6 @@ blogdown::new_post(title = "Mensajes de desconexión personalizados en Shiny",
 ## borradores ----
 
 # tutoriales
-"content/blog/r_introduccion/conectores/conectores.qmd"
 "content/blog/r_introduccion/dplyr_mutate/dplyr_mutate.qmd"
 "content/blog/r_introduccion/dplyr_summarize/dplyr_summarize.qmd"
 "content/blog/r_introduccion/tidyr_pivotar/tidyr_pivotar.qmd"
