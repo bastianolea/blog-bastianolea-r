@@ -22,5 +22,9 @@ options(
 # fix Hugo version
 options(blogdown.hugo.version = "0.136.5")
 
-# abrir script
-# utils::file.edit("_instrucciones.R")
+# abrir script al iniciar RStudio
+setHook("rstudio.sessionInit", function(newSession) {
+  if (newSession)
+    rstudioapi::filesPaneNavigate(here::here("content/blog/"))
+    rstudioapi::documentOpen("_instrucciones.R")
+}, action = "append")

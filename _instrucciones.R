@@ -12,7 +12,7 @@ blogdown::build_site()
 blogdown::new_post(title = "¿Por qué programar para trabajar con datos?", 
                    file = paste0("blog/", lubridate::today(), "/index.md"),
                    author = "Bastián Olea Herrera",
-                   tags = c("blog")
+                   tags = c("curiosidadaes")
 )
 
 # crear un post tutorial
