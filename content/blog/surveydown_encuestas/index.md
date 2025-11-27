@@ -19,25 +19,27 @@ links:
   icon_pack: fas
   name: encuesta demo
   url: https://bastianoleah.shinyapps.io/encuesta_animales
+excerpt: "Con el paquete [`{surveydown}`](https://surveydown.org) podemos crear encuestas desde R gratis, cuyas respuestas se almacenan en una base de datos también gratuita. Así, no necesitas depender de un servicio para generar la encuesta, ni tampoco tener que pagar para poder crearla o publicarla. En este tutorial te explico cómo hacerlo paso a paso."
 ---
 
-Con el paquete [`{surveydown}`](https://surveydown.org) es muy fácil crear una encuesta con R, creando tus propias preguntas personalizadas, y almacenando todas las respuestas de tus encuestados/as en una base de datos.
+Con el paquete [`{surveydown}`](https://surveydown.org) podemos crear encuestas desde R gratis, cuyas respuestas se almacenan en una base de datos también gratuita.
 
-La gracia de crear tu propia encuesta es que puedes personalizarla según tus necesidades, pero también es que no necesitas depender de un servicio para generar la encuesta, ni tampoco tener que pagar para poder crearla o publicarla. Por el contrario, podemos utilizar tecnologías gratuitas y de código abierto para crear nuestras encuestas, almacenar sus resultados y analizarlos.
+La gracia de crear tu propia encuesta es que puedes personalizarla según tus necesidades, pero también es que no necesitas depender de un servicio para generar la encuesta, ni tampoco tener que pagar para poder crearla o publicarla. Por el contrario, podemos utilizar **tecnologías gratuitas y de código abierto** para crear nuestras encuestas, almacenar sus resultados y analizarlos.
 
-El paquete [`{surveydown}`](https://surveydown.org) combina el uso de [Quarto](https://quarto.org/docs/computations/r.html) y [Shiny](https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/) para crear encuestas fáciles de diseñar, y con altas capacidades de personalización. [Aquí te dejo una encuesta de prueba para que veas cómo son!](https://bastianoleah.shinyapps.io/encuesta_animales)
+{{< imagen "surveydown_2.png" >}}
+
+{{< bajada "Ejemplo de una encuesta" >}}
+
+El paquete [`{surveydown}`](https://surveydown.org) combina el uso de [Quarto](https://quarto.org/docs/computations/r.html) y [Shiny](https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/) para crear encuestas fáciles de diseñar, y con altas capacidades de personalización. [Aquí te dejo una **encuesta de prueba** para que veas cómo son!](https://bastianoleah.shinyapps.io/encuesta_animales)
 
 El diseño de la encuesta, con todas sus preguntas, títulos, textos, páginas y botones, se hace por medio de un **documento [Quarto](https://quarto.org/docs/computations/r.html)**, donde literalmente vas poniendo todo el contenido que quieres que tenga tu encuesta, especificando los saltos de página de la encuesta, y listo.
 
 El funcionamiento interno de la encuesta es resuelto por `{surveydown}`, y no tenemos que realizar nada de configuración ni programación por nuestro lado. Todo funciona de forma inmediata (la encuesta, la interacción del usuario y la base de datos) por medio de una **aplicación Shiny**. Lo único que tenemos que proveer es la **conexión a la base de datos** donde se van a ir guardando las respuestas, y de la cual también vamos a poder obtener los resultados cuando queramos.
 
-<div style="padding:18px;padding-bottom:1px;padding-top:1px;background-color:#493365;color:#E9DDEE;border-radius:6px;margin:20px;margin-top:40px;margin-left:40px;margin-right:40px;font-size:100%;">
 
-Aquí les dejo una encuesta de prueba, hecha siguiendo este tutorial, para ver quién gana: ¿gatos 🐈 o perros 🐕? [**Responde aquí**](https://bastianoleah.shinyapps.io/encuesta_animales)
+{{< aviso "Aquí les dejo una encuesta de prueba, hecha siguiendo este tutorial, para ver quién gana: ¿gatos 🐈 o perros 🐕? [**Responde aquí**](https://bastianoleah.shinyapps.io/encuesta_animales)" >}}
 
-</div>
-
-<br></br>
+{{< indice >}}
 
 
 ## Instalar el paquete
@@ -100,7 +102,7 @@ En el sitio de `{surveydown}` puedes conocer [todos los **tipos de preguntas**](
 
 También existe una [**encuesta online de prueba** que te muestra todos los tipos de preguntas](https://surveydown.shinyapps.io/question_types/) en una encuesta real.
 
-![](surveydown_1.png)
+{{< imagen "surveydown_1.png" >}}
 
 Aquí te dejo algunos ejemplos de preguntas básicas que puedes incluir en tu encuesta:
 
@@ -151,6 +153,8 @@ sd_question(
 )
 ```
 
+### Navegación
+
 Al finalizar cada página de tu encuesta, tienes que agregar el botón de siguiente, para que los usuarios/as puedan avanzar a la siguiente página:
 
 ```r
@@ -167,7 +171,7 @@ sd_close(label_close = "Terminar")
 
 Si quieres probar cómo va quedando tu encuesta, puedes ejecutar la aplicación Shiny desde el archivo `app.R`, presionando el botón _Run._
 
-![](surveydown_2.png)
+{{< imagen "surveydown_2.png" >}}
 
 En [este repositorio](https://github.com/bastianolea/encuesta_animales) te dejo el código de [una encuesta básica](https://bastianoleah.shinyapps.io/encuesta_animales), de tres preguntas, con gráficos que visualizan las respuestas de la encuesta al terminar de responderla. Puedes usarla como guía al momento de diseñar tu propia encuesta.
 
@@ -279,11 +283,4 @@ _Gráficos al final de la encuesta, actualizados en tiempo real_
 
 Si este tutorial te sirvió, por favor considera hacerme una pequeña donación para poder tomarme un cafecito mientras escribo el siguiente tutorial 🥺
 
-<div style = "height: 18px;">
-</div>
-<div>
-  <div style="display: flex;
-  justify-content: center;
-  align-items: center;">
-    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
-  </div>
+{{< cafecito >}}
