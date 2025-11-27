@@ -9,10 +9,10 @@ blogdown::build_site()
 ## posts ----
 
 # crear un post normal
-blogdown::new_post(title = "¿Por qué programar para trabajar con datos?", 
+blogdown::new_post(title = "Recibe fotos de gatos o bendiciones automáticamente al abrir RStudio", 
                    file = paste0("blog/", lubridate::today(), "/index.md"),
                    author = "Bastián Olea Herrera",
-                   tags = c("curiosidadaes")
+                   tags = c("curiosidades")
 )
 
 # crear un post tutorial
