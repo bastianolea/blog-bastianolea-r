@@ -16,10 +16,10 @@ blogdown::new_post(title = "Recibe fotos de gatos o bendiciones automáticamente
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Mensajes de desconexión personalizados en Shiny", 
-                   file = "blog/shiny_desconexion/index.md",
+blogdown::new_post(title = "R", 
+                   file = "blog/grupo_usuarixs_r/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("shiny"),
+                   tags = c("blog", "chile"),
                    categories = c() 
 )
 
