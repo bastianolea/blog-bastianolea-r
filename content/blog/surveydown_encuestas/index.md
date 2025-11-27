@@ -169,13 +169,15 @@ En la página final de tu encuesta puedes poner un texto de agradecimiento y má
 sd_close(label_close = "Terminar")
 ```
 
+### Probar la encuesta
+
 Si quieres probar cómo va quedando tu encuesta, puedes ejecutar la aplicación Shiny desde el archivo `app.R`, presionando el botón _Run._
 
 {{< imagen "surveydown_2.png" >}}
 
 En [este repositorio](https://github.com/bastianolea/encuesta_animales) te dejo el código de [una encuesta básica](https://bastianoleah.shinyapps.io/encuesta_animales), de tres preguntas, con gráficos que visualizan las respuestas de la encuesta al terminar de responderla. Puedes usarla como guía al momento de diseñar tu propia encuesta.
 
-Sin embargo, para que tu encuesta funcione, tienes que **configurar la base de datos** primero. Veremos eso a continuación, pero si de todas maneras quieres probar tu encuesta antes de configurar la base de datos, puedes probar la aplicación Shiny ejecutándola, y las respuestas se van a guardar en un archivo local.
+Sin embargo, para poder capturar respuestas como corresponde, tienes que **configurar la base de datos** primero. Veremos eso a continuación, pero si de todas maneras quieres probar tu encuesta antes de configurar la base de datos, puedes probar la aplicación Shiny ejecutándola, y las respuestas se van a guardar en un archivo local.
 
 
 ## Configurar la base de datos
