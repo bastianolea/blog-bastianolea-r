@@ -9,8 +9,8 @@ link_list_label: "Enlaces"
 link_list:
 - name: Sitio web académico
   url: https://bastian.olea.biz
-- name: LinkedIn
-  url: https://www.linkedin.com/in/bastianolea/
+- name: Clases
+  url: /clases/
 - name: Escríbeme
   url: /contacto/
 ---

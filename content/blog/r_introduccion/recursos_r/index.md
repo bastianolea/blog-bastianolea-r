@@ -69,7 +69,7 @@ _Sitios con contenido educacional para que aprendas R._
 
 
 ## Conectar
-_Conoce a otras personas que usan R o únete a una comundad de usuarios/as!_
+_Conoce a otras personas que usan R o únete a una comunidad de usuarios/as!_
 
 ### Comunidades de R
 
@@ -83,6 +83,7 @@ _Conoce a otras personas que usan R o únete a una comundad de usuarios/as!_
 - [Escuela de Datos](https://escueladedatos.online)
 - [Grupo de usuarios de R de Madrid](https://madrid.r-es.org) 🇪🇸
 - [R en Buenos Aires](https://www.meetup.com/renbaires/?_xtd=gqFyqTIxOTE0ODE0MqFwp2FuZHJvaWQ%253D&from=ref) 🇦🇷
+- [Comunidad R Hispano](https://r-es.org) 🇪🇸
 
 #### Otras comunidades de R
 - [rainbowR](https://rainbowr.org) 🏳️‍🌈 comunidad de usuarixs de R enfocada en diversidad y disidencias sexo-genéricas y activismo de datos
@@ -112,13 +113,20 @@ _Conoce a otras personas que usan R o únete a una comundad de usuarios/as!_
 
 
 #### Blogs sobre R
-- [Blog R-Bloggers](https://www.r-bloggers.com/), blog que reúne cientos de posts desde blogs de usuarios y desarrolladores de R
+- [R-Bloggers](https://www.r-bloggers.com/), blog que reúne cientos de posts desde blogs de usuarios y desarrolladores de R
 - [R Weekly](https://rweekly.org), curatoría de noticias y posts sobre R
 - [Blog del Tidyverse](https://www.tidyverse.org/blog/)
 - [RWorks](https://rworks.dev/), blog de curatoría de funcionalidades y paquetes de R
 - [Blog de Posit](https://posit.co/blog/), blog oficial de Posit (antes RStudio)
 - [Blog de Posit sobre IA](https://blogs.rstudio.com/ai/)
 
+
+#### Listas de correo de R
+- [RWeekly](https://rweekly.org/#get-)
+- [R for the Rest of Us](https://rfortherestofus.com/whatsnew/)
+- [The R Data Scientist](https://rstats.blaze.email)
+- [Lista de correo de Escuela de Datos](https://substack.com/@escueladedatos)
+- [Lista de correos de Estación R](https://estacion-r.com/newsletter)
 
 
 ----
