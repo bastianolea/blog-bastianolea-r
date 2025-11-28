@@ -1,5 +1,5 @@
 ---
-title: Recibe fotos de gatos o bendiciones automáticamente al abrir RStudio
+title: Recibe gatos o bendiciones automáticamente al abrir RStudio
 author: Bastián Olea Herrera
 date: '2025-11-27'
 slug: []
