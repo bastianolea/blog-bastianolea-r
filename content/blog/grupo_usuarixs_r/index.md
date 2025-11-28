@@ -15,6 +15,10 @@ links:
   - icon: clipboard-list
     icon_pack: fas
     name: Encuesta
+    url: https://bastianoleah.shinyapps.io/encuesta_grupo_r/
+  - icon: github
+    icon_pack: fab
+    name: Código
     url: https://github.com/bastianolea/encuesta_grupo_r
 ---
 
@@ -25,4 +29,4 @@ Así que estoy viendo si existe interés para organizar un **grupo de usuarios/a
 
 Si te interesaría **compartir cada cierto tiempo** con otros usuari@s de R, de forma relajada, amistosa e inclusiva, o bien ayudar a la **coordinación** del grupo, por favor completa esta breve encuesta para ver si resulta:
 
-{{< boton "Responde la encuesta aquí!" "https://github.com/bastianolea/encuesta_grupo_r" "fa-solid fa-clipboard-list" >}}
+{{< boton "Responde la encuesta aquí!" "https://bastianoleah.shinyapps.io/encuesta_grupo_r/" "fa-solid fa-clipboard-list" >}}
