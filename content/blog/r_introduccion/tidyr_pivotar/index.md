@@ -7,7 +7,8 @@ format:
     output-file: index
     output-ext: md
 weight: 9
-draft: true
+draft: false
+freeze: true
 series: Introducción a R
 slug: []
 categories:
@@ -43,9 +44,11 @@ excerpt: >-
 
 Los datos pueden existir en distintos formatos o estructuras, y el poder **transformar los datos entre distintas estructuras** es una habilidad clave.
 
+{{< imagen "featured.png" >}}
+
 En este tutorial aprenderemos a usar las funciones `pivot_longer()` y `pivot_wider()` del [paquete `{tidyr}`](https://tidyr.tidyverse.org/) para cambiar entre formatos de datos *ancho* (*wide*) y *largo* (*long*).
 
-{{< imagen "featured.png" >}}
+{{< indice >}}
 
 ## Formatos de datos
 
@@ -458,6 +461,8 @@ Partamos desde la tabla `pobreza_largo` que creamos anteriormente:
 | Argentina | esperanza   | 77.69 |
 | Argentina | escolaridad | 11.18 |
 
+{{< bajada "Tabla con datos en formato largo" >}}
+
 Para volver a convertirla al formato ancho usamos `pivot_wider()`:
 
 ``` r
@@ -480,6 +485,8 @@ pobreza_ancho <- pobreza_largo |>
 | México      |      22 |     75.07 |        9.35 |
 | Brasil      |      24 |     75.85 |        8.43 |
 | El Salvador |      28 |     72.10 |        7.30 |
+
+{{< bajada "Datos pivotados al formato ancho" >}}
 
 Ahora cada variable tiene su propia columna nuevamente.
 
@@ -504,6 +511,8 @@ Veamos otro ejemplo usando la tabla `desarrollo_largo`:
 | Argentina | 2021 |  0.847 |
 | Argentina | 2019 |  0.861 |
 
+{{< bajada "Tabla con datos en formato largo" >}}
+
 Podemos convertirla de vuelta al formato ancho para tener cada año como una columna separada:
 
 ``` r
@@ -511,6 +520,8 @@ desarrollo_ancho <- desarrollo_largo |>
   pivot_wider(names_from = año,
               values_from = índice)
 ```
+
+{{< bajada "Pivotar a formato ancho" >}}
 
 | pais       |  2023 |  2022 |  2021 |  2019 |
 |:-----------|------:|------:|------:|------:|
@@ -524,6 +535,8 @@ desarrollo_ancho <- desarrollo_largo |>
 | Colombia   | 0.788 | 0.782 | 0.762 | 0.777 |
 | Brasil     | 0.786 | 0.780 | 0.768 | 0.776 |
 | Ecuador    | 0.777 | 0.773 | 0.753 | 0.765 |
+
+{{< bajada "Datos pivotados a formato ancho" >}}
 
 Ahora tenemos cada año como columna, lo que facilita comparar los valores entre años lado a lado.
 
