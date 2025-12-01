@@ -32,5 +32,5 @@ Si te interesaría **compartir cada cierto tiempo** con otros usuari@s de R, de 
 {{< boton "Responde la encuesta aquí!" "https://bastianoleah.shinyapps.io/encuesta_grupo_r/" "fa-solid fa-clipboard-list" >}}
 
 <div style="width: 100%; text-align: center;">
-<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7400248242871103489?collapsed=1" height="262" width="504" frameborder="0" allowfullscreen="" title="Publicación integrada"></iframe>
+<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7400248242871103489?collapsed=1" height="262" width="90%" frameborder="0" allowfullscreen="" title="Publicación integrada"></iframe>
 </div>
