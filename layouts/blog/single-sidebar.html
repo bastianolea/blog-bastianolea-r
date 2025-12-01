@@ -61,25 +61,35 @@
 
 <!-- barra lateral del post -->
 <aside class="page-sidebar" role="complementary">
-   {{ partial "shared/sidebar-scaffold.html" . }} 
+   <!--  {{ partial "shared/sidebar-scaffold.html" . }}  -->
+   
+
+  <div class="blog-info ph4 pt4 pb4 pb0-l">
+    {{ partial "shared/sidebar/sidebar-header-wide.html" $section }}
+  <!--{{ partial "shared/sidebar/sidebar-link.html" .Params.sidebar }}-->
+  
    <!-- {{ .Scratch.Set "details" "open" }} -->
    <!--{{ partial "shared/post-details.html" . }} -->
-  
-  
+
+</div>
   <!-- índice de la página -->
   {{ $headers := findRE "<h[2].*>" $page.Content }}
   {{- $has_headers := ge (len $headers) 1 -}}
   {{- if $has_headers -}}
-    <div style="margin-top: 48px; position: sticky; top: 80px;">
-      <details open id="PageTableOfContents" style="width:100%;">
-        <summary><h2 class="mv0 f5 fw7 ttu tracked dib" style="margin-left: 6px; font-size: 120%;">Índice</h2></summary>
-          <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: 16px; margin-bottom: 32px;">
+    <div id="PageTableOfContents", style="margin-top: 24px; position: sticky; top: 108px;">
+      <!-- <details open id="PageTableOfContents" style="width:100%;"> -->
+        <!-- <summary><h2 class="mv0 f5 fw7 ttu tracked dib" style="margin-left: 6px; font-size: 120%;">Índice</h2></summary> -->
+        <div class="blog-info ph4 pb4 pb0-l">
+        <h3 style="margin-bottom: 12px;">Índice:</h3>
+          <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: -22px; margin-bottom: 32px;">
             {{ $page.TableOfContents }}
           </div>
-      </details>
+        </div>
+      <!-- </details> -->
   
     </div>
   {{ end }}
+  
 
 </aside>
 {{ end }}
