@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Aprendiendo a usar conectores o _pipes_ | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Los conectores o _pipes_ son símbolos que nos permiten encadenar varias operaciones. En inglés, _pipe_ significa literalmente &#39;tubería&#39;, porque la idea es que los datos fluyan a través de una serie de pasos. En esta guía comprenderemos cómo se usan los conectores, y cómo pueden ayudarnos a escribir mejores análisis.">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="Aprendiendo a usar conectores o _pipes_ | Bastián Olea">
+<meta property="og:description" content="Los conectores o _pipes_ son símbolos que nos permiten encadenar varias operaciones. En inglés, _pipe_ significa literalmente &#39;tubería&#39;, porque la idea es que los datos fluyan a través de una serie de pasos. En esta guía comprenderemos cómo se usan los conectores, y cómo pueden ayudarnos a escribir mejores análisis." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/r_introduccion/conectores/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/r_introduccion/conectores/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/r_introduccion/conectores/featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Aprendiendo a usar conectores o _pipes_">
+  <meta itemprop="description" content="Los conectores o pipes son símbolos que nos permiten encadenar varias operaciones. En inglés, pipe significa literalmente “tubería”, porque la idea es que los datos fluyan a través de una serie de pasos.
+El uso de conectores facilita la lectura del código, porque nos muestra el flujo de las operaciones de forma ordenada y lógica, y también simplifica la escritura, porque nos hace escribir en el mismo orden lógico que pensamos las operaciones, y porque además nos permite reordenar, comentar, agregar o eliminar pasos.">
+  <meta itemprop="datePublished" content="2025-11-24T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-11-24T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1061">
+  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/r_introduccion/conectores/featured.png">
+  <meta itemprop="keywords" content="Tutoriales,Introducción a R">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.21df494c84c5dfe9475313852cebf248784a129e86d7fa40fc5d7b4e5fb2232a.css" integrity="sha256-Id9JTITF3&#43;lHUxOFLOvySHhKEp6G1/pA/F17Tl&#43;yIyo=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container single-series">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/aprende_r/" title="Aprende R">Aprende R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+                       
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 pl3-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Aprendiendo a usar conectores o <em>pipes</em></h1>
+        
+        
+        <p class="f7 db mv0 ttu">24/11/2025</p>
+        
+         
+         
+        
+      </header>
+      <section class="post-body pt5 pb4">
+        <script src="conectores_files/libs/bslib-component-js-0.9.0/components.min.js"></script>
+<script src="conectores_files/libs/bslib-component-js-0.9.0/web-components.min.js" type="module"></script>
+<link href="conectores_files/libs/bslib-component-css-0.9.0/components.css" rel="stylesheet" />
+<link href="conectores_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="conectores_files/libs/bslib-tag-require-0.9.0/tag-require.js"></script>
+<p>Los conectores o <em>pipes</em> son símbolos que nos permiten <strong>encadenar varias operaciones</strong>. En inglés, <em>pipe</em> significa literalmente &ldquo;tubería&rdquo;, porque la idea es que los datos fluyan a través de una serie de pasos.</p>
+<p>El uso de conectores <strong>facilita la lectura</strong> del código, porque nos muestra el flujo de las operaciones de forma ordenada y lógica, y también <strong>simplifica la escritura</strong>, porque nos hace escribir en el mismo orden lógico que pensamos las operaciones, y porque además nos permite reordenar, comentar, agregar o eliminar pasos.</p>
+<p>En R, el conector nativo es <code>|&gt;</code> y a continuación veremos cómo usarlo!</p>
+
+
+
+
+<h2 id="definición">Definición
+  <a href="#definici%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Un conector <strong>conecta dos pasos del procesamiento de datos</strong>, ya sea conectando los datos a una acción, o el resultado de una acción con una nueva acción. Así que la lectura de un conector (<code>|&gt;</code>) sería algo así como <em>&ldquo;luego&rdquo;</em> o <em>&ldquo;entonces&rdquo;</em>.</p>
+<p>Pensemos en una idea de procesamiento:</p>
+<blockquote>
+<p>Para obtener <code>resultado</code>, empiezo con mis <code>datos</code>, y <em>luego</em> <code>|&gt;</code> les aplico una <code>acción()</code>, y <em>luego</em> <code>|&gt;</code> les hago <code>otra_acción()</code></p>
+</blockquote>
+<p>Traduzcámosla a código:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">resultado</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">acción</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">otra_acción</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>En otras palabras, se empieza con los <code>datos</code>, los datos se modifican una vez en el primer paso, y en el segundo paso se modifica el resultado del paso anterior. Es una cadena de operaciones con un inicio (<code>datos</code>) y un final (<code>resultado</code>).</p>
+<p>Recordemos que, en R, el resultado (la <em>
+<a href="../../../../blog/r_introduccion/r_basico/#asignaciones">asignación</a></em>) se pone al principio, porque es una forma de decir <em>vamos a hacer esto de la siguiente manera</em>, una especie de <em>título</em> de la operación.</p>
+
+
+
+
+<h2 id="escritura-del-conector">Escritura del conector
+  <a href="#escritura-del-conector"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>El conector se escribe como <code>|&gt;</code>, es decir, una barra vertical <code>|</code> seguida de un símbolo <em>mayor que</em> <code>&gt;</code>.</p>
+<p>Pero recomiendo aprender el <strong>atajo de teclado</strong> para insertarlo, ya que va a ser una operación de uso muy frecuente:</p>
+<p><a href="atajo_mac.png" target="_blank">
+
+  <img src="atajo_mac.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<div style="max-width: 380px; margin:auto; text-align: center; font-size:80%; opacity:60%;">
+  Atajo de teclado para insertar el conector <code>|&gt;</code> en Mac
+  </div></p>
+<br>
+<p><a href="atajo_windows.png" target="_blank">
+
+  <img src="atajo_windows.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<div style="max-width: 380px; margin:auto; text-align: center; font-size:80%; opacity:60%;">
+  Atajo de teclado para insertar el conector <code>|&gt;</code> en Linux y Windows
+  </div></p>
+
+
+
+
+<h2 id="tipos-de-conectores">Tipos de conectores
+  <a href="#tipos-de-conectores"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Si intentaste el paso anterior, puede que te haya salido un símbolo distinto 😱</p>
+<p>En R existen dos conectores: el <code>|&gt;</code> (<em>pipe</em> nativo de R) y el <code>%&gt;%</code> (<em>pipe</em> del paquete <code>{magrittr}</code>). Ambos hacen prácticamente lo mismo.</p>
+<div style="text-align: center;">
+<bslib-layout-columns class="bslib-grid grid bslib-mb-spacing html-fill-item" data-require-bs-caller="layout_columns()" data-require-bs-version="5">
+<div class="bslib-grid-item bslib-gap-spacing html-fill-container">
+<div style="font-size: 400%; color: #9069C0; font-weight: bold;&#10;           font-family: Menlo, Consolas, Courier, monospace, monaco;">
+<p>|&gt;</p>
+</div>
+</div>
+<div class="bslib-grid-item bslib-gap-spacing html-fill-container">
+<div style="font-size: 400%; color: #9069C0; font-weight: bold;&#10;           font-family: Menlo, Consolas, Courier, monospace, monaco;">
+<p>%&gt;%</p>
+</div>
+</div>
+</bslib-layout-columns>
+</div>
+<p>El conector que aparezca va a depender de tu configuración de RStudio: en el menú <em>Tools</em>, entra a <em>Global options</em>, y en el menú <em>Code</em> elige si quieres o no usar el conector nativo de R (recomendado).</p>
+<hr>
+
+
+
+
+<h2 id="ejemplos">Ejemplos
+  <a href="#ejemplos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Veamos unos ejemplos de uso del conector en R, y cuándo resulta conveniente de usar:</p>
+<p>Empecemos con un vector de números:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">6</span><span style="color:#908caa">,</span> <span style="color:#f6c177">3</span><span style="color:#908caa">,</span> <span style="color:#f6c177">7</span><span style="color:#908caa">,</span> <span style="color:#f6c177">8</span><span style="color:#908caa">,</span> <span style="color:#f6c177">6</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+
+
+
+<h3 id="ejemplo-sin-conector-">Ejemplo sin conector 👎🏼
+  <a href="#ejemplo-sin-conector-"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Si tenemos un vector de números y queremos calcular su promedio:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Pero si además queremos redondear el resultado (dos operaciones), tenemos que empezar a <strong>anidar</strong> las funciones:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">round</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">digits</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Este código se leería, de izquierda a derecha, como <em>redondear el promedio de datos</em>, lo cual no está mal, pero te obliga a entender la operación <em>desde adentro hacia afuera</em> (los datos o el inicio del proceso están al medio del código). Además, anidar las funciones empieza a hacer que el código sea cada vez menos legible. Imagínate si en vez de 2 funciones necesitas 4 o 5? 🫤</p>
+
+
+
+
+<h3 id="ejemplo-con-conector-">Ejemplo con conector 👍
+  <a href="#ejemplo-con-conector-"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Para hacer lo mismo pero usando conectores, encadenamos las operaciones empezando con los datos, en el orden de su ejecución:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mean</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">round</span><span style="color:#908caa">(</span><span style="color:#ea9a97">digits</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>La lectura sería: <em>a los datos les calculo el promedio y luego al resultado lo redondeo.</em> La operación ahora es <strong>más legible</strong> (vemos que hay claramente 3 pasos) y sigue un orden <strong>secuencial</strong> (se leen en el orden que se aplican).</p>
+<hr>
+<p>Creemos una pequeña tabla de datos para el siguiente ejemplo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># crear tabla de datos de ejemplo con tribble</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tibble</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animal</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;gato&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;ratón&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;perro&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;pez&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;paloma&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">color</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;gris&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;negro&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;blanco&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;azul&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;gris&#34;</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">patas</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">4</span><span style="color:#908caa">,</span> <span style="color:#f6c177">0</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">),</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#ea9a97">edad</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">8</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">10</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">3</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><div style="max-width: 380px; margin:auto; text-align: center; font-size:80%; opacity:60%;">
+  Copia y pega el código para ejecutarlo en tu sesión de R
+  </div>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">animal</th>
+          <th style="text-align: left">color</th>
+          <th style="text-align: right">patas</th>
+          <th style="text-align: right">edad</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">gato</td>
+          <td style="text-align: left">gris</td>
+          <td style="text-align: right">4</td>
+          <td style="text-align: right">8</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">ratón</td>
+          <td style="text-align: left">negro</td>
+          <td style="text-align: right">4</td>
+          <td style="text-align: right">2</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">perro</td>
+          <td style="text-align: left">blanco</td>
+          <td style="text-align: right">4</td>
+          <td style="text-align: right">10</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">pez</td>
+          <td style="text-align: left">azul</td>
+          <td style="text-align: right">0</td>
+          <td style="text-align: right">1</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">paloma</td>
+          <td style="text-align: left">gris</td>
+          <td style="text-align: right">2</td>
+          <td style="text-align: right">3</td>
+      </tr>
+  </tbody>
+</table>
+
+
+
+
+<h3 id="ejemplo-sin-conector--1">Ejemplo sin conector 👎🏼
+  <a href="#ejemplo-sin-conector--1"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Imagina que a estos datos queremos hacerle varias operaciones:</p>
+<ol>
+<li>Seleccionar algunas columnas,</li>
+<li>filtrar algunas filas, y</li>
+<li>ordenar los resultados</li>
+</ol>
+<p>Vamos agregando las funciones en orden: primero la selección&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">patas</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">edad</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># 🙂</span>
+</span></span></code></pre></div><p>Ahora el filtro, pero adentro hay que ponerle los datos seleccionados&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">patas</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">edad</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">patas</span> <span style="color:#908caa">&gt;=</span> <span style="color:#f6c177">4</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># 🤨</span>
+</span></span></code></pre></div><p>Si queremos ordenarlos tenemos que poner todo adentro de otra función&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">patas</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">edad</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">patas</span> <span style="color:#908caa">&gt;=</span> <span style="color:#f6c177">4</span><span style="color:#908caa">),</span> <span style="color:#ea9a97">edad</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># 😵‍💫</span>
+</span></span></code></pre></div><p>Terminamos con esta aberración de paréntesis y funciones que se leen algo así como <em>ordeno el filtro de la selección de los datos</em> 😣 y al final van apareciendo los argumentos de cada función. Imposible de leer! 😭</p>
+<p>Una forma de solucionarlo es ir asignando cada paso a un objeto&hellip;</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">patas</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">edad</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos_3</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos_2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">patas</span> <span style="color:#908caa">&gt;=</span> <span style="color:#f6c177">4</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos_4</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos_3</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">edad</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>&hellip;pero esto hace que tengamos que crear muchos objetos intermedios, que no nos interesan! Además se lee muy mal porque te interrumpe la constante creación de objetos.</p>
+
+
+
+
+<h3 id="ejemplo-con-conector--1">Ejemplo con conector 👍
+  <a href="#ejemplo-con-conector--1"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Para hacer lo mismo pero usando los conectores, empezamos con los datos y vamos agregando los pasos del procesamiento: primero la selección, luego el filtro, y finalmente el ordenamiento:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">patas</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">edad</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">patas</span> <span style="color:#908caa">&gt;=</span> <span style="color:#f6c177">4</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edad</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>El proceso queda <strong>más ordenado</strong>, se lee en orden (de arriba hacia abajo), no necesitamos crear objetos intermedios, y no hay ningún caos de paréntesis para desenredar! Mucho mejor 😊</p>
+<p>Además, se hace mucho más fácil reordenar los pasos o agregar pasos intermedios, o bien poder poner comentarios entre medio, para ir apoyándonos en la lectura y el aprendizaje:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># seleccionar sólo columnas útiles</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">patas</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">edad</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># filtrar animales con 4 o más patitas</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">patas</span> <span style="color:#908caa">&gt;=</span> <span style="color:#f6c177">4</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># ordenarlos empeazndo por el más bebé</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">edad</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Solamente hay que acostumbrarse a fijarnos bien que los conectores <em>conecten</em> con algo: no dejar conectores apuntando a nada, porque hacen que R piense que el código conecta con lo que sea que tenga abajo, o peor, que R quede esperando que lo conectes con algo!<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>en cuyo caso hay que tirarle cualquier cosa a la consola para que retorne error y podamos seguir con nuestras vidas&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/r_introduccion/r_intermedio/">&larr; Herramientas básicas para programar con R</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/r_introduccion/proyectos/">Organizar el trabajo en Proyectos de RStudio &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+
+<aside class="page-sidebar" role="complementary">
+
+   
+                         
+ 
+
+
+
+<div class="flex items-start sticky ph4 pb4">
+  <div class="w-two-thirds w-50-l ph0">
+    
+    <h2 class="mt3 mb3 f5 fw7 ttu tracked"><a class="no-underline dim" href="/blog/r_introduccion/">Publicaciones de la serie</a></h2>
+    <nav id="SeriesTableOfContents">
+        <ul>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/instalar_r/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/instalar_r/">Primer paso: instalar R</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/por_que_r/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/por_que_r/">¿Por qué usar R?</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/r_basico/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/r_basico/">Introducción al lenguaje de programación R</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/r_intermedio/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/r_intermedio/">Herramientas básicas para programar con R</a></li>
+        
+          
+          <li class="active" hugo-nav="/blog/r_introduccion/conectores/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/conectores/">Aprendiendo a usar conectores o <em>pipes</em></a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/proyectos/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/proyectos/">Organizar el trabajo en Proyectos de RStudio</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/dplyr_intro/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/dplyr_intro/">Introducción al manejo de datos con {dplyr}</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tidyr_pivotar/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tidyr_pivotar/">Transformación de datos entre formato <em>ancho</em> y <em>largo</em> con {tidyr}</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_censo/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_campamentos/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_dplyr_campamentos/">Tutorial: introducción a {dplyr} usando datos de campamentos</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_visualizacion_ggplot/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_visualizacion_ggplot/">Tutorial: visualización de datos con {ggplot2}</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shiny_1/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_shiny_1/">Tutorial: introducción al desarrollo de apps con Shiny</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shinyapps/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_shinyapps/">Tutorial: publicar una app Shiny en shinyapps.io</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/web_scraping/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/web_scraping/">Web scraping con R</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_github/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/tutorial_github/">Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/recursos_r/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="https://bastianoleah.netlify.app/blog/r_introduccion/recursos_r/">Recursos, blogs y otros sitios sobre R</a></li>
+        
+        </ul>
+      </nav>
+  </div>
+  
+  
+  <details open id="PageTableOfContents">
+    <summary><h2 class="mv0 f5 fw7 ttu tracked dib">Índice</h2></summary>
+    <div class="pl2 pr0 mh0" style = "font-size: 95%;">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#definición">Definición</a></li>
+    <li><a href="#escritura-del-conector">Escritura del conector</a></li>
+    <li><a href="#tipos-de-conectores">Tipos de conectores</a></li>
+    <li><a href="#ejemplos">Ejemplos</a>
+      <ul>
+        <li><a href="#ejemplo-sin-conector-">Ejemplo sin conector 👎🏼</a></li>
+        <li><a href="#ejemplo-con-conector-">Ejemplo con conector 👍</a></li>
+        <li><a href="#ejemplo-sin-conector--1">Ejemplo sin conector 👎🏼</a></li>
+        <li><a href="#ejemplo-con-conector--1">Ejemplo con conector 👍</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </details>
+  
+</div>
+
+
+ 
+  
+</aside>
+
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source" style="color:#9069C0;">Hugo Apéro</a> 
+      y <a href="https://pkgs.rstudio.com/blogdown/" style="color:#9069C0;">{blogdown}</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source" style="color:#9069C0;">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL" style="color:#9069C0;">Formspree</a>.
+
+Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlify</a></span>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+      <a class="dib pv1 ph2 link" href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/tags/" title="Temas">Temas</a>
+      
+      <a class="dib pv1 ph2 link" href="/clases/" title="Clases">Clases</a>
+      
+      <a class="dib pv1 ph2 link" href="/code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

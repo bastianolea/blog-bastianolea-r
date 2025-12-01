@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.136.5">
+<title>Configura R para que haga cosas automáticamente al abrirlo | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Se puede configurar R para que haga cosas automáticamente al iniciarse. Esto se logra creando un archivo `.Rprofile`, que es un script de R que se ejecuta automáticamente cuando se inicia la sesión.">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="Configura R para que haga cosas automáticamente al abrirlo | Bastián Olea">
+<meta property="og:description" content="Se puede configurar R para que haga cosas automáticamente al iniciarse. Esto se logra creando un archivo `.Rprofile`, que es un script de R que se ejecuta automáticamente cuando se inicia la sesión." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="https://bastianoleah.netlify.app/blog/2025-11-25/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/sidebar-listing.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/sidebar-listing.jpg" >
+    
+    
+  
+  <meta itemprop="name" content="Configura R para que haga cosas automáticamente al abrirlo">
+  <meta itemprop="description" content="Se puede configurar R para que haga cosas automáticamente al iniciarse. Esto se logra creando un archivo .Rprofile, que es un script de R que se ejecuta automáticamente cuando se inicia la sesión.
+Para crear un archivo de perfil o .Rprofile, usamos la función edit_r_profile() del paquete {usethis}:
+usethis::edit_r_profile() Con esto se abrirá el .Rprofile. Este es un archivo invisible que se guarda en tu carpeta de usuario (home directory), que se va a ejecutar en todas tus sesiones de R. Pero también es posible tener otro dentro de cada proyecto de R, que sólo aplica a ese proyecto.">
+  <meta itemprop="datePublished" content="2025-11-25T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-11-25T00:00:00+00:00">
+  <meta itemprop="wordCount" content="686">
+  <meta itemprop="keywords" content="Curiosidadades,Automatización">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="/style.main.min.21df494c84c5dfe9475313852cebf248784a129e86d7fa40fc5d7b4e5fb2232a.css" integrity="sha256-Id9JTITF3&#43;lHUxOFLOvySHhKEp6G1/pA/F17Tl&#43;yIyo=" media="screen">
+  
+  
+  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+</head>
+<body>
+      <div class="grid-container single-sidebar">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
+      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/aprende_r/" title="Aprende R">Aprende R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+
+                       
+ 
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 pr3-l">
+      <header class="post-header" style="margin-top:-30px;">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Configura R para que haga cosas automáticamente al abrirlo</h1>
+        
+        
+        <p class="f7 db mv0 ttu">25/11/2025</p>
+        
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/curiosidadades"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            curiosidadades</a>  <a href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            automatización</a> </dd></em>
+        </dl>
+         
+      
+        
+      
+      
+    </header>
+      
+      
+    <section class="post-body pt5 pb4">
+        <p>Se puede configurar R para que haga cosas automáticamente al iniciarse. Esto se logra creando un archivo <code>.Rprofile</code>, que es un script de R que se ejecuta automáticamente cuando se inicia la sesión.</p>
+<p>Para crear un <strong>archivo de perfil</strong> o <code>.Rprofile</code>, usamos la función <code>edit_r_profile()</code> del paquete <code>{usethis}</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">usethis</span><span style="color:#908caa">::</span><span style="color:#ea9a97">edit_r_profile</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Con esto se abrirá el <code>.Rprofile</code>. Este es un archivo invisible que se guarda en tu carpeta de usuario (home directory), que se va a ejecutar en todas tus sesiones de R. Pero también es posible tener otro dentro de cada proyecto de R, que sólo aplica a ese proyecto.</p>
+<p>Al iniciar R, R ejecutará el perfil <strong>global</strong> (en tu carpeta de usuario) y luego el perfil del <strong>proyecto</strong> (si existe). Para crear un <code>.Rprofile</code> que sólo aplique a un 
+<a href="/blog/r_introduccion/proyectos/"><strong>proyecto</strong> específico</a>, hay que ejecutar <code>usethis::edit_r_profile(scope = &quot;project&quot;)</code>.</p>
+<hr>
+<p>Dentro del <code>.Rprofile</code>, cualquier código que agreguemos se ejecutará automáticamente al abrir R o el proyecto.</p>
+<p>Si agregamos el siguiente código, R nos dará un mensaje de bienvenida al iniciarse:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">message</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Bienvenido/a a RStudio! 💜&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Puedes confirmarlo <strong>reiniciando la sesión de R</strong> (menú <em>Session</em>, opción <em>Restart R</em>).</p>
+<p>Podemos usar esto para definir configuraciones, o ejecutar cualquier tarea que necesitemos que se realice apenas abramos R.</p>
+<hr>
+<p>Por ejemplo, podemos configurar la cantidad de decimales de los números antes de pasar a notación científica agregando:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">options</span><span style="color:#908caa">(</span><span style="color:#ea9a97">scipen</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">999</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># probar:</span>
+</span></span><span style="display:flex;"><span><span style="color:#f6c177">1</span><span style="color:#908caa">/</span><span style="color:#f6c177">900000</span>
+</span></span></code></pre></div><pre tabindex="0"><code>[1] 0.000001111111
+</code></pre><p>O cambiar el lenguaje de R:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">Sys.setenv</span><span style="color:#908caa">(</span><span style="color:#ea9a97">LANG</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;es&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>O podemos configurar globalmente el lenguaje de las fechas de R:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># poner las fechas de R en español</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">Sys.setlocale</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;LC_TIME&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;es_ES.UTF-8&#34;</span><span style="color:#908caa">)</span> 
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># pedirle una fecha para confirmar que usa meses en español</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">lubridate</span><span style="color:#908caa">::</span><span style="color:#ea9a97">today</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">format</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;%d de %B&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre tabindex="0"><code>[1] &#34;25 de noviembre&#34;
+</code></pre><p>Podemos hacer que R nos de un saludo personalizado al azar:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">saludos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Holi 💕&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#f6c177">&#34;Te extrañaba 🥺&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#f6c177">&#34;Holi polli 🐥&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#f6c177">&#34;Hoy es un buen día para la ciencia&#34;</span><span style="color:#908caa">,</span>
+</span></span><span style="display:flex;"><span>             <span style="color:#f6c177">&#34;Que tengas un bonito día, nerd 🤓&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>             
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">message</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sample</span><span style="color:#908caa">(</span><span style="color:#ea9a97">saludos</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">))</span>
+</span></span></code></pre></div><pre tabindex="0"><code>Holi 💕
+</code></pre><p>O podemos hacer algo más útil; que R nos entregue información al iniciarse; por ejemplo, que nos diga la fecha de actualización del último archivo modificado en una carpeta:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># obtener información del contenido de una carpeta</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">directorio</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">fs</span><span style="color:#908caa">::</span><span style="color:#ea9a97">dir_info</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;datos/&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># obtener la fecha de la última modificación</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">ultimo</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">directorio</span><span style="color:#908caa">$</span><span style="color:#ea9a97">modification_time</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># formatear fecha</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">fecha</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">format</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ultimo</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;%d de %B a las %H:%M&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">message</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Bienvenidx! ☺️ Última actualización: &#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">fecha</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><pre tabindex="0"><code>Bienvenidx! ☺️ Última actualización: 25 de noviembre a las 15:10
+</code></pre><p>Pero siempre tenemos que tener cuidado de no agregar al <em>perfil</em> código que haga que nuestros proyectos dejen de ser reproducibles! Si el proyecto <em>depende</em> de código que está en el <em>perfil</em>, alguien más que abra el proyecto no podrá correrlo correctamente.</p>
+<hr>
+<p>En mi caso, tengo un proyecto específico donde quiero que al abrirlo <strong>se abra un script</strong> y <strong>se navegue a una carpeta</strong> del proyecto. Como el software que puede abrir scripts e interactuar con los paneles de Rstudio es RStudio (y no R) este caso, necesitamos agregar código extra para que R confirme que estamos en RStudio.</p>
+<p>Ejecuto <code>usethis::edit_r_profile(scope = &quot;project&quot;)</code> para crear un <em>perfil</em> solamente par ami proyecto, y le agrego:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># abrir script al iniciar RStudio</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">setHook</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;rstudio.sessionInit&#34;</span><span style="color:#908caa">,</span> <span style="color:#3e8fb0">function</span><span style="color:#908caa">(</span><span style="color:#ea9a97">newSession</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">newSession</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># navegar a carpeta </span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">rstudioapi</span><span style="color:#908caa">::</span><span style="color:#ea9a97">filesPaneNavigate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">here</span><span style="color:#908caa">::</span><span style="color:#ea9a97">here</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;content/blog/&#34;</span><span style="color:#908caa">))</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#6e6a86"># abrir script principal</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">rstudioapi</span><span style="color:#908caa">::</span><span style="color:#ea9a97">documentOpen</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;_instrucciones.R&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">},</span> <span style="color:#ea9a97">action</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;append&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>Para probar que funciona, hay que cerrar y abrir RStudio, no sólo reiniciar R.</p>
+<hr>
+<p>Del mismo modo, en otro post del blog explico que podemos 
+<a href="/blog/2025-01-12/">configurar RStudio para que use un tema durante el día y otro durante la noche</a>. En este caso, usamos el paquete <code>{rsthemes}</code> para definir los temas claro y oscuro, y las horas del día a las que se activan:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># especificar temas para modo claro y oscuro</span>
+</span></span><span style="display:flex;"><span><span style="color:#3e8fb0">if</span> <span style="color:#908caa">(</span><span style="color:#ea9a97">interactive</span><span style="color:#908caa">()</span> <span style="color:#908caa">&amp;&amp;</span> <span style="color:#ea9a97">requireNamespace</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;rsthemes&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">quietly</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span><span style="color:#908caa">))</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># definir temas favoritos</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rsthemes</span><span style="color:#908caa">::</span><span style="color:#ea9a97">set_theme_light</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Basti Purple Light&#34;</span><span style="color:#908caa">)</span>  <span style="color:#6e6a86"># tema claro</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rsthemes</span><span style="color:#908caa">::</span><span style="color:#ea9a97">set_theme_dark</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Basti Purple Dark&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># tema oscuro</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># cambiar al tema dependiendo de la hora al iniciar una sesión en RStudio</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">setHook</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;rstudio.sessionInit&#34;</span><span style="color:#908caa">,</span> <span style="color:#3e8fb0">function</span><span style="color:#908caa">(</span><span style="color:#ea9a97">isNewSession</span><span style="color:#908caa">)</span> <span style="color:#908caa">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">rsthemes</span><span style="color:#908caa">::</span><span style="color:#ea9a97">use_theme_auto</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dark_start</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;21:00&#34;</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># hora del tema oscuro</span>
+</span></span><span style="display:flex;"><span>                             <span style="color:#ea9a97">dark_end</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;6:00&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86">#hora del tema claro</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#908caa">},</span> <span style="color:#ea9a97">action</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;append&#34;</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#908caa">}</span>
+</span></span></code></pre></div><p>También hay que poner código extra, porque es RStudio (y no R) quien define los temas de RStudio.</p>
+ 
+    </section>
+      
+    <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/surveydown_encuestas/">&larr; Crea encuestas online gratis en R con {surveydown}</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/mapas_sf/">Mapas y visualización de datos geoespaciales en R con {sf} &rarr;</a>
+  
+</div>
+
+    </footer>
+    
+  </article>
+    
+    <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+</section>
+  
+
+<section class="post-body pt5 pb4">
+  
+  <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">November 25, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">4 minute read, 686 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/curiosidadades">curiosidadades</a>  <a href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n">automatización</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="/blog/shiny_validacion/">Testeo automatizado de aplicaciones Shiny con {shinytest2}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/validacion_avanzada/">Validación de datos con {testthat} y {pointblank}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/excel_openxlsx/">Crea planillas de Excel con formato personalizado desde R con {openxlsx}</a></dd>
+    
+  </dl>
+</details>
+
+</section>
+</main>
+
+
+<aside class="page-sidebar" role="complementary">
+                          
+ 
+
+
+<div style = "padding: 12px;">
+                       
+ 
+
+
+
+
+
+
+
+
+
+
+
+  <img src="/blog/sidebar-listing.jpg" style = "border-radius: 8px;" class="db ma0">
+
+</div>
+
+<div class="blog-info ph4 pt4 pb4 pb0-l">
+  
+
+  <h1 class="f3">Blog</h1>
+  <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
+<a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
+<a href="/tags/">temas</a>.</p>
+  
+
+
+
+
+
+<div style="font-size: 90%;">
+  <h3 style="margin-bottom: 12px;">Temas:</h3>
+   
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/chile/">Chile</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">38 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/datos/">Datos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">25 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/consejos/">Consejos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">24 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">24 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos/">Gráficos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">22 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/ggplot2/">Ggplot2</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">20 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/blog/">Blog</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">17 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/apps/">Apps</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">17 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/shiny/">Shiny</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">17 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/web-scraping/">Web scraping</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">16 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/mapas/">Mapas</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">13 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">13 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">13 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/quarto/">Quarto</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">11 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/ciencias-sociales/">Ciencias sociales</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">10 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">9 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/curiosidades/">Curiosidades</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">9 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/dplyr/">Dplyr</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">8 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/loops/">Loops</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">8 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n/">Optimización</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">8 posts</span>
+  </div>
+
+<a href="/tags/" style="font-size: 9pt; margin-left:2px;">Ver todos los temas</a>
+</div>
+
+  
+</div>
+
+ 
+   
+   
+  
+  
+  
+  
+
+</aside>
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source" style="color:#9069C0;">Hugo Apéro</a> 
+      y <a href="https://pkgs.rstudio.com/blogdown/" style="color:#9069C0;">{blogdown}</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source" style="color:#9069C0;">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL" style="color:#9069C0;">Formspree</a>.
+
+Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlify</a></span>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+      <a class="dib pv1 ph2 link" href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/tags/" title="Temas">Temas</a>
+      
+      <a class="dib pv1 ph2 link" href="/clases/" title="Clases">Clases</a>
+      
+      <a class="dib pv1 ph2 link" href="/code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
+      
+      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

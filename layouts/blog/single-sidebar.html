@@ -1,0 +1,85 @@
+{{ define "main" }}
+
+{{ $page := . }}                       <!--save current page-->
+{{ $section := $page.CurrentSection }} <!--save current section-->
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 pr3-l">
+      <header class="post-header" style="margin-top:-30px;">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">{{ .Title }}</h1>
+        {{ if .Params.subtitle }}<h4 class="f4 mt0 mb4 lh-title measure">{{ .Params.subtitle }}</h4>{{ end }}
+        {{ if .Params.show_author_byline }}<p class="f6 measure lh-copy mv1">{{ if .Params.author }}Por {{ .Params.author }}{{ end }}{{ with .Params.categories }} en{{ range . }} <a href="{{ "categories/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}{{ end }}</p>{{ end }}
+        {{ if .Params.show_post_date }}<p class="f7 db mv0 ttu">{{ .PublishDate.Format "2/1/2006" }}</p>{{ end }}
+        
+        <!-- etiquetas -->
+        {{ with .Params.tags }}
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0">{{ range . }} <a href="{{ "tags/" | absURL }}{{ . | urlize }}"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            {{ . }}</a> {{ end }}</dd></em>
+        </dl>
+        {{ end }} 
+      
+      <!-- botones -->  
+      {{ if .Params.links }}
+      <div class="ph0 pt3">
+        {{ partial "shared/btn-links.html" . }}
+      </div>
+      {{ end }}
+      
+    </header>
+      
+      
+    <section class="post-body pt5 pb4">
+        {{ .Content }} 
+    </section>
+      
+    <footer class="post-footer">
+        {{ partial "shared/post-pagination.html" . }}
+    </footer>
+    
+  </article>
+    {{ if .Params.show_comments }}
+    {{ partial "shared/comments.html" . }}
+    {{ end }}
+</section>
+  
+<!-- detalles al fondo del post -->
+<section class="post-body pt5 pb4">
+  {{ .Scratch.Set "details" "closed" }}
+  {{ partial "shared/post-details.html" . }}
+</section>
+</main>
+
+<!-- barra lateral del post -->
+<aside class="page-sidebar" role="complementary">
+   {{ partial "shared/sidebar-scaffold.html" . }} 
+   <!-- {{ .Scratch.Set "details" "open" }} -->
+   <!--{{ partial "shared/post-details.html" . }} -->
+  
+  
+  <!-- índice de la página -->
+  {{ $headers := findRE "<h[2].*>" $page.Content }}
+  {{- $has_headers := ge (len $headers) 1 -}}
+  {{- if $has_headers -}}
+    <div style="margin-top: 48px; position: sticky; top: 80px;">
+      <details open id="PageTableOfContents" style="width:100%;">
+        <summary><h2 class="mv0 f5 fw7 ttu tracked dib" style="margin-left: 6px; font-size: 120%;">Índice</h2></summary>
+          <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: 16px; margin-bottom: 32px;">
+            {{ $page.TableOfContents }}
+          </div>
+      </details>
+  
+    </div>
+  {{ end }}
+
+</aside>
+{{ end }}
