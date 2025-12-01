@@ -16,10 +16,10 @@ blogdown::new_post(title = "Recibe fotos de gatos o bendiciones automáticamente
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "R", 
-                   file = "blog/grupo_usuarixs_r/index.md",
+blogdown::new_post(title = "Nuevo sitio: todo lo necesario para Aprender R", 
+                   file = "blog/aprender_r/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("blog", "chile"),
+                   tags = c("consejos"),
                    categories = c() 
 )
 

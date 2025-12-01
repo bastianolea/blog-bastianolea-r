@@ -78,6 +78,11 @@ En la línea donde se define `saludito` puedes elegir entre `"gatos"` o `"piolí
 
 {{< imagen "pantallazo_2.png" >}}
 
+<br>
+<div style="width: 100%; text-align: center;">
+<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:share:7399225074526027776?collapsed=1" height="647" width="504" frameborder="0" allowfullscreen="" title="Publicación integrada"></iframe>
+</div>
+
 ----
 
 Originalmente, cuando estaba probando la idea, hice que solo se mostrara una imagen en el panel Viewer, pero salía con fondo blanco. Entonces hice que la imagen tuviera un fondo oscuro usando `{magick}` (nunca lo había usado), que permite editar imágenes desde R. Lo que hice fue crear una imagen negra del mismo tamaño que el panel _Viewer_ de RStudio (lo que se puede obtener con la función `dev.size("px")`, y sobre esa imagen ponía una de las imágenes al azar, reescaladas y al centro, y mostraba eso. Pero después se me ocurrió que era mucho mejor mostrar un HTML con fondo negro y la foto centrada.
@@ -127,5 +132,7 @@ writeLines(text = as.character(contenido), temporal)
 # ver en Rstudio
 rstudioapi::viewer(temporal)
 ```
+
+
 
 {{< cafecito >}}
