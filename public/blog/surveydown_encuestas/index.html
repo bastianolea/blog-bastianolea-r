@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="generator" content="Hugo 0.136.5">
-<title>Crea encuestas en R usando {surveydown} | Bastián Olea</title>
+<title>Crea encuestas online gratis en R con {surveydown} | Bastián Olea</title>
 
 
 <meta property="twitter:site" content="@bastimapache">
@@ -24,12 +24,12 @@
   
     
   
-<meta name="description" content="Blog de Bastián Olea, sociólogx y analista de datos">
+<meta name="description" content="Con el paquete [`{surveydown}`](https://surveydown.org) podemos crear encuestas desde R gratis, cuyas respuestas se almacenan en una base de datos también gratuita. Así, no necesitas depender de un servicio para generar la encuesta, ni tampoco tener que pagar para poder crearla o publicarla. En este tutorial te explico cómo hacerlo paso a paso.">
 
 
 <meta property="og:site_name" content="Bastián Olea">
-<meta property="og:title" content="Crea encuestas en R usando {surveydown} | Bastián Olea">
-<meta property="og:description" content="Blog de Bastián Olea, sociólogx y analista de datos" />
+<meta property="og:title" content="Crea encuestas online gratis en R con {surveydown} | Bastián Olea">
+<meta property="og:description" content="Con el paquete [`{surveydown}`](https://surveydown.org) podemos crear encuestas desde R gratis, cuyas respuestas se almacenan en una base de datos también gratuita. Así, no necesitas depender de un servicio para generar la encuesta, ni tampoco tener que pagar para poder crearla o publicarla. En este tutorial te explico cómo hacerlo paso a paso." />
 <meta property="og:type" content="page" />
 <meta property="og:url" content="https://bastianoleah.netlify.app/blog/surveydown_encuestas/" />
 <meta property="og:locale" content="es-ES">
@@ -44,12 +44,12 @@
     
     
   
-  <meta itemprop="name" content="Crea encuestas en R usando {surveydown}">
-  <meta itemprop="description" content="⚠️ Este tutorial está desactualizado! {surveydown} cambió y ahora funciona distinto. Todavía no he tenido tiempo de actualizarlo para ajustaste al nuevo funcionamiento. Perdón 😔 Con el paquete {surveydown} es muy fácil crear una encuesta con R, creando tus propias preguntas personalizadas, y almacenando todas las respuestas de tus encuestados/as en una base de datos.
+  <meta itemprop="name" content="Crea encuestas online gratis en R con {surveydown}">
+  <meta itemprop="description" content="Con el paquete {surveydown} podemos crear encuestas desde R gratis, cuyas respuestas se almacenan en una base de datos también gratuita.
 La gracia de crear tu propia encuesta es que puedes personalizarla según tus necesidades, pero también es que no necesitas depender de un servicio para generar la encuesta, ni tampoco tener que pagar para poder crearla o publicarla. Por el contrario, podemos utilizar tecnologías gratuitas y de código abierto para crear nuestras encuestas, almacenar sus resultados y analizarlos.">
-  <meta itemprop="datePublished" content="2024-11-21T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2024-11-21T00:00:00+00:00">
-  <meta itemprop="wordCount" content="2406">
+  <meta itemprop="datePublished" content="2025-11-26T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-11-26T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2194">
   <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/surveydown_encuestas/featured.png">
   <meta itemprop="keywords" content="Quarto,Shiny,Ciencias sociales,Datos">
   
@@ -58,7 +58,7 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.05c2dee644e65ea536a58bc8edefe21b071855219e5bd2807cc6c59fa8998621.css" integrity="sha256-BcLe5kTmXqU2pYvI7e/iGwcYVSGeW9KAfMbFn6iZhiE=" media="screen">
+  <link rel="stylesheet" href="/style.main.min.21df494c84c5dfe9475313852cebf248784a129e86d7fa40fc5d7b4e5fb2232a.css" integrity="sha256-Id9JTITF3&#43;lHUxOFLOvySHhKEp6G1/pA/F17Tl&#43;yIyo=" media="screen">
   
   
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -67,7 +67,7 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
   <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
 </head>
 <body>
-      <div class="grid-container">
+      <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
     <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
@@ -88,6 +88,16 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
         
         
         
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/aprende_r/" title="Aprende R">Aprende R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      
+        
+        
+        
       <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Apps">Apps</a>
       
         
@@ -98,37 +108,12 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/tags/" title="Temas">Temas</a>
-      
-        
-        
-        
-      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Tutoriales">Tutoriales</a>
-      
-        
-        
-        
-      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/" title="Aprender R">Aprender</a>
-      
-        
-        
-        
-      <a class="link f6 f5-l dib pv1 ph2 " href="/clases/" title="Clases">Clases</a>
-      
-        
-        
-        
       <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
       
         
         
         
       <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
-      
-        
-        
-        
-      <a class="link f6 f5-l dib pv1 ph2 " href="/contacto/" title="Contacto">Contacto</a>
       
       
       
@@ -147,7 +132,8 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fas fa-search fa-lg fa-fw"></i>
     </a>
   
@@ -162,7 +148,8 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-github fa-lg fa-fw"></i>
     </a>
   
@@ -177,7 +164,8 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-twitter fa-lg fa-fw"></i>
     </a>
   
@@ -192,7 +180,8 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-linkedin fa-lg fa-fw"></i>
     </a>
   
@@ -207,7 +196,8 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-tiktok fa-lg fa-fw"></i>
     </a>
   
@@ -222,7 +212,8 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-instagram fa-lg fa-fw"></i>
     </a>
   
@@ -237,7 +228,8 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-goodreads fa-lg fa-fw"></i>
     </a>
   
@@ -252,7 +244,8 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-lastfm fa-lg fa-fw"></i>
     </a>
   
@@ -267,7 +260,8 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-bluesky fa-lg fa-fw"></i>
     </a>
   
@@ -282,7 +276,8 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" >
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
       <i class="fas fa-envelope fa-lg fa-fw"></i>
     </a>
   
@@ -294,108 +289,192 @@ La gracia de crear tu propia encuesta es que puedes personalizarla según tus ne
   </nav>
 </header>
 
+
+                       
+ 
+
 <main class="page-main pa4" role="main">
   <section class="page-content mw7 center">
-    <article class="post-content pa0 ph4-l">
-      <header class="post-header">
-        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Crea encuestas en R usando {surveydown}</h1>
+    <article class="post-content pa0 pr3-l">
+      <header class="post-header" style="margin-top:-30px;">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Crea encuestas online gratis en R con {surveydown}</h1>
         
         
-        <span><div class="f7 db mv0 ttu" style="display:inline-block;">21/11/2024 </div>
-        
-        
-        <span>
-
-
-
-<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
-<span id="ea38092fdab18e22ae9c8df135401886" title="visitas">
-</span>
-<script>
-    var r = new XMLHttpRequest();
-    r.addEventListener('load', function() {
-        document.getElementById('ea38092fdab18e22ae9c8df135401886').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
-    })
-    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/surveydown_encuestas/".replace(/(\/)?$/, '')) + '.json')
-    r.send()
-</script>
-</span></span>
-        </span>
+        <p class="f7 db mv0 ttu">26/11/2025</p>
         
         
         
-        
-  <dl class="f6 lh-copy">
-    <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/quarto"
-    style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 10pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px; ">
-      quarto</a>  <a href="https://bastianoleah.netlify.app/tags/shiny"
-    style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 10pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px; ">
-      shiny</a>  <a href="https://bastianoleah.netlify.app/tags/ciencias-sociales"
-    style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 10pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px; ">
-      ciencias sociales</a>  <a href="https://bastianoleah.netlify.app/tags/datos"
-    style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 10pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px; ">
-      datos</a> </dd></em>
-  </dl>
- 
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/quarto"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            quarto</a>  <a href="https://bastianoleah.netlify.app/tags/shiny"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            shiny</a>  <a href="https://bastianoleah.netlify.app/tags/ciencias-sociales"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            ciencias sociales</a>  <a href="https://bastianoleah.netlify.app/tags/datos"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            datos</a> </dd></em>
+        </dl>
+         
+      
         
       
+      <div class="ph0 pt3">
+        
 
-      </header>
-      <section class="post-body pt5 pb4">
-        <div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
-margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
-font-size:90%;">
+<div style="margin-top:-24px;">
 
-⚠️ Este tutorial está desactualizado! 
-<a href="https://surveydown.org" target="_blank" rel="noopener"><code>{surveydown}</code></a> cambió y ahora funciona distinto. Todavía no he tenido tiempo de actualizarlo para ajustaste al nuevo funcionamiento. Perdón 😔
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+    
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; 
+  color: #EAD2FA; font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; 
+  margin-right: 1px; margin-top: 6px; margin-bottom: 0px;"
+  href="https://surveydown.org/" target="_blank" rel="noopener"><i class="fas fa-registered fa-lg fa-fw mr2"></i>surveydown</a>
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+    
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; 
+  color: #EAD2FA; font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; 
+  margin-right: 1px; margin-top: 6px; margin-bottom: 0px;"
+  href="https://bastianoleah.shinyapps.io/encuesta_animales" target="_blank" rel="noopener"><i class="fas fa-link fa-lg fa-fw mr2"></i>encuesta demo</a>
 
 </div>
 
-<p>Con el paquete 
-<a href="https://surveydown.org" target="_blank" rel="noopener"><code>{surveydown}</code></a> es muy fácil crear una encuesta con R, creando tus propias preguntas personalizadas, y almacenando todas las respuestas de tus encuestados/as en una base de datos.</p>
-<p>La gracia de crear tu propia encuesta es que puedes personalizarla según tus necesidades, pero también es que no necesitas depender de un servicio para generar la encuesta, ni tampoco tener que pagar para poder crearla o publicarla. Por el contrario, podemos utilizar tecnologías gratuitas y de código abierto para crear nuestras encuestas, almacenar sus resultados y analizarlos.</p>
+      </div>
+      
+      
+    </header>
+      
+      
+    <section class="post-body pt5 pb4">
+        <p>Con el paquete 
+<a href="https://surveydown.org" target="_blank" rel="noopener"><code>{surveydown}</code></a> podemos crear encuestas desde R gratis, cuyas respuestas se almacenan en una base de datos también gratuita.</p>
+<p>La gracia de crear tu propia encuesta es que puedes personalizarla según tus necesidades, pero también es que no necesitas depender de un servicio para generar la encuesta, ni tampoco tener que pagar para poder crearla o publicarla. Por el contrario, podemos utilizar <strong>tecnologías gratuitas y de código abierto</strong> para crear nuestras encuestas, almacenar sus resultados y analizarlos.</p>
+<a href="surveydown_2.png" target="_blank">
+
+  <img src="surveydown_2.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<div style="max-width: 380px; margin:auto; text-align: center; font-size:80%; opacity:60%;">
+  Ejemplo de una encuesta
+  </div>
 <p>El paquete 
 <a href="https://surveydown.org" target="_blank" rel="noopener"><code>{surveydown}</code></a> combina el uso de 
 <a href="https://quarto.org/docs/computations/r.html" target="_blank" rel="noopener">Quarto</a> y 
 <a href="https://shiny.posit.co/r/getstarted/shiny-basics/lesson1/" target="_blank" rel="noopener">Shiny</a> para crear encuestas fáciles de diseñar, y con altas capacidades de personalización. 
-<a href="https://bastianoleah.shinyapps.io/encuesta_animales" target="_blank" rel="noopener">Aquí te dejo una encuesta de prueba para que veas cómo son!</a></p>
+<a href="https://bastianoleah.shinyapps.io/encuesta_animales" target="_blank" rel="noopener">Aquí te dejo una <strong>encuesta de prueba</strong> para que veas cómo son!</a></p>
 <p>El diseño de la encuesta, con todas sus preguntas, títulos, textos, páginas y botones, se hace por medio de un <strong>documento 
 <a href="https://quarto.org/docs/computations/r.html" target="_blank" rel="noopener">Quarto</a></strong>, donde literalmente vas poniendo todo el contenido que quieres que tenga tu encuesta, especificando los saltos de página de la encuesta, y listo.</p>
 <p>El funcionamiento interno de la encuesta es resuelto por <code>{surveydown}</code>, y no tenemos que realizar nada de configuración ni programación por nuestro lado. Todo funciona de forma inmediata (la encuesta, la interacción del usuario y la base de datos) por medio de una <strong>aplicación Shiny</strong>. Lo único que tenemos que proveer es la <strong>conexión a la base de datos</strong> donde se van a ir guardando las respuestas, y de la cual también vamos a poder obtener los resultados cuando queramos.</p>
-<div style="padding:18px;padding-bottom:1px;padding-top:1px;background-color:#493365;color:#E9DDEE;border-radius:6px;margin:20px;margin-top:40px;margin-left:40px;margin-right:40px;font-size:100%;">
-<p>Aquí les dejo una encuesta de prueba, hecha siguiendo este tutorial, para ver quién gana: ¿gatos 🐈 o perros 🐕? 
-<a href="https://bastianoleah.shinyapps.io/encuesta_animales" target="_blank" rel="noopener"><strong>Responde aquí</strong></a></p>
-</div>
-<p><br></br></p>
+<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
+font-size:90%;">
 
+Aquí les dejo una encuesta de prueba, hecha siguiendo este tutorial, para ver quién gana: ¿gatos 🐈 o perros 🐕? 
+<a href="https://bastianoleah.shinyapps.io/encuesta_animales" target="_blank" rel="noopener"><strong>Responde aquí</strong></a>
+
+</div>
+
+<div style = "margin-left: -16px;">
+  
+  <details closed id="PageTableOfContents">
+    <summary>
+      <h2 class="mv0 f5 fw7 ttu tracked dib" style = "margin-left: 6px; font-size: 120%;">Índice</h2>
+      </summary>
+    <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: 16px; margin-bottom: 32px;">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#instalar-el-paquete">Instalar el paquete</a></li>
+    <li><a href="#crear-una-encuesta">Crear una encuesta</a></li>
+    <li><a href="#diseñar-la-encuesta">Diseñar la encuesta</a>
+      <ul>
+        <li><a href="#crear-preguntas">Crear preguntas</a></li>
+        <li><a href="#navegación">Navegación</a></li>
+        <li><a href="#probar-la-encuesta">Probar la encuesta</a></li>
+      </ul>
+    </li>
+    <li><a href="#configurar-la-base-de-datos">Configurar la base de datos</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#probar-la-encuesta-1">Probar la encuesta</a></li>
+    <li><a href="#subir-tu-encuesta-y-compartirla">Subir tu encuesta y compartirla</a></li>
+    <li><a href="#obtener-resultados-de-la-encuesta">Obtener resultados de la encuesta</a></li>
+    <li><a href="#conclusión">Conclusión</a></li>
+  </ul>
+</nav>
+    </div>
+  </details>
+  
+</div>
+
+
+
+
+<h2 id="instalar-el-paquete">Instalar el paquete
+  <a href="#instalar-el-paquete"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Instalamos 
+<a href="https://surveydown.org/blog/2025-11-21-announcing-surveydown-version-1/" target="_blank" rel="noopener">la versión más reciente</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># install.packages(&#34;pak&#34;)</span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">pak</span><span style="color:#908caa">::</span><span style="color:#ea9a97">pak</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;surveydown-dev/surveydown&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
 
 
 
@@ -405,13 +484,15 @@ font-size:90%;">
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>Para crear nuestra encuesta, podemos usar la función <code>surveydown::sd_create_survey(&quot;ruta/de/la/encuesta/&quot;)</code> para que el paquete <code>{surveydown}</code> cree un nuevo proyecto de R con una plantilla de encuesta lista para editar.</p>
-<p>Otra alternativa es clonar<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup> una 
-<a href="https://surveydown.org/demos" target="_blank" rel="noopener">encuesta de demostración disponible la página de <code>{surveydown}</code></a>. El beneficio de esta alternativa es que puedes probar la encuesta antes, para ver cómo quedaría, y si te sirve, la clonas en tu equipo para poder editarla.</p>
+<p>Para crear nuestra encuesta, creamos un 
+<a href="/blog/r_introduccion/proyectos/">nuevo proyecto de RStudio</a> para la encuesta, y usamos la función <code>surveydown::sd_create_survey()</code> para crear una plantilla de encuesta lista para editar. Sólo una encuesta por proyecto!</p>
+<p>En la función <code>sd_create_survey()</code> puedes elegir 
+<a href="https://surveydown.org/templates" target="_blank" rel="noopener">plantillas</a>, como <code>sd_create_survey(template = &quot;question_types&quot;)</code> para obtener una encuesta con varios tipos de preguntas distintos para partir.</p>
 <p>Cuando creamos nuestra primera encuesta, obtenemos un proyecto de R con dos archivos principales:</p>
 <ul>
-<li><code>survey.qmd</code>: la encuesta, en un documento Quarto, donde diseñas todo el contenido de la encuesta, desde subtítulos, textos de introducción, títulos para las preguntas, las preguntas en sí misma, y otros textos que quieras agregar entremedio de la encuesta.</li>
-<li><code>app.R</code>: la aplicación Shiny donde va a aparecer tu encuesta, y que posibilita que las respuestas vayan guardándose en una base de datos. En esta aplicación de Shiny no hay mucho que hacer, porque todo el contenido visible y usable de la encuesta está en el documento Quarto <code>survey.qmd</code>. El rol de la aplicación Shiny es hacer la gestión de que la encuesta funcione y sea interactiva, y que las respuestas que ingresamos quedan registradas en la base de datos. Pero también, al ser una aplicación Shiny, podemos hacer cosas avanzadas con nuestra encuesta, como por ejemplo ir mostrando resultados en tiempo real, visualizaciones de nuestros resultados que se actualizan automáticamente, y más.</li>
+<li><code>survey.qmd</code>: la <strong>encuesta</strong>, en un documento Quarto, donde diseñas todo el contenido de la encuesta, desde subtítulos, textos de introducción, títulos para las preguntas, las preguntas en sí misma, y otros textos que quieras agregar entremedio de la encuesta.</li>
+<li><code>app.R</code>: la <strong>aplicación</strong> Shiny donde va a aparecer tu encuesta, y que posibilita que las respuestas vayan guardándose en una base de datos. El rol de la aplicación Shiny es hacer la gestión de que la encuesta funcione y sea interactiva, y que las respuestas que ingresamos quedan registradas en la base de datos. Pero también aquí se puede 
+<a href="https://surveydown.org/docs/conditional-logic" target="_blank" rel="noopener">configurar lógica condicional</a> para la encuesta, y además podemos ir mostrando resultados en tiempo real, visualizaciones de nuestros resultados que se actualizan automáticamente, y más.</li>
 </ul>
 
 
@@ -425,7 +506,7 @@ font-size:90%;">
 </h2>
 <p>Estando en el proyecto de R de nuestra nueva encuesta, abrimos el documento Quarto <code>survey.qmd</code>, y en él encontraremos una encuesta que viene por defecto.</p>
 <p>Mirando este documento vemos que las páginas de la encuesta van delimitadas por cercos <code>:::</code>, y que dentro de estos cercos va todo el contenido que queramos poner en cada página, como títulos, textos y preguntas.</p>
-<pre tabindex="0"><code class="language-quarto" data-lang="quarto">::: {#bienvenida .sd-page}
+<pre tabindex="0"><code class="language-quarto" data-lang="quarto">::: {.sd-page id=bienvenida}
 
 # Encuesta
 
@@ -442,11 +523,29 @@ Texto de _introducción_
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h3>
-<p>Dentro de los cercos que delimitan cada página, cada pregunta  dela encuesta va en el documento como un bloque de código R, que en su interior contiene la función <code>sd_question()</code>. Con esta función se crean las preguntas de nuestra encuesta, y en sus argumentos tenemos todas las opciones para personalizarlas.</p>
-<p>En el sitio de <code>{surveydown}</code> existe una 
-<a href="https://surveydown.org/question-types" target="_blank" rel="noopener">documentación con todos los tipos de preguntas</a>, para que veas cómo se ven y cómo se crean. También existe una 
-<a href="https://surveydown.org/demos" target="_blank" rel="noopener">aplicación de prueba que te muestra todos los tipos de preguntas</a> en una encuesta real.</p>
-<p><img src="/blog/surveydown_encuestas/surveydown_1.png"></p>
+<p>Dentro de los cercos que delimitan cada página, cada pregunta de la encuesta va en el documento como un bloque de código R, que en su interior contiene la función <code>sd_question()</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-markdown" data-lang="markdown"><span style="display:flex;"><span>```{r}
+</span></span><span style="display:flex;"><span>sd_question(
+</span></span><span style="display:flex;"><span>  type  = &#39;mc&#39;,
+</span></span><span style="display:flex;"><span>  id    = &#39;pinguinos&#39;,
+</span></span><span style="display:flex;"><span>  label = &#34;¿Qué tipo de pingüino te gusta más?&#34;,
+</span></span><span style="display:flex;"><span>  option = c(
+</span></span><span style="display:flex;"><span>    &#39;Adélie&#39;    = &#39;adelie&#39;,
+</span></span><span style="display:flex;"><span>    &#39;Chinstrap&#39; = &#39;chinstrap&#39;,
+</span></span><span style="display:flex;"><span>    &#39;Gentoo&#39;    = &#39;gentoo&#39;
+</span></span><span style="display:flex;"><span>  )
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>```
+</span></span></code></pre></div><p>Con esta función se crean las preguntas de nuestra encuesta, y en sus argumentos tenemos todas las opciones para personalizarlas.</p>
+<p>En el sitio de <code>{surveydown}</code> puedes conocer 
+<a href="https://surveydown.org/docs/question-types" target="_blank" rel="noopener">todos los <strong>tipos de preguntas</strong></a>, para que veas cómo se ven y cómo se crean.</p>
+<p>También existe una 
+<a href="https://surveydown.shinyapps.io/question_types/" target="_blank" rel="noopener"><strong>encuesta online de prueba</strong> que te muestra todos los tipos de preguntas</a> en una encuesta real.</p>
+<a href="surveydown_1.png" target="_blank">
+
+  <img src="surveydown_1.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>Aquí te dejo algunos ejemplos de preguntas básicas que puedes incluir en tu encuesta:</p>
 
 
@@ -508,20 +607,41 @@ Texto de _introducción_
 </span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;Prefiero no responder&#34;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
 </span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>Al finalizar cada página de tu encuesta, tienes que agregar el botón de siguiente, para que los usuarios/as puedan avanzar a la siguiente página:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sd_next</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Siguiente&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>En la página final de tu encuesta puedes poner un texto de agradecimiento y más información, y especificar el botón para terminar la encuesta:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sd_close</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Terminar&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>Si quieres probar cómo va quedando tu encuesta, puedes ejecutar la aplicación Shiny desde el archivo <code>app.R</code>, presionando el botón <em>Run.</em></p>
-<p><img src="/blog/surveydown_encuestas/surveydown_2.png"></p>
+</span></span></code></pre></div>
+
+
+
+<h3 id="navegación">Navegación
+  <a href="#navegaci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Al finalizar cada página de tu encuesta, tienes que agregar el botón de siguiente, para que los usuarios/as puedan avanzar a la siguiente página:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sd_nav</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label_next</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Siguiente&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div><p>En este botón también puedes configurar si llevar a les usuaries a otra página distinta.</p>
+<p>En la página final de tu encuesta puedes poner un texto de agradecimiento y más información, y especificar el botón para terminar la encuesta:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sd_close</span><span style="color:#908caa">(</span><span style="color:#ea9a97">label_close</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Terminar&#34;</span><span style="color:#908caa">)</span>
+</span></span></code></pre></div>
+
+
+
+<h3 id="probar-la-encuesta">Probar la encuesta
+  <a href="#probar-la-encuesta"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Si quieres probar cómo va quedando tu encuesta, puedes ejecutar la aplicación Shiny desde el archivo <code>app.R</code>, presionando el botón <em>Run.</em></p>
+<a href="surveydown_2.png" target="_blank">
+
+  <img src="surveydown_2.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 <p>En 
 <a href="https://github.com/bastianolea/encuesta_animales" target="_blank" rel="noopener">este repositorio</a> te dejo el código de 
 <a href="https://bastianoleah.shinyapps.io/encuesta_animales" target="_blank" rel="noopener">una encuesta básica</a>, de tres preguntas, con gráficos que visualizan las respuestas de la encuesta al terminar de responderla. Puedes usarla como guía al momento de diseñar tu propia encuesta.</p>
-<p>Sin embargo, para que tu encuesta funcione, tienes que <strong>configurar la base de datos</strong> primero. Veremos eso a continuación, pero si de todas maneras quieres probar tu encuesta antes de configurar la base de datos, en la aplicación Shiny debes configurar la conexión a la base de datos del siguiente modo:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">db</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sd_database</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">ignore</span> <span style="color:#908caa">=</span> <span style="color:#3e8fb0">TRUE</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>De esta forma, la aplicación funcionará sin una base de datos, almacenando los datos localmente en tu proyecto (en un archivo .csv) para que puedas probarla.</p>
+<p>Sin embargo, para poder capturar respuestas como corresponde, tienes que <strong>configurar la base de datos</strong> primero. Veremos eso a continuación, pero si de todas maneras quieres probar tu encuesta antes de configurar la base de datos, puedes probar la aplicación Shiny ejecutándola, y las respuestas se van a guardar en un archivo local.</p>
 
 
 
@@ -532,9 +652,13 @@ Texto de _introducción_
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>Para que las preguntas que respondan tus usuarios/as queden registradas, es necesario especificar un método de recolección de los datos que guarde las respuestas en una base de datos centralizada. Pero una de las limitaciones de las aplicaciones Shiny, particularmente las publicadas en shinyapps.io, es que no pueden almacenar datos persistentes, sino que los datos creados durante el uso de las apps son eliminados al terminar la sesión. Por lo tanto, hay que crear una base de datos <em>remota</em> donde las respuestas de cada persona sean registradas en cada interacción con la encuesta, y que luego podamos consultar para obtener los resultados.</p>
+<p>Para que las preguntas que respondan tus usuarios/as queden registradas, es necesario especificar un método de recolección de los datos que guarde las respuestas en una base de datos centralizada.</p>
+<p>Pero una de las limitaciones de las aplicaciones Shiny, particularmente las publicadas en shinyapps.io, es que no pueden almacenar datos persistentes, sino que los datos creados durante el uso de las apps son eliminados al terminar la sesión.</p>
+<p>Por lo tanto, hay que <strong>
+<a href="/blog/db_supabase/">crear una base de datos</a></strong> donde las respuestas de cada persona sean registradas en cada interacción con la encuesta, y que luego podamos consultar para obtener los resultados.</p>
 <p>Esto no es tan difícil de hacer como suena. En la documentación de <code>{surveydown}</code> hay 
-<a href="https://surveydown.org/store-data" target="_blank" rel="noopener">instrucciones detalladas para crear una base de datos para tu encuesta</a>, pero acá de te dejo un resumen:</p>
+<a href="https://surveydown.org/docs/storing-data" target="_blank" rel="noopener">instrucciones detalladas para crear una base de datos para tu encuesta</a>, y acá tengo un <strong>
+<a href="/blog/db_supabase/">tutorial completo para crear bases de datos</a></strong>, pero acá de te dejo un resumen:</p>
 
 
 
@@ -543,8 +667,8 @@ Texto de _introducción_
   <a href="#paso-1-crea-una-cuenta-en-supabase"></a>
 </h4>
 <p>Lo primero es averiguar dónde podemos crear una base de datos remota y gratuita. En la 
-<a href="https://surveydown.org/store-data" target="_blank" rel="noopener">documentación</a> de <code>{surveydown}</code> recomiendan usar 
-<a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a>. Supabase es un proveedor abierto y gratuito de bases de datos Postgres. Crea una cuenta ahí, y sigue las instrucciones para tener tu primer proyecto, el cual cuenta con una base de datos. En tu base de datos podrás tener tablas donde se almacenarán las respuestas de tu encuesta. En una misma base de datos pueden haber múltiples tablas, una tabla para cada encuesta distinta que crees.</p>
+<a href="https://surveydown.org/docs/storing-dat" target="_blank" rel="noopener">documentación</a> de <code>{surveydown}</code> recomiendan usar 
+<a href="https://supabase.com" target="_blank" rel="noopener">Supabase</a>. Supabase es un <strong>proveedor abierto y gratuito de bases de datos Postgres</strong>. Crea una cuenta ahí, y sigue las instrucciones para tener tu primer proyecto, el cual cuenta con una base de datos. En tu base de datos podrás tener tablas donde se almacenarán las respuestas de tu encuesta. En una misma base de datos pueden haber múltiples tablas, una tabla para cada encuesta distinta que crees.</p>
 
 
 
@@ -552,7 +676,18 @@ Texto de _introducción_
 <h4 id="paso-dos-crear-la-base-de-datos">Paso dos: crear la base de datos
   <a href="#paso-dos-crear-la-base-de-datos"></a>
 </h4>
-<p>Al crear tu cuenta, se te pedirá crear un <em>proyecto.</em> En este proyecto habrá una base de datos donde se almacenarán los datos de respuesta de tu encuesta, en una tabla específica. Aquí lo importante es que tienes que <strong>definir una contraseña segura</strong>, que será la contraseña que uses para que tu encuesta pueda escribir sus resultados en la base, y también para que tú puedas obtener los resultados desde la base.</p>
+<p>Luego tienes que crear un <em>proyecto.</em> En este proyecto habrá una base de datos donde se almacenarán los datos de respuesta de tu encuesta, en una tabla específica.</p>
+<a href="https://bastianolea.rbind.io/blog/db_supabase/supabase_1.png" target="_blank">
+
+  <img src="https://bastianolea.rbind.io/blog/db_supabase/supabase_1.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Aquí lo importante es que tienes que <strong>definir una contraseña segura</strong>, que será la contraseña que uses para que tu encuesta pueda escribir sus resultados en la base, y también para que tú puedas obtener los resultados desde la base.</p>
+<a href="https://bastianolea.rbind.io/blog/db_supabase/supabase_2.png" target="_blank">
+
+  <img src="https://bastianolea.rbind.io/blog/db_supabase/supabase_2.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
 
 
 
@@ -560,42 +695,47 @@ Texto de _introducción_
 <h4 id="paso-tres-obtener-parámetros-de-la-base-de-datos">Paso tres: obtener parámetros de la base de datos
   <a href="#paso-tres-obtener-par%c3%a1metros-de-la-base-de-datos"></a>
 </h4>
-<p>Luego de crear la base, necesitas obtener ciertos datos de tu base para poder hacer la conexión entre tu encuesta y la base. En Supabase, ve a <em>Project Settings</em> (abajo a la izquierda), luego en el menú <em>Configuration</em> elige <em>Database.</em> En esta sección aparecerán los parámetros de conexión en <em>Connection parameters.</em></p>
+<p>Luego de crear la base, necesitas obtener los <strong>parámetros de conexión</strong> para poder hacer la conexión entre tu encuesta y la base.</p>
+<p>Al entrar a tu proyecto, arriba presiona el botón <strong>Connect</strong>. Se abrirá un panel donde se nos entregarán los parámetros de acceso a la base de datos.</p>
+<a href="https://bastianolea.rbind.io/blog/db_supabase/supabase_7.png" target="_blank">
+
+  <img src="https://bastianolea.rbind.io/blog/db_supabase/supabase_7.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p><strong>Importante:</strong> en <em>Method</em> que elegir <em>Transaction Pooler</em>.</p>
+<p>Ten a la vista estos parámetros para ingresarlos en el siguiente paso!</p>
 
 
 
 
-<h4 id="paso-cuatro-configurar-la-base-de-datos-en-tu-proyecto-de-r">Paso cuatro: configurar la base de datos en tu proyecto de R
-  <a href="#paso-cuatro-configurar-la-base-de-datos-en-tu-proyecto-de-r"></a>
+<h4 id="paso-cuatro-guardar-los-parámetros-de-la-base-de-datos">Paso cuatro: guardar los parámetros de la base de datos
+  <a href="#paso-cuatro-guardar-los-par%c3%a1metros-de-la-base-de-datos"></a>
 </h4>
-<p>Para que tu encuesta se conecte a la base de datos, debes proveer a tu encuesta con los parámetros de conexión. Los parámetros de configuración de tu base de datos se ingresan en el archivo de tu aplicación Shiny de la encuesta. Abre <code>app.R</code>, y en la función <code>sd_database()</code> que está al principio del script, pega la información que tienes en Supabase:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">db</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sd_database</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">host</span>   <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">dbname</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">port</span>   <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">user</span>   <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">table</span>  <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;nombre_de_tu_tabla&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>El nombre de la tabla puede ser cualquiera, y dependiendo del nombre que pongas es la tabla donde sea almacenar la respuesta. Si luego creas una nueva encuesta, y pones un nombre de tabla distinto, las respuestas de esta nueva encuesta aparecerá en una tabla separada. Basta con especificar el nombre de una tabla nueva para que la tabla nueva se cree, no es necesario crearla antes en otro lugar.</p>
+<p>Ahora que tienes los parámetros de conexión, ejecuta el siguiente comando:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sd_db_config</span><span style="color:#908caa">()</span>
+</span></span></code></pre></div><p>Este comando irá pidiéndote uno por uno los parámetros de conexión que tienes en Supabase, incluyendo la contraseña que ingresaste al momento de crear el proyecto.</p>
+<p>Cuando te pregunte por el nombre de la tabla, puedes poner el que tú quieras. La tabla se va a crear solita en la base de datos. Si luego creas una nueva encuesta, y pones un nombre de tabla distinto, las respuestas de esta nueva encuesta aparecerá en una tabla separada. Basta con especificar el nombre de una tabla nueva para que la tabla nueva se cree, no es necesario crearla antes en otro lugar.</p>
+<a href="surveydown_5.png" target="_blank">
+
+  <img src="surveydown_5.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Estas credenciales se guardarán en un archivo oculto <code>.env</code> dentro de tu proyecto, y que será leído por la encuesta para poder conectarse a la base de datos.</p>
 
 
 
 
-<h4 id="paso-cinco-autenticar-la-base-de-datos-en-tu-proyecto-de-r">Paso cinco: autenticar la base de datos en tu proyecto de R
-  <a href="#paso-cinco-autenticar-la-base-de-datos-en-tu-proyecto-de-r"></a>
+<h4 id="paso-cinco-configurar-la-base-de-datos-en-tu-proyecto-de-r">Paso cinco: configurar la base de datos en tu proyecto de R
+  <a href="#paso-cinco-configurar-la-base-de-datos-en-tu-proyecto-de-r"></a>
 </h4>
-<p>El paso final es darle el permiso a tu proyecto de R para poder leer y escribir la base de datos. Esto se hace autenticando la contraseña de tu base de datos en tu proyecto de R.</p>
-<p>Si bien en el paso anterior entregamos los demás parámetros de configuración de tu base de datos, la contraseña no se puede escribir en el script, porque eso haría que la contraseña sea visible para cualquier persona que pueda ver el código de tu encuesta (por ejemplo, si alguien usa tu computador, si subes tu encuesta a GitHub, o si compartes el código con alguien).</p>
-<p>Para garantizar la seguridad de tu base de datos, <strong>la contraseña se entrega por medio de la consola de R</strong>, y queda registrada en un archivo invisible dentro de tu proyecto (<code>.Renviron</code>), que no se subirá a GitHub (si es que decides subir tu encuesta a GitHub).</p>
-<p>En la consola de tu sesión de R, ejecuta la siguiente función con tu contraseña adentro para autenticar tu encuesta con la base de datos:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">sd_set_password</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;contraseña&#34;</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>¡Y listo! Ahora cada respuesta que se marque en tu encuesta quedará registrada automáticamente en la base de datos.</p>
+<p>Abre <code>app.R</code>, y revisa que la función <code>sd_db_connect()</code> que está al principio del script. Por defecto dice <code>db &lt;- sd_db_connect(ignore = TRUE)</code>, para funcionar en modo de prueba sin una base de datos, pero ahora queremos que diga solamente <code>db &lt;- sd_db_connect()</code>. De este modo, la aplicación va a buscar el archivo <code>.env</code> que creamos en el paso anterior y se va a conectar a la base de datos.</p>
+<p>¡Y listo! Ahora cada respuesta que se marque en tu encuesta quedará registrada automáticamente en la base de datos.</p>
 
 
 
 
-<h2 id="probar-la-encuesta">Probar la encuesta
-  <a href="#probar-la-encuesta"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="probar-la-encuesta-1">Probar la encuesta
+  <a href="#probar-la-encuesta-1"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
@@ -627,17 +767,13 @@ Texto de _introducción_
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>Para obtener los resultados de tu encuesta, simplemente en un nuevo script ingresas la configuración de tu base de datos para conectarte a ella, igual como lo hiciste antes en la encuesta misma, y luego usa la función <code>sd_get_data()</code> para obtener los datos.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">db</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sd_database</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">host</span>   <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;my_host&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">dbname</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;my_dbname&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">port</span>   <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;my_port&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">user</span>   <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;my_user&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">table</span>  <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;my_table&#34;</span>
-</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+<p>Para obtener los resultados de tu encuesta, simplemente en un nuevo script te conectas a la base con <code>sd_db_connect()</code> y usas la función <code>sd_get_data()</code> para obtener los datos:</p>
+<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">surveydown</span><span style="color:#908caa">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ea9a97">db</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sd_db_connect</span><span style="color:#908caa">()</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ea9a97">data</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">sd_get_data</span><span style="color:#908caa">(</span><span style="color:#ea9a97">db</span><span style="color:#908caa">)</span>
-</span></span></code></pre></div><p>Vale decir que la obtención de los datos remotos tienes que hacerla desde el mismo proyecto de R donde creaste y configuraste la contraseña de tu base de datos. De lo contrario, vas a tener que volver a registrar la contraseña de tu base de datos con <code>sd_set_password()</code> en el proyecto que quieras conectar a tu base de datos.</p>
+</span></span></code></pre></div><p>Vale decir que la obtención de los datos remotos tienes que hacerla desde el mismo proyecto de R donde creaste y configuraste las credenciales de tu base de datos.</p>
 <p>Una vez establecida la conexión con la base de datos, si vuelves a ejecutar la función <code>sd_get_data()</code> obtendrás los datos actualizados.</p>
 <hr>
 
@@ -668,24 +804,57 @@ Texto de _introducción_
   align-items: center;">
     <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
   </div>
-<div class="footnotes" role="doc-endnotes">
-<hr>
-<ol>
-<li id="fn:1">
-<p>Para clonar un repositorio de GitHub, entras al repositorio, presionas el botón verde que dice <em>Code</em>, copias el enlace que te entrega, y en RStudio creas un nuevo proyecto a partir de control de versiones, pegas ahí el enlace del repositorio GitHub, y específicas donde quieres guardar tu proyecto clonado.&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
-</li>
-</ol>
+ 
+    </section>
+      
+    <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/2025-11-27/">&larr; Recibe gatos o bendiciones automáticamente al abrir RStudio</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="https://bastianoleah.netlify.app/blog/2025-11-25/">Configura R para que haga cosas automáticamente al abrirlo &rarr;</a>
+  
 </div>
 
-        
-        <details closed class="f6 fw7 input-reset">
+    </footer>
+    
+  </article>
+    
+    <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+</section>
+  
+
+<section class="post-body pt5 pb4">
+  
+  <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
     <dt class="fw7">Fecha de publicación:</dt>
-    <dd class="fw5 ml0">November 21, 2024</dd>
+    <dd class="fw5 ml0">November 26, 2025</dd>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">12 minute read, 2406 words</dd>
+    <dd class="fw5 ml0">11 minute read, 2194 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -703,52 +872,403 @@ Texto de _introducción_
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/2025-11-14/">Actualización: plataforma de visualización de estadísticas delictuales</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/r_introduccion/tidyr_pivotar/">Transformación de datos entre formato _ancho_ y _largo_ con {tidyr}</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/shiny_reactlog/">Analiza el funcionamiento de tus aplicaciones Shiny con {reactlog}</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/elecciones_presidenciales_2025/">Visualización y scraping de resultados de las elecciones presidenciales 2025</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/db_supabase/">Crear y conectarse a una base de datos en R</a></dd>
+    <dd class="fw5 ml0"><a href="/blog/shiny_desconexion/">Mensajes de desconexión personalizados en Shiny</a></dd>
     
   </dl>
 </details>
 
-      </section>
-      <footer class="post-footer">
-        <div class="post-pagination dt w-100 mt4 mb2">
-  
-  
-    <a class="prev dtc pr2 tl v-top fw6"
-    href="https://bastianoleah.netlify.app/blog/tutorial_mapa_chile/">&larr; Crea un mapa de Chile y visualiza datos comunales y regionales con mapas en R</a>
-  
-  
-  
-    <a class="next dtc pl2 tr v-top fw6"
-    href="https://bastianoleah.netlify.app/blog/tutorial_gt/">Tutorial: generar tablas atractivas y personalizables con {gt} &rarr;</a>
-  
-</div>
-
-      </footer>
-    </article>
-    
-      <div class="post-comments pa0 pa4-l mt4">
-  
-    
-      <script src="https://utteranc.es/client.js"
-              repo="bastianolea/blog-bastianolea-r"
-              issue-term="pathname"
-              theme="github-light"
-              label="comments"
-              crossorigin="anonymous"
-              async
-              type="text/javascript">
-      </script>
-    
-  
-</div>
-
-    
-  </section>
+</section>
 </main>
+
+
+<aside class="page-sidebar" role="complementary">
+                          
+ 
+
+
+<div style = "padding: 12px;">
+                       
+ 
+
+
+
+
+
+
+
+
+
+
+
+  <img src="/blog/sidebar-listing.jpg" style = "border-radius: 8px;" class="db ma0">
+
+</div>
+
+<div class="blog-info ph4 pt4 pb4 pb0-l">
+  
+
+  <h1 class="f3">Blog</h1>
+  <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
+<a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
+<a href="/tags/">temas</a>.</p>
+  
+
+
+
+
+
+<div style="font-size: 90%;">
+  <h3 style="margin-bottom: 12px;">Temas:</h3>
+   
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/chile/">Chile</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">38 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/datos/">Datos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">25 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/consejos/">Consejos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">24 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">24 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos/">Gráficos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">22 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/ggplot2/">Ggplot2</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">20 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/shiny/">Shiny</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">17 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/blog/">Blog</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">17 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/apps/">Apps</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">17 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/web-scraping/">Web scraping</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">16 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">13 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/mapas/">Mapas</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">13 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">13 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/quarto/">Quarto</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">11 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/ciencias-sociales/">Ciencias sociales</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">10 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">9 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/curiosidades/">Curiosidades</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">9 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n/">Automatización</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">8 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/loops/">Loops</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">8 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n/">Optimización</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">8 posts</span>
+  </div>
+
+<a href="/tags/" style="font-size: 9pt; margin-left:2px;">Ver todos los temas</a>
+</div>
+
+  
+</div>
+
+ 
+   
+   
+  
+  
+  
+  <div style="margin-top: 48px; position: sticky; top: 80px;">
+      <details open id="PageTableOfContents" style="width:100%;">
+        <summary><h2 class="mv0 f5 fw7 ttu tracked dib" style="margin-left: 6px; font-size: 120%;">Índice</h2></summary>
+          <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: 16px; margin-bottom: 32px;">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#instalar-el-paquete">Instalar el paquete</a></li>
+    <li><a href="#crear-una-encuesta">Crear una encuesta</a></li>
+    <li><a href="#diseñar-la-encuesta">Diseñar la encuesta</a>
+      <ul>
+        <li><a href="#crear-preguntas">Crear preguntas</a></li>
+        <li><a href="#navegación">Navegación</a></li>
+        <li><a href="#probar-la-encuesta">Probar la encuesta</a></li>
+      </ul>
+    </li>
+    <li><a href="#configurar-la-base-de-datos">Configurar la base de datos</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#probar-la-encuesta-1">Probar la encuesta</a></li>
+    <li><a href="#subir-tu-encuesta-y-compartirla">Subir tu encuesta y compartirla</a></li>
+    <li><a href="#obtener-resultados-de-la-encuesta">Obtener resultados de la encuesta</a></li>
+    <li><a href="#conclusión">Conclusión</a></li>
+  </ul>
+</nav>
+          </div>
+      </details>
+  
+    </div>
+  
+
+</aside>
 
         
           <script id="partials/analytics.html" 
@@ -759,10 +1279,13 @@ Texto de _introducción_
     <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
       &copy; 2025 Bastián Olea Herrera, Chile
       <span class="middot-divider"></span>
-      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source">Hugo Apéro</a></span>.
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source" style="color:#9069C0;">Hugo Apéro</a> 
+      y <a href="https://pkgs.rstudio.com/blogdown/" style="color:#9069C0;">{blogdown}</a></span>.
       <br />
       
-Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL">Formspree</a>.
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source" style="color:#9069C0;">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL" style="color:#9069C0;">Formspree</a>.
+
+Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlify</a></span>.
     </p>
     
     <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
@@ -780,7 +1303,8 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fas fa-search fa-lg fa-fw"></i>
     </a>
   
@@ -795,7 +1319,8 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-github fa-lg fa-fw"></i>
     </a>
   
@@ -810,7 +1335,8 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-twitter fa-lg fa-fw"></i>
     </a>
   
@@ -825,7 +1351,8 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-linkedin fa-lg fa-fw"></i>
     </a>
   
@@ -840,7 +1367,8 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-tiktok fa-lg fa-fw"></i>
     </a>
   
@@ -855,7 +1383,8 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-instagram fa-lg fa-fw"></i>
     </a>
   
@@ -870,7 +1399,8 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-goodreads fa-lg fa-fw"></i>
     </a>
   
@@ -885,7 +1415,8 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-lastfm fa-lg fa-fw"></i>
     </a>
   
@@ -900,7 +1431,8 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener">
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
       <i class="fab fa-bluesky fa-lg fa-fw"></i>
     </a>
   
@@ -915,7 +1447,8 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" >
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
       <i class="fas fa-envelope fa-lg fa-fw"></i>
     </a>
   
@@ -930,6 +1463,12 @@ Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xm
       <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
       <a class="dib pv1 ph2 link" href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="/tags/" title="Temas">Temas</a>
+      
+      <a class="dib pv1 ph2 link" href="/clases/" title="Clases">Clases</a>
+      
+      <a class="dib pv1 ph2 link" href="/code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
       
       <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
       

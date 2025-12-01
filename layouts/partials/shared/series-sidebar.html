@@ -16,6 +16,8 @@
         </ul>
       </nav>
   </div>
+  
+  <!-- index of headers on the current page -->
   {{ $headers := findRE "<h[2].*>" $page.Content }}
   {{- $has_headers := ge (len $headers) 1 -}}
   {{- if $has_headers -}}
@@ -27,3 +29,5 @@
   </details>
   {{ end }}
 </div>
+
+

@@ -3,7 +3,7 @@ title: Mapas y visualización de datos geoespaciales en R con {sf}
 author: Bastián Olea Herrera
 date: '2025-11-18'
 draft: false
-freeze: false
+freeze: true
 slug: []
 categories:
   - tutoriales
@@ -201,7 +201,6 @@ mapa
 
 ### Cargar KMZ
 
-
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -209,30 +208,7 @@ unzip("~/Downloads/Mis lugares.kmz", exdir = "~/Downloads/Mis lugares")
 
 sf::read_sf("~/Downloads/Mis lugares/doc.kml")
 ```
-
-::: {.cell-output .cell-output-stdout}
-
-```
-Simple feature collection with 5 features and 2 fields
-Geometry type: POINT
-Dimension:     XYZ
-Bounding box:  xmin: -70.65963 ymin: -33.46337 xmax: -70.54287 ymax: -33.41469
-z_range:       zmin: 0 zmax: 0
-Geodetic CRS:  WGS 84
-# A tibble: 5 × 3
-  Name                         Description                  geometry
-  <chr>                        <chr>                     <POINT [°]>
-1 Marca de posición sin título ""          Z (-70.65963 -33.46337 0)
-2 Marca de posición sin título ""          Z (-70.61304 -33.43355 0)
-3 Marca de posición sin título ""            Z (-70.599 -33.46007 0)
-4 Marca de posición sin título ""          Z (-70.55756 -33.41469 0)
-5 Marca de posición sin título ""          Z (-70.54287 -33.44922 0)
-```
-
-
 :::
-:::
-
 
 
 -->
@@ -940,7 +916,6 @@ ggplot() +
 <!--
 Desde el centroide de un polígono
 
-
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -954,11 +929,9 @@ st_as_sf()
 ```
 :::
 
-
 -->
 <!--
 ### Calcular superficie o área
-
 
 ::: {.cell}
 
@@ -973,9 +946,7 @@ units::set_units("km^2")
 
 
 
-
 ### Recortar polígono a coordenadas
-
 
 ::: {.cell}
 
@@ -986,9 +957,7 @@ st_crop(xmin = -74, ymin = -36, xmax = -65, ymax = -30) |>
 
 
 
-
 ### Simplificar un polígono
-
 
 ::: {.cell}
 
@@ -1002,9 +971,7 @@ rmapshaper::ms_simplify(geometry, keep = 0.8))
 
 
 
-
 ### Extraer líneas internas de un polígono
-
 
 ::: {.cell}
 
@@ -1015,9 +982,7 @@ ms_innerlines() # deja solo las líneas interiores de un coso
 
 
 
-
 ## Correcciones
-
 
 ::: {.cell}
 
@@ -1026,12 +991,17 @@ st_as_sf()
 ```
 :::
 
+
+
+
 ::: {.cell}
 
 ```{.r .cell-code}
 st_make_valid()
 ```
 :::
+
+
 
 ::: {.cell}
 
@@ -1042,14 +1012,12 @@ st_drop_geometry()
 
 
 
-
 ----
 
 
 ## Operaciones agrupadas
 
 ### Unir polígonos
-
 
 ::: {.cell}
 
@@ -1061,12 +1029,10 @@ st_union()
 
 
 
-
 ## Operaciones entre geometrías
 
 ### Recortar un polígono con otro
 https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#clipping
-
 
 
 ::: {.cell}
@@ -1077,9 +1043,7 @@ st_intersection()
 :::
 
 
-
 ### Usar un polígono para eliminar partes de otro
-
 
 ::: {.cell}
 
@@ -1090,9 +1054,7 @@ st_difference()
 
 
 
-
 ### unir dos polígonos
-
 
 ::: {.cell}
 
@@ -1102,11 +1064,9 @@ st_union()
 :::
 
 
-
 ### Spatial join
 
 ### Filter
-
 
 ::: {.cell}
 
@@ -1118,11 +1078,9 @@ https://cengel.github.io/R-spatial/spatialops.html#topological-subsetting-select
 
 
 
-
 ## Coordenadas
 
 ### Extraer sistema de coordenadas
-
 
 ::: {.cell}
 
@@ -1132,9 +1090,7 @@ st_crs(comunas_region)
 :::
 
 
-
 ### Cambiar coordenadas
-
 
 ::: {.cell}
 
@@ -1145,11 +1101,9 @@ st_transform(crs = st_crs(comunas_region))
 
 
 
-
 ## Visualización
 
 ### Visualizar por capas
-
 
 ::: {.cell}
 
@@ -1160,9 +1114,7 @@ geom_sf()
 
 
 
-
 ### Texto
-
 
 ::: {.cell}
 
@@ -1173,10 +1125,8 @@ aes(label = nombre)) +
 :::
 
 
-
 ### Texto con repel
 https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
-
 
 ::: {.cell}
 
@@ -1193,9 +1143,7 @@ label.padding = 0.15, label.size = 0
 
 
 
-
 ### Hacer zoom
-
 
 ::: {.cell}
 
@@ -1206,9 +1154,7 @@ label.padding = 0.15, label.size = 0
 :::
 
 
-
 ### Dibujar un cuadrado
-
 
 ::: {.cell}
 
@@ -1220,9 +1166,7 @@ label.padding = 0.15, label.size = 0
 :::
 
 
-
 ### Escala de colores para mapa de calor
-
 
 
 ::: {.cell}
@@ -1240,15 +1184,12 @@ limits = c(0, NA)
 
 
 
-
 ### Minimapa
 https://dominicroye.github.io/blog/inserted-map/
-
 
 ::: {.cell}
 
 :::
-
 
 
 -->
