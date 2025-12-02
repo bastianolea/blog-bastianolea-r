@@ -1,0 +1,38 @@
+---
+title: Tips para explorar datos con R
+author: Bastián Olea Herrera
+date: '2025-12-03'
+slug: []
+categories: []
+draft: true
+tags:
+  - estadísticas
+  - básico
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+---
+
+
+```{r}
+ggplot2::qplot(Sepal.Length, data = iris, geom = "histogram")
+
+library(ggplot2)
+
+ggplot(iris) +
+  aes(Sepal.Length) +
+  geom_histogram()
+
+```
+
+```{r}
+library(GGally)
+
+iris |> 
+ ggpairs(aes(color = Species)) + 
+  theme_minimal() +
+  scale_color_brewer(palette = "Purples", aesthetics = c("color", "fill"))
+```
+
+[Florencia Mangini](https://www.thinkingondata.com/how-to-show-correlations-between-variables/)
