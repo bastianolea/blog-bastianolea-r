@@ -33,9 +33,11 @@
       </header>
       {{ $summary := cond (ne .Params.excerpt nil) .Params.excerpt .Summary }}
       {{ with $summary }}<p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">{{ . | markdownify | emojify }}</p>{{ end }}
+      
       <!-- tags de cada post -->
         {{ partial "shared/tags.html" . }}
         <!-- /agregar tags -->
+      
       <footer class="w-100">
         
       <!--ensures section Params are respected-->
