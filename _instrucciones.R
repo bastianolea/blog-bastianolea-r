@@ -16,10 +16,10 @@ blogdown::new_post(title = "Recibe fotos de gatos o bendiciones automáticamente
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Nuevo sitio: todo lo necesario para Aprender R", 
-                   file = "blog/crear_dataframes/index.qmd",
+blogdown::new_post(title = "Calcula estadísticos descriptivos básicos en R", 
+                   file = "blog/estadisticos_descriptivos/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos"),
+                   tags = c("estadísticas"),
                    categories = c() 
 )
 

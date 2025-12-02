@@ -6,6 +6,7 @@ slug: []
 categories: []
 tags:
   - consejos
+  - básico
 format:
   hugo-md:
     output-file: index

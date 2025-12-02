@@ -15,6 +15,7 @@ tags:
   - automatización
   - control de flujo
   - funciones
+  - básico
 excerpt: >-
   Si estás procesando muchos datos y/o datos que vienen de distintas fuentes con
   R, validarlos puede ayudarte a encontrar problemas antes de que sea tarde!

@@ -18,6 +18,7 @@ tags:
   - tidyr
   - procesamiento de datos
   - datos
+  - básico
 lang: es
 execute:
   error: true

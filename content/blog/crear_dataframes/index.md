@@ -7,6 +7,7 @@ categories: []
 tags:
   - consejos
   - datos
+  - básico
 excerpt: "Las tablas de datos o _dataframes_ son la estructura de información principal que usamos en R. En este post veremos cómo crear _dataframes_ sencillos a mano de dos formas: usando la función base `data.frame()` y la función `tribble()`."
 ---
 

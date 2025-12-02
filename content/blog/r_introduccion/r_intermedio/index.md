@@ -11,6 +11,7 @@ series: Introducción a R
 categories:
   - Tutoriales
 tags:
+  - básico
   - funciones
   - control de flujo
   - loops
@@ -118,11 +119,11 @@ saludar <- function(persona) {
 saludar(personas)
 ```
 
-    [1] "¡Hola BASTI! Tu número de la suerte es 57"     
-    [2] "¡Hola PAULA! Tu número de la suerte es 21"     
-    [3] "¡Hola CATHERINE! Tu número de la suerte es 58" 
-    [4] "¡Hola LUIS! Tu número de la suerte es 10"      
-    [5] "¡Hola MARÍA JOSÉ! Tu número de la suerte es 24"
+    [1] "¡Hola BASTI! Tu número de la suerte es 52"     
+    [2] "¡Hola PAULA! Tu número de la suerte es 70"     
+    [3] "¡Hola CATHERINE! Tu número de la suerte es 63" 
+    [4] "¡Hola LUIS! Tu número de la suerte es 39"      
+    [5] "¡Hola MARÍA JOSÉ! Tu número de la suerte es 48"
 
 En este caso, dentro del cuerpo de la función estamos realizando varias operaciones. Dentro de una función podemos crear nuevos objetos, y usar esos nuevos objetos para realizar otras operaciones sobre ellos. De este modo podemos llevar a cabo acciones más complejas. En el ejemplo, el argumento de la función es transformado a mayúsculas con `toupper()`, luego se inserta dentro del texto con `paste()`. Después, se crea un vector de números al azar que contenga una cantidad de números igual a la cantidad de elementos del vector que viene del argumento de la función, para que haya un número por persona. Finalmente, se usa nuevamente `paste()` junto a `sample()` para agregar el número aleatorio, y se entrega el objeto final, que será lo que la función retorna.
 

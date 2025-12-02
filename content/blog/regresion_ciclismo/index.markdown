@@ -9,8 +9,10 @@ categories: []
 tags:
   - estadística
   - ggplot2
+  - curiosidades
 excerpt: "Se me ocurrió aplicar estadísticas a una duda cotidiana: si se tiene un historial de kilómetros recorridos, ¿cómo podemos predecir los kilómetros que se recorrerán en el futuro? En este post aplicamos una regresión lineal en R para averiguarlo."
 ---
+
 
 
 
@@ -27,6 +29,7 @@ Lo primero fue anotar estas cifras en una tabla de datos:
 
 
 
+
 ``` r
 library(dplyr)
 
@@ -38,7 +41,9 @@ kms_año <- tribble(~año, ~kms,
 
 
 
+
 Luego visualizar los datos:
+
 
 
 
@@ -61,11 +66,13 @@ grafico_1
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 
+
 Efectivamente, la cantidad de kilómetros recorridos para este desafío en cada año ha aumentado de una manera casi lineal. 
 
 Mi idea fue crear un **modelo de regresión lineal** para ajustar estos datos a una recta que, al extenderla, nos permita **predecir cuántos kilómetros serían recorridos en los siguientes años**, si la tendencia se mantiene.
 
 Ajustamos un modelo de regresión lineal, por medio del cual queremos predecir los kilómetros a partir de los años, dado que intuimos que un aumento en los años conlleva también un aumento en los kilómetros.
+
 
 
 
@@ -100,6 +107,7 @@ grafico_1 +
 
 
 
+
 La primera predicción que obtenemos es una predicción de los datos que ya conocemos, pero a partir de la recta ajusta por el modelo. Es decir, son los valores que corresponden a cada punto en el tiempo de acuerdo a la línea de regresión proyectada. Estos valores se asemejan mucho a los valores reales, pero al ser un modelo, no son exactamente iguales, ya que corresponden a una simplificación de la realidad.
 
 En términos simples, un modelo de regresión lineal crea o _ajusta_ una recta que busca cruzar todos los puntos de los datos de la manera más cercana a ellos posible. Por lo tanto, el gráfico anterior compara los datos reales con los datos representados por el modelo, que en el fondo son resumidos por una sola recta.
@@ -111,6 +119,7 @@ Lo que haremos será crear nuevos datos, en este caso nuevos años, que no esté
 
 
 
+
 ``` r
 # crear nuevas observaciones para predecir
 predecir <- tibble(año = 2021:2026)
@@ -118,7 +127,9 @@ predecir <- tibble(año = 2021:2026)
 
 
 
+
 Luego usamos el modelo para predecir los valores que tendrían estos nuevos datos (al extender a recta hacia los nuevos años).
+
 
 
 
@@ -137,7 +148,9 @@ prediccion
 
 
 
+
 Finalmente reunimos estos resultados en una nueva tabla de datos que contiene los años y los kilómetros predichos.
+
 
 
 
@@ -163,7 +176,9 @@ predicho
 
 
 
+
 Teniendo estas predicciones, el último paso es unir las predicciones con los datos reales, y ponernos a analizar los resultados:
+
 
 
 
@@ -191,7 +206,9 @@ kms_año_pred
 
 
 
+
 Para visualizar los resultados, transformamos los datos a _formato largo_, para que en vez de tener dos columnas (los kilómetros reales y predichos) tengamos una sola columna con todos los valores, y una segunda columna que distinga los valores entre kilómetros reales y kilómetros predichos. Además, creamos una columna con los datos formateados de una manera más legible.
+
 
 
 
@@ -237,7 +254,9 @@ kms_año_pred_2
 
 
 
+
 Creamos un gráfico para analizar visualmente los resultados de nuestra predicción:
+
 
 
 
@@ -268,6 +287,7 @@ kms_año_pred_2 |>
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+
 
 
 Considerando los tres años de datos que tenemos de los recorridos en bicicleta de Andrés Arias durante el desafío Rapha Festive 500, podríamos predecir que este año Andrés va a recorrer 1.637 kilómetros entre el 24 y el 31 de diciembre, bajo el supuesto de que cada año Andrés ha aumentado sus kilómetros de forma lineal.

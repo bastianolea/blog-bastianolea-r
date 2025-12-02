@@ -8,6 +8,7 @@ draft: false
 weight: 6
 tags:
   - consejos
+  - básico
 excerpt: "Antes de hacer cualquier trabajo que involucre datos con R, es recomendable crear un _Proyecto_ de RStudio. Ésta es una forma de definir la carpeta específica donde vamos a guardar todos los scripts y archivos que vamos a necesitar, lo cual previene muchos problemas, simplifica la carga y guardado de datos, y ordena nuestro trabajo."
 ---
 

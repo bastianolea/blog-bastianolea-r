@@ -13,6 +13,7 @@ categories:
 tags:
   - procesamiento de datos
   - limpieza de datos
+  - básico
 editor_options:
   chunk_output_type: console
 excerpt: >-

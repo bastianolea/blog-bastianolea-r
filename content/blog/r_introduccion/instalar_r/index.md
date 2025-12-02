@@ -8,6 +8,7 @@ weight: 1
 series_weight: 1
 series: Introducción a R
 tags:
+  - básico
 categories:
   - Tutoriales
 lang: es

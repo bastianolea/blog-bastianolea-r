@@ -14,8 +14,8 @@ categories:
   - Tutoriales
 tags:
   - dplyr
-  - consejos
   - datos
+  - básico
 lang: es
 excerpt: >-
   Luego de haber aprendido las funcionalidades básicas del lenguaje y R, y

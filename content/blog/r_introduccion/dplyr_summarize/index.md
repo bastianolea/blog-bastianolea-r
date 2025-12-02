@@ -14,6 +14,7 @@ categories:
   - Tutoriales
 tags:
   - dplyr
+  - básico
 lang: es
 excerpt: Prueba
 execute:

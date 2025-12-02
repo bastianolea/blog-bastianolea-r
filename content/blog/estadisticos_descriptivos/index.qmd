@@ -1,0 +1,73 @@
+---
+title: Calcula estadísticos descriptivos básicos en R
+author: Bastián Olea Herrera
+date: '2025-12-02'
+slug: []
+categories: []
+tags:
+  - estadísticas
+  - básico
+  - dplyr
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+excerpt: "Hola"
+---
+
+```{r}
+summary(iris)
+```
+
+
+```{r}
+#| message: false
+library(dplyr)
+
+iris |> 
+  summarize(
+    across(where(is.numeric), 
+           ~min(.x))
+    )
+```
+
+```{r}
+iris |>
+  rename(var = Petal.Width) |> # definir variable
+  filter(!is.na(var)) |>
+  # grupo
+  group_by(Species) |> 
+  # calcular
+  summarize(
+    "minimo" = min(var),
+    "primer" = quantile(var, probs = 0.25),
+    "promedio" = mean(var),
+    "mediana" = median(var),
+    "tercer" = quantile(var, probs = 0.75),
+    "maximo" = max(var),
+    "desviacion" = sd(var)
+  )
+```
+
+
+```{r}
+library(tidyr)
+
+iris |> 
+  tibble() |> 
+  summarise(
+    across(where(is.numeric),
+           list("minimo" = ~min(.x),
+                "primer" = ~quantile(.x, probs = 0.25),
+                "promedio" = ~mean(.x),
+                "mediana" = ~median(.x),
+                "tercer" = ~quantile(.x, probs = 0.75),
+                "maximo" = ~max(.x),
+                "desviacion" = ~sd(.x)
+           )
+    )) |> 
+  pivot_longer(everything(), 
+               names_sep = "_", 
+               names_to = c("variable", ".value"))
+```
+

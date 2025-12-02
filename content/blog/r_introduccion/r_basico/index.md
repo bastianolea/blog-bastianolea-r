@@ -13,6 +13,7 @@ categories:
   - Tutoriales
 tags:
   - funciones
+  - básico
 lang: es
 excerpt: >-
   Instrucciones paso a paso para aprender los aspectos más básicos del lenguaje
@@ -726,7 +727,7 @@ numeros <- 1:10000000
 sample(numeros, size = 1)
 ```
 
-    [1] 3036468
+    [1] 4402724
 
 La función recibe como primer argumento el vector de elementos, y como segundo argumento la cantidad de elementos que queremos obtener al azar.
 
@@ -800,7 +801,7 @@ animales <- c("gato", "mapache", "castor", "pollo", "ratón", "pudú")
 paste("el animal más lindo es el", sample(animales, 1))
 ```
 
-    [1] "el animal más lindo es el mapache"
+    [1] "el animal más lindo es el pollo"
 
 ### Redondear datos
 

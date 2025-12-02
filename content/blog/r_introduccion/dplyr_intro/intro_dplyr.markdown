@@ -13,8 +13,8 @@ slug: []
 categories: ["Tutoriales"]
 tags:
   - dplyr
-  - consejos
   - datos
+  - básico
 lang: es
 excerpt: "Luego de haber aprendido las funcionalidades básicas del lenguaje y R, y habernos familiarizado con herramientas un poco más avanzadas de la programación en este lenguaje, ahora podemos aplicar estos aprendizajes a los datos. Aprenderemos a explorar, comprender, y navegar tablas de datos, tanto en la forma nativa de trabajar con R, como con la ayuda del paquete {dplyr}."
 execute: 
@@ -23,6 +23,9 @@ execute:
 editor_options: 
   chunk_output_type: console
 ---
+
+
+
 
 
 Luego de haber aprendido las [funcionalidades básicas del lenguaje R](/blog/r_introduccion/r_basico/), y habernos familiarizado con [herramientas un poco más avanzadas de la programación](/blog/r_introduccion/r_intermedio/) en este lenguaje, ahora podemos aplicar estos aprendizajes a los datos. Aprenderemos a explorar, comprender, y navegar tablas de datos, tanto en la forma nativa de trabajar con R, como con la ayuda del paquete {dplyr}.
@@ -45,13 +48,22 @@ Para usar el paquete `{dplyr}`, así como cualquier otro paquete de R que no ven
 
 Instalamos `{dplyr}` con el siguiente comando:
 
+
+
+
 ``` r
 install.packages("dplyr")
 ```
 
+
+
+
 Así como cuando instalamos una aplicación en nuestro celular o computador, solamente necesitamos instalar el paquete una vez. Pero cuando queramos usar el paquete, debemos **cargarlo**, que sería equivalente a abrir una aplicación ya instalada en tu celular o computador.
 
 Para cargar un paquete se utiliza la función `library()`:
+
+
+
 
 
 ``` r
@@ -75,6 +87,9 @@ library("dplyr")
 ##     intersect, setdiff, setequal, union
 ```
 
+
+
+
 Después de cargar un paquete puede ser que aparezcan mensajes en la consola, pero en general podemos ignorarlos.
 
 
@@ -89,6 +104,9 @@ Usemos {dplyr} para tener nuestra primera aproximación a los datos en tablas co
 Creemos unos vectores y luego hagamos una tabla a partir de ellos:
 
 
+
+
+
 ``` r
 animal <- c("gato", "paloma", "rana", "pollo", "mapache", "serpiente")
 
@@ -97,7 +115,13 @@ tipo <- c("mamífero", "ave", "anfibio", "ave", "mamífero", "reptil")
 patas <- c(4, 2, 4, 2, 4, 0)
 ```
 
+
+
+
 Creamos tres vectores, que serán las columnas de nuestra tabla. Confirmemos que tienen el mismo largo:
+
+
+
 
 
 ``` r
@@ -111,7 +135,13 @@ all(length(animal) == 6,
 ## [1] TRUE
 ```
 
+
+
+
 Ahora, usemos los vectores para crear una tabla con {dplyr}:
+
+
+
 
 
 ``` r
@@ -135,10 +165,16 @@ tabla
 ## 6 serpiente reptil       0
 ```
 
+
+
+
 Esta es la salida en la consola que tienen los _dataframes_ creados con {dplyr}. En ella, podemos ver en la primera fila de texto en largo y ancho de la tabla (número de filas y columnas). Luego vemos los **nombres** de las tres columnas, y debajo de ellos vemos el **tipo** de cada columna (caracter, caracter y numérico). Las siguientes filas corresponden a los datos mismos de la tabla.
 
 ### Explorar una tabla
 Exploremos un poco las características de una tabla o _dataframe_:
+
+
+
 
 
 ``` r
@@ -149,7 +185,13 @@ class(tabla)
 ## [1] "tbl_df"     "tbl"        "data.frame"
 ```
 
+
+
+
 Las tablas creadas con {dplyr} son de la clase `"tbl_df"`, que hace referencia a _tibble,_ el tipo específico de tablas de datos de este paquete, que son más amigables y fáciles de leer.
+
+
+
 
 
 ``` r
@@ -160,7 +202,13 @@ length(tabla)
 ## [1] 3
 ```
 
+
+
+
 Se consultamos el largo del objeto con `length()`, obtenemos el número de columnas. Si queremos saber el número de filas, usamos `nrow()`:
+
+
+
 
 
 ``` r
@@ -171,7 +219,13 @@ nrow(tabla)
 ## [1] 6
 ```
 
+
+
+
 Si queremos saber los nombres de las columnas de una tabla, podemos usar `names()`, o bien, la función `glimpse()`, que nos entrega un conveniente _vistazo_ de los datos de nuestra tabla:
+
+
+
 
 
 ``` r
@@ -195,9 +249,15 @@ glimpse(tabla)
 ```
 
 
+
+
+
 ### Seleccionar datos
 
 Recordemos que podemos extraer subconjuntos de los vectores usando los corchetes `[]`:
+
+
+
 
 
 ``` r
@@ -224,9 +284,15 @@ animal[c(1, 2, 4)]
 ## [1] "gato"   "paloma" "pollo"
 ```
 
+
+
+
 Con los vectores es sencillo, porque un vector es una unidad de datos unidimensional, donde con un número podemos seleccionar cualquiera de los elementos contenidos en el vector.
 
 Las tablas de datos no son unidimensionales, sino **bidimensionales**, dado que tienen filas y columnas. Entonces, para poder extraer elementos de distintas posiciones de una tabla, dentro de los corchetes habrá que indicar sus filas y/o columnas. Tenemos que indicar ya no sólo uno, sino dos argumentos: el primero refiere a las **filas**, y el segundo a las **columnas**.
+
+
+
 
 
 ``` r
@@ -240,11 +306,17 @@ tabla[2, 3]
 ## 1     2
 ```
 
+
+
+
 En este caso, extrajimos la observación que se encuentra en la fila `2` y en la columna `3`.
 
 #### Filas
 
 Para extraer una fila de una tabla, dentro de los corchetes debemos indicar la posición de la fila, separado por una coma, y dejar en blanco el segundo argumento, que sería la selección de columnas.
+
+
+
 
 
 ``` r
@@ -258,9 +330,15 @@ tabla[1, ]
 ## 1 gato   mamífero     4
 ```
 
+
+
+
 Indicando sólo el número de fila `1` y dejando en blanco la ubicación de la columna, seleccionamos la fila 1 entera.
 
 También podemos usar la función `slice()` para extraer una fila de una tabla:
+
+
+
 
 
 ``` r
@@ -274,7 +352,13 @@ slice(tabla, 5)
 ## 1 mapache mamífero     4
 ```
 
+
+
+
 Si queremos extraer la última fila de una tabla, podemos combinar `slice()` con la función `nrow()` que nos entrega la cantidad de filas de una tabla, resultando en extraer la fila que corresponde con el número de filas; es decir, la última:
+
+
+
 
 
 ``` r
@@ -289,9 +373,15 @@ slice(tabla, nrow(tabla))
 ```
 
 
+
+
+
 #### Columnas
 
 Para extraer una columna, debemos indicar su posición en el segundo argumento dentro de los corchetes, dejando el primero vacío:
+
+
+
 
 
 ``` r
@@ -310,7 +400,13 @@ tabla[, 1]
 ## 6 serpiente
 ```
 
+
+
+
 También podemos indicar el nombre de la columna, entre comillas, para seleccionarla:
+
+
+
 
 ``` r
 tabla[, "animal"]
@@ -329,7 +425,13 @@ tabla[, "animal"]
 ```
 
 
+
+
+
 Puede para ser extraño dejar la coma por sí sola dentro del corchete, así que en su lugar podemos usar la función `select()` para seleccionar columnas:
+
+
+
 
 
 ``` r
@@ -364,9 +466,16 @@ select(tabla, "tipo")
 ## 6 reptil
 ```
 
+
+
+
 Otra forma de extraer una columna de una tabla de datos es _abrir_ la tabla usando el operador `$`. Al escribir el nombre de la tabla de datos seguido del operador `$`, RStudio sugerirá los nombres de las columnas para que puedas extraerlas:
 
+
+
+
 {{< imagen "dplyr_1.png" >}}
+
 
 
 ``` r
@@ -377,9 +486,15 @@ tabla$animal
 ## [1] "gato"      "paloma"    "rana"      "pollo"     "mapache"   "serpiente"
 ```
 
+
+
+
 A usar el operador `$` para extraer columnas, se obtiene el vector que se usó para crear la columna, así que recibimos los datos en forma de vector.
 
 La misma extracción de una columna como vector puede hacerse con la función `pull()` de {dplyr}, donde se entrega la tabla y la columna, y se obtiene la columna como vector:
+
+
+
 
 
 ``` r
@@ -391,11 +506,17 @@ pull(tabla, animal)
 ```
 
 
+
+
+
 ### Crear columnas
 
 Si queremos agregar una nueva columna a nuestro _dataframe_, tenemos que hacer una mezcla entre la extracción de columnas con el operador `$` y la asignación de nuevos objetos: 
 
 Si intentamos extraer una columna que no existe, recibimos un error:
+
+
+
 
 ``` r
 tabla$habitat
@@ -409,7 +530,13 @@ tabla$habitat
 ## NULL
 ```
 
+
+
+
 Sin embargo, si creamos un vector encima de esta columna que aún no existe, ésta se crea:
+
+
+
 
 ``` r
 tabla$habitat <- c("urbano", "urbano", "rural", "rural", "urbano", "rural")
@@ -429,9 +556,15 @@ tabla
 ## 6 serpiente reptil       0 rural
 ```
 
+
+
+
 En otras palabras, para crear una nueva columna simplemente especificamos su nombre como parte de la tabla existente, y asignamos los datos que queremos que se contengan en esta nueva columna.
 
 Otra forma de crear columnas es con la función `mutate()`, que nos permite crear o modificar columnas existentes:
+
+
+
 
 
 ``` r
@@ -450,13 +583,22 @@ mutate(tabla, cola = c("sí", "sí", "no", "no", "sí", "toda"))
 ## 6 serpiente reptil       0 rural   toda
 ```
 
+
+
+
 La diferencia es que con `mutate()` solamente estamos previsualizando el cambio, dado que no hemos asignado nada. Si queremos que la columna realmente se guarde en el _dataframe_, debemos asignar el resultado a un objeto nuevo, o sobreescribir el actual:
+
+
+
 
 
 ``` r
 # sobreescribir la tabla con la columna nueva
 tabla <- mutate(tabla, cola = c("sí", "sí", "no", "no", "sí", "toda"))
 ```
+
+
+
 
 
 
@@ -467,6 +609,9 @@ Una de las tareas más recurrentes que vamos a hacer con tablas de datos, sobre 
 Entonces, para filtrar datos, escribimos una comparación que coincida (retorne `TRUE`) con los valores que deseamos recibir.
 
 Supongamos que queremos ver solamente las observaciones donde el valor de la variable `patas` sea mayor que 2. Primero, planteemos la comparación:
+
+
+
 
 
 ``` r
@@ -487,9 +632,15 @@ tabla$patas > 2
 ## [1]  TRUE FALSE  TRUE FALSE  TRUE FALSE
 ```
 
+
+
+
 A partir de las comparaciones, recibimos una secuencia de valores lógicos (`TRUE`/`FALSE`) que indican si cada elemento del vector cumplió o no con la comparación planteada. Entonces, en principio, queremos mantener solamente las observaciones que retornaron `TRUE`. 
 
 Recordemos que para filtrar filas de una tabla, dentro de los corchetes especificamos en la primera posición las filas que queremos extraer. 
+
+
+
 
 
 ``` r
@@ -503,7 +654,13 @@ tabla[1, ]
 ## 1 gato   mamífero     4 urbano  sí
 ```
 
+
+
+
 Esto, sumado a lo anterior, son los principios que usaremos para filtrar las filas de una tabla de datos:
+
+
+
 
 
 ``` r
@@ -519,9 +676,15 @@ tabla[tabla$patas > 2, ]
 ## 3 mapache mamífero     4 urbano  sí
 ```
 
+
+
+
 Usamos la comparación que retorna verdaderos y falsos dentro de los corchetes para seleccionar las filas de la tabla. Entonces, como el vector de la comparación entre el mismo largo que las filas de la tabla, en cada posición de la comparación que se obtuvo `TRUE`, se muestra la fila correspondiente, y si se obtuvo `FALSE`, se omite.
 
 Otros ejemplos de filtrado:
+
+
+
 
 
 ``` r
@@ -543,7 +706,13 @@ tabla[tabla$animal == "mapache", ]
 ## 1 mapache mamífero     4 urbano  sí
 ```
 
+
+
+
 Una segunda opción es usar la función `subset()` de R base para filtrar tablas:
+
+
+
 
 ``` r
 subset(tabla, patas < 3)
@@ -569,7 +738,13 @@ subset(tabla, animal == "pollo")
 ## 1 pollo  ave       2 rural   no
 ```
 
+
+
+
 La alternativa de {dplyr}, `filter()`, es similar a `subset()`, pero tiene otras conveniencias que aprenderemos más adelante:
+
+
+
 
 
 ``` r
@@ -600,11 +775,17 @@ filter(tabla, animal %in% c("mapache", "gato"))
 
 
 
+
+
+
 ### Renombrar columnas
 
 Para cambiar el nombre de una de las columnas, hay varias formas. 
 
 Una forma, quizás más rudimentaria, sería crear una columna nueva con el nombre que deseamos, a partir de una columna existente, para luego eliminar la columna original:
+
+
+
 
 ``` r
 # columna original
@@ -630,9 +811,15 @@ names(tabla)
 ## [1] "animal" "tipo"   "patas"  "cola"   "zona"
 ```
 
+
+
+
 Éste procedimiento es similar al que vimos para crear nuevas columnas, ya que implica crear una columna que no existe aún (`zona`), a partir de un valor, en este caso, una columna de la misma tabla (`tabla$habitat`). De esta forma, duplicamos la columna, para luego **eliminar** la columna original al asignarle el valor nulo, `NULL`. 
 
 Otra forma de renombrar columnas, aunque un poco confusa, es usando la función `names()`, que nos entrega los nombres de las columnas:
+
+
+
 
 ``` r
 # obtener columnas
@@ -643,7 +830,13 @@ names(tabla)
 ## [1] "animal" "tipo"   "patas"  "cola"   "zona"
 ```
 
+
+
+
 Al obtener los nombres de las columnas, realizamos una selección de la columna que queremos, usando los corchetes. Luego habría que asignar el nombre nuevo a la columna que sleeccionamos:
+
+
+
 
 ``` r
 # seleccionar columna a renombrar
@@ -666,7 +859,13 @@ names(tabla)
 ## [1] "animal"  "tipo"    "piernas" "cola"    "zona"
 ```
 
+
+
+
 Finalmente, la alternativa que entrega {dplyr} para renombrar columnas es la función `rename()`, a la cual se le entrega la tabla, y luego se le entrega el nombre nuevo de la columna, el signo `= ` y el nombre original:
+
+
+
 
 ``` r
 tabla <- rename(tabla, nombre = animal)
@@ -679,11 +878,17 @@ names(tabla)
 ## [1] "nombre"  "tipo"    "piernas" "cola"    "zona"
 ```
 
+
+
+
 ### Ordenar observaciones
 
 Otra operación común con tallas de datos es ordenar una tabla según una variable numérica, para que las observaciones estén en orden decreciente o ascendente.
 
 Primero, si queremos ordenar un vector, podemos usar la función `sort()` para obtener los valores del vector de menor a mayor:
+
+
+
 
 
 ``` r
@@ -694,7 +899,13 @@ sort(tabla$piernas)
 ## [1] 0 2 2 4 4 4
 ```
 
+
+
+
 En cierto sentido, ordenar una tabla es la misma operación que extraer filas de una tabla, solamente extraemos las filas de la tabla en el orden que deseamos. Por ejemplo:
+
+
+
 
 
 ``` r
@@ -727,9 +938,15 @@ tabla[c(6, 4, 4), ]
 ## 3 pollo     ave          2 no    rural
 ```
 
+
+
+
 En este ejemplo, extrajimos tres filas de la tabla, pero la extracción que hacemos es específicamente de la fila que tiene valor 0 en la variable `piernas`, y luego las dos filas que tienen valor 2.
 
 Como memos, en este caso no nos serviría la función `sort()`. Porque para ordenar una tabla no necesitamos los _valores ordenados_ del vector, sino las **posiciones** de los valores del vector ordenadas de manera que podamos mover las filas de una tabla. Para eso nos sirve la función `order()`:
+
+
+
 
 
 ``` r
@@ -741,7 +958,13 @@ order(tabla$piernas)
 ## [1] 6 2 4 1 3 5
 ```
 
+
+
+
 Esta función si no se entrega la posición de los elementos del vector o de la columna en el orden de menor a mayor, y con estas posiciones podemos reordenar las filas de la tabla:
+
+
+
 
 ``` r
 # ordenar de menor a mayor
@@ -777,7 +1000,13 @@ tabla[order(tabla$piernas, decreasing = TRUE), ]
 ## 6 serpiente reptil         0 toda  rural
 ```
 
+
+
+
 La función `arrange()` de {dplyr} nos permite ordenar una tabla tan sólo entregándole la columna por la cual queremos ordenar:
+
+
+
 
 ``` r
 arrange(tabla, piernas)
@@ -795,7 +1024,13 @@ arrange(tabla, piernas)
 ## 6 mapache   mamífero       4 sí    urbano
 ```
 
+
+
+
 ¡Mucho más sencillo! Si deseamos ordenar en orden descendiente (mayor a menor), debemos meter la columna dentro de la función `desc()` (por _descending_):
+
+
+
 
 
 ``` r
@@ -815,11 +1050,17 @@ arrange(tabla, desc(piernas))
 ```
 
 
+
+
+
 ## Bonus
 
 ### Crear tablas manualmente
 
 Si queremos crear una tabla de datos de prueba, para explorar estos aprendizajes, o bien porque nuestros datos son muy poquitos, podemos usar la función `tribble()` para escribir la tabla como si la estuviéramos haciendo en una aplicación de planillas de cálculo:
+
+
+
 
 
 ``` r
@@ -839,6 +1080,9 @@ tribble(~días,    ~n, ~caso,
 ## 3 sábado      2     1
 ```
 
+
+
+
 Simplemente escribe los nombres de las columnas con una colita de chancho antes (`~`) en la primera fila, y hacia abajo puedes ir rellenando los valores de cada columna. 
 
 
@@ -850,7 +1094,12 @@ En ese tutorial nuevamente aprendimos herramientas básicas de R, esta vez orien
 **El siguiente paso** es aprender a [transformar datos con `{dplyr}` y `{tidyr}`](/blog/r_introduccion/dplyr_intermedio/), o bien puedes pasar a los tutoriales aplicados, donde practicaremos estos aprendizajes en conjunto de datos reales: con [datos de proyecciones de población provenientes del Censo](/blog/r_introduccion/tutorial_dplyr_censo/), y con [datos de un catastro de asentamientos de vivienda informales](/blog/r_introduccion/tutorial_dplyr_campamentos/).
 
 
+
+
+
 {{< cafecito >}}
 
+
 {{< cursos >}}
+
 

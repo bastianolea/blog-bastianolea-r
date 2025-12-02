@@ -7,7 +7,8 @@ format:
     output-file: "index"
     output-ext:  "md"
 weight: 9
-draft: true
+draft: false
+freeze: true
 series: "Introducción a R"
 slug: []
 categories: ["Tutoriales"]
@@ -16,6 +17,7 @@ tags:
   - tidyr
   - procesamiento de datos
   - datos
+  - básico
 lang: es
 execute: 
   error: true
@@ -34,12 +36,26 @@ links:
 excerpt: "Los datos pueden existir en distintos formatos o estructuras, y el poder transformar los datos entre distintas estructuras es una habilidad clave. En este tutorial aprenderemos a usar las funciones `pivot_longer()` y `pivot_wider()` del paquete `{tidyr}` para cambiar entre formatos de datos _ancho_ (_wide_) y _largo_ (_long_)."
 ---
 
+
+
 Los datos pueden existir en distintos formatos o estructuras, y el poder **transformar los datos entre distintas estructuras** es una habilidad clave.
+
+
+
+{{< imagen "featured.png" >}}
+
+
+
 
 En este tutorial  aprenderemos a usar las funciones `pivot_longer()` y `pivot_wider()` del [paquete `{tidyr}`](https://tidyr.tidyverse.org/) para cambiar entre formatos de datos _ancho_ (_wide_) y _largo_ (_long_).
 
 
-{{< imagen "featured.png" >}}
+
+
+{{< indice >}}
+
+
+
 
 ## Formatos de datos
 No existe una forma estandarizada de estructurar los datos. La estructura o formato que tengan los datos va a depender de muchas cosas: de dónde provienen los datos, para que se van a usar los datos, etc. Dependiendo de estas distintas necesidades los datos se pueden estructurar distintos.
@@ -48,23 +64,15 @@ Dos de estos formatos o estructuras de datos son los datos anchos y largos.
 
 
 
+
+
+
+
 ### Datos en formato ancho
 El **formato ancho** (_wide_) es cuando cada variable que describe las observaciones tiene su propia columna. Esto resulta en varias columnas, cada una describiendo un aspecto distinto de cada observación.
 
 _Por ejemplo:_
 
-
-```
-## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
-
-```
-## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
 
 
 
@@ -76,6 +84,8 @@ _Por ejemplo:_
 |Costa Rica |      13|     80.80|        8.84|
 |Panamá     |      13|     79.59|       10.83|
 |Bolivia    |      15|     68.58|       10.02|
+
+
 {{< bajada "Tabla con datos en formato ancho, con las variables distribuidas en columnas">}}
 
 Generalmente este formato se usa para presentar los datos, ya que es fácil de leer y comparar valores lado a lado.
@@ -85,18 +95,6 @@ El **formato largo** (_long_) es cuando las variables se encuentran en una sola 
 
 _Por ejemplo:_
 
-
-```
-## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
-
-```
-## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
 
 
 
@@ -111,6 +109,8 @@ _Por ejemplo:_
 |Argentina |pobreza     | 11.00|
 |Argentina |esperanza   | 77.69|
 |Argentina |escolaridad | 11.18|
+
+
 {{< bajada "Tabla con datos en formato largo, con las variables distribuidas en filas">}}
 
 
@@ -125,9 +125,16 @@ Ahora veremos cómo podemos pasar desde una estructura o formato de datos hacia 
 
 Si tenemos nuestros datos cuyas variables están distribuidas en columnas, y queremos pasarlas hacia filas, necesitamos _pivotar_ la tabla hacia lo largo.
 
+
+
 {{< imagen "pivot_ancho_largo.png" >}}
 
+
+
+
 La función `pivot_longer()` toma las columnas que contienen las variables, y las _apila_ en dos nuevas columnas: una con los **nombres** de las variables, y otra con sus **valores**. 
+
+
 
 
 ``` r
@@ -135,7 +142,11 @@ library(tidyr)
 library(dplyr)
 ```
 
+
+
 Veamos un ejemplo común. Cuando buscamos datos que muestran la evolución de una variable, en general los datos se estructuran con columnas que describen los valores de una variable separadas en columnas por mes o año.
+
+
 
 
 ``` r
@@ -156,20 +167,11 @@ desarrollo <- tribble(
 
 {{< bajada "Ejecuta este código para cargar los datos en tu sesión de R" >}}
 
+
+
+
 Esta tabla contiene datos del [índice de desarrollo humano](https://es.wikipedia.org/wiki/Anexo:Países_de_América_Latina_por_índice_de_desarrollo_humano) para 10 países de la Latinoamérica:
 
-
-```
-## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
-
-```
-## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
 
 
 
@@ -185,11 +187,17 @@ Esta tabla contiene datos del [índice de desarrollo humano](https://es.wikipedi
 |Colombia   | 0.788| 0.782| 0.762| 0.777|
 |Brasil     | 0.786| 0.780| 0.768| 0.776|
 |Ecuador    | 0.777| 0.773| 0.753| 0.765|
+
 {{< bajada "Tabla de datos en formato ancho" >}}
+
+
+
 
 Tener los datos así puede ser útil para mirarlos y presentarlos, pero se vuelve difícil trabajar con ellos, por ejemplo, para calcular la variación entre cada año, o para graficar la evolución del índice de desarrollo humano a través del tiempo.
 
 Para convertirlos en formato largo usamos `pivot_longer()` indicando las columnas que queremos _pivotar_:
+
+
 
 ``` r
 desarrollo_largo <- desarrollo |> 
@@ -199,19 +207,6 @@ desarrollo_largo <- desarrollo |>
 ```
 
 {{< bajada "Pivotar una tabla al formato largo" >}}
-
-
-```
-## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
-
-```
-## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
 
 
 
@@ -225,7 +220,11 @@ desarrollo_largo <- desarrollo |>
 |Argentina |2022 |  0.858|
 |Argentina |2021 |  0.847|
 |Argentina |2019 |  0.861|
+
 {{< bajada "Datos en formato largo" >}}
+
+
+
 
 Ahora cada país abarca varias filas, porque ahora las filas son también los años. Es decir, pasamos a tener una fila por cada país, tener una fila por cada año de cada país. De este modo, ahora todas las cifras se encuentran en una sola columna.
 
@@ -235,9 +234,16 @@ Con `cols = c("2023", "2022", "2021", "2019")` especificamos las **columnas** qu
 
 Con los argumentos `names_to` y `values_to` definimos el nombre de las nuevas columnas con los **nombres** y los **valores** de las columnas originales. Podemos dejar estos últimos dos argumentos vacíos para que se usen los nombres por defecto (`name` y `value`).
 
+
+
 {{< detalles "**Ejemplos:** _¿Para qué nos sirve ésto?_" >}}
 
+
+
+
 Ahora podemos filtrar por año fácilmente:
+
+
 
 ``` r
 desarrollo_largo |> 
@@ -260,7 +266,11 @@ desarrollo_largo |>
 ## 10 Ecuador    2023   0.777
 ```
 
+
+
 Podemos encontrar datos donde el índice cumpla algún criterio:
+
+
 
 
 ``` r
@@ -280,7 +290,11 @@ desarrollo_largo |>
 ## 6 Uruguay   2023   0.862
 ```
 
+
+
 O podemos calcular la variación entre años:
+
+
 
 ``` r
 desarrollo_largo |> 
@@ -300,7 +314,11 @@ desarrollo_largo |>
 ## 4 Chile 2023   0.878   0.00900 Sí
 ```
 
+
+
 Y lo mejor es que ahora resulta mucho más fácil poder hacer el gráficos con estos datos, dado que la información necesaria se encuentra agrupada en sólo dos columnas:
+
+
 
 
 ``` r
@@ -329,12 +347,16 @@ desarrollo_largo |>
 
 <img src="/blog/r_introduccion/tidyr_pivotar/tidyr_pivotar_files/figure-html/unnamed-chunk-12-1.png" width="672" />
 
-
 {{< /detalles >}}
+
+
+
 
 ----
 
 Veamos otro ejemplo: una tabla con tres variables distintas, que nos muestran datos de países latinoamericanos sobre [pobreza](https://es.wikipedia.org/wiki/Anexo:Países_por_porcentaje_de_pobreza_en_Latinoamérica) y [desarrollo](https://es.wikipedia.org/wiki/Anexo:Países_de_América_Latina_por_índice_de_desarrollo_humano).
+
+
 
 
 ``` r
@@ -356,19 +378,6 @@ pobreza <- tribble(
 {{< bajada "Ejecuta este código para cargar los datos en tu sesión de R" >}}
 
 
-```
-## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
-
-```
-## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
-
-
 
 |pais        | pobreza| esperanza| escolaridad|
 |:-----------|-------:|---------:|-----------:|
@@ -383,9 +392,13 @@ pobreza <- tribble(
 |Brasil      |      24|     75.85|        8.43|
 |El Salvador |      28|     72.10|        7.30|
 
+
+
 En las **filas** tenemos las observaciones (países), y en las **columnas** tenemos tres variables distintas: pobreza (medida por el Banco Mundial como porcentaje de la población que recibe menos de US$6,85 al día), esperanza de vida, y escolaridad promedio.
 
 Si convertimos esta tabla hacia el formato largo, vamos a tener la información estructurada de forma que cada variable ocupe una fila distinta:
+
+
 
 
 ``` r
@@ -396,19 +409,6 @@ pobreza_largo <- pobreza |>
 ```
 
 {{< bajada "Pivotar una tabla al formato largo" >}}
-
-
-```
-## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
-
-```
-## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
 
 
 
@@ -424,9 +424,14 @@ pobreza_largo <- pobreza |>
 |Argentina |esperanza   | 77.69|
 |Argentina |escolaridad | 11.18|
 
+
+
 Ahora cada país ocupa tres filas, una por cada variable. Esto nos permite filtrar y analizar los datos de forma más flexible.
 
+
+
 {{< detalles "**Ejemplos:** _¿Para qué nos sirve ésto?_" >}}
+
 
 
 ``` r
@@ -476,6 +481,9 @@ pobreza_largo |>
 {{< /detalles >}}
 
 
+
+
+
 #### Selección de columnas
 
 Cuando tenemos muchas columnas para pivotar, es mejor usar técnicas o funciones que las abarquen todas en vez de escribirlas manualmente.
@@ -485,6 +493,8 @@ Cuando tenemos muchas columnas para pivotar, es mejor usar técnicas o funciones
 Podemos usar el operador `-` para seleccionar todas las columnas excepto las que especifiquemos:
 
 
+
+
 ``` r
 pobreza |> 
   pivot_longer(cols = -pais,
@@ -492,11 +502,15 @@ pobreza |>
                values_to = "valor")
 ```
 
+
+
 Esto es equivalente a escribir `cols = c(pobreza, esperanza, escolaridad)`, pero mucho más corto cuando tenemos muchas columnas.
 
 ##### Seleccionar por posición
 
 También podemos seleccionar columnas por su posición numérica:
+
+
 
 
 ``` r
@@ -506,11 +520,15 @@ desarrollo |>
                values_to = "índice")
 ```
 
+
+
 Esto selecciona desde la segunda columna hasta la última (`last_col()`); es decir, los cuatro años de la tabla). 
 
 ##### Seleccionar con funciones auxiliares
 
 Se pueden usar todas las funciones de `{tidyselect}` para seleccionar columnas según su texto, formato, y más:
+
+
 
 
 ``` r
@@ -548,6 +566,8 @@ desarrollo |>
 ```
 
 
+
+
 ----
 
 ### Desde largo hacia ancho
@@ -556,22 +576,15 @@ desarrollo |>
 
 Es decir que pasamos de datos donde las variables de cada observación se encuentran en varias filas, a una tabla donde cada observación usará una fila y las variables estarán en **varias columnas**.
 
+
+
 {{< imagen "pivot_largo_ancho.png" >}}
+
+
+
 
 Partamos desde la tabla `pobreza_largo` que creamos anteriormente:
 
-
-```
-## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
-
-```
-## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
 
 
 
@@ -587,7 +600,14 @@ Partamos desde la tabla `pobreza_largo` que creamos anteriormente:
 |Argentina |esperanza   | 77.69|
 |Argentina |escolaridad | 11.18|
 
+{{< bajada "Tabla con datos en formato largo" >}}
+
+
+
+
 Para volver a convertirla al formato ancho usamos `pivot_wider()`:
+
+
 
 
 ``` r
@@ -597,19 +617,6 @@ pobreza_ancho <- pobreza_largo |>
 ```
 
 {{< bajada "Pivotar una tabla al formato ancho" >}}
-
-
-```
-## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
-
-```
-## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
 
 
 
@@ -626,6 +633,11 @@ pobreza_ancho <- pobreza_largo |>
 |Brasil      |      24|     75.85|        8.43|
 |El Salvador |      28|     72.10|        7.30|
 
+{{< bajada "Datos pivotados al formato ancho" >}}
+
+
+
+
 Ahora cada variable tiene su propia columna nuevamente.
 
 _¿Qué hicimos?_
@@ -638,18 +650,6 @@ Con `values_from` indicamos desde cuál columna sacaremos los **valores** que re
 
 Veamos otro ejemplo usando la tabla `desarrollo_largo`:
 
-
-```
-## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
-
-```
-## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
 
 
 
@@ -664,7 +664,14 @@ Veamos otro ejemplo usando la tabla `desarrollo_largo`:
 |Argentina |2021 |  0.847|
 |Argentina |2019 |  0.861|
 
+{{< bajada "Tabla con datos en formato largo" >}}
+
+
+
+
 Podemos convertirla de vuelta al formato ancho para tener cada año como una columna separada:
+
+
 
 
 ``` r
@@ -673,18 +680,7 @@ desarrollo_ancho <- desarrollo_largo |>
               values_from = índice)
 ```
 
-
-```
-## Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
-
-```
-## Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-## Use 'xfun::attr2()' instead.
-## See help("Deprecated")
-```
+{{< bajada "Pivotar a formato ancho" >}}
 
 
 
@@ -701,11 +697,23 @@ desarrollo_ancho <- desarrollo_largo |>
 |Brasil     | 0.786| 0.780| 0.768| 0.776|
 |Ecuador    | 0.777| 0.773| 0.753| 0.765|
 
+{{< bajada "Datos pivotados a formato ancho" >}}
+
+
+
+
 Ahora tenemos cada año como columna, lo que facilita comparar los valores entre años lado a lado.
+
+
 
 {{< detalles "**Ejemplos:** _¿Para qué nos sirve ésto?_" >}}
 
+
+
+
 Con los datos en formato ancho podemos calcular fácilmente diferencias entre años específicos:
+
+
 
 
 ``` r
@@ -731,9 +739,16 @@ desarrollo_ancho |>
 ## 10 México      0.788  0.789          0.00100
 ```
 
+
+
 Pero en general el formato ancho se usa para posteriormente guardar los datos en una tabla Excel y presentárselos a otras personas, o bien, [**generar tablas** usando R](/blog/tutorial_gt/) destinadas a su lectura en informes o reportes.
 
+
+
 {{< /detalles >}}
+
+
+
 
 
 ## ¿Cuándo usar cada formato?
@@ -762,7 +777,11 @@ En general, te vas a dar cuenta intuitivamente que el formato de tus datos te es
 Saber transformar datos entre formato ancho y largo es una habilidad esencial para trabajar con datos en R. Dominar esta transformaciones de estructuras de datos te entrega mucha libertad al momento de manipular, limpiar, y trabajar con conjuntos de datos complejos.
 
 
+
+
 {{< cafecito >}}
 
+
 {{< cursos >}}
+
 
