@@ -12,13 +12,39 @@ format:
   hugo-md:
     output-file: index
     output-ext: md
-excerpt: "Hola"
+excerpt: "Calcular estadísticos descriptivos, como promedio, mediana y cuartiles, es un paso inicial de la exploración de datos. En este post aprendemos varias formas de calcular descriptivos personalizables a todas las variables de tu _dataframe_ al mismo tiempo."
 ---
+
+Calcular estadísticos descriptivos en R es tan simple como usar la función `summary()` sobre cualquier tabla de datos o _dataframe_.
+
+{{< indice >}}
+
+## Estadísticos descriptivos iniciales
+Usaremos como ejemplo el conjunto de datos `iris`, que viene incorporado en R, para aplicarle `summary()` y así obtener sus **estadísticos descriptivos**.
 
 ```{r}
 summary(iris)
 ```
 
+La función `summary()` calcula estadísticos descriptivos básicos para cada variable numérica del conjunto de datos, incluyendo:
+- **Mínimo** y **máximo**
+- **Mediana:** el valor central, si los datos se ordenaran de menor a mayor
+- **Promedio**
+- **Primer y tercer cuartil:** si se ordenan los datos de menor a mayor, el primer cuartil indica el valor que corta la distrución de manera que el 25% de los datos son menores o iguales a él, y el tercer cuartil lo mismo pero cortando el 75% de los datos son menores o iguales a él.
+
+
+
+## Estadísticos descriptivos con `{dplyr}`
+
+Si queremos tener más control sobre los cálculos de estadísticos descriptivos, podemos usar `{dplyr}`.
+
+Vamos a partir viendo cómo se hace un sólo estadístico descriptivo promedio para una sola variable, y vamos a ir avanzando desde ahí hasta poder aplicar **múltiples estadísticos descriptivos a todas las variables**.
+
+### Calcular promedio con `summarize()`
+
+Si bien `{dplyr}` no tiene una función que lo haga automáticamente como `summary()`, podemos usar la función `summarize()` para calcular **resúmenes estadísticos**. A `summarize()` le damos una función que usaremos para _resumir_ los datos a una sola fila.
+
+Por ejemplo, calculemos el **promedio** de una variable:
 
 ```{r}
 #| message: false
@@ -26,14 +52,60 @@ library(dplyr)
 
 iris |> 
   summarize(
-    across(where(is.numeric), 
-           ~min(.x))
-    )
+    promedio = mean(Sepal.Length)
+  )
 ```
+
+### Calcular promedio de varias variables con `summarize(across())`
+
+Para hacerlo más útil, en vez de calcular para una sola variable, podemos pedirle que calcule el promedio para todas las variables numéricas. Esto lo logramos usando `across()`, que permite aplicar las operaciones a varias columnas a la vez, indicando que queremos aplicar la operación _donde_ (`where()`) las variables _sean numéricas_ (`is.numeric`).
+
+Entonces, este código calculará el promedio para todas las columnas numéricas del _dataframe_:
+
+```{r}
+iris |> 
+  summarize(             # resumir los datos
+    across(              # donde las columnas
+      where(is.numeric), # sean numéricas
+      ~mean(.x),         # calculando el promedio
+      .names = "{col}_promedio") # cambiar el nombre de columnas
+  )
+```
+
+
+### Estadísticos descriptivos con `summarize()`
+
+Siguiendo los mismos principios, ahora podemos calcular varios estadísticos descriptivos a la vez agregándolos a `summarize()`. 
+
+Primero calculemos los descriptivos para una sola variable:
 
 ```{r}
 iris |>
-  rename(var = Petal.Width) |> # definir variable
+  # definir variable
+  rename(var = Petal.Width) |> 
+  # omitir datos perdidos
+  filter(!is.na(var)) |>
+  # calcular
+  summarize(
+    "minimo" = min(var),
+    "primer" = quantile(var, probs = 0.25),
+    "promedio" = mean(var),
+    "mediana" = median(var),
+    "tercer" = quantile(var, probs = 0.75),
+    "maximo" = max(var),
+    "desviacion" = sd(var)
+  )
+```
+
+### Estadísticos descriptivos por grupo
+
+La gracia de `{dplyr}` es que al código anterior podemos agregarle una agrupación (`group_by()`) para calcular los mismos estadísticos descriptivos **por grupos**:
+
+```{r}
+iris |>
+  # definir variable
+  rename(var = Petal.Width) |> 
+  # omitir datos perdidos
   filter(!is.na(var)) |>
   # grupo
   group_by(Species) |> 
@@ -49,12 +121,14 @@ iris |>
   )
 ```
 
+### Estadísticos descriptivos para todas las variables
+
+Podemos **automatizar el cálculo** de todos los estadísticos descriptivos para **todas las variables** numéricas usando `across()` dentro de `summarize()`. El resultado lo podemos [transformar a formato largo](/blog/r_introduccion/tidyr_pivotar/) con `{tidyr}` para facilitar su lectura:
 
 ```{r}
 library(tidyr)
 
 iris |> 
-  tibble() |> 
   summarise(
     across(where(is.numeric),
            list("minimo" = ~min(.x),
@@ -63,11 +137,43 @@ iris |>
                 "mediana" = ~median(.x),
                 "tercer" = ~quantile(.x, probs = 0.75),
                 "maximo" = ~max(.x),
-                "desviacion" = ~sd(.x)
-           )
-    )) |> 
+                "desviacion" = ~sd(.x))
+    )
+  ) |> 
   pivot_longer(everything(), 
                names_sep = "_", 
                names_to = c("variable", ".value"))
 ```
+
+
+### Estadísticos descriptivos para todas las variables, por grupos
+
+Finalmente, el mismo proceso anterior de calcular todos los descriptivos para todas las variables, pero ahora **por grupos**, simplemente agregándole `group_by()` al código y cambiando las columnas a pivotar para que no incluya la variable de grupo:
+
+```{r}
+
+iris |> 
+  rename(grupo = Species) |> 
+  group_by(grupo) |> 
+  summarise(
+    across(where(is.numeric),
+           list("minimo" = ~min(.x),
+                "primer" = ~quantile(.x, probs = 0.25),
+                "promedio" = ~mean(.x),
+                "mediana" = ~median(.x),
+                "tercer" = ~quantile(.x, probs = 0.75),
+                "maximo" = ~max(.x),
+                "desviacion" = ~sd(.x))
+    )
+  ) |> 
+  pivot_longer(c(everything(), -grupo), # todas menos la variable de agrupación
+               names_sep = "_", 
+               names_to = c("variable", ".value"))
+```
+
+Si bien R base trae herramientas útiles como `summary()`, metiéndole un poco de `{dplyr}` podemos tener formas más flexibles y personalizables para calcular estadísticos descriptivos.
+
+{{< cafecito >}}
+
+{{< cursos >}}
 
