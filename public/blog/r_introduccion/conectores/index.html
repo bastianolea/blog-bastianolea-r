@@ -49,7 +49,7 @@
 El uso de conectores facilita la lectura del código, porque nos muestra el flujo de las operaciones de forma ordenada y lógica, y también simplifica la escritura, porque nos hace escribir en el mismo orden lógico que pensamos las operaciones, y porque además nos permite reordenar, comentar, agregar o eliminar pasos.">
   <meta itemprop="datePublished" content="2025-11-24T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-11-24T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1061">
+  <meta itemprop="wordCount" content="1085">
   <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/r_introduccion/conectores/featured.png">
   <meta itemprop="keywords" content="Tutoriales,Introducción a R">
   
@@ -64,7 +64,7 @@ El uso de conectores facilita la lectura del código, porque nos muestra el fluj
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
   
   
-  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+  <script src="/main.min.422a2363d11e9d6836a9931682c00abf3c5a2cb6d5460f3485cb54696b258be4.js" type="text/javascript"></script>
 </head>
 <body>
       <div class="grid-container single-series">
@@ -408,12 +408,9 @@ El uso de conectores facilita la lectura del código, porque nos muestra el fluj
 
 
 
-<h3 id="ejemplo-sin-conector-">Ejemplo sin conector 👎🏼
-  <a href="#ejemplo-sin-conector-"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h3>
+<h4 id="ejemplo-sin-conector-">Ejemplo sin conector 👎🏼
+  <a href="#ejemplo-sin-conector-"></a>
+</h4>
 <p>Si tenemos un vector de números y queremos calcular su promedio:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos</span><span style="color:#908caa">)</span>
 </span></span></code></pre></div><p>Pero si además queremos redondear el resultado (dos operaciones), tenemos que empezar a <strong>anidar</strong> las funciones:</p>
@@ -423,12 +420,9 @@ El uso de conectores facilita la lectura del código, porque nos muestra el fluj
 
 
 
-<h3 id="ejemplo-con-conector-">Ejemplo con conector 👍
-  <a href="#ejemplo-con-conector-"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h3>
+<h4 id="ejemplo-con-conector-">Ejemplo con conector 👍
+  <a href="#ejemplo-con-conector-"></a>
+</h4>
 <p>Para hacer lo mismo pero usando conectores, encadenamos las operaciones empezando con los datos, en el orden de su ejecución:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mean</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> 
@@ -446,6 +440,14 @@ El uso de conectores facilita la lectura del código, porque nos muestra el fluj
 </span></span></code></pre></div><div style="max-width: 380px; margin:auto; text-align: center; font-size:80%; opacity:60%;">
   Copia y pega el código para ejecutarlo en tu sesión de R
   </div>
+<pre><code>Warning in attr(x, &quot;align&quot;): 'xfun::attr()' is deprecated.
+Use 'xfun::attr2()' instead.
+See help(&quot;Deprecated&quot;)
+
+Warning in attr(x, &quot;format&quot;): 'xfun::attr()' is deprecated.
+Use 'xfun::attr2()' instead.
+See help(&quot;Deprecated&quot;)
+</code></pre>
 <table>
   <thead>
       <tr>
@@ -492,12 +494,9 @@ El uso de conectores facilita la lectura del código, porque nos muestra el fluj
 
 
 
-<h3 id="ejemplo-sin-conector--1">Ejemplo sin conector 👎🏼
-  <a href="#ejemplo-sin-conector--1"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h3>
+<h4 id="ejemplo-sin-conector--1">Ejemplo sin conector 👎🏼
+  <a href="#ejemplo-sin-conector--1"></a>
+</h4>
 <p>Imagina que a estos datos queremos hacerle varias operaciones:</p>
 <ol>
 <li>Seleccionar algunas columnas,</li>
@@ -520,12 +519,9 @@ El uso de conectores facilita la lectura del código, porque nos muestra el fluj
 
 
 
-<h3 id="ejemplo-con-conector--1">Ejemplo con conector 👍
-  <a href="#ejemplo-con-conector--1"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
-      <path d="M0 0h24v24H0z" fill="currentColor"></path>
-      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
-    </svg></a>
-</h3>
+<h4 id="ejemplo-con-conector--1">Ejemplo con conector 👍
+  <a href="#ejemplo-con-conector--1"></a>
+</h4>
 <p>Para hacer lo mismo pero usando los conectores, empezamos con los datos y vamos agregando los pasos del procesamiento: primero la selección, luego el filtro, y finalmente el ordenamiento:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
 </span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">animal</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">patas</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">edad</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
@@ -666,10 +662,7 @@ El uso de conectores facilita la lectura del código, porque nos muestra el fluj
     <li><a href="#tipos-de-conectores">Tipos de conectores</a></li>
     <li><a href="#ejemplos">Ejemplos</a>
       <ul>
-        <li><a href="#ejemplo-sin-conector-">Ejemplo sin conector 👎🏼</a></li>
-        <li><a href="#ejemplo-con-conector-">Ejemplo con conector 👍</a></li>
-        <li><a href="#ejemplo-sin-conector--1">Ejemplo sin conector 👎🏼</a></li>
-        <li><a href="#ejemplo-con-conector--1">Ejemplo con conector 👍</a></li>
+        <li></li>
       </ul>
     </li>
   </ul>

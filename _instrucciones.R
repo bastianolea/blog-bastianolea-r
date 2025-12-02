@@ -107,6 +107,7 @@ blogdown::new_post(title = "Nuevo sitio: todo lo necesario para Aprender R",
 "layouts/blog/single-sidebar.html" # html de los post 
 "layouts/taxonomy/taxonomy.html" # html de la página de tags (/tags/)
 
+"~/Documents/Otros/blog/layouts/index.json" # genera el sitio en JSON para el buscador
 "layouts/partials/shared/sidebar/sidebar-header.html" # sidebar del blog
 
 "assets/custom.scss" # css del sitio

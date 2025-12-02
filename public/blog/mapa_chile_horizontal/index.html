@@ -47,12 +47,12 @@
   <meta itemprop="name" content="Rotar un mapa de Chile en R para que quede horizontal">
   <meta itemprop="description" content="Visualizar un mapa de Chile puede ser complicado debido a su largo. Muchas veces cuesta ubicar correctamente el mapa por el espacio vertical que requiere. Pero en ciertos casos puede ser conveniente visualizar a Chile de lado, para aprovechar el espacio horizontal. En esta guía veremos cómo rotar un mapa de Chile 90° hacia la izquierda en R para que quede acostado.
 Primero cargamos los paquetes necesarios:
-library(sf) # manejo de datos espaciales Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE library(chilemapas) # mapas de Chile La documentacion del paquete y ejemplos de uso se encuentran en https://pacha.dev/chilemapas/. Visita https://buymeacoffee.com/pacha/ si deseas donar para contribuir al desarrollo de este software. library(ggplot2) # visualización de datos library(dplyr) # manejo de datos tabulares Attaching package: &#39;dplyr&#39; The following objects are masked from &#39;package:stats&#39;: filter, lag The following objects are masked from &#39;package:base&#39;: intersect, setdiff, setequal, union library(readr) # cargar datos Obtenemos un mapa de Chile gracias al paquete {chilemapas}; en este caso un mapa del país por regiones:">
+library(sf) # manejo de datos espaciales Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE library(chilemapas) # mapas de Chile La documentacion del paquete y ejemplos de uso se encuentran en https://pacha.dev/chilemapas/. Visita https://buymeacoffee.com/pacha/ si deseas donar para contribuir al desarrollo de este software. library(ggplot2) # visualización de datos library(dplyr) # manejo de datos tabulares Attaching package: &#39;dplyr&#39; The following objects are masked from &#39;package:stats&#39;: filter, lag The following objects are masked from &#39;package:base&#39;: intersect, setdiff, setequal, union library(readr) # cargar datos Obtenemos un mapa de Chile gracias al paquete {chilemapas}; en este caso un mapa del país por regiones:">
   <meta itemprop="datePublished" content="2025-03-04T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-03-04T00:00:00+00:00">
   <meta itemprop="wordCount" content="861">
   <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/mapa_chile_horizontal/featured.png">
-  <meta itemprop="keywords" content="Mapas,Visualización de datos,Chile">
+  <meta itemprop="keywords" content="Mapas,Visualización de datos">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="false" type="image/x-icon">
@@ -65,7 +65,7 @@ library(sf) # manejo de datos espaciales Linking to GEOS 3.11.0, GDAL 3.5.3, PRO
   <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
   
   
-  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+  <script src="/main.min.422a2363d11e9d6836a9931682c00abf3c5a2cb6d5460f3485cb54696b258be4.js" type="text/javascript"></script>
 </head>
 <body>
       <div class="grid-container single-sidebar">
@@ -324,16 +324,7 @@ library(sf) # manejo de datos espaciales Linking to GEOS 3.11.0, GDAL 3.5.3, PRO
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/chile"
-          style="margin-right: 2px; 
-                       color: #EAD2FA; 
-                       font-style: normal;
-                       text-decoration: none;
-                       font-size: 10pt;
-                       background-color: #9069C0; 
-                       border-radius: 3px; 
-                       padding: 2px 6px; ">
-            Chile</a> </dd></em>
+            visualización de datos</a> </dd></em>
         </dl>
          
       
@@ -347,7 +338,7 @@ library(sf) # manejo de datos espaciales Linking to GEOS 3.11.0, GDAL 3.5.3, PRO
         <p>Visualizar un mapa de Chile puede ser complicado debido a su largo. Muchas veces cuesta ubicar correctamente el mapa por el espacio vertical que requiere. Pero en ciertos casos puede ser conveniente visualizar a Chile <em>de lado</em>, para aprovechar el espacio horizontal. En esta guía veremos cómo rotar un mapa de Chile 90° hacia la izquierda en R para que quede acostado.</p>
 <p>Primero cargamos los paquetes necesarios:</p>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sf</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># manejo de datos espaciales</span>
-</span></span></code></pre></div><pre><code>Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE
+</span></span></code></pre></div><pre><code>Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE
 </code></pre>
 <div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># mapas de Chile</span>
 </span></span></code></pre></div><pre><code>La documentacion del paquete y ejemplos de uso se encuentran en https://pacha.dev/chilemapas/.
@@ -409,7 +400,7 @@ Geodetic CRS:  SIRGAS 2000
 </span></span></code></pre></div><pre><code>ℹ Using &quot;','&quot; as decimal and &quot;'.'&quot; as grouping mark. Use `read_delim()` for more control.
 
 New names:
-Rows: 893 Columns: 8
+Rows: 951 Columns: 8
 ── Column specification
 ──────────────────────────────────────────────────────── Delimiter: &quot;;&quot; chr
 (2): serie, fecha dbl (5): ...1, valor, año, trimestre, mes date (1):
@@ -573,17 +564,17 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/mapas">mapas</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="https://bastianoleah.netlify.app/tags/chile">Chile</a> </dd>
+    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/mapas">mapas</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/grupo_usuarixs_r/">Grupo de usuarios/as de R</a></dd>
-    
     <dd class="fw5 ml0"><a href="/blog/mapas_sf/">Mapas y visualización de datos geoespaciales en R con {sf}</a></dd>
     
     <dd class="fw5 ml0"><a href="/blog/elecciones_presidenciales_2025/">Visualización y scraping de resultados de las elecciones presidenciales 2025</a></dd>
+    
+    <dd class="fw5 ml0"><a href="/blog/mapas_areas_metropolitanas/">Portafolio: mapas de Áreas Metropolitanas</a></dd>
     
   </dl>
 </details>
@@ -593,30 +584,11 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
 
 <aside class="page-sidebar" role="complementary">
-                          
- 
+   
+   
 
-
-<div style = "padding: 12px;">
-                       
- 
-
-
-
-
-
-
-
-
-
-
-
-  <img src="/blog/sidebar-listing.jpg" style = "border-radius: 8px;" class="db ma0">
-
-</div>
-
-<div class="blog-info ph4 pt4 pb4 pb0-l">
-  
+  <div class="blog-info ph4 pt4 pb4 pb0-l">
+    
 
   <h1 class="f3">Blog</h1>
   <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
@@ -624,323 +596,323 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 <a href="/tags/">temas</a>.</p>
   
 
+   
+<h3 style="margin-bottom: 12px;">Temas:</h3>
 
-
-
+<div style="font-size:90%;">
 
 <div style="font-size: 90%;">
-  <h3 style="margin-bottom: 12px;">Temas:</h3>
+  
    
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/chile/">Chile</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">38 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/chile/">Chile</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/datos/">Datos</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">25 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/consejos/">Consejos</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/consejos/">Consejos</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">24 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/datos/">Datos</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">24 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos/">Gráficos</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">22 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos/">Gráficos</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/ggplot2/">Ggplot2</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">20 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/ggplot2/">Ggplot2</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/blog/">Blog</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">17 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/apps/">Apps</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/apps/">Apps</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">17 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/shiny/">Shiny</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/shiny/">Shiny</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">17 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/blog/">Blog</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/web-scraping/">Web scraping</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">16 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/web-scraping/">Web scraping</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">13 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/mapas/">Mapas</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/mapas/">Mapas</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">13 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/limpieza-de-datos/">Limpieza de datos</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">13 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/quarto/">Quarto</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">11 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/quarto/">Quarto</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/ciencias-sociales/">Ciencias sociales</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">10 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/ciencias-sociales/">Ciencias sociales</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/curiosidades/">Curiosidades</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">9 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/curiosidades/">Curiosidades</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">9 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n/">Automatización</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">8 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n/">Optimización</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/dplyr/">Dplyr</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">8 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/dplyr/">Dplyr</a></span>
+  </span>
  
   
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
                  font-style: normal;
-                 font-size: 9pt;
                  background-color: #9069C0; 
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="https://bastianoleah.netlify.app/tags/loops/">Loops</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">8 posts</span>
-  </div>
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="https://bastianoleah.netlify.app/tags/automatizaci%C3%B3n/">Automatización</a></span>
+  </span>
 
-<a href="/tags/" style="font-size: 9pt; margin-left:2px;">Ver todos los temas</a>
+<a href="/tags/" style="margin-left: 3px;">y más!</a>
 </div>
-
-  
 </div>
-
- 
-   
-   
   
+  
+   
+   
+
+</div>
   
   
   
