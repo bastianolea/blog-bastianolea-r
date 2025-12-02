@@ -1,5 +1,5 @@
 ---
-title: 'Copia y pega datos en R con {datapasta} y {clipr}'
+title: Copia y pega datos en R con {datapasta} y {clipr}
 author: Bastián Olea Herrera
 date: '2025-06-06'
 slug: []
@@ -53,11 +53,11 @@ tabla
     # A tibble: 5 × 5
       Sepal.Length Sepal.Width Petal.Length Petal.Width Species  
              <dbl>       <dbl>        <dbl>       <dbl> <fct>    
-    1          6           2.2          5           1.5 virginica
-    2          5.1         3.8          1.5         0.3 setosa   
-    3          6.1         3            4.9         1.8 virginica
-    4          6.7         3.1          5.6         2.4 virginica
-    5          4.7         3.2          1.6         0.2 setosa   
+    1          6.1         3            4.9         1.8 virginica
+    2          5.2         4.1          1.5         0.1 setosa   
+    3          4.9         3.1          1.5         0.2 setosa   
+    4          5           3            1.6         0.2 setosa   
+    5          6.5         3            5.8         2.2 virginica
 
 Imagínate que queremos corregir esta tabla, usarla como ejemplo, o compartirla con alguien. Entonces usamos la función `dpasta()`:
 
@@ -140,10 +140,7 @@ pib_latam |> clipr::write_clip()
 
 Los datos quedarán copiados en el portapapeles de tu sistema, y vas a poder pegarlos en Excel:
 
-{{< imagen "pegar_excel.png" >}}
-
-------------------------------------------------------------------------
-
-{{< cafecito  >}}
+{{< imagen_tamaño "pegar_excel.png" "300px">}}
+{{< cafecito >}}
 
 [^1]: Fuente: [Wikipedia](https://en-m-wikipedia-org.translate.goog/wiki/List_of_Latin_American_and_Caribbean_countries_by_GDP_(PPP))

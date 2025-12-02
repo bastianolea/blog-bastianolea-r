@@ -11,7 +11,6 @@ categories: []
 tags:
   - mapas
   - visualización de datos
-  - Chile
 editor_options:
   chunk_output_type: console
 excerpt: >-
@@ -31,7 +30,7 @@ Primero cargamos los paquetes necesarios:
 library(sf) # manejo de datos espaciales
 ```
 
-    Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE
+    Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE
 
 ``` r
 library(chilemapas) # mapas de Chile
@@ -115,7 +114,7 @@ datos <- read_csv2("https://github.com/bastianolea/economia_chile/raw/main/app/d
     ℹ Using "','" as decimal and "'.'" as grouping mark. Use `read_delim()` for more control.
 
     New names:
-    Rows: 893 Columns: 8
+    Rows: 951 Columns: 8
     ── Column specification
     ──────────────────────────────────────────────────────── Delimiter: ";" chr
     (2): serie, fecha dbl (5): ...1, valor, año, trimestre, mes date (1):

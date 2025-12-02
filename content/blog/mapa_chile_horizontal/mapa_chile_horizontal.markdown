@@ -18,9 +18,11 @@ excerpt: Visualizar un mapa de Chile puede ser complicado debido a su largo. Muc
 
 
 
+
 Visualizar un mapa de Chile puede ser complicado debido a su largo. Muchas veces cuesta ubicar correctamente el mapa por el espacio vertical que requiere. Pero en ciertos casos puede ser conveniente visualizar a Chile _de lado_, para aprovechar el espacio horizontal. En esta guía veremos cómo rotar un mapa de Chile 90° hacia la izquierda en R para que quede acostado.
 
 Primero cargamos los paquetes necesarios:
+
 
 
 
@@ -70,7 +72,9 @@ library(readr) # cargar datos
 
 
 
+
 Obtenemos un mapa de Chile gracias al paquete {chilemapas}; en este caso un mapa del país por regiones:
+
 
 
 
@@ -121,7 +125,9 @@ mapa_region |>
 
 
 
+
 Cargamos algunos datos regionales para ponerle al mapa:
+
 
 
 
@@ -136,7 +142,7 @@ datos <- read_csv2("https://github.com/bastianolea/economia_chile/raw/main/app/d
 
 ```
 ## New names:
-## Rows: 893 Columns: 8
+## Rows: 951 Columns: 8
 ## ── Column specification
 ## ──────────────────────────────────────────────────────── Delimiter: ";" chr
 ## (2): serie, fecha dbl (5): ...1, valor, año, trimestre, mes date (1):
@@ -208,7 +214,9 @@ mapa_datos |>
 
 
 
+
 Ahora que tenemos un mapa de Chile con datos regionales, procedemos a rotar el mapa. Para esto, necesitamos una _matriz de rotación_, respecto de la cual no hay mucho que entender, salvo que nos permitirá multiplicar la geometría del mapa para obtener como resultado la misma geometría, pero rotada. El único detalle que hay que considerar es que es necesario cambiar la proyección del mapa para que la zona sur del país no se vea deformada.
+
 
 
 
@@ -227,7 +235,9 @@ mapa_rotado <- mapa_proyectado |>
 
 
 
+
 Finalmente, visualizamos el mapa reproyectado y rotado:
+
 
 
 
@@ -256,6 +266,7 @@ mapa_rotado |>
 ```
 
 <img src="/blog/mapa_chile_horizontal/mapa_chile_horizontal_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+
 
 
 

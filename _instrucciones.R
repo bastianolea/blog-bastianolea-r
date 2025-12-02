@@ -17,7 +17,7 @@ blogdown::new_post(title = "Recibe fotos de gatos o bendiciones automáticamente
 
 # crear un post tutorial
 blogdown::new_post(title = "Nuevo sitio: todo lo necesario para Aprender R", 
-                   file = "blog/aprender_r/index.md",
+                   file = "blog/r_introduccion/crear_dataframes/index.qmd",
                    author = "Bastián Olea Herrera",
                    tags = c("consejos"),
                    categories = c() 

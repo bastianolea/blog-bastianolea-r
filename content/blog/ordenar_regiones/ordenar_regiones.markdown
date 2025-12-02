@@ -17,9 +17,11 @@ excerpt: La franja larga y angosta que es Chile tiene el beneficio de que sus re
 
 
 
+
 La franja larga y angosta que es Chile tiene el beneficio de que sus regiones se ubican casi perfectamente una sobre la otra, de norte a sur. Este orgen geográfico natural de sus regiones resulta familiar para sus habitantes, por lo que se vuelve recomendable ordenar los datos a nivel regional siguiendo este orden geográfico.
 
 Creemos una tabla o _dataframe_ con las regiones de Chile. Ejecuta el siguiente código en R para obtener una tabla:
+
 
 
 
@@ -70,9 +72,11 @@ regiones <- tibble::tribble(
 
 
 
+
 En esta tabla tenemos el nombre de las 16 regiones del país, y además una columna de código de región. El código de región corresponde al nombre antiguo que tenían las regiones (instaurado en dictadura), y que hoy en día no se sigue utilizando, pero que sin embargo se mantiene como código identificador de las regiones en la mayoría de las bases de datos oficiales. Si bien este código originalmente ordenaba las regiones, hoy en día la creación de nuevas regiones (como Ñuble en 2017 o Arica y Parinacota en 2007) provoca que este ordenamiento antiguo no se corresponda con el orden geográfico de las regiones.
 
 Si ejecutamos esta tabla de datos, veremos que las regiones no están ordenadas geográficamente:
+
 
 
 
@@ -105,7 +109,9 @@ regiones
 
 
 
+
 Para **ordenar geográficamente las regiones de Chile** podemos crear una variable nueva, que use el código de las regiones para asignar un nuevo número que ordene las regiones de norte a sur:
+
 
 
 
@@ -136,7 +142,9 @@ regiones_ordenadas <- regiones |>
 
 
 
+
 Se recomienda hacer este tipo de operaciones usando el código de las regiones, para evitar problemas por las distintas formas de escribir el nombre de cada región[^1]. Pero si lo quieres hacer por el nombre de las regiones, sería así:
+
 
 
 
@@ -167,9 +175,11 @@ regiones_ordenadas <- regiones |>
 
 
 
+
 [^1]: Por ejempo, _Valparaíso_ puede encontrarse como _Región de Valparaíso_, _De Valparaíso_, _V región de Valparaíso,_ etc., y para qué hablar de O'Higgins...
 
 Si ejecutamos la nueva tabla con la columna `orden_region`, vemos que sigue desordenada, así que la ordenamos:
+
 
 
 
@@ -203,7 +213,9 @@ regiones_ordenadas |>
 
 
 
+
 ¡Ahora sí aparecen ordenadas geográficamente! ¿Pero qué pasa si hacemos un gráfico con estas regiones?
+
 
 
 
@@ -224,11 +236,13 @@ regiones_ordenadas |>
 
 
 
+
 Las regiones nuevamente aparecen desordenadas. ¿Por qué? Porque `{ggplot2}`, la librería de visualización de datos que usamos, así como muchos otros paquetes, no se basan en en el orden de las filas de la base de datos que usemos, sino en el _orden de la variable._ Como la variable `nombre_region` es una variable de texto (tipo _caracter_), no tiene un orden, así que se asume que su orden es alfabético (en el gráfico vemos que abajo están las regiones que empiezan con _A_, porque el eje `y` nace desde el cero que está abajo y aumenta hacia arriba).
 
 La solución sería darle un _orden_ a la variable. En R, las variables de texto que contienen información sobre su ordenamiento se llaman _factores._ Un factor es una variable categórica de tipo ordinal; es decir, una variable de texto que tiene categorías de texto, pero que estas categorías tienen un ordenamiento entre ellas: por ejemplo, _bajo_, _medio_ y _alto_ deberían tener un orden de 1 a 3, de lo contrario se ordenarían alfabéticamente y _alto_ quedaría antes que _bajo_.
 
 El paquete `{forcats}` facilita todo tipo de trabajo con variables tipo factor o categóricas. Entre sus funciones está `fct_reorder()`, que nos permite ordenar una variable de texto en base al ordenamiento que nos da una variable numérica: en nuestro caso, ordenar el `nombre_region` en base al `orden_region`:
+
 
 
 
@@ -243,7 +257,9 @@ regiones_ordenadas_2 <- regiones_ordenadas |>
 
 
 
+
 Si ahora volvemos a hacer el gráfico, la variable `nombre_region` sí aparecerá ordenada:
+
 
 
 
@@ -264,7 +280,9 @@ regiones_ordenadas_2 |>
 
 
 
+
 Naturalmente, las regiones aparecen al revés, porque el eje `y` parte desde abajo y aumenta hacia arriba, entonces la primera región (la de más al norte) aparece abajo. Pero sería esperable que las regiones estén ordenadas de norte a sur y de arriba hacia abajo (en el hemisferio sur), así que podemos invertir el orden del factor:
+
 
 
 
@@ -286,7 +304,9 @@ regiones_ordenadas_2 |>
 
 
 
+
 ¡Listo! Si te sirve, acá dejo un dataframe con las regiones del país, su código y su orden, para que puedas copiarlo y pegarlo en tu script de R, y luego agregarlo a tus datos usando `left_join()`:
+
 
 
 

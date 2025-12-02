@@ -1,8 +1,9 @@
 ---
-title: Visualizar un mapa de Chile desde cartografías oficiales en R
+title: Crea un mapa de Chile desde datos geoespaciales oficiales en R
 author: Bastián Olea Herrera
 date: '2025-10-14'
-draft: true
+draft: false
+freeze: true
 slug: []
 categories:
   - tutoriales
@@ -16,9 +17,19 @@ format:
   hugo-md:
     output-file: index
     output-ext: md
+links:
+  - icon: github
+    icon_pack: fab
+    name: Código
+    url: https://gist.github.com/bastianolea/a9e7af5392a31251e33f68ca041e8dd6
+  - icon: link
+    icon_pack: fas
+    name: IDE Subdere
+    url: https://ide.subdere.gov.cl
 excerpt: En este tutorial aprenderemos a crear mapas de Chile en R usando datos geográficos o _shapes_ oficiales, obtenidos desde la Subsecretaría de Desarrollo Regional y Administrativo (Subdere) y la Biblioteca del Congreso Nacional de Chile. El objetivo será aprender a visualizar mapas desde _shapefiles_ obtenidos de internet, y a procesar datos geográficos más complejos con R, para generar mapas de Chile con polígonos y límites geográficamente correctos.
 
 ---
+
 
 
 
@@ -63,6 +74,7 @@ Alternativamente, puedes descargar los archivos desde R ejecutando este código:
 
 
 
+
 ``` r
 dir.create("shapes") # crear carpeta
 
@@ -82,6 +94,7 @@ download.file("https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10403/2/Re
 
 
 
+
 Una vez que descargamos los archivos, debemos descomprimirlos para obtener las carpetas que contienen los _shapes._
 
 
@@ -90,6 +103,7 @@ Una vez que descargamos los archivos, debemos descomprimirlos para obtener las c
 Para trabajar con datos geográficos usamos el paquete `{sf}`, abreviación de _simple features_, que es un estándar para manejar datos geoespaciales. Si no tienes instalado el paquete, instálalo con `install.packages("sf")`.
 
 Para leer un archivo geoespacial usamos la función `read_sf()` apuntada a la carpeta que contiene los _shapefiles_:
+
 
 
 
@@ -113,7 +127,9 @@ calles <- read_sf("shapes/Red_Vial") |> clean_names()
 
 
 
+
 Algunos de estos mapas pueden ser muy detallados y/o complejos, por lo que pueden tardarse en cargar[^1].
+
 
 
 
@@ -135,7 +151,9 @@ Algunos de estos mapas pueden ser muy detallados y/o complejos, por lo que puede
 
 
 
+
 Si verificamos la clase de uno de los objetos geográficos cargados, vemos que una de sus clases es `sf`, pero al mismo tiempo `tbl` y `data.frame`:
+
 
 
 
@@ -149,7 +167,9 @@ class(comunas)
 
 
 
+
 Si lo imprimimos en la consola, confirmamos que los objetos cargados desde los _shapefiles_ son tablas de datos que arriba dicen _Simple feature collection_; es decir, son tablas de datos que además tienen información geográfica.
+
 
 
 
@@ -183,12 +203,14 @@ comunas
 
 
 
+
 Estas tablas de datos cuentan con una columna `geometry`, que contiene la información geográfica de los polígonos, puntos y/o líneas de cada observación. A su vez, encima de la tabla de datos vemos información especial, como el tipo de geometría, las dimensiones de la caja (_bounding box_), y el sistema de coordenadas de referencia (_CRS_), que indica el tipo de proyección usada.
 
 ## Visualizar mapas
 Una vez cargados los _shapes_, simplemente es cosa de aplicarlos por capas a un gráfico de `{ggplot2}`. Las capas de datos geográficos se agregan con `geom_sf()`, y en este caso, que tenemos varios _shapes_, en cada capa habría que definir el objeto correspondiente en el argumento `data`; es decir, cada capa se basa en datos distintos, pero que coinciden en términos de coordenadas. 
 
 Entonces, empezamos un gráfico con `ggplot()`, y luego vamos agregando capas de `geom_sf()`, recordando que el orden en que agreguemos las capas importa: las primeras (más arriba) serán los objetos en el fondo, y las siguientes capas (en sucesivas líneas) se visualizarán encima de las anteriores.
+
 
 
 
@@ -222,6 +244,8 @@ ggplot() +
 ```
 
 {{< imagen "mapa_chile_subdere.jpeg" >}}
+
+
 
 
 
