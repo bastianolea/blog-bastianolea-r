@@ -17,7 +17,7 @@ blogdown::new_post(title = "Recibe fotos de gatos o bendiciones automáticamente
 
 # crear un post tutorial
 blogdown::new_post(title = "Nuevo sitio: todo lo necesario para Aprender R", 
-                   file = "blog/r_introduccion/crear_dataframes/index.qmd",
+                   file = "blog/crear_dataframes/index.qmd",
                    author = "Bastián Olea Herrera",
                    tags = c("consejos"),
                    categories = c() 
@@ -90,6 +90,7 @@ blogdown::new_post(title = "Nuevo sitio: todo lo necesario para Aprender R",
 # {{< cursos >}}
 # {{< bajada "x" >}}
 # {{< imagen "x" >}}
+# {{< imagen_tamaño "x" "300px" >}}
 # {{< video "x" >}}
 # {{< aviso "x" >}}
 # {{< detalles "Hola" >}} {{< /detalles >}}
@@ -107,10 +108,12 @@ blogdown::new_post(title = "Nuevo sitio: todo lo necesario para Aprender R",
 "layouts/blog/single-sidebar.html" # html de los post 
 "layouts/taxonomy/taxonomy.html" # html de la página de tags (/tags/)
 
-"~/Documents/Otros/blog/layouts/index.json" # genera el sitio en JSON para el buscador
+"~/Documents/Otros/blog/layouts/index.json" # genera el sitio en JSON para el buscador (el archivo queda en public como index.json)
 "layouts/partials/shared/sidebar/sidebar-header.html" # sidebar del blog
 
 "assets/custom.scss" # css del sitio
+
+
 
 ## utilidades ----
 
@@ -122,7 +125,3 @@ convertr::r_to_qmd(
 
 # ver en github
 usethis::browse_github()
-
-# configurar netlifly
-# blogdown::config_netlify()
-blogdown::check_netlify()
