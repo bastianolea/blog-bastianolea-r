@@ -12,10 +12,12 @@ excerpt: "Las tablas de datos o _dataframes_ son la estructura de información p
 
 Las tablas de datos o _dataframes_ son la estructura de información principal que usamos en R.
 
-En general cargamos los datos desde archivos o bases de datos, pero a veces necesitamos crear _dataframes_ sencillos a mano. Aquí te muestro dos formas de hacerlo: usando la función base `data.frame()` y la función `tribble()` del [paquete `tibble`](https://tibble.tidyverse.org).
+En general cargamos los datos desde archivos o bases de datos, pero a veces necesitamos crear _dataframes_ sencillos a mano, ya sea para introducir datos manualmente, corregir datos, o crear pequeñas tablas auxiliares o de consulta (_lookup tables_). 
+
+Aquí te muestro dos formas de hacerlo: usando la función base `data.frame()` y la función `tribble()` del [paquete `tibble`](https://tibble.tidyverse.org).
 
 
-## Crea tablas de datos con `data.frame()`
+## Crear tablas de datos con `data.frame()`
 
 La función `data.frame()` es la forma base de R para crear dataframes (tablas de datos). Puedes usarla para combinar vectores en columnas.
 
@@ -27,8 +29,12 @@ color <- c("gris", "negro", "blanco")
 data.frame(animal, patas, color)
 ```
 
+Así vas creando cada columna como un vector, y luego combinas los vectores para crear una tabla. 
 
-## Crea tablas de datos con `tribble()`
+El resultado es un objeto tipo `data.frame`, que es una tabla más tosca y primitiva que un _tibble_, pero siempre puedes convertir cualquier _dataframe_ a un _tibble_ con la función `tibble()`.
+
+
+## Crear tablas de datos con `tribble()`
 
 La función `tribble()` del [paquete `tibble`](https://tibble.tidyverse.org) (parte del [`tidyverse`](https://tidyverse.org)) permite crear _dataframes_ escribiéndolos como si fueran una planilla: por columnas y filas. Es **lo más parecido a abrir Excel y escribir los datos**, pero saltándote la parte de abrir Excel 🤢
 
@@ -39,6 +45,9 @@ tibble::tribble(
         "gato",      4,  "negro",
      "gallina",      2, "blanco")
 ```
+Así vas escribiendo los datos igual como si fuese una planilla, lo que puede ser más intuitivo, y el resultado sale como un _tibble_, que es una versión mejorada de los _dataframes_ base de R.
+
+----
 
 Te dejo [otro post](https://bastianolea.rbind.io/blog/datapasta/) para donde puedes ver cómo [convertir un _dataframe_ a código](https://bastianolea.rbind.io/blog/datapasta/#copiar) para poder compartirlo o prescindir de archivos, cómo [copiar datos desde R y pegarlos en una planilla](https://bastianolea.rbind.io/blog/datapasta/#pegar), y cómo [copiar datos desde planilla Excel y pegarla como código](https://bastianolea.rbind.io/blog/datapasta/#pegar-datos-desde-r-a-excel) que genere el _dataframe_.
 
