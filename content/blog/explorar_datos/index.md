@@ -12,8 +12,16 @@ format:
   hugo-md:
     output-file: index
     output-ext: md
+excerpt: >-
+  Por medio de la exploración de datos obtenemos las primeras ideas sobre la
+  información que vamos a abordar. Set de un paso muy importante para poder
+  planificar tempranamente los pasos a seguir en tu análisis, así como detectar
+  a tiempo posibles problemas o dificultades. Por eso te voy a entregar algunas
+  ideas para poder explorar datos de forma rápida y clara.
 ---
 
+
+Por medio de la exploración de datos obtenemos las primeras ideas sobre la información que vamos a abordar. Set de un paso muy importante para poder planificar tempranamente los pasos a seguir en tu análisis, así como detectar a tiempo posibles problemas o dificultades. Por eso te voy a entregar algunas ideas para poder explorar datos de forma rápida y clara.
 
 ``` r
 ggplot2::qplot(Sepal.Length, data = iris, geom = "histogram")
