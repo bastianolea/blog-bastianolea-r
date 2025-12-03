@@ -5,7 +5,6 @@ blogdown::stop_server()
 blogdown::build_site()
 
 
-
 ## posts ----
 
 # crear un post normal
