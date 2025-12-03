@@ -1,5 +1,5 @@
 ---
-title: 'Crear tablas de datos manualmente'
+title: 'Crear tablas de datos manualmente en R'
 author: Bastián Olea Herrera
 date: '2025-12-02'
 slug: []
