@@ -124,7 +124,7 @@ Como ya se estaban acumulando muchos tutoriales sobre R en este blog, quise hace
 ----
 
 ### Nueva etiqueta "básico"
-Siguiendo la idea de organizar el contenido para principiantes, agrega una nueva etiqueta a las publicaciones que son más introductorias, para facilitar el acceso a [contenido básico de R](/tags/básico/).
+Siguiendo la idea de organizar el **contenido para principiantes**, agregué una nueva [etiqueta](/tags/) a las publicaciones sobre [contenido básico de R](/tags/básico/).
 
 ----
 
@@ -173,5 +173,7 @@ Me hace muy feliz que todo se vea tan bonito, y si quieren su RStudio también p
 {{< boton "Tema morado para RStudio" "https://bastianolea.rbind.io/blog/tema_morado/" "fas fa-brush" >}}
 
 
+----
 
+Eso por ahora! Recuerda que siempre puedes escribirme por [LinkedIn](https://www.linkedin.com/in/bastianolea/), Twitter a [@bastimapache](https://x.com/bastimapache), o [por correo](/contacto/).
 
