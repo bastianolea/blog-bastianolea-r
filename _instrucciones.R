@@ -112,7 +112,7 @@ blogdown::new_post(title = "Calcula estadísticos descriptivos básicos en R",
 "layouts/partials/shared/sidebar/sidebar-header.html" # sidebar del blog
 
 "assets/custom.scss" # css del sitio
-
+"static/css/syntax.css" # css del syntax higlight
 
 
 ## utilidades ----
