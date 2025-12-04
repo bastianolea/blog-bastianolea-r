@@ -15,10 +15,10 @@ blogdown::new_post(title = "Recibe fotos de gatos o bendiciones automáticamente
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Calcula estadísticos descriptivos básicos en R", 
-                   file = "blog/estadisticos_descriptivos/index.qmd",
+blogdown::new_post(title = "Procesa datos con R sin programar y de forma interactiva", 
+                   file = "blog/r_no_code/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("estadísticas"),
+                   tags = c("curiosidades"),
                    categories = c() 
 )
 
@@ -38,10 +38,11 @@ blogdown::new_post(title = "Calcula estadísticos descriptivos básicos en R",
 
 ## borradores ----
 
+"content/blog/r_no_code/index.qmd"
+
 # tutoriales
 "content/blog/r_introduccion/dplyr_mutate/dplyr_mutate.qmd"
 "content/blog/r_introduccion/dplyr_summarize/dplyr_summarize.qmd"
-"content/blog/r_introduccion/tidyr_pivotar/tidyr_pivotar.qmd"
 
 # constantes
 "content/blog/mapas_sf/mapas_sf.qmd"
