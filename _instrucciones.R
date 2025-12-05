@@ -38,7 +38,7 @@ blogdown::new_post(title = "Procesa datos con R sin programar y de forma interac
 
 ## borradores ----
 
-"content/blog/r_no_code/index.qmd"
+"content/blog/blockr/index.md"
 
 # tutoriales
 "content/blog/r_introduccion/dplyr_mutate/dplyr_mutate.qmd"
