@@ -11,6 +11,7 @@ tags:
   - procesamiento de datos
   - automatización
   - tablas
+  - Excel
 links:
   - icon: registered
     icon_pack: fas

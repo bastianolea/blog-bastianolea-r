@@ -16,7 +16,7 @@ blogdown::new_post(title = "Recibe fotos de gatos o bendiciones automáticamente
 
 # crear un post tutorial
 blogdown::new_post(title = "Procesa datos con R sin programar y de forma interactiva", 
-                   file = "blog/r_no_code/index.qmd",
+                   file = "blog/excel_unir_hojas/index.qmd",
                    author = "Bastián Olea Herrera",
                    tags = c("curiosidades"),
                    categories = c() 
