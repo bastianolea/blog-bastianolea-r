@@ -15,10 +15,10 @@ blogdown::new_post(title = "Recibe fotos de gatos o bendiciones automáticamente
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Procesa datos con R sin programar y de forma interactiva", 
-                   file = "blog/excel_unir_hojas/index.qmd",
+blogdown::new_post(title = "Interactúa desde R con una IA que conoce tus datos, archivos y paquetes", 
+                   file = "blog/btw/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("curiosidades"),
+                   tags = c("inteligencia artificial", "consejos"),
                    categories = c() 
 )
 

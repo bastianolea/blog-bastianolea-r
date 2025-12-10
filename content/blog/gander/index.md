@@ -27,7 +27,7 @@ excerpt: "`{gander}` es un paquete de R para integrar asistentes de inteligencia
 ---
 
 <div style="max-width:400px; margin: auto;">
-{{< imagen "featured.png" >}}
+{{< imagen "gander.png" >}}
 </div>
 
 {{< indice >}}
