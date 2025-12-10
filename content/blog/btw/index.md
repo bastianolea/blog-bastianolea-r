@@ -158,3 +158,11 @@ Para evitar tener que crear un chat y/o especificar proveedor y modelo cada vez,
 ```r
 options(btw.client = ellmer::chat_github()) |> suppressMessages()
 ```
+
+
+Conoce más herramientas de IA en R en este video de [RLadies Paris](https://www.youtube.com/@rladiesparis):
+
+<div style="margin:auto; text-align: center;">
+<iframe width="90%" height="315" src="https://www.youtube.com/embed/uV5g3T7-_40?si=_RuCAuBebXKEOmI1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
