@@ -87,7 +87,7 @@ Es necesario tener la aplicación Ollama abierta en tu computadora, dado que és
 
 ### Opción B: configurar un proveedor de IA en la nube
 
-Para conectarte a un proveedor en la nube de IA, como ChatGPT y otros, necesitas darle a R la _API key_ o clave de acceso. Como esta clave es privada (nadie más la debería ver!), la mejor forma de guardarla es en las **variables de entorno** de R. 
+Para conectarte a un proveedor en la nube de IA, como ChatGPT y otros, necesitas darle a R la _API key_ o clave de acceso, como se explica en la [documentación de `{ellmer}`](https://ellmer.tidyverse.org/index.html#authentication). Como esta clave es privada (nadie más la debería ver!), la mejor forma de guardarla es en las **variables de entorno** de R. 
 
 #### Variables de entorno
 
@@ -128,6 +128,7 @@ Personalmente uso Copilot, así que pongo `ellmer::chat_copilot()`.
 {{< aviso "Para conocer otras formas de usar la integración de IA con R, revisa [este post sobre `{ellmer}`](/blog/ellmer/)" >}}
 
 
+----
 
 ## Configurar atajo de teclado
 

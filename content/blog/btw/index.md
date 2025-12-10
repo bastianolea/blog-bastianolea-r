@@ -51,6 +51,21 @@ Antes de mostrarte `{btw}`, veremos como comparación un [chat normal con una IA
 
 {{< info "`{ellmer}` es un [paquete de R](https://ellmer.tidyverse.org/index.html) que facilita la interacción con modelos de lenguaje desde R, y se usa como el motor de muchos otros paquetes que usan IA.">}}
 
+Antes que nada, para poder usar la IA en R tienes que tener una **llave API de tu proveedor de IA** (OpenAI, Anthropic, Copilot, etc.) configurada en tus variables de entorno, como se explica en la [documentación de `{ellmer}`](https://ellmer.tidyverse.org/index.html#authentication).
+
+{{< detalles "**Configurar tu proveedor de IA en R**" >}}
+
+En resumen, ejecuta `usethis::edit_r_environ()` para abrir tu archivo `.Renviron`, donde se pueden guardar secretos que se aplican a todas tus sesiones de R pero quedan ocultos, y agrega una línea con la _API key_, por ejemplo:
+
+```r
+OPENAI_API_KEY=345345398475937434534539847593743453453984759374
+```
+
+Si tu proveedor es Claude (Anthropic), el nombre de la variable es `ANTHROPIC_API_KEY`, etc.
+
+{{< /detalles >}}
+
+
 Primero **creamos el chat** con el proveedor de IA que usemos:
 ```r 
 chat <- ellmer::chat_github() # yo uso Copilot
