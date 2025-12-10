@@ -16,6 +16,10 @@ links:
     icon_pack: fas
     name: Paquete
     url: https://posit-dev.github.io/btw/index.html
+  - icon: file-code
+    icon_pack: fas
+    name: Código
+    url: https://gist.github.com/bastianolea/d5ebd6d3700d54f21ee2b980f12ec836
 excerpt: "El paquete `{btw}` te ofrece un chat de IA interactivo directamente a RStudio o Positron, que además cuenta con la capacidad de utilizar herramientas para interactuar con tus datos y tu código, y posee conocimiento contextual no sólo de tu entorno de R y tus datos, sino también de las funciones de los paquetes que usas y su documentación. Se trata de un asistente de IA que te entregará respuestas más certeras sin que tengas que estar explicándole todo."
 ---
 

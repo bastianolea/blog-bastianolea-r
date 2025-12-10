@@ -18,8 +18,8 @@ links:
     icon_pack: fab
     name: Presentación
     url: https://www.youtube.com/live/5yY7ETpfVlk
-  - icon: github
-    icon_pack: fab
+  - icon: file-code
+    icon_pack: fas
     name: Código
     url: https://github.com/bastianolea/siet_grafico
 ---

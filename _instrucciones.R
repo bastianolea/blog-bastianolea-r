@@ -1,3 +1,5 @@
+source("R/funciones.R")
+
 # previsualizar sitio
 
 blogdown::serve_site()
@@ -5,7 +7,12 @@ blogdown::stop_server()
 blogdown::build_site()
 
 
+
 ## posts ----
+
+# editar el más reciente
+abrir_post_reciente()
+
 
 # crear un post normal
 blogdown::new_post(title = "Recibe fotos de gatos o bendiciones automáticamente al abrir RStudio", 
