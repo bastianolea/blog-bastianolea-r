@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4512&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.136.5">
+<meta name="generator" content="Hugo 0.152.2">
 <title>Calcula estadísticos descriptivos básicos en R | Bastián Olea</title>
 
 
@@ -31,25 +31,25 @@
 <meta property="og:title" content="Calcula estadísticos descriptivos básicos en R | Bastián Olea">
 <meta property="og:description" content="Calcular estadísticos descriptivos, como promedio, mediana y cuartiles, es un paso inicial de la exploración de datos. En este post aprendemos varias formas de calcular descriptivos personalizables a todas las variables de tu _dataframe_ al mismo tiempo." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="https://bastianoleah.netlify.app/blog/estadisticos_descriptivos/" />
+<meta property="og:url" content="http://localhost:4512/blog/estadisticos_descriptivos/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/sidebar-listing.jpg" >
+        <meta property="og:image" content="http://localhost:4512/blog/sidebar-listing.jpg" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/sidebar-listing.jpg" >
+        <meta name="twitter:image" content="http://localhost:4512/blog/sidebar-listing.jpg" >
     
     
   
   <meta itemprop="name" content="Calcula estadísticos descriptivos básicos en R">
   <meta itemprop="description" content="Calcular estadísticos descriptivos en R es tan simple como usar la función summary() sobre cualquier tabla de datos o dataframe.
-Índice Estadísticos descriptivos iniciales Estadísticos descriptivos con {dplyr} Calcular promedio con summarize() Calcular promedio de varias variables con summarize(across()) Estadísticos descriptivos con summarize() Estadísticos descriptivos por grupo Estadísticos descriptivos para todas las variables Estadísticos descriptivos para todas las variables, por grupos Estadísticos descriptivos iniciales Usaremos como ejemplo el conjunto de datos iris, que viene incorporado en R, para aplicarle summary() y así obtener sus estadísticos descriptivos.">
+Índice Estadísticos descriptivos iniciales Estadísticos descriptivos con {dplyr} Calcular promedio con summarize() Calcular promedio de varias variables con summarize(across()) Estadísticos descriptivos con summarize() Estadísticos descriptivos por grupo Estadísticos descriptivos para todas las variables Estadísticos descriptivos para todas las variables, por grupos Estadísticos descriptivos con {skimr} Estadísticos descriptivos iniciales Usaremos como ejemplo el conjunto de datos iris, que viene incorporado en R, para aplicarle summary() y así obtener sus estadísticos descriptivos.">
   <meta itemprop="datePublished" content="2025-12-02T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-12-02T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1083">
+  <meta itemprop="wordCount" content="1274">
   <meta itemprop="keywords" content="Estadísticas,Básico,Dplyr">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -57,29 +57,29 @@
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.21df494c84c5dfe9475313852cebf248784a129e86d7fa40fc5d7b4e5fb2232a.css" integrity="sha256-Id9JTITF3&#43;lHUxOFLOvySHhKEp6G1/pA/F17Tl&#43;yIyo=" media="screen">
+  <link rel="stylesheet" href="../../style.main.min.7887be321ed5334c878ceffe54c6681c0cc23ed59f4c21d854aa4b609d217cc7.css" integrity="sha256-eIe&#43;Mh7VM0yHjO/&#43;VMZoHAzCPtWfTCHYVKpLYJ0hfMc=" media="screen">
   
   
-  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
   
   
-  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+  <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
   
-  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="../../css/syntax.css">
 </head>
 <body>
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
-      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4512/" title="Home">
+      <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog</a>
+      <a class="link f6 f5-l dib pv1 ph2 active" href="../../blog/" title="Bastián Olea: Blog de R">Blog</a>
       
         
         
@@ -94,7 +94,7 @@
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../categories/tutoriales/" title="Tutoriales">Tutoriales</a>
       
         
         
@@ -109,12 +109,12 @@
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../about/" title="Bastián Olea: Sobre mi">Yo</a>
       
       
       
@@ -277,7 +277,7 @@
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" 
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-envelope fa-lg fa-fw"></i>
     </a>
@@ -306,7 +306,7 @@
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/estad%C3%ADsticas"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:4512/tags/estad%C3%ADsticas"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -315,7 +315,7 @@
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            estadísticas</a>  <a href="https://bastianoleah.netlify.app/tags/b%C3%A1sico"
+            estadísticas</a>  <a href="http://localhost:4512/tags/b%C3%A1sico"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -324,7 +324,7 @@
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            básico</a>  <a href="https://bastianoleah.netlify.app/tags/dplyr"
+            básico</a>  <a href="http://localhost:4512/tags/dplyr"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -365,6 +365,7 @@
         <li><a href="#estadísticos-descriptivos-para-todas-las-variables-por-grupos">Estadísticos descriptivos para todas las variables, por grupos</a></li>
       </ul>
     </li>
+    <li><a href="#estadísticos-descriptivos-con-skimr">Estadísticos descriptivos con <code>{skimr}</code></a></li>
   </ul>
 </nav>
     </div>
@@ -382,7 +383,7 @@
     </svg></a>
 </h2>
 <p>Usaremos como ejemplo el conjunto de datos <code>iris</code>, que viene incorporado en R, para aplicarle <code>summary()</code> y así obtener sus <strong>estadísticos descriptivos</strong>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">summary</span><span style="color:#908caa">(</span><span style="color:#ea9a97">iris</span><span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">summary</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span>
 </span></span></code></pre></div><pre><code>  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   
  Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  
  1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  
@@ -426,12 +427,12 @@
 </h3>
 <p>Si bien <code>{dplyr}</code> no tiene una función que lo haga automáticamente como <code>summary()</code>, podemos usar la función <code>summarize()</code> para calcular <strong>resúmenes estadísticos</strong>. A <code>summarize()</code> le damos una función que usaremos para <em>resumir</em> los datos a una sola fila.</p>
 <p>Por ejemplo, calculemos el <strong>promedio</strong> de una variable:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarize</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">promedio</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Length</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">iris</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarize</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">promedio</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Sepal.Length</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
 </span></span></code></pre></div><pre><code>  promedio
 1 5.843333
 </code></pre>
@@ -447,13 +448,13 @@
 </h3>
 <p>Para hacerlo más útil, en vez de calcular para una sola variable, podemos pedirle que calcule el promedio para todas las variables numéricas. Esto lo logramos usando <code>across()</code>, que permite aplicar las operaciones a varias columnas a la vez, indicando que queremos aplicar la operación <em>donde</em> (<code>where()</code>) las variables <em>sean numéricas</em> (<code>is.numeric</code>).</p>
 <p>Entonces, este código calculará el promedio para todas las columnas numéricas del <em>dataframe</em>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarize</span><span style="color:#908caa">(</span>             <span style="color:#6e6a86"># resumir los datos</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">across</span><span style="color:#908caa">(</span>              <span style="color:#6e6a86"># donde las columnas</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">where</span><span style="color:#908caa">(</span><span style="color:#ea9a97">is.numeric</span><span style="color:#908caa">),</span> <span style="color:#6e6a86"># sean numéricas</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#908caa">~</span><span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">),</span>         <span style="color:#6e6a86"># calculando el promedio</span>
-</span></span><span style="display:flex;"><span>      <span style="color:#ea9a97">.names</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;{col}_promedio&#34;</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># cambiar el nombre de columnas</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">iris</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarize</span><span class="p">(</span>             <span class="c1"># resumir los datos</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">across</span><span class="p">(</span>              <span class="c1"># donde las columnas</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">where</span><span class="p">(</span><span class="n">is.numeric</span><span class="p">),</span> <span class="c1"># sean numéricas</span>
+</span></span><span class="line"><span class="cl">      <span class="o">~</span><span class="nf">mean</span><span class="p">(</span><span class="n">.x</span><span class="p">),</span>         <span class="c1"># calculando el promedio</span>
+</span></span><span class="line"><span class="cl">      <span class="n">.names</span> <span class="o">=</span> <span class="s">&#34;{col}_promedio&#34;</span><span class="p">)</span> <span class="c1"># cambiar el nombre de columnas</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
 </span></span></code></pre></div><pre><code>  Sepal.Length_promedio Sepal.Width_promedio Petal.Length_promedio
 1              5.843333             3.057333                 3.758
   Petal.Width_promedio
@@ -471,21 +472,21 @@
 </h3>
 <p>Siguiendo los mismos principios, ahora podemos calcular varios estadísticos descriptivos a la vez agregándolos a <code>summarize()</code>.</p>
 <p>Primero calculemos los descriptivos para una sola variable:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># definir variable</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rename</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Petal.Width</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># omitir datos perdidos</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#908caa">!</span><span style="color:#ea9a97">is.na</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># calcular</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarize</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;minimo&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">min</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;primer&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">quantile</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">probs</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.25</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;promedio&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;mediana&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">median</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;tercer&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">quantile</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">probs</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.75</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;maximo&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;desviacion&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">sd</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">iris</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># definir variable</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">rename</span><span class="p">(</span><span class="n">var</span> <span class="o">=</span> <span class="n">Petal.Width</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="c1"># omitir datos perdidos</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">var</span><span class="p">))</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># calcular</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">summarize</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;minimo&#34;</span> <span class="o">=</span> <span class="nf">min</span><span class="p">(</span><span class="n">var</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;primer&#34;</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="m">0.25</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;promedio&#34;</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">var</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;mediana&#34;</span> <span class="o">=</span> <span class="nf">median</span><span class="p">(</span><span class="n">var</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;tercer&#34;</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="m">0.75</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;maximo&#34;</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="n">var</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;desviacion&#34;</span> <span class="o">=</span> <span class="nf">sd</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
 </span></span></code></pre></div><pre><code>  minimo primer promedio mediana tercer maximo desviacion
 1    0.1    0.3 1.199333     1.3    1.8    2.5  0.7622377
 </code></pre>
@@ -500,23 +501,23 @@
     </svg></a>
 </h3>
 <p>La gracia de <code>{dplyr}</code> es que al código anterior podemos agregarle una agrupación (<code>group_by()</code>) para calcular los mismos estadísticos descriptivos <strong>por grupos</strong>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># definir variable</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rename</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Petal.Width</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># omitir datos perdidos</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#908caa">!</span><span style="color:#ea9a97">is.na</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># grupo</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># calcular</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarize</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;minimo&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">min</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;primer&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">quantile</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">probs</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.25</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;promedio&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;mediana&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">median</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;tercer&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">quantile</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">probs</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.75</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;maximo&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#f6c177">&#34;desviacion&#34;</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">sd</span><span style="color:#908caa">(</span><span style="color:#ea9a97">var</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">iris</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># definir variable</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">rename</span><span class="p">(</span><span class="n">var</span> <span class="o">=</span> <span class="n">Petal.Width</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="c1"># omitir datos perdidos</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">var</span><span class="p">))</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># grupo</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">group_by</span><span class="p">(</span><span class="n">Species</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="c1"># calcular</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">summarize</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;minimo&#34;</span> <span class="o">=</span> <span class="nf">min</span><span class="p">(</span><span class="n">var</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;primer&#34;</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="m">0.25</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;promedio&#34;</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">var</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;mediana&#34;</span> <span class="o">=</span> <span class="nf">median</span><span class="p">(</span><span class="n">var</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;tercer&#34;</span> <span class="o">=</span> <span class="nf">quantile</span><span class="p">(</span><span class="n">var</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="m">0.75</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;maximo&#34;</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="n">var</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;desviacion&#34;</span> <span class="o">=</span> <span class="nf">sd</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
 </span></span></code></pre></div><pre><code># A tibble: 3 × 8
   Species    minimo primer promedio mediana tercer maximo desviacion
   &lt;fct&gt;       &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
@@ -536,23 +537,23 @@
 </h3>
 <p>Podemos <strong>automatizar el cálculo</strong> de todos los estadísticos descriptivos para <strong>todas las variables</strong> numéricas usando <code>across()</code> dentro de <code>summarize()</code>. El resultado lo podemos 
 <a href="../../../blog/r_introduccion/tidyr_pivotar/">transformar a formato largo</a> con <code>{tidyr}</code> para facilitar su lectura:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tidyr</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarise</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">across</span><span style="color:#908caa">(</span><span style="color:#ea9a97">where</span><span style="color:#908caa">(</span><span style="color:#ea9a97">is.numeric</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">list</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;minimo&#34;</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">min</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;primer&#34;</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">quantile</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">probs</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.25</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;promedio&#34;</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;mediana&#34;</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">median</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;tercer&#34;</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">quantile</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">probs</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.75</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;maximo&#34;</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;desviacion&#34;</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">sd</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">))</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">pivot_longer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">everything</span><span style="color:#908caa">(),</span> 
-</span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">names_sep</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;_&#34;</span><span style="color:#908caa">,</span> 
-</span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">names_to</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;variable&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;.value&#34;</span><span style="color:#908caa">))</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">tidyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">iris</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarise</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">across</span><span class="p">(</span><span class="nf">where</span><span class="p">(</span><span class="n">is.numeric</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">           <span class="nf">list</span><span class="p">(</span><span class="s">&#34;minimo&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">min</span><span class="p">(</span><span class="n">.x</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s">&#34;primer&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">quantile</span><span class="p">(</span><span class="n">.x</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="m">0.25</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s">&#34;promedio&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">mean</span><span class="p">(</span><span class="n">.x</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s">&#34;mediana&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">median</span><span class="p">(</span><span class="n">.x</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s">&#34;tercer&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">quantile</span><span class="p">(</span><span class="n">.x</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="m">0.75</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s">&#34;maximo&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">max</span><span class="p">(</span><span class="n">.x</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s">&#34;desviacion&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">sd</span><span class="p">(</span><span class="n">.x</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">pivot_longer</span><span class="p">(</span><span class="nf">everything</span><span class="p">(),</span> 
+</span></span><span class="line"><span class="cl">               <span class="n">names_sep</span> <span class="o">=</span> <span class="s">&#34;_&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">               <span class="n">names_to</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;variable&#34;</span><span class="p">,</span> <span class="s">&#34;.value&#34;</span><span class="p">))</span>
 </span></span></code></pre></div><pre><code># A tibble: 4 × 8
   variable     minimo primer promedio mediana tercer maximo desviacion
   &lt;chr&gt;         &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
@@ -572,23 +573,23 @@
     </svg></a>
 </h3>
 <p>Finalmente, el mismo proceso anterior de calcular todos los descriptivos para todas las variables, pero ahora <strong>por grupos</strong>, simplemente agregándole <code>group_by()</code> al código y cambiando las columnas a pivotar para que no incluya la variable de grupo:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">iris</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rename</span><span style="color:#908caa">(</span><span style="color:#ea9a97">grupo</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Species</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">grupo</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarise</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#ea9a97">across</span><span style="color:#908caa">(</span><span style="color:#ea9a97">where</span><span style="color:#908caa">(</span><span style="color:#ea9a97">is.numeric</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>           <span style="color:#ea9a97">list</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;minimo&#34;</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">min</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;primer&#34;</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">quantile</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">probs</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.25</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;promedio&#34;</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;mediana&#34;</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">median</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;tercer&#34;</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">quantile</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">probs</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0.75</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;maximo&#34;</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                <span style="color:#f6c177">&#34;desviacion&#34;</span> <span style="color:#908caa">=</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">sd</span><span style="color:#908caa">(</span><span style="color:#ea9a97">.x</span><span style="color:#908caa">))</span>
-</span></span><span style="display:flex;"><span>    <span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">pivot_longer</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#ea9a97">everything</span><span style="color:#908caa">(),</span> <span style="color:#908caa">-</span><span style="color:#ea9a97">grupo</span><span style="color:#908caa">),</span> <span style="color:#6e6a86"># todas menos la variable de agrupación</span>
-</span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">names_sep</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;_&#34;</span><span style="color:#908caa">,</span> 
-</span></span><span style="display:flex;"><span>               <span style="color:#ea9a97">names_to</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;variable&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;.value&#34;</span><span style="color:#908caa">))</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">iris</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">rename</span><span class="p">(</span><span class="n">grupo</span> <span class="o">=</span> <span class="n">Species</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">group_by</span><span class="p">(</span><span class="n">grupo</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarise</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">across</span><span class="p">(</span><span class="nf">where</span><span class="p">(</span><span class="n">is.numeric</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">           <span class="nf">list</span><span class="p">(</span><span class="s">&#34;minimo&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">min</span><span class="p">(</span><span class="n">.x</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s">&#34;primer&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">quantile</span><span class="p">(</span><span class="n">.x</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="m">0.25</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s">&#34;promedio&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">mean</span><span class="p">(</span><span class="n">.x</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s">&#34;mediana&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">median</span><span class="p">(</span><span class="n">.x</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s">&#34;tercer&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">quantile</span><span class="p">(</span><span class="n">.x</span><span class="p">,</span> <span class="n">probs</span> <span class="o">=</span> <span class="m">0.75</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s">&#34;maximo&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">max</span><span class="p">(</span><span class="n">.x</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                <span class="s">&#34;desviacion&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">sd</span><span class="p">(</span><span class="n">.x</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">pivot_longer</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="nf">everything</span><span class="p">(),</span> <span class="o">-</span><span class="n">grupo</span><span class="p">),</span> <span class="c1"># todas menos la variable de agrupación</span>
+</span></span><span class="line"><span class="cl">               <span class="n">names_sep</span> <span class="o">=</span> <span class="s">&#34;_&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">               <span class="n">names_to</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;variable&#34;</span><span class="p">,</span> <span class="s">&#34;.value&#34;</span><span class="p">))</span>
 </span></span></code></pre></div><pre><code># A tibble: 12 × 9
    grupo      variable   minimo primer promedio mediana tercer maximo desviacion
    &lt;fct&gt;      &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
@@ -606,7 +607,52 @@
 12 virginica  Petal.Wid…    1.4   1.8     2.03     2      2.3     2.5      0.275
 </code></pre>
 <p>Si bien R base trae herramientas útiles como <code>summary()</code>, metiéndole un poco de <code>{dplyr}</code> podemos tener formas más flexibles y personalizables para calcular estadísticos descriptivos.</p>
-<p><div style = "height: 18px;">
+
+
+
+
+<h2 id="estadísticos-descriptivos-con-skimr">Estadísticos descriptivos con <code>{skimr}</code>
+  <a href="#estad%c3%adsticos-descriptivos-con-skimr"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Otra alternativa a <code>summary()</code> es la función <code>skim()</code> del 
+<a href="https://docs.ropensci.org/skimr/" target="_blank" rel="noopener">paquete <code>{skimr}</code></a>, que nos entrega resúmenes estadísticos permite obtener un resumen estadístico más completo y visualmente atractivo.</p>
+<p>Instalamos el paquete:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">install.packages</span><span class="p">(</span><span class="s">&#34;skimr&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>Luego lo probamos con nuestros datos:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">skimr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">skim</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span>
+</span></span></code></pre></div><p>La función entregará tablas con resúmenes de cantidad de observaciones, tipo de las columnas, y estadísticas descriptivas específicas para variables categóricas y numéricas.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl">── <span class="n">Data</span> <span class="n">Summary</span> ────────────────────────
+</span></span><span class="line"><span class="cl">                           <span class="n">Values</span>
+</span></span><span class="line"><span class="cl"><span class="n">Name</span>                       <span class="n">iris</span>  
+</span></span><span class="line"><span class="cl"><span class="n">Number</span> <span class="n">of</span> <span class="n">rows</span>             <span class="m">150</span>   
+</span></span><span class="line"><span class="cl"><span class="n">Number</span> <span class="n">of</span> <span class="n">columns</span>          <span class="m">5</span>     
+</span></span><span class="line"><span class="cl"><span class="n">_______________________</span>          
+</span></span><span class="line"><span class="cl"><span class="n">Column</span> <span class="n">type</span> <span class="n">frequency</span><span class="o">:</span>           
+</span></span><span class="line"><span class="cl">  <span class="n">factor</span>                   <span class="m">1</span>     
+</span></span><span class="line"><span class="cl">  <span class="n">numeric</span>                  <span class="m">4</span>     
+</span></span><span class="line"><span class="cl"><span class="n">________________________</span>         
+</span></span><span class="line"><span class="cl"><span class="n">Group</span> <span class="n">variables</span>            <span class="n">None</span>  
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">── <span class="n">Variable</span> <span class="n">type</span><span class="o">:</span> <span class="n">factor</span> ───────────────────────────────────────────────────────────────────────────
+</span></span><span class="line"><span class="cl">  <span class="n">skim_variable</span> <span class="n">n_missing</span> <span class="n">complete_rate</span> <span class="n">ordered</span> <span class="n">n_unique</span> <span class="n">top_counts</span>               
+</span></span><span class="line"><span class="cl"><span class="m">1</span> <span class="n">Species</span>               <span class="m">0</span>             <span class="m">1</span> <span class="kc">FALSE</span>          <span class="m">3</span> <span class="n">set</span><span class="o">:</span> <span class="m">50</span><span class="p">,</span> <span class="n">ver</span><span class="o">:</span> <span class="m">50</span><span class="p">,</span> <span class="n">vir</span><span class="o">:</span> <span class="m">50</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">── <span class="n">Variable</span> <span class="n">type</span><span class="o">:</span> <span class="n">numeric</span> ──────────────────────────────────────────────────────────────────────────
+</span></span><span class="line"><span class="cl">  <span class="n">skim_variable</span> <span class="n">n_missing</span> <span class="n">complete_rate</span> <span class="n">mean</span>    <span class="n">sd</span>  <span class="n">p0</span> <span class="n">p25</span>  <span class="n">p50</span> <span class="n">p75</span> <span class="n">p100</span> <span class="n">hist</span> 
+</span></span><span class="line"><span class="cl"><span class="m">1</span> <span class="n">Sepal.Length</span>          <span class="m">0</span>             <span class="m">1</span> <span class="m">5.84</span> <span class="m">0.828</span> <span class="m">4.3</span> <span class="m">5.1</span> <span class="m">5.8</span>  <span class="m">6.4</span>  <span class="m">7.9</span> ▆▇▇▅▂
+</span></span><span class="line"><span class="cl"><span class="m">2</span> <span class="n">Sepal.Width</span>           <span class="m">0</span>             <span class="m">1</span> <span class="m">3.06</span> <span class="m">0.436</span> <span class="m">2</span>   <span class="m">2.8</span> <span class="m">3</span>    <span class="m">3.3</span>  <span class="m">4.4</span> ▁▆▇▂▁
+</span></span><span class="line"><span class="cl"><span class="m">3</span> <span class="n">Petal.Length</span>          <span class="m">0</span>             <span class="m">1</span> <span class="m">3.76</span> <span class="m">1.77</span>  <span class="m">1</span>   <span class="m">1.6</span> <span class="m">4.35</span> <span class="m">5.1</span>  <span class="m">6.9</span> ▇▁▆▇▂
+</span></span><span class="line"><span class="cl"><span class="m">4</span> <span class="n">Petal.Width</span>           <span class="m">0</span>             <span class="m">1</span> <span class="m">1.20</span> <span class="m">0.762</span> <span class="m">0.1</span> <span class="m">0.3</span> <span class="m">1.3</span>  <span class="m">1.8</span>  <span class="m">2.5</span> ▇▁▇▅▃
+</span></span></code></pre></div><p><div style="max-width: 380px; margin:auto; text-align: center; font-size:80%; opacity:60%;">
+  Gracias a 
+<a href="https://www.linkedin.com/in/darakhshan-nehal-b38747154/" target="_blank" rel="noopener">Darakhshan Nehal</a> por enseñarme esta función!
+  </div>
+<div style = "height: 18px;">
 </div>
 <div>
   <div style="display: flex;
@@ -622,10 +668,13 @@
         <div class="post-pagination dt w-100 mt4 mb2">
   
   
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="http://localhost:4512/blog/tema_morado/">&larr; Temas morados oscuro y claro para RStudio</a>
+  
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="https://bastianoleah.netlify.app/blog/crear_dataframes/">Crear tablas de datos manualmente &rarr;</a>
+    href="http://localhost:4512/blog/crear_dataframes/">Crear tablas de datos manualmente en R &rarr;</a>
   
 </div>
 
@@ -662,24 +711,24 @@
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">6 minute read, 1083 words</dd>
+    <dd class="fw5 ml0">6 minute read, 1274 words</dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/estad%C3%ADsticas">estadísticas</a>  <a href="https://bastianoleah.netlify.app/tags/b%C3%A1sico">básico</a>  <a href="https://bastianoleah.netlify.app/tags/dplyr">dplyr</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4512/tags/estad%C3%ADsticas">estadísticas</a>  <a href="http://localhost:4512/tags/b%C3%A1sico">básico</a>  <a href="http://localhost:4512/tags/dplyr">dplyr</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/crear_dataframes/">Crear tablas de datos manualmente</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/blockr/">Procesa datos con R sin programar y de forma interactiva</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/aprender_r/">Nuevo sitio con todo lo necesario para aprender R</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/crear_dataframes/">Crear tablas de datos manualmente en R</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/r_introduccion/tidyr_pivotar/">Transformación de datos entre formato _ancho_ y _largo_ con {tidyr}</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/aprender_r/">Nuevo sitio con todo lo necesario para aprender R</a></dd>
     
   </dl>
 </details>
@@ -698,7 +747,7 @@
   <h1 class="f3">Blog</h1>
   <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
 <a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
-<a href="/tags/">temas</a>.</p>
+<a href="../../tags/">temas</a>.</p>
   
 
    
@@ -721,7 +770,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/chile/">Chile</a></span>
+      href="http://localhost:4512/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -736,7 +785,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/datos/">Datos</a></span>
+      href="http://localhost:4512/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -751,7 +800,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/consejos/">Consejos</a></span>
+      href="http://localhost:4512/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -766,7 +815,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:4512/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -781,7 +830,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:4512/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -796,7 +845,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:4512/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -811,7 +860,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/shiny/">Shiny</a></span>
+      href="http://localhost:4512/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -826,7 +875,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/apps/">Apps</a></span>
+      href="http://localhost:4512/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -841,7 +890,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/blog/">Blog</a></span>
+      href="http://localhost:4512/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -856,7 +905,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:4512/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -871,7 +920,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:4512/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -886,7 +935,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:4512/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -901,7 +950,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/mapas/">Mapas</a></span>
+      href="http://localhost:4512/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -916,7 +965,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/quarto/">Quarto</a></span>
+      href="http://localhost:4512/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -931,7 +980,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:4512/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -946,7 +995,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:4512/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -961,7 +1010,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:4512/tags/ciencias-sociales/">Ciencias sociales</a></span>
   </span>
  
   
@@ -976,7 +1025,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:4512/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -991,7 +1040,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:4512/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -1006,10 +1055,10 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/loops/">Loops</a></span>
+      href="http://localhost:4512/tags/automatizaci%C3%B3n/">Automatización</a></span>
   </span>
 
-<a href="/tags/" style="margin-left: 3px;">y más!</a>
+<a href="../../tags/" style="margin-left: 3px;">y más!</a>
 </div>
 </div>
   
@@ -1018,10 +1067,9 @@
    
 
 </div>
+
   
   <div id="PageTableOfContents", style="margin-top: 24px; position: sticky; top: 108px;">
-      
-        
         <div class="blog-info ph4 pb4 pb0-l">
         <h3 style="margin-bottom: 12px;">Índice:</h3>
           <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: -22px; margin-bottom: 32px;">
@@ -1038,12 +1086,11 @@
         <li><a href="#estadísticos-descriptivos-para-todas-las-variables-por-grupos">Estadísticos descriptivos para todas las variables, por grupos</a></li>
       </ul>
     </li>
+    <li><a href="#estadísticos-descriptivos-con-skimr">Estadísticos descriptivos con <code>{skimr}</code></a></li>
   </ul>
 </nav>
           </div>
         </div>
-      
-  
     </div>
   
   
@@ -1227,7 +1274,7 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" 
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-envelope fa-lg fa-fw"></i>
     </a>
@@ -1238,19 +1285,19 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
     
     <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
       
-      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
       
       <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
-      <a class="dib pv1 ph2 link" href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
       
-      <a class="dib pv1 ph2 link" href="/tags/" title="Temas">Temas</a>
+      <a class="dib pv1 ph2 link" href="../../tags/" title="Temas">Temas</a>
       
-      <a class="dib pv1 ph2 link" href="/clases/" title="Clases">Clases</a>
+      <a class="dib pv1 ph2 link" href="../../clases/" title="Clases">Clases</a>
       
-      <a class="dib pv1 ph2 link" href="/code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
+      <a class="dib pv1 ph2 link" href="../../code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
       
-      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      <a class="dib pv1 ph2 link" href="../../license/" title="Bastián Olea: Licencia">Licencia</a>
       
     </div>
   </nav>

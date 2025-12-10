@@ -4,9 +4,6 @@ author: Bastián Olea Herrera
 date: '2025-11-17'
 slug: []
 categories: []
-tags:
-  - shiny
-  - optimización
 format:
   hugo-md:
     output-file: index

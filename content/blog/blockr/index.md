@@ -12,7 +12,7 @@ format:
   hugo-md:
     output-file: index
     output-ext: md
-excerpt: "El paquete de R `{blockr}`](https://bristolmyerssquibb.github.io/blockr/) nos ofrece una interfaz gráfica interactiva para poder usar R sin escribir código. Como su nombre lo indica, funciona por medio de bloques que se conectan entre sí, representando de forma visual el flujo de procesamiento de datos. En esta guía te muestro un ejemplo de su uso!"
+excerpt: "El paquete de R `{blockr}` nos ofrece una interfaz gráfica interactiva para poder usar R sin escribir código. Como su nombre lo indica, funciona por medio de bloques que se conectan entre sí, representando de forma visual el flujo de procesamiento de datos. En esta guía te muestro un ejemplo de su uso!"
 links:
   - icon: registered
     icon_pack: fas

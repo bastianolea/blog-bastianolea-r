@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4512&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.136.5">
+<meta name="generator" content="Hugo 0.152.2">
 <title>Rotar un mapa de Chile en R para que quede horizontal | Bastián Olea</title>
 
 
@@ -31,16 +31,16 @@
 <meta property="og:title" content="Rotar un mapa de Chile en R para que quede horizontal | Bastián Olea">
 <meta property="og:description" content="Visualizar un mapa de Chile puede ser complicado debido a su largo. Muchas veces cuesta ubicar correctamente el mapa por el espacio vertical que requiere. Pero en ciertos casos puede ser conveniente visualizar a Chile _de lado_, para aprovechar el espacio horizontal. En esta guía veremos cómo rotar un mapa de Chile 90° hacia la izquierda en R para que quede acostado." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="https://bastianoleah.netlify.app/blog/mapa_chile_horizontal/" />
+<meta property="og:url" content="http://localhost:4512/blog/mapa_chile_horizontal/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/mapa_chile_horizontal/featured.png" >
+        <meta property="og:image" content="http://localhost:4512/blog/mapa_chile_horizontal/featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/mapa_chile_horizontal/featured.png" >
+        <meta name="twitter:image" content="http://localhost:4512/blog/mapa_chile_horizontal/featured.png" >
     
     
   
@@ -51,7 +51,7 @@ library(sf) # manejo de datos espaciales Linking to GEOS 3.13.0, GDAL 3.8.5, PRO
   <meta itemprop="datePublished" content="2025-03-04T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-03-04T00:00:00+00:00">
   <meta itemprop="wordCount" content="861">
-  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/mapa_chile_horizontal/featured.png">
+  <meta itemprop="image" content="http://localhost:4512/blog/mapa_chile_horizontal/featured.png">
   <meta itemprop="keywords" content="Mapas,Visualización de datos">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -59,29 +59,29 @@ library(sf) # manejo de datos espaciales Linking to GEOS 3.13.0, GDAL 3.8.5, PRO
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.21df494c84c5dfe9475313852cebf248784a129e86d7fa40fc5d7b4e5fb2232a.css" integrity="sha256-Id9JTITF3&#43;lHUxOFLOvySHhKEp6G1/pA/F17Tl&#43;yIyo=" media="screen">
+  <link rel="stylesheet" href="../../style.main.min.7887be321ed5334c878ceffe54c6681c0cc23ed59f4c21d854aa4b609d217cc7.css" integrity="sha256-eIe&#43;Mh7VM0yHjO/&#43;VMZoHAzCPtWfTCHYVKpLYJ0hfMc=" media="screen">
   
   
-  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
   
   
-  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+  <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
   
-  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="../../css/syntax.css">
 </head>
 <body>
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
-      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4512/" title="Home">
+      <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog</a>
+      <a class="link f6 f5-l dib pv1 ph2 active" href="../../blog/" title="Bastián Olea: Blog de R">Blog</a>
       
         
         
@@ -96,7 +96,7 @@ library(sf) # manejo de datos espaciales Linking to GEOS 3.13.0, GDAL 3.8.5, PRO
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../categories/tutoriales/" title="Tutoriales">Tutoriales</a>
       
         
         
@@ -111,12 +111,12 @@ library(sf) # manejo de datos espaciales Linking to GEOS 3.13.0, GDAL 3.8.5, PRO
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../about/" title="Bastián Olea: Sobre mi">Yo</a>
       
       
       
@@ -279,7 +279,7 @@ library(sf) # manejo de datos espaciales Linking to GEOS 3.13.0, GDAL 3.8.5, PRO
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" 
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-envelope fa-lg fa-fw"></i>
     </a>
@@ -308,7 +308,7 @@ library(sf) # manejo de datos espaciales Linking to GEOS 3.13.0, GDAL 3.8.5, PRO
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/mapas"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:4512/tags/mapas"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -317,7 +317,7 @@ library(sf) # manejo de datos espaciales Linking to GEOS 3.13.0, GDAL 3.8.5, PRO
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            mapas</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos"
+            mapas</a>  <a href="http://localhost:4512/tags/visualizaci%C3%B3n-de-datos"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -339,15 +339,15 @@ library(sf) # manejo de datos espaciales Linking to GEOS 3.13.0, GDAL 3.8.5, PRO
     <section class="post-body pt5 pb4">
         <p>Visualizar un mapa de Chile puede ser complicado debido a su largo. Muchas veces cuesta ubicar correctamente el mapa por el espacio vertical que requiere. Pero en ciertos casos puede ser conveniente visualizar a Chile <em>de lado</em>, para aprovechar el espacio horizontal. En esta guía veremos cómo rotar un mapa de Chile 90° hacia la izquierda en R para que quede acostado.</p>
 <p>Primero cargamos los paquetes necesarios:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">sf</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># manejo de datos espaciales</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">sf</span><span class="p">)</span> <span class="c1"># manejo de datos espaciales</span>
 </span></span></code></pre></div><pre><code>Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># mapas de Chile</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">chilemapas</span><span class="p">)</span> <span class="c1"># mapas de Chile</span>
 </span></span></code></pre></div><pre><code>La documentacion del paquete y ejemplos de uso se encuentran en https://pacha.dev/chilemapas/.
 Visita https://buymeacoffee.com/pacha/ si deseas donar para contribuir al desarrollo de este software.
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ggplot2</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># visualización de datos</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># manejo de datos tabulares</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span> <span class="c1"># visualización de datos</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span> <span class="c1"># manejo de datos tabulares</span>
 </span></span></code></pre></div><pre><code>Attaching package: 'dplyr'
 
 The following objects are masked from 'package:stats':
@@ -358,12 +358,12 @@ The following objects are masked from 'package:base':
 
     intersect, setdiff, setequal, union
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">readr</span><span style="color:#908caa">)</span> <span style="color:#6e6a86"># cargar datos</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">readr</span><span class="p">)</span> <span class="c1"># cargar datos</span>
 </span></span></code></pre></div><p>Obtenemos un mapa de Chile gracias al paquete {chilemapas}; en este caso un mapa del país por regiones:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># obtener mapa</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_region</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">chilemapas</span><span style="color:#908caa">::</span><span style="color:#ea9a97">generar_regiones</span><span style="color:#908caa">()</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_region</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># obtener mapa</span>
+</span></span><span class="line"><span class="cl"><span class="n">mapa_region</span> <span class="o">&lt;-</span> <span class="n">chilemapas</span><span class="o">::</span><span class="nf">generar_regiones</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">mapa_region</span>
 </span></span></code></pre></div><pre><code>Simple feature collection with 16 features and 1 field
 Geometry type: GEOMETRY
 Dimension:     XY
@@ -389,16 +389,16 @@ Geodetic CRS:  SIRGAS 2000
 15 15            POLYGON ((-70.35079 -18.8362, -70.34707 -18.83939, -70.34351 -…
 16 16            POLYGON ((-72.38553 -36.91169, -72.37685 -36.91617, -72.37034 …
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># visualizar</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_region</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">(</span><span style="color:#ea9a97">aes</span><span style="color:#908caa">())</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#6e6a86"># recortar coordenadas horizontales</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-80</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-62</span><span style="color:#908caa">))</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># visualizar</span>
+</span></span><span class="line"><span class="cl"><span class="n">mapa_region</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">())</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">geom_sf</span><span class="p">()</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># recortar coordenadas horizontales</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">coord_sf</span><span class="p">(</span><span class="n">xlim</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">-80</span><span class="p">,</span> <span class="m">-62</span><span class="p">))</span>
 </span></span></code></pre></div><img src="mapa_chile_horizontal.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png" width="768" />
 <p>Cargamos algunos datos regionales para ponerle al mapa:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># obtener datos</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">read_csv2</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;https://github.com/bastianolea/economia_chile/raw/main/app/datos/pib_regional.csv&#34;</span><span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># obtener datos</span>
+</span></span><span class="line"><span class="cl"><span class="n">datos</span> <span class="o">&lt;-</span> <span class="nf">read_csv2</span><span class="p">(</span><span class="s">&#34;https://github.com/bastianolea/economia_chile/raw/main/app/datos/pib_regional.csv&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><pre><code>ℹ Using &quot;','&quot; as decimal and &quot;'.'&quot; as grouping mark. Use `read_delim()` for more control.
 
 New names:
@@ -411,80 +411,80 @@ fecha_scraping
 Specify the column types or set `show_col_types = FALSE` to quiet this message.
 • `` -&gt; `...1`
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># limpiar datos</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">serie</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">año</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">slice_max</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mes</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">select</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre_region</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">serie</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">valor</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">año</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">trimestre</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">mes</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># crear tabla de regiones</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">regiones</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tribble</span><span style="color:#908caa">(</span><span style="color:#908caa">~</span><span style="color:#ea9a97">codigo_region</span><span style="color:#908caa">,</span> <span style="color:#908caa">~</span><span style="color:#ea9a97">nombre_region</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;01&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región de Arica y Parinacota&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;02&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región de Tarapacá&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;03&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región de Antofagasta&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;04&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región de Atacama&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;05&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región de Coquimbo&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;06&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región de Valparaíso&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;07&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región Metropolitana de Santiago&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;08&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región del Libertador General Bernardo OHiggins&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;09&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región del Maule&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;10&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región de Ñuble&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;11&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región del Biobío&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;12&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región de La Araucanía&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;13&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región de Los Ríos&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;14&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región de Los Lagos&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;15&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región de Aysén del General Carlos Ibáñez del Campo&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                    <span style="color:#f6c177">&#34;16&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Región de Magallanes y de la Antártica Chilena&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># agregar regiones y datos al mapa</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_datos</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_region</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">left_join</span><span style="color:#908caa">(</span><span style="color:#ea9a97">regiones</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">left_join</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos_2</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">by</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">join_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">nombre_region</span><span style="color:#908caa">))</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># limpiar datos</span>
+</span></span><span class="line"><span class="cl"><span class="n">datos_2</span> <span class="o">&lt;-</span> <span class="n">datos</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">group_by</span><span class="p">(</span><span class="n">serie</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">slice_max</span><span class="p">(</span><span class="n">año</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">slice_max</span><span class="p">(</span><span class="n">mes</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">select</span><span class="p">(</span><span class="n">nombre_region</span> <span class="o">=</span> <span class="n">serie</span><span class="p">,</span> <span class="n">valor</span><span class="p">,</span> <span class="n">año</span><span class="p">,</span> <span class="n">trimestre</span><span class="p">,</span> <span class="n">mes</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># crear tabla de regiones</span>
+</span></span><span class="line"><span class="cl"><span class="n">regiones</span> <span class="o">&lt;-</span> <span class="nf">tribble</span><span class="p">(</span><span class="o">~</span><span class="n">codigo_region</span><span class="p">,</span> <span class="o">~</span><span class="n">nombre_region</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;01&#34;</span><span class="p">,</span> <span class="s">&#34;Región de Arica y Parinacota&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;02&#34;</span><span class="p">,</span> <span class="s">&#34;Región de Tarapacá&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;03&#34;</span><span class="p">,</span> <span class="s">&#34;Región de Antofagasta&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;04&#34;</span><span class="p">,</span> <span class="s">&#34;Región de Atacama&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;05&#34;</span><span class="p">,</span> <span class="s">&#34;Región de Coquimbo&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;06&#34;</span><span class="p">,</span> <span class="s">&#34;Región de Valparaíso&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;07&#34;</span><span class="p">,</span> <span class="s">&#34;Región Metropolitana de Santiago&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;08&#34;</span><span class="p">,</span> <span class="s">&#34;Región del Libertador General Bernardo OHiggins&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;09&#34;</span><span class="p">,</span> <span class="s">&#34;Región del Maule&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;10&#34;</span><span class="p">,</span> <span class="s">&#34;Región de Ñuble&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;11&#34;</span><span class="p">,</span> <span class="s">&#34;Región del Biobío&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;12&#34;</span><span class="p">,</span> <span class="s">&#34;Región de La Araucanía&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;13&#34;</span><span class="p">,</span> <span class="s">&#34;Región de Los Ríos&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;14&#34;</span><span class="p">,</span> <span class="s">&#34;Región de Los Lagos&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;15&#34;</span><span class="p">,</span> <span class="s">&#34;Región de Aysén del General Carlos Ibáñez del Campo&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s">&#34;16&#34;</span><span class="p">,</span> <span class="s">&#34;Región de Magallanes y de la Antártica Chilena&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># agregar regiones y datos al mapa</span>
+</span></span><span class="line"><span class="cl"><span class="n">mapa_datos</span> <span class="o">&lt;-</span> <span class="n">mapa_region</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">left_join</span><span class="p">(</span><span class="n">regiones</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">left_join</span><span class="p">(</span><span class="n">datos_2</span><span class="p">,</span> <span class="n">by</span> <span class="o">=</span> <span class="nf">join_by</span><span class="p">(</span><span class="n">nombre_region</span><span class="p">))</span>
 </span></span></code></pre></div><pre><code>Joining with `by = join_by(codigo_region)`
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># visualizar mapa con datos</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_datos</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">valor</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">xlim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">-80</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-62</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_fill_distiller</span><span style="color:#908caa">(</span><span style="color:#ea9a97">type</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;seq&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">12</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                       <span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">scales</span><span style="color:#908caa">::</span><span style="color:#ea9a97">label_comma</span><span style="color:#908caa">(</span><span style="color:#ea9a97">big.mark</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;.&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">axis.text</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">(),</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.line</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">(),</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.ticks</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">())</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># visualizar mapa con datos</span>
+</span></span><span class="line"><span class="cl"><span class="n">mapa_datos</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">ggplot</span><span class="p">()</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">aes</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="n">valor</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">geom_sf</span><span class="p">(</span><span class="n">linewidth</span> <span class="o">=</span> <span class="m">0</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">coord_sf</span><span class="p">(</span><span class="n">xlim</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">-80</span><span class="p">,</span> <span class="m">-62</span><span class="p">))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">scale_fill_distiller</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="s">&#34;seq&#34;</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="m">12</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">label_comma</span><span class="p">(</span><span class="n">big.mark</span> <span class="o">=</span> <span class="s">&#34;.&#34;</span><span class="p">))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">theme_classic</span><span class="p">()</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">theme</span><span class="p">(</span><span class="n">axis.text</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">axis.line</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">axis.ticks</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">())</span>
 </span></span></code></pre></div><pre><code>Warning in prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L, :
 'big.mark' and 'decimal.mark' are both '.', which could be confusing
 </code></pre>
 <img src="mapa_chile_horizontal.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="768" />
 <p>Ahora que tenemos un mapa de Chile con datos regionales, procedemos a rotar el mapa. Para esto, necesitamos una <em>matriz de rotación</em>, respecto de la cual no hay mucho que entender, salvo que nos permitirá multiplicar la geometría del mapa para obtener como resultado la misma geometría, pero rotada. El único detalle que hay que considerar es que es necesario cambiar la proyección del mapa para que la zona sur del país no se vea deformada.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># reprojectar a CRS EPSG:5361 para evitar deformación</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_proyectado</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">st_transform</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mapa_datos</span><span style="color:#908caa">,</span> <span style="color:#f6c177">5361</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># matriz de rotación 90° izquierda</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">rotacion</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">matrix</span><span style="color:#908caa">(</span><span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">0</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1</span><span style="color:#908caa">,</span> <span style="color:#f6c177">0</span><span style="color:#908caa">),</span> <span style="color:#f6c177">2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">2</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># aplicar rotación al mapa proyectado</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">mapa_rotado</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">mapa_proyectado</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">geometry</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">geometry</span> <span style="color:#908caa">*</span> <span style="color:#ea9a97">rotacion</span><span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># reprojectar a CRS EPSG:5361 para evitar deformación</span>
+</span></span><span class="line"><span class="cl"><span class="n">mapa_proyectado</span> <span class="o">&lt;-</span> <span class="nf">st_transform</span><span class="p">(</span><span class="n">mapa_datos</span><span class="p">,</span> <span class="m">5361</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># matriz de rotación 90° izquierda</span>
+</span></span><span class="line"><span class="cl"><span class="n">rotacion</span> <span class="o">&lt;-</span> <span class="nf">matrix</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">-1</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="m">2</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># aplicar rotación al mapa proyectado</span>
+</span></span><span class="line"><span class="cl"><span class="n">mapa_rotado</span> <span class="o">&lt;-</span> <span class="n">mapa_proyectado</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">geometry</span> <span class="o">=</span> <span class="n">geometry</span> <span class="o">*</span> <span class="n">rotacion</span><span class="p">)</span>
 </span></span></code></pre></div><p>Finalmente, visualizamos el mapa reproyectado y rotado:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">mapa_rotado</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">ggplot</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">aes</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">valor</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">geom_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">linewidth</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">0</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_y_continuous</span><span style="color:#908caa">(</span><span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">scales</span><span style="color:#908caa">::</span><span style="color:#ea9a97">label_number</span><span style="color:#908caa">())</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">coord_sf</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ylim</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">800000</span><span style="color:#908caa">,</span> <span style="color:#f6c177">-100000</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">labs</span><span style="color:#908caa">(</span><span style="color:#ea9a97">title</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;Mapa de Chile horizontal&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>       <span style="color:#ea9a97">subtitle</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;A mimir&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">scale_fill_distiller</span><span style="color:#908caa">(</span><span style="color:#ea9a97">type</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;seq&#34;</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">palette</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">12</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                       <span style="color:#ea9a97">labels</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">scales</span><span style="color:#908caa">::</span><span style="color:#ea9a97">label_comma</span><span style="color:#908caa">(</span><span style="color:#ea9a97">big.mark</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;.&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">guides</span><span style="color:#908caa">(</span><span style="color:#ea9a97">fill</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">guide_legend</span><span style="color:#908caa">(</span><span style="color:#ea9a97">position</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;bottom&#34;</span><span style="color:#908caa">))</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme_classic</span><span style="color:#908caa">()</span> <span style="color:#908caa">+</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">theme</span><span style="color:#908caa">(</span><span style="color:#ea9a97">axis.text</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">(),</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.line</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">(),</span>
-</span></span><span style="display:flex;"><span>        <span style="color:#ea9a97">axis.ticks</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">element_blank</span><span style="color:#908caa">())</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">mapa_rotado</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">ggplot</span><span class="p">()</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">aes</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="n">valor</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">geom_sf</span><span class="p">(</span><span class="n">linewidth</span> <span class="o">=</span> <span class="m">0</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">label_number</span><span class="p">())</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">coord_sf</span><span class="p">(</span><span class="n">ylim</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">800000</span><span class="p">,</span> <span class="m">-100000</span><span class="p">))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">labs</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s">&#34;Mapa de Chile horizontal&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">       <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;A mimir&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">scale_fill_distiller</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="s">&#34;seq&#34;</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="m">12</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">label_comma</span><span class="p">(</span><span class="n">big.mark</span> <span class="o">=</span> <span class="s">&#34;.&#34;</span><span class="p">))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">guides</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="nf">guide_legend</span><span class="p">(</span><span class="n">position</span> <span class="o">=</span> <span class="s">&#34;bottom&#34;</span><span class="p">))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">theme_classic</span><span class="p">()</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">theme</span><span class="p">(</span><span class="n">axis.text</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">axis.line</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">axis.ticks</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">())</span>
 </span></span></code></pre></div><pre><code>Warning in prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L, :
 'big.mark' and 'decimal.mark' are both '.', which could be confusing
 </code></pre>
@@ -517,12 +517,12 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="https://bastianoleah.netlify.app/blog/colores/">&larr; Creación y personalización de colores y paletas en R</a>
+    href="http://localhost:4512/blog/colores/">&larr; Creación y personalización de colores y paletas en R</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="https://bastianoleah.netlify.app/blog/simplificar_mapas/">Simplificar la geometría de los polígonos de un mapa en R &rarr;</a>
+    href="http://localhost:4512/blog/simplificar_mapas/">Simplificar la geometría de los polígonos de un mapa en R &rarr;</a>
   
 </div>
 
@@ -566,17 +566,17 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/mapas">mapas</a>  <a href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4512/tags/mapas">mapas</a>  <a href="http://localhost:4512/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/mapas_sf/">Mapas y visualización de datos geoespaciales en R con {sf}</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/mapas_sf/">Mapas y visualización de datos geoespaciales en R con {sf}</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/elecciones_presidenciales_2025/">Visualización y scraping de resultados de las elecciones presidenciales 2025</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/elecciones_presidenciales_2025/">Visualización y scraping de resultados de las elecciones presidenciales 2025</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/mapas_areas_metropolitanas/">Portafolio: mapas de Áreas Metropolitanas</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/mapas_areas_metropolitanas/">Portafolio: mapas de Áreas Metropolitanas</a></dd>
     
   </dl>
 </details>
@@ -595,7 +595,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
   <h1 class="f3">Blog</h1>
   <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
 <a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
-<a href="/tags/">temas</a>.</p>
+<a href="../../tags/">temas</a>.</p>
   
 
    
@@ -618,7 +618,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/chile/">Chile</a></span>
+      href="http://localhost:4512/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -633,7 +633,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/datos/">Datos</a></span>
+      href="http://localhost:4512/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -648,7 +648,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/consejos/">Consejos</a></span>
+      href="http://localhost:4512/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -663,7 +663,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:4512/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -678,7 +678,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:4512/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -693,7 +693,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:4512/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -708,7 +708,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/blog/">Blog</a></span>
+      href="http://localhost:4512/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -723,7 +723,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/shiny/">Shiny</a></span>
+      href="http://localhost:4512/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -738,7 +738,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/apps/">Apps</a></span>
+      href="http://localhost:4512/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -753,7 +753,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:4512/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -768,7 +768,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:4512/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -783,7 +783,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/mapas/">Mapas</a></span>
+      href="http://localhost:4512/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -798,7 +798,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:4512/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -813,7 +813,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/quarto/">Quarto</a></span>
+      href="http://localhost:4512/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -828,7 +828,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:4512/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -843,7 +843,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:4512/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -858,7 +858,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:4512/tags/ciencias-sociales/">Ciencias sociales</a></span>
   </span>
  
   
@@ -873,7 +873,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:4512/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -888,7 +888,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:4512/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -903,10 +903,10 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/loops/">Loops</a></span>
+      href="http://localhost:4512/tags/loops/">Loops</a></span>
   </span>
 
-<a href="/tags/" style="margin-left: 3px;">y más!</a>
+<a href="../../tags/" style="margin-left: 3px;">y más!</a>
 </div>
 </div>
   
@@ -915,6 +915,7 @@ Specify the column types or set `show_col_types = FALSE` to quiet this message.
    
 
 </div>
+
   
   
   
@@ -1098,7 +1099,7 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" 
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-envelope fa-lg fa-fw"></i>
     </a>
@@ -1109,19 +1110,19 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
     
     <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
       
-      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
       
       <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
-      <a class="dib pv1 ph2 link" href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
       
-      <a class="dib pv1 ph2 link" href="/tags/" title="Temas">Temas</a>
+      <a class="dib pv1 ph2 link" href="../../tags/" title="Temas">Temas</a>
       
-      <a class="dib pv1 ph2 link" href="/clases/" title="Clases">Clases</a>
+      <a class="dib pv1 ph2 link" href="../../clases/" title="Clases">Clases</a>
       
-      <a class="dib pv1 ph2 link" href="/code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
+      <a class="dib pv1 ph2 link" href="../../code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
       
-      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      <a class="dib pv1 ph2 link" href="../../license/" title="Bastián Olea: Licencia">Licencia</a>
       
     </div>
   </nav>

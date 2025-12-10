@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4512&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.136.5">
+<meta name="generator" content="Hugo 0.152.2">
 <title>Rellenar datos perdidos usando datos de otra tabla | Bastián Olea</title>
 
 
@@ -31,16 +31,16 @@
 <meta property="og:title" content="Rellenar datos perdidos usando datos de otra tabla | Bastián Olea">
 <meta property="og:description" content="¿Te ha pasado que tienes una tabla con datos perdidos, y otra tabla con una columna que coincide con la primera tabla, que además cuenta con datos que quieres usar para rellenar las observaciones perdidas? Antes pensaba que esto se resolvía con `left_join()` y algún ajuste para reemplazar los perdidos con los datos anexados. Pero ayer conocí una función que resuelve este problema de inmediato: `rows_update()`!" />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="https://bastianoleah.netlify.app/blog/2025-02-14/" />
+<meta property="og:url" content="http://localhost:4512/blog/2025-02-14/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/2025-02-14/featured.png" >
+        <meta property="og:image" content="http://localhost:4512/blog/2025-02-14/featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/2025-02-14/featured.png" >
+        <meta name="twitter:image" content="http://localhost:4512/blog/2025-02-14/featured.png" >
     
     
   
@@ -50,7 +50,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
   <meta itemprop="datePublished" content="2025-02-14T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-02-14T00:00:00+00:00">
   <meta itemprop="wordCount" content="661">
-  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/2025-02-14/featured.png">
+  <meta itemprop="image" content="http://localhost:4512/blog/2025-02-14/featured.png">
   <meta itemprop="keywords" content="Dplyr,Limpieza de datos,Datos perdidos">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -58,29 +58,29 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.21df494c84c5dfe9475313852cebf248784a129e86d7fa40fc5d7b4e5fb2232a.css" integrity="sha256-Id9JTITF3&#43;lHUxOFLOvySHhKEp6G1/pA/F17Tl&#43;yIyo=" media="screen">
+  <link rel="stylesheet" href="../../style.main.min.7887be321ed5334c878ceffe54c6681c0cc23ed59f4c21d854aa4b609d217cc7.css" integrity="sha256-eIe&#43;Mh7VM0yHjO/&#43;VMZoHAzCPtWfTCHYVKpLYJ0hfMc=" media="screen">
   
   
-  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
   
   
-  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+  <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
   
-  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="../../css/syntax.css">
 </head>
 <body>
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
-      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4512/" title="Home">
+      <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog</a>
+      <a class="link f6 f5-l dib pv1 ph2 active" href="../../blog/" title="Bastián Olea: Blog de R">Blog</a>
       
         
         
@@ -95,7 +95,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../categories/tutoriales/" title="Tutoriales">Tutoriales</a>
       
         
         
@@ -110,12 +110,12 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../about/" title="Bastián Olea: Sobre mi">Yo</a>
       
       
       
@@ -278,7 +278,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" 
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-envelope fa-lg fa-fw"></i>
     </a>
@@ -307,7 +307,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/dplyr"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:4512/tags/dplyr"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -316,7 +316,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            dplyr</a>  <a href="https://bastianoleah.netlify.app/tags/limpieza-de-datos"
+            dplyr</a>  <a href="http://localhost:4512/tags/limpieza-de-datos"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -325,7 +325,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            limpieza de datos</a>  <a href="https://bastianoleah.netlify.app/tags/datos-perdidos"
+            limpieza de datos</a>  <a href="http://localhost:4512/tags/datos-perdidos"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -346,13 +346,13 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
       
     <section class="post-body pt5 pb4">
         <p>¿Te ha pasado que tienes una tabla con datos perdidos, y otra tabla con una columna que coincide con la primera tabla, que además cuenta con datos que quieres usar para rellenar las observaciones perdidas? Antes pensaba que esto se resolvía con <code>left_join()</code> y algún ajuste para reemplazar los perdidos con los datos anexados. Pero ayer conocí una función que resuelve este problema de inmediato: <code>rows_update()</code>!</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">suppressPackageStartupMessages</span><span style="color:#908caa">()</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tabla_1</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tibble</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ciudad</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Santiago&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Concepción&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Valparaíso&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Arica&#34;</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                  <span style="color:#ea9a97">poblacion</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">7123891</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1036142</span><span style="color:#908caa">,</span> <span style="color:#f6c177">1054253</span><span style="color:#908caa">,</span> <span style="color:#f6c177">221364</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                  <span style="color:#ea9a97">temperatura</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#3e8fb0">NA</span><span style="color:#908caa">,</span> <span style="color:#f6c177">17.6</span><span style="color:#908caa">,</span> <span style="color:#3e8fb0">NA</span><span style="color:#908caa">,</span> <span style="color:#f6c177">19.2</span><span style="color:#908caa">))</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tabla_1</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">suppressPackageStartupMessages</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">tabla_1</span> <span class="o">&lt;-</span> <span class="nf">tibble</span><span class="p">(</span><span class="n">ciudad</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;Santiago&#34;</span><span class="p">,</span> <span class="s">&#34;Concepción&#34;</span><span class="p">,</span> <span class="s">&#34;Valparaíso&#34;</span><span class="p">,</span> <span class="s">&#34;Arica&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                  <span class="n">poblacion</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">7123891</span><span class="p">,</span> <span class="m">1036142</span><span class="p">,</span> <span class="m">1054253</span><span class="p">,</span> <span class="m">221364</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                  <span class="n">temperatura</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="kc">NA</span><span class="p">,</span> <span class="m">17.6</span><span class="p">,</span> <span class="kc">NA</span><span class="p">,</span> <span class="m">19.2</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">tabla_1</span>
 </span></span></code></pre></div><pre><code># A tibble: 4 × 3
   ciudad     poblacion temperatura
   &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt;
@@ -361,10 +361,10 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
 3 Valparaíso   1054253        NA  
 4 Arica         221364        19.2
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tabla_2</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tibble</span><span style="color:#908caa">(</span><span style="color:#ea9a97">ciudad</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;Santiago&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Rancagua&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Concepción&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Arica&#34;</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;Valparaíso&#34;</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>                  <span style="color:#ea9a97">temperatura</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">c</span><span style="color:#908caa">(</span><span style="color:#f6c177">22.8</span><span style="color:#908caa">,</span> <span style="color:#f6c177">14.0</span><span style="color:#908caa">,</span> <span style="color:#f6c177">17.6</span><span style="color:#908caa">,</span> <span style="color:#f6c177">19.2</span><span style="color:#908caa">,</span> <span style="color:#f6c177">17.5</span><span style="color:#908caa">))</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tabla_2</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">tabla_2</span> <span class="o">&lt;-</span> <span class="nf">tibble</span><span class="p">(</span><span class="n">ciudad</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;Santiago&#34;</span><span class="p">,</span> <span class="s">&#34;Rancagua&#34;</span><span class="p">,</span> <span class="s">&#34;Concepción&#34;</span><span class="p">,</span> <span class="s">&#34;Arica&#34;</span><span class="p">,</span> <span class="s">&#34;Valparaíso&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                  <span class="n">temperatura</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">22.8</span><span class="p">,</span> <span class="m">14.0</span><span class="p">,</span> <span class="m">17.6</span><span class="p">,</span> <span class="m">19.2</span><span class="p">,</span> <span class="m">17.5</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">tabla_2</span>
 </span></span></code></pre></div><pre><code># A tibble: 5 × 2
   ciudad     temperatura
   &lt;chr&gt;            &lt;dbl&gt;
@@ -376,11 +376,11 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
 </code></pre>
 <p>En este ejemplo, tenemos dos tablas: la primera tiene una columna con datos perdidos o faltantes, y la segunda tabla, de datos similares, contiene las observaciones que en la primera tabla están faltando.</p>
 <p>Una solución sería unir ambas tablas con <code>left_join()</code>, lo cual resultaría en dos columnas con el mismo nombre a las que se les agregan las letras <code>x</code> e <code>y</code> para distinguirlas. Luego habría que usar la función <code>if_else()</code> para rellenar las filas que tienen casos perdidos con el posible valor de la segunda columna:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tablas_unidas</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">left_join</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla_1</span><span style="color:#908caa">,</span> 
-</span></span><span style="display:flex;"><span>                           <span style="color:#ea9a97">tabla_2</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>                           <span style="color:#ea9a97">by</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;ciudad&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tablas_unidas</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">tablas_unidas</span> <span class="o">&lt;-</span> <span class="nf">left_join</span><span class="p">(</span><span class="n">tabla_1</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                           <span class="n">tabla_2</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                           <span class="n">by</span> <span class="o">=</span> <span class="s">&#34;ciudad&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">tablas_unidas</span>
 </span></span></code></pre></div><pre><code># A tibble: 4 × 4
   ciudad     poblacion temperatura.x temperatura.y
   &lt;chr&gt;          &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;
@@ -389,11 +389,11 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
 3 Valparaíso   1054253          NA            17.5
 4 Arica         221364          19.2          19.2
 </code></pre>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># rellenar usando ifelse()</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tablas_unidas</span> <span style="color:#908caa">|&gt;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">temperatura.rellenada</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">if_else</span><span style="color:#908caa">(</span><span style="color:#ea9a97">is.na</span><span style="color:#908caa">(</span><span style="color:#ea9a97">temperatura.x</span><span style="color:#908caa">),</span> 
-</span></span><span style="display:flex;"><span>                                         <span style="color:#ea9a97">temperatura.y</span><span style="color:#908caa">,</span> 
-</span></span><span style="display:flex;"><span>                                         <span style="color:#ea9a97">temperatura.x</span><span style="color:#908caa">))</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># rellenar usando ifelse()</span>
+</span></span><span class="line"><span class="cl"><span class="n">tablas_unidas</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">temperatura.rellenada</span> <span class="o">=</span> <span class="nf">if_else</span><span class="p">(</span><span class="nf">is.na</span><span class="p">(</span><span class="n">temperatura.x</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">                                         <span class="n">temperatura.y</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                         <span class="n">temperatura.x</span><span class="p">))</span>
 </span></span></code></pre></div><pre><code># A tibble: 4 × 5
   ciudad     poblacion temperatura.x temperatura.y temperatura.rellenada
   &lt;chr&gt;          &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;                 &lt;dbl&gt;
@@ -403,9 +403,9 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
 4 Arica         221364          19.2          19.2                  19.2
 </code></pre>
 <p>Una segunda solución se lograría usando la función de {dplyr} especializada para estos casos: <code>coalesce()</code>, a la cual le entregas dos o más columnas, y utiliza el primer dato no perdido entre ellas para generar la nueva columna. En otras palabras, te permite unir varias columnas en una sola, cuando estas columnas pueden tener un mismo dato pero no tiene certeza en cuál de las columnas se encuentra.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#6e6a86"># rellenar usando coalesce()</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">tablas_unidas</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">temperatura2</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">coalesce</span><span style="color:#908caa">(</span><span style="color:#ea9a97">temperatura.x</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">temperatura.y</span><span style="color:#908caa">))</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># rellenar usando coalesce()</span>
+</span></span><span class="line"><span class="cl"><span class="n">tablas_unidas</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">temperatura2</span> <span class="o">=</span> <span class="nf">coalesce</span><span class="p">(</span><span class="n">temperatura.x</span><span class="p">,</span> <span class="n">temperatura.y</span><span class="p">))</span>
 </span></span></code></pre></div><pre><code># A tibble: 4 × 5
   ciudad     poblacion temperatura.x temperatura.y temperatura2
   &lt;chr&gt;          &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;
@@ -415,10 +415,10 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
 4 Arica         221364          19.2          19.2         19.2
 </code></pre>
 <p>La tercera forma me resulta la más conveniente. La función <code>rows_update()</code> funciona casi igual que <code>left_join()</code>, pero la unión entre ambas tablas se realiza <em>encima</em> de la primera tabla, dado que se asume que ambas tablas comparten una <em>o varias</em> columnas con datos, y que solamente queremos rellenar la primera tabla con los datos de la segunda tabla cuando estos estén ausentes en la primera.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">tabla_1</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">rows_update</span><span style="color:#908caa">(</span><span style="color:#ea9a97">tabla_2</span><span style="color:#908caa">,</span> 
-</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">by</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;ciudad&#34;</span><span style="color:#908caa">,</span> 
-</span></span><span style="display:flex;"><span>              <span style="color:#ea9a97">unmatched</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;ignore&#34;</span><span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">tabla_1</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">rows_update</span><span class="p">(</span><span class="n">tabla_2</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">              <span class="n">by</span> <span class="o">=</span> <span class="s">&#34;ciudad&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">              <span class="n">unmatched</span> <span class="o">=</span> <span class="s">&#34;ignore&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><pre><code># A tibble: 4 × 3
   ciudad     poblacion temperatura
   &lt;chr&gt;          &lt;dbl&gt;       &lt;dbl&gt;
@@ -445,12 +445,12 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="https://bastianoleah.netlify.app/blog/tutorial_shinymanager/">&larr; Protege el acceso a tus aplicaciones Shiny con contraseña</a>
+    href="http://localhost:4512/blog/tutorial_shinymanager/">&larr; Protege el acceso a tus aplicaciones Shiny con contraseña</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="https://bastianoleah.netlify.app/blog/2025-02-12/">Cargar archivos csv más rápido en R con Arrow &rarr;</a>
+    href="http://localhost:4512/blog/2025-02-12/">Cargar archivos csv más rápido en R con Arrow &rarr;</a>
   
 </div>
 
@@ -494,17 +494,17 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/dplyr">dplyr</a>  <a href="https://bastianoleah.netlify.app/tags/limpieza-de-datos">limpieza de datos</a>  <a href="https://bastianoleah.netlify.app/tags/datos-perdidos">datos perdidos</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4512/tags/dplyr">dplyr</a>  <a href="http://localhost:4512/tags/limpieza-de-datos">limpieza de datos</a>  <a href="http://localhost:4512/tags/datos-perdidos">datos perdidos</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/estadisticos_descriptivos/">Calcula estadísticos descriptivos básicos en R</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/excel_unir_hojas/">Cargar y unir datos de múltiples hojas de Excel con R</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/r_introduccion/tidyr_pivotar/">Transformación de datos entre formato _ancho_ y _largo_ con {tidyr}</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/estadisticos_descriptivos/">Calcula estadísticos descriptivos básicos en R</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/waldo/">Encuentra diferencias entre objetos de R con {waldo}</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/r_introduccion/tidyr_pivotar/">Transformación de datos entre formato _ancho_ y _largo_ con {tidyr}</a></dd>
     
   </dl>
 </details>
@@ -523,7 +523,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
   <h1 class="f3">Blog</h1>
   <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
 <a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
-<a href="/tags/">temas</a>.</p>
+<a href="../../tags/">temas</a>.</p>
   
 
    
@@ -546,7 +546,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/chile/">Chile</a></span>
+      href="http://localhost:4512/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -561,7 +561,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/datos/">Datos</a></span>
+      href="http://localhost:4512/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -576,7 +576,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/consejos/">Consejos</a></span>
+      href="http://localhost:4512/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -591,7 +591,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:4512/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -606,7 +606,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:4512/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -621,7 +621,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:4512/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -636,7 +636,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/blog/">Blog</a></span>
+      href="http://localhost:4512/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -651,7 +651,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/shiny/">Shiny</a></span>
+      href="http://localhost:4512/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -666,7 +666,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/apps/">Apps</a></span>
+      href="http://localhost:4512/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -681,7 +681,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:4512/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -696,7 +696,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:4512/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -711,7 +711,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:4512/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -726,7 +726,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/mapas/">Mapas</a></span>
+      href="http://localhost:4512/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -741,7 +741,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:4512/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -756,7 +756,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/quarto/">Quarto</a></span>
+      href="http://localhost:4512/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -771,7 +771,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:4512/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -786,7 +786,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:4512/tags/ciencias-sociales/">Ciencias sociales</a></span>
   </span>
  
   
@@ -801,7 +801,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:4512/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -816,7 +816,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:4512/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -831,10 +831,10 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n/">Optimización</a></span>
+      href="http://localhost:4512/tags/automatizaci%C3%B3n/">Automatización</a></span>
   </span>
 
-<a href="/tags/" style="margin-left: 3px;">y más!</a>
+<a href="../../tags/" style="margin-left: 3px;">y más!</a>
 </div>
 </div>
   
@@ -843,6 +843,7 @@ library(dplyr) |&gt; suppressPackageStartupMessages() tabla_1 &lt;- tibble(ciuda
    
 
 </div>
+
   
   
   
@@ -1026,7 +1027,7 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" 
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-envelope fa-lg fa-fw"></i>
     </a>
@@ -1037,19 +1038,19 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
     
     <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
       
-      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
       
       <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
-      <a class="dib pv1 ph2 link" href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
       
-      <a class="dib pv1 ph2 link" href="/tags/" title="Temas">Temas</a>
+      <a class="dib pv1 ph2 link" href="../../tags/" title="Temas">Temas</a>
       
-      <a class="dib pv1 ph2 link" href="/clases/" title="Clases">Clases</a>
+      <a class="dib pv1 ph2 link" href="../../clases/" title="Clases">Clases</a>
       
-      <a class="dib pv1 ph2 link" href="/code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
+      <a class="dib pv1 ph2 link" href="../../code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
       
-      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      <a class="dib pv1 ph2 link" href="../../license/" title="Bastián Olea: Licencia">Licencia</a>
       
     </div>
   </nav>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4512&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="generator" content="Hugo 0.136.5">
+<meta name="generator" content="Hugo 0.152.2">
 <title>Crear y conectarse a una base de datos en R | Bastián Olea</title>
 
 
@@ -31,16 +31,16 @@
 <meta property="og:title" content="Crear y conectarse a una base de datos en R | Bastián Olea">
 <meta property="og:description" content="Coloquialmente se usa el término _base de datos_ para referirse a datos que están en Excel. Pero en realidad una base de datos es algo distinto: un sistema de almacenamiento y procesamiento de datos que puede contener múltiples tablas, alojado en un computador, servidor o en la nube, que puede entregar datos de forma rápida y eficiente de acuerdo a las solicitudes que se le hagan. En este post veremos cómo crear una base de datos **gratuita**, cómo conectarnos a ella desde R, a leer y escribir tablas, y procesar datos desde la base de datos remota." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="https://bastianoleah.netlify.app/blog/db_supabase/" />
+<meta property="og:url" content="http://localhost:4512/blog/db_supabase/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="https://bastianoleah.netlify.app/blog/db_supabase/featured.png" >
+        <meta property="og:image" content="http://localhost:4512/blog/db_supabase/featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="https://bastianoleah.netlify.app/blog/db_supabase/featured.png" >
+        <meta name="twitter:image" content="http://localhost:4512/blog/db_supabase/featured.png" >
     
     
   
@@ -49,7 +49,7 @@
   <meta itemprop="datePublished" content="2025-11-06T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-11-06T00:00:00+00:00">
   <meta itemprop="wordCount" content="2212">
-  <meta itemprop="image" content="https://bastianoleah.netlify.app/blog/db_supabase/featured.png">
+  <meta itemprop="image" content="http://localhost:4512/blog/db_supabase/featured.png">
   <meta itemprop="keywords" content="Datos,Optimización,Dplyr">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -57,29 +57,29 @@
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="/style.main.min.21df494c84c5dfe9475313852cebf248784a129e86d7fa40fc5d7b4e5fb2232a.css" integrity="sha256-Id9JTITF3&#43;lHUxOFLOvySHhKEp6G1/pA/F17Tl&#43;yIyo=" media="screen">
+  <link rel="stylesheet" href="../../style.main.min.7887be321ed5334c878ceffe54c6681c0cc23ed59f4c21d854aa4b609d217cc7.css" integrity="sha256-eIe&#43;Mh7VM0yHjO/&#43;VMZoHAzCPtWfTCHYVKpLYJ0hfMc=" media="screen">
   
   
-  <script src="/panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
   
   
-  <script src="/main.min.26a7606c1bee1310cdae7196cfade9ba0a2a95bff0c4f9cc2156609ec0d0326a.js" type="text/javascript"></script>
+  <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
   
-  <link rel="stylesheet" href="/css/syntax.css">
+  <link rel="stylesheet" href="../../css/syntax.css">
 </head>
 <body>
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="https://bastianoleah.netlify.app/" title="Home">
-      <img src="/img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4512/" title="Home">
+      <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 active" href="/blog/" title="Bastián Olea: Blog de R">Blog</a>
+      <a class="link f6 f5-l dib pv1 ph2 active" href="../../blog/" title="Bastián Olea: Blog de R">Blog</a>
       
         
         
@@ -94,7 +94,7 @@
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../categories/tutoriales/" title="Tutoriales">Tutoriales</a>
       
         
         
@@ -109,12 +109,12 @@
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
       
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="/about/" title="Bastián Olea: Sobre mi">Yo</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../about/" title="Bastián Olea: Sobre mi">Yo</a>
       
       
       
@@ -277,7 +277,7 @@
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" 
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-envelope fa-lg fa-fw"></i>
     </a>
@@ -306,7 +306,7 @@
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/datos"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:4512/tags/datos"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -315,7 +315,7 @@
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            datos</a>  <a href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n"
+            datos</a>  <a href="http://localhost:4512/tags/optimizaci%C3%B3n"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -324,7 +324,7 @@
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            optimización</a>  <a href="https://bastianoleah.netlify.app/tags/dplyr"
+            optimización</a>  <a href="http://localhost:4512/tags/dplyr"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -463,9 +463,9 @@
   
 </a>
 <p>Necesitamos los parámetros <code>host</code>, <code>port</code>, <code>database</code> y <code>user</code>. Ahora iremos a R para introducirlos y conectarnos.</p>
-<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+<div style="padding: 14px; background-color:#493365; color:#E9DDEE; border-radius:6px;
 margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
-font-size:90%;">
+font-size: 90%;">
 
 <strong>Importante:</strong> si quieres usar la base de datos desde aplicaciones Shiny conectadas a Shinyapps.io, tienes que elegir en <em>Method</em> la opción <em>Transaction Pooler</em> para que tu base de datos funcione por IPv4.
 
@@ -487,17 +487,17 @@ font-size:90%;">
     </svg></a>
 </h3>
 <p>Para interactuar con bases de datos, necesitamos el paquete <code>{DBI}</code>, que gestiona las conexiones con bases de datos, y en nuestro caso el paquete <code>{RPostgres}</code>, que es el motor para trabajar con bases de datos Postgres.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;DBI&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;RPostgres&#34;</span><span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">install.packages</span><span class="p">(</span><span class="s">&#34;DBI&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">install.packages</span><span class="p">(</span><span class="s">&#34;RPostgres&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><p>Para conectarnos a una base de datos desde R usamos la función <code>dbConnect()</code>. Dentro de esta función explicitamos el <em>driver</em> de la base de datos (en este caso <code>Postgres()</code>), y los parámetros de conexión que obtuvimos en Supabase: <code>dbname</code>, <code>host</code>, <code>port</code>, <code>user</code> y <code>password</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">db_con</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">DBI</span><span style="color:#908caa">::</span><span style="color:#ea9a97">dbConnect</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">RPostgres</span><span style="color:#908caa">::</span><span style="color:#ea9a97">Postgres</span><span style="color:#908caa">(),</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">dbname</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;postgres&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">host</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;host&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">port</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">5432</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">user</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;postgres&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">password</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;contraseña&#34;</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">db_con</span> <span class="o">&lt;-</span> <span class="n">DBI</span><span class="o">::</span><span class="nf">dbConnect</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">RPostgres</span><span class="o">::</span><span class="nf">Postgres</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">dbname</span> <span class="o">=</span> <span class="s">&#34;postgres&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">host</span> <span class="o">=</span> <span class="s">&#34;host&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">port</span> <span class="o">=</span> <span class="m">5432</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">user</span> <span class="o">=</span> <span class="s">&#34;postgres&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">password</span> <span class="o">=</span> <span class="s">&#34;contraseña&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
 </span></span></code></pre></div><p>⚠️ ¡Pero espera! <strong>No es seguro escribir credenciales privadas en un script.</strong> Así que vamos a seguir las <em>buenas prácticas</em> y vamos a <strong>guardar las credenciales de forma segura</strong>.</p>
 <p>Una opción es no escribir la contraseña y en su lugar usar <code>rstudioapi::askForPassword()</code> para ingresar la contraseña manualmente pero de forma segura. Sin embargo, no queremos estar escribiendo la contraseña cada vez que necesitemos los datos!</p>
 
@@ -512,7 +512,7 @@ font-size:90%;">
 </h3>
 <p>Vamos a crear un script donde podamos guardar <strong>variables de entorno</strong>, que son variables que R puede leer pero que <strong>no quedan en el código</strong>, y que además <strong>siempre se cargan cuando abrimos el proyecto</strong>. Es decir, quedan disponibles para poder usarlas, pero estarán ocultas. Así podemos compartir y respaldar nuestro código sin exponer información sensible, y podemos conectarnos a la base de datos sin tener que volver a introducir las credenciales.</p>
 <p><strong>Creamos un script de entorno</strong> llamado <code>.Renviron</code> en la raíz de nuestro proyecto ejecutando una función que lo hace por nosotres:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">usethis</span><span style="color:#908caa">::</span><span style="color:#ea9a97">edit_r_environ</span><span style="color:#908caa">(</span><span style="color:#ea9a97">scope</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;project&#34;</span><span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">usethis</span><span class="o">::</span><span class="nf">edit_r_environ</span><span class="p">(</span><span class="n">scope</span> <span class="o">=</span> <span class="s">&#34;project&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><p>En el script que se abre <strong>guardamos las credenciales</strong> de la siguiente manera:</p>
 <pre><code>db_host=db.blablablabla.supabase.co
 db_port=5432
@@ -520,12 +520,12 @@ db_user=postgres
 db_pass=clavebasededatosprueba
 </code></pre>
 <p>Una vez guardadas las credenciales, <strong>reiniciamos la sesión de R</strong> para que se lean las variables de entorno (siempre se leerán al iniciar R), o podemos ejecutar <code>readRenviron(&quot;.Renviron&quot;)</code> para cargarlas.</p>
-<div style="padding:18px; background-color:#493365; color:#E9DDEE; border-radius:6px;
+<div style="padding: 14px; background-color:#493365; color:#E9DDEE; border-radius:6px;
 margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
-font-size:90%;">
+font-size: 90%;">
 
 <strong>⚠️ Importante:</strong> Si usas 
-<a href="/tags/git/">git</a>, no olvides agregar el archivo <code>.Renviron</code> a tu <code>.gitignore</code> para evitar subir a internet credenciales privadas!
+<a href="../../tags/git/">git</a>, no olvides agregar el archivo <code>.Renviron</code> a tu <code>.gitignore</code> para evitar subir a internet credenciales privadas!
 
 </div>
 
@@ -540,19 +540,19 @@ font-size:90%;">
     </svg></a>
 </h3>
 <p>Procedemos a hacer la conexión a la base de datos de forma segura, usando <code>Sys.getenv()</code> para obtener las variables de entorno que guardamos en <code>.Renviron</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">DBI</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">RPostgres</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">db_con</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">DBI</span><span style="color:#908caa">::</span><span style="color:#ea9a97">dbConnect</span><span style="color:#908caa">(</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">RPostgres</span><span style="color:#908caa">::</span><span style="color:#ea9a97">Postgres</span><span style="color:#908caa">(),</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">dbname</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;postgres&#34;</span><span style="color:#908caa">,</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">host</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sys.getenv</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;db_host&#34;</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">port</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sys.getenv</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;db_port&#34;</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">user</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sys.getenv</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;db_user&#34;</span><span style="color:#908caa">),</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">password</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">Sys.getenv</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;db_pass&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span><span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">DBI</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">RPostgres</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">db_con</span> <span class="o">&lt;-</span> <span class="n">DBI</span><span class="o">::</span><span class="nf">dbConnect</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">RPostgres</span><span class="o">::</span><span class="nf">Postgres</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">dbname</span> <span class="o">=</span> <span class="s">&#34;postgres&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="n">host</span> <span class="o">=</span> <span class="nf">Sys.getenv</span><span class="p">(</span><span class="s">&#34;db_host&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">port</span> <span class="o">=</span> <span class="nf">Sys.getenv</span><span class="p">(</span><span class="s">&#34;db_port&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">user</span> <span class="o">=</span> <span class="nf">Sys.getenv</span><span class="p">(</span><span class="s">&#34;db_user&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">password</span> <span class="o">=</span> <span class="nf">Sys.getenv</span><span class="p">(</span><span class="s">&#34;db_pass&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
 </span></span></code></pre></div><p>Al conectarnos creamos un objeto que representa nuestra conexión a la base de datos.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">db_con</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">db_con</span>
 </span></span></code></pre></div><pre><code>&lt;PqConnection&gt; postgres@db.ybqnpazmjvictxbevqqk.supabase.co:5432
 </code></pre>
 <p>Usaremos este objeto para interactuar con la base de datos.</p>
@@ -567,15 +567,15 @@ font-size:90%;">
     </svg></a>
 </h2>
 <p>Con la función <code>dbWriteTable()</code> creamos en la base de datos una tabla nueva a partir de un dataframe; por ejemplo, usando el conjunto de datos <code>iris</code> que viene por defecto en R.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">DBI</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#6e6a86"># crear tabla</span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">dbWriteTable</span><span style="color:#908caa">(</span><span style="color:#ea9a97">conn</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">db_con</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># conexión a la base</span>
-</span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">name</span> <span style="color:#908caa">=</span> <span style="color:#f6c177">&#34;prueba&#34;</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># nombre de la tabla a crear</span>
-</span></span><span style="display:flex;"><span>             <span style="color:#ea9a97">iris</span> <span style="color:#6e6a86"># datos a escribir</span>
-</span></span><span style="display:flex;"><span>             <span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">DBI</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># crear tabla</span>
+</span></span><span class="line"><span class="cl"><span class="nf">dbWriteTable</span><span class="p">(</span><span class="n">conn</span> <span class="o">=</span> <span class="n">db_con</span><span class="p">,</span> <span class="c1"># conexión a la base</span>
+</span></span><span class="line"><span class="cl">             <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;prueba&#34;</span><span class="p">,</span> <span class="c1"># nombre de la tabla a crear</span>
+</span></span><span class="line"><span class="cl">             <span class="n">iris</span> <span class="c1"># datos a escribir</span>
+</span></span><span class="line"><span class="cl">             <span class="p">)</span>
 </span></span></code></pre></div><p>Confirmamos que la tabla se subió a la base de datos consultándole a la base los <strong>nombres de las tablas existentes</strong>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">dbListTables</span><span style="color:#908caa">(</span><span style="color:#ea9a97">db_con</span><span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">dbListTables</span><span class="p">(</span><span class="n">db_con</span><span class="p">)</span>
 </span></span></code></pre></div><pre><code>[1] &quot;prueba&quot;                  &quot;pg_stat_statements&quot;     
 [3] &quot;pg_stat_statements_info&quot;
 </code></pre>
@@ -597,11 +597,11 @@ font-size:90%;">
     </svg></a>
 </h2>
 <p>Podemos leer las tablas existentes en la base de datos con <code>dbReadTable()</code> tan solo indicando el nombre de la tabla:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_db</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">dbReadTable</span><span style="color:#908caa">(</span><span style="color:#ea9a97">db_con</span><span style="color:#908caa">,</span> <span style="color:#6e6a86"># conexión a la base</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#f6c177">&#34;prueba&#34;</span> <span style="color:#6e6a86"># nombre de la tabla a leer</span>
-</span></span><span style="display:flex;"><span>            <span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">head</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos_db</span><span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos_db</span> <span class="o">&lt;-</span> <span class="nf">dbReadTable</span><span class="p">(</span><span class="n">db_con</span><span class="p">,</span> <span class="c1"># conexión a la base</span>
+</span></span><span class="line"><span class="cl">            <span class="s">&#34;prueba&#34;</span> <span class="c1"># nombre de la tabla a leer</span>
+</span></span><span class="line"><span class="cl">            <span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">datos_db</span><span class="p">)</span>
 </span></span></code></pre></div><pre><code>  Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 1          5.1         3.5          1.4         0.2  setosa
 2          4.9         3.0          1.4         0.2  setosa
@@ -625,14 +625,14 @@ font-size:90%;">
 <a href="../../../tags/dplyr/">usando directamente <code>{dplyr}</code></a> para <strong>interactuar con la base de datos</strong>.</p>
 <p>Para ello 
 <a href="https://dbplyr.tidyverse.org" target="_blank" rel="noopener">instalamos <code>{dbplyr}</code></a>, paquete que traducirá el código de <code>{dplyr}</code> en SQL.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">install.packages</span><span style="color:#908caa">(</span><span style="color:#f6c177">&#34;dbplyr&#34;</span><span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">install.packages</span><span class="p">(</span><span class="s">&#34;dbplyr&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><p>Esta funcionalidad se carga automáticamente al cargar <code>{dplyr}</code>.</p>
 <p>Para <strong>obtener datos</strong> desde la base de datos, usamos <code>tbl()</code> con el objeto de conexión y el nombre de la tabla, y recibiremos los datos en el formato <code>tibble</code> de <code>{dplyr}</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">library</span><span style="color:#908caa">(</span><span style="color:#ea9a97">dplyr</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos_db</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">tbl</span><span style="color:#908caa">(</span><span style="color:#ea9a97">db_con</span><span style="color:#908caa">,</span> <span style="color:#f6c177">&#34;prueba&#34;</span><span style="color:#908caa">)</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#ea9a97">datos_db</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">datos_db</span> <span class="o">&lt;-</span> <span class="nf">tbl</span><span class="p">(</span><span class="n">db_con</span><span class="p">,</span> <span class="s">&#34;prueba&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">datos_db</span>
 </span></span></code></pre></div><pre><code># Source:   table&lt;&quot;prueba&quot;&gt; [?? x 5]
 # Database: postgres  [postgres@db.ybqnpazmjvictxbevqqk.supabase.co:5432/postgres]
    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
@@ -650,17 +650,17 @@ font-size:90%;">
 # ℹ more rows
 </code></pre>
 <p>Esta tabla generada desde la base de datos <strong>no es un dataframe normal</strong> 😱 sino que es una <strong>conexión abierta con la base de datos</strong>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">class</span><span style="color:#908caa">(</span><span style="color:#ea9a97">datos_db</span><span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">class</span><span class="p">(</span><span class="n">datos_db</span><span class="p">)</span>
 </span></span></code></pre></div><pre><code>[1] &quot;tbl_PqConnection&quot; &quot;tbl_dbi&quot;          &quot;tbl_sql&quot;          &quot;tbl_lazy&quot;        
 [5] &quot;tbl&quot;             
 </code></pre>
 <p>Esto nos permite seguir pidiéndole instrucciones que se procesarán en la base, no en nuestra sesión local de R. Esto es lo que nos permite realizar <strong>cálculos con datos de grandes volúmenes</strong> o <strong>manejar bases de datos gigantes que no caben en la memoria de tu computador</strong> 😲</p>
 <p>Usemos la tabla obtenida desde la base de datos para hacer un filtro y calcular un promedio:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">calculo_db</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datos_db</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;setosa&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarise</span><span style="color:#908caa">(</span><span style="color:#ea9a97">mean_sepal_length</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Length</span><span style="color:#908caa">))</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">calculo_db</span> <span class="o">&lt;-</span> <span class="n">datos_db</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">Species</span> <span class="o">==</span> <span class="s">&#34;setosa&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarise</span><span class="p">(</span><span class="n">mean_sepal_length</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Sepal.Length</span><span class="p">))</span>
 </span></span></code></pre></div><p>Estas operaciones se realizan remotamente en la base, y con una evaluación <em>perezosa</em> 🦥 (<em>lazy evaluation</em>); es decir, solamente se calcula el resultado cuando es estrictamente necesario. Entonces, recién al solicitar el resultado <strong>la base de datos va a realizar el cálculo requerido</strong>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">calculo_db</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">calculo_db</span>
 </span></span></code></pre></div><pre><code>Warning: Missing values are always removed in SQL aggregation functions.
 Use `na.rm = TRUE` to silence this warning
 This warning is displayed once every 8 hours.
@@ -672,7 +672,7 @@ This warning is displayed once every 8 hours.
 1              5.01
 </code></pre>
 <p>Podemos confirmar que el cálculo se hizo en la base de datos usando <code>show_query()</code> para ver el código <code>SQL</code> que se usó para hacer el cálculo:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">calculo_db</span> <span style="color:#908caa">|&gt;</span> <span style="color:#ea9a97">show_query</span><span style="color:#908caa">()</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">calculo_db</span> <span class="o">|&gt;</span> <span class="nf">show_query</span><span class="p">()</span>
 </span></span></code></pre></div><pre><code>&lt;SQL&gt;
 SELECT AVG(&quot;Sepal.Length&quot;) AS &quot;mean_sepal_length&quot;
 FROM (
@@ -683,26 +683,26 @@ FROM (
 </code></pre>
 <p>🪄✨ Magia! Es como si hubiéramos aprendido SQL: combinamos el poder de SQL con la conveniencia de R.</p>
 <p>Si necesitamos <em>traer</em> los datos desde la base a tu computador, los <strong>cargamos en la memoria</strong> con la función <code>collect()</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_df</span> <span style="color:#908caa">&lt;-</span> <span style="color:#ea9a97">datos_db</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">filter</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span> <span style="color:#908caa">==</span> <span style="color:#f6c177">&#34;setosa&#34;</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">collect</span><span style="color:#908caa">()</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos_df</span> <span class="o">&lt;-</span> <span class="n">datos_db</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">Species</span> <span class="o">==</span> <span class="s">&#34;setosa&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">collect</span><span class="p">()</span>
 </span></span></code></pre></div><p>Ahora sí que sí el objeto <code>datos_df</code> se encuentra cargado en tu sesión local de R como un dataframe normal.</p>
 <p>Como los cálculos que hagamos sobre los datos se <strong>traducen</strong> desde R a SQL y luego se nos entregan, un uso importante de <code>collect()</code> es para anteponerlo a <strong>operaciones que no tienen traducción a SQL</strong>.</p>
 <p>Por ejemplo, me consta que las funciones de <code>{forcats}</code> no se traducen a SQL:</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_db</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarise</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Width</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Width</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">forcats</span><span style="color:#908caa">::</span><span style="color:#ea9a97">fct_reorder</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">Sepal.Width</span><span style="color:#908caa">))</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos_db</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">group_by</span><span class="p">(</span><span class="n">Species</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarise</span><span class="p">(</span><span class="n">Sepal.Width</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Sepal.Width</span><span class="p">))</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">Species</span> <span class="o">=</span> <span class="n">forcats</span><span class="o">::</span><span class="nf">fct_reorder</span><span class="p">(</span><span class="n">Species</span><span class="p">,</span> <span class="n">Sepal.Width</span><span class="p">))</span>
 </span></span></code></pre></div><pre><code>Error in `forcats::fct_reorder()`:
 ! No known SQL translation
 </code></pre>
 <p>En este caso, anteponemos <code>collect()</code> para pasar de SQL a R en medio del proceso y listo.</p>
-<div class="highlight"><pre tabindex="0" style="color:#e0def4;background-color:#232136;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-r" data-lang="r"><span style="display:flex;"><span><span style="color:#ea9a97">datos_db</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">group_by</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span><span style="color:#908caa">)</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">summarise</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Width</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">mean</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Sepal.Width</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">collect</span><span style="color:#908caa">()</span> <span style="color:#908caa">|&gt;</span> <span style="color:#6e6a86"># cargar a la memoria</span>
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">mutate</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span> <span style="color:#908caa">=</span> <span style="color:#ea9a97">forcats</span><span style="color:#908caa">::</span><span style="color:#ea9a97">fct_reorder</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span><span style="color:#908caa">,</span> <span style="color:#ea9a97">Sepal.Width</span><span style="color:#908caa">))</span> <span style="color:#908caa">|&gt;</span> 
-</span></span><span style="display:flex;"><span>  <span style="color:#ea9a97">arrange</span><span style="color:#908caa">(</span><span style="color:#ea9a97">Species</span><span style="color:#908caa">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos_db</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">group_by</span><span class="p">(</span><span class="n">Species</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarise</span><span class="p">(</span><span class="n">Sepal.Width</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">Sepal.Width</span><span class="p">))</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">collect</span><span class="p">()</span> <span class="o">|&gt;</span> <span class="c1"># cargar a la memoria</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">Species</span> <span class="o">=</span> <span class="n">forcats</span><span class="o">::</span><span class="nf">fct_reorder</span><span class="p">(</span><span class="n">Species</span><span class="p">,</span> <span class="n">Sepal.Width</span><span class="p">))</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">arrange</span><span class="p">(</span><span class="n">Species</span><span class="p">)</span>
 </span></span></code></pre></div><pre><code># A tibble: 3 × 2
   Species    Sepal.Width
   &lt;fct&gt;            &lt;dbl&gt;
@@ -788,12 +788,12 @@ FROM (
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="https://bastianoleah.netlify.app/blog/ggiraph/">&larr; Convierte gráficos {ggplot2} en visualizaciones interactivas con {ggiraph}</a>
+    href="http://localhost:4512/blog/ggiraph/">&larr; Convierte gráficos {ggplot2} en visualizaciones interactivas con {ggiraph}</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="https://bastianoleah.netlify.app/blog/shiny_optimizar/">Optimiza la velocidad de tus aplicaciones Shiny con bindCache() &rarr;</a>
+    href="http://localhost:4512/blog/shiny_optimizar/">Optimiza la velocidad de tus aplicaciones Shiny con bindCache() &rarr;</a>
   
 </div>
 
@@ -835,24 +835,24 @@ FROM (
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Categorías:</dt>
-    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/categories/tutoriales">Tutoriales</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4512/categories/tutoriales">Tutoriales</a> </dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="https://bastianoleah.netlify.app/tags/datos">datos</a>  <a href="https://bastianoleah.netlify.app/tags/optimizaci%C3%B3n">optimización</a>  <a href="https://bastianoleah.netlify.app/tags/dplyr">dplyr</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4512/tags/datos">datos</a>  <a href="http://localhost:4512/tags/optimizaci%C3%B3n">optimización</a>  <a href="http://localhost:4512/tags/dplyr">dplyr</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="/blog/crear_dataframes/">Crear tablas de datos manualmente</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/excel_unir_hojas/">Cargar y unir datos de múltiples hojas de Excel con R</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/estadisticos_descriptivos/">Calcula estadísticos descriptivos básicos en R</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/crear_dataframes/">Crear tablas de datos manualmente en R</a></dd>
     
-    <dd class="fw5 ml0"><a href="/blog/r_introduccion/tidyr_pivotar/">Transformación de datos entre formato _ancho_ y _largo_ con {tidyr}</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/estadisticos_descriptivos/">Calcula estadísticos descriptivos básicos en R</a></dd>
     
   </dl>
 </details>
@@ -871,7 +871,7 @@ FROM (
   <h1 class="f3">Blog</h1>
   <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
 <a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
-<a href="/tags/">temas</a>.</p>
+<a href="../../tags/">temas</a>.</p>
   
 
    
@@ -894,7 +894,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/chile/">Chile</a></span>
+      href="http://localhost:4512/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -909,7 +909,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/datos/">Datos</a></span>
+      href="http://localhost:4512/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -924,7 +924,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/consejos/">Consejos</a></span>
+      href="http://localhost:4512/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -939,7 +939,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:4512/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -954,7 +954,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:4512/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -969,7 +969,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:4512/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -984,7 +984,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/apps/">Apps</a></span>
+      href="http://localhost:4512/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -999,7 +999,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/shiny/">Shiny</a></span>
+      href="http://localhost:4512/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -1014,7 +1014,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/blog/">Blog</a></span>
+      href="http://localhost:4512/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -1029,7 +1029,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:4512/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -1044,7 +1044,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:4512/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -1059,7 +1059,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:4512/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -1074,7 +1074,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/mapas/">Mapas</a></span>
+      href="http://localhost:4512/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -1089,7 +1089,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/quarto/">Quarto</a></span>
+      href="http://localhost:4512/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -1104,7 +1104,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:4512/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -1119,7 +1119,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:4512/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -1134,7 +1134,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:4512/tags/ciencias-sociales/">Ciencias sociales</a></span>
   </span>
  
   
@@ -1149,7 +1149,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:4512/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -1164,7 +1164,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:4512/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -1179,10 +1179,10 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="https://bastianoleah.netlify.app/tags/loops/">Loops</a></span>
+      href="http://localhost:4512/tags/automatizaci%C3%B3n/">Automatización</a></span>
   </span>
 
-<a href="/tags/" style="margin-left: 3px;">y más!</a>
+<a href="../../tags/" style="margin-left: 3px;">y más!</a>
 </div>
 </div>
   
@@ -1191,10 +1191,9 @@ FROM (
    
 
 </div>
+
   
   <div id="PageTableOfContents", style="margin-top: 24px; position: sticky; top: 108px;">
-      
-        
         <div class="blog-info ph4 pb4 pb0-l">
         <h3 style="margin-bottom: 12px;">Índice:</h3>
           <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: -22px; margin-bottom: 32px;">
@@ -1223,8 +1222,6 @@ FROM (
 </nav>
           </div>
         </div>
-      
-  
     </div>
   
   
@@ -1408,7 +1405,7 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="/contacto/" title="envelope" 
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-envelope fa-lg fa-fw"></i>
     </a>
@@ -1419,19 +1416,19 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
     
     <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
       
-      <a class="dib pv1 ph2 link" href="/about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
       
       <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
-      <a class="dib pv1 ph2 link" href="/contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
       
-      <a class="dib pv1 ph2 link" href="/tags/" title="Temas">Temas</a>
+      <a class="dib pv1 ph2 link" href="../../tags/" title="Temas">Temas</a>
       
-      <a class="dib pv1 ph2 link" href="/clases/" title="Clases">Clases</a>
+      <a class="dib pv1 ph2 link" href="../../clases/" title="Clases">Clases</a>
       
-      <a class="dib pv1 ph2 link" href="/code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
+      <a class="dib pv1 ph2 link" href="../../code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
       
-      <a class="dib pv1 ph2 link" href="/license/" title="Bastián Olea: Licencia">Licencia</a>
+      <a class="dib pv1 ph2 link" href="../../license/" title="Bastián Olea: Licencia">Licencia</a>
       
     </div>
   </nav>

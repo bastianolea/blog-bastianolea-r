@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4512&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.152.2">
+<title>Cargar y unir datos de múltiples hojas de Excel con R | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Las hojas de Excel pueden ser cómodas para organizar información, pero no mucho para procesarla o analizarla. Por lo mismo, una de las operaciones iniciales de limpieza de datos suele ser unir datos que vienen repartidos en varias hojas de Excel. Veamos cómo se hace paso a paso. Usaremos el paquete `{readxl}` para leer los datos, `{dplyr}` para manipular y combinar las hojas, y `{purrr}` para realizar operaciones sobre todas las hojas de forma automática.">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="Cargar y unir datos de múltiples hojas de Excel con R | Bastián Olea">
+<meta property="og:description" content="Las hojas de Excel pueden ser cómodas para organizar información, pero no mucho para procesarla o analizarla. Por lo mismo, una de las operaciones iniciales de limpieza de datos suele ser unir datos que vienen repartidos en varias hojas de Excel. Veamos cómo se hace paso a paso. Usaremos el paquete `{readxl}` para leer los datos, `{dplyr}` para manipular y combinar las hojas, y `{purrr}` para realizar operaciones sobre todas las hojas de forma automática." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4512/blog/excel_unir_hojas/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4512/blog/sidebar-listing.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4512/blog/sidebar-listing.jpg" >
+    
+    
+  
+  <meta itemprop="name" content="Cargar y unir datos de múltiples hojas de Excel con R">
+  <meta itemprop="description" content="Las hojas de Excel pueden ser cómodas para organizar información, pero no mucho para procesarla o analizarla. Por lo mismo, una de las operaciones iniciales de limpieza de datos suele ser unir datos que vienen repartidos en varias hojas de Excel.
+En este tutorial vamos a ver cómo se hace paso a paso. Usaremos el paquete {readxl} para leer los datos, {dplyr} para manipular y combinar las hojas, y {purrr} para realizar operaciones sobre todas las hojas de forma automática.">
+  <meta itemprop="datePublished" content="2025-12-09T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-12-09T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2376">
+  <meta itemprop="keywords" content="Excel,Limpieza de datos,Datos">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="../../style.main.min.7887be321ed5334c878ceffe54c6681c0cc23ed59f4c21d854aa4b609d217cc7.css" integrity="sha256-eIe&#43;Mh7VM0yHjO/&#43;VMZoHAzCPtWfTCHYVKpLYJ0hfMc=" media="screen">
+  
+  
+  <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
+  
+  <link rel="stylesheet" href="../../css/syntax.css">
+</head>
+<body>
+      <div class="grid-container single-sidebar">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4512/" title="Home">
+      <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="../../blog/" title="Bastián Olea: Blog de R">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/aprende_r/" title="Aprende R">Aprende R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+
+                       
+ 
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 pr3-l">
+      <header class="post-header" style="margin-top:-30px;">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Cargar y unir datos de múltiples hojas de Excel con R</h1>
+        
+        
+        <p class="f7 db mv0 ttu">9/12/2025</p>
+        
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="http://localhost:4512/tags/excel"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            Excel</a>  <a href="http://localhost:4512/tags/limpieza-de-datos"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            limpieza de datos</a>  <a href="http://localhost:4512/tags/datos"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            datos</a> </dd></em>
+        </dl>
+         
+      
+        
+      
+      <div class="ph0 pt3">
+        
+
+<div style="margin-top:-24px;">
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+    
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; 
+  color: #EAD2FA; font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; 
+  margin-right: 1px; margin-top: 6px; margin-bottom: 0px;"
+  href="https://gist.github.com/bastianolea/5c896dab18924a9cc0346fd7570ee28b" target="_blank" rel="noopener"><i class="fab fa-github fa-lg fa-fw mr2"></i>Código</a>
+
+</div>
+
+      </div>
+      
+      
+    </header>
+      
+      
+    <section class="post-body pt5 pb4">
+        <p>Las hojas de Excel pueden ser cómodas para organizar información, pero no mucho para procesarla o analizarla. Por lo mismo, una de las operaciones iniciales de limpieza de datos suele ser <strong>unir datos que vienen repartidos en varias hojas de Excel</strong>.</p>
+<p>En este tutorial vamos a ver cómo se hace paso a paso. Usaremos el paquete <code>{readxl}</code> para leer los datos, <code>{dplyr}</code> para manipular y combinar las hojas, y <code>{purrr}</code> para realizar operaciones sobre todas las hojas de forma automática.</p>
+
+
+
+
+<h2 id="datos">Datos
+  <a href="#datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Como ejemplo, usaremos un archivo de Excel con datos falsos, que puedes descargar a continuación:</p>
+<p>
+
+
+
+<div class = "db pt1"
+style = "margin-bottom: 34px;">
+
+<a class = "btn-links mr2 ba dib"
+href = "/blog/excel_unir_hojas/datos_falsos.xlsx" target="_blank"
+style = "padding: 12px; padding-bottom: 8px; border-radius: 5px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #9069C0; margin-bottom: -12px;">
+<i class="fas fa-download fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
+Descargar datos falsos</a>
+
+</div>
+
+
+<details>
+  <summary>
+    Ver código para generar los datos falsos
+  </summary>
+  <p>
+    <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">purrr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">nombres_hojas</span> <span class="o">&lt;-</span> <span class="nf">paste</span><span class="p">(</span><span class="s">&#34;hoja&#34;</span><span class="p">,</span> <span class="m">1</span><span class="o">:</span><span class="m">20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># crear una lista con tablas de datos sintéticos</span>
+</span></span><span class="line"><span class="cl"><span class="n">datos_falsos</span> <span class="o">&lt;-</span> <span class="nf">map</span><span class="p">(</span> <span class="c1"># iterar por cada elemento</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">set_names</span><span class="p">(</span><span class="n">nombres_hojas</span><span class="p">),</span> <span class="c1"># poner nombre a cada elemento</span>
+</span></span><span class="line"><span class="cl">  <span class="o">~</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">n</span> <span class="o">=</span> <span class="nf">sample</span><span class="p">(</span><span class="m">5</span><span class="o">:</span><span class="m">30</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span> <span class="c1"># cantidad de filas al azar</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># datos al azar</span>
+</span></span><span class="line"><span class="cl">    <span class="n">datos</span> <span class="o">&lt;-</span> <span class="nf">tibble</span><span class="p">(</span><span class="n">variable_a</span>  <span class="o">=</span> <span class="nf">sample</span><span class="p">(</span><span class="kc">letters</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="bp">T</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">variable_b</span> <span class="o">=</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">variable_c</span> <span class="o">=</span> <span class="nf">rnorm</span><span class="p">(</span><span class="n">n</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># que una de las tablas sea distinta</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">if</span> <span class="p">(</span><span class="n">.x</span> <span class="o">==</span> <span class="s">&#34;hoja 13&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">datos</span> <span class="o">&lt;-</span> <span class="n">datos</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">        <span class="nf">mutate</span><span class="p">(</span><span class="n">variable_c</span> <span class="o">=</span> <span class="nf">sample</span><span class="p">(</span><span class="kc">letters</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">replace</span> <span class="o">=</span> <span class="bp">T</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span><span class="p">(</span><span class="n">datos</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># guardar archivo</span>
+</span></span><span class="line"><span class="cl"><span class="n">writexl</span><span class="o">::</span><span class="nf">write_xlsx</span><span class="p">(</span><span class="n">datos_falsos</span><span class="p">,</span> <span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">)</span>
+</span></span></code></pre></div>
+  </p>
+</details></p>
+<p>Se trata de un archivo con 20 hojas, y tres columnas con datos al azar. La planilla de Excel se ve más o menos así:</p>
+<a href="datos_falsos.png" target="_blank">
+
+  <img src="datos_falsos.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+
+
+
+
+<h2 id="cargar-datos-desde-una-hoja-de-excel">Cargar datos desde una hoja de Excel
+  <a href="#cargar-datos-desde-una-hoja-de-excel"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para cargar datos desde una hoja específica de un archivo Excel, usamos la función <code>read_excel()</code> del paquete <code>readxl</code>, definiendo la hoja en el argumento <code>sheet</code> (ya sea según su posición o su nombre).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">datos</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">datos</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 6 × 3
+  variable_a variable_b variable_c
+  &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;
+1 j              0.0841     -0.339
+2 z             -0.0351     -0.278
+3 k             -1.24        0.353
+4 p              1.32       -0.767
+5 f              1.06       -0.569
+6 x              1.27        0.750
+</code></pre>
+<p>Obtenemos sólo los datos de la hoja especificada. Esta es la base que nos permitirá cargar desde múltiples hojas.</p>
+
+
+
+
+<h2 id="unir-datos-desde-varias-hojas-de-excel-manualmente">Unir datos desde varias hojas de Excel manualmente
+  <a href="#unir-datos-desde-varias-hojas-de-excel-manualmente"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>La forma básica de unir los datos de varias hojas sería repetir la lectura de datos anterior, y luego unir los objetos resultantes con <code>bind_rows()</code> de <code>dplyr</code>.</p>
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <div style = "font-size: 90%;">
+    La función <code>bind_rows()</code> une varias tablas con las mismas columnas, apilándolas una debajo de la otra, como una torta 🍰
+    </div>
+  
+</div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># cargar hojas individualmente</span>
+</span></span><span class="line"><span class="cl"><span class="n">datos_1</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">datos_2</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">datos_3</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet</span> <span class="o">=</span> <span class="m">3</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># unir todas las hojas</span>
+</span></span><span class="line"><span class="cl"><span class="nf">bind_rows</span><span class="p">(</span><span class="n">datos_1</span><span class="p">,</span> <span class="n">datos_2</span><span class="p">,</span> <span class="n">datos_3</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 52 × 3
+   variable_a variable_b variable_c
+   &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;
+ 1 b              0.0980      0.605
+ 2 f             -1.56        0.815
+ 3 i              0.245       1.05 
+ 4 m              0.178       0.779
+ 5 x             -0.587       0.443
+ 6 l             -1.27        0.591
+ 7 y             -0.317      -0.276
+ 8 j              0.0841     -0.339
+ 9 z             -0.0351     -0.278
+10 k             -1.24        0.353
+# ℹ 42 more rows
+</code></pre>
+<p>Pero pronto nos damos cuenta de que esto <strong>no es sostenible</strong>: si tenemos 20 hojas, o 50, o 100, no podemos estar copiando y pegando el mismo código una y otra vez! Ni menos crear 100 objetos distintos para cada hoja!</p>
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <div style = "font-size: 90%;">
+    Cuando repitas código 3 veces, significa que lo correcto sería hacer una función o un loop
+    </div>
+  
+</div>
+<p>Necesitamos <strong>automatizar</strong> este código para aplicarlo a todas las hojas que queramos.</p>
+
+
+
+
+<h3 id="corregir-diferencias-entre-hojas-al-unirlas">Corregir diferencias entre hojas al unirlas
+  <a href="#corregir-diferencias-entre-hojas-al-unirlas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Pero ¿qué pasa si las hojas tienen <strong>datos inesperados</strong>? Intentemos unir otras hojas del mismo archivo:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1">#Se cambian los datos porque no calzan entre las dos columnas el tipo de dato, </span>
+</span></span><span class="line"><span class="cl"><span class="n">datos_11</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet</span> <span class="o">=</span> <span class="m">11</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">datos_12</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet</span> <span class="o">=</span> <span class="m">12</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">datos_13</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet</span> <span class="o">=</span> <span class="m">13</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">bind_rows</span><span class="p">(</span><span class="n">datos_11</span><span class="p">,</span> <span class="n">datos_12</span><span class="p">,</span> <span class="n">datos_13</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>Error in `bind_rows()`:
+! Can't combine `..1$variable_c` &lt;double&gt; and `..3$variable_c` &lt;character&gt;.
+</code></pre>
+<p>¡Obtenemos un error! No siempre podemos asumir que todo va a salir bien (casi nunca todo sale bien). Al unir varias hojas, si alguna viene con datos incorrectos, la unión con <code>bind_rows()</code> <strong>falla</strong>.</p>
+<p>En este caso, según el error vemos que la columna <code>variable_c</code> es <strong>distinta</strong> en una de las hojas:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">waldo</span><span class="o">::</span><span class="nf">compare</span><span class="p">(</span><span class="n">datos_12</span><span class="o">$</span><span class="n">variable_c</span><span class="p">,</span> <span class="n">datos_13</span><span class="o">$</span><span class="n">variable_c</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>`old` is a double vector (0.104654760635383, -0.87864148501293, -0.67300275472249, 1.290359654706, 2.25558071386618, ...)
+`new` is a character vector ('h', 'd', 'w', 'm', 'i', ...)
+</code></pre>
+<p>Si 
+<a href="../../../blog/waldo/">comparamos las columnas con <code>{waldo}</code></a>, confirmamos usando que la columna <code>c</code> viene con datos tipo carácter en una de las hojas, mientras que en las otras hojas es numérica, por lo que R se niega a hacer la unión.</p>
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <div style = "font-size: 90%;">
+    Recordemos que las columnas sólo pueden ser de <strong>un</strong> tipo en R, por lo que no puedes mezclar números con texto en una columna!
+    </div>
+  
+</div>
+<p>La solución parche sería <strong>corregir los datos</strong> en esa hoja específica, y reintentar la unión:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">datos_13b</span> <span class="o">&lt;-</span> <span class="n">datos_13</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">variable_c</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">variable_c</span><span class="p">))</span>
+</span></span></code></pre></div><pre><code>Warning: There was 1 warning in `mutate()`.
+ℹ In argument: `variable_c = as.numeric(variable_c)`.
+Caused by warning:
+! NAs introduced by coercion
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">bind_rows</span><span class="p">(</span><span class="n">datos_11</span><span class="p">,</span> <span class="n">datos_12</span><span class="p">,</span> <span class="n">datos_13b</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 51 × 3
+   variable_a variable_b variable_c
+   &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;
+ 1 v               0.227     -0.374
+ 2 q               0.299     -1.09 
+ 3 k              -1.03       0.117
+ 4 m              -0.828      1.24 
+ 5 k              -0.475     -0.631
+ 6 d               0.448      0.918
+ 7 i               0.845     -0.682
+ 8 l               0.232      0.885
+ 9 r               0.150     -0.652
+10 w              -0.474     -0.667
+# ℹ 41 more rows
+</code></pre>
+<p>¡Funciona!</p>
+<hr>
+<p>Ya vimos cómo cargar y unir varias hojas de Excel, así que ahora veremos cómo <strong>automatizar</strong> este proceso para que funcione con cualquier cantidad de hojas.</p>
+
+
+
+
+<h2 id="unir-datos-desde-varias-hojas-de-excel-automáticamente">Unir datos desde varias hojas de Excel automáticamente
+  <a href="#unir-datos-desde-varias-hojas-de-excel-autom%c3%a1ticamente"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para realizar operaciones que se repiten a lo largo de una serie de elementos (sean hojas de Excel, archivos, columnas, filas, etc), usamos 
+<a href="../../../tags/loops/"><em>loops</em> (bucles)</a> para automatizar el proceso.</p>
+
+
+
+
+<h3 id="repaso-de-loops-con-purrrmap">Repaso de <em>loops</em> con <code>purrr::map()</code>
+  <a href="#repaso-de-loops-con-purrrmap"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Antes de seguir avanzando, haremos un repaso de <em>loops</em> con el paquete <code>{purrr}</code>.</p>
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <div style = "font-size: 90%;">
+    Un <em>loop</em> o bucle en R es una estructura de control que permite repetir un bloque de código varias veces, iterando sobre una secuencia de elementos
+    </div>
+  
+</div>
+<p>En un loop, tenemos una <strong>secuencia</strong> de algo, a la cual vamos a <strong>repetirle</strong> una operación. Se realizan tantas operaciones o <strong>pasos</strong> como elementos haya en la secuencia.</p>
+<p>Con las funciones para <em>loops</em> del paquete <code>{purrr}</code>, cada paso va agregando los resultados como un elemento de una lista, la cual podemos combinar al final si queremos.</p>
+<p>Veamos un ejemplo básico: tenemos números del 1 al 4, y por cada número, queremos multiplicar por 10, y obtener el resultado.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># install.packages(&#34;purrr&#34;) </span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">purrr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># creamos una secuencia de elementos</span>
+</span></span><span class="line"><span class="cl"><span class="n">hojas</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="m">2</span><span class="p">,</span> <span class="m">3</span><span class="p">,</span> <span class="m">4</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># por cada elemento de la secuencia, repetimos una operación</span>
+</span></span><span class="line"><span class="cl"><span class="nf">map</span><span class="p">(</span><span class="n">hojas</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="p">{</span><span class="n">.x</span> <span class="o">*</span> <span class="m">10</span><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></div><pre><code>[[1]]
+[1] 10
+
+[[2]]
+[1] 20
+
+[[3]]
+[1] 30
+
+[[4]]
+[1] 40
+</code></pre>
+<p>En el ejemplo anterior, iteramos sobre una <strong>secuencia</strong> de números del 1 al 4. Por cada número, que en cada <strong>paso</strong> se representa por <code>.x</code>, multiplicamos el número por 10 (<code>.x * 10</code>), y el resultado de cada paso se guarda como un elemento de una <strong>lista</strong>.</p>
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <div style = "font-size: 90%;">
+    Una lista en R es un objeto que puede contener varios elementos, los cuales pueden ser de distintos tipos y tamaños
+    </div>
+  
+</div>
+
+
+
+
+<h3 id="loop-para-cargar-hojas"><em>Loop</em> para cargar hojas
+  <a href="#loop-para-cargar-hojas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Siguiendo el mismo principio del ejemplo anterior, iteramos por las hojas del 1 al 3, y dentro del <em>loop</em>, definimos que se <strong>cargue</strong> el archivo Excel en la hoja correspondiente a cada número de la secuencia.</p>
+<p>Entonces, en el paso 1 se carga la hoja 1, en el paso 2 se carga la hoja 2, y así sucesivamente hasta la hoja 10.</p>
+<p>Al final le ponemos <code>list_rbind()</code> (parecido a <code>bind_rows()</code>) para que todos los elementos de la lista se unan en un sólo dataframe., asumiendo que todas las hojas tienen datos compatibles.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># secuencia de hojas a cargar</span>
+</span></span><span class="line"><span class="cl"><span class="n">hojas</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># loop</span>
+</span></span><span class="line"><span class="cl"><span class="n">datos</span> <span class="o">&lt;-</span> <span class="nf">map</span><span class="p">(</span><span class="n">hojas</span><span class="p">,</span> <span class="o">~</span><span class="p">{</span> <span class="c1"># por cada hoja</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet</span> <span class="o">=</span> <span class="n">.x</span><span class="p">)</span> <span class="c1"># cargar el archivo en la hoja correspondiente</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">datos</span>
+</span></span></code></pre></div><pre><code>[[1]]
+# A tibble: 7 × 3
+  variable_a variable_b variable_c
+  &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;
+1 b              0.0980      0.605
+2 f             -1.56        0.815
+3 i              0.245       1.05 
+4 m              0.178       0.779
+5 x             -0.587       0.443
+6 l             -1.27        0.591
+7 y             -0.317      -0.276
+
+[[2]]
+# A tibble: 16 × 3
+   variable_a variable_b variable_c
+   &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;
+ 1 j              0.0841     -0.339
+ 2 z             -0.0351     -0.278
+ 3 k             -1.24        0.353
+ 4 p              1.32       -0.767
+ 5 f              1.06       -0.569
+ 6 x              1.27        0.750
+ 7 z             -0.0293      0.775
+ 8 k             -1.51       -0.415
+ 9 c             -1.57       -1.88 
+10 e             -1.39        0.618
+11 c              0.924      -1.40 
+12 q             -1.82        1.26 
+13 w              1.71        1.62 
+14 u             -1.08       -1.10 
+15 y              0.358      -0.141
+16 b              1.47        0.936
+
+[[3]]
+# A tibble: 29 × 3
+   variable_a variable_b variable_c
+   &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;
+ 1 w              0.235     -0.204 
+ 2 m             -0.107      0.0811
+ 3 r             -0.0999    -1.58  
+ 4 p              0.731     -0.0249
+ 5 w              0.146     -0.730 
+ 6 y             -0.160     -1.63  
+ 7 c              0.915      0.451 
+ 8 h             -0.144     -1.00  
+ 9 x              1.14       0.636 
+10 w              0.106     -0.135 
+# ℹ 19 more rows
+</code></pre>
+<p>¡Cargamos 3 hojas! El resultado es una <strong>lista</strong> con tres elementos. Ahora <strong>unimos</strong> el resultado con <code>list_rbind()</code> para que quede una sola tabla con el contenido de cada hoja:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos</span> <span class="o">|&gt;</span> <span class="nf">list_rbind</span><span class="p">()</span> <span class="c1"># unir todo al final</span>
+</span></span></code></pre></div><pre><code># A tibble: 52 × 3
+   variable_a variable_b variable_c
+   &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;
+ 1 b              0.0980      0.605
+ 2 f             -1.56        0.815
+ 3 i              0.245       1.05 
+ 4 m              0.178       0.779
+ 5 x             -0.587       0.443
+ 6 l             -1.27        0.591
+ 7 y             -0.317      -0.276
+ 8 j              0.0841     -0.339
+ 9 z             -0.0351     -0.278
+10 k             -1.24        0.353
+# ℹ 42 more rows
+</code></pre>
+<p>Pero ¿qué pasa si ampliamos la cantidad de hojas, en específico al pasar por la hoja 13 que tenía datos incorrectos?</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># secuencia de hojas a cargar</span>
+</span></span><span class="line"><span class="cl"><span class="n">hojas</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># loop</span>
+</span></span><span class="line"><span class="cl"><span class="nf">map</span><span class="p">(</span><span class="n">hojas</span><span class="p">,</span> <span class="o">~</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet</span> <span class="o">=</span> <span class="n">.x</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">list_rbind</span><span class="p">()</span> <span class="c1"># unir todo al final</span>
+</span></span></code></pre></div><pre><code>Error in `list_rbind()`:
+! Can't combine `..1$variable_c` &lt;double&gt; and `..13$variable_c` &lt;character&gt;.
+</code></pre>
+<p>Error! Como vimos antes, el problema con esta hoja que tenía una columna distinta va a evitar que los resultados se unan al final del <em>loop</em>.</p>
+<p>Entonces, dentro del <em>loop</em> podemos aplicar la misma corrección que probamos antes:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">hojas</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">map</span><span class="p">(</span><span class="n">hojas</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">,</span><span class="n">sheet</span> <span class="o">=</span> <span class="n">.x</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">        <span class="nf">mutate</span><span class="p">(</span><span class="n">variable_c</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">variable_c</span><span class="p">))</span> <span class="c1"># corregir columna</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">list_rbind</span><span class="p">()</span>
+</span></span></code></pre></div><pre><code>Warning: There was 1 warning in `mutate()`.
+ℹ In argument: `variable_c = as.numeric(variable_c)`.
+Caused by warning:
+! NAs introduced by coercion
+
+# A tibble: 350 × 3
+   variable_a variable_b variable_c
+   &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;
+ 1 b              0.0980      0.605
+ 2 f             -1.56        0.815
+ 3 i              0.245       1.05 
+ 4 m              0.178       0.779
+ 5 x             -0.587       0.443
+ 6 l             -1.27        0.591
+ 7 y             -0.317      -0.276
+ 8 j              0.0841     -0.339
+ 9 z             -0.0351     -0.278
+10 k             -1.24        0.353
+# ℹ 340 more rows
+</code></pre>
+<p>Con este código <strong>cargamos los datos de todas las hojas, aplicando la corrección necesaria</strong> para que los datos se puedan unir correctamente, y obtuvimos como resultado una sola tabla con todos los datos hacia abajo!</p>
+<p>Otra opción más específica (menos extrapolable) sería aplicar la corrección sólo a la hoja que sabemos que tiene el problema, usando una condición <code>if</code> dentro del <em>loop</em>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">map</span><span class="p">(</span><span class="n">hojas</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="o">~</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="n">datos_hoja</span> <span class="o">&lt;-</span> <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">,</span><span class="n">sheet</span> <span class="o">=</span> <span class="n">.x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">      <span class="kr">if</span> <span class="p">(</span><span class="n">.x</span> <span class="o">==</span> <span class="m">13</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># si es la hoja 13</span>
+</span></span><span class="line"><span class="cl">        <span class="n">datos_hoja</span> <span class="o">&lt;-</span> <span class="n">datos_hoja</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">          <span class="nf">mutate</span><span class="p">(</span><span class="n">variable_c</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">variable_c</span><span class="p">))</span> <span class="c1"># corregir columna</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">      
+</span></span><span class="line"><span class="cl">      <span class="kr">return</span><span class="p">(</span><span class="n">datos_hoja</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">list_rbind</span><span class="p">()</span>
+</span></span></code></pre></div><p>Esta forma de hacerlo es menos reutilizable, pero si te permite una mayor flexibilidad al momento de aplicar correcciones más complejas.</p>
+
+
+
+
+<h3 id="agregar-el-nombre-de-la-hoja-como-una-variable-nueva">Agregar el nombre de la hoja como una variable nueva
+  <a href="#agregar-el-nombre-de-la-hoja-como-una-variable-nueva"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Si queremos agregar una <strong>columna que indique desde qué hoja vienen los datos</strong>, primero usamos la función <code>excel_sheets()</code> para obtener los nombres de las hojas:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># obtener nombres de las hojas</span>
+</span></span><span class="line"><span class="cl"><span class="n">nombres_hojas</span> <span class="o">&lt;-</span> <span class="n">readxl</span><span class="o">::</span><span class="nf">excel_sheets</span><span class="p">(</span><span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>Como se trata de un vector, podemos extraer sus elementos usando su posición, para saber cómo se llama cada hoja:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># consultar el nombre de una hoja</span>
+</span></span><span class="line"><span class="cl"><span class="n">nombres_hojas[10]</span>
+</span></span></code></pre></div><pre><code>[1] &quot;hoja 10&quot;
+</code></pre>
+<p>Ahora que sabemos los nombres de las hojas, podemos iterar el <em>loop</em> usando los nombres directamente (en vez de números), y aprovechar de usar el nombre en cada paso para agregar una columna que se llame <code>hoja</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos</span> <span class="o">&lt;-</span> <span class="nf">map</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">nombres_hojas</span><span class="p">,</span> <span class="c1"># iterar por el nombre de cada hoja</span>
+</span></span><span class="line"><span class="cl">  <span class="o">~</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">message</span><span class="p">(</span><span class="n">.x</span><span class="p">)</span> <span class="c1"># decir la hoja al leerla</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet</span> <span class="o">=</span> <span class="n">.x</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">      <span class="nf">mutate</span><span class="p">(</span><span class="n">variable_c</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">variable_c</span><span class="p">))</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">      <span class="nf">mutate</span><span class="p">(</span><span class="n">hoja</span> <span class="o">=</span> <span class="n">.x</span><span class="p">)</span> <span class="c1"># agregar nombre de hoja como columna</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">list_rbind</span><span class="p">()</span>
+</span></span></code></pre></div><pre><code>hoja 1
+
+hoja 2
+
+hoja 3
+
+hoja 4
+
+hoja 5
+
+hoja 6
+
+hoja 7
+
+hoja 8
+
+hoja 9
+
+hoja 10
+
+hoja 11
+
+hoja 12
+
+hoja 13
+
+Warning: There was 1 warning in `mutate()`.
+ℹ In argument: `variable_c = as.numeric(variable_c)`.
+Caused by warning:
+! NAs introduced by coercion
+
+hoja 14
+
+hoja 15
+
+hoja 16
+
+hoja 17
+
+hoja 18
+
+hoja 19
+
+hoja 20
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># obtener 10 filas al azar</span>
+</span></span><span class="line"><span class="cl"><span class="nf">slice_sample</span><span class="p">(</span><span class="n">datos</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="m">10</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 10 × 4
+   variable_a variable_b variable_c hoja   
+   &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;  
+ 1 q               0.299    -1.09   hoja 11
+ 2 t              -0.311    NA      hoja 13
+ 3 x              -1.14     -0.243  hoja 8 
+ 4 l               0.232     0.885  hoja 11
+ 5 a              -0.977    -0.181  hoja 19
+ 6 g              -1.39     NA      hoja 13
+ 7 s              -0.902    -0.112  hoja 8 
+ 8 p               0.731    -0.0249 hoja 3 
+ 9 z              -1.42     -0.418  hoja 4 
+10 n              -2.01      0.0468 hoja 11
+</code></pre>
+<p>Otra opción más rudimentaria, pero a veces necesaria, es iterar por la posición de cada hoja, y luego usar esa posición para extraer el nombre de la hoja desde el vector <code>nombres_hojas</code>. Usamos <code>seq_along()</code> para obtener un vector de números sucesivos por cada elemento del objeto, e iteramos por el <em>loop</em> siguiendo esos números.</p>
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <div style = "font-size: 90%;">
+    La función <code>seq_along()</code> genera una secuencia de números desde 1 hasta el largo del objeto que le pasemos como argumento. Es equivalente a <code>1:length(x)</code>
+    </div>
+  
+</div>
+<p>Dentro del <em>loop</em> referimos el número (<code>.x</code>) para obtener el mismo elemento del vector de nombres (<code>nombres_hojas[.x]</code>), y así agregar una columna nueva con el nombre de la hoja:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos</span> <span class="o">&lt;-</span> <span class="nf">map</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">seq_along</span><span class="p">(</span><span class="n">nombres_hojas</span><span class="p">),</span> <span class="c1"># iterar por la posición de cada hoja</span>
+</span></span><span class="line"><span class="cl">  <span class="o">~</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">message</span><span class="p">(</span><span class="n">nombres_hojas[.x]</span><span class="p">)</span> <span class="c1"># decir la hoja al leerla</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nf">read_excel</span><span class="p">(</span><span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">,</span><span class="n">sheet</span> <span class="o">=</span> <span class="n">.x</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="c1"># cargar hoja</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">mutate</span><span class="p">(</span><span class="n">variable_c</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">variable_c</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="c1"># corrección</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">mutate</span><span class="p">(</span><span class="n">hoja</span> <span class="o">=</span> <span class="n">nombres_hojas[.x]</span><span class="p">)</span> <span class="c1"># agregar nombre de hoja como columna</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">list_rbind</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">datos</span><span class="p">)</span>
+</span></span></code></pre></div>
+
+
+
+<h3 id="guardar-archivo-resultante">Guardar archivo resultante
+  <a href="#guardar-archivo-resultante"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Ahora que tenemos los datos de todas las hojas unidos en una sola planilla, podemos guardarlos en un nuevo archivo Excel usando la función <code>write_xlsx()</code> del paquete <code>writexl</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">writexl</span><span class="o">::</span><span class="nf">write_xlsx</span><span class="p">(</span><span class="n">datos</span><span class="p">,</span> <span class="s">&#34;datos_unidos.xlsx&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>¡Y listo! Hemos aprendido a cargar y unir datos desde múltiples hojas de Excel, enfrentando problemas comunes como datos incompatibles, y automatizando el proceso para cualquier cantidad de hojas.</p>
+<p><div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+</p>
+ 
+    </section>
+      
+    <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4512/blog/blockr/">Procesa datos con R sin programar y de forma interactiva &rarr;</a>
+  
+</div>
+
+    </footer>
+    
+  </article>
+    
+    <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+</section>
+  
+
+<section class="post-body pt5 pb4">
+  
+  <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">December 9, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">12 minute read, 2376 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4512/tags/excel">Excel</a>  <a href="http://localhost:4512/tags/limpieza-de-datos">limpieza de datos</a>  <a href="http://localhost:4512/tags/datos">datos</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="../../blog/crear_dataframes/">Crear tablas de datos manualmente en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/r_introduccion/tidyr_pivotar/">Transformación de datos entre formato _ancho_ y _largo_ con {tidyr}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/surveydown_encuestas/">Crea encuestas online gratis en R con {surveydown}</a></dd>
+    
+  </dl>
+</details>
+
+</section>
+</main>
+
+
+<aside class="page-sidebar" role="complementary">
+   
+   
+
+  <div class="blog-info ph4 pt4 pb4 pb0-l">
+    
+
+  <h1 class="f3">Blog</h1>
+  <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
+<a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
+<a href="../../tags/">temas</a>.</p>
+  
+
+   
+<h3 style="margin-bottom: 12px;">Temas:</h3>
+
+<div style="font-size:90%;">
+
+<div style="font-size: 90%;">
+  
+   
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/chile/">Chile</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/datos/">Datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/consejos/">Consejos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/gr%C3%A1ficos/">Gráficos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/ggplot2/">Ggplot2</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/blog/">Blog</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/apps/">Apps</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/shiny/">Shiny</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/web-scraping/">Web scraping</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/mapas/">Mapas</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/b%C3%A1sico/">Básico</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/quarto/">Quarto</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/curiosidades/">Curiosidades</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/ciencias-sociales/">Ciencias sociales</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/dplyr/">Dplyr</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4512/tags/automatizaci%C3%B3n/">Automatización</a></span>
+  </span>
+
+<a href="../../tags/" style="margin-left: 3px;">y más!</a>
+</div>
+</div>
+  
+  
+   
+   
+
+</div>
+
+  
+  <div id="PageTableOfContents", style="margin-top: 24px; position: sticky; top: 108px;">
+        <div class="blog-info ph4 pb4 pb0-l">
+        <h3 style="margin-bottom: 12px;">Índice:</h3>
+          <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: -22px; margin-bottom: 32px;">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#datos">Datos</a></li>
+    <li><a href="#cargar-datos-desde-una-hoja-de-excel">Cargar datos desde una hoja de Excel</a></li>
+    <li><a href="#unir-datos-desde-varias-hojas-de-excel-manualmente">Unir datos desde varias hojas de Excel manualmente</a>
+      <ul>
+        <li><a href="#corregir-diferencias-entre-hojas-al-unirlas">Corregir diferencias entre hojas al unirlas</a></li>
+      </ul>
+    </li>
+    <li><a href="#unir-datos-desde-varias-hojas-de-excel-automáticamente">Unir datos desde varias hojas de Excel automáticamente</a>
+      <ul>
+        <li><a href="#repaso-de-loops-con-purrrmap">Repaso de <em>loops</em> con <code>purrr::map()</code></a></li>
+        <li><a href="#loop-para-cargar-hojas"><em>Loop</em> para cargar hojas</a></li>
+        <li><a href="#agregar-el-nombre-de-la-hoja-como-una-variable-nueva">Agregar el nombre de la hoja como una variable nueva</a></li>
+        <li><a href="#guardar-archivo-resultante">Guardar archivo resultante</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+          </div>
+        </div>
+    </div>
+  
+  
+
+</aside>
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source" style="color:#9069C0;">Hugo Apéro</a> 
+      y <a href="https://pkgs.rstudio.com/blogdown/" style="color:#9069C0;">{blogdown}</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source" style="color:#9069C0;">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL" style="color:#9069C0;">Formspree</a>.
+
+Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlify</a></span>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+      <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="../../tags/" title="Temas">Temas</a>
+      
+      <a class="dib pv1 ph2 link" href="../../clases/" title="Clases">Clases</a>
+      
+      <a class="dib pv1 ph2 link" href="../../code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
+      
+      <a class="dib pv1 ph2 link" href="../../license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
