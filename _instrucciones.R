@@ -45,10 +45,7 @@ blogdown::new_post(title = "Interactúa desde R con una IA que conoce tus datos,
 
 ## borradores ----
 
-"content/blog/blockr/index.md"
-
 # tutoriales
-"content/blog/r_introduccion/dplyr_mutate/dplyr_mutate.qmd"
 "content/blog/r_introduccion/dplyr_summarize/dplyr_summarize.qmd"
 
 # constantes
@@ -56,6 +53,8 @@ blogdown::new_post(title = "Interactúa desde R con una IA que conoce tus datos,
 "content/blog/git_comandos/index.md"
 
 # en construcción
+"content/blog/mapas_sf/mapas_sf.qmd"
+"content/blog/ellmer/index.md"
 "content/blog/shiny_validacion/index.md"
 "content/blog/tutorial_digitalocean/index.md"
 

@@ -1,13 +1,13 @@
 ---
-title: "Crear y calcular variables nuevas con `dplyr::mutate()`"
+title: "Crear variables nuevas con `dplyr::mutate()`"
 author: Bastián Olea Herrera
-date: '2025-11-24'
+date: '2025-12-11'
 format: 
   hugo-md:
     output-file: "index"
     output-ext:  "md"
 weight: 8
-draft: true
+draft: false
 series: "Introducción a R"
 slug: []
 categories: ["Tutoriales"]
@@ -15,28 +15,319 @@ tags:
   - dplyr
   - básico
 lang: es
-excerpt: Prueba
+excerpt: "La función `mutate()` es una de las principales en R, ya que te permite crear variables nuevas o transformar variables existentes en un _data frame_. Este tutorial presenta ejemplos muy básicos del uso de esta función, y va avanzando a casos más reales de su uso."
 execute: 
   error: true
   eval: true
 ---
 
-En esta ocasión, avanzaremos hacia las herramientas que nos permiten **crear datos nuevos** a partir de los datos que ya aprendimos a manejar.
+En esta ocasión veremos la función que nos permite **crear variables nuevas**, a partir de los aprendizajes sobre manipualción de datos que vimos [en tutoriales anteriores](/blog/r_introduccion/dplyr_intro/).
+
+Para **crear variables nuevas**, o **transformar variables existentes**, usaremos la función `mutate()`, que forma parte del paquete `{dplyr}`.
+
+{{< aviso "Si necesitas aprender `{dplyr}` desde el principio, revisa el [tutorial de introducción a `{dplyr}`](/blog/r_introduccion/dplyr_intro/)." >}}
+
+
+## Introducción
+
+Vamos a empezar con ejemplos básicos y luego pasaremos a datos reales.
+
+Lo primero que haremos será cargar el paquete `{dplyr}`:
+
+```{r}
+#| message: false
+# install.packages("dplyr")
+library(dplyr)
+```
+
+
+### Crear nuevas columnas
+
+Empezaremos con una tabla de datos de ejemplo, llamada creativamente `ejemplo`:
+
+```{r}
+library(dplyr)
+
+ejemplo <- tibble(números = 1:3)
+
+ejemplo
+```
+
+
+Podemos usar `mutate()` para crear una nueva variable o columna (¡son sinónimos! 🤓). 
+
+Para crear usar `mutate()`, aplicamos esta función a un _data frame_ [conectando los datos a la función con un conector](/blog/r_introduccion/conectores/) (`|>` o `%>%`).
+
+{{< info "Un **conector** en R es un operador que nos permite _conectar_ datos (o el resultado de una operación) con la siguiente operación." >}}
+
+
+```{r}
+ejemplo |> 
+  mutate(prueba = 1)
+```
+
+
+Creamos una **nueva columna** llamada `prueba`, que contiene el valor `1`. Como le dimos un sólo valor (`1`), el valor se repite en todas las filas.
+
+_¿Qué hicimos?_ 
+
+Para crear la variable `prueba`, dentro de `mutate()`:
+1. Primero pusimos el **nombre** de la columna que queríamos crear (`prueba`), 
+2. Luego un **signo igual** (`=`), que indica que _ésto va a ser aquello_,
+3. Finalmente el **valor** que queremos que contenga la nueva columna ( `1`).
+
+Creemos otra columna, llamada `saludo`:
+
+```{r}
+ejemplo |> 
+  mutate(saludo = "hola")
+```
+
+De esta forma podemos crear variables que contengan un único valor.
+
+{{< info "Notamos que en el ejemplo anterior no existe la primera columna que creamos. Ésto es porque **nunca estamos sobreescribiendo ni editando los datos**, a menos que [hagamos una **asignación**](https://bastianolea.rbind.io/blog/r_introduccion/r_basico/#asignaciones) (`<-`) para guardar el resultado como un nuevo objeto." >}}
+
+También podemos usar funciones para crear los valores que va a tener una columna. Por ejemplo, creemos una columna llamada `azar` que contenga números aleatorios entre `1` y `100`:
+
+```{r}
+ejemplo |> 
+  mutate(azar = sample(1:100, size =  3))
+```
+En este ejemplo, los valores de la columna son definidos por la función que usamos.
+
+
+### Modificar variables existentes
+
+También podemos usar `mutate()` para modificar columnas que ya existen en el _data frame_. Esto se hace simplemente poniendo en `mutate()` como nombre de la columna que vamos a crear el **nombre de una columna existente** que queremos modificar.
+
+Por ejemplo, cambiemos los valores de `números` por unos distintos:
+
+```{r}
+ejemplo |> 
+  mutate(números = 4:6)
+```
+En este caso, **sobreescribimos** la columna con datos nuevos. 
+
+Volvamos a ver los datos originales:
+
+```{r}
+ejemplo
+```
+
+
+En vez de cambiar completamente los datos de una columna, podemos **editar una columna existente**, usando los valores de la misma columna y ejecutando alguna operación sobre ellos, para obtener una versión editada de la misma columna:
+
+```{r}
+ejemplo |> 
+  mutate(números = números * 100)
+```
+
+En este ejemplo, **editamos** la columna `números`, que contenía los valores `1`, `2` y `3`, declarando que `números = números * 100`; es decir, la columna va a ser igual a ella misma pero multiplicada por `100`. Por eso ahora contiene los valores `100`, `200` y `300`, que son el resultado de multiplicar cada valor original por `100`.
+
+
+### Crear una columna nueva en base a otra existente
+
+Siguiendo el ejemplo anterior, podemos crear una nueva columna llamada `doble` que contenga el doble de los valores de la columna `números`:
+
+```{r}
+ejemplo |> 
+  mutate(doble = números * 2)
+```
+
+Así creamos una **nueva columna** basada en datos de una columna existente.
+
+También podemos usar **funciones** para crear las variables nuevas:
+
+```{r}
+ejemplo |> 
+  mutate(doble = números * 2) |> 
+  mutate(texto = paste(doble, "es el doble de", números))
+```
+
+Estas son las piezas básicas para trabajar con variables o columnas. ¡Ahora veámoslo con datos!
 
 ----
 
-crear variables en R base
 
-[intro a mutate](/blog/r_introduccion/dplyr_intro/#crear-columnas)
-mutate
+## Ejemplo
 
-mutate group_by
+A continuación, usaremos datos sobre países de América Latina, que fueron obtenidos desde tablas de Wikipedia por medio de [web scraping](/blog/r_introduccion/web_scraping/). Puedes revisar el [script con el código del scraping aquí](https://gist.github.com/bastianolea/00d7da36e85b76de1abf9ca37014cfe4).
 
-mutate case_when
+Ejecutaremos el siguiente código para obtener una tabla llamada `datos` en nuestro entorno de R:
 
-mutate across
+```{r}
+datos <- tribble(
+  ~pais,       ~pobreza, ~esperanza, ~escolaridad,
+  "Chile",         5,    81.17,      11.29,
+  "Uruguay",       6,    78.14,      10.54,
+  "Argentina",    11,    77.69,      11.18,
+  "Costa Rica",   13,    80.8,        8.84,
+  "Panamá",       13,    79.59,      10.83,
+  "Bolivia",      15,    68.58,      10.02,
+  "Paraguay",     20,    73.84,       8.93,
+  "México",       22,    75.07,       9.35,
+  "Brasil",       24,    75.85,       8.43,
+  "El Salvador",  28,    72.1,        7.3
+)
+```
+
+La tabla `datos` contiene información sobre porcentaje de pobreza, esperanza de vida promedio y años de escolaridad promedio en varios países de América Latina.
+
+### Crear una variable nueva con `mutate()`
+
+Usemos `mutate()` para crear una nueva columna llamada `escolaridad_redondeada`, que contenga los valores de la columna `escolaridad` redondeados al número entero más cercano:
+
+```{r}
+datos |> 
+  select(pais, escolaridad) |> 
+  mutate(escolaridad_redondeada = round(escolaridad))
+```
+
+En este caso aplicamos una función a una columna existente para obtener una columna nueva.
+
+### Crear una variable condicional con `if_else()`
+
+Podemos usar `mutate()` junto con la función `if_else()` para crear una nueva columna basada en condiciones. Por ejemplo, creemos una columna llamada `pobreza_nivel` que indique si el porcentaje de pobreza alto (es mayor al 10%) o bajo:
+
+```{r}
+datos |> 
+  select(pais, pobreza) |> 
+  mutate(pobreza_nivel = if_else(pobreza >= 10, "Alto", "Bajo"))
+```
 
 
+{{< info "La función `if_else()` permite crear variables condicionales. La condición que se defina será evaluada para cada valor, y se aplicará el resultado que corresponda si la condición es _verdadera_ o _falsa_." >}}
+
+### Crear una variable con múltiples condiciones usando `case_when()`
+
+Podemos usar `mutate()` junto con la función `case_when()` para crear una nueva columna basada en múltiples condiciones. Por ejemplo, creemos una columna llamada `esperanza_nivel` que clasifique la esperanza de vida en "Alta", "Media" y "Baja":
+
+```{r}
+datos |> 
+  select(pais, esperanza) |> 
+  mutate(esperanza_nivel = case_when(
+    esperanza >= 80 ~ "Alta",
+    esperanza >= 70 ~ "Media",
+    esperanza <  70 ~ "Baja"
+  ))
+```
+
+
+En el ejemplo anterior usamos números arbitrarios para recodificar una variable contínua en una variable categórica. En un caso real, deberíamos analizar la distribución de los datos para definir los puntos de corte adecuados. Una forma muy rudimentaria de hacer ésto es usando desviaciones estándar:
+
+```{r}
+datos |> 
+  mutate(esperanza_nivel = case_when(
+    esperanza >= mean(esperanza) + sd(esperanza) ~ "Alta",
+    esperanza <= mean(esperanza) - sd(esperanza) ~ "Baja",
+    TRUE ~ "Media"
+  ))
+```
+
+{{< info "La desviación estándar es una medida de dispersión que indica cuánto varían los datos respecto a su promedio. En este caso se usa para definir puntos de corte objetivos basados en la distribución de los datos." >}}
+
+En este caso clasificamos la esperanza de vida en función de su distancia a la media, usando una desviación estándar como punto de corte: países que tengan valores que sean mayores al promedio más una desviación estándar serán _altos_, los que tengan valores menores al promedio menos una desviación estándar serán _bajos_, y el resto serán _medios_.
+
+### Calcular variables por grupos con `group_by()`
+
+Podemos usar `group_by()` para crear variables nuevas basadas en grupos dentro de los datos; es decir, cuyo cálculo se haga dentro de cada grupo definido.
+
+Primero creemos un grupo:
+
+```{r}
+datos_grupo <- datos |> 
+  mutate(pobreza_nivel = if_else(pobreza >= 15, "Alto", "Bajo"))
+
+datos_grupo
+```
+
+Ahora calculemos el promedio de esperanza de vida dentro de cada grupo de pobreza usando `group_by()` y `mutate()`:
+
+```{r}
+datos_grupo |> 
+  select(pais, pobreza_nivel, esperanza) |> 
+  group_by(pobreza_nivel) |> 
+  mutate(esperanza_promedio = mean(esperanza)) |> 
+  mutate(esperanza_diferencia = esperanza - esperanza_promedio)
+```
+En este ejemplo, primero agrupamos los datos por la variable `pobreza_nivel` usando `group_by()`, y luego usamos `mutate()` para crear una nueva columna llamada `esperanza_promedio`, que contiene el promedio de esperanza de vida dentro de cada grupo. Finalmente, creamos otra columna llamada `esperanza_diferencia`, que contiene la diferencia entre la esperanza de vida individual y el promedio del grupo.
+
+De este modo obtuvimos una nueva variable que muestra la diferencia de cada país respecto al promedio de su grupo; una especie de indicador.
+
+
+### Crear varias columnas al mismo tiempo con `across()`
+
+Finalmente, podemos modificar o crear varias columnas nuevas al mismo tiempo usando `mutate()` junto con la función `across()`. Con `across()`, especificamos las variables que queremos afectar, y luego la fórmula que les vamos a aplicar.
+
+Por ejemplo, podemos redondear todas las columnas al mismo tiempo:
+
+```{r}
+datos |> 
+  mutate(
+    across(c(pobreza, esperanza, escolaridad), 
+           ~round(.x)
+    )
+  )
+```
+
+La función que aplicamos se escribe con _colita de chancho_ (`~`) para indicar que todas las variables especificadas van a ser afectadas por la misma función, representadas dentro de la función como `.x` 🐷
+
+Incluso podemos hacerlo en menos código, al especificar que queremos afectar todas las columnas donde (`where`) sean numéricas (`is.numeric`):
+```{r}
+datos |> 
+  mutate(
+    across(where(is.numeric), 
+           ~round(.x)
+    )
+  )
+```
+
+Esto trae el beneficio de no tener que referirnos a las columnas por sus nombres!
+
+Otro ejemplo sería aplicar una función que transforme todos los valores numéricos en texto, agregando una palabra antes del número:
+```{r}
+datos |> 
+  mutate(
+    across(
+      where(is.numeric), 
+      ~paste("Valor:", .x)
+    )
+  )
+```
+
+En este caso, el símbolo `.x` hace que el valor de cada observación se ponga en otro lugar de la función, en este caso al final de la función `paste()`.
+
+Podemos combinar `mutate()` con uno o varios `mutate(across())` para crear o modificar varias columnas al mismo tiempo. Por ejemplo, podemos agregarle el signo de porcentaje a `pobreza`, luego redondear las columnas `esperanza` y `escolaridad`, y al final agregar un mismo texto a dos columnas:
+
+```{r}
+datos |> 
+  mutate(
+    # redactar
+    pobreza = paste(pobreza, "%", sep = ""),
+    # redondear
+    across(c(esperanza, escolaridad), ~round(.x, 0)),
+    # redactar
+    across(c(esperanza, escolaridad), ~paste(.x, "años"))
+  )
+```
+
+En los casos de `across()` que hemos visto, las variable son editadas o modificadas, y por ende sobreescritas. Pero también podemos hacer que se creen variables nuevas! Pero, lógicamente, como estamos editando varias columnas a la vez, no podemos darles a todas un nombre distinto. En este caso, usamos el argumento `.names` dentro de `across()` para definir un patrón de nombres para las nuevas columnas:
+
+```{r}
+datos |> 
+  mutate(
+    across(c(pobreza, esperanza, escolaridad), 
+           ~round(.x),
+           .names = "{.col}_redondeada"
+    )
+  )
+```
+
+En este caso, usamos `{.col}` dentro de `.names` para indicar que el nombre de la nueva columna va a ser igual al nombre de la columna original (representada por `.col`), seguido del texto `_redondeada`. Esta sintaxis para crear textos [se llama _glue_](https://glue.tidyverse.org/articles/glue.html) y es muy útil para crear textos dinámicos en R.
+
+----
+
+Estas son las herramientas básicas que necesitas para crear y modificar variables en R! Al final se trata de usar `mutate()` para crear algo nuevo o editar algo existente, usando valores nuevos, otras columnas, o funciones, y combinar estas herramientas para llevar a cabo lo que necesitemos, ya sea limpieza de datos o análisis de datos más complejos.
 
 
 {{< cursos >}}

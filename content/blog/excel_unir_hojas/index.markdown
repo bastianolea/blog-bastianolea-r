@@ -21,6 +21,9 @@ links:
 excerpt: "Las hojas de Excel pueden ser cómodas para organizar información, pero no mucho para procesarla o analizarla. Por lo mismo, una de las operaciones iniciales de limpieza de datos suele ser unir datos que vienen repartidos en varias hojas de Excel. Veamos cómo se hace paso a paso. Usaremos el paquete `{readxl}` para leer los datos, `{dplyr}` para manipular y combinar las hojas, y `{purrr}` para realizar operaciones sobre todas las hojas de forma automática."
 ---
 
+
+
+
 Las hojas de Excel pueden ser cómodas para organizar información, pero no mucho para procesarla o analizarla. Por lo mismo, una de las operaciones iniciales de limpieza de datos suele ser **unir datos que vienen repartidos en varias hojas de Excel**. 
 
 En este tutorial vamos a ver cómo se hace paso a paso. Usaremos el paquete `{readxl}` para leer los datos, `{dplyr}` para manipular y combinar las hojas, y `{purrr}` para realizar operaciones sobre todas las hojas de forma automática.
@@ -30,7 +33,11 @@ En este tutorial vamos a ver cómo se hace paso a paso. Usaremos el paquete `{re
 
 Como ejemplo, usaremos un archivo de Excel con datos falsos, que puedes descargar a continuación:
 
+
+
+
 {{< boton "Descargar datos falsos" "/blog/excel_unir_hojas/datos_falsos.xlsx" "fas fa-download" >}}
+
 
 {{< detalles "Ver código para generar los datos falsos" >}}
 
@@ -70,14 +77,30 @@ writexl::write_xlsx(datos_falsos, "datos_falsos.xlsx")
 
 {{< /detalles >}}
 
+
+
+
+
+
 Se trata de un archivo con 20 hojas, y tres columnas con datos al azar. La planilla de Excel se ve más o menos así:
 
+
+
+
 {{< imagen "datos_falsos.png" >}}
+
+
+
+
+
 
 
 ## Cargar datos desde una hoja de Excel
 
 Para cargar datos desde una hoja específica de un archivo Excel, usamos la función `read_excel()` del paquete `readxl`, definiendo la hoja en el argumento `sheet` (ya sea según su posición o su nombre).
+
+
+
 
 
 ``` r
@@ -100,6 +123,9 @@ head(datos)
 ## 6 x              1.27        0.750
 ```
 
+
+
+
 Obtenemos sólo los datos de la hoja especificada. Esta es la base que nos permitirá cargar desde múltiples hojas.
 
 ## Unir datos desde varias hojas de Excel manualmente
@@ -107,8 +133,10 @@ Obtenemos sólo los datos de la hoja especificada. Esta es la base que nos permi
 La forma básica de unir los datos de varias hojas sería repetir la lectura de datos anterior, y luego unir los objetos resultantes con `bind_rows()` de `dplyr`.
 
 
-{{< info "La función `bind_rows()` une varias tablas con las mismas columnas, apilándolas una debajo de la otra, como una torta 🍰" >}}
 
+
+
+{{< info "La función `bind_rows()` une varias tablas con las mismas columnas, apilándolas una debajo de la otra, como una torta 🍰" >}}
 
 
 
@@ -141,15 +169,29 @@ bind_rows(datos_1, datos_2, datos_3)
 ## # ℹ 42 more rows
 ```
 
+
+
+
 Pero pronto nos damos cuenta de que esto **no es sostenible**: si tenemos 20 hojas, o 50, o 100, no podemos estar copiando y pegando el mismo código una y otra vez! Ni menos crear 100 objetos distintos para cada hoja!
 
+
+
+
 {{< info "Cuando repitas código 3 veces, significa que lo correcto sería hacer una función o un loop" >}}
+
+
+
+
+
 
 Necesitamos **automatizar** este código para aplicarlo a todas las hojas que queramos.
 
 ### Corregir diferencias entre hojas al unirlas
 
 Pero ¿qué pasa si las hojas tienen **datos inesperados**? Intentemos unir otras hojas del mismo archivo:
+
+
+
 
 
 ``` r
@@ -166,9 +208,15 @@ bind_rows(datos_11, datos_12, datos_13)
 ## ! Can't combine `..1$variable_c` <double> and `..3$variable_c` <character>.
 ```
 
+
+
+
 ¡Obtenemos un error! No siempre podemos asumir que todo va a salir bien (casi nunca todo sale bien). Al unir varias hojas, si alguna viene con datos incorrectos, la unión con `bind_rows()` **falla**. 
 
 En este caso, según el error vemos que la columna `variable_c` es **distinta** en una de las hojas:
+
+
+
 
 
 ``` r
@@ -180,11 +228,25 @@ waldo::compare(datos_12$variable_c, datos_13$variable_c)
 ## `new` is a character vector ('h', 'd', 'w', 'm', 'i', ...)
 ```
 
+
+
+
 Si [comparamos las columnas con `{waldo}`](/blog/waldo/), confirmamos usando que la columna `c` viene con datos tipo carácter en una de las hojas, mientras que en las otras hojas es numérica, por lo que R se niega a hacer la unión.
+
+
+
 
 {{< info "Recordemos que las columnas sólo pueden ser de **un** tipo en R, por lo que no puedes mezclar números con texto en una columna!" >}}
 
+
+
+
+
+
 La solución parche sería **corregir los datos** en esa hoja específica, y reintentar la unión:
+
+
+
 
 
 ``` r
@@ -222,6 +284,9 @@ bind_rows(datos_11, datos_12, datos_13b)
 ## # ℹ 41 more rows
 ```
 
+
+
+
 ¡Funciona! 
 
 ----
@@ -236,13 +301,24 @@ Para realizar operaciones que se repiten a lo largo de una serie de elementos (s
 
 Antes de seguir avanzando, haremos un repaso de _loops_ con el paquete `{purrr}`. 
 
+
+
+
 {{< info "Un _loop_ o bucle en R es una estructura de control que permite repetir un bloque de código varias veces, iterando sobre una secuencia de elementos" >}}
+
+
+
+
+
 
 En un loop, tenemos una **secuencia** de algo, a la cual vamos a **repetirle** una operación. Se realizan tantas operaciones o **pasos** como elementos haya en la secuencia. 
 
 Con las funciones para _loops_ del paquete `{purrr}`, cada paso va agregando los resultados como un elemento de una lista, la cual podemos combinar al final si queremos.
 
 Veamos un ejemplo básico: tenemos números del 1 al 4, y por cada número, queremos multiplicar por 10, y obtener el resultado.
+
+
+
 
 
 ``` r
@@ -272,9 +348,20 @@ map(hojas,
 ## [1] 40
 ```
 
+
+
+
 En el ejemplo anterior, iteramos sobre una **secuencia** de números del 1 al 4. Por cada número, que en cada **paso** se representa por `.x`, multiplicamos el número por 10 (`.x * 10`), y el resultado de cada paso se guarda como un elemento de una **lista**.
 
+
+
+
 {{< info "Una lista en R es un objeto que puede contener varios elementos, los cuales pueden ser de distintos tipos y tamaños" >}}
+
+
+
+
+
 
 
 
@@ -285,6 +372,9 @@ Siguiendo el mismo principio del ejemplo anterior, iteramos por las hojas del 1 
 Entonces, en el paso 1 se carga la hoja 1, en el paso 2 se carga la hoja 2, y así sucesivamente hasta la hoja 10.
 
 Al final le ponemos `list_rbind()` (parecido a `bind_rows()`) para que todos los elementos de la lista se unan en un sólo dataframe., asumiendo que todas las hojas tienen datos compatibles.
+
+
+
 
 
 ``` r
@@ -351,7 +441,13 @@ datos
 ## # ℹ 19 more rows
 ```
 
+
+
+
 ¡Cargamos 3 hojas! El resultado es una **lista** con tres elementos. Ahora **unimos** el resultado con `list_rbind()` para que quede una sola tabla con el contenido de cada hoja:
+
+
+
 
 
 ``` r
@@ -375,7 +471,13 @@ datos |> list_rbind() # unir todo al final
 ## # ℹ 42 more rows
 ```
 
+
+
+
 Pero ¿qué pasa si ampliamos la cantidad de hojas, en específico al pasar por la hoja 13 que tenía datos incorrectos?
+
+
+
 
 
 ``` r
@@ -394,9 +496,15 @@ map(hojas, ~{
 ## ! Can't combine `..1$variable_c` <double> and `..13$variable_c` <character>.
 ```
 
+
+
+
 Error! Como vimos antes, el problema con esta hoja que tenía una columna distinta va a evitar que los resultados se unan al final del _loop_. 
 
 Entonces, dentro del _loop_ podemos aplicar la misma corrección que probamos antes:
+
+
+
 
 
 ``` r
@@ -434,9 +542,15 @@ map(hojas,
 ## # ℹ 340 more rows
 ```
 
+
+
+
 Con este código **cargamos los datos de todas las hojas, aplicando la corrección necesaria** para que los datos se puedan unir correctamente, y obtuvimos como resultado una sola tabla con todos los datos hacia abajo!
 
 Otra opción más específica (menos extrapolable) sería aplicar la corrección sólo a la hoja que sabemos que tiene el problema, usando una condición `if` dentro del _loop_:
+
+
+
 
 
 ``` r
@@ -454,10 +568,16 @@ map(hojas,
 ) |> list_rbind()
 ```
 
+
+
+
 Esta forma de hacerlo es menos reutilizable, pero si te permite una mayor flexibilidad al momento de aplicar correcciones más complejas.
 
 ### Agregar el nombre de la hoja como una variable nueva
 Si queremos agregar una **columna que indique desde qué hoja vienen los datos**, primero usamos la función `excel_sheets()` para obtener los nombres de las hojas:
+
+
+
 
 
 ``` r
@@ -465,7 +585,13 @@ Si queremos agregar una **columna que indique desde qué hoja vienen los datos**
 nombres_hojas <- readxl::excel_sheets("datos_falsos.xlsx")
 ```
 
+
+
+
 Como se trata de un vector, podemos extraer sus elementos usando su posición, para saber cómo se llama cada hoja:
+
+
+
 
 
 ``` r
@@ -477,7 +603,13 @@ nombres_hojas[10]
 ## [1] "hoja 10"
 ```
 
+
+
+
 Ahora que sabemos los nombres de las hojas, podemos iterar el _loop_ usando los nombres directamente (en vez de números), y aprovechar de usar el nombre en cada paso para agregar una columna que se llame `hoja`:
+
+
+
 
 
 ``` r
@@ -589,23 +721,37 @@ slice_sample(datos, n = 10)
 ## # A tibble: 10 × 4
 ##    variable_a variable_b variable_c hoja   
 ##    <chr>           <dbl>      <dbl> <chr>  
-##  1 n             -2.80        0.377 hoja 7 
-##  2 o             -0.809      -1.25  hoja 9 
-##  3 i             -0.322      -0.371 hoja 5 
-##  4 w              0.0254     -1.19  hoja 10
-##  5 y             -0.521       0.794 hoja 16
-##  6 q              0.640       0.735 hoja 8 
-##  7 k             -0.481      -1.29  hoja 8 
-##  8 v             -0.944      -0.200 hoja 17
-##  9 x             -0.587       0.443 hoja 1 
-## 10 z              0.447       0.963 hoja 5
+##  1 y               0.719    -0.208  hoja 8 
+##  2 g              -1.08     -0.112  hoja 14
+##  3 x              -0.616    -1.53   hoja 5 
+##  4 y              -0.229     0.835  hoja 14
+##  5 n               1.22     -0.140  hoja 9 
+##  6 n              -2.01      0.0468 hoja 11
+##  7 c              -1.27     -0.451  hoja 12
+##  8 n               1.53     NA      hoja 13
+##  9 x              -0.512     3.70   hoja 7 
+## 10 m              -0.454     1.38   hoja 14
 ```
+
+
+
 
 Otra opción más rudimentaria, pero a veces necesaria, es iterar por la posición de cada hoja, y luego usar esa posición para extraer el nombre de la hoja desde el vector `nombres_hojas`. Usamos `seq_along()` para obtener un vector de números sucesivos por cada elemento del objeto, e iteramos por el _loop_ siguiendo esos números. 
 
+
+
+
 {{< info "La función `seq_along()` genera una secuencia de números desde 1 hasta el largo del objeto que le pasemos como argumento. Es equivalente a `1:length(x)`" >}}
 
+
+
+
+
+
 Dentro del _loop_ referimos el número (`.x`) para obtener el mismo elemento del vector de nombres (`nombres_hojas[.x]`), y así agregar una columna nueva con el nombre de la hoja:
+
+
+
 
 
 ``` r
@@ -725,8 +871,14 @@ head(datos)
 ```
 
 
+
+
+
 ### Guardar archivo resultante
 Ahora que tenemos los datos de todas las hojas unidos en una sola planilla, podemos guardarlos en un nuevo archivo Excel usando la función `write_xlsx()` del paquete `writexl`:
+
+
+
 
 
 ``` r
@@ -734,8 +886,17 @@ writexl::write_xlsx(datos, "datos_unidos.xlsx")
 ```
 
 
+
+
+
 ¡Y listo! Hemos aprendido a cargar y unir datos desde múltiples hojas de Excel, enfrentando problemas comunes como datos incompatibles, y automatizando el proceso para cualquier cantidad de hojas.
+
+
+
 
 {{< cafecito >}}
 
+
 {{< cursos >}}
+
+

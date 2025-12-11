@@ -505,16 +505,16 @@ slice_sample(datos, n = 10)
     # A tibble: 10 × 4
        variable_a variable_b variable_c hoja   
        <chr>           <dbl>      <dbl> <chr>  
-     1 q               0.299    -1.09   hoja 11
-     2 t              -0.311    NA      hoja 13
-     3 x              -1.14     -0.243  hoja 8 
-     4 l               0.232     0.885  hoja 11
-     5 a              -0.977    -0.181  hoja 19
-     6 g              -1.39     NA      hoja 13
-     7 s              -0.902    -0.112  hoja 8 
-     8 p               0.731    -0.0249 hoja 3 
-     9 z              -1.42     -0.418  hoja 4 
-    10 n              -2.01      0.0468 hoja 11
+     1 w             -0.931     NA      hoja 13
+     2 c             -1.27      -0.451  hoja 12
+     3 w             -0.983     -1.32   hoja 6 
+     4 q             -0.655     -2.06   hoja 16
+     5 a              0.0417    -0.0949 hoja 10
+     6 l              0.636      0.122  hoja 20
+     7 j              1.21      -0.671  hoja 11
+     8 u             -0.818     -0.133  hoja 4 
+     9 e             -0.626      1.74   hoja 9 
+    10 n             -0.911     -0.572  hoja 10
 
 Otra opción más rudimentaria, pero a veces necesaria, es iterar por la posición de cada hoja, y luego usar esa posición para extraer el nombre de la hoja desde el vector `nombres_hojas`. Usamos `seq_along()` para obtener un vector de números sucesivos por cada elemento del objeto, e iteramos por el *loop* siguiendo esos números.
 
