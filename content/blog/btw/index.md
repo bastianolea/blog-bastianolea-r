@@ -121,6 +121,16 @@ Esto funciona porque `{btw}` registra **herramientas** que el modelo puede usar 
 
 {{< imagen "btw_2.png" >}}
 
+Usa este chat interactivo para hacerle preguntas sobre tu entorno de R, tus datos, paquetes o funciones, y más, sin salir de RStudio!
+
+Otra forma de invocar `{btw}` es desde el menú de _Addins_ de RStudio, con el beneficio extra de que el asistente corre en otro proceso y así no bloquea tu consola.
+
+Para acceder más rápido a este chat IA, recomiendo configurar un **atajo de teclado**: en RStudio, ve a *Tools* > *Modify Keyboard Shortcuts*, busca `btw` y asigna un atajo como `Shift + Cmd + B`)
+
+{{< imagen_tamaño "btw_atajo_mac.png" "60%" >}}
+{{< bajada "Atajo de teclado en macOS (usa `control` o `alt` en vez de comando si usas Linux o Windows" >}}
+
+Así el atajo de teclado me queda cerca del de [`{gander}`, otra herramienta útil para aplicar IA directamente a tu código de R](/blog/gander/) 😊
 
 ## Chat con conocimiento contextual por la consola
 
@@ -141,7 +151,7 @@ A diferencia de el primer ejemplo, ahora el modelo de lenguaje sí puede acceder
 
 En una sesión de R cargué un archivo con datos, luego lancé una sesión de chat con `btw::btw_app()`, y le pregunté:
 
-> con la base de datos que tengo cargada, ¿cómo puedo hacer un gráfico que compare el valor del capital humano en cada región?
+> Con la base de datos que tengo cargada, ¿cómo puedo hacer un gráfico que compare el valor del capital humano en cada región?
 
 Gracias al conocimiento contextual y el acceso a herramientas, responde correctamente, usando nombres y valores correctos:
 

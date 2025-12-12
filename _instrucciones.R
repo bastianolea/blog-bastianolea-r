@@ -1,5 +1,3 @@
-source("R/funciones.R")
-
 # previsualizar sitio
 
 blogdown::serve_site()
@@ -44,6 +42,9 @@ blogdown::new_post(title = "Interactúa desde R con una IA que conoce tus datos,
 
 
 ## borradores ----
+
+
+# https://www.linkedin.com/feed/update/urn:li:activity:7405241344316841984?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB9if5MBe0keh4VrsmJOFbZxmIK9T9GSkYM
 
 # tutoriales
 "content/blog/r_introduccion/dplyr_summarize/dplyr_summarize.qmd"
@@ -114,7 +115,7 @@ blogdown::new_post(title = "Interactúa desde R con una IA que conoce tus datos,
 "layouts/blog/single-sidebar.html" # html de los post 
 "layouts/taxonomy/taxonomy.html" # html de la página de tags (/tags/)
 
-"~/Documents/Otros/blog/layouts/index.json" # genera el sitio en JSON para el buscador (el archivo queda en public como index.json)
+"layouts/index.json" # genera el sitio en JSON para el buscador (el archivo queda en public como index.json)
 "layouts/partials/shared/sidebar/sidebar-header.html" # sidebar del blog
 
 "assets/custom.scss" # css del sitio

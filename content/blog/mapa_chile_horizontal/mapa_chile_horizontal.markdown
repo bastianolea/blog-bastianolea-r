@@ -11,70 +11,46 @@ categories: []
 tags:
   - mapas
   - visualización de datos
+  - Chile
 editor_options: 
   chunk_output_type: console
 excerpt: Visualizar un mapa de Chile puede ser complicado debido a su largo. Muchas veces cuesta ubicar correctamente el mapa por el espacio vertical que requiere. Pero en ciertos casos puede ser conveniente visualizar a Chile _de lado_, para aprovechar el espacio horizontal. En esta guía veremos cómo rotar un mapa de Chile 90° hacia la izquierda en R para que quede acostado.
+links:
+  - icon: file-code
+    icon_pack: fas
+    name: Código
+    url: https://gist.github.com/bastianolea/8e3dff701fb660ee7cb5091bd1195b5f
 ---
 
 
 
+Visualizar un mapa de Chile puede ser complicado debido a su largo. Muchas veces cuesta ubicar correctamente el mapa por el espacio vertical que requiere. Pero en ciertos casos puede ser conveniente **visualizar a Chile _de lado_**, para aprovechar el espacio horizontal. 
 
-Visualizar un mapa de Chile puede ser complicado debido a su largo. Muchas veces cuesta ubicar correctamente el mapa por el espacio vertical que requiere. Pero en ciertos casos puede ser conveniente visualizar a Chile _de lado_, para aprovechar el espacio horizontal. En esta guía veremos cómo rotar un mapa de Chile 90° hacia la izquierda en R para que quede acostado.
+En esta guía veremos cómo rotar un mapa de Chile 90° hacia la izquierda en R para que quede acostado 💤🌙
+
+
+
+{{< aviso "Si necesitas aprender en profundidad la visualización de mapas con R, revisa mi [tutorial de mapas y datos espaciales con `{sf}`](/blog/mapas_sf/)." >}}
+
+
+
 
 Primero cargamos los paquetes necesarios:
 
 
 
 
-
 ``` r
 library(sf) # manejo de datos espaciales
-```
-
-```
-## Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE
-```
-
-``` r
 library(chilemapas) # mapas de Chile
-```
-
-```
-## La documentacion del paquete y ejemplos de uso se encuentran en https://pacha.dev/chilemapas/.
-## Visita https://buymeacoffee.com/pacha/ si deseas donar para contribuir al desarrollo de este software.
-```
-
-``` r
 library(ggplot2) # visualización de datos
 library(dplyr) # manejo de datos tabulares
-```
-
-```
-## 
-## Attaching package: 'dplyr'
-```
-
-```
-## The following objects are masked from 'package:stats':
-## 
-##     filter, lag
-```
-
-```
-## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union
-```
-
-``` r
 library(readr) # cargar datos
 ```
 
 
 
-
-Obtenemos un mapa de Chile gracias al paquete {chilemapas}; en este caso un mapa del país por regiones:
-
+Obtenemos un mapa de Chile [gracias al paquete `{chilemapas}`](https://github.com/pachadotdev/chilemapas); en este caso un mapa del país por regiones:
 
 
 
@@ -125,34 +101,15 @@ mapa_region |>
 
 
 
-
-Cargamos algunos datos regionales para ponerle al mapa:
-
+Cargamos algunos datos regionales para ponerle al mapa, sacados de mi proyecto de [visualización de datos económicos de Chile](https://bastianoleah.shinyapps.io/economia_chile/):
 
 
 
 ``` r
 # obtener datos
 datos <- read_csv2("https://github.com/bastianolea/economia_chile/raw/main/app/datos/pib_regional.csv")
-```
+# https://github.com/bastianolea/economia_chile
 
-```
-## ℹ Using "','" as decimal and "'.'" as grouping mark. Use `read_delim()` for more control.
-```
-
-```
-## New names:
-## Rows: 951 Columns: 8
-## ── Column specification
-## ──────────────────────────────────────────────────────── Delimiter: ";" chr
-## (2): serie, fecha dbl (5): ...1, valor, año, trimestre, mes date (1):
-## fecha_scraping
-## ℹ Use `spec()` to retrieve the full column specification for this data. ℹ
-## Specify the column types or set `show_col_types = FALSE` to quiet this message.
-## • `` -> `...1`
-```
-
-``` r
 # limpiar datos
 datos_2 <- datos |> 
   group_by(serie) |> 
@@ -178,7 +135,16 @@ regiones <- tribble(~codigo_region, ~nombre_region,
                     "14", "Región de Los Lagos",
                     "15", "Región de Aysén del General Carlos Ibáñez del Campo",
                     "16", "Región de Magallanes y de la Antártica Chilena")
+```
 
+
+
+Ahora que tenemos los datos listos, los agregamos al mapa [usando un `left_join()`](/blog/left_join/):
+
+
+
+
+``` r
 # agregar regiones y datos al mapa
 mapa_datos <- mapa_region |> 
   left_join(regiones) |> 
@@ -188,6 +154,12 @@ mapa_datos <- mapa_region |>
 ```
 ## Joining with `by = join_by(codigo_region)`
 ```
+
+
+
+Finalmente, previsualizamos el mapa con los datos agregados:
+
+
 
 ``` r
 # visualizar mapa con datos
@@ -209,14 +181,12 @@ mapa_datos |>
 ## 'big.mark' and 'decimal.mark' are both '.', which could be confusing
 ```
 
-<img src="/blog/mapa_chile_horizontal/mapa_chile_horizontal_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+<img src="/blog/mapa_chile_horizontal/mapa_chile_horizontal_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 
 
 
-
-Ahora que tenemos un mapa de Chile con datos regionales, procedemos a rotar el mapa. Para esto, necesitamos una _matriz de rotación_, respecto de la cual no hay mucho que entender, salvo que nos permitirá multiplicar la geometría del mapa para obtener como resultado la misma geometría, pero rotada. El único detalle que hay que considerar es que es necesario cambiar la proyección del mapa para que la zona sur del país no se vea deformada.
-
+Ahora que tenemos un mapa de Chile con datos regionales, procedemos a **rotar el mapa**. Para esto, necesitamos una _matriz de rotación_, respecto de la cual no hay mucho que entender, salvo que nos permitirá multiplicar la geometría del mapa para obtener como resultado la misma geometría, pero rotada. El único detalle que hay que considerar es que es necesario **cambiar la proyección del mapa** para que la zona sur del país no se vea deformada.
 
 
 
@@ -235,9 +205,7 @@ mapa_rotado <- mapa_proyectado |>
 
 
 
-
-Finalmente, visualizamos el mapa reproyectado y rotado:
-
+Ahora visualizamos el **mapa reproyectado y rotado**:
 
 
 
@@ -260,14 +228,16 @@ mapa_rotado |>
         axis.ticks = element_blank())
 ```
 
-```
-## Warning in prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L, :
-## 'big.mark' and 'decimal.mark' are both '.', which could be confusing
-```
-
-<img src="/blog/mapa_chile_horizontal/mapa_chile_horizontal_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+<img src="/blog/mapa_chile_horizontal/mapa_chile_horizontal_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 
+
+
+Listo! Revisa el [código completo](https://gist.github.com/bastianolea/8e3dff701fb660ee7cb5091bd1195b5f) en el siguiente botón para poder copiarlo y pegarlo en tu proyecto:
+
+
+
+{{< boton "Ver código completo" "https://gist.github.com/bastianolea/8e3dff701fb660ee7cb5091bd1195b5f" "fas fa-file-code" >}}
 
 
 
