@@ -27,7 +27,7 @@ execute:
 ---
 
 
-En esta ocasión veremos la función que nos permite **crear variables nuevas**, a partir de los aprendizajes sobre manipualción de datos que vimos [en tutoriales anteriores](../../../../blog/r_introduccion/dplyr_intro/).
+En esta ocasión veremos la función que nos permite **crear variables nuevas**, a partir de los aprendizajes sobre manipulación de datos que vimos [en tutoriales anteriores](../../../../blog/r_introduccion/dplyr_intro/).
 
 Para **crear variables nuevas**, o **transformar variables existentes**, usaremos la función `mutate()`, que forma parte del paquete `{dplyr}`.
 
@@ -118,9 +118,9 @@ ejemplo |>
     # A tibble: 3 × 2
       números  azar
         <int> <int>
-    1       1    64
-    2       2     1
-    3       3    22
+    1       1    45
+    2       2    54
+    3       3    73
 
 En este ejemplo, los valores de la columna son definidos por la función que usamos.
 

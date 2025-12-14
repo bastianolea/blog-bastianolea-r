@@ -1,13 +1,13 @@
 ---
 title: "Calcular resúmenes de datos con `dplyr::summarize()`"
 author: Bastián Olea Herrera
-date: '2025-11-24'
+date: '2025-12-14'
 format: 
   hugo-md:
     output-file: "index"
     output-ext:  "md"
-weight: 8
-draft: true
+weight: 9
+draft: false
 series: "Introducción a R"
 slug: []
 categories: ["Tutoriales"]
@@ -19,53 +19,248 @@ excerpt: Prueba
 execute: 
   error: true
   eval: true
+links:
+  - icon: file-code
+    icon_pack: fas
+    name: Código scraping
+    url: https://gist.github.com/bastianolea/c9898df9994cdba32bd6702697498ee589
 ---
 
-En el [tutorial anterior de introducción a `{dplyr}`](/blog/r_introduccion/dplyr_intro/) aprendimos a ordenar, seleccionar, y filtrar datos tabulares. Con estas operaciones básicas deberíamos poder desenvolvernos con tablas de datos.
+En el [tutorial de introducción a `{dplyr}`](/blog/r_introduccion/dplyr_intro/) aprendimos a ordenar, seleccionar, y filtrar datos tabulares. Con estas operaciones básicas deberíamos poder desenvolvernos con tablas de datos.
 
-En esta ocasión, avanzaremos hacia las herramientas que nos permiten **crear datos nuevos** a partir de los datos que ya aprendimos a manejar.
+Luego aprendimos a **crear y modificar variables** con [la función `mutate()` de `{dplyr}`](/blog/r_introduccion/dplyr_mutate/).
 
-
-
-Si queremos tener más control sobre los cálculos de estadísticos descriptivos, podemos usar `{dplyr}`.
-
-Vamos a partir viendo cómo se hace un sólo estadístico descriptivo promedio para una sola variable, y vamos a ir avanzando desde ahí hasta poder aplicar **múltiples estadísticos descriptivos a todas las variables**.
-
-### Calcular promedio con `summarize()`
-
-Si bien `{dplyr}` no tiene una función que lo haga automáticamente como `summary()`, podemos usar la función `summarize()` para calcular **resúmenes estadísticos**. A `summarize()` le damos una función que usaremos para _resumir_ los datos a una sola fila.
-
-Por ejemplo, calculemos el **promedio** de una variable:
+Ahora veremos cómo **calcular resúmenes de datos**. Con esto nos referimos a tomar varias observaciones o filas, y aplicar algún cálculo para **reducir todas las filas a un solo dato**.
 
 ```{r}
 #| message: false
 library(dplyr)
 
-iris |> 
-  summarize(
-    promedio = mean(Sepal.Length)
+options(scipen = 999) # desactivar notación científica
+```
+
+
+{{< aviso "Si necesitas aprender `{dplyr}` desde el principio, revisa el [tutorial de introducción a `{dplyr}`](/blog/r_introduccion/dplyr_intro/)." >}}
+
+
+## Introducción
+
+Para este tutorial vamos a trabajar con datos de **población de países de América del Sur**, obtenidas desde [una tabla de Wikipedia](https://es.wikipedia.org/wiki/América_del_Sur#Geografía_política) usando [web scraping](/tags/web-scraping/]. Puedes ver el [código del web scraping aquí](https://gist.github.com/bastianolea/c9898df9994cdba32bd6702697498ee5).
+
+Para cargar los datos en tu entorno de R, ejecuta el siguiente código:
+
+```{r}
+datos <- tribble(
+                ~pais, ~superficie, ~poblacion,  ~idh,
+             "Brasil",     8515767,   2.08e+08, 0.765,
+          "Argentina",     2780400,   44500000, 0.845,
+               "Perú",     1286216,   32200000, 0.777,
+           "Colombia",     1141748,      5e+07, 0.767,
+            "Bolivia",     1098581,   11200000, 0.718,
+          "Venezuela",      916445,   31800000, 0.711,
+              "Chile",      756102,   17800000, 0.851,
+           "Paraguay",      406752,    7100000, 0.728,
+            "Ecuador",      256370,   16900000, 0.759,
+             "Guyana",      214970,      8e+05, 0.682,
+            "Uruguay",      176215,    3500000, 0.817,
+            "Surinam",      163820,      5e+05, 0.738,
+   "Guayana Francesa",       83846,      3e+05, 0.901,
+  "Trinidad y Tobago",        5128,    1300000, 0.796
   )
 ```
 
 
-
-
-### Calcular promedio de varias variables con `summarize(across())`
-
-Para hacerlo más útil, en vez de calcular para una sola variable, podemos pedirle que calcule el promedio para todas las variables numéricas. Esto lo logramos usando `across()`, que permite aplicar las operaciones a varias columnas a la vez, indicando que queremos aplicar la operación _donde_ (`where()`) las variables _sean numéricas_ (`is.numeric`).
-
-Entonces, este código calculará el promedio para todas las columnas numéricas del _dataframe_:
+Como hemos visto en el [tutorial introductorio de R](https://bastianolea.rbind.io/blog/r_introduccion/r_basico/#funciones), para **calcular una suma** usamos la función `sum()`:
 
 ```{r}
-iris |> 
+#| warning: false
+total <- sum(datos$poblacion)
+
+format(total, big.mark = ".", scientific = FALSE)
+```
+Mientras que para **calcular un promedio** usamos la función `mean()`:
+
+```{r}
+promedio <- mean(datos$idh)
+
+round(promedio, 2)
+```
+Cualquier función como las anteriores, que **reciba varios datos y entregue uno solo**, será una función que podemos usar dentro de `summarize()` para obtener resúmenes de datos.
+
+
+## Resumir datos con `summarize()`
+
+La función `summarize()` calcula **resúmenes** de las tablas de datos, a partir de una o varias funciones que van a _resumir_ los datos a una sola fila.
+
+Para calcular el resumen de los valores de una variable, dentro de `summarize()` ubicamos la **función** necesaria, aplicada a la **columna** que nos interesa resumir. 
+
+Calculemos la suma (`sum()`) de la columna `poblacion`:
+
+```{r}
+datos |> 
+  summarize(
+    suma = sum(poblacion)
+  )
+```
+
+Redujimos las 14 filas de nuestra tabla de datos y obtuvimos una sola fila, que resume todos los valores de la `poblacion` a partir de una suma.
+
+Dentro de `summarize()` podemos calcular varios resúmenes al mismo tiempo. 
+
+Agreguemos una segunda línea para calcular el **promedio** del índice de desarrollo humano (`idh`):
+
+```{r}
+datos |> 
+  summarize(
+    suma = sum(poblacion),
+    promedio = mean(idh)
+  )
+```
+
+### Estadísticos descriptivos 
+De este modo podemos calcular datos que resumen las observaciones, por ejemplo, [calcular estadísticas descriptivos](https://bastianolea.rbind.io/blog/estadisticos_descriptivos/) relevantes a los datos que estamos trabajando:
+
+```{r}
+#| warning: false
+datos |> 
+  # calcular estadísticos descriptivos
+  summarize(
+    poblacion_total = sum(poblacion),
+    poblacion_promedio = mean(poblacion),
+    poblacion_minima = min(poblacion),
+    poblacion_maxima = max(poblacion)
+  ) |> 
+  # agregar puntos de miles
+  mutate(
+    across(
+      where(is.numeric), ~format(.x, big.mark = ".")
+    )
+  )
+```
+
+{{< info "Agregamos un `mutate(across())` para aplicar una función a todas las columnas al mismo tiempo. Para más información, [revisa este tutorial](/blog/r_introduccion/dplyr_mutate/#crear-varias-columnas-al-mismo-tiempo-con-across)." >}}
+
+
+### Resúmenes por grupos
+
+[Tal que como vimos con `mutate()`](/blog/r_introduccion/dplyr_mutate/#calcular-variables-por-grupos-con-group_by), podemos anteponer la función de **agrupación** `group_by()` para que los resúmenes de datos se calculen por grupos. Esto significa que, en vez de obtener una sola fila de resumen, obtendremos **una fila por cada grupo** de la variable que elijamos para agrupar los datos.
+
+Primero creemos una variable que nos permita agrupar los datos:
+
+```{r}
+datos_2 <- datos |>
+  # crear grupos por índice de desarrollo humano
+  mutate(grupo = case_when(poblacion >= 20000000 ~ "Alta",
+                           poblacion >= 5000000 ~ "Media",
+                           poblacion <  5000000 ~ "Baja")) |> 
+  # ordenar factor
+  mutate(grupo = factor(grupo, 
+                        levels = c("Baja", "Media", "Alta")))
+
+datos_2 |> 
+  count(grupo)
+```
+Ahora, usando `group_by()`, podemos calcular los resúmenes por cada grupo de población:
+
+```{r}
+datos_2 |> 
+  group_by(grupo) |> 
+  summarize(
+    poblacion_total = sum(poblacion),
+    poblacion_promedio = mean(poblacion),
+    idh_promedio = mean(idh),
+    idh_maximo = max(idh)
+  )
+```
+El uso de `group_by()` es muy conveniente, porque podemos tener un mismo código para calcular resúmenes estadísticos, y con tan solo cambiar la variable de agrupación obtendremos resultados actualizados.
+
+
+### Resúmenes de varias variables con `across()`
+
+En lugar de tener que estar especificando las columnas que queremos resumir, podemos calcular un resumen para varias columnas al mismo tiempo. [Igual que con `mutate()`](/blog/r_introduccion/dplyr_mutate/#crear-varias-columnas-al-mismo-tiempo-con-across), esto lo logramos usando `across()` dentro de `summarize()`, que permite aplicar las operaciones a varias columnas a la vez.
+
+Por ejemplo, para calcular un resumen de todas las **columnas numéricas**, indicamos dentro de `across()` que queremos aplicar la operación _donde_ (`where()`) las variables _sean numéricas_ (`is.numeric`):
+
+```{r}
+datos_2 |> 
   summarize(             # resumir los datos
     across(              # donde las columnas
       where(is.numeric), # sean numéricas
-      ~mean(.x),         # calculando el promedio
-      .names = "{col}_promedio") # cambiar el nombre de columnas
+      ~mean(.x)          # calculando el promedio
+    )
   )
 ```
 
+Para controlar el **nombre** que tendrán las columnas resultantes se puede usar el argumento `.names`:
+
+```{r}
+datos_2 |> 
+  summarise(
+    across(where(is.numeric), 
+           ~mean(.x), 
+           .names = "resumen_{.col}_promedio" # cambiar el nombre de columnas
+    )
+  )
+```
+
+O bien, se pueden poner las funciones de resumen dentro de una lista, donde puedes entregarle el nombre que tendrá el resultado:
+
+```{r}
+datos_2 |> 
+  summarise(
+    across(where(is.numeric), 
+           list(
+             "promedio" = ~mean(.x)
+           )
+    )
+  )
+```
+
+
+
+### Múltiples resúmenes a la vez
+
+También es posible calcular resúmenes usando más de una función, por ejemplo para **calcular los promedios y las sumas al mismo tiempo**, entregando las funciones dentro de una lista:
+```{r}
+datos_2 |> 
+  summarise(
+    across(where(is.numeric), 
+           list(
+             "promedio" = ~mean(.x), 
+             "suma" = ~sum(.x)
+           )
+    )
+  ) |> 
+  glimpse()
+```
+
+O bien, podemos aprovechar `across()` para reducir el código que escribimos en combinación con resúmenes individuales:
+
+```{r}
+datos_2 |> 
+  summarize(
+    "idh_prom" = mean(idh),
+    across(c(superficie, poblacion), 
+           list("suma" = ~sum(.x))
+    )
+  )
+
+```
+
+Obviamente podemos combinar lo anterior con la agrupación para obtener un completo resumen de datos de la tabla:
+
+```{r}
+datos_2 |> 
+  group_by(grupo) |>
+  summarise(
+    across(where(is.numeric), 
+           list(
+             "promedio" = ~mean(.x), 
+             "suma" = ~sum(.x)
+           )
+    )
+  )
+```
 
 
 {{< cursos >}}

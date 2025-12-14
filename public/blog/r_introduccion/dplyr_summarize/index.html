@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=5626&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.152.2">
+<title>Calcular resúmenes de datos con `dplyr::summarize()` | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Prueba">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="Calcular resúmenes de datos con `dplyr::summarize()` | Bastián Olea">
+<meta property="og:description" content="Prueba" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:5626/blog/r_introduccion/dplyr_summarize/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:5626/blog/r_introduccion/dplyr_summarize/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:5626/blog/r_introduccion/dplyr_summarize/featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Calcular resúmenes de datos con `dplyr::summarize()`">
+  <meta itemprop="description" content="En el tutorial de introducción a {dplyr} aprendimos a ordenar, seleccionar, y filtrar datos tabulares. Con estas operaciones básicas deberíamos poder desenvolvernos con tablas de datos.
+Luego aprendimos a crear y modificar variables con la función mutate() de {dplyr}.
+Ahora veremos cómo calcular resúmenes de datos. Con esto nos referimos a tomar varias observaciones o filas, y aplicar algún cálculo para reducir todas las filas a un solo dato.
+library(dplyr) options(scipen = 999) # desactivar notación científica Si necesitas aprender {dplyr} desde el principio, revisa el tutorial de introducción a {dplyr}. Introducción Para este tutorial vamos a trabajar con datos de población de países de América del Sur, obtenidas desde una tabla de Wikipedia usando [web scraping](/tags/web-scraping/]. Puedes ver el código del web scraping aquí.">
+  <meta itemprop="datePublished" content="2025-12-14T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-12-14T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1163">
+  <meta itemprop="image" content="http://localhost:5626/blog/r_introduccion/dplyr_summarize/featured.png">
+  <meta itemprop="keywords" content="Dplyr,Básico">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="../../../style.main.min.8f721815d150079638fe25bf9714e71c67b8ddf7e9435d32764c3175c3e06556.css" integrity="sha256-j3IYFdFQB5Y4/iW/lxTnHGe43ffpQ10ydkwxdcPgZVY=" media="screen">
+  
+  
+  <script src="../../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="../../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
+  
+  <link rel="stylesheet" href="../../../css/syntax.css">
+</head>
+<body>
+      <div class="grid-container single-series">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:5626/" title="Home">
+      <img src="../../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="../../../blog/" title="Bastián Olea: Blog de R">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/aprende_r/" title="Aprende R">Aprende R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../../categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../../blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../../about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+                       
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 pl3-l">
+      <header class="post-header">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Calcular resúmenes de datos con <code>dplyr::summarize()</code></h1>
+        
+        
+        <p class="f7 db mv0 ttu">14/12/2025</p>
+        
+         
+        
+  <dl class="f6 lh-copy">
+    <em><dd class="fw5 ml0"> <a href="http://localhost:5626/tags/dplyr"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      dplyr</a>  <a href="http://localhost:5626/tags/b%C3%A1sico"
+    style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 10pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px; ">
+      básico</a> </dd></em>
+  </dl>
+ 
+        
+      </header>
+      <section class="post-body pt5 pb4">
+        <p>En el 
+<a href="../../../../blog/r_introduccion/dplyr_intro/">tutorial de introducción a <code>{dplyr}</code></a> aprendimos a ordenar, seleccionar, y filtrar datos tabulares. Con estas operaciones básicas deberíamos poder desenvolvernos con tablas de datos.</p>
+<p>Luego aprendimos a <strong>crear y modificar variables</strong> con 
+<a href="../../../../blog/r_introduccion/dplyr_mutate/">la función <code>mutate()</code> de <code>{dplyr}</code></a>.</p>
+<p>Ahora veremos cómo <strong>calcular resúmenes de datos</strong>. Con esto nos referimos a tomar varias observaciones o filas, y aplicar algún cálculo para <strong>reducir todas las filas a un solo dato</strong>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">options</span><span class="p">(</span><span class="n">scipen</span> <span class="o">=</span> <span class="m">999</span><span class="p">)</span> <span class="c1"># desactivar notación científica</span>
+</span></span></code></pre></div>
+
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #493365;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-triangle-exclamation" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #EAD2FA;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%; color: #EAD2FA;">
+    Si necesitas aprender <code>{dplyr}</code> desde el principio, revisa el 
+<a href="../../../blog/r_introduccion/dplyr_intro/">tutorial de introducción a <code>{dplyr}</code></a>.
+  </aside>
+  
+</div>
+
+
+
+
+<h2 id="introducción">Introducción
+  <a href="#introducci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para este tutorial vamos a trabajar con datos de <strong>población de países de América del Sur</strong>, obtenidas desde 
+<a href="https://es.wikipedia.org/wiki/Am%c3%a9rica_del_Sur#Geograf%c3%ada_pol%c3%adtica" target="_blank" rel="noopener">una tabla de Wikipedia</a> usando [web scraping](/tags/web-scraping/]. Puedes ver el 
+<a href="https://gist.github.com/bastianolea/c9898df9994cdba32bd6702697498ee5" target="_blank" rel="noopener">código del web scraping aquí</a>.</p>
+<p>Para cargar los datos en tu entorno de R, ejecuta el siguiente código:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos</span> <span class="o">&lt;-</span> <span class="nf">tribble</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">                <span class="o">~</span><span class="n">pais</span><span class="p">,</span> <span class="o">~</span><span class="n">superficie</span><span class="p">,</span> <span class="o">~</span><span class="n">poblacion</span><span class="p">,</span>  <span class="o">~</span><span class="n">idh</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="s">&#34;Brasil&#34;</span><span class="p">,</span>     <span class="m">8515767</span><span class="p">,</span>   <span class="m">2.08e+08</span><span class="p">,</span> <span class="m">0.765</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="s">&#34;Argentina&#34;</span><span class="p">,</span>     <span class="m">2780400</span><span class="p">,</span>   <span class="m">44500000</span><span class="p">,</span> <span class="m">0.845</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="s">&#34;Perú&#34;</span><span class="p">,</span>     <span class="m">1286216</span><span class="p">,</span>   <span class="m">32200000</span><span class="p">,</span> <span class="m">0.777</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">           <span class="s">&#34;Colombia&#34;</span><span class="p">,</span>     <span class="m">1141748</span><span class="p">,</span>      <span class="m">5e+07</span><span class="p">,</span> <span class="m">0.767</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s">&#34;Bolivia&#34;</span><span class="p">,</span>     <span class="m">1098581</span><span class="p">,</span>   <span class="m">11200000</span><span class="p">,</span> <span class="m">0.718</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="s">&#34;Venezuela&#34;</span><span class="p">,</span>      <span class="m">916445</span><span class="p">,</span>   <span class="m">31800000</span><span class="p">,</span> <span class="m">0.711</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="s">&#34;Chile&#34;</span><span class="p">,</span>      <span class="m">756102</span><span class="p">,</span>   <span class="m">17800000</span><span class="p">,</span> <span class="m">0.851</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">           <span class="s">&#34;Paraguay&#34;</span><span class="p">,</span>      <span class="m">406752</span><span class="p">,</span>    <span class="m">7100000</span><span class="p">,</span> <span class="m">0.728</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s">&#34;Ecuador&#34;</span><span class="p">,</span>      <span class="m">256370</span><span class="p">,</span>   <span class="m">16900000</span><span class="p">,</span> <span class="m">0.759</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="s">&#34;Guyana&#34;</span><span class="p">,</span>      <span class="m">214970</span><span class="p">,</span>      <span class="m">8e+05</span><span class="p">,</span> <span class="m">0.682</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s">&#34;Uruguay&#34;</span><span class="p">,</span>      <span class="m">176215</span><span class="p">,</span>    <span class="m">3500000</span><span class="p">,</span> <span class="m">0.817</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="s">&#34;Surinam&#34;</span><span class="p">,</span>      <span class="m">163820</span><span class="p">,</span>      <span class="m">5e+05</span><span class="p">,</span> <span class="m">0.738</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">   <span class="s">&#34;Guayana Francesa&#34;</span><span class="p">,</span>       <span class="m">83846</span><span class="p">,</span>      <span class="m">3e+05</span><span class="p">,</span> <span class="m">0.901</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s">&#34;Trinidad y Tobago&#34;</span><span class="p">,</span>        <span class="m">5128</span><span class="p">,</span>    <span class="m">1300000</span><span class="p">,</span> <span class="m">0.796</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></div><p>Como hemos visto en el 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/r_basico/#funciones" target="_blank" rel="noopener">tutorial introductorio de R</a>, para <strong>calcular una suma</strong> usamos la función <code>sum()</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">total</span> <span class="o">&lt;-</span> <span class="nf">sum</span><span class="p">(</span><span class="n">datos</span><span class="o">$</span><span class="n">poblacion</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">format</span><span class="p">(</span><span class="n">total</span><span class="p">,</span> <span class="n">big.mark</span> <span class="o">=</span> <span class="s">&#34;.&#34;</span><span class="p">,</span> <span class="n">scientific</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>[1] &quot;425.900.000&quot;
+</code></pre>
+<p>Mientras que para <strong>calcular un promedio</strong> usamos la función <code>mean()</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">promedio</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">(</span><span class="n">datos</span><span class="o">$</span><span class="n">idh</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">round</span><span class="p">(</span><span class="n">promedio</span><span class="p">,</span> <span class="m">2</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>[1] 0.78
+</code></pre>
+<p>Cualquier función como las anteriores, que <strong>reciba varios datos y entregue uno solo</strong>, será una función que podemos usar dentro de <code>summarize()</code> para obtener resúmenes de datos.</p>
+
+
+
+
+<h2 id="resumir-datos-con-summarize">Resumir datos con <code>summarize()</code>
+  <a href="#resumir-datos-con-summarize"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>La función <code>summarize()</code> calcula <strong>resúmenes</strong> de las tablas de datos, a partir de una o varias funciones que van a <em>resumir</em> los datos a una sola fila.</p>
+<p>Para calcular el resumen de los valores de una variable, dentro de <code>summarize()</code> ubicamos la <strong>función</strong> necesaria, aplicada a la <strong>columna</strong> que nos interesa resumir.</p>
+<p>Calculemos la suma (<code>sum()</code>) de la columna <code>poblacion</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarize</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">suma</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">poblacion</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 1
+       suma
+      &lt;dbl&gt;
+1 425900000
+</code></pre>
+<p>Redujimos las 14 filas de nuestra tabla de datos y obtuvimos una sola fila, que resume todos los valores de la <code>poblacion</code> a partir de una suma.</p>
+<p>Dentro de <code>summarize()</code> podemos calcular varios resúmenes al mismo tiempo.</p>
+<p>Agreguemos una segunda línea para calcular el <strong>promedio</strong> del índice de desarrollo humano (<code>idh</code>):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarize</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">suma</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">poblacion</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">promedio</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">idh</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 2
+       suma promedio
+      &lt;dbl&gt;    &lt;dbl&gt;
+1 425900000    0.775
+</code></pre>
+
+
+
+
+<h3 id="estadísticos-descriptivos">Estadísticos descriptivos
+  <a href="#estad%c3%adsticos-descriptivos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>De este modo podemos calcular datos que resumen las observaciones, por ejemplo, 
+<a href="https://bastianolea.rbind.io/blog/estadisticos_descriptivos/" target="_blank" rel="noopener">calcular estadísticas descriptivos</a> relevantes a los datos que estamos trabajando:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="c1"># calcular estadísticos descriptivos</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">summarize</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">poblacion_total</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">poblacion</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">poblacion_promedio</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">poblacion</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">poblacion_minima</span> <span class="o">=</span> <span class="nf">min</span><span class="p">(</span><span class="n">poblacion</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">poblacion_maxima</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="n">poblacion</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="c1"># agregar puntos de miles</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">across</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">where</span><span class="p">(</span><span class="n">is.numeric</span><span class="p">),</span> <span class="o">~</span><span class="nf">format</span><span class="p">(</span><span class="n">.x</span><span class="p">,</span> <span class="n">big.mark</span> <span class="o">=</span> <span class="s">&#34;.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 4
+  poblacion_total poblacion_promedio poblacion_minima poblacion_maxima
+  &lt;chr&gt;           &lt;chr&gt;              &lt;chr&gt;            &lt;chr&gt;           
+1 425.900.000     30.421.429         300.000          208.000.000     
+</code></pre>
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%;">
+    Agregamos un <code>mutate(across())</code> para aplicar una función a todas las columnas al mismo tiempo. Para más información, 
+<a href="../../../blog/r_introduccion/dplyr_mutate/#crear-varias-columnas-al-mismo-tiempo-con-across">revisa este tutorial</a>.
+  </aside>
+  
+</div>
+
+
+
+
+<h3 id="resúmenes-por-grupos">Resúmenes por grupos
+  <a href="#res%c3%bamenes-por-grupos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>
+<a href="../../../../blog/r_introduccion/dplyr_mutate/#calcular-variables-por-grupos-con-group_by">Tal que como vimos con <code>mutate()</code></a>, podemos anteponer la función de <strong>agrupación</strong> <code>group_by()</code> para que los resúmenes de datos se calculen por grupos. Esto significa que, en vez de obtener una sola fila de resumen, obtendremos <strong>una fila por cada grupo</strong> de la variable que elijamos para agrupar los datos.</p>
+<p>Primero creemos una variable que nos permita agrupar los datos:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos_2</span> <span class="o">&lt;-</span> <span class="n">datos</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># crear grupos por índice de desarrollo humano</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">grupo</span> <span class="o">=</span> <span class="nf">case_when</span><span class="p">(</span><span class="n">poblacion</span> <span class="o">&gt;=</span> <span class="m">20000000</span> <span class="o">~</span> <span class="s">&#34;Alta&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                           <span class="n">poblacion</span> <span class="o">&gt;=</span> <span class="m">5000000</span> <span class="o">~</span> <span class="s">&#34;Media&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                           <span class="n">poblacion</span> <span class="o">&lt;</span>  <span class="m">5000000</span> <span class="o">~</span> <span class="s">&#34;Baja&#34;</span><span class="p">))</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="c1"># ordenar factor</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">grupo</span> <span class="o">=</span> <span class="nf">factor</span><span class="p">(</span><span class="n">grupo</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                        <span class="n">levels</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;Baja&#34;</span><span class="p">,</span> <span class="s">&#34;Media&#34;</span><span class="p">,</span> <span class="s">&#34;Alta&#34;</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">datos_2</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">count</span><span class="p">(</span><span class="n">grupo</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 3 × 2
+  grupo     n
+  &lt;fct&gt; &lt;int&gt;
+1 Baja      5
+2 Media     4
+3 Alta      5
+</code></pre>
+<p>Ahora, usando <code>group_by()</code>, podemos calcular los resúmenes por cada grupo de población:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos_2</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">group_by</span><span class="p">(</span><span class="n">grupo</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarize</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">poblacion_total</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">poblacion</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">poblacion_promedio</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">poblacion</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">idh_promedio</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">idh</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">idh_maximo</span> <span class="o">=</span> <span class="nf">max</span><span class="p">(</span><span class="n">idh</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 3 × 5
+  grupo poblacion_total poblacion_promedio idh_promedio idh_maximo
+  &lt;fct&gt;           &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;
+1 Baja          6400000            1280000        0.787      0.901
+2 Media        53000000           13250000        0.764      0.851
+3 Alta        366500000           73300000        0.773      0.845
+</code></pre>
+<p>El uso de <code>group_by()</code> es muy conveniente, porque podemos tener un mismo código para calcular resúmenes estadísticos, y con tan solo cambiar la variable de agrupación obtendremos resultados actualizados.</p>
+
+
+
+
+<h3 id="resúmenes-de-varias-variables-con-across">Resúmenes de varias variables con <code>across()</code>
+  <a href="#res%c3%bamenes-de-varias-variables-con-across"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>En lugar de tener que estar especificando las columnas que queremos resumir, podemos calcular un resumen para varias columnas al mismo tiempo. 
+<a href="../../../../blog/r_introduccion/dplyr_mutate/#crear-varias-columnas-al-mismo-tiempo-con-across">Igual que con <code>mutate()</code></a>, esto lo logramos usando <code>across()</code> dentro de <code>summarize()</code>, que permite aplicar las operaciones a varias columnas a la vez.</p>
+<p>Por ejemplo, para calcular un resumen de todas las <strong>columnas numéricas</strong>, indicamos dentro de <code>across()</code> que queremos aplicar la operación <em>donde</em> (<code>where()</code>) las variables <em>sean numéricas</em> (<code>is.numeric</code>):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos_2</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarize</span><span class="p">(</span>             <span class="c1"># resumir los datos</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">across</span><span class="p">(</span>              <span class="c1"># donde las columnas</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">where</span><span class="p">(</span><span class="n">is.numeric</span><span class="p">),</span> <span class="c1"># sean numéricas</span>
+</span></span><span class="line"><span class="cl">      <span class="o">~</span><span class="nf">mean</span><span class="p">(</span><span class="n">.x</span><span class="p">)</span>          <span class="c1"># calculando el promedio</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 3
+  superficie poblacion   idh
+       &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt;
+1   1271597. 30421429. 0.775
+</code></pre>
+<p>Para controlar el <strong>nombre</strong> que tendrán las columnas resultantes se puede usar el argumento <code>.names</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos_2</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarise</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">across</span><span class="p">(</span><span class="nf">where</span><span class="p">(</span><span class="n">is.numeric</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">           <span class="o">~</span><span class="nf">mean</span><span class="p">(</span><span class="n">.x</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">           <span class="n">.names</span> <span class="o">=</span> <span class="s">&#34;resumen_{.col}_promedio&#34;</span> <span class="c1"># cambiar el nombre de columnas</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 3
+  resumen_superficie_promedio resumen_poblacion_promedio resumen_idh_promedio
+                        &lt;dbl&gt;                      &lt;dbl&gt;                &lt;dbl&gt;
+1                    1271597.                  30421429.                0.775
+</code></pre>
+<p>O bien, se pueden poner las funciones de resumen dentro de una lista, donde puedes entregarle el nombre que tendrá el resultado:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos_2</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarise</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">across</span><span class="p">(</span><span class="nf">where</span><span class="p">(</span><span class="n">is.numeric</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">           <span class="nf">list</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">             <span class="s">&#34;promedio&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">mean</span><span class="p">(</span><span class="n">.x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">           <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 3
+  superficie_promedio poblacion_promedio idh_promedio
+                &lt;dbl&gt;              &lt;dbl&gt;        &lt;dbl&gt;
+1            1271597.          30421429.        0.775
+</code></pre>
+
+
+
+
+<h3 id="múltiples-resúmenes-a-la-vez">Múltiples resúmenes a la vez
+  <a href="#m%c3%baltiples-res%c3%bamenes-a-la-vez"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>También es posible calcular resúmenes usando más de una función, por ejemplo para <strong>calcular los promedios y las sumas al mismo tiempo</strong>, entregando las funciones dentro de una lista:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos_2</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarise</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">across</span><span class="p">(</span><span class="nf">where</span><span class="p">(</span><span class="n">is.numeric</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">           <span class="nf">list</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">             <span class="s">&#34;promedio&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">mean</span><span class="p">(</span><span class="n">.x</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">             <span class="s">&#34;suma&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">sum</span><span class="p">(</span><span class="n">.x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">           <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">glimpse</span><span class="p">()</span>
+</span></span></code></pre></div><pre><code>Rows: 1
+Columns: 6
+$ superficie_promedio &lt;dbl&gt; 1271597
+$ superficie_suma     &lt;dbl&gt; 17802360
+$ poblacion_promedio  &lt;dbl&gt; 30421429
+$ poblacion_suma      &lt;dbl&gt; 425900000
+$ idh_promedio        &lt;dbl&gt; 0.7753571
+$ idh_suma            &lt;dbl&gt; 10.855
+</code></pre>
+<p>O bien, podemos aprovechar <code>across()</code> para reducir el código que escribimos en combinación con resúmenes individuales:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos_2</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarize</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="s">&#34;idh_prom&#34;</span> <span class="o">=</span> <span class="nf">mean</span><span class="p">(</span><span class="n">idh</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">across</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">superficie</span><span class="p">,</span> <span class="n">poblacion</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">           <span class="nf">list</span><span class="p">(</span><span class="s">&#34;suma&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">sum</span><span class="p">(</span><span class="n">.x</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 3
+  idh_prom superficie_suma poblacion_suma
+     &lt;dbl&gt;           &lt;dbl&gt;          &lt;dbl&gt;
+1    0.775        17802360      425900000
+</code></pre>
+<p>Obviamente podemos combinar lo anterior con la agrupación para obtener un completo resumen de datos de la tabla:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos_2</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">group_by</span><span class="p">(</span><span class="n">grupo</span><span class="p">)</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">summarise</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">across</span><span class="p">(</span><span class="nf">where</span><span class="p">(</span><span class="n">is.numeric</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">           <span class="nf">list</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">             <span class="s">&#34;promedio&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">mean</span><span class="p">(</span><span class="n">.x</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">             <span class="s">&#34;suma&#34;</span> <span class="o">=</span> <span class="o">~</span><span class="nf">sum</span><span class="p">(</span><span class="n">.x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">           <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 3 × 7
+  grupo superficie_promedio superficie_suma poblacion_promedio poblacion_suma
+  &lt;fct&gt;               &lt;dbl&gt;           &lt;dbl&gt;              &lt;dbl&gt;          &lt;dbl&gt;
+1 Baja              128796.          643979            1280000        6400000
+2 Media             629451.         2517805           13250000       53000000
+3 Alta             2928115.        14640576           73300000      366500000
+# ℹ 2 more variables: idh_promedio &lt;dbl&gt;, idh_suma &lt;dbl&gt;
+</code></pre>
+<p>
+<div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div></p>
+
+      </section>
+      <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="http://localhost:5626/blog/r_introduccion/dplyr_mutate/">&larr; Crear variables nuevas con `dplyr::mutate()`</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:5626/blog/r_introduccion/tidyr_pivotar/">Transformación de datos entre formato _ancho_ y _largo_ con {tidyr} &rarr;</a>
+  
+</div>
+
+      </footer>
+    </article>
+    
+      <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+  </section>
+</main>
+
+<aside class="page-sidebar" role="complementary">
+
+   
+                         
+ 
+
+
+
+<div class="flex items-start sticky ph4 pb4">
+  <div class="w-two-thirds w-50-l ph0">
+    
+    <h2 class="mt3 mb3 f5 fw7 ttu tracked"><a class="no-underline dim" href="../../../blog/r_introduccion/">Publicaciones de la serie</a></h2>
+    <nav id="SeriesTableOfContents">
+        <ul>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/instalar_r/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/instalar_r/">Primer paso: instalar R</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/por_que_r/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/por_que_r/">¿Por qué usar R?</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/r_basico/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/r_basico/">Introducción al lenguaje de programación R</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/r_intermedio/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/r_intermedio/">Herramientas básicas para programar con R</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/conectores/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/conectores/">Aprendiendo a usar conectores o <em>pipes</em></a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/proyectos/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/proyectos/">Organizar el trabajo en Proyectos de RStudio</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/dplyr_intro/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/dplyr_intro/">Introducción al manejo de datos con {dplyr}</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/dplyr_mutate/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/dplyr_mutate/">Crear variables nuevas con <code>dplyr::mutate()</code></a></li>
+        
+          
+          <li class="active" hugo-nav="/blog/r_introduccion/dplyr_summarize/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/dplyr_summarize/">Calcular resúmenes de datos con <code>dplyr::summarize()</code></a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tidyr_pivotar/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/tidyr_pivotar/">Transformación de datos entre formato <em>ancho</em> y <em>largo</em> con {tidyr}</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_censo/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_campamentos/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/tutorial_dplyr_campamentos/">Tutorial: introducción a {dplyr} usando datos de campamentos</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_visualizacion_ggplot/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/tutorial_visualizacion_ggplot/">Tutorial: visualización de datos con {ggplot2}</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shiny_1/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/tutorial_shiny_1/">Tutorial: introducción al desarrollo de apps con Shiny</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shinyapps/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/tutorial_shinyapps/">Tutorial: publicar una app Shiny en shinyapps.io</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/web_scraping/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/web_scraping/">Web scraping con R</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_github/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/tutorial_github/">Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub</a></li>
+        
+          
+          <li class="" hugo-nav="/blog/r_introduccion/recursos_r/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/recursos_r/">Recursos, blogs y otros sitios sobre R</a></li>
+        
+        </ul>
+      </nav>
+  </div>
+  
+  
+  <details open id="PageTableOfContents">
+    <summary><h2 class="mv0 f5 fw7 ttu tracked dib">Índice</h2></summary>
+    <div class="pl2 pr0 mh0" style = "font-size: 95%;">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introducción">Introducción</a></li>
+    <li><a href="#resumir-datos-con-summarize">Resumir datos con <code>summarize()</code></a>
+      <ul>
+        <li><a href="#estadísticos-descriptivos">Estadísticos descriptivos</a></li>
+        <li><a href="#resúmenes-por-grupos">Resúmenes por grupos</a></li>
+        <li><a href="#resúmenes-de-varias-variables-con-across">Resúmenes de varias variables con <code>across()</code></a></li>
+        <li><a href="#múltiples-resúmenes-a-la-vez">Múltiples resúmenes a la vez</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+  </details>
+  
+</div>
+
+
+ 
+  
+</aside>
+
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2025 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source" style="color:#9069C0;">Hugo Apéro</a> 
+      y <a href="https://pkgs.rstudio.com/blogdown/" style="color:#9069C0;">{blogdown}</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source" style="color:#9069C0;">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL" style="color:#9069C0;">Formspree</a>.
+
+Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlify</a></span>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="../../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+      <a class="dib pv1 ph2 link" href="../../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="../../../tags/" title="Temas">Temas</a>
+      
+      <a class="dib pv1 ph2 link" href="../../../clases/" title="Clases">Clases</a>
+      
+      <a class="dib pv1 ph2 link" href="../../../code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
+      
+      <a class="dib pv1 ph2 link" href="../../../license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

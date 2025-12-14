@@ -34,20 +34,16 @@ blogdown::new_post(title = "Interactúa desde R con una IA que conoce tus datos,
 #     output-ext: "md"
 
 # links:
-#   - icon: github
-#     icon_pack: fab
+#   - icon: file-code
+#     icon_pack: fas
 #     name: Código
 #     url: https://gist.github.com/bastianolea/8ea85fa8169b302d2144e05434668c89
 
 
-
 ## borradores ----
-
 
 # https://www.linkedin.com/feed/update/urn:li:activity:7405241344316841984?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB9if5MBe0keh4VrsmJOFbZxmIK9T9GSkYM
 
-# tutoriales
-"content/blog/r_introduccion/dplyr_summarize/dplyr_summarize.qmd"
 
 # constantes
 "content/blog/mapas_sf/mapas_sf.qmd"
