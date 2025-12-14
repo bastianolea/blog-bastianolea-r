@@ -7,6 +7,7 @@ draft: false
 categories: []
 tags:
   - git
+  - programación
 format:
   hugo-md:
     output-file: index

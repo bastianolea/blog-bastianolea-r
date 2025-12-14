@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4512&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=3343&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -31,16 +31,16 @@
 <meta property="og:title" content="Actualización del blog: menús, mejoras, y más morado | Bastián Olea">
 <meta property="og:description" content="He estado retocando algunos aspectos de este blog. Quería contarles los principales cambios: tablas de contenido en todas las publicaciones, nuevos _shortcodes_, nuevo tema de colores para bloques de código, resultados de búsqueda con resúmenes de posts, y más." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:4512/blog/2025-12-02/" />
+<meta property="og:url" content="http://localhost:3343/blog/2025-12-02/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:4512/blog/sidebar-listing.jpg" >
+        <meta property="og:image" content="http://localhost:3343/blog/sidebar-listing.jpg" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:4512/blog/sidebar-listing.jpg" >
+        <meta name="twitter:image" content="http://localhost:3343/blog/sidebar-listing.jpg" >
     
     
   
@@ -57,7 +57,7 @@ Tablas de contenido en posts Uno de los cambios principales, y que quería hacer
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="../../style.main.min.7887be321ed5334c878ceffe54c6681c0cc23ed59f4c21d854aa4b609d217cc7.css" integrity="sha256-eIe&#43;Mh7VM0yHjO/&#43;VMZoHAzCPtWfTCHYVKpLYJ0hfMc=" media="screen">
+  <link rel="stylesheet" href="../../style.main.min.8f721815d150079638fe25bf9714e71c67b8ddf7e9435d32764c3175c3e06556.css" integrity="sha256-j3IYFdFQB5Y4/iW/lxTnHGe43ffpQ10ydkwxdcPgZVY=" media="screen">
   
   
   <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -71,7 +71,7 @@ Tablas de contenido en posts Uno de los cambios principales, y que quería hacer
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4512/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:3343/" title="Home">
       <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -306,7 +306,7 @@ Tablas de contenido en posts Uno de los cambios principales, y que quería hacer
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:4512/tags/blog"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:3343/tags/blog"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -350,7 +350,9 @@ Tablas de contenido en posts Uno de los cambios principales, y que quería hacer
   <summary>
     <strong>Más detalles sobre cómo lo hice</strong>
   </summary>
-  <p>
+    <div style="padding: 16px; border: solid 2px #A885C6AA; border-radius: 6px; 
+    background-color: #A885C630;
+    margin-top: 8px; padding-top: 0px; padding-bottom: 0px;">
     <p>Tuve que cambiar la plantilla (<em>layout</em>) de los posts a <code>single-sidebar</code> en el <em>front matter</em> del blog (<code>content/blog/_index.md</code>), y luego personalizar el <em>sidebar</em> para que tenga etiquetas y la tabla de contenidos (que se agrega con <code>{{ $page.TableOfContents }}</code> en Hugo).</p>
 <p>En concreto, el código que agregué al <em>sidebar</em> revisa que el post tenga títulos, de lo contrario no tiene sentido mostrar un índice, y si los tiene, mostrarlo con un estilo y atributos determinados. El código es:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="c">&lt;!-- índice de la página --&gt;</span>
@@ -380,7 +382,7 @@ Tablas de contenido en posts Uno de los cambios principales, y que quería hacer
 </span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">details</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></span></code></pre></div>
-  </p>
+    </div>
 </details>
 <hr>
 
@@ -400,7 +402,9 @@ Tablas de contenido en posts Uno de los cambios principales, y que quería hacer
   <summary>
     <strong>Detalles sobre los detalles</strong>
   </summary>
-  <p>
+    <div style="padding: 16px; border: solid 2px #A885C6AA; border-radius: 6px; 
+    background-color: #A885C630;
+    margin-top: 8px; padding-top: 0px; padding-bottom: 0px;">
     <p>El <em>shortcode</em> es demasiado sencillo:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">details</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">summary</span><span class="p">&gt;</span>
@@ -412,7 +416,7 @@ Tablas de contenido en posts Uno de los cambios principales, y que quería hacer
 </span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">details</span><span class="p">&gt;</span>
 </span></span></code></pre></div><p>Solamente ese código guardado en <code>layouts/shortcodes/detalles.html</code>, y se usa poniendo el <em>shortcode</em> de apertura y después uno de cierre con un <code>/</code> antes de la palabra <em>detalles</em>.</p>
 
-  </p>
+    </div>
 </details>
 <hr>
 
@@ -435,13 +439,15 @@ Tablas de contenido en posts Uno de los cambios principales, y que quería hacer
   <summary>
     <strong>Más detalles sobre cómo lo hice</strong>
   </summary>
-  <p>
+    <div style="padding: 16px; border: solid 2px #A885C6AA; border-radius: 6px; 
+    background-color: #A885C630;
+    margin-top: 8px; padding-top: 0px; padding-bottom: 0px;">
     <p>Para esto, tuve que cambiar un poco la configuración de Hugo para que genere una versión del blog en JSON, agregándole que también incluya los textos de resumen o <em>excerpt</em>.</p>
 <p>Siguiendo las 
 <a href="https://bastianolea.rbind.io/blog/buscador/" target="_blank" rel="noopener">instrucciones que di antes</a>, en el archivo <code>layouts/index.json</code> hay que agregarle <code>&quot;excerpt&quot; (default $page.Summary $page.Params.excerpt)</code> para que registre ese atributo de cada post en el archivo JSON, que se regenera con cada compilación (<em>build</em>) del sitio.</p>
 <p>Luego simplemente actualizar la app para que agregue ese texto, previamente interpretado como <em>markdown</em> con la función <code>shiny::markdown()</code>.</p>
 
-  </p>
+    </div>
 </details>
 <br>
 
@@ -529,7 +535,9 @@ Aprende R</a>
   <summary>
     <strong>Detalles sobre cómo lo hice</strong>
   </summary>
-  <p>
+    <div style="padding: 16px; border: solid 2px #A885C6AA; border-radius: 6px; 
+    background-color: #A885C630;
+    margin-top: 8px; padding-top: 0px; padding-bottom: 0px;">
     <p>El tema del código del blog Hugo se puede cambiar en <code>config.toml</code>, pero las opciones de colores 
 <a href="https://xyproto.github.io/splash/docs/" target="_blank" rel="noopener">son limitadas</a>.</p>
 <p>Para poder crear tu propio tema de <em>syntax highlighting</em> primero tienes que cambiar la opción para que cada elemento de tu código use una clase CSS específica:</p>
@@ -547,7 +555,7 @@ Aprende R</a>
 </a>
 <p>Finalmente tienes que poner el archivo CSS en la carpeta <code>static/css/syntax.css</code>, y cargarlo en todas las páginas del blog agregando <code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/css/syntax.css&quot;&gt;</code> al archivo <code>layouts/partials/head.html</code> (si no lo tienes, lo copias desde la carpeta del tema).</p>
 
-  </p>
+    </div>
 </details>
 <p>Me hace muy feliz que todo se vea tan bonito, y si quieren su RStudio también puede verse así de cute 💕</p>
 
@@ -577,12 +585,12 @@ Tema morado para RStudio</a>
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4512/blog/2025-12-04/">&larr; Gráfico exploratorio para el Sistema de Indicadores y Estándares Territoriales</a>
+    href="http://localhost:3343/blog/2025-12-04/">&larr; Gráfico exploratorio para el Sistema de Indicadores y Estándares Territoriales</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4512/blog/tema_morado/">Temas morados oscuro y claro para RStudio &rarr;</a>
+    href="http://localhost:3343/blog/tema_morado/">Temas morados oscuro y claro para RStudio &rarr;</a>
   
 </div>
 
@@ -626,7 +634,7 @@ Tema morado para RStudio</a>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4512/tags/blog">blog</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:3343/tags/blog">blog</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -678,7 +686,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/chile/">Chile</a></span>
+      href="http://localhost:3343/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -693,7 +701,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/datos/">Datos</a></span>
+      href="http://localhost:3343/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -708,7 +716,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/consejos/">Consejos</a></span>
+      href="http://localhost:3343/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -723,7 +731,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:3343/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -738,7 +746,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:3343/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -753,7 +761,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:3343/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -768,7 +776,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/blog/">Blog</a></span>
+      href="http://localhost:3343/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -783,7 +791,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/apps/">Apps</a></span>
+      href="http://localhost:3343/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -798,7 +806,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/shiny/">Shiny</a></span>
+      href="http://localhost:3343/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -813,7 +821,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:3343/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -828,7 +836,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:3343/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -843,7 +851,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/mapas/">Mapas</a></span>
+      href="http://localhost:3343/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -858,7 +866,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:3343/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -873,7 +881,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:3343/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -888,7 +896,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/quarto/">Quarto</a></span>
+      href="http://localhost:3343/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -903,7 +911,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:3343/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -918,7 +926,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:3343/tags/ciencias-sociales/">Ciencias sociales</a></span>
   </span>
  
   
@@ -933,7 +941,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:3343/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -948,7 +956,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:3343/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -963,7 +971,7 @@ Tema morado para RStudio</a>
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/loops/">Loops</a></span>
+      href="http://localhost:3343/tags/automatizaci%C3%B3n/">Automatización</a></span>
   </span>
 
 <a href="../../tags/" style="margin-left: 3px;">y más!</a>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4512&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=3343&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -31,16 +31,16 @@
 <meta property="og:title" content="Mensajes de desconexión personalizados en Shiny | Bastián Olea">
 <meta property="og:description" content="Las aplicaciones Shiny funcionan con un servidor detrás, que es el proceso de R que realiza los cálculos necesarios para mostrar tus contenidos. Por lo mismo, estas aplicaciones no pueden estar conectadas por siempre. Lo bueno es que podemos personalizar el mensaje de desconexión de la app para que les usaries entiendan mejor que la app requiere recargarse." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:4512/blog/shiny_desconexion/" />
+<meta property="og:url" content="http://localhost:3343/blog/shiny_desconexion/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:4512/blog/shiny_desconexion/featured.png" >
+        <meta property="og:image" content="http://localhost:3343/blog/shiny_desconexion/featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:4512/blog/shiny_desconexion/featured.png" >
+        <meta name="twitter:image" content="http://localhost:3343/blog/shiny_desconexion/featured.png" >
     
     
   
@@ -50,7 +50,7 @@ Por ejemplo, si pasa mucho tiempo, o si el usuario de la app presiona un enlace 
   <meta itemprop="datePublished" content="2025-11-16T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-11-16T00:00:00+00:00">
   <meta itemprop="wordCount" content="386">
-  <meta itemprop="image" content="http://localhost:4512/blog/shiny_desconexion/featured.png">
+  <meta itemprop="image" content="http://localhost:3343/blog/shiny_desconexion/featured.png">
   <meta itemprop="keywords" content="Shiny">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -58,7 +58,7 @@ Por ejemplo, si pasa mucho tiempo, o si el usuario de la app presiona un enlace 
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="../../style.main.min.7887be321ed5334c878ceffe54c6681c0cc23ed59f4c21d854aa4b609d217cc7.css" integrity="sha256-eIe&#43;Mh7VM0yHjO/&#43;VMZoHAzCPtWfTCHYVKpLYJ0hfMc=" media="screen">
+  <link rel="stylesheet" href="../../style.main.min.8f721815d150079638fe25bf9714e71c67b8ddf7e9435d32764c3175c3e06556.css" integrity="sha256-j3IYFdFQB5Y4/iW/lxTnHGe43ffpQ10ydkwxdcPgZVY=" media="screen">
   
   
   <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -72,7 +72,7 @@ Por ejemplo, si pasa mucho tiempo, o si el usuario de la app presiona un enlace 
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4512/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:3343/" title="Home">
       <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -307,7 +307,7 @@ Por ejemplo, si pasa mucho tiempo, o si el usuario de la app presiona un enlace 
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:4512/tags/shiny"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:3343/tags/shiny"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -414,7 +414,9 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
   <summary>
     Ver código completo de la aplicación
   </summary>
-  <p>
+    <div style="padding: 16px; border: solid 2px #A885C6AA; border-radius: 6px; 
+    background-color: #A885C630;
+    margin-top: 8px; padding-top: 0px; padding-bottom: 0px;">
     <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">shiny</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">bslib</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
@@ -472,7 +474,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nf">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
 </span></span></code></pre></div>
-  </p>
+    </div>
 </details>
  
     </section>
@@ -482,12 +484,12 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4512/blog/elecciones_presidenciales_2025/">&larr; Visualización y scraping de resultados de las elecciones presidenciales 2025</a>
+    href="http://localhost:3343/blog/elecciones_presidenciales_2025/">&larr; Visualización y scraping de resultados de las elecciones presidenciales 2025</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4512/blog/2025-11-14/">Actualización: plataforma de visualización de estadísticas delictuales &rarr;</a>
+    href="http://localhost:3343/blog/2025-11-14/">Actualización: plataforma de visualización de estadísticas delictuales &rarr;</a>
   
 </div>
 
@@ -531,7 +533,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4512/tags/shiny">shiny</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:3343/tags/shiny">shiny</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -583,7 +585,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/chile/">Chile</a></span>
+      href="http://localhost:3343/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -598,7 +600,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/datos/">Datos</a></span>
+      href="http://localhost:3343/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -613,7 +615,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/consejos/">Consejos</a></span>
+      href="http://localhost:3343/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -628,7 +630,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:3343/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -643,7 +645,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:3343/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -658,7 +660,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:3343/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -673,7 +675,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/blog/">Blog</a></span>
+      href="http://localhost:3343/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -688,7 +690,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/apps/">Apps</a></span>
+      href="http://localhost:3343/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -703,7 +705,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/shiny/">Shiny</a></span>
+      href="http://localhost:3343/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -718,7 +720,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:3343/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -733,7 +735,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:3343/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -748,7 +750,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/mapas/">Mapas</a></span>
+      href="http://localhost:3343/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -763,7 +765,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:3343/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -778,7 +780,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:3343/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -793,7 +795,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/quarto/">Quarto</a></span>
+      href="http://localhost:3343/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -808,7 +810,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:3343/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -823,7 +825,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:3343/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -838,7 +840,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:3343/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -853,7 +855,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:3343/tags/ciencias-sociales/">Ciencias sociales</a></span>
   </span>
  
   
@@ -868,7 +870,7 @@ En estos casos la aplicación se pone gris, o bien, aparece un mensaje en inglé
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/loops/">Loops</a></span>
+      href="http://localhost:3343/tags/loops/">Loops</a></span>
   </span>
 
 <a href="../../tags/" style="margin-left: 3px;">y más!</a>

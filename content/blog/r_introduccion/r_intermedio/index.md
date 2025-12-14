@@ -15,6 +15,7 @@ tags:
   - funciones
   - control de flujo
   - loops
+  - programación
 lang: es
 excerpt: >-
   En guía aprenderemos herramientas de programación poderosas que flexibilizarán
@@ -119,11 +120,11 @@ saludar <- function(persona) {
 saludar(personas)
 ```
 
-    [1] "¡Hola BASTI! Tu número de la suerte es 52"     
-    [2] "¡Hola PAULA! Tu número de la suerte es 70"     
-    [3] "¡Hola CATHERINE! Tu número de la suerte es 63" 
-    [4] "¡Hola LUIS! Tu número de la suerte es 39"      
-    [5] "¡Hola MARÍA JOSÉ! Tu número de la suerte es 48"
+    [1] "¡Hola BASTI! Tu número de la suerte es 47"     
+    [2] "¡Hola PAULA! Tu número de la suerte es 88"     
+    [3] "¡Hola CATHERINE! Tu número de la suerte es 82" 
+    [4] "¡Hola LUIS! Tu número de la suerte es 31"      
+    [5] "¡Hola MARÍA JOSÉ! Tu número de la suerte es 24"
 
 En este caso, dentro del cuerpo de la función estamos realizando varias operaciones. Dentro de una función podemos crear nuevos objetos, y usar esos nuevos objetos para realizar otras operaciones sobre ellos. De este modo podemos llevar a cabo acciones más complejas. En el ejemplo, el argumento de la función es transformado a mayúsculas con `toupper()`, luego se inserta dentro del texto con `paste()`. Después, se crea un vector de números al azar que contenga una cantidad de números igual a la cantidad de elementos del vector que viene del argumento de la función, para que haya un número por persona. Finalmente, se usa nuevamente `paste()` junto a `sample()` para agregar el número aleatorio, y se entrega el objeto final, que será lo que la función retorna.
 
@@ -377,7 +378,7 @@ for (persona in personas) {
     [1] "¡Hola a todes!"
     [1] "Hola Paula"
     [1] "Excelente pregunta, Catherine"
-    [1] "Gallina"
+    [1] "Gato"
     [1] "Hola María José"
 
 Por cada paso, el objeto `persona` asume el valor del elemento correspondiente del vector `personas`. El código avanza dentro del loop probando si `persona` coincide con alguna de las condiciones dadas, y si no coincide, prueba si coincide la siguiente con `else if`, y al final, si el valor no coincidió con ninguna de las comparaciones específicas de los `if`, entonces se realiza una operación general para todos los demás casos en `else`.

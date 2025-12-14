@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4512&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=3343&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -31,16 +31,16 @@
 <meta property="og:title" content="Cargar y unir datos de múltiples hojas de Excel con R | Bastián Olea">
 <meta property="og:description" content="Las hojas de Excel pueden ser cómodas para organizar información, pero no mucho para procesarla o analizarla. Por lo mismo, una de las operaciones iniciales de limpieza de datos suele ser unir datos que vienen repartidos en varias hojas de Excel. Veamos cómo se hace paso a paso. Usaremos el paquete `{readxl}` para leer los datos, `{dplyr}` para manipular y combinar las hojas, y `{purrr}` para realizar operaciones sobre todas las hojas de forma automática." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:4512/blog/excel_unir_hojas/" />
+<meta property="og:url" content="http://localhost:3343/blog/excel_unir_hojas/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:4512/blog/sidebar-listing.jpg" >
+        <meta property="og:image" content="http://localhost:3343/blog/sidebar-listing.jpg" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:4512/blog/sidebar-listing.jpg" >
+        <meta name="twitter:image" content="http://localhost:3343/blog/sidebar-listing.jpg" >
     
     
   
@@ -57,7 +57,7 @@ En este tutorial vamos a ver cómo se hace paso a paso. Usaremos el paquete {rea
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="../../style.main.min.7887be321ed5334c878ceffe54c6681c0cc23ed59f4c21d854aa4b609d217cc7.css" integrity="sha256-eIe&#43;Mh7VM0yHjO/&#43;VMZoHAzCPtWfTCHYVKpLYJ0hfMc=" media="screen">
+  <link rel="stylesheet" href="../../style.main.min.8f721815d150079638fe25bf9714e71c67b8ddf7e9435d32764c3175c3e06556.css" integrity="sha256-j3IYFdFQB5Y4/iW/lxTnHGe43ffpQ10ydkwxdcPgZVY=" media="screen">
   
   
   <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -71,7 +71,7 @@ En este tutorial vamos a ver cómo se hace paso a paso. Usaremos el paquete {rea
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4512/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:3343/" title="Home">
       <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -306,7 +306,7 @@ En este tutorial vamos a ver cómo se hace paso a paso. Usaremos el paquete {rea
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:4512/tags/excel"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:3343/tags/excel"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -315,7 +315,7 @@ En este tutorial vamos a ver cómo se hace paso a paso. Usaremos el paquete {rea
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            Excel</a>  <a href="http://localhost:4512/tags/limpieza-de-datos"
+            Excel</a>  <a href="http://localhost:3343/tags/limpieza-de-datos"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -324,7 +324,7 @@ En este tutorial vamos a ver cómo se hace paso a paso. Usaremos el paquete {rea
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            limpieza de datos</a>  <a href="http://localhost:4512/tags/datos"
+            limpieza de datos</a>  <a href="http://localhost:3343/tags/datos"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -405,7 +405,9 @@ Descargar datos falsos</a>
   <summary>
     Ver código para generar los datos falsos
   </summary>
-  <p>
+    <div style="padding: 16px; border: solid 2px #A885C6AA; border-radius: 6px; 
+    background-color: #A885C630;
+    margin-top: 8px; padding-top: 0px; padding-bottom: 0px;">
     <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">purrr</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
@@ -436,7 +438,7 @@ Descargar datos falsos</a>
 </span></span><span class="line"><span class="cl"><span class="c1"># guardar archivo</span>
 </span></span><span class="line"><span class="cl"><span class="n">writexl</span><span class="o">::</span><span class="nf">write_xlsx</span><span class="p">(</span><span class="n">datos_falsos</span><span class="p">,</span> <span class="s">&#34;datos_falsos.xlsx&#34;</span><span class="p">)</span>
 </span></span></code></pre></div>
-  </p>
+    </div>
 </details></p>
 <p>Se trata de un archivo con 20 hojas, y tres columnas con datos al azar. La planilla de Excel se ve más o menos así:</p>
 <a href="datos_falsos.png" target="_blank">
@@ -490,9 +492,9 @@ Descargar datos falsos</a>
     <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
   </div>
   
-  <div style = "font-size: 90%;">
+  <aside style = "font-size: 90%;">
     La función <code>bind_rows()</code> une varias tablas con las mismas columnas, apilándolas una debajo de la otra, como una torta 🍰
-    </div>
+  </aside>
   
 </div>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># cargar hojas individualmente</span>
@@ -528,9 +530,9 @@ Descargar datos falsos</a>
     <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
   </div>
   
-  <div style = "font-size: 90%;">
+  <aside style = "font-size: 90%;">
     Cuando repitas código 3 veces, significa que lo correcto sería hacer una función o un loop
-    </div>
+  </aside>
   
 </div>
 <p>Necesitamos <strong>automatizar</strong> este código para aplicarlo a todas las hojas que queramos.</p>
@@ -570,9 +572,9 @@ Descargar datos falsos</a>
     <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
   </div>
   
-  <div style = "font-size: 90%;">
+  <aside style = "font-size: 90%;">
     Recordemos que las columnas sólo pueden ser de <strong>un</strong> tipo en R, por lo que no puedes mezclar números con texto en una columna!
-    </div>
+  </aside>
   
 </div>
 <p>La solución parche sería <strong>corregir los datos</strong> en esa hoja específica, y reintentar la unión:</p>
@@ -635,9 +637,9 @@ Caused by warning:
     <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
   </div>
   
-  <div style = "font-size: 90%;">
+  <aside style = "font-size: 90%;">
     Un <em>loop</em> o bucle en R es una estructura de control que permite repetir un bloque de código varias veces, iterando sobre una secuencia de elementos
-    </div>
+  </aside>
   
 </div>
 <p>En un loop, tenemos una <strong>secuencia</strong> de algo, a la cual vamos a <strong>repetirle</strong> una operación. Se realizan tantas operaciones o <strong>pasos</strong> como elementos haya en la secuencia.</p>
@@ -674,9 +676,9 @@ Caused by warning:
     <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
   </div>
   
-  <div style = "font-size: 90%;">
+  <aside style = "font-size: 90%;">
     Una lista en R es un objeto que puede contener varios elementos, los cuales pueden ser de distintos tipos y tamaños
-    </div>
+  </aside>
   
 </div>
 
@@ -904,16 +906,16 @@ hoja 20
 </span></span></code></pre></div><pre><code># A tibble: 10 × 4
    variable_a variable_b variable_c hoja   
    &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;  
- 1 q               0.299    -1.09   hoja 11
- 2 t              -0.311    NA      hoja 13
- 3 x              -1.14     -0.243  hoja 8 
- 4 l               0.232     0.885  hoja 11
- 5 a              -0.977    -0.181  hoja 19
- 6 g              -1.39     NA      hoja 13
- 7 s              -0.902    -0.112  hoja 8 
- 8 p               0.731    -0.0249 hoja 3 
- 9 z              -1.42     -0.418  hoja 4 
-10 n              -2.01      0.0468 hoja 11
+ 1 w             -0.931     NA      hoja 13
+ 2 c             -1.27      -0.451  hoja 12
+ 3 w             -0.983     -1.32   hoja 6 
+ 4 q             -0.655     -2.06   hoja 16
+ 5 a              0.0417    -0.0949 hoja 10
+ 6 l              0.636      0.122  hoja 20
+ 7 j              1.21      -0.671  hoja 11
+ 8 u             -0.818     -0.133  hoja 4 
+ 9 e             -0.626      1.74   hoja 9 
+10 n             -0.911     -0.572  hoja 10
 </code></pre>
 <p>Otra opción más rudimentaria, pero a veces necesaria, es iterar por la posición de cada hoja, y luego usar esa posición para extraer el nombre de la hoja desde el vector <code>nombres_hojas</code>. Usamos <code>seq_along()</code> para obtener un vector de números sucesivos por cada elemento del objeto, e iteramos por el <em>loop</em> siguiendo esos números.</p>
 <div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
@@ -924,9 +926,9 @@ hoja 20
     <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
   </div>
   
-  <div style = "font-size: 90%;">
+  <aside style = "font-size: 90%;">
     La función <code>seq_along()</code> genera una secuencia de números desde 1 hasta el largo del objeto que le pasemos como argumento. Es equivalente a <code>1:length(x)</code>
-    </div>
+  </aside>
   
 </div>
 <p>Dentro del <em>loop</em> referimos el número (<code>.x</code>) para obtener el mismo elemento del vector de nombres (<code>nombres_hojas[.x]</code>), y así agregar una columna nueva con el nombre de la hoja:</p>
@@ -971,10 +973,13 @@ hoja 20
         <div class="post-pagination dt w-100 mt4 mb2">
   
   
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="http://localhost:3343/blog/btw/">&larr; Interactúa desde R con una IA que conoce tus datos, archivos y paquetes</a>
+  
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4512/blog/blockr/">Procesa datos con R sin programar y de forma interactiva &rarr;</a>
+    href="http://localhost:3343/blog/blockr/">Procesa datos con R sin programar y de forma interactiva &rarr;</a>
   
 </div>
 
@@ -1018,7 +1023,7 @@ hoja 20
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4512/tags/excel">Excel</a>  <a href="http://localhost:4512/tags/limpieza-de-datos">limpieza de datos</a>  <a href="http://localhost:4512/tags/datos">datos</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:3343/tags/excel">Excel</a>  <a href="http://localhost:3343/tags/limpieza-de-datos">limpieza de datos</a>  <a href="http://localhost:3343/tags/datos">datos</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -1070,7 +1075,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/chile/">Chile</a></span>
+      href="http://localhost:3343/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -1085,7 +1090,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/datos/">Datos</a></span>
+      href="http://localhost:3343/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -1100,7 +1105,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/consejos/">Consejos</a></span>
+      href="http://localhost:3343/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -1115,7 +1120,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:3343/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -1130,7 +1135,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:3343/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -1145,7 +1150,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:3343/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -1160,7 +1165,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/blog/">Blog</a></span>
+      href="http://localhost:3343/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -1175,7 +1180,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/apps/">Apps</a></span>
+      href="http://localhost:3343/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -1190,7 +1195,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/shiny/">Shiny</a></span>
+      href="http://localhost:3343/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -1205,7 +1210,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:3343/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -1220,7 +1225,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:3343/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -1235,7 +1240,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/mapas/">Mapas</a></span>
+      href="http://localhost:3343/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -1250,7 +1255,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:3343/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -1265,7 +1270,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:3343/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -1280,7 +1285,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/quarto/">Quarto</a></span>
+      href="http://localhost:3343/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -1295,7 +1300,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:3343/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -1310,7 +1315,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:3343/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -1325,7 +1330,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:3343/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -1340,7 +1345,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:3343/tags/ciencias-sociales/">Ciencias sociales</a></span>
   </span>
  
   
@@ -1355,7 +1360,7 @@ hoja 20
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/automatizaci%C3%B3n/">Automatización</a></span>
+      href="http://localhost:3343/tags/loops/">Loops</a></span>
   </span>
 
 <a href="../../tags/" style="margin-left: 3px;">y más!</a>
@@ -1369,7 +1374,7 @@ hoja 20
 </div>
 
   
-  <div id="PageTableOfContents", style="margin-top: 24px; position: sticky; top: 108px;">
+  <div id="PageTableOfContents" style="margin-top: 24px; position: sticky; top: 108px;">
         <div class="blog-info ph4 pb4 pb0-l">
         <h3 style="margin-bottom: 12px;">Índice:</h3>
           <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: -22px; margin-bottom: 32px;">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4512&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=3343&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -31,16 +31,16 @@
 <meta property="og:title" content="Crear y conectarse a una base de datos en R | Bastián Olea">
 <meta property="og:description" content="Coloquialmente se usa el término _base de datos_ para referirse a datos que están en Excel. Pero en realidad una base de datos es algo distinto: un sistema de almacenamiento y procesamiento de datos que puede contener múltiples tablas, alojado en un computador, servidor o en la nube, que puede entregar datos de forma rápida y eficiente de acuerdo a las solicitudes que se le hagan. En este post veremos cómo crear una base de datos **gratuita**, cómo conectarnos a ella desde R, a leer y escribir tablas, y procesar datos desde la base de datos remota." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:4512/blog/db_supabase/" />
+<meta property="og:url" content="http://localhost:3343/blog/db_supabase/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:4512/blog/db_supabase/featured.png" >
+        <meta property="og:image" content="http://localhost:3343/blog/db_supabase/featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:4512/blog/db_supabase/featured.png" >
+        <meta name="twitter:image" content="http://localhost:3343/blog/db_supabase/featured.png" >
     
     
   
@@ -49,7 +49,7 @@
   <meta itemprop="datePublished" content="2025-11-06T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-11-06T00:00:00+00:00">
   <meta itemprop="wordCount" content="2212">
-  <meta itemprop="image" content="http://localhost:4512/blog/db_supabase/featured.png">
+  <meta itemprop="image" content="http://localhost:3343/blog/db_supabase/featured.png">
   <meta itemprop="keywords" content="Datos,Optimización,Dplyr">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -57,7 +57,7 @@
   <link rel="icon" href="false" type="image/x-icon">
   
   
-  <link rel="stylesheet" href="../../style.main.min.7887be321ed5334c878ceffe54c6681c0cc23ed59f4c21d854aa4b609d217cc7.css" integrity="sha256-eIe&#43;Mh7VM0yHjO/&#43;VMZoHAzCPtWfTCHYVKpLYJ0hfMc=" media="screen">
+  <link rel="stylesheet" href="../../style.main.min.8f721815d150079638fe25bf9714e71c67b8ddf7e9435d32764c3175c3e06556.css" integrity="sha256-j3IYFdFQB5Y4/iW/lxTnHGe43ffpQ10ydkwxdcPgZVY=" media="screen">
   
   
   <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
@@ -71,7 +71,7 @@
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4512/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:3343/" title="Home">
       <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -306,7 +306,7 @@
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:4512/tags/datos"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:3343/tags/datos"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -315,7 +315,7 @@
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            datos</a>  <a href="http://localhost:4512/tags/optimizaci%C3%B3n"
+            datos</a>  <a href="http://localhost:3343/tags/optimizaci%C3%B3n"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -324,7 +324,7 @@
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            optimización</a>  <a href="http://localhost:4512/tags/dplyr"
+            optimización</a>  <a href="http://localhost:3343/tags/dplyr"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -463,14 +463,21 @@
   
 </a>
 <p>Necesitamos los parámetros <code>host</code>, <code>port</code>, <code>database</code> y <code>user</code>. Ahora iremos a R para introducirlos y conectarnos.</p>
-<div style="padding: 14px; background-color:#493365; color:#E9DDEE; border-radius:6px;
-margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
-font-size: 90%;">
 
-<strong>Importante:</strong> si quieres usar la base de datos desde aplicaciones Shiny conectadas a Shinyapps.io, tienes que elegir en <em>Method</em> la opción <em>Transaction Pooler</em> para que tu base de datos funcione por IPv4.
 
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #493365;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-triangle-exclamation" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #EAD2FA;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%; color: #EAD2FA;">
+    <strong>Importante:</strong> si quieres usar la base de datos desde aplicaciones Shiny conectadas a Shinyapps.io, tienes que elegir en <em>Method</em> la opción <em>Transaction Pooler</em> para que tu base de datos funcione por IPv4.
+  </aside>
+  
 </div>
-
 <a href="supabase_7.png" target="_blank">
 
   <img src="supabase_7.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
@@ -520,15 +527,22 @@ db_user=postgres
 db_pass=clavebasededatosprueba
 </code></pre>
 <p>Una vez guardadas las credenciales, <strong>reiniciamos la sesión de R</strong> para que se lean las variables de entorno (siempre se leerán al iniciar R), o podemos ejecutar <code>readRenviron(&quot;.Renviron&quot;)</code> para cargarlas.</p>
-<div style="padding: 14px; background-color:#493365; color:#E9DDEE; border-radius:6px;
-margin:20px; margin-top:26px; margin-bottom:20px; margin-left:40px; margin-right:40px;
-font-size: 90%;">
 
-<strong>⚠️ Importante:</strong> Si usas 
+
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #493365;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-triangle-exclamation" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #EAD2FA;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%; color: #EAD2FA;">
+    <strong>⚠️ Importante:</strong> Si usas 
 <a href="../../tags/git/">git</a>, no olvides agregar el archivo <code>.Renviron</code> a tu <code>.gitignore</code> para evitar subir a internet credenciales privadas!
-
+  </aside>
+  
 </div>
-
 
 
 
@@ -788,12 +802,12 @@ FROM (
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:4512/blog/ggiraph/">&larr; Convierte gráficos {ggplot2} en visualizaciones interactivas con {ggiraph}</a>
+    href="http://localhost:3343/blog/ggiraph/">&larr; Convierte gráficos {ggplot2} en visualizaciones interactivas con {ggiraph}</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:4512/blog/shiny_optimizar/">Optimiza la velocidad de tus aplicaciones Shiny con bindCache() &rarr;</a>
+    href="http://localhost:3343/blog/shiny_optimizar/">Optimiza la velocidad de tus aplicaciones Shiny con bindCache() &rarr;</a>
   
 </div>
 
@@ -835,24 +849,24 @@ FROM (
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Categorías:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4512/categories/tutoriales">Tutoriales</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:3343/categories/tutoriales">Tutoriales</a> </dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:4512/tags/datos">datos</a>  <a href="http://localhost:4512/tags/optimizaci%C3%B3n">optimización</a>  <a href="http://localhost:4512/tags/dplyr">dplyr</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:3343/tags/datos">datos</a>  <a href="http://localhost:3343/tags/optimizaci%C3%B3n">optimización</a>  <a href="http://localhost:3343/tags/dplyr">dplyr</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
+    <dd class="fw5 ml0"><a href="../../blog/r_introduccion/dplyr_mutate/">Crear variables nuevas con `dplyr::mutate()`</a></dd>
+    
     <dd class="fw5 ml0"><a href="../../blog/excel_unir_hojas/">Cargar y unir datos de múltiples hojas de Excel con R</a></dd>
     
     <dd class="fw5 ml0"><a href="../../blog/crear_dataframes/">Crear tablas de datos manualmente en R</a></dd>
-    
-    <dd class="fw5 ml0"><a href="../../blog/estadisticos_descriptivos/">Calcula estadísticos descriptivos básicos en R</a></dd>
     
   </dl>
 </details>
@@ -894,7 +908,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/chile/">Chile</a></span>
+      href="http://localhost:3343/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -909,7 +923,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/datos/">Datos</a></span>
+      href="http://localhost:3343/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -924,7 +938,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/consejos/">Consejos</a></span>
+      href="http://localhost:3343/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -939,7 +953,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:3343/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -954,7 +968,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:3343/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -969,7 +983,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:3343/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -984,7 +998,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/blog/">Blog</a></span>
+      href="http://localhost:3343/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -999,7 +1013,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/apps/">Apps</a></span>
+      href="http://localhost:3343/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -1014,7 +1028,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/shiny/">Shiny</a></span>
+      href="http://localhost:3343/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -1029,7 +1043,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:3343/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -1044,7 +1058,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:3343/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -1059,7 +1073,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/mapas/">Mapas</a></span>
+      href="http://localhost:3343/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -1074,7 +1088,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:3343/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -1089,7 +1103,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:3343/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -1104,7 +1118,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/quarto/">Quarto</a></span>
+      href="http://localhost:3343/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -1119,7 +1133,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:3343/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -1134,7 +1148,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:3343/tags/ciencias-sociales/">Ciencias sociales</a></span>
   </span>
  
   
@@ -1149,7 +1163,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:3343/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -1164,7 +1178,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:3343/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -1179,7 +1193,7 @@ FROM (
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:4512/tags/automatizaci%C3%B3n/">Automatización</a></span>
+      href="http://localhost:3343/tags/loops/">Loops</a></span>
   </span>
 
 <a href="../../tags/" style="margin-left: 3px;">y más!</a>
@@ -1193,7 +1207,7 @@ FROM (
 </div>
 
   
-  <div id="PageTableOfContents", style="margin-top: 24px; position: sticky; top: 108px;">
+  <div id="PageTableOfContents" style="margin-top: 24px; position: sticky; top: 108px;">
         <div class="blog-info ph4 pb4 pb0-l">
         <h3 style="margin-bottom: 12px;">Índice:</h3>
           <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: -22px; margin-bottom: 32px;">
