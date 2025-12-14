@@ -16,7 +16,11 @@ tags:
   - dplyr
   - básico
 lang: es
-excerpt: Prueba
+excerpt: >-
+  En este tutorial veremos cómo calcular resúmenes de datos con la función
+  `summarize()`, que nos permite tomar las filas de una tabla de datos, y
+  aplicarles algún cálculo para reducir todas las filas a un solo dato; por
+  ejemplo, para calcular la suma o el promedio de una columna.
 execute:
   error: true
   eval: true
@@ -32,7 +36,7 @@ En el [tutorial de introducción a `{dplyr}`](../../../../blog/r_introduccion/dp
 
 Luego aprendimos a **crear y modificar variables** con [la función `mutate()` de `{dplyr}`](../../../../blog/r_introduccion/dplyr_mutate/).
 
-Ahora veremos cómo **calcular resúmenes de datos**. Con esto nos referimos a tomar varias observaciones o filas, y aplicar algún cálculo para **reducir todas las filas a un solo dato**.
+Ahora veremos cómo **calcular resúmenes de datos**. Con esto nos referimos a tomar todas las observaciones o filas de una tabla, y aplicar algún cálculo para **reducir todas las filas a un solo dato**. Esto sirve, por ejemplo, para calcular la suma o el promedio de una columna, y para calcular [estadísticos descriptivos](../../../../blog/estadisticos_descriptivos/).
 
 ``` r
 library(dplyr)
@@ -93,6 +97,9 @@ Cualquier función como las anteriores, que **reciba varios datos y entregue uno
 ## Resumir datos con `summarize()`
 
 La función `summarize()` calcula **resúmenes** de las tablas de datos, a partir de una o varias funciones que van a *resumir* los datos a una sola fila.
+
+{{< imagen_tamaño "featured.png" "200px" >}}
+{{< bajada "Esquema de un resumen de datos: se pasa de varias filas a una sola" >}}
 
 Para calcular el resumen de los valores de una variable, dentro de `summarize()` ubicamos la **función** necesaria, aplicada a la **columna** que nos interesa resumir.
 

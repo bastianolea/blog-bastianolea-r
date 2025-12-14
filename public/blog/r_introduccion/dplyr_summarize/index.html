@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=5626&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4814&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -24,35 +24,34 @@
   
     
   
-<meta name="description" content="Prueba">
+<meta name="description" content="En este tutorial veremos cómo calcular resúmenes de datos con la función `summarize()`, que nos permite tomar las filas de una tabla de datos, y aplicarles algún cálculo para reducir todas las filas a un solo dato; por ejemplo, para calcular la suma o el promedio de una columna.">
 
 
 <meta property="og:site_name" content="Bastián Olea">
 <meta property="og:title" content="Calcular resúmenes de datos con `dplyr::summarize()` | Bastián Olea">
-<meta property="og:description" content="Prueba" />
+<meta property="og:description" content="En este tutorial veremos cómo calcular resúmenes de datos con la función `summarize()`, que nos permite tomar las filas de una tabla de datos, y aplicarles algún cálculo para reducir todas las filas a un solo dato; por ejemplo, para calcular la suma o el promedio de una columna." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:5626/blog/r_introduccion/dplyr_summarize/" />
+<meta property="og:url" content="http://localhost:4814/blog/r_introduccion/dplyr_summarize/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:5626/blog/r_introduccion/dplyr_summarize/featured.png" >
+        <meta property="og:image" content="http://localhost:4814/blog/r_introduccion/dplyr_summarize/featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:5626/blog/r_introduccion/dplyr_summarize/featured.png" >
+        <meta name="twitter:image" content="http://localhost:4814/blog/r_introduccion/dplyr_summarize/featured.png" >
     
     
   
   <meta itemprop="name" content="Calcular resúmenes de datos con `dplyr::summarize()`">
   <meta itemprop="description" content="En el tutorial de introducción a {dplyr} aprendimos a ordenar, seleccionar, y filtrar datos tabulares. Con estas operaciones básicas deberíamos poder desenvolvernos con tablas de datos.
 Luego aprendimos a crear y modificar variables con la función mutate() de {dplyr}.
-Ahora veremos cómo calcular resúmenes de datos. Con esto nos referimos a tomar varias observaciones o filas, y aplicar algún cálculo para reducir todas las filas a un solo dato.
-library(dplyr) options(scipen = 999) # desactivar notación científica Si necesitas aprender {dplyr} desde el principio, revisa el tutorial de introducción a {dplyr}. Introducción Para este tutorial vamos a trabajar con datos de población de países de América del Sur, obtenidas desde una tabla de Wikipedia usando [web scraping](/tags/web-scraping/]. Puedes ver el código del web scraping aquí.">
+Ahora veremos cómo calcular resúmenes de datos. Con esto nos referimos a tomar todas las observaciones o filas de una tabla, y aplicar algún cálculo para reducir todas las filas a un solo dato. Esto sirve, por ejemplo, para calcular la suma o el promedio de una columna, y para calcular estadísticos descriptivos.">
   <meta itemprop="datePublished" content="2025-12-14T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-12-14T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1163">
-  <meta itemprop="image" content="http://localhost:5626/blog/r_introduccion/dplyr_summarize/featured.png">
+  <meta itemprop="wordCount" content="1200">
+  <meta itemprop="image" content="http://localhost:4814/blog/r_introduccion/dplyr_summarize/featured.png">
   <meta itemprop="keywords" content="Dplyr,Básico">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -74,7 +73,7 @@ library(dplyr) options(scipen = 999) # desactivar notación científica Si neces
       <div class="grid-container single-series">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:5626/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4814/" title="Home">
       <img src="../../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -306,7 +305,7 @@ library(dplyr) options(scipen = 999) # desactivar notación científica Si neces
          
         
   <dl class="f6 lh-copy">
-    <em><dd class="fw5 ml0"> <a href="http://localhost:5626/tags/dplyr"
+    <em><dd class="fw5 ml0"> <a href="http://localhost:4814/tags/dplyr"
     style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -315,7 +314,7 @@ library(dplyr) options(scipen = 999) # desactivar notación científica Si neces
                  background-color: #9069C0; 
                  border-radius: 3px; 
                  padding: 2px 6px; ">
-      dplyr</a>  <a href="http://localhost:5626/tags/b%C3%A1sico"
+      dplyr</a>  <a href="http://localhost:4814/tags/b%C3%A1sico"
     style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -334,7 +333,8 @@ library(dplyr) options(scipen = 999) # desactivar notación científica Si neces
 <a href="../../../../blog/r_introduccion/dplyr_intro/">tutorial de introducción a <code>{dplyr}</code></a> aprendimos a ordenar, seleccionar, y filtrar datos tabulares. Con estas operaciones básicas deberíamos poder desenvolvernos con tablas de datos.</p>
 <p>Luego aprendimos a <strong>crear y modificar variables</strong> con 
 <a href="../../../../blog/r_introduccion/dplyr_mutate/">la función <code>mutate()</code> de <code>{dplyr}</code></a>.</p>
-<p>Ahora veremos cómo <strong>calcular resúmenes de datos</strong>. Con esto nos referimos a tomar varias observaciones o filas, y aplicar algún cálculo para <strong>reducir todas las filas a un solo dato</strong>.</p>
+<p>Ahora veremos cómo <strong>calcular resúmenes de datos</strong>. Con esto nos referimos a tomar todas las observaciones o filas de una tabla, y aplicar algún cálculo para <strong>reducir todas las filas a un solo dato</strong>. Esto sirve, por ejemplo, para calcular la suma o el promedio de una columna, y para calcular 
+<a href="../../../../blog/estadisticos_descriptivos/">estadísticos descriptivos</a>.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nf">options</span><span class="p">(</span><span class="n">scipen</span> <span class="o">=</span> <span class="m">999</span><span class="p">)</span> <span class="c1"># desactivar notación científica</span>
@@ -410,6 +410,14 @@ library(dplyr) options(scipen = 999) # desactivar notación científica Si neces
     </svg></a>
 </h2>
 <p>La función <code>summarize()</code> calcula <strong>resúmenes</strong> de las tablas de datos, a partir de una o varias funciones que van a <em>resumir</em> los datos a una sola fila.</p>
+<p><a href="featured.png" target="_blank">
+
+  <img src="featured.png" style='border-radius: 5px; width: 200px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;'>
+  
+</a>
+<div style="max-width: 380px; margin:auto; text-align: center; font-size:80%; opacity:60%;">
+  Esquema de un resumen de datos: se pasa de varias filas a una sola
+  </div></p>
 <p>Para calcular el resumen de los valores de una variable, dentro de <code>summarize()</code> ubicamos la <strong>función</strong> necesaria, aplicada a la <strong>columna</strong> que nos interesa resumir.</p>
 <p>Calculemos la suma (<code>sum()</code>) de la columna <code>poblacion</code>:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos</span> <span class="o">|&gt;</span> 
@@ -657,12 +665,12 @@ $ idh_suma            &lt;dbl&gt; 10.855
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:5626/blog/r_introduccion/dplyr_mutate/">&larr; Crear variables nuevas con `dplyr::mutate()`</a>
+    href="http://localhost:4814/blog/r_introduccion/dplyr_mutate/">&larr; Crear variables nuevas con `dplyr::mutate()`</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:5626/blog/r_introduccion/tidyr_pivotar/">Transformación de datos entre formato _ancho_ y _largo_ con {tidyr} &rarr;</a>
+    href="http://localhost:4814/blog/r_introduccion/tidyr_pivotar/">Transformación de datos entre formato _ancho_ y _largo_ con {tidyr} &rarr;</a>
   
 </div>
 
@@ -705,58 +713,58 @@ $ idh_suma            &lt;dbl&gt; 10.855
         <ul>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/instalar_r/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/instalar_r/">Primer paso: instalar R</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/instalar_r/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/instalar_r/">Primer paso: instalar R</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/por_que_r/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/por_que_r/">¿Por qué usar R?</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/por_que_r/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/por_que_r/">¿Por qué usar R?</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/r_basico/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/r_basico/">Introducción al lenguaje de programación R</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/r_basico/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/r_basico/">Introducción al lenguaje de programación R</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/r_intermedio/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/r_intermedio/">Herramientas básicas para programar con R</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/r_intermedio/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/r_intermedio/">Herramientas básicas para programar con R</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/conectores/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/conectores/">Aprendiendo a usar conectores o <em>pipes</em></a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/conectores/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/conectores/">Aprendiendo a usar conectores o <em>pipes</em></a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/proyectos/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/proyectos/">Organizar el trabajo en Proyectos de RStudio</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/proyectos/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/proyectos/">Organizar el trabajo en Proyectos de RStudio</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/dplyr_intro/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/dplyr_intro/">Introducción al manejo de datos con {dplyr}</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/dplyr_intro/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/dplyr_intro/">Introducción al manejo de datos con {dplyr}</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/dplyr_mutate/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/dplyr_mutate/">Crear variables nuevas con <code>dplyr::mutate()</code></a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/dplyr_mutate/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/dplyr_mutate/">Crear variables nuevas con <code>dplyr::mutate()</code></a></li>
         
           
-          <li class="active" hugo-nav="/blog/r_introduccion/dplyr_summarize/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/dplyr_summarize/">Calcular resúmenes de datos con <code>dplyr::summarize()</code></a></li>
+          <li class="active" hugo-nav="/blog/r_introduccion/dplyr_summarize/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/dplyr_summarize/">Calcular resúmenes de datos con <code>dplyr::summarize()</code></a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/tidyr_pivotar/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/tidyr_pivotar/">Transformación de datos entre formato <em>ancho</em> y <em>largo</em> con {tidyr}</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/tidyr_pivotar/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/tidyr_pivotar/">Transformación de datos entre formato <em>ancho</em> y <em>largo</em> con {tidyr}</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_censo/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_censo/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/tutorial_dplyr_censo/">Tutorial: introducción a {dplyr} con datos de población</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_campamentos/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/tutorial_dplyr_campamentos/">Tutorial: introducción a {dplyr} usando datos de campamentos</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_dplyr_campamentos/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/tutorial_dplyr_campamentos/">Tutorial: introducción a {dplyr} usando datos de campamentos</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/tutorial_visualizacion_ggplot/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/tutorial_visualizacion_ggplot/">Tutorial: visualización de datos con {ggplot2}</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_visualizacion_ggplot/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/tutorial_visualizacion_ggplot/">Tutorial: visualización de datos con {ggplot2}</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shiny_1/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/tutorial_shiny_1/">Tutorial: introducción al desarrollo de apps con Shiny</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shiny_1/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/tutorial_shiny_1/">Tutorial: introducción al desarrollo de apps con Shiny</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shinyapps/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/tutorial_shinyapps/">Tutorial: publicar una app Shiny en shinyapps.io</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_shinyapps/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/tutorial_shinyapps/">Tutorial: publicar una app Shiny en shinyapps.io</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/web_scraping/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/web_scraping/">Web scraping con R</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/web_scraping/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/web_scraping/">Web scraping con R</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/tutorial_github/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/tutorial_github/">Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/tutorial_github/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/tutorial_github/">Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub</a></li>
         
           
-          <li class="" hugo-nav="/blog/r_introduccion/recursos_r/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:5626/blog/r_introduccion/recursos_r/">Recursos, blogs y otros sitios sobre R</a></li>
+          <li class="" hugo-nav="/blog/r_introduccion/recursos_r/" style="line-height: 1.3; font-size: 95%; margin-left:-18px;"><a href="http://localhost:4814/blog/r_introduccion/recursos_r/">Recursos, blogs y otros sitios sobre R</a></li>
         
         </ul>
       </nav>
