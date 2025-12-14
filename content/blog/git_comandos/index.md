@@ -21,6 +21,11 @@ excerpt: "Colección de comandos de `git` para realizar acciones comunes y resol
 Otro recurso mucho más completo es [ohshitgit.com](https://ohshitgit.com/es), que como su nombre indica, está enfocado en resolver problemas comunes con `git`.
 
 
+{{< aviso "Este post está _en construcción_, y a medida que me encuentro con problemas o voy aprendiendo iré agregando y desarrollando." >}}
+
+{{< aviso "Ten mucho cuidado al ejecutar estos u otros comandos de `git`, ya que pueden afectar tus archivos. Recuerda siempre tener **respaldos**!" >}}
+
+## Comandos git básicos
 
 ### Crear repositorio git en proyecto de RStudio
 
@@ -33,6 +38,12 @@ usethis::use_git()
 ```
 Para más información sobre la integración de R con `git`, [revisa este post](/blog/r_introduccion/tutorial_github/). También existe el libro [Happy Git with R](https://happygitwithr.com), que detalla todos los pasos necesarios para poder usar `git` con R, incluyendo soluciones a problemas comunes.
 
+### Ver estado del repositorio
+Para ver qué archivos han sido modificados, cuáles están en el área de preparación, y cuáles no:
+
+```
+git status
+```
 
 
 ### Agregar archivos al área de preparación (_staging area_)
@@ -48,12 +59,6 @@ Para agregar todos los archivos cambiados desde el último _commit_:
 git add .
 ```
 
-### Ver estado del repositorio
-Para ver qué archivos han sido modificados, cuáles están en el área de preparación, y cuáles no:
-
-```
-git status
-```
 
 ### Guardar los cambios preparados en una versión (_commit_)
 Un _commit_ es la operación en la que tomas los archivos del área de preparación y los guardas como una nueva versión del proyecto. Siempre hay que agregar un mensaje que describa los cambios de esta versión:
@@ -74,7 +79,7 @@ También está el comando `git reflog`, que muestra un historial de todos los mo
 git reflog
 ```
 
-### Subir los cambios guardados al repositorio remoto (GitHub)
+### Subir los cambios guardados al repositorio remoto
 
 Asumiendo que tu proyecto de RStudio tiene un repositorio `git`, que has hecho `commit` de tus cambios, y que [ya conectaste el repositorio local con un repositorio remoto](/blog/r_introduccion/tutorial_github/#crear-un-repositorio-remoto-en-github-para-tu-proyecto-de-r) en GitHub o GitLab:
 
@@ -88,6 +93,9 @@ Si no has creado una versión remota de tu repositorio aún, puedes usar el coma
 usethis::use_github()
 ```
 
+----
+
+## Solucionar problemas
 
 ### Deshacer `git add archivo.R`
 Por si la embarraste y agregaste un archivo incorrecto a la zona de preparación:
@@ -109,7 +117,7 @@ git reset --soft HEAD~1
 ```
 
 
-### Eliminar archivos agregados con `git add`
+### Eliminar archivos agregados con `git add` después del commit
 Para cuando agregaste archivos al _commit_ pero luego te das cuenta que no debías haberlo hecho. Por ejemplo, si agregaste un archivo muy grande por error:
 
 ```r
@@ -118,20 +126,16 @@ git commit -m "mensaje"
 git push -u origin branch
 ```
 
+----
+
+
+## Recuperar cambios
 
 ### Volver al último `commit`
 Borra el último commit, **perdiendo tus cambios locales.**
 ```
 git reset --hard HEAD
 ```
-
-### Forzar push
-Por si no te deja subir los cambios, pero estás segurx de que quieres sobreescribir el repositorio remoto con tu versión local:
-
-```r
-git push origin main --force
-```
-
 
 ### Volver a una versión anterior de tu código
 
@@ -140,6 +144,29 @@ Busca el índice de la versión a la cual quieres volver, y usa `git reset` para
 ```
 git reflog
 git reset HEAD@{index}
+```
+
+----
+
+## Forzar cambios
+
+### Forzar push
+
+Por si no te deja subir los cambios, pero estás segurx de que quieres sobreescribir el repositorio remoto con tu versión local:
+
+```r
+git push origin main --force
+```
+
+
+### Forzar pull
+
+Cuando la versión del código que te importa es la remota (en GitHub o equivalente) y deseas descartar los cambios locales, por ejemplo, si hiciste cambios locales pero no puedes subirlos porque olvidaste ahcer `pull` antes):
+
+```
+git fetch --all
+git branch backup-main
+git reset --hard origin/main
 ```
 
 ### Ramas
