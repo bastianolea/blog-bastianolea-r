@@ -8,7 +8,10 @@ abrir_post_reciente <- function() {
   library(stringr)
   
   # obtener todas las carpetas del blog
-  carpetas <- dir_info("content/blog", type = "directory")
+  carpetas <- bind_rows(
+    dir_info("content/blog", type = "directory"),
+    dir_info("content/blog/r_introduccion/", type = "directory")
+  )
   
   # filtrar las 3 más recientes
   recientes <- carpetas |> 
