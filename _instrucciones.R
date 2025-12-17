@@ -20,11 +20,11 @@ blogdown::new_post(title = "Recibe fotos de gatos o bendiciones automáticamente
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Interactúa desde R con una IA que conoce tus datos, archivos y paquetes", 
-                   file = "blog/btw/index.qmd",
+blogdown::new_post(title = "Visualiza datos del Censo 2024 en mapas a nivel de manzana con R", 
+                   file = "blog/mapas_censo_2024/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("inteligencia artificial", "consejos"),
-                   categories = c() 
+                   tags = c("mapas", "Chile", "datos"),
+                   categories = c("Tutoriales") 
 )
 
 # draft: true
@@ -97,6 +97,7 @@ blogdown::new_post(title = "Interactúa desde R con una IA que conoce tus datos,
 # {{< video "x" >}}
 # {{< aviso "x" >}}
 # {{< detalles "Hola" >}} {{< /detalles >}}
+# {{< boton "Buscador" "https://bastianoleah.shinyapps.io/buscador/" "fas fa-search" >}}
 
 
 

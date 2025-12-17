@@ -1,0 +1,283 @@
+---
+title: Visualiza datos del Censo 2024 en mapas a nivel de manzana con R
+author: Bastián Olea Herrera
+date: '2025-12-17'
+slug: []
+freeze: true
+categories:
+  - Tutoriales
+tags:
+  - mapas
+  - Chile
+  - datos
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+excerpt: "Recientemente lanzaron los datos 2024 del Censo de Población y Vivienda de Chile, incluyendo más de 200 variables a nivel de manzana. En este tutorial veremos dos formas de visualizar datos censales a nivel de manzana: con mapas estáticos en `{ggplot2}`, y con mapas interactivos con `{mapgl}`."
+---
+
+Ahora que recientemente lanzaron los datos 2024 del Censo de Población y Vivienda de Chile, me di unos minutos para visualizarlos. En este tutorial veremos dos formas de visualizar datos censales **a nivel de manzana**: con mapas estáticos en `{ggplot2}`, y con mapas interactivos en `{mapgl}`.
+
+
+## Datos censales
+[Descarga los datos cartográficos del Censo 2024 desde la página del INE](https://censo2024.ine.gob.cl/resultados/), entrando a _Cartografía Censal_ y luego descargando el archivo **Cartografía País Censo 2024 (geoparquet)**.
+
+{{< boton "Descargar datos nivel manzana" "https://storage.googleapis.com/bktdescargascenso2024/Cartografia/GEOPARQUET/Cartografia_censo2024_Pais.zip" "fas fa-map-location" >}}
+
+
+### Cargar cartografías censales
+Los datos censales vienen en formato `geoparquet`, que es un formato moderno y eficiente para datos espaciales. 
+
+Podemos cargar datos en `geoparquet` con la función `read_parquet()` del paquete `{arrow}`.
+
+Si no tenemos `{arrow}` instalado, lo instalamos con `install.packages("arrow")`.
+
+```{r}
+#| eval: false
+#| message: false
+library(arrow)
+manzanas <- read_parquet("Cartografia_censo2024_Pais/Cartografia_censo2024_Pais_Manzanas.parquet")
+```
+
+```{r}
+#| echo: false
+#| message: false
+library(arrow)
+
+manzanas <- read_parquet("~/Documents/Otros/censo_2024_mapas/datos/Cartografia_censo2024_Pais/Cartografia_censo2024_Pais_Manzanas.parquet")
+```
+
+Con la función `glimpse()` de `{dplyr}` podemos echar un vistazo a las columnas que vienen en la tabla, pero no las mostraremos aquí porque son más de 200 😂
+
+```{r}
+#| message: false
+#| output: false
+library(dplyr)
+glimpse(manzanas)
+```
+
+Ahora que tenemos los datos, vamos a ver cómo visualizarlos en mapas!
+
+{{< aviso "Si necesitas aprender a visualizar mapas con R, [revisa este tutorial de `{sf}`](/blog/mapas_sf/)!" >}}
+
+## Mapas estáticos
+
+Para generar mapas a partir de cartografía censal, lo que haremos será: **filtrar** la base de datos para obtener la unidad territorial que nos interesa, luego **convertir** la cartografía a formato `{sf}`, y finalmente **visualizar** con `{ggplot2}`.
+
+### Preparar datos
+
+Primero filtremos una comuna del país:
+
+```{r}
+# filtrar datos
+manzanas_comuna <- manzanas |> 
+  filter(COMUNA == "LA FLORIDA")
+```
+
+Luego, convertimos a formato `{sf}`, para poder usar en R los polígonos que vienen en la cartografía, especificando un sistema de referencia de coordenadas (CRS) adecuado:
+
+```{r}
+#| message: false
+library(sf)
+
+# convertir a sf
+manzanas_comuna_sf <- manzanas_comuna |> 
+  st_as_sf(crs = 4326) 
+```
+
+Ahora podemos ver la tabla de datos, que vienen con sus características espaciales incluídas:
+
+```{r}
+manzanas_comuna_sf
+```
+
+Este **_dataframe_ espacial** posee una columna especial (`SHAPE`) que contiene los polígonos territoriales. 
+
+Cada fila del _dataframe_ corresponde a una unidad territorial, y en la columna `SHAPE` se indica la forma o el polígono que ocupa esa unidad en el territorio.
+
+### Visualización
+
+Vamos a generar mapas estáticos con [`{ggplot2}`, un paquete](/blog/r_introduccion/tutorial_visualizacion_ggplot/) muy poderoso y personalizable para visualización de datos.
+
+{{< aviso "Si necesitas aprender a usar `{ggplot2}`, [revisa este tutorial completo de introducción a `{ggplot2}`](/blog/r_introduccion/tutorial_visualizacion_ggplot/)!" >}}
+
+Para visualizar estos datos en `{ggplot2}`, usamos la función de geometría `geom_sf()`, que está diseñada para trabajar con datos espaciales en formato `{sf}`. Esta función detecta la columna que contiene los datos espaciales y otras características espaciales, y permite visualizarlas como mapas.
+
+```{r}
+#| message: false
+library(ggplot2)
+
+manzanas_comuna_sf |> 
+  ggplot() +
+  geom_sf() +
+  theme_minimal(base_size = 10)
+```
+
+Con ésto anterior obtenemos el **mapa base**, generado a partir de los polígonos de la columna `SHAPE`. 
+
+Ahora podemos **especificar una variable censal** para visualizar, definiéndola en `aes()`. Luego podemos personalizar el gráfico agregando paletas de colores, ajustes visuales, y textos:
+
+```{r}
+#| fig-width: 7
+#| fig-height: 6
+#| fig-dpi: 220
+
+manzanas_comuna_sf |> 
+  ggplot() +
+  aes(fill = n_edad_60_mas) +
+  geom_sf(color = "white", linewidth = 0.02) +
+  scale_fill_fermenter(palette = 13) +
+  theme_minimal(base_size = 10) +
+  theme(axis.text.x = element_text(angle = 90, vjust = .5)) +
+  guides(fill = guide_legend(title = "Población 60 años y más",
+                             position = "top")) +
+  labs(title = "Población de 60 años y más por manzana",
+       subtitle = "Comuna de La Florida",
+       caption = "Fuente: Censo 2024, INE")
+```
+
+
+### Reutilizar mapa
+Podemos repetir todo el proceso, cambiando sólo un par de líneas, para obtener el **mapa de otra variable en una comuna distinta**:
+
+```{r}
+#| fig-width: 6
+#| fig-height: 6
+#| fig-dpi: 220
+
+manzanas |> 
+  # filtrar
+  filter(COMUNA == "PUENTE ALTO") |> # comuna
+  # convertir
+  st_as_sf(crs = 4326) |> 
+  # graficar
+  ggplot() +
+  aes(fill = n_discapacidad) + # variable
+  geom_sf(color = "white", linewidth = 0.02) +
+  scale_fill_fermenter(palette = 11) +
+  theme_minimal(base_size = 10) +
+  theme(axis.text.x = element_text(angle = 90, vjust = .5)) +
+  guides(fill = guide_legend(title = "Población 60 años y más",
+                             position = "top")) +
+  labs(title = "Población con discapacidad por manzana",
+       subtitle = "Comuna de Puente Alto",
+       caption = "Fuente: Censo 2024, INE")
+```
+
+Lo bueno de disponer del código es que podemos [**automatizar la creación de mapas** para distintas comunas o regiones](/blog/ggplot_purrr/), simplemente cambiando los filtros y las variables que queremos graficar, o podemos cambiar el nivel territorial cargando uno de los otros archivos, o bien, [realizando una operación de resumen](https://bastianolea.rbind.io/blog/r_introduccion/dplyr_summarize/) sobre los datos.
+
+### Mapa por comunas
+
+Solamente como prueba, filtremos una región del país, luego agrupemos por comunas, y sumemos la población de una de las variables en cada comuna con `summarize()` para **pasar desde un mapa por manzanas a un mapa por comunas**:
+
+```{r}
+#| message: false
+sf_use_s2(FALSE)
+
+comunas <- manzanas |> 
+  # filtrar
+  filter(REGION == "METROPOLITANA DE SANTIAGO") |> 
+  # convertir
+  st_as_sf(crs = 4326) |> 
+  # resumir por comuna
+  group_by(COMUNA) |> 
+  summarize(n_ocupado = sum(n_ocupado), # sumar datos por grupo
+            SHAPE = st_union(SHAPE)) # unir polígonos por grupo
+```
+
+Obtenemos como resultado una tabla de datos por comuna:
+
+```{r}
+comunas
+```
+
+Ahora podemos visualizar un mapa de la **población ocupada por comuna** en la Región Metropolitana:
+
+```{r}
+#| fig-width: 6
+#| fig-height: 6.5
+#| fig-dpi: 220
+#| message: false
+
+comunas |> 
+  ggplot() +
+  aes(fill = n_ocupado) + # variable
+  geom_sf(color = "white", linewidth = 0.01) +
+  colorspace::scale_fill_continuous_sequential(palette = "Sunset", na.value = "white",
+                                               labels = scales::label_number(big.mark = "."),
+                                               breaks = c(0, 50000, 100000, 150000, 200000, 250000)) +
+  theme_minimal(base_size = 10) +
+  theme(axis.text.x = element_text(angle = 90, vjust = .5),
+        legend.key.width = unit(3, "mm")) +
+  guides(fill = guide_colorbar(title = "Ocupados/as", position = "right")) +
+  coord_sf(xlim = c(-70.83, -70.47), 
+           ylim = c(-33.3, -33.68)) +
+  labs(title = "Población ocupada",
+       subtitle = "Región Metropolitana",
+       caption = "Fuente: Censo 2024, INE")
+```
+
+
+{{< info "Para más información sobre visualización de mapas de Chile comunales y regionales, revisa [este tutorial](/blog/tutorial_mapa_chile/) sobre mapas básicos de Chile, o [este tutorial](/blog/tutorial_mapa_chile_subdere/) para usar cartografías oficiales." >}}
+
+----
+
+
+## Mapas interactivos
+
+Para visualizar **mapas interactivos** en R existen varias opciones, como [el paquete `{leaflet}`](https://rstudio.github.io/leaflet/), pero yo quería usar [el paquete `{mapgl}`](https://walker-data.com/mapgl/), desarrollado por [Kyle Walker](https://walker-data.com) que permite crear mapas interactivos usando [MapLibre](https://maplibre.org), una biblioteca de código abierto para mapas web.
+
+Este paquete se caracteriza por el acceso que ofrece a usuarixs de R a mapas online interactivos de alta calidad y alto rendimiento.
+
+Primero instalamos [`{mapgl}`](https://walker-data.com/mapgl/):
+```{r}
+#| eval: false
+install.packages("mapgl")
+```
+
+Luego lo cargamos:
+```{r}
+#| message: false
+library(mapgl)
+```
+
+Y probamos su funcionamiento con un **mapa vacío** (prueba haciendo zoom o navegando el mapa con el cursor)
+
+```{r}
+maplibre(center = c(-71.5, -33.0), 
+         zoom = 3)
+```
+
+Ahora usemos `{mapgl}` con los datos censales. Podemos **repetir el proceso** de filtrado de la comuna o región que nos interese:
+
+```{r}
+# filtrar y seleccionar
+manzanas_comuna <- manzanas |> 
+  filter(COMUNA == "VALPARAÍSO") |> 
+  select(REGION, n_edad_60_mas, SHAPE)
+```
+
+Luego hacemos la misma conversión a `{sf}` para trabajar mejor con datos espaciales:
+
+```{r}
+# convertir a sf
+manzanas_comuna_sf <- manzanas_comuna |> 
+  st_as_sf(crs = 4326)
+```
+
+Finalmente podemos **visualizar los datos en un mapa interactivo** con la función `maplibre_view()`, especificando la variable que queremos graficar en el mapa:
+
+```{r}
+manzanas_comuna_sf |> 
+  maplibre_view(column = "n_edad_60_mas")
+```
+
+¡Así de simple! 💜
+
+Lo interesante es que `{mapgl}` también permite hacer cosas [mucho más increíbles](https://walker-data.com/mapgl/articles/layers-overview.html) usando [Mapbox](https://www.mapbox.com/), una plataforma de mapas de primer nivel que tiene muchas más opciones de personalización y estilos de mapas, incluyendo figuras tridimensionales, edificios, efectos visuales y más.
+
+{{< cafecito >}}
+
+{{< cursos >}}
+
