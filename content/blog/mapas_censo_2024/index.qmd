@@ -15,6 +15,15 @@ format:
     output-file: index
     output-ext: md
 excerpt: "Recientemente lanzaron los datos 2024 del Censo de Población y Vivienda de Chile, incluyendo más de 200 variables a nivel de manzana. En este tutorial veremos dos formas de visualizar datos censales a nivel de manzana: con mapas estáticos en `{ggplot2}`, y con mapas interactivos con `{mapgl}`."
+links:
+  - icon: file-code
+    icon_pack: fas
+    name: Código ggplot
+    url: https://gist.github.com/bastianolea/0fc32985c92ffb569bcf3776f391163b
+  - icon: file-code
+    icon_pack: fas
+    name: Código mapGL
+    url: https://gist.github.com/bastianolea/a45ba0b6a068c7e42c3054e070d4c04d
 ---
 
 Ahora que recientemente lanzaron los datos 2024 del Censo de Población y Vivienda de Chile, me di unos minutos para visualizarlos. En este tutorial veremos dos formas de visualizar datos censales **a nivel de manzana**: con mapas estáticos en `{ggplot2}`, y con mapas interactivos en `{mapgl}`.
@@ -130,9 +139,9 @@ manzanas_comuna_sf |>
   scale_fill_fermenter(palette = 13) +
   theme_minimal(base_size = 10) +
   theme(axis.text.x = element_text(angle = 90, vjust = .5)) +
-  guides(fill = guide_legend(title = "Población 60 años y más",
+  guides(fill = guide_legend(title = "Población",
                              position = "top")) +
-  labs(title = "Población de 60 años y más por manzana",
+  labs(title = "Población de 60 años o más por manzana",
        subtitle = "Comuna de La Florida",
        caption = "Fuente: Censo 2024, INE")
 ```
@@ -154,11 +163,11 @@ manzanas |>
   # graficar
   ggplot() +
   aes(fill = n_discapacidad) + # variable
-  geom_sf(color = "white", linewidth = 0.02) +
-  scale_fill_fermenter(palette = 11) +
+  geom_sf(color = "white", linewidth = 0.01) +
+  scale_fill_fermenter(palette = 3) +
   theme_minimal(base_size = 10) +
   theme(axis.text.x = element_text(angle = 90, vjust = .5)) +
-  guides(fill = guide_legend(title = "Población 60 años y más",
+  guides(fill = guide_legend(title = "Población",
                              position = "top")) +
   labs(title = "Población con discapacidad por manzana",
        subtitle = "Comuna de Puente Alto",
