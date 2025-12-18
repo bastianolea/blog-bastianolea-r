@@ -20,11 +20,11 @@ blogdown::new_post(title = "Recibe fotos de gatos o bendiciones automáticamente
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Visualiza datos del Censo 2024 en mapas a nivel de manzana con R", 
-                   file = "blog/mapas_censo_2024/index.qmd",
+blogdown::new_post(title = "Carga datos directamente desde Google Drive en R", 
+                   file = "blog/googledrive/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("mapas", "Chile", "datos"),
-                   categories = c("Tutoriales") 
+                   tags = c("datos"),
+                   categories = c() 
 )
 
 # draft: true
@@ -42,6 +42,7 @@ blogdown::new_post(title = "Visualiza datos del Censo 2024 en mapas a nivel de m
 
 ## borradores ----
 
+"content/blog/googledrive/index.qmd"
 # https://www.linkedin.com/feed/update/urn:li:activity:7405241344316841984?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB9if5MBe0keh4VrsmJOFbZxmIK9T9GSkYM
 
 
