@@ -10,7 +10,19 @@
         <h1 class="f1 lh-solid measure-narrow mb3 fw4">{{ .Title | markdownify }}</h1>
         {{ if .Params.subtitle }}<h4 class="f4 mt0 mb4 lh-title measure">{{ .Params.subtitle }}</h4>{{ end }}
         {{ if .Params.show_author_byline }}<p class="f6 measure lh-copy mv1">{{ if .Params.author }}Por {{ .Params.author }}{{ end }}{{ with .Params.categories }} en{{ range . }} <a href="{{ "categories/" | absURL }}{{ . | urlize }}">{{ . }}</a> {{ end }}{{ end }}</p>{{ end }}
-        {{ if .Params.show_post_date }}<p class="f7 db mv0 ttu">{{ .PublishDate.Format "2/1/2006" }}</p>{{ end }}
+        
+        <div style = "display: inline-block;">  <!-- para que queden en la misma línea -->
+          {{ if .Params.show_post_date }}<p class="f7 db mv0 ttu" style = "display: inline-block;">
+            {{ .PublishDate.Format "2/1/2006" }}</p>{{ end }}
+          
+          <!-- contador de visitas -->
+          <span>
+            {{ if .Params.show_page_views }}
+              {{- partial "page_views.html" . -}}
+            {{ end }}
+          </span>
+        </div>
+          
         
         <!-- etiquetas -->
         {{ with .Params.tags }}
