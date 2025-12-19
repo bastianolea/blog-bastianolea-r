@@ -20,11 +20,11 @@ blogdown::new_post(title = "Recibe fotos de gatos o bendiciones automáticamente
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Carga datos directamente desde Google Drive en R", 
-                   file = "blog/googledrive/index.qmd",
+blogdown::new_post(title = "App: visualizador de mapas comunales del Censo 2024 por manzanas", 
+                   file = "blog/app_mapas_censo/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("datos"),
-                   categories = c() 
+                   tags = c("apps", "shiny", "mapas", "Chile"),
+                   categories = c("aplicaciones") 
 )
 
 # draft: true

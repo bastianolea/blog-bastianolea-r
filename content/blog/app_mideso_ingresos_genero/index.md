@@ -5,7 +5,7 @@ author: Bastián Olea Herrera
 date: '2025-09-24'
 slug: []
 categories:
-  - apps
+  - aplicaciones
 tags:
   - apps
   - datos
