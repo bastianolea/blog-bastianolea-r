@@ -13,18 +13,18 @@ abrir_post_reciente()
 
 
 # crear un post normal
-blogdown::new_post(title = "Recibe fotos de gatos o bendiciones automáticamente al abrir RStudio", 
+blogdown::new_post(title = "Post", 
                    file = paste0("blog/", lubridate::today(), "/index.md"),
                    author = "Bastián Olea Herrera",
                    tags = c("blog", "gráficos")
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "App: visualizador de mapas comunales del Censo 2024 por manzanas", 
-                   file = "blog/app_mapas_censo/index.qmd",
+blogdown::new_post(title = "Conoce un formato de datos optimizado para rendimiento: Arrow", 
+                   file = "blog/arrow/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("apps", "shiny", "mapas", "Chile"),
-                   categories = c("aplicaciones") 
+                   tags = c("datos", "optimización"),
+                   categories = c() 
 )
 
 # draft: true
