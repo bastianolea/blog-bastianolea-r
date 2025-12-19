@@ -41,6 +41,8 @@ Toda la app fue **hecha en R en menos de media hora** ⏱️ gracias a la conven
 
 En el fondo hice la app para aprender la carga de datos formato Arrow como base de datos, que es extremadamente fácil de hacer con R y `{dplyr}`, y me hizo pasar de cargar datos y filtrar en 1.1 segundos a tan sólo 0.1 segundos! 🚀 Si quieres que haga un tutorial de eso déjame un comentario o escríbeme 🤭
 
+{{< info "Si quieres explorar más aplicaciones de datos sociales, revisa mi [portafolio de aplicaciones](https://bastianolea.github.io/shiny_apps/)" >}}
+
 
 ## Resumen del código
 Quiero destacar lo simple que es hacer aplicaciones como ésta con **[Shiny](/tags/shiny/)**.
