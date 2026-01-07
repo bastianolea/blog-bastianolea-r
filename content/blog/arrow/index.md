@@ -1,0 +1,71 @@
+---
+title: 'Conoce un formato de datos optimizado para rendimiento: Arrow'
+author: Bastián Olea Herrera
+date: '2025-12-19'
+draft: true
+slug: []
+categories: []
+tags:
+  - datos
+  - optimización
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+execute:
+  eval: false
+---
+
+
+``` r
+# read_parquet(): read a file in Parquet format
+# read_feather(): read a file in Arrow/Feather format
+# read_delim_arrow(): read a delimited text file
+# read_csv_arrow(): read a comma-separated values (CSV) file
+# read_tsv_arrow(): read a tab-separated values (TSV) file
+# read_json_arrow(): read a JSON data file
+```
+
+parquet it is a binary format that is optimized for reduced file sizes and fast read performance, especially for column-based access patterns.
+
+One useful feature of Parquet files is that they store data column-wise, and contain metadata that allow file readers to skip to the relevant sections of the file. That means it is possible to load only a subset of the columns without reading the complete file. The col_select argument to read_parquet() supports this functionality:
+
+## benchmark
+
+``` r
+# cargar datos
+datos <- arrow::open_dataset("Cartografia_censo2024_Pais_Manzanas.parquet",
+                             partitioning = c("COD_REGION", "CUT")
+                             )
+```
+
+Arrow Tables and Datasets can be analyzed using dplyr syntax. This is possible because the arrow R package supplies a backend that translates dplyr verbs into commands that are understood by the Arrow C++ library, and will similarly translate R expressions that appear within a call to a dplyr verb. For example, although the dset Dataset is not a data frame (and does not store the data values in memory), you can still pass it to a dplyr pipeline like the one shown below:
+makes it possible for the Arrow C++ compute engine to optimize how the computations are performed.
+
+## Guardar conjunto de datos
+
+*dataset*
+
+``` r
+random_data |>
+  group_by(subset) |>
+  write_dataset(dataset_path)
+```
+
+``` r
+dset <- open_dataset(dataset_path)
+dset
+```
+
+## Cargar CSV
+
+https://bastianolea.rbind.io/blog/2025-02-12/
+
+``` r
+datos <- arrow::read_csv_arrow(archivo,
+                               read_options = csv_read_options(encoding = "latin1"))
+```
+
+https://arrow.apache.org/docs/r/articles/arrow.html
+https://arrow.apache.org/docs/r/articles/dataset.html
+https://arrow.apache.org/cookbook/r/index.html

@@ -8,6 +8,7 @@ format:
 date: '2025-03-04'
 slug: []
 categories: []
+freeze: true
 tags:
   - mapas
   - visualización de datos
@@ -128,11 +129,9 @@ Ahora que tenemos los datos listos, los agregamos al mapa [usando un `left_join(
 ``` r
 # agregar regiones y datos al mapa
 mapa_datos <- mapa_region |> 
-  left_join(regiones) |> 
+  left_join(regiones, by = join_by(codigo_region)) |> 
   left_join(datos_2, by = join_by(nombre_region))
 ```
-
-    Joining with `by = join_by(codigo_region)`
 
 Finalmente, previsualizamos el mapa con los datos agregados:
 
@@ -150,9 +149,6 @@ mapa_datos |>
         axis.line = element_blank(),
         axis.ticks = element_blank())
 ```
-
-    Warning in prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L, :
-    'big.mark' and 'decimal.mark' are both '.', which could be confusing
 
 <img src="mapa_chile_horizontal.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="768" />
 
@@ -202,3 +198,6 @@ Listo! Revisa el [código completo](https://gist.github.com/bastianolea/8e3dff70
 -   https://gist.github.com/ryanpeek/99c6935ae51429761f5f73cf3b027da2
 -   https://r-spatial.github.io/sf/articles/sf3.html#affine-transformations
 -   https://en.wikipedia.org/wiki/Rotation_matrix
+
+{{< cafecito >}}
+{{< cursos >}}

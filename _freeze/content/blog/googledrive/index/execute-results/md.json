@@ -1,0 +1,15 @@
+{
+  "hash": "0a5ab570c921976cd100d9553ef49caf",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: Carga datos directamente desde Google Drive en R\nauthor: Bastián Olea Herrera\ndate: '2025-12-18'\ndraft: true\nslug: []\ncategories: []\ntags:\n  - datos\nformat:\n  hugo-md:\n    output-file: index\n    output-ext: md\nexecute:\n  eval: false\n  freeze: true\n---\n\n\n\n\n## Planillas de cálculo de Google\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# cargar metadatos desde drive\nlibrary(googlesheets4)\n\ngs4_auth(email = \"bastian.olea@subdere.gov.cl\")\n\n# obtener metadatos\nmetadatos <- read_sheet(\"1Gc-oRq8k3hxcmE6K6Osw-l-t2vGDvLfsRALf6gtXhuE\", \n           sheet = \"Hoja 1\")\n```\n:::\n\n::: {.cell}\n\n```{.r .cell-code}\n  write_sheet(data = datos,\n              ss = \"1Gc-oRq8k3hxcmE6K6Osw-l-t2vGDvLfsRALf6gtXhuE\", \n              sheet = \"Datos\")\n```\n:::\n\n\n\n\n\n\n## Archivos desde Google Drive\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(googledrive)\n\ndrive_auth(email = \"bastian.olea@subdere.gov.cl\")\n\n# descargar archivo\ndrive_download(as_id(\"1Gc-oRq8k3hxcmE6K6Osw-l-t2vGDvLfsRALf6gtXhuE\"), \n               path = \"censo_proyeccion_2024.xlsx\", \n               overwrite = TRUE)\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": null,
+    "postProcess": false
+  }
+}

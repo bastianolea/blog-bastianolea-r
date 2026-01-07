@@ -8,6 +8,7 @@ format:
 date: '2025-03-04'
 slug: []
 categories: []
+freeze: true
 tags:
   - mapas
   - visualización de datos
@@ -22,13 +23,22 @@ links:
     url: https://gist.github.com/bastianolea/8e3dff701fb660ee7cb5091bd1195b5f
 ---
 
+
+
 Visualizar un mapa de Chile puede ser complicado debido a su largo. Muchas veces cuesta ubicar correctamente el mapa por el espacio vertical que requiere. Pero en ciertos casos puede ser conveniente **visualizar a Chile _de lado_**, para aprovechar el espacio horizontal. 
 
 En esta guía veremos cómo rotar un mapa de Chile 90° hacia la izquierda en R para que quede acostado 💤🌙
 
+
+
 {{< aviso "Si necesitas aprender en profundidad la visualización de mapas con R, revisa mi [tutorial de mapas y datos espaciales con `{sf}`](/blog/mapas_sf/)." >}}
 
+
+
+
 Primero cargamos los paquetes necesarios:
+
+
 
 
 ``` r
@@ -39,7 +49,11 @@ library(dplyr) # manejo de datos tabulares
 library(readr) # cargar datos
 ```
 
+
+
 Obtenemos un mapa de Chile [gracias al paquete `{chilemapas}`](https://github.com/pachadotdev/chilemapas); en este caso un mapa del país por regiones:
+
+
 
 ``` r
 # obtener mapa
@@ -86,7 +100,11 @@ mapa_region |>
 
 <img src="/blog/mapa_chile_horizontal/mapa_chile_horizontal_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
+
+
 Cargamos algunos datos regionales para ponerle al mapa, sacados de mi proyecto de [visualización de datos económicos de Chile](https://bastianoleah.shinyapps.io/economia_chile/):
+
+
 
 ``` r
 # obtener datos
@@ -120,21 +138,25 @@ regiones <- tribble(~codigo_region, ~nombre_region,
                     "16", "Región de Magallanes y de la Antártica Chilena")
 ```
 
+
+
 Ahora que tenemos los datos listos, los agregamos al mapa [usando un `left_join()`](/blog/left_join/):
+
+
 
 
 ``` r
 # agregar regiones y datos al mapa
 mapa_datos <- mapa_region |> 
-  left_join(regiones) |> 
+  left_join(regiones, by = join_by(codigo_region)) |> 
   left_join(datos_2, by = join_by(nombre_region))
 ```
 
-```
-## Joining with `by = join_by(codigo_region)`
-```
+
 
 Finalmente, previsualizamos el mapa con los datos agregados:
+
+
 
 ``` r
 # visualizar mapa con datos
@@ -151,15 +173,14 @@ mapa_datos |>
         axis.ticks = element_blank())
 ```
 
-```
-## Warning in prettyNum(.Internal(format(x, trim, digits, nsmall, width, 3L, :
-## 'big.mark' and 'decimal.mark' are both '.', which could be confusing
-```
-
 <img src="/blog/mapa_chile_horizontal/mapa_chile_horizontal_files/figure-html/unnamed-chunk-5-1.png" width="672" />
 
 
+
+
 Ahora que tenemos un mapa de Chile con datos regionales, procedemos a **rotar el mapa**. Para esto, necesitamos una _matriz de rotación_, respecto de la cual no hay mucho que entender, salvo que nos permitirá multiplicar la geometría del mapa para obtener como resultado la misma geometría, pero rotada. El único detalle que hay que considerar es que es necesario **cambiar la proyección del mapa** para que la zona sur del país no se vea deformada.
+
+
 
 
 ``` r
@@ -174,7 +195,11 @@ mapa_rotado <- mapa_proyectado |>
   mutate(geometry = geometry * rotacion)
 ```
 
+
+
 Ahora visualizamos el **mapa reproyectado y rotado**:
+
+
 
 
 ``` r
@@ -198,12 +223,28 @@ mapa_rotado |>
 <img src="/blog/mapa_chile_horizontal/mapa_chile_horizontal_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 
+
+
 Listo! Revisa el [código completo](https://gist.github.com/bastianolea/8e3dff701fb660ee7cb5091bd1195b5f) en el siguiente botón para poder copiarlo y pegarlo en tu proyecto:
 
+
+
 {{< boton "Ver código completo" "https://gist.github.com/bastianolea/8e3dff701fb660ee7cb5091bd1195b5f" "fas fa-file-code" >}}
+
+
+
 
 ### Fuentes
 - [DeepSeek DeepThink (R1)](https://chat.deepseek.com)
 - https://gist.github.com/ryanpeek/99c6935ae51429761f5f73cf3b027da2
 - https://r-spatial.github.io/sf/articles/sf3.html#affine-transformations
 - https://en.wikipedia.org/wiki/Rotation_matrix
+
+
+
+
+{{< cafecito >}}
+
+
+{{< cursos >}}
+

@@ -19,7 +19,7 @@ execute:
 
 ## Planillas de cálculo de Google
 
-```{r}
+``` r
 # cargar metadatos desde drive
 library(googlesheets4)
 
@@ -28,20 +28,17 @@ gs4_auth(email = "bastian.olea@subdere.gov.cl")
 # obtener metadatos
 metadatos <- read_sheet("1Gc-oRq8k3hxcmE6K6Osw-l-t2vGDvLfsRALf6gtXhuE", 
            sheet = "Hoja 1")
-
 ```
 
-```{r}
+``` r
   write_sheet(data = datos,
               ss = "1Gc-oRq8k3hxcmE6K6Osw-l-t2vGDvLfsRALf6gtXhuE", 
               sheet = "Datos")
 ```
 
-
-
-
 ## Archivos desde Google Drive
-```{r}
+
+``` r
 library(googledrive)
 
 drive_auth(email = "bastian.olea@subdere.gov.cl")
@@ -51,4 +48,3 @@ drive_download(as_id("1Gc-oRq8k3hxcmE6K6Osw-l-t2vGDvLfsRALf6gtXhuE"),
                path = "censo_proyeccion_2024.xlsx", 
                overwrite = TRUE)
 ```
-
