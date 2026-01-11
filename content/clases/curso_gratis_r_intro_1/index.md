@@ -12,7 +12,7 @@ links:
 - icon: file-pen
   icon_pack: fas
   name: inscripción
-  url: https://github.com/bastianolea/taller_datos_unam
+  url: https://bastianoleah.shinyapps.io/inscripcion_curso_gratis_r_intro_1/
 # - icon: github
 #   icon_pack: fab
 #   name: código y contenidos
@@ -49,4 +49,4 @@ Las clases serán **online** los días 3, 5, y 9 de febrero a las 7:30PM.
 
 Más información y formulario de inscripción aquí:
 
-{{< boton "Inscribirse" "https://bastianoleah.shinyapps.io/buscador/" "fas fa-file-pen" >}}
+{{< boton "Inscripción" "https://bastianoleah.shinyapps.io/inscripcion_curso_gratis_r_intro_1/" "fas fa-file-pen" >}}
