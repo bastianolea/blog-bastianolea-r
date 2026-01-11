@@ -42,6 +42,7 @@ _Sitios con contenido educacional para que aprendas R._
 - [Galería de Shiny Widgets](http://shinyapps.dreamrs.fr/shinyWidgets/), paquete que ofrece muchas inputs nuevos para Shiny
 - [Extensiones de Shiny](https://github.com/nanxstats/awesome-shiny-extensions), colección de paquetes que extienden Shiny
 - [Documentación de `{bslib}`](https://rstudio.github.io/bslib/index.html), paquete para construir interfaces en Shiny
+- [Galería de apps Shiny en el sector público](https://pub.current.posit.team/public/Public_Sector_Shiny_Showcase/)
 
 ### Otros
 

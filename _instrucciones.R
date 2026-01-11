@@ -21,9 +21,9 @@ blogdown::new_post(title = "Post",
 
 # crear un post tutorial
 blogdown::new_post(title = "Conoce un formato de datos optimizado para rendimiento: Arrow", 
-                   file = "blog/arrow/index.qmd",
+                   file = "blog/curso_r_intro_1/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("datos", "optimización"),
+                   tags = c("blog"),
                    categories = c() 
 )
 
