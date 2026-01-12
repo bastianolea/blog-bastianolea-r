@@ -182,6 +182,7 @@ Crear capturas de código en imágenes para compartir
 
 #### Paletas de colores
 Sitios para encontrar combinaciones de colores para tus gráficos o aplicaciones
+- [Colour de Obumbratta](https://obumbratta.com/colour), genera paletas a partir de 1 o más colores, con revisiones de contraste, accesibilidad y más
 - [HTML Color Picker](https://www.w3schools.com/colors/colors_picker.asp)
 - [Pigment](https://pigment.shapefactory.co), paletas de colores
 - [2 Color Combinations](https://2colors.colorion.co), pares de colores
