@@ -45,6 +45,10 @@ blogdown::new_post(title = "Conoce un formato de datos optimizado para rendimien
 "content/blog/googledrive/index.qmd"
 # https://www.linkedin.com/feed/update/urn:li:activity:7405241344316841984?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB9if5MBe0keh4VrsmJOFbZxmIK9T9GSkYM
 
+# mapas de chile con comunas pero sin líneas en la costa
+# pildoritas en shiny y en ggiraph
+# pildoritas en gt
+
 
 # constantes
 "content/blog/mapas_sf/mapas_sf.qmd"

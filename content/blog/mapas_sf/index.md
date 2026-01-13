@@ -24,13 +24,12 @@ execute:
   cache: false
   warning: false
 excerpt: >-
-  R cuenta con un muy amplio ecosistema de paquetes para datos geoespaciales.
+  R cuenta con un muy amplio ecosistema para trabajar con datos geoespaciales.
   Uno de los paquetes más importantes es `{sf}`, que permite manipular datos
-  espaciales a partir del estándar _simple features_ (características simples),
-  ampliamente utilizado en sistemas de información geográfica (SIG/GIS). En esta
-  guía iré guardando los comandos que uso frecuentemente para manipular y
-  visualizar datos geoespaciales en R. En la medida que voy aprendiendo más
-  sobre hacer mapitas, iré actualizando y complementando.
+  espaciales a partir del estándar _simple features_ (características simples).
+  En esta guía iré recopilando los comandos básicos para manipular y visualizar
+  datos geoespaciales en R. En la medida que voy aprendiendo más sobre hacer
+  mapas, iré actualizando y complementando.
 ---
 
 
@@ -201,6 +200,7 @@ mapa
 
 ### Cargar KMZ
 
+
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -209,6 +209,7 @@ unzip("~/Downloads/Mis lugares.kmz", exdir = "~/Downloads/Mis lugares")
 sf::read_sf("~/Downloads/Mis lugares/doc.kml")
 ```
 :::
+
 
 
 -->
@@ -762,9 +763,7 @@ Ahora lo recortamos con `st_crop()`. Recomiendo hacerlo terminando el recorte co
 ``` r
 chile_recortado <- chile |> 
   st_crop(xmin = -78, ymax = -17,
-          xmax = -65, ymin = -56) # |> 
-  # ggplot() +
-  # geom_sf()
+          xmax = -65, ymin = -56) 
 ```
 
 En este caso, hacemos un recorte para obtener el territorio continental de Chile (excluyendo las islas Juan Fernández, Isla de Pascua y Antártica)
@@ -782,6 +781,7 @@ mapa_recortado <- chile_recortado |>
   ggplot() +
   geom_sf(fill = "#9069C0", linewidth = 0)
 
+# poner los dos mapas lado a lado
 library(patchwork)
 
 mapa_completo + mapa_recortado
@@ -916,6 +916,7 @@ ggplot() +
 <!--
 Desde el centroide de un polígono
 
+
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -929,9 +930,11 @@ st_as_sf()
 ```
 :::
 
+
 -->
 <!--
 ### Calcular superficie o área
+
 
 ::: {.cell}
 
@@ -946,7 +949,9 @@ units::set_units("km^2")
 
 
 
+
 ### Recortar polígono a coordenadas
+
 
 ::: {.cell}
 
@@ -957,7 +962,9 @@ st_crop(xmin = -74, ymin = -36, xmax = -65, ymax = -30) |>
 
 
 
+
 ### Simplificar un polígono
+
 
 ::: {.cell}
 
@@ -971,7 +978,9 @@ rmapshaper::ms_simplify(geometry, keep = 0.8))
 
 
 
+
 ### Extraer líneas internas de un polígono
+
 
 ::: {.cell}
 
@@ -982,7 +991,9 @@ ms_innerlines() # deja solo las líneas interiores de un coso
 
 
 
+
 ## Correcciones
+
 
 ::: {.cell}
 
@@ -991,17 +1002,12 @@ st_as_sf()
 ```
 :::
 
-
-
-
 ::: {.cell}
 
 ```{.r .cell-code}
 st_make_valid()
 ```
 :::
-
-
 
 ::: {.cell}
 
@@ -1012,12 +1018,14 @@ st_drop_geometry()
 
 
 
+
 ----
 
 
 ## Operaciones agrupadas
 
 ### Unir polígonos
+
 
 ::: {.cell}
 
@@ -1029,10 +1037,12 @@ st_union()
 
 
 
+
 ## Operaciones entre geometrías
 
 ### Recortar un polígono con otro
 https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#clipping
+
 
 
 ::: {.cell}
@@ -1043,7 +1053,9 @@ st_intersection()
 :::
 
 
+
 ### Usar un polígono para eliminar partes de otro
+
 
 ::: {.cell}
 
@@ -1054,7 +1066,9 @@ st_difference()
 
 
 
+
 ### unir dos polígonos
+
 
 ::: {.cell}
 
@@ -1064,9 +1078,11 @@ st_union()
 :::
 
 
+
 ### Spatial join
 
 ### Filter
+
 
 ::: {.cell}
 
@@ -1078,9 +1094,11 @@ https://cengel.github.io/R-spatial/spatialops.html#topological-subsetting-select
 
 
 
+
 ## Coordenadas
 
 ### Extraer sistema de coordenadas
+
 
 ::: {.cell}
 
@@ -1090,7 +1108,9 @@ st_crs(comunas_region)
 :::
 
 
+
 ### Cambiar coordenadas
+
 
 ::: {.cell}
 
@@ -1101,9 +1121,11 @@ st_transform(crs = st_crs(comunas_region))
 
 
 
+
 ## Visualización
 
 ### Visualizar por capas
+
 
 ::: {.cell}
 
@@ -1114,7 +1136,9 @@ geom_sf()
 
 
 
+
 ### Texto
+
 
 ::: {.cell}
 
@@ -1125,8 +1149,10 @@ aes(label = nombre)) +
 :::
 
 
+
 ### Texto con repel
 https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
+
 
 ::: {.cell}
 
@@ -1143,7 +1169,9 @@ label.padding = 0.15, label.size = 0
 
 
 
+
 ### Hacer zoom
+
 
 ::: {.cell}
 
@@ -1154,7 +1182,9 @@ label.padding = 0.15, label.size = 0
 :::
 
 
+
 ### Dibujar un cuadrado
+
 
 ::: {.cell}
 
@@ -1166,7 +1196,9 @@ label.padding = 0.15, label.size = 0
 :::
 
 
+
 ### Escala de colores para mapa de calor
+
 
 
 ::: {.cell}
@@ -1184,12 +1216,15 @@ limits = c(0, NA)
 
 
 
+
 ### Minimapa
 https://dominicroye.github.io/blog/inserted-map/
+
 
 ::: {.cell}
 
 :::
+
 
 
 -->

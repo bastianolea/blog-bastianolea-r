@@ -23,7 +23,7 @@ execute:
   eval: true
   cache: false
   warning: false
-excerpt: "R cuenta con un muy amplio ecosistema de paquetes para datos geoespaciales. Uno de los paquetes más importantes es `{sf}`, que permite manipular datos espaciales a partir del estándar _simple features_ (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS). En esta guía iré guardando los comandos que uso frecuentemente para manipular y visualizar datos geoespaciales en R. En la medida que voy aprendiendo más sobre hacer mapitas, iré actualizando y complementando."
+excerpt: "R cuenta con un muy amplio ecosistema para trabajar con datos geoespaciales. Uno de los paquetes más importantes es `{sf}`, que permite manipular datos espaciales a partir del estándar _simple features_ (características simples). En esta guía iré recopilando los comandos básicos para manipular y visualizar datos geoespaciales en R. En la medida que voy aprendiendo más sobre hacer mapas, iré actualizando y complementando."
 ---
 
 {{< imagen "mapa_rm_featured.png" >}}
@@ -895,9 +895,7 @@ Ahora lo recortamos con `st_crop()`. Recomiendo hacerlo terminando el recorte co
 ```{r}
 chile_recortado <- chile |> 
   st_crop(xmin = -78, ymax = -17,
-          xmax = -65, ymin = -56) # |> 
-  # ggplot() +
-  # geom_sf()
+          xmax = -65, ymin = -56) 
 ```
 
 En este caso, hacemos un recorte para obtener el territorio continental de Chile (excluyendo las islas Juan Fernández, Isla de Pascua y Antártica)
@@ -931,6 +929,7 @@ mapa_recortado <- chile_recortado |>
   ggplot() +
   geom_sf(fill = "#9069C0", linewidth = 0)
 
+# poner los dos mapas lado a lado
 library(patchwork)
 
 mapa_completo + mapa_recortado

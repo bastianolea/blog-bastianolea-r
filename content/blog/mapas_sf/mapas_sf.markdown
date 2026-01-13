@@ -23,12 +23,16 @@ execute:
   eval: true
   cache: false
   warning: false
-excerpt: "R cuenta con un muy amplio ecosistema de paquetes para datos geoespaciales. Uno de los paquetes más importantes es `{sf}`, que permite manipular datos espaciales a partir del estándar _simple features_ (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS). En esta guía iré guardando los comandos que uso frecuentemente para manipular y visualizar datos geoespaciales en R. En la medida que voy aprendiendo más sobre hacer mapitas, iré actualizando y complementando."
+excerpt: "R cuenta con un muy amplio ecosistema para trabajar con datos geoespaciales. Uno de los paquetes más importantes es `{sf}`, que permite manipular datos espaciales a partir del estándar _simple features_ (características simples). En esta guía iré recopilando los comandos básicos para manipular y visualizar datos geoespaciales en R. En la medida que voy aprendiendo más sobre hacer mapas, iré actualizando y complementando."
 ---
 
 {{< imagen "mapa_rm_featured.png" >}}
 
+
 {{< aviso "⚠️ Este tutorial se encuentra en construcción! ⚠️" >}}
+
+
+
 
 R cuenta con un muy amplio [ecosistema](https://github.com/r-spatial/) de paquetes para datos geoespaciales. Uno de los [paquetes más importantes es `{sf}`](https://r-spatial.github.io/sf/), que permite manipular datos espaciales a partir del estándar _simple features_ (características simples), ampliamente utilizado en sistemas de información geográfica (SIG/GIS).
 
@@ -37,11 +41,17 @@ En esta guía iré guardando los comandos que uso frecuentemente para **manipula
 Lo inicial es instalar `{sf}`:
 
 
+
+
 ``` r
 install.packages("sf")
 ```
 
+
+
 Y cargarlo junto a `{dplyr}` para empezar a trabajar con datos geoespaciales.
+
+
 
 ``` r
 library(sf)
@@ -49,9 +59,14 @@ library(dplyr)
 ```
 
 
+
+
 **Nota:** para simplificar, en este tutorial voy a ocultar el código de los gráficos, pero siempre estará disponible bajo flechitas que despliegan el código, como la siguiente:
 
+
+
 {{< detalles "**Ver código para los gráficos**" >}}
+
 
 
 ``` r
@@ -69,11 +84,20 @@ theme_set(
     theme(axis.ticks = element_blank())
 )
 ```
+
 {{< /detalles >}}
+
+
+
 
 <br>
 
+
+
 {{< indice >}}
+
+
+
 
 ----
 
@@ -90,11 +114,17 @@ Si no tenemos o no queremos descargar _shapes_, podemos **cargar mapas de cualqu
 Instala `{rnaturalearth}` si no lo tienes:
 
 
+
+
 ``` r
 install.packages("rnaturalearth")
 ```
 
+
+
 Puedes insertar el nombre de tu país para seguir con este tutorial usando ejemplos de tu territorio.
+
+
 
 
 ``` r
@@ -134,13 +164,20 @@ mapa
 ```
 
 
+
+
 ### Cargar _shapes_
 
 Un _shapefile_ es un formato de archivo común para datos geoespaciales, que en realidad consiste en una **carpeta** con archivos relacionados (`.shp`, `.shx`, `.dbf`, entre otros) que juntos representan la geometría y atributos de los objetos geográficos.
 
 Teniendo la carpeta, basta con cargarla con la función `read_sf()`.
 
+
+
 {{< detalles "**Ejemplo de descarga y carga de un _shapefile_ de Chile**" >}}
+
+
+
 
 Para aprender, podemos descargar un _shape_ y usarlo para practicar. Si no tienes uno a mano, en el siguiente botón podemos bajar un _shapefile_ de Chile por regiones, que proviene de la [Mapoteca de la Biblioteca del Congreso Nacional](https://www.bcn.cl/siit/mapas_vectoriales).
 
@@ -152,6 +189,8 @@ También puedes descargarlo directamente desde R con `download.file()` y luego `
 Una vez descargado, descomprimimos el archivo y obtenemos una **carpeta**. Esta carpeta es nuestro _shapefile_, así que la guardamos dentro de nuestro [proyecto de RStudio](/blog/r_introduccion/proyectos/), idealmente dentro de una carpeta donde guardemos nuestros mapas. 
 
 
+
+
 ``` r
 # descargar
 download.file("https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Regiones.zip",
@@ -161,7 +200,11 @@ download.file("https://www.bcn.cl/obtienearchivo?id=repositorio/10221/10398/2/Re
 unzip("Regiones.zip", exdir = "shapes/Regiones")
 ```
 
+
+
 En el siguiente ejemplo, guardamos el _shapefile_ en una carpeta `shapes`, y lo cargamos con `read_sf()`.
+
+
 
 
 
@@ -207,7 +250,11 @@ mapa
 
 {{< /detalles >}}
 
+
 {{< aviso "Puedes seguir este tutorial independientemente del mapa que hayas cargado (el _shape_ de Chile, con `rnaturalearth`, u otro _shape_ que tú elijas); lo importante es que cargues un objeto `mapa` que tenga columna `geometry` y `region`." >}}
+
+
+
 
 <!--
 ### Cargar geoJSON
@@ -215,11 +262,15 @@ mapa
 
 ### Cargar KMZ
 
+
+
 ``` r
 unzip("~/Downloads/Mis lugares.kmz", exdir = "~/Downloads/Mis lugares")
 
 sf::read_sf("~/Downloads/Mis lugares/doc.kml")
 ```
+
+
 
 -->
 
@@ -247,6 +298,8 @@ En `{sf}` los datos geoespaciales además contienen una columna `geometry`, que 
 Para visualizar un mapa con `{sf}` usamos la geometría `geom_sf()` dentro de un gráfico de `{ggplot2}`. Esta función reconoce automáticamente la columna `geometry` del objeto espacial, y dibuja las formas geográficas correspondientes.
 
 
+
+
 ``` r
 mapa |> 
   ggplot() +
@@ -260,6 +313,9 @@ mapa |>
 {{< aviso "Si necesitas aprender lo básico de `{ggplot2}` para visualización de datos, [revisa este completo tutorial](/blog/r_introduccion/tutorial_visualizacion_ggplot/)." >}}
 
 
+
+
+
 ----
 
 ## Operaciones sobre geometrías
@@ -269,6 +325,8 @@ Las operaciones sobre geometrías permiten manipular y analizar las formas y ubi
 ### Calcular centroide
 
 El centroide es el punto central de un polígono. Calcularlo sirve, por ejemplo, para ubicar una etiqueta de texto sobre un polígono, poner un punto sobre un territorio que crece con respecto a una variable, etc.
+
+
 
 
 ``` r
@@ -310,6 +368,8 @@ mapa_centroide <- mapa |>
 
 {{< detalles "Ver código del gráfico" >}}
 
+
+
 ``` r
 mapa_centroide |> 
   filter(region == mapa$region[3]) |> 
@@ -324,13 +384,19 @@ mapa_centroide |>
     label = "centroide", size = 3,
     vjust = 2)
 ```
+
 {{< /detalles >}}
+
+
+
 
 
 ----
 
 ### Extraer longitud y latitud
 Para obtener las coordenadas (longitud y latitud) de un elemento espacial, necesitamos primero que sea un punto, porque un polígono es una figura compleja que no tiene solamente una latitud y una longitud. Si tenemos un polígono, [primero calculamos el centroide](#calcular-centroide), y luego extraemos las coordenadas con `st_coordinates()`. Como esta función retorna la longitud y latitud de cada punto al mismo tiempo, tenemos que pedirle que entregue la una o la otra usando corchetes.
+
+
 
 
 ``` r
@@ -368,10 +434,11 @@ mapa_centroide_coordenadas <- mapa_centroide |>
 ## 3857             Córdoba -63.76859 -32.07319
 ```
 
-
 <img src="/blog/mapas_sf/mapas_sf_files/figure-html/barras_latitud-1.png" width="672" />
 
 {{< detalles "Ver código del gráfico" >}}
+
+
 
 ``` r
 mapa_centroide_coordenadas |> 
@@ -386,7 +453,11 @@ mapa_centroide_coordenadas |>
   scale_y_discrete(labels = NULL) +
   labs(y = NULL, x = "Latitud")
 ```
+
 {{< /detalles >}}
+
+
+
 
 
 ----
@@ -396,6 +467,8 @@ mapa_centroide_coordenadas |>
 Un _buffer_ es una zona alrededor de un objeto geográfico, definida por una distancia específica. Calcular un _buffer_ es útil para analizar áreas de influencia, proximidad a ciertos puntos o regiones, o para hacer modificiones sobre mapas con fines de visualización.
 
 Con la función `st_buffer()` definimos el espacio en torno a un polígono, especificando en el argumento `dist` la **distancia** del _buffer_ en las unidades del sistema de coordenadas del mapa (por ejemplo, metros si el mapa está en UTM), y con `max_cells` podemos controlar la calidad del polígono resultante.
+
+
 
 
 ``` r
@@ -412,6 +485,8 @@ mapa_buffer <- mapa |>
 
 {{< detalles "Ver código del gráfico" >}}
 
+
+
 ``` r
 mapa_buffer |> 
   ggplot() +
@@ -422,13 +497,19 @@ mapa_buffer |>
   geom_sf(aes(geometry = buffer), 
           fill = "#9069C0", alpha = 0.5, linewidth = NA)
 ```
+
 {{< /detalles >}}
+
+
+
 
 ----
 
 ### Calcular caja de un polígono
 
 Con la función `st_bbox()` obtenemos las coordenadas de la caja que envuelve a un polígono o conjunto de polígonos. Esta caja está definida por las coordenadas mínimas y máximas en los ejes _x_ (longitud) e _y_ (latitud).
+
+
 
 
 ``` r
@@ -444,9 +525,13 @@ caja
 
 
 
+
+
 #### Convertir caja a polígono
 
 Teniendo una caja con sus coordenadas, podemos convertirla a un polígono para aplicarlo sobre (o debajo de) un mapa.
+
+
 
 
 ``` r
@@ -457,6 +542,8 @@ rectangulo <- caja |>
 <img src="/blog/mapas_sf/mapas_sf_files/figure-html/unnamed-chunk-18-1.png" width="672" />
 
 {{< detalles "Ver código del gráfico" >}}
+
+
 
 ``` r
 ggplot() +
@@ -472,7 +559,11 @@ ggplot() +
   theme(axis.text = element_blank(),
         panel.background = element_blank())
 ```
+
 {{< /detalles >}}
+
+
+
 
 
 ----
@@ -481,6 +572,8 @@ ggplot() +
 ### Poner un punto en un mapa
 
 Si queremos poner puntos en posiciones específicas de un mapa, sólo necesitamos crear una tabla con las coordenadas de los puntos y convertir la tabla a `sf` con `st_as_sf()`. Al hacer esto, es necesario especificar el sistema de referencia de coordenadas (CRS) del mapa, para que los puntos se ubiquen correctamente. Hacemos esto extrayendo el CRS del mapa con `st_crs()` y aplicándolo a nuestra nueva tabla `sf`.
+
+
 
 
 ``` r
@@ -494,10 +587,13 @@ punto <- coordenadas |>
            crs = st_crs(mapa))
 ```
 
-
 <img src="/blog/mapas_sf/mapas_sf_files/figure-html/unnamed-chunk-21-1.png" width="672" />
 
+
+
 {{< detalles "Ver código del gráfico">}}
+
+
 
 ``` r
 ggplot() +
@@ -509,13 +605,19 @@ ggplot() +
   geom_sf(data = punto,
           size = 3, alpha = .5)
 ```
+
 {{< /detalles >}}
+
+
+
 
 
 
 #### Poner varios puntos en un mapa
 
 Si necesitamos agregar más de un punto, simplemente hacemos una tabla con todos los que necesitemos. Obviamente también podemos especificar otras columnas que podemos usar para etiquetar los puntos, especificar sus colores, y más.
+
+
 
 
 ``` r
@@ -531,7 +633,11 @@ puntos <- coordenadas |>
 ```
 
 <img src="/blog/mapas_sf/mapas_sf_files/figure-html/unnamed-chunk-24-1.png" width="672" />
+
+
 {{< detalles "Ver código del gráfico">}}
+
+
 
 ``` r
 ggplot() +
@@ -554,7 +660,11 @@ ggplot() +
   guides(size = guide_legend(override.aes = list(color = "#9069C0", 
                                                  alpha = 1)))
 ```
+
 {{< /detalles >}}
+
+
+
 
 ----
 
@@ -562,6 +672,8 @@ ggplot() +
 ### Crear un cuadrado
 
 Para poner un cuadrado encima de una ubicación del mapa, primero creamos un punto, luego lo [expandimos con un _buffer_](#calcular-buffer), calculamos [la caja que envuelve a dicho punto](#calcular-caja-de-un-polígono), y finalmente convertimos la caja en un polígono `sf`.
+
+
 
 
 ``` r
@@ -578,10 +690,13 @@ cuadrado <- punto |>
   st_as_sfc(crs = st_crs(mapa)) # convertir a sf
 ```
 
-
 <img src="/blog/mapas_sf/mapas_sf_files/figure-html/unnamed-chunk-27-1.png" width="672" />
 
+
+
 {{< detalles "Ver código del gráfico">}}
+
+
 
 ``` r
 ggplot() +
@@ -598,13 +713,23 @@ ggplot() +
   coord_sf(xlim = c(-72, -56),
            ylim = c(-40, -30))
 ```
+
 {{< /detalles >}}
+
+
+
 
 Paso a paso, el proceso de crear el punto, agrandarlo, y formarlo en un cuadrado se vería así:
 
+
+
 <img src="/blog/mapas_sf/mapas_sf_files/figure-html/unnamed-chunk-29-1.png" width="672" />
 
+
+
 {{< detalles "Ver código del proceso y del gráfico">}}
+
+
 
 ``` r
 punto_grande <- punto |> 
@@ -631,11 +756,17 @@ ggplot() +
   coord_sf(xlim = c(-61, -55),
            ylim = c(-40, -35.7))
 ```
+
 {{< /detalles >}}
+
+
+
 
 
 #### Crear un rectángulo a partir de puntos
 Si tenemos varios puntos y necesitamos crear un rectángulo que los contenga a todos, podemos repetir lo anterior pero partiendo de varios puntos a la vez.
+
+
 
 
 ``` r
@@ -659,7 +790,11 @@ rectangulo <- puntos |>
 ```
 
 <img src="/blog/mapas_sf/mapas_sf_files/figure-html/unnamed-chunk-32-1.png" width="672" />
+
+
 {{< detalles "Ver código del gráfico">}}
+
+
 
 ``` r
 ggplot() +
@@ -673,7 +808,11 @@ ggplot() +
   geom_sf(data = rectangulo,
           fill = NA, color = "#402E5A", lwd = 0.7)
 ```
+
 {{< /detalles >}}
+
+
+
 
 
 ----
@@ -681,6 +820,8 @@ ggplot() +
 ### Crear un polígono a partir de coordenadas
 
 Teniendo una tabla con un conjunto de coordenadas, podemos unirlas para formar un polígono. Es decir, **unir los puntos** para conformar una figura geométrica cerrada. Para ello, usamos `st_combine()` para combinar las coordenadas en un solo elemento, y luego `st_cast()` para convertir esos puntos combinados en un polígono.
+
+
 
 
 ``` r
@@ -705,6 +846,8 @@ poligono <- puntos |>
 
 {{< detalles "Ver código del gráfico" >}}
 
+
+
 ``` r
 ggplot() +
   # mapa de fondo
@@ -719,12 +862,18 @@ ggplot() +
           fill = "#402E5A", color = "#402E5A",
           lwd = 0.7, alpha = 0.7)
 ```
+
 {{< /detalles >}}
+
+
+
 
 
 #### Crear varios polígonos a partir de coordenadas
 
 Podemos realizar el mismo proceso anterior, pero agrupando los datos con `group_by()` para crear varios polígonos a la vez, de acuerdo a la variable de agrupación (en este caso, `tipo`). Entonces, cuando usemos `st_combine()`, se combinarán las coordenadas de cada grupo por separado, y luego `st_cast()` convertirá cada grupo de puntos combinados en un polígono distinto.
+
+
 
 
 ``` r
@@ -754,6 +903,8 @@ poligono <- puntos |>
 
 {{< detalles "Ver código del gráfico" >}}
 
+
+
 ``` r
 ggplot() +
   # mapa de fondo
@@ -771,7 +922,11 @@ ggplot() +
   labs(fill = "Tipo", color = "Tipo") +
   theme(legend.key.spacing.y = unit(1, "mm"))
 ```
+
 {{< /detalles >}}
+
+
+
 
 ----
 
@@ -783,6 +938,8 @@ Para enfocar un mapa en una zona específica y eliminar el resto de los polígon
 Primero obtengamos un mapa de Chile desde `{rnaturalearth}`:
 
 
+
+
 ``` r
 library(rnaturalearth)
 
@@ -792,13 +949,17 @@ chile <- ne_countries(country = "Chile", scale = 10) |>
          geometry)
 ```
 
+
+
 Ahora lo recortamos con `st_crop()`. Recomiendo hacerlo terminando el recorte con una visualización del mapa, para ver inmediatamente el resultado y así poder ir ajustando el recorte:
+
+
 
 
 ``` r
 chile_recortado <- chile |> 
   st_crop(xmin = -78, ymax = -17,
-          xmax = -65, ymin = -56) # |> 
+          xmax = -65, ymin = -56) 
 ```
 
 ```
@@ -806,16 +967,16 @@ chile_recortado <- chile |>
 ## all geometries
 ```
 
-``` r
-  # ggplot() +
-  # geom_sf()
-```
+
 
 En este caso, hacemos un recorte para obtener el territorio continental de Chile (excluyendo las islas Juan Fernández, Isla de Pascua y Antártica)
+
+
 
 <img src="/blog/mapas_sf/mapas_sf_files/figure-html/unnamed-chunk-40-1.png" width="672" />
 
 {{< detalles "Ver código del gráfico" >}}
+
 
 
 ``` r
@@ -827,6 +988,7 @@ mapa_recortado <- chile_recortado |>
   ggplot() +
   geom_sf(fill = "#9069C0", linewidth = 0)
 
+# poner los dos mapas lado a lado
 library(patchwork)
 
 mapa_completo + mapa_recortado
@@ -834,9 +996,16 @@ mapa_completo + mapa_recortado
 
 {{< /detalles >}}
 
+
+
+
 También podemos hacer recortes que pasen por encima de los polígonos, eliminando la geografía que quede fuera del recorte. En este caso hacemos un recorte más cercano a la zona costera de Temuco y Valdivia:
 
+
+
 <img src="/blog/mapas_sf/mapas_sf_files/figure-html/unnamed-chunk-42-1.png" width="672" />
+
+
 
 
 ----
@@ -847,6 +1016,8 @@ Cuando ya contamos con tabla con datos geoespaciales en puntos, a veces es neces
 Los puntos pueden moverse al **modificar las coordenadas de la geometría**. En el caso de los puntos se las coordenadas son un vector de dos elementos (longitud y latitud), por lo que podemos sumar o restarle a la columna `geometry` para modificar la posición de cada punto.
 
 Creemos una tabla con latitudes y longitudes, y convirtámosla a `sf` con `st_as_sf()`, [como vimos antes](#poner-un-punto-en-un-mapa):
+
+
 
 
 ``` r
@@ -862,11 +1033,19 @@ puntos <- tribble(~nombre, ~lon,     ~lat,
            crs = 3395)
 ```
 
+
+
 Así se ven los puntitos por sí solos: 
+
+
 
 <img src="/blog/mapas_sf/mapas_sf_files/figure-html/unnamed-chunk-44-1.png" width="672" />
 
+
+
 Ahora recortemos el mapa de Chile para enfocarnos en la zona donde están los puntos. [Creamos un _buffer_](#calcular-buffer) alrededor de los puntos para agrandarlos con `st_buffer()`, y luego [calculamos la caja que los contiene](#calcular-caja-de-un-polígono) con `st_bbox()` para usarla como recorte.
+
+
 
 
 ``` r
@@ -875,7 +1054,11 @@ caja_puntos <- puntos|>
   st_bbox() # calcular caja que contiene a los puntos
 ```
 
+
+
 Ahora que tenemos la caja, la usamos dentro de `st_crop()` para recortar el mapa, pero ojo, que ambas capas tienen que tener el mismo sistema de referencias de coordenadas (CRS), así que primero transformamos el mapa de Chile con `st_transform()` para que use el mismo sistema que la capa de puntos.
+
+
 
 
 ``` r
@@ -890,6 +1073,8 @@ chile_recorte <- chile |>
 
 {{< detalles "Ver código del gráfico" >}}
 
+
+
 ``` r
 ggplot() +
   geom_sf(data = chile_recorte,
@@ -900,13 +1085,19 @@ ggplot() +
                aes(label = paste("  ", nombre)),
                color = "#402E5A", size = 3, hjust = 0, angle = -35)
 ```
+
 {{< /detalles >}}
+
+
+
 
 Imaginemos que queremos mover o modificar puntos específicos del mapa. Igual como haríamos con una tabla de datos, usamos `mutate()` para modificar la columna `geometry`, que contiene las coordenadas de cada punto, y le aplicamos una función para modificar sus valores condicionalmente, como `case_when()`. Así podemos modificar los puntos dependiendo de si coinciden con criterios basados en datos, en vez de hacerlo a mano.
 
 Para este ejemplo, modificaremos puntos a partir de su valor en la variable `nombre`. Simplemente sumamos a las coordenadas de los puntos que queremos mover, recordando que como es un vector de dos elementos, sumamos un vector de dos elementos. Para moverlos horizontalmente (hacia el este), sumamos a la primera posición del vector (longitud, `c(7000, 0)`) y dejamos la segunda posición (latitud) en cero.
 
 El problema es que, al hacer esto, convertimos las coordenadas en meros números, por lo que pierden atributos geométricos, lo que causa problemas. Para resolverlo, le sacamos también los atributos geométricos a los demás puntos que no se mueven (con `st_set_crs(NA)`), y después luego le reasignamos el sistema de coordenadas (CRS) original a toda la tabla con `st_set_crs()`.
+
+
 
 
 ``` r
@@ -921,7 +1112,12 @@ puntos_movidos <- puntos |>
 
 {{< detalles "Otra alternativa sería..." >}}
 
+
+
+
 Otra alternativa al problema de perder las coordenadas al modificar los puntos es hacer lo contrario: volver a agregar las coordenadas a cada observación que se modifique agregándoles `st_set_crs(st_crs(mapa))`, y dejando las demás observaciones sin cambios.
+
+
 
 
 ``` r
@@ -933,6 +1129,8 @@ puntos |>
   )
 ```
 
+
+
 Personalmente encuentro que la primera forma es más legible.
 
 {{< /detalles>}}
@@ -941,9 +1139,12 @@ Lo que sumemos o restemos a las coordenadas depende del sistema de coordenadas d
 
 En el gráfico vemos en color más tenue las posiciones originales de los puntos que fueron modificados.
 
+
+
 <img src="/blog/mapas_sf/mapas_sf_files/figure-html/unnamed-chunk-51-1.png" width="672" />
 
 {{< detalles "Ver código del gráfico" >}}
+
 
 
 ``` r
@@ -961,10 +1162,15 @@ ggplot() +
 
 {{< /detalles >}}
 
+
+
+
 ----
 
 <!--
 Desde el centroide de un polígono
+
+
 
 ``` r
 mapa |> 
@@ -975,10 +1181,14 @@ st_bbox() |>
 st_as_sfc() |>
 st_as_sf()
 ```
+
+
 -->
 
 <!--
 ### Calcular superficie o área
+
+
 
 ``` r
 mapa_region_comunas_areas |> 
@@ -989,14 +1199,22 @@ units::set_units("km^2")
 
 
 
+
+
 ### Recortar polígono a coordenadas
+
+
 
 ``` r
 st_crop(xmin = -74, ymin = -36, xmax = -65, ymax = -30) |> 
 ```
 
 
+
+
 ### Simplificar un polígono
+
+
 
 ``` r
 https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#simplification
@@ -1006,19 +1224,26 @@ rmapshaper::ms_simplify(geometry, keep = 0.8))
 ```
 
 
+
+
 ### Extraer líneas internas de un polígono
+
+
 
 ``` r
 ms_innerlines() # deja solo las líneas interiores de un coso
 ```
 
 
+
+
 ## Correcciones
+
+
 
 ``` r
 st_as_sf()
 ```
-
 
 
 ``` r
@@ -1031,6 +1256,8 @@ st_drop_geometry()
 ```
 
 
+
+
 ----
 
 
@@ -1038,10 +1265,14 @@ st_drop_geometry()
 
 ### Unir polígonos
 
+
+
 ``` r
 group_by() |> 
 st_union()
 ```
+
+
 
 
 ## Operaciones entre geometrías
@@ -1050,26 +1281,40 @@ st_union()
 https://bookdown.org/robinlovelace/geocompr/geometric-operations.html#clipping
 
 
+
+
 ``` r
 st_intersection()
 ```
 
+
+
 ### Usar un polígono para eliminar partes de otro
+
+
 
 ``` r
 st_difference()
 ```
 
 
+
+
 ### unir dos polígonos
+
+
 
 ``` r
 st_union()
 ```
 
+
+
 ### Spatial join
 
 ### Filter
+
+
 
 ``` r
 https://cengel.github.io/R-spatial/spatialops.html#topological-subsetting-select-polygons-by-location
@@ -1077,39 +1322,59 @@ https://cengel.github.io/R-spatial/spatialops.html#topological-subsetting-select
 
 
 
+
+
 ## Coordenadas
 
 ### Extraer sistema de coordenadas
+
+
 
 ``` r
 st_crs(comunas_region)
 ```
 
+
+
 ### Cambiar coordenadas
+
+
 
 ``` r
 st_transform(crs = st_crs(comunas_region))
 ```
 
 
+
+
 ## Visualización
 
 ### Visualizar por capas
+
+
 
 ``` r
 geom_sf()
 ```
 
 
+
+
 ### Texto
+
+
 
 ``` r
 geom_sf_text(data = nombres_areas |> filter(clase_topo == "Comuna"), color = "red", fontface = "bold",
 aes(label = nombre)) + 
 ```
 
+
+
 ### Texto con repel
 https://github.com/slowkow/ggrepel/issues/111#issuecomment-416853013
+
+
 
 ``` r
 ggrepel::geom_label_repel(data = comunas_region_conteo_urbanas,
@@ -1122,14 +1387,22 @@ label.padding = 0.15, label.size = 0
 ```
 
 
+
+
 ### Hacer zoom
+
+
 
 ``` r
 #   coord_sf(xlim = c(-70.4, -70.2),
 #            ylim = c(-18.7, -18.4),
 ```
 
+
+
 ### Dibujar un cuadrado
+
+
 
 ``` r
 #   annotate("rect", fill = NA, color = "black", linewidth = 1,
@@ -1137,7 +1410,11 @@ label.padding = 0.15, label.size = 0
 #            ymin = bbox_area_met[3]+2000, ymax = bbox_area_met[4]-2000)+
 ```
 
+
+
 ### Escala de colores para mapa de calor
+
+
 
 
 ``` r
@@ -1151,13 +1428,24 @@ limits = c(0, NA)
 ```
 
 
+
+
 ### Minimapa
 https://dominicroye.github.io/blog/inserted-map/
 
 
+
+
+
+
 -->
 
+
+
 {{< aviso "⚠️ Este tutorial se encuentra en construcción ⚠️" >}}
+
+
+
 
 ----
 
@@ -1166,8 +1454,15 @@ https://dominicroye.github.io/blog/inserted-map/
 
 ### Apuntes
 <div style="display: flex; margin:auto;">
+
+
 {{< imagen "sf_cheatsheet_1.jpeg" >}}
+
+
 {{< imagen "sf_cheatsheet_2.jpeg" >}}
+
+
+
 </div>
 
 
