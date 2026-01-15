@@ -6,7 +6,7 @@ draft: false
 slug: []
 categories: []
 tags:
-  - curiosidadades
+  - curiosidades
   - automatización
 format:
   hugo-md:

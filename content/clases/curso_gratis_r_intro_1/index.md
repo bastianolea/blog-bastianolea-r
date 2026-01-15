@@ -31,7 +31,10 @@ links:
 #   url: https://youtu.be/2E71ONRPMXo
 ---
 
+
 {{< imagen "curso_r_featured.png" >}}
+
+{{< aviso "Inscripciones cerradas! Gracias a las **más de 500 personas** que se inscribieron! En los próximos días enviaré correos a las personas que obtuvieron un cupo." >}}
 
 ### ¿Quieres entrar al mundo de los datos, pero no sabes cómo?
 
@@ -43,7 +46,9 @@ R es un lenguaje diseñado para trabajar con datos. Además de exploración, tra
 
 Su gracia es que es un lenguaje usado por personas de múltiples disciplinas, y por lo mismo es un lenguaje orientado a ser usado por personas que no sean expertas en informática o ciencias de la computación.
 
-Aprende desde cero a usar este lenguaje y complementa tu carrera con herramientas de programación que te abrirán muchas posibilidades. 
+Aprende **desde cero** a usar este lenguaje y complementa tu carrera con herramientas de programación que te abrirán muchas posibilidades. 
+
+{{< imagen afiche_shiny.jpg >}}
 
 El curso va dirigido a **profesionales o estudiantes de humanidades y ciencias sociales** que **no tengan experiencia previa** programando.
 
@@ -51,6 +56,14 @@ Los **cupos** son limitados, y se aplicarán **criterios de inclusión** para la
 
 Las clases serán **online** los días 3, 5, y 9 de febrero a las 7:30PM.
 
-Más información y formulario de inscripción aquí:
 
-{{< boton "Inscripción" "https://bastianoleah.shinyapps.io/inscripcion_curso_gratis_r_intro_1/" "fas fa-file-pen" >}}
+{{< boton "Inscripciones cerradas" "https://bastianolea.rbind.io" "fas fa-file-pen" >}}
+
+Al inscribirte al curso aceptas el [código de conducta](https://bastianolea.rbind.io/code-of-conduct/).
+
+
+## Streaming
+
+Si no obtuviste un cupo, puedes seguir las clases en vivo a través de YouTube:
+
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/A9wtPBEaVvY?si=V49lRnW2gFam7iP7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

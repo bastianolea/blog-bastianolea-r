@@ -8,6 +8,7 @@ slug: []
 categories: []
 tags:
   - blog
+  - básico
 links:
 - icon: video
   icon_pack: fas
