@@ -19,7 +19,7 @@ links:
 
 {{< imagen "curso_r_featured.png" >}}
 
-{{< aviso "Inscripciones cerradas! En los próximos días enviaré correos a las personas que obtuvieron un cupo." >}}
+{{< aviso "Inscripciones cerradas! Gracias a las más de 500 personas que se inscribieron! En los próximos días enviaré correos a las personas que obtuvieron un cupo." >}}
 
 ### ¿Quieres entrar al mundo de los datos, pero no sabes cómo?
 
