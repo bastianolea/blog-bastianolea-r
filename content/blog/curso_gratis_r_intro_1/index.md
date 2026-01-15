@@ -9,6 +9,10 @@ categories: []
 tags:
   - blog
 links:
+- icon: video
+  icon_pack: fas
+  name: streaming
+  url: https://youtube.com/live/A9wtPBEaVvY
 - icon: file-pen
   icon_pack: fas
   name: inscripciones cerradas
@@ -19,7 +23,7 @@ links:
 
 {{< imagen "curso_r_featured.png" >}}
 
-{{< aviso "Inscripciones cerradas! Gracias a las más de 500 personas que se inscribieron! En los próximos días enviaré correos a las personas que obtuvieron un cupo." >}}
+{{< aviso "Inscripciones cerradas! Gracias a las **más de 500 personas** que se inscribieron! En los próximos días enviaré correos a las personas que obtuvieron un cupo." >}}
 
 ### ¿Quieres entrar al mundo de los datos, pero no sabes cómo?
 
@@ -45,3 +49,10 @@ Las clases serán **online** los días 3, 5, y 9 de febrero a las 7:30PM.
 {{< boton "Inscripciones cerradas" "https://bastianolea.rbind.io" "fas fa-file-pen" >}}
 
 Al inscribirte al curso aceptas el [código de conducta](https://bastianolea.rbind.io/code-of-conduct/).
+
+
+## Streaming
+
+Si no obtuviste un cupo, puedes seguir las clases en vivo a través de YouTube:
+
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/A9wtPBEaVvY?si=V49lRnW2gFam7iP7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

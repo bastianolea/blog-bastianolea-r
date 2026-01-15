@@ -9,6 +9,10 @@ excerpt: "Existen muchas herramientas para analizar datos, pero hay algo que cas
 layout: single
 location: Online
 links:
+- icon: video
+  icon_pack: fas
+  name: streaming
+  url: https://youtube.com/live/A9wtPBEaVvY
 - icon: file-pen
   icon_pack: fas
   name: inscripción
