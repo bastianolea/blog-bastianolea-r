@@ -11,12 +11,15 @@ tags:
 links:
 - icon: file-pen
   icon_pack: fas
-  name: inscripción
-  url: https://bastianoleah.shinyapps.io/inscripcion_curso_gratis_r_intro_1/
+  name: inscripciones cerradas
+  url: https://bastianolea.rbind.io
+  # url: https://bastianoleah.shinyapps.io/inscripcion_curso_gratis_r_intro_1/
 ---
 
 
 {{< imagen "curso_r_featured.png" >}}
+
+{{< aviso "Inscripciones cerradas! En los próximos días enviaré correos a las personas que obtuvieron un cupo." >}}
 
 ### ¿Quieres entrar al mundo de los datos, pero no sabes cómo?
 
@@ -38,8 +41,7 @@ Los **cupos** son limitados, y se aplicarán **criterios de inclusión** para la
 
 Las clases serán **online** los días 3, 5, y 9 de febrero a las 7:30PM.
 
-Formulario de inscripción aquí:
 
-{{< boton "Inscripción" "https://bastianoleah.shinyapps.io/inscripcion_curso_gratis_r_intro_1/" "fas fa-file-pen" >}}
+{{< boton "Inscripciones cerradas" "https://bastianolea.rbind.io" "fas fa-file-pen" >}}
 
 Al inscribirte al curso aceptas el [código de conducta](https://bastianolea.rbind.io/code-of-conduct/).
