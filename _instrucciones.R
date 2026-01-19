@@ -49,6 +49,8 @@ blogdown::new_post(title = "Conoce un formato de datos optimizado para rendimien
 # pildoritas en shiny y en ggiraph
 # pildoritas en gt
 
+# subir apps Shiny a posit connect
+
 # datos de género en chile (mmeg, subcomisión, datos.gob, red chilena, ibg)
 
 
