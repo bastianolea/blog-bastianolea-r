@@ -12,7 +12,7 @@ cascade:
     text_link_label: Posts por temática
     text_link_url: /tags/
 description: |
-  Encuentra publicaciones sobre R según su temática (ordenadas por actualización reciente). Si no encuentras algo, [usa el buscador](https://bastianoleah.shinyapps.io/buscador/).
+  Encuentra publicaciones sobre R según su temática (ordenadas por actualización reciente). Si no encuentras algo, [usa el buscador](https://bastianolea-buscador.share.connect.posit.cloud).
 
 show_author_byline: false
 show_button_links: true
