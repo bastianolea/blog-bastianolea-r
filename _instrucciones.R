@@ -20,10 +20,10 @@ blogdown::new_post(title = "Post",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Crea tablas con píldoras de colores usando `{gt}` en R", 
-                   file = "blog/gt_pildoras/index.qmd",
+blogdown::new_post(title = "Desplegar aplicaciones Shiny a producción en contenedores Docker", 
+                   file = "blog/shiny_docker/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("tablas"),
+                   tags = c("shiny"),
                    categories = c() 
 )
 
@@ -47,13 +47,14 @@ blogdown::new_post(title = "Crea tablas con píldoras de colores usando `{gt}` e
 
 # mapas de chile con comunas pero sin líneas en la costa
 # pildoritas en shiny y en ggiraph
-# pildoritas en gt
 
 # subir apps Shiny a posit connect
 
 # tablas gt con flechitas
 
 # datos de género en chile (mmeg, subcomisión, datos.gob, red chilena, ibg)
+
+# docker
 
 
 # constantes
