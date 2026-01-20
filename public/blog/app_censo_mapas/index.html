@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=7359&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.152.2">
+<title>App: visualizador de mapas comunales del Censo 2024 por manzanas | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Continuando con la exploración de los datos georeferenciados del Censo 2024 por manzanas, en vez de ponerme a hacer mapas interesantes, hice una [aplicación](https://bastianoleah.shinyapps.io/censo_2024_mapas/) para visualizar mapas de cualquier variable del Censo en cualquier comuna del país, a nivel de manzana.">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="App: visualizador de mapas comunales del Censo 2024 por manzanas | Bastián Olea">
+<meta property="og:description" content="Continuando con la exploración de los datos georeferenciados del Censo 2024 por manzanas, en vez de ponerme a hacer mapas interesantes, hice una [aplicación](https://bastianoleah.shinyapps.io/censo_2024_mapas/) para visualizar mapas de cualquier variable del Censo en cualquier comuna del país, a nivel de manzana." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:7359/blog/app_censo_mapas/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:7359/blog/app_censo_mapas/featured.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:7359/blog/app_censo_mapas/featured.jpg" >
+    
+    
+  
+  <meta itemprop="name" content="App: visualizador de mapas comunales del Censo 2024 por manzanas">
+  <meta itemprop="description" content="Continuando con la exploración de los datos georeferenciados del Censo 2024 por manzanas, en vez de ponerme a hacer mapas interesantes, hice una aplicación para visualizar mapas de cualquier variable del Censo en cualquier comuna del país, a nivel de manzana.
+Aplicación Es una aplicación súper sencilla, que carga las cartografías oficiales del Censo en formato Arrow como una base de datos, a la cual por medio de queries se le filtran región, comuna y la columna de variable elegida, para generar un mapa simple de una comuna dividida en manzanas censales 🍎">
+  <meta itemprop="datePublished" content="2025-12-19T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-12-19T00:00:00+00:00">
+  <meta itemprop="wordCount" content="534">
+  <meta itemprop="image" content="http://localhost:7359/blog/app_censo_mapas/featured.jpg">
+  <meta itemprop="keywords" content="Apps,Shiny,Mapas,Chile">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="../../style.main.min.8f721815d150079638fe25bf9714e71c67b8ddf7e9435d32764c3175c3e06556.css" integrity="sha256-j3IYFdFQB5Y4/iW/lxTnHGe43ffpQ10ydkwxdcPgZVY=" media="screen">
+  
+  
+  <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
+  
+  <link rel="stylesheet" href="../../css/syntax.css">
+</head>
+<body>
+      <div class="grid-container single-sidebar">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:7359/" title="Home">
+      <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="../../blog/" title="Bastián Olea: Blog de R">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/aprende_r/" title="Aprende R">Aprende R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea-buscador.share.connect.posit.cloud" title="Buscador">Buscar</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../clases/" title="Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianolea-buscador.share.connect.posit.cloud" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+
+                       
+ 
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 pr3-l">
+      <header class="post-header" style="margin-top:-30px;">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">App: visualizador de mapas comunales del Censo 2024 por manzanas</h1>
+        
+        
+        
+        <div style = "display: inline-block;">  
+          <p class="f7 db mv0 ttu" style = "display: inline-block;">
+            19/12/2025</p>
+          
+          
+          <span>
+            
+
+
+
+
+<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
+<span id="449d07e7159de709c402261f60430b24" title="visitas">
+</span>
+<script>
+    var r = new XMLHttpRequest();
+    r.addEventListener('load', function() {
+        document.getElementById('449d07e7159de709c402261f60430b24').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
+    })
+    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/app_censo_mapas/".replace(/(\/)?$/, '')) + '.json')
+    r.send()
+</script>
+</span>
+
+          </span>
+        </div>
+          
+        
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="http://localhost:7359/tags/apps"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            apps</a>  <a href="http://localhost:7359/tags/shiny"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            shiny</a>  <a href="http://localhost:7359/tags/mapas"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            mapas</a>  <a href="http://localhost:7359/tags/chile"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            Chile</a> </dd></em>
+        </dl>
+         
+      
+        
+      
+      <div class="ph0 pt3">
+        
+
+<div style="margin-top:-24px;">
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+    
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; 
+  color: #EAD2FA; font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; 
+  margin-right: 1px; margin-top: 6px; margin-bottom: 0px;"
+  href="https://bastianoleah.shinyapps.io/censo_2024_mapas/" target="_blank" rel="noopener"><i class="fas fa-link fa-lg fa-fw mr2"></i>aplicación</a>
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+    
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; 
+  color: #EAD2FA; font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; 
+  margin-right: 1px; margin-top: 6px; margin-bottom: 0px;"
+  href="https://github.com/bastianolea/censo_2024_mapas" target="_blank" rel="noopener"><i class="fas fa-file-code fa-lg fa-fw mr2"></i>código</a>
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+    
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; 
+  color: #EAD2FA; font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; 
+  margin-right: 1px; margin-top: 6px; margin-bottom: 0px;"
+  href="../../blog/mapas_censo_2024" ><i class="fas fa-file-pen fa-lg fa-fw mr2"></i>tutorial</a>
+
+</div>
+
+      </div>
+      
+      
+    </header>
+      
+      
+    <section class="post-body pt5 pb4">
+        <p>Continuando con la exploración de los datos georeferenciados del Censo 2024 por manzanas, en vez de ponerme a hacer mapas interesantes, hice una <strong>
+<a href="https://bastianoleah.shinyapps.io/censo_2024_mapas/" target="_blank" rel="noopener">aplicación</a> para visualizar mapas</strong> de cualquier variable del Censo en cualquier comuna del país, a nivel de manzana.</p>
+<a href="app_censo_mapas.jpg" target="_blank">
+
+  <img src="app_censo_mapas.jpg" style='border-radius: 5px; width: 400px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;'>
+  
+</a>
+
+
+
+
+<h2 id="aplicación">Aplicación
+  <a href="#aplicaci%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Es una aplicación súper sencilla, que carga las <strong>cartografías oficiales del Censo</strong> en formato Arrow como una base de datos, a la cual por medio de <em>queries</em> se le filtran región, comuna y la columna de variable elegida, para generar un mapa simple de una comuna dividida en manzanas censales 🍎</p>
+
+
+
+
+<div class = "db pt1"
+style = "margin-bottom: 34px;">
+
+<a class = "btn-links mr2 ba dib"
+href = "https://bastianoleah.shinyapps.io/censo_2024_mapas/" target="_blank"
+style = "padding: 12px; padding-bottom: 8px; border-radius: 5px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #9069C0; margin-bottom: -12px;">
+<i class="fas fa-link fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
+App mapas Censo 2024</a>
+
+</div>
+<p>Toda la app fue <strong>hecha en R en menos de media hora</strong> ⏱️ gracias a la conveniencia de <code>{dplyr}</code> para poder conectarse a los <strong>datos cargados como 
+<a href="https://jthomasmock.github.io/bigger-data/#49" target="_blank" rel="noopener">base de datos por Arrow</a></strong>, al 
+<a href="../../blog/mapas_censo_2024"><strong>tutorial de hacer mapas</strong> del Censo 2024 con <code>{ggplot2}</code></a>, al 
+<a href="../../blog/shiny_temas/">tutorial para poner <strong>temas a las apps</strong> Shiny</a> y al 
+<a href="../../blog/ggplot_temas/">tutorial para <strong>temas de gráficos</strong> <code>ggplot2</code></a>.</p>
+<p>En el fondo hice la app para aprender la carga de datos formato Arrow como base de datos, que es extremadamente fácil de hacer con R y <code>{dplyr}</code>, y me hizo pasar de cargar datos y filtrar en 1.1 segundos a tan sólo 0.1 segundos! 🚀 Si quieres que haga un tutorial de eso déjame un comentario o escríbeme 🤭</p>
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%;">
+    Si quieres explorar más aplicaciones de datos sociales, revisa mi 
+<a href="https://bastianolea.github.io/shiny_apps/" target="_blank" rel="noopener">portafolio de aplicaciones</a>
+  </aside>
+  
+</div>
+
+
+
+
+<h2 id="resumen-del-código">Resumen del código
+  <a href="#resumen-del-c%c3%b3digo"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Quiero destacar lo simple que es hacer aplicaciones como ésta con <strong>
+<a href="../../tags/shiny/">Shiny</a></strong>.</p>
+<p>El código de la app son apenas 200 líneas, donde prácticamente lo único que se hace es crear los botoncitos, cargar los datos, filtrarlos y generar el gráfico.</p>
+<p>La carga de los datos con <code>{arrow}</code> se hace con <code>open_dataset()</code> para cargar como base de datos <strong>sin leer todo el archivo ni traer los datos a la memoria</strong>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># cargar datos</span>
+</span></span><span class="line"><span class="cl"><span class="n">datos</span> <span class="o">&lt;-</span> <span class="n">arrow</span><span class="o">::</span><span class="nf">open_dataset</span><span class="p">(</span><span class="s">&#34;Cartografia_censo2024_Pais_Manzanas.parquet&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                             <span class="n">partitioning</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;COD_REGION&#34;</span><span class="p">,</span> <span class="s">&#34;CUT&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                             <span class="p">)</span>
+</span></span></code></pre></div><p>Luego simplemente con <code>{dplyr}</code> se hacen los filtros, que internamente se convierten a <em>queries</em> SQL que van a cargar y obtener solamente los datos necesarios desde la base de datos:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"> <span class="n">datos_fitrados</span> <span class="o">&lt;-</span> <span class="nf">datos</span><span class="p">()</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># filtrar filas</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">filter</span><span class="p">(</span><span class="n">COD_REGION</span> <span class="o">==</span> <span class="n">input</span><span class="o">$</span><span class="n">region</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="n">CUT</span> <span class="o">==</span> <span class="n">input</span><span class="o">$</span><span class="n">comuna</span><span class="p">)</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># seleccionar columnas</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">select</span><span class="p">(</span><span class="nf">all_of</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">variable</span><span class="p">),</span> <span class="n">SHAPE</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">      <span class="c1"># traer datos a memoria</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">collect</span><span class="p">()</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">      <span class="c1"># convertir mapa</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">st_as_sf</span><span class="p">(</span><span class="n">crs</span> <span class="o">=</span> <span class="m">4326</span><span class="p">)</span>
+</span></span></code></pre></div><p>Finalmente los datos filtrados se visualizan como un mapa en <code>{ggplot2}</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">datos_filtrados</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">      <span class="nf">ggplot</span><span class="p">()</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">aes</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="o">!!</span><span class="nf">sym</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">variable</span><span class="p">))</span> <span class="o">+</span> <span class="c1"># variable elegida</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">geom_sf</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#181818&#34;</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="m">0.1</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># paleta de colores</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">scale_fill_fermenter</span><span class="p">(</span><span class="n">palette</span> <span class="o">=</span> <span class="m">13</span><span class="p">,</span> <span class="n">na.value</span> <span class="o">=</span> <span class="s">&#34;#181818&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">      <span class="c1"># tema</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">theme</span><span class="p">(</span><span class="n">axis.text.x</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">angle</span> <span class="o">=</span> <span class="m">90</span><span class="p">,</span> <span class="n">vjust</span> <span class="o">=</span> <span class="m">.5</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">            <span class="n">axis.ticks</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">            <span class="n">panel.background</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">            <span class="n">panel.grid</span> <span class="o">=</span> <span class="nf">element_line</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#333333&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">            <span class="n">axis.text</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#444444&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">            <span class="n">legend.text</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#666666&#34;</span><span class="p">))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">guides</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="nf">guide_legend</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                 <span class="n">position</span> <span class="o">=</span> <span class="s">&#34;top&#34;</span><span class="p">))</span>
+</span></span></code></pre></div><div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%;">
+    Si quieres aprender a hacer estos mismos mapas, revisa este [tutorial de mapas del Censo 2024]/blog/mapas_censo_2024), o revisa el 
+<a href="../../blog/mapas_sf/">tutorial completo de mapas en R</a>
+  </aside>
+  
+</div>
+<p>La gracia de Shiny es que puedes tomar cualquier código de R que harías normalmente, y ponerlo dentro de una app interactiva, para lo que solamente necesitas reemplazar los filtros, selecciones, y otros lugares donde escribirías cosas a mano por un <code>input$algo</code> que sería la selección hecha por la/él usuaria/o de la aplicación web.</p>
+ 
+    </section>
+      
+    <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="http://localhost:7359/blog/curso_gratis_r_intro_1/">&larr; Curso gratuito: introducción al análisis de datos con R</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:7359/blog/mapas_censo_2024/">Visualiza datos del Censo 2024 en mapas a nivel de manzana con R &rarr;</a>
+  
+</div>
+
+    </footer>
+    
+  </article>
+    
+    <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+</section>
+  
+
+<section class="post-body pt5 pb4">
+  
+  <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">December 19, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">3 minute read, 534 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categorías:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:7359/categories/aplicaciones">aplicaciones</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:7359/tags/apps">apps</a>  <a href="http://localhost:7359/tags/shiny">shiny</a>  <a href="http://localhost:7359/tags/mapas">mapas</a>  <a href="http://localhost:7359/tags/chile">Chile</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="../../blog/mapas_censo_2024/">Visualiza datos del Censo 2024 en mapas a nivel de manzana con R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/grupo_usuarixs_r/">Grupo de usuarios/as de R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/surveydown_encuestas/">Crea encuestas online gratis en R con {surveydown}</a></dd>
+    
+  </dl>
+</details>
+
+</section>
+</main>
+
+
+<aside class="page-sidebar" role="complementary">
+   
+   
+
+  <div class="blog-info ph4 pt4 pb4 pb0-l">
+    
+
+  <h1 class="f3">Blog</h1>
+  <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
+<a href="https://bastianolea-buscador.share.connect.posit.cloud" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
+<a href="../../tags/">temas</a>.</p>
+  
+
+   
+<h3 style="margin-bottom: 12px;">Temas:</h3>
+
+<div style="font-size:90%;">
+
+<div style="font-size: 90%;">
+  
+   
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/chile/">Chile</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/datos/">Datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/consejos/">Consejos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/gr%C3%A1ficos/">Gráficos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/blog/">Blog</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/ggplot2/">Ggplot2</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/shiny/">Shiny</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/apps/">Apps</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/web-scraping/">Web scraping</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/mapas/">Mapas</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/b%C3%A1sico/">Básico</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/curiosidades/">Curiosidades</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/quarto/">Quarto</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/dplyr/">Dplyr</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/ciencias-sociales/">Ciencias sociales</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/loops/">Loops</a></span>
+  </span>
+
+<a href="../../tags/" style="margin-left: 3px;">y más!</a>
+</div>
+</div>
+  
+  
+   
+   
+
+</div>
+
+  
+  <div id="PageTableOfContents" style="margin-top: 24px; position: sticky; top: 108px;">
+        <div class="blog-info ph4 pb4 pb0-l">
+        <h3 style="margin-bottom: 12px;">Índice:</h3>
+          <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: -22px; margin-bottom: 32px;">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#aplicación">Aplicación</a></li>
+    <li><a href="#resumen-del-código">Resumen del código</a></li>
+  </ul>
+</nav>
+          </div>
+        </div>
+    </div>
+  
+  
+
+</aside>
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2026 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source" style="color:#9069C0;">Hugo Apéro</a> 
+      y <a href="https://pkgs.rstudio.com/blogdown/" style="color:#9069C0;">{blogdown}</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source" style="color:#9069C0;">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL" style="color:#9069C0;">Formspree</a>.
+
+Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlify</a></span>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianolea-buscador.share.connect.posit.cloud" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="https://bastianolea-buscador.share.connect.posit.cloud" title="Buscador">Buscar</a>
+      
+      <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="../../tags/" title="Temas">Temas</a>
+      
+      <a class="dib pv1 ph2 link" href="../../clases/" title="Clases">Clases</a>
+      
+      <a class="dib pv1 ph2 link" href="../../code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
+      
+      <a class="dib pv1 ph2 link" href="../../license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

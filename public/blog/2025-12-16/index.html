@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=7359&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.152.2">
+<title>Automatizar el scroll de una página web desde R con `{RSelenium}` | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Para publicitar mi nueva página para [aprender R](https://bastianolea.github.io/aprende_r/) quise grabar un video, así que lo hice controlando el movimiento de la página desde R usando `{RSelenium}`, herramienta de web scraping que te permite controlar un navegador web. ¿Quedó bonito?">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="Automatizar el scroll de una página web desde R con `{RSelenium}` | Bastián Olea">
+<meta property="og:description" content="Para publicitar mi nueva página para [aprender R](https://bastianolea.github.io/aprende_r/) quise grabar un video, así que lo hice controlando el movimiento de la página desde R usando `{RSelenium}`, herramienta de web scraping que te permite controlar un navegador web. ¿Quedó bonito?" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:7359/blog/2025-12-16/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:7359/blog/sidebar-listing.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:7359/blog/sidebar-listing.jpg" >
+    
+    
+  
+  <meta itemprop="name" content="Automatizar el scroll de una página web desde R con `{RSelenium}`">
+  <meta itemprop="description" content="Para publicitar mi nueva página para aprender R gratis y de manera autodidacta, quise grabar un video mostrando los contenidos.
+Pero al grabar el video, no me gustaba cómo quedaba cuando yo iba haciendo scroll manualmente, porque a veces me quedaban cortados los contenidos o se veía muy errático.
+Así que hice lo que cualquier persona racional y ocupada haría, y automatizé el scroll con R, para que la página se moviera solita sin que yo intervenga. Así la grabación sale perfecta 💖">
+  <meta itemprop="datePublished" content="2025-12-16T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2025-12-16T00:00:00+00:00">
+  <meta itemprop="wordCount" content="726">
+  <meta itemprop="keywords" content="Web scraping">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="../../style.main.min.8f721815d150079638fe25bf9714e71c67b8ddf7e9435d32764c3175c3e06556.css" integrity="sha256-j3IYFdFQB5Y4/iW/lxTnHGe43ffpQ10ydkwxdcPgZVY=" media="screen">
+  
+  
+  <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
+  
+  <link rel="stylesheet" href="../../css/syntax.css">
+</head>
+<body>
+      <div class="grid-container single-sidebar">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:7359/" title="Home">
+      <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="../../blog/" title="Bastián Olea: Blog de R">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/aprende_r/" title="Aprende R">Aprende R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea-buscador.share.connect.posit.cloud" title="Buscador">Buscar</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../clases/" title="Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianolea-buscador.share.connect.posit.cloud" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+
+                       
+ 
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 pr3-l">
+      <header class="post-header" style="margin-top:-30px;">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Automatizar el scroll de una página web desde R con <code>{RSelenium}</code></h1>
+        
+        
+        
+        <div style = "display: inline-block;">  
+          <p class="f7 db mv0 ttu" style = "display: inline-block;">
+            16/12/2025</p>
+          
+          
+          <span>
+            
+
+
+
+
+<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
+<span id="f7726464fb23a26bb48552bbdafb5191" title="visitas">
+</span>
+<script>
+    var r = new XMLHttpRequest();
+    r.addEventListener('load', function() {
+        document.getElementById('f7726464fb23a26bb48552bbdafb5191').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
+    })
+    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/2025-12-16/".replace(/(\/)?$/, '')) + '.json')
+    r.send()
+</script>
+</span>
+
+          </span>
+        </div>
+          
+        
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="http://localhost:7359/tags/web-scraping"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            web scraping</a> </dd></em>
+        </dl>
+         
+      
+        
+      
+      <div class="ph0 pt3">
+        
+
+<div style="margin-top:-24px;">
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+    
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; 
+  color: #EAD2FA; font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; 
+  margin-right: 1px; margin-top: 6px; margin-bottom: 0px;"
+  href="https://gist.github.com/bastianolea/0eb150d5e841fa507e9c80e03482f1a5" target="_blank" rel="noopener"><i class="fas fa-file-code fa-lg fa-fw mr2"></i>Código</a>
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+    
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; 
+  color: #EAD2FA; font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; 
+  margin-right: 1px; margin-top: 6px; margin-bottom: 0px;"
+  href="../../blog/tutorial_scraping_selenium/" ><i class="fas fa-link fa-lg fa-fw mr2"></i>Tutorial</a>
+
+</div>
+
+      </div>
+      
+      
+    </header>
+      
+      
+    <section class="post-body pt5 pb4">
+        <p>Para publicitar 
+<a href="https://bastianolea.github.io/aprende_r/" target="_blank" rel="noopener">mi nueva página para <strong>aprender R</strong> gratis y de manera autodidacta</a>, quise grabar un video mostrando los contenidos.</p>
+<div style="width: 100%; text-align: center;">
+<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7406413050523840512?compact=1" height="399" width="504" frameborder="0" allowfullscreen="" title="Publicación integrada"></iframe>
+</div>
+<p>Pero al grabar el video, no me gustaba cómo quedaba cuando yo iba haciendo <em>scroll</em> manualmente, porque a veces me quedaban cortados los contenidos o se veía muy errático.</p>
+<p>Así que hice lo que cualquier persona racional y ocupada haría, y automatizé el <em>scroll</em> con R, para que <strong>la página se moviera solita</strong> sin que yo intervenga. Así la grabación sale perfecta 💖</p>
+<p>Para automarizar el scroll usé 
+<a href="../../blog/tutorial_scraping_selenium/">el paquete <code>{RSelenium}</code></a>, que permite <strong>controlar un navegador web</strong> desde R.</p>
+<p>Cargamos el paquete:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">RSelenium</span><span class="p">)</span>
+</span></span></code></pre></div><p>Luego creamos un navegador:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># crear driver para controlar navegador</span>
+</span></span><span class="line"><span class="cl"><span class="n">driver</span> <span class="o">&lt;-</span> <span class="nf">rsDriver</span><span class="p">(</span><span class="n">browser</span> <span class="o">=</span> <span class="s">&#34;firefox&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                   <span class="n">port</span> <span class="o">=</span> <span class="m">4560L</span><span class="p">,</span> <span class="n">verbose</span> <span class="o">=</span> <span class="bp">F</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                   <span class="n">chromever</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">,</span> <span class="n">phantomver</span> <span class="o">=</span> <span class="kc">NULL</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">remote</span> <span class="o">&lt;-</span> <span class="n">driver</span><span class="o">$</span><span class="n">client</span>
+</span></span></code></pre></div><p>Se debería abrir una ventana de Firefox controlada por R!</p>
+<a href="rselenium_1.png" target="_blank">
+
+  <img src="rselenium_1.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Ahora navegamos al sitio:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">remote</span><span class="o">$</span><span class="nf">navigate</span><span class="p">(</span><span class="n">url</span> <span class="o">=</span> <span class="s">&#34;https://bastianolea.github.io/aprende_r/&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><a href="rselenium_2.png" target="_blank">
+
+  <img src="rselenium_2.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+
+
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #493365;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-triangle-exclamation" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #EAD2FA;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%; color: #EAD2FA;">
+    Si necesitas aprender lo básico sobre web scraping, 
+<a href="../../blog/tutorial_scraping_rvest/">revisa este <strong>tutorial introductorio</strong></a>, o bien, revisa el 
+<a href="../../blog/tutorial_scraping_selenium/">tutorial avanzado de RSelenium</a>.
+  </aside>
+  
+</div>
+<p>Para hacer <em>scroll</em>, necesitamos ejecutar el siguiente comando de JavaScript en la página:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">remote</span><span class="o">$</span><span class="nf">executeScript</span><span class="p">(</span><span class="s">&#34;window.scrollBy(0, 300);&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>Así la página baja 300 pixeles. Pero el scroll es instantáneo y se ve súper mal! ☹️</p>
+<a href="rselenium_3.png" target="_blank">
+
+  <img src="rselenium_3.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Si le agregamos <code>behavior: 'smooth'</code>, hacemos <em>scroll</em> <strong>suave</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">remote</span><span class="o">$</span><span class="nf">executeScript</span><span class="p">(</span><span class="s">&#34;window.scrollBy({
+</span></span></span><span class="line"><span class="cl"><span class="s">                      top: 300, left: 0,
+</span></span></span><span class="line"><span class="cl"><span class="s">                      behavior: &#39;smooth&#39;});&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>¡Mucho mejor! Así podemos bajar poco a poco por el sitio.</p>
+<p>Ahora quiero que el navegador haga <em>scroll</em> hasta llegar a un <strong>título</strong> específico de la página, así no tengo que ir haciendo scroll por cantidades específicas de pixeles. Para esto, tengo que 
+<a href="../../blog/tutorial_scraping_selenium/#identificar-elementos">encontrar el <strong>selector</strong> del elemento</a> al que quiero llegar.</p>
+<p>En este caso usaré el ID (<code>#</code>) de cada subtítulo. Por ejemplo, para llegar al título &ldquo;Obtener R&rdquo;, el selector es <code>#obtener-r</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">remote</span><span class="o">$</span><span class="nf">executeScript</span><span class="p">(</span><span class="s">&#34;document.querySelector(&#39;#obtener-r&#39;).scrollIntoView({behavior: &#39;smooth&#39;});&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>Ahora el comando me lleva a un elemento específico, con suavidad 😌</p>
+<p>¡Pero hay otro problema! 😣</p>
+<p>Como la página tiene un menú arriba, al scrollear a un elemento, <strong>el elemento queda tapado por el menú</strong>. Así que necesito hacer scroll ligeramente más arriba que el elemento al que quiero llegar, de manera que se alcance a leer el título!</p>
+<p>Entonces, en el siguiente comando primero se <strong>encuentra</strong> al elemento, se obtiene su <strong>posición vertical</strong> en la página, a la cual se le resta una cantidad de pixeles (en este caso 90), y luego se hace scroll a esa posición:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">remote</span><span class="o">$</span><span class="nf">executeScript</span><span class="p">(</span><span class="s">&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">      const element = document.querySelector(&#39;#obtener-r&#39;);
+</span></span></span><span class="line"><span class="cl"><span class="s">      const y = element.getBoundingClientRect().top + window.scrollY - 90;
+</span></span></span><span class="line"><span class="cl"><span class="s">      window.scrollTo({ top: y, behavior: &#39;smooth&#39; });&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>Increíble, sinceramente.</p>
+<p>Ahora estamos listos para hacer el <strong>boceto</strong> del desplazamiento por la página.</p>
+<p>Pero antes, vamos a simplificar todo, metiendo esos comandos en <strong>funciones</strong>, porque no tiene sentido copiar y pegar 20 veces el mismo código!</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># scroll hasta el elemento + offset</span>
+</span></span><span class="line"><span class="cl"><span class="n">scrollear_elemento</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">elemento</span> <span class="o">=</span> <span class="s">&#34;#introduccion&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                               <span class="n">scroll</span> <span class="o">=</span> <span class="m">90</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">remote</span><span class="o">$</span><span class="nf">executeScript</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">      const element = document.querySelector(&#39;&#34;</span><span class="p">,</span> <span class="n">elemento</span><span class="p">,</span> <span class="s">&#34;&#39;);
+</span></span></span><span class="line"><span class="cl"><span class="s">      const y = element.getBoundingClientRect().top + window.scrollY - &#34;</span><span class="p">,</span> <span class="n">scroll</span><span class="p">,</span> <span class="s">&#34;;
+</span></span></span><span class="line"><span class="cl"><span class="s">        window.scrollTo({ top: y, behavior: &#39;smooth&#39; });&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                       <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># scroll por pixeles exactos</span>
+</span></span><span class="line"><span class="cl"><span class="n">scrollear_manual</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">scroll</span> <span class="o">=</span> <span class="m">90</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">remote</span><span class="o">$</span><span class="nf">executeScript</span><span class="p">(</span><span class="nf">paste</span><span class="p">(</span><span class="s">&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s">      window.scrollBy({
+</span></span></span><span class="line"><span class="cl"><span class="s">      top:&#34;</span><span class="p">,</span> <span class="n">scroll</span><span class="p">,</span> <span class="s">&#34;, left: 0,
+</span></span></span><span class="line"><span class="cl"><span class="s">      behavior: &#39;smooth&#39; });&#34;</span><span class="p">))</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># función de espera entre scrolls</span>
+</span></span><span class="line"><span class="cl"><span class="n">espera</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">largo</span> <span class="o">=</span> <span class="s">&#34;larga&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="p">(</span><span class="n">largo</span> <span class="o">==</span> <span class="s">&#34;larga&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">Sys.sleep</span><span class="p">(</span><span class="m">1.1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="kr">else</span> <span class="kr">if</span> <span class="p">(</span><span class="n">largo</span> <span class="o">==</span> <span class="s">&#34;corta&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">Sys.sleep</span><span class="p">(</span><span class="m">0.7</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Creamos tres funciones: <code>scrollear_elemento()</code> para hacer scroll a un elemento específico, <code>scrollear_manual()</code> para bajar una cantidad exacta de pixeles, y <code>espera()</code> para pausar el código entre scrolls para dar tiempo para leer, y que puede ser una espera larga o corta.</p>
+<p>Así, la escritura de los comandos es más rápida, y el código es más sencillo de leer. Solamente hay que ir poniendo las funciones una tras la otra.</p>
+<p>El guión se ve más o menos así:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">scrollear_elemento</span><span class="p">(</span><span class="s">&#34;#introduccion&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">espera</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nf">scrollear_elemento</span><span class="p">(</span><span class="s">&#34;#obtener-r&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">espera</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nf">scrollear_manual</span><span class="p">(</span><span class="m">400</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">espera</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nf">scrollear_elemento</span><span class="p">(</span><span class="s">&#34;#basico&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">espera</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="nf">scrollear_manual</span><span class="p">(</span><span class="m">400</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">espera</span><span class="p">(</span><span class="s">&#34;corta&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">scrollear_manual</span><span class="p">(</span><span class="m">260</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">espera</span><span class="p">(</span><span class="s">&#34;corta&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">scrollear_manual</span><span class="p">(</span><span class="m">260</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">espera</span><span class="p">(</span><span class="s">&#34;corta&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">scrollear_manual</span><span class="p">(</span><span class="m">260</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">espera</span><span class="p">(</span><span class="s">&#34;corta&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">scrollear_elemento</span><span class="p">(</span><span class="s">&#34;#trabajando-con-datos-en-r&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">espera</span><span class="p">()</span>
+</span></span></code></pre></div><p>Entonces la página va suavemente al primer subtítulo, espera, luego va a la siguiente, espera, baja un poquito para mostrar más contenido, espera, luego al siguiente&hellip; y así hasta recorrer toda la página.</p>
+<p>Al llegar al final agregamos lo siguiente para subir hasta arriba<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># volver arriba</span>
+</span></span><span class="line"><span class="cl"><span class="nf">scrollear_elemento</span><span class="p">(</span><span class="s">&#34;body&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>Entonces solamente queda poner a grabar la pantalla y ejecutar todas esas líneas al mismo tiempo, y listo, el sitio se presenta por sí solo de manera perfecta y yo puedo reclinarme a tomar café ☕️</p>
+<br>
+<div style="width: 100%; text-align: center;">
+<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:7406413050523840512?collapsed=1" height="549" width="504" frameborder="0" allowfullscreen="" title="Publicación integrada"></iframe>
+</div>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>no vamos a subir hasta abajo 🤪&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+ 
+    </section>
+      
+    <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="http://localhost:7359/blog/mapas_censo_2024/">&larr; Visualiza datos del Censo 2024 en mapas a nivel de manzana con R</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:7359/blog/btw/">Interactúa desde R con una IA que conoce tus datos, archivos y paquetes &rarr;</a>
+  
+</div>
+
+    </footer>
+    
+  </article>
+    
+    <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+</section>
+  
+
+<section class="post-body pt5 pb4">
+  
+  <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">December 16, 2025</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">4 minute read, 726 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:7359/tags/web-scraping">web scraping</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="../../blog/elecciones_presidenciales_2025/">Visualización y scraping de resultados de las elecciones presidenciales 2025</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/2025-07-27/">Descargar todos los archivos de la página web del Censo 2024 con {rvest}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/taller_corrupcion_cesi/">Video: Taller Medición y Análisis de la Corrupción en Chile desde el Análisis de Datos y Herramientas Abiertas</a></dd>
+    
+  </dl>
+</details>
+
+</section>
+</main>
+
+
+<aside class="page-sidebar" role="complementary">
+   
+   
+
+  <div class="blog-info ph4 pt4 pb4 pb0-l">
+    
+
+  <h1 class="f3">Blog</h1>
+  <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
+<a href="https://bastianolea-buscador.share.connect.posit.cloud" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
+<a href="../../tags/">temas</a>.</p>
+  
+
+   
+<h3 style="margin-bottom: 12px;">Temas:</h3>
+
+<div style="font-size:90%;">
+
+<div style="font-size: 90%;">
+  
+   
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/chile/">Chile</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/datos/">Datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/consejos/">Consejos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/gr%C3%A1ficos/">Gráficos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/blog/">Blog</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/ggplot2/">Ggplot2</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/apps/">Apps</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/shiny/">Shiny</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/web-scraping/">Web scraping</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/b%C3%A1sico/">Básico</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/mapas/">Mapas</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/curiosidades/">Curiosidades</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/dplyr/">Dplyr</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/quarto/">Quarto</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/ciencias-sociales/">Ciencias sociales</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:7359/tags/automatizaci%C3%B3n/">Automatización</a></span>
+  </span>
+
+<a href="../../tags/" style="margin-left: 3px;">y más!</a>
+</div>
+</div>
+  
+  
+   
+   
+
+</div>
+
+  
+  
+  
+
+</aside>
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2026 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source" style="color:#9069C0;">Hugo Apéro</a> 
+      y <a href="https://pkgs.rstudio.com/blogdown/" style="color:#9069C0;">{blogdown}</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source" style="color:#9069C0;">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL" style="color:#9069C0;">Formspree</a>.
+
+Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlify</a></span>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianolea-buscador.share.connect.posit.cloud" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="https://bastianolea-buscador.share.connect.posit.cloud" title="Buscador">Buscar</a>
+      
+      <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="../../tags/" title="Temas">Temas</a>
+      
+      <a class="dib pv1 ph2 link" href="../../clases/" title="Clases">Clases</a>
+      
+      <a class="dib pv1 ph2 link" href="../../code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
+      
+      <a class="dib pv1 ph2 link" href="../../license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
