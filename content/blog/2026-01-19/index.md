@@ -15,6 +15,10 @@ links:
     icon_pack: fas
     name: streaming
     url: https://youtube.com/live/A9wtPBEaVvY
+  - icon: file-code
+    icon_pack: fas
+    name: Código selección
+    url: https://github.com/bastianolea/inscripcion_curso_gratis_r_intro_1
 excerpt: >-
   La [convocatoria al curso gratuito de introducción a
   R](/blog/curso_gratis_r_intro_1/) fue un éxito! **Más de 500 personas**

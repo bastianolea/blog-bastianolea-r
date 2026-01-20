@@ -2,101 +2,101 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Procesamiento de datos on Bastián Olea</title>
-    <link>http://localhost:7359/tags/procesamiento-de-datos/</link>
+    <link>http://localhost:5219/tags/procesamiento-de-datos/</link>
     <description>Recent content in Procesamiento de datos on Bastián Olea</description>
     <generator>Hugo</generator>
     <language>es-ES</language>
     <lastBuildDate>Sat, 29 Nov 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:7359/tags/procesamiento-de-datos/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:5219/tags/procesamiento-de-datos/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Transformación de datos entre formato _ancho_ y _largo_ con {tidyr}</title>
-      <link>http://localhost:7359/blog/r_introduccion/tidyr_pivotar/</link>
+      <link>http://localhost:5219/blog/r_introduccion/tidyr_pivotar/</link>
       <pubDate>Sat, 29 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:7359/blog/r_introduccion/tidyr_pivotar/</guid>
+      <guid>http://localhost:5219/blog/r_introduccion/tidyr_pivotar/</guid>
       <description>&lt;p&gt;Los datos pueden existir en distintos formatos o estructuras, y el poder &lt;strong&gt;transformar los datos entre distintas estructuras&lt;/strong&gt; es una habilidad clave.&lt;/p&gt;&#xA;&lt;a href=&#34;featured.png&#34; target=&#34;_blank&#34;&gt;&#xA;&#xA;  &lt;img src=&#34;featured.png&#34; style=&#34;border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;&#34;&gt;&#xA;  &#xA;&lt;/a&gt;&#xA;&lt;p&gt;En este tutorial aprenderemos a usar las funciones &lt;code&gt;pivot_longer()&lt;/code&gt; y &lt;code&gt;pivot_wider()&lt;/code&gt; del &#xA;&lt;a href=&#34;https://tidyr.tidyverse.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;paquete &lt;code&gt;{tidyr}&lt;/code&gt;&lt;/a&gt; para cambiar entre formatos de datos &lt;em&gt;ancho&lt;/em&gt; (&lt;em&gt;wide&lt;/em&gt;) y &lt;em&gt;largo&lt;/em&gt; (&lt;em&gt;long&lt;/em&gt;).&lt;/p&gt;&#xA;&lt;div style = &#34;margin-left: -16px;&#34;&gt;&#xA;  &#xA;  &lt;details closed id=&#34;PageTableOfContents&#34;&gt;&#xA;    &lt;summary&gt;&#xA;      &lt;h2 class=&#34;mv0 f5 fw7 ttu tracked dib&#34; style = &#34;margin-left: 6px; font-size: 120%;&#34;&gt;Índice&lt;/h2&gt;&#xA;      &lt;/summary&gt;&#xA;    &lt;div class=&#34;pl2 pr0 mh0&#34; style = &#34;font-size: 90%; margin-top: -8px; margin-left: 16px; margin-bottom: 32px;&#34;&gt;&#xA;    &lt;nav id=&#34;TableOfContents&#34;&gt;&#xA;  &lt;ul&gt;&#xA;    &lt;li&gt;&lt;a href=&#34;#formatos-de-datos&#34;&gt;Formatos de datos&lt;/a&gt;&#xA;      &lt;ul&gt;&#xA;        &lt;li&gt;&lt;a href=&#34;#datos-en-formato-ancho&#34;&gt;Datos en formato ancho&lt;/a&gt;&lt;/li&gt;&#xA;        &lt;li&gt;&lt;a href=&#34;#datos-en-formato-largo&#34;&gt;Datos en formato largo&lt;/a&gt;&lt;/li&gt;&#xA;      &lt;/ul&gt;&#xA;    &lt;/li&gt;&#xA;    &lt;li&gt;&lt;a href=&#34;#transformación-de-formatos&#34;&gt;Transformación de formatos&lt;/a&gt;&#xA;      &lt;ul&gt;&#xA;        &lt;li&gt;&lt;a href=&#34;#desde-ancho-hacia-largo&#34;&gt;Desde ancho hacia largo&lt;/a&gt;&lt;/li&gt;&#xA;        &lt;li&gt;&lt;a href=&#34;#desde-largo-hacia-ancho&#34;&gt;Desde largo hacia ancho&lt;/a&gt;&lt;/li&gt;&#xA;      &lt;/ul&gt;&#xA;    &lt;/li&gt;&#xA;    &lt;li&gt;&lt;a href=&#34;#cuándo-usar-cada-formato&#34;&gt;¿Cuándo usar cada formato?&lt;/a&gt;&lt;/li&gt;&#xA;  &lt;/ul&gt;&#xA;&lt;/nav&gt;&#xA;    &lt;/div&gt;&#xA;  &lt;/details&gt;&#xA;  &#xA;&lt;/div&gt;&#xA;&#xA;&#xA;&#xA;&#xA;&lt;h2 id=&#34;formatos-de-datos&#34;&gt;Formatos de datos&#xA;  &lt;a href=&#34;#formatos-de-datos&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&#xA;      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;&#xA;      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;&#xA;    &lt;/svg&gt;&lt;/a&gt;&#xA;&lt;/h2&gt;&#xA;&lt;p&gt;No existe una forma estandarizada de estructurar los datos. La estructura o formato que tengan los datos va a depender de muchas cosas: de dónde provienen los datos, para que se van a usar los datos, etc. Dependiendo de estas distintas necesidades los datos se pueden estructurar distintos.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Visualización y scraping de resultados de las elecciones presidenciales 2025</title>
-      <link>http://localhost:7359/blog/elecciones_presidenciales_2025/</link>
+      <link>http://localhost:5219/blog/elecciones_presidenciales_2025/</link>
       <pubDate>Mon, 17 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:7359/blog/elecciones_presidenciales_2025/</guid>
+      <guid>http://localhost:5219/blog/elecciones_presidenciales_2025/</guid>
       <description>&lt;p&gt;Hoy domingo 17 de noviembre celebramos una nueva fecha electoral en Chile, esta vez eligiendo presidente.&lt;/p&gt;&#xA;&lt;p&gt;Apliqué el &#xA;&lt;a href=&#34;https://bastianolea.rbind.io/blog/elecciones_municipales_2024/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;código que he usado en elecciones pasadas&lt;/a&gt; para obtener los datos del Servicio Electoral (Servel) en tiempo real, para así ir &lt;strong&gt;generando gráficos, tablas y mapas&lt;/strong&gt; con los resultados preliminares.&lt;/p&gt;&#xA;&lt;p&gt;&#xA;&lt;a href=&#34;https://github.com/bastianolea/servel_scraping_votaciones&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;El repositorio contiene todo el código&lt;/a&gt; para acceder en tiempo real a los &#xA;&lt;a href=&#34;https://elecciones.servel.cl&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;datos preliminares publicados en la web del Servel&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;El sistema que programé usa &#xA;&lt;a href=&#34;https://bastianolea.rbind.io/blog/tutorial_scraping_selenium/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;RSelenium para hacer web scraping&lt;/a&gt; de las tablas, a las que se debe acceder presionando botones en el sitio para elegir elección, región, y comuna, por lo que Selenium resulta ideal para ir probando junto al navegador &lt;em&gt;títere&lt;/em&gt; las formas de controlar la navegación por medio de código, y eventualmente &lt;strong&gt;automatizar el acceso a todas las tablas&lt;/strong&gt; mediante un loop. Luego se aplica un script de &lt;strong&gt;limpieza de datos&lt;/strong&gt;, y finalmente, según las comunas del país que se definan, el sistema genera gráficos, tablas, mapas y textos en base a los resultados de cada comuna, los cuales se guardan y se ordenan en una carpeta llamada &lt;code&gt;salidas&lt;/code&gt;, la que me permite obtener todos los resultados juntos (las imágenes y el texto con cifras y otros datos) y listos para subir a redes sociales.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Validación de datos con {testthat} y {pointblank}</title>
-      <link>http://localhost:7359/blog/validacion_avanzada/</link>
+      <link>http://localhost:5219/blog/validacion_avanzada/</link>
       <pubDate>Wed, 15 Oct 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:7359/blog/validacion_avanzada/</guid>
+      <guid>http://localhost:5219/blog/validacion_avanzada/</guid>
       <description>&lt;a href=&#34;pointblank-1.png&#34; target=&#34;_blank&#34;&gt;&#xA;&#xA;  &lt;img src=&#34;pointblank-1.png&#34; style=&#34;border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;&#34;&gt;&#xA;  &#xA;&lt;/a&gt;&#xA;&lt;p&gt;En un &#xA;&lt;a href=&#34;../../../blog/validacion_basica&#34;&gt;post anterior&lt;/a&gt; hablé sobre cómo hacer validación básica de datos en R. A grandes razgos, vimos la utilidad de crear funciones que contengan pruebas simples para validar la calidad de tus datos, tales como revisar cantidad de filas, cantidad de datos perdidos, y otros.&lt;/p&gt;&#xA;&lt;p&gt;Dado que R es un lenguaje enfocado en el análisis de datos, existen varios paquetes que nos pueden ayudar con la validación de datos!&lt;/p&gt;</description>
     </item>
     <item>
       <title>Unir o cruzar datos con left_join()</title>
-      <link>http://localhost:7359/blog/left_join/</link>
+      <link>http://localhost:5219/blog/left_join/</link>
       <pubDate>Sat, 16 Aug 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:7359/blog/left_join/</guid>
+      <guid>http://localhost:5219/blog/left_join/</guid>
       <description>&lt;p&gt;El &lt;em&gt;left join&lt;/em&gt; es una de las operaciones básicas del trabajo con datos, en el sentido de que realiza una operación sencilla que a la vez es muy útil. Sirve tanto para limpiar datos como para procesarlos y obtener nuevas relaciones entre ellos.&lt;/p&gt;&#xA;&lt;p&gt;Un &lt;em&gt;left join&lt;/em&gt; realiza una unión o combinación entre dos tablas de datos a partir de una variable en común o &lt;em&gt;clave&lt;/em&gt; (&lt;em&gt;key&lt;/em&gt;). En otras palabras, un &lt;em&gt;left join&lt;/em&gt; toma dos tablas que tienen datos distintos, pero que comparten una variable o columna en común, y usa esta variable en común para &lt;strong&gt;unir las observaciones de ambas tablas&lt;/strong&gt;.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Crea planillas de Excel con formato personalizado desde R con {openxlsx}</title>
-      <link>http://localhost:7359/blog/excel_openxlsx/</link>
+      <link>http://localhost:5219/blog/excel_openxlsx/</link>
       <pubDate>Fri, 08 Aug 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:7359/blog/excel_openxlsx/</guid>
+      <guid>http://localhost:5219/blog/excel_openxlsx/</guid>
       <description>&lt;p&gt;Al terminar el procesamiento o limpieza de un conjunto de datos, usualmente necesitamos &lt;em&gt;entregar&lt;/em&gt; la base en un formato más amigable para otros colegas o usuarios/as, lo que significa: Excel. Exportar datos de R a Excel es fácil: con la función &lt;code&gt;writexl::write_xlsx()&lt;/code&gt; podemos guardar cualquier dataframe en Excel. Pero esta función hace sólo eso, y el archivo resultante es básico y hasta feo.&lt;/p&gt;&#xA;&lt;p&gt;Sin embargo, existe el &#xA;&lt;a href=&#34;https://ycphs.github.io/openxlsx/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;paquete &lt;code&gt;{openxlsx}&lt;/code&gt;&lt;/a&gt;, que además de leer y escribir archivos Excel, nos entrega funciones para generar archivos Excel desde R que contengan &lt;strong&gt;todo tipo de formato, estilo de tablas, y manipulación celda por celda&lt;/strong&gt; del archivo resultante, con lo que podemos &lt;strong&gt;generar planillas de Excel atractivas desde R.&lt;/strong&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>Validación básica de datos con R</title>
-      <link>http://localhost:7359/blog/validacion_basica/</link>
+      <link>http://localhost:5219/blog/validacion_basica/</link>
       <pubDate>Thu, 07 Aug 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:7359/blog/validacion_basica/</guid>
+      <guid>http://localhost:5219/blog/validacion_basica/</guid>
       <description>&lt;div style = &#34;margin-left: -16px;&#34;&gt;&#xA;  &#xA;  &lt;details closed id=&#34;PageTableOfContents&#34;&gt;&#xA;    &lt;summary&gt;&#xA;      &lt;h2 class=&#34;mv0 f5 fw7 ttu tracked dib&#34; style = &#34;margin-left: 6px; font-size: 120%;&#34;&gt;Índice&lt;/h2&gt;&#xA;      &lt;/summary&gt;&#xA;    &lt;div class=&#34;pl2 pr0 mh0&#34; style = &#34;font-size: 90%; margin-top: -8px; margin-left: 16px; margin-bottom: 32px;&#34;&gt;&#xA;    &lt;nav id=&#34;TableOfContents&#34;&gt;&#xA;  &lt;ul&gt;&#xA;    &lt;li&gt;&lt;a href=&#34;#validación-básica&#34;&gt;Validación básica&lt;/a&gt;&lt;/li&gt;&#xA;    &lt;li&gt;&lt;a href=&#34;#funciones-de-validación&#34;&gt;Funciones de validación&lt;/a&gt;&lt;/li&gt;&#xA;    &lt;li&gt;&lt;a href=&#34;#validación-avanzada&#34;&gt;Validación avanzada&lt;/a&gt;&lt;/li&gt;&#xA;  &lt;/ul&gt;&#xA;&lt;/nav&gt;&#xA;    &lt;/div&gt;&#xA;  &lt;/details&gt;&#xA;  &#xA;&lt;/div&gt;&#xA;&lt;p&gt;Si estás procesando muchos datos y/o datos que vienen de distintas fuentes con R, validarlos puede ayudarte a encontrar problemas antes de que sea tarde! 😱&lt;/p&gt;&#xA;&lt;p&gt;¿Qué es la validación de datos? Son las distintas pruebas que crearemos para &lt;strong&gt;confirmar que nuestros datos cumplen ciertos criterios&lt;/strong&gt;. El objetivo es entregarnos la &lt;strong&gt;certeza&lt;/strong&gt; de que nuestros datos son como esperamos luego de procesarlos. Para lograrlo, ponemos a prueba nuestros datos en distintos puntos de nuestros procesos de análisis de datos.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Procesamiento de datos multiprocesador en R con {furrr}</title>
-      <link>http://localhost:7359/blog/furrr_multiprocesador/</link>
+      <link>http://localhost:5219/blog/furrr_multiprocesador/</link>
       <pubDate>Thu, 12 Jun 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:7359/blog/furrr_multiprocesador/</guid>
+      <guid>http://localhost:5219/blog/furrr_multiprocesador/</guid>
       <description>&lt;p&gt;La mayoría de las funciones de R, así como R mismo, se ejecutan en un único proceso dentro de tu computadora, dado que R es un software de un sólo hilo (&lt;em&gt;single threaded&lt;/em&gt;).&lt;/p&gt;&#xA;&lt;p&gt;Los computadores modernos en general tienen entre 2 y 8 núcleos (&lt;em&gt;cores&lt;/em&gt;), algunos incluso muchos más. Una mayor cantidad de núcleos o procesadores permite a tu computadora hacer más &lt;strong&gt;operaciones paralelas&lt;/strong&gt;. Por ejemplo, si tu computador tiene 6 núcleos y R está procesando datos, R usará 1 núcleo al 100%, y te quedarán 5 núcleos en desuso, que podrían estar ejecutando otras tareas. En otras palabras, R está usando sólo el 100% de tu computador, cuando podría estar usando el 600%.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Predecir género a partir de nombres usando un modelo de lenguaje en R</title>
-      <link>http://localhost:7359/blog/genero_nombres_llm/</link>
+      <link>http://localhost:5219/blog/genero_nombres_llm/</link>
       <pubDate>Wed, 19 Feb 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:7359/blog/genero_nombres_llm/</guid>
+      <guid>http://localhost:5219/blog/genero_nombres_llm/</guid>
       <description>&lt;p&gt;&#xA;&lt;a href=&#34;https://bastianolea.rbind.io/blog/introduccion_llm_mall/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Hace poco&lt;/a&gt; conocí &#xA;&lt;a href=&#34;https://mlverse.github.io/mall/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;el paquete &lt;code&gt;{mall}&lt;/code&gt;&lt;/a&gt;, que facilita mucho el uso de un un modelo de lenguaje (LLM) local como una herramienta cotidiana para el análisis y procesamiento de datos.&lt;/p&gt;&#xA;&lt;p&gt;El paquete incluye varias funciones para usar un modelo LLM local en las columnas de un dataframe. &lt;code&gt;{mall}&lt;/code&gt; te puede ayudar a :&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;clasificar el contenido de una variable&lt;/li&gt;&#xA;&lt;li&gt;resumir textos&lt;/li&gt;&#xA;&lt;li&gt;extraer sentimiento a partir del texto&lt;/li&gt;&#xA;&lt;li&gt;extraer información desde el texto&lt;/li&gt;&#xA;&lt;li&gt;confirmar si algo es verdadero o falso a partir de un texto&lt;/li&gt;&#xA;&lt;li&gt;y también a aplicar cualquier &lt;em&gt;prompt&lt;/em&gt; a una variable.&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Recientemente lo usé para un caso real, donde tenía una columna de casi 2.000 nombres, y necesitaba asignarle un género a cada una de estas personas, solamente a partir de sus nombres y apellidos.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Video: Taller Aplicación de la Ciencia de Datos en la Gestión Municipal</title>
-      <link>http://localhost:7359/blog/unim/taller_ciencia_de_datos_gestion_municipal/</link>
+      <link>http://localhost:5219/blog/unim/taller_ciencia_de_datos_gestion_municipal/</link>
       <pubDate>Fri, 24 Jan 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:7359/blog/unim/taller_ciencia_de_datos_gestion_municipal/</guid>
+      <guid>http://localhost:5219/blog/unim/taller_ciencia_de_datos_gestion_municipal/</guid>
       <description>&lt;p&gt;Tuve el privilegio de exponer en la &lt;strong&gt;Universidad Internacional de la Municipalidad de Rancagua&lt;/strong&gt;, un espacio de diálogo, aprendizaje y colaboración, organizado por el &lt;strong&gt;Programa de Gobierno Local Abierto&lt;/strong&gt; (GOBLA) de la Municipalidad de Rancagua.&lt;/p&gt;&#xA;&lt;p&gt;Presenté un taller dirigido a funcionarios y funcionarias municipales sobre Aplicación de la ciencia de datos en la Gestión Municipal, donde comuniqué la importancia de manejar herramientas de progamación para le análisis de datos, favoreciendo el desarrollo de herramientas reutilizables, reproducibles, transparentes y abiertas.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Contar días hábiles entre dos fechas en R</title>
-      <link>http://localhost:7359/blog/contar_dias_habiles/</link>
+      <link>http://localhost:5219/blog/contar_dias_habiles/</link>
       <pubDate>Wed, 13 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:7359/blog/contar_dias_habiles/</guid>
+      <guid>http://localhost:5219/blog/contar_dias_habiles/</guid>
       <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dplyr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# manipulación de datos&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;lubridate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# trabajar con fechas&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;RQuantLib&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# paquete con calendarios&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;bizdays&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;# paquete para contar días hábiles&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Hoy se me planteó un pequeño desafío que no había tenido que hacer antes. Tenía que contar la cantidad de días entre dos fechas.&lt;/p&gt;&#xA;&lt;p&gt;Esto no es particularmente complejo, de hecho es demasiado fácil:&lt;/p&gt;&#xA;&#xA;&#xA;&#xA;&#xA;&lt;h3 id=&#34;contar-la-cantidad-de-días-entre-dos-fechas&#34;&gt;Contar la cantidad de días entre dos fechas&#xA;  &lt;a href=&#34;#contar-la-cantidad-de-d%c3%adas-entre-dos-fechas&#34;&gt;&lt;svg class=&#34;anchor-symbol&#34; aria-hidden=&#34;true&#34; height=&#34;26&#34; width=&#34;26&#34; viewBox=&#34;0 0 22 22&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34;&gt;&#xA;      &lt;path d=&#34;M0 0h24v24H0z&#34; fill=&#34;currentColor&#34;&gt;&lt;/path&gt;&#xA;      &lt;path d=&#34;M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z&#34;&gt;&lt;/path&gt;&#xA;    &lt;/svg&gt;&lt;/a&gt;&#xA;&lt;/h3&gt;&#xA;&lt;p&gt;Primero definimos las dos fechas:&lt;/p&gt;</description>
     </item>
     <item>
       <title>Comparar el rendimiento expresiones en R</title>
-      <link>http://localhost:7359/blog/benchmark_ejemplo/</link>
+      <link>http://localhost:5219/blog/benchmark_ejemplo/</link>
       <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:7359/blog/benchmark_ejemplo/</guid>
+      <guid>http://localhost:5219/blog/benchmark_ejemplo/</guid>
       <description>&lt;p&gt;Al programar algo, siempre existen varias formas de lograr un mismo objetivo. Un criterio para elegir una forma por sobre otra puede ser el rendimiento: si hay dos formas de hacer algo, elegir la forma que se ejecute más rápido.&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;&#xA;&lt;p&gt;Para comparar el rendimiento de distintas expresiones en R, realizamos un &lt;em&gt;benchmark,&lt;/em&gt; al cual le entregamos las expresiones que queremos comparar, y nos entregará un detalle de su velocidad de ejecución, consumo de memoria, y otros.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Visualización y scraping de resultados en vivo de las elecciones municipales 2024</title>
-      <link>http://localhost:7359/blog/elecciones_municipales_2024/</link>
+      <link>http://localhost:5219/blog/elecciones_municipales_2024/</link>
       <pubDate>Wed, 30 Oct 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:7359/blog/elecciones_municipales_2024/</guid>
+      <guid>http://localhost:5219/blog/elecciones_municipales_2024/</guid>
       <description>&lt;p&gt;&lt;img src=&#34;../../blog/elecciones_municipales_2024/servel_resultados_multi_featured.png&#34; alt=&#34;&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Con motivo de las elecciones municipales, estuve generando algunas visualizaciones ”en tiempo real” de los resultados de las elecciones de alcaldías. Los datos de conteo de votos los fui obteniendo minuto a minuto mediante web scraping con &lt;code&gt;{RSelenium}&lt;/code&gt;, que permite programar un navegador web para que interactúe con un sitio como si fuera humano. Entonces, el navegador robot (marioneta, le llaman) iba apretando todos los botones, sin intervención de mi parte, para encontrar y copiar los resultados de cada comuna del país.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Evitar que un loop se detenga debido a errores</title>
-      <link>http://localhost:7359/blog/evitar_errores/</link>
+      <link>http://localhost:5219/blog/evitar_errores/</link>
       <pubDate>Fri, 13 Sep 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:7359/blog/evitar_errores/</guid>
+      <guid>http://localhost:5219/blog/evitar_errores/</guid>
       <description>&lt;p&gt;Usando el paquete &lt;code&gt;{purrr}&lt;/code&gt; para realizar iteraciones o &lt;em&gt;loops&lt;/em&gt; en nuestro código, vamos a probar tres escenarios ante los que un loop se detendría debido a un error, y formas de solucionarlo.&lt;/p&gt;&#xA;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-r&#34; data-lang=&#34;r&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nf&#34;&gt;library&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;purrr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;números&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;list&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;3&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#34;error&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&#xA;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;En el primer escenario, el loop intenta sumar &lt;code&gt;100&lt;/code&gt; a un vector de números, pero se encuentra con que uno de los números es un texto, por lo tanto la ejecución se detiene con un error:&lt;/p&gt;</description>
     </item>
   </channel>
