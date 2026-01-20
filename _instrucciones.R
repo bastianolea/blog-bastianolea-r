@@ -20,10 +20,10 @@ blogdown::new_post(title = "Post",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Conoce un formato de datos optimizado para rendimiento: Arrow", 
-                   file = "blog/curso_r_intro_1/index.md",
+blogdown::new_post(title = "Crea tablas con píldoras de colores usando `{gt}` en R", 
+                   file = "blog/gt_pildoras/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("blog"),
+                   tags = c("tablas"),
                    categories = c() 
 )
 
@@ -50,6 +50,8 @@ blogdown::new_post(title = "Conoce un formato de datos optimizado para rendimien
 # pildoritas en gt
 
 # subir apps Shiny a posit connect
+
+# tablas gt con flechitas
 
 # datos de género en chile (mmeg, subcomisión, datos.gob, red chilena, ibg)
 
