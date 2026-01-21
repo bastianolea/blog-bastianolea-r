@@ -44,18 +44,14 @@ blogdown::new_post(title = "Desplegar aplicaciones Shiny a producción en conten
 
 "content/blog/googledrive/index.qmd"
 # https://www.linkedin.com/feed/update/urn:li:activity:7405241344316841984?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB9if5MBe0keh4VrsmJOFbZxmIK9T9GSkYM
-
+# hacer que R te pregunte cosas
 # mapas de chile con comunas pero sin líneas en la costa
 # pildoritas en shiny y en ggiraph
-
 # subir apps Shiny a posit connect
-
 # tablas gt con flechitas
-
 # datos de género en chile (mmeg, subcomisión, datos.gob, red chilena, ibg)
-
 # docker
-
+# How do I replace NA values with zeros in an R dataframe?
 
 # constantes
 "content/blog/mapas_sf/mapas_sf.qmd"

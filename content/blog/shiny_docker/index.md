@@ -161,12 +161,23 @@ docker compose up -d
 ```
 Este comando levanta una aplicación Shiny hecha con Docker Compose en segundo plano, asumiendo que la carpeta desde la que ejecutaste el comando contiene el `dockerfile` y `docker-compose.yml`.
 
+{{< imagen "docker_build.png" >}}
+
 La primera vez que lo ejecutes, debería salir en la terminal el proceso de construcción del contenedor, con la instalación de todo lo que detallaste. Luego de unos minutos (dependiendo de la cantidad de paquetes y librerías que tengas que instalar), el contenedor debería estar listo y ejecutándose.
 
 Para **acceder a la aplicación**, accede desde un navegador a `localhost:3838`, o reemplaza `3838` por el puerto que hayas definido en `docker-compose.yml`. 
 
 {{< info "Si tienes varias apps en varios contenedores, cada una debe salir por un puerto distinto!" >}}
 
+Para confirmar el estado de tus contenedores, sus nombres y puertos, ejecuta:
+
+```bash
+docker ps
+```
+
+{{< imagen "docker_ps.png" >}}
+
+----
 
 ## Comandos de Docker más frecuentes
 
@@ -174,45 +185,64 @@ Levantar una aplicación Shiny hecha con Docker Compose:
 ```bash
 docker compose up -d
 ```
+- Tienes que estar en la carpeta de la app
+
 
 Bajar la aplicación Shiny hecha con Docker Compose:
 ```bash
 docker compose down
 ```
+- Tienes que estar en la carpeta de la app
+
 
 Ver los contenedores Docker activos:
 ```bash
 docker ps 
 ```
 
-Ver las imágenes Docker disponibles:
-```bash
-docker image ls
-```
-
-Eliminar una imagen Docker:
-```bash
-docker image ls
-docker rmi xxxx
-```
-_Reemplaza `xxxx` por el ID de la imagen_
 
 Reconstruir y levantar la aplicación Shiny hecha con Docker Compose:
 ```bash
 docker compose up --build --force-recreate -d
 ```
-_Para recibir cambios nuevos y asegurarte de que se aplicarán_
+- Tienes que estar en la carpeta de la app
+- Sirve para recibir cambios nuevos y asegurarte de que se aplicarán
+
 
 Entrar a la consola de un contenedor Docker activo:
 ```bash
 docker ps 
 docker exec -ti xxxx /bin/bash
 ```
-_Reemplaza `xxxx` por el ID del contenedor_
+- _Reemplaza `xxxx` por el ID del contenedor_
 
+
+Revisar los logs de un contenedor Docker:
+```bash
+docker ps
+docker logs xxxx
+```
+- _Reemplaza `xxxx` por el ID o nombre del contenedor_
+
+
+
+Ver las imágenes Docker disponibles:
+```bash
+docker image ls
+```
+
+
+Eliminar una imagen Docker:
+```bash
+docker image ls
+docker rmi xxxx
+```
+- _Reemplaza `xxxx` por el ID de la imagen_
 
 ----
 
 
 ## Recursos
 
+- [How To Run Shiny Apps in a Docker Container](https://www.appsilon.com/post/r-shiny-docker-getting-started)
+- [Containerizing Shiny Apps with {shiny2docker}: A Step-by-Step Guide](https://www.r-bloggers.com/2025/06/containerizing-shiny-apps-with-shiny2docker-a-step-by-step-guide/)
