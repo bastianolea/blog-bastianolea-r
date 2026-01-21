@@ -7,7 +7,7 @@ categories: []
 tags:
   - shiny
   - optimización
-draft: true
+draft: false
 format:
   hugo-md:
     output-file: index
@@ -28,12 +28,17 @@ Docker es una plataforma que permite empaquetar aplicaciones y sus dependencias 
 
 {{< aviso "Post en construcción! A medida que voy aprendiendo iré complementando la publicación." >}}
 
+{{< info "Este es un post para usuarios avanzados de Shiny que necesiten desplegar sus apps contextos de empresas o producción. Si eres un usuario casual de Shiny, probablemente sea mejor usar [Posit Connect Cloud](https://connect.posit.cloud) para publicar tus apps." >}}
+
 ## ¿Qué es Docker?
+
+Docker es un programa que te permite crear **contenedores** dentro de los cuales puedes ejecutar aplicaciones. Estos son entornos exclusivos y específicos para tu app, de manera que ya no la ejecutas en _tu_ computador, sino que la ejecutas dentro del contenedor, que es una especie de computador virtual sólo para tu app. Estos contenedores son independientes entre sí y reproducibles, ayudándote a que tus apps siempre funcionen siempre igual, sin importar dónde las ejecutes.
+
 Los objetivos principales de usar Docker en aplicaciones Shiny son:
 
 - **Garantizar un entorno de ejecución consistente y reproducible**: al ejecutar la app en el contenedor, tienes garantizado que se ejecutará igual en otro computador, en un servidor Linux, o en cualquier entorno.
-- **Congelar las dependencias** de la aplicación, para asegurarte de que se usan las versiones exactas de R y de los paquetes que utilices.
-- **Facilitar el despliegue** en servidores o plataformas de nube.
+- **Congelar las dependencias** de la aplicación, para asegurarte de que se usan las versiones exactas de R y de los paquetes que utilices, además de ejecutarse en un mismo sistema operativo (usualmente Linux) con todas las librerías y configuraciones que éste requiera.
+- **Facilitar el despliegue** en servidores o plataformas de nube, dado que tu app vive aislada dentro del contenedor, y por ende no requiere cambiar configuraciones ni instalar cosas al servidor.
 
 En pocas palabras, Docker sirve para empaquetar tu aplicación Shiny junto con todo lo necesario para que funcione correctamente, y así poder desplegarla en cualquier lugar sin preocuparte por las diferencias en los entornos de ejecución. Esto significa que crearás un **contenedor** con una versión de Linux y de R específica, junto a todas las configuraciones e instalaciones que necesites.
 
@@ -118,7 +123,8 @@ RUN R -e 'remotes::install_github("hrbrmstr/waffle")'
 RUN sudo chown -R shiny:shiny /srv/shiny-server/
 ```
 
-Si no sabes qué librerías de Ubuntu/Linux son necesarias, simplemente omite esas líneas e instala los paquetes que necesites. Al ejecutar el contenedor, los mensajes de error te dirán lo que necesitas instalar.
+{{< info "Si no sabes qué librerías de Ubuntu/Linux son necesarias, simplemente omite esas líneas e instala los paquetes que necesites. Al ejecutar el contenedor, los mensajes de error te dirán lo que necesitas instalar." >}}
+
 
 Luego, crea un archivo `docker-compose.yml` para definir el servicio de la app Shiny:
 
@@ -138,22 +144,28 @@ services:
 
 Este archivo coordinará el despliegue de tu contenedor, y copiará los contenidos de la carpeta `app/` a `/srv/shiny-server/` dentro del contenedor, así que asegúrate de que dentro de `app/` (o el nombre de la carpeta de tu app) estén los archivos `app.R` o `ui.R` y `server.R`.
 
+
+
 ## Ejecutando apps Shiny desde contenedores Docker
 
-Entonces, en un mismo directorio, deberías tener:
+Para ejecutar el contenedor con tu app Shiny, deberías tener en un mismo directorio lo siguiente:
 
 1. El archivo `Dockerfile` con los pasos de instalación de tu contenedor, ya sea escrito por ti o creado por `{shiny2docker}`
 2. El archivo `docker-compose.yml` para coordinar el despliegue de tu contenedor
-3. Una carpeta `app/` (o el nombre de tu app) con los scripts y archivos necesarios para tu aplicación Shiny.
+3. Una carpeta `app/` (o el nombre de tu app) con los scripts y archivos necesarios para tu aplicación Shiny (`app.R`, etc).
 
-Luego necesitas abrir una Terminal en esa carpeta, y ejecutar el siguiente comando:
+Luego necesitas **abrir una Terminal** y ubicar la terminal en esa carpeta (`cd ruta/a/carpeta/`), y desde ahí ejecutar el siguiente comando:
 
 ```bash
 docker compose up -d
 ```
-Este comando levanta una aplicación Shiny hecha con Docker Compose en segundo plano.
+Este comando levanta una aplicación Shiny hecha con Docker Compose en segundo plano, asumiendo que la carpeta desde la que ejecutaste el comando contiene el `dockerfile` y `docker-compose.yml`.
 
-Para acceder a la aplicación, accede desde un navegador a `localhost:3838`, o reemplaza `3838` por el puerto que hayas definido en `docker-compose.yml`.
+La primera vez que lo ejecutes, debería salir en la terminal el proceso de construcción del contenedor, con la instalación de todo lo que detallaste. Luego de unos minutos (dependiendo de la cantidad de paquetes y librerías que tengas que instalar), el contenedor debería estar listo y ejecutándose.
+
+Para **acceder a la aplicación**, accede desde un navegador a `localhost:3838`, o reemplaza `3838` por el puerto que hayas definido en `docker-compose.yml`. 
+
+{{< info "Si tienes varias apps en varios contenedores, cada una debe salir por un puerto distinto!" >}}
 
 
 ## Comandos de Docker más frecuentes
