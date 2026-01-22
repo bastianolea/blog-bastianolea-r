@@ -50,7 +50,6 @@ blogdown::new_post(title = "Desplegar aplicaciones Shiny a producción en conten
 # subir apps Shiny a posit connect
 # tablas gt con flechitas
 # datos de género en chile (mmeg, subcomisión, datos.gob, red chilena, ibg)
-# docker
 # How do I replace NA values with zeros in an R dataframe?
 
 # constantes
@@ -66,10 +65,6 @@ blogdown::new_post(title = "Desplegar aplicaciones Shiny a producción en conten
 # casi listos
 "content/blog/shiny_tipografias/shiny_tipografias.qmd"
 
-# pendientes importantes
-"content/blog/r_introduccion/dplyr_intermedio/dplyr_intermedio.qmd"
-"content/blog/r_introduccion/dplyr_variables/dplyr_variables.qmd"
-
 # ideas
 "content/blog/dt_tablas/index.qmd"
 "content/blog/ellmer/ellmer.qmd"
@@ -80,17 +75,6 @@ blogdown::new_post(title = "Desplegar aplicaciones Shiny a producción en conten
 "content/blog/2025-07-01/index.qmd" # st_join
 "content/blog/unpivotr/index.qmd"
 "content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
-
-
-
-
-## pendientes ----
-
-# last.fm https://blog.spacehey.com/entry?id=221954
-# búsqueda 
-# https://aaronluna.dev/blog/add-search-to-static-site-lunrjs-hugo-vanillajs/
-# https://palant.info/2020/06/04/the-easier-way-to-use-lunr-search-with-hugo/
-# https://dev.to/fajarwz/create-search-feature-for-hugo-static-site-with-lunr-4dbl
 
 
 
