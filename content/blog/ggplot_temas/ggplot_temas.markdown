@@ -6,8 +6,8 @@ draft: false
 freeze: true
 format:
   hugo-md:
-    output-file: index
-    output-ext: md
+    output-file: "index"
+    output-ext: "md"
 slug: []
 categories: []
 tags:
@@ -19,19 +19,16 @@ links:
     icon_pack: fab
     name: Código
     url: https://gist.github.com/bastianolea/23dee295aceb142fcd66ad29c21a51cb
-excerpt: >-
-  Darle un toque de color a tus gráficos en `{ggplot2}` produce visualizaciones
-  con más personalidad y mayor impacto. En este post veremos cómo aplicar temas
-  de colores a tus gráficos! Para ayudarte con eso también existe el paquete
-  `{thematic}` para cambiar fácilmente los colores de fondo de tus gráficos.
+excerpt: "Darle un toque de color a tus gráficos en `{ggplot2}` produce visualizaciones con más personalidad y mayor impacto. En este post veremos cómo aplicar temas de colores a tus gráficos! Para ayudarte con eso también existe el paquete `{thematic}` para cambiar fácilmente los colores de fondo de tus gráficos."
 ---
-
 
 Darle un toque de color a tus gráficos produce visualizaciones con **más personalidad** y **mayor impacto**. Pero cambiar el color de cada elemento puede parecer engorroso 😣
 
 ¡Pero es fácil! Veamos cómo se puede hacer [con las nuevas funcionalidades de `{ggplot2}` versión 4.0.](https://tidyverse.org/blog/2025/09/ggplot2-4-0-0/#theme-improvements)
 
+
 Primero generemos datos al azar para crear una visualización de demostración:
+
 
 ``` r
 library(dplyr)
@@ -59,9 +56,10 @@ grafico <- datos |>
 grafico
 ```
 
-<img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png" width="768" />
+<img src="/blog/ggplot_temas/ggplot_temas_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 Agreguemos algunas capas extra para mejorar la apariencia de nuestro gráfico:
+
 
 ``` r
 grafico <- grafico +
@@ -80,17 +78,19 @@ grafico <- grafico +
 grafico
 ```
 
-<img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="768" />
+<img src="/blog/ggplot_temas/ggplot_temas_files/figure-html/unnamed-chunk-3-1.png" width="672" />
+
 
 ## Cambiar colores de los temas de `{ggplot2}`
 
-Ahora, para cambiar los colores del gráfico, podemos usar una **función para aplicar un tema**, como `theme_classic()` o `theme_minimal()`, dentro de la cual podremos **definir los colores principales** del gráfico:
+Ahora, para cambiar los colores del gráfico, podemos usar una **función para aplicar un tema**, como `theme_classic()` o `theme_minimal()`, dentro de la cual podremos **definir los colores principales** del gráfico: 
 
--   El color de **fondo** o *papel* (`paper`)
--   El color de los **elementos** o *tinta* (`ink`)
--   El color de **acento** (`accent`)
+- El color de **fondo** o _papel_ (`paper`)
+- El color de los **elementos** o _tinta_ (`ink`)
+- El color de **acento** (`accent`)
 
 Probemos con `theme_classic()`:
+
 
 ``` r
 grafico +
@@ -99,11 +99,12 @@ grafico +
                 accent = "#9069C0")
 ```
 
-<img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png" width="768" />
+<img src="/blog/ggplot_temas/ggplot_temas_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 
 Tan solo con definir tres colores, obtenemos un gráfico con una apariencia mucho mejor! 💜
 
 Intentemos ahora con `theme_minimal()`:
+
 
 ``` r
 grafico +
@@ -112,13 +113,16 @@ grafico +
                 accent = "#9069C0")
 ```
 
-<img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="768" />
+<img src="/blog/ggplot_temas/ggplot_temas_files/figure-html/unnamed-chunk-5-1.png" width="672" />
+
 
 ## Aplicar temas con `{thematic}`
 
 Otra forma de aplicar temas de colores a tus gráficos es con el [paquete `{thematic}`](https://rstudio.github.io/thematic/).
 
-La idea de `{thematic}` es que tenemos que *activar* la **función que aplica los temas** con `thematic_on()`, y en el momento que la activamos, definimos los **colores principales** de nuestro tema. Estos colores son de **fondo** (`bg`) y de **frente** (`fg`), que como su nombre lo indica, definen el color base del gráfico y el color de los elementos principales.
+
+La idea de `{thematic}` es que tenemos que _activar_ la **función que aplica los temas** con `thematic_on()`, y en el momento que la activamos, definimos los **colores principales** de nuestro tema. Estos colores son de **fondo** (`bg`) y de **frente** (`fg`), que como su nombre lo indica, definen el color base del gráfico y el color de los elementos principales.
+
 
 ``` r
 library(thematic)
@@ -129,7 +133,7 @@ thematic_on(fg = "#553A74",
 grafico
 ```
 
-<img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.png" width="768" />
+<img src="/blog/ggplot_temas/ggplot_temas_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 Solamente con definir dos colores con `thematic_on()` e imprimir el gráfico obtenemos el gráfico con el tema aplicado. Muy lindo 💜
 
@@ -143,7 +147,11 @@ Para encontrar pares de colores interesantes, recomiendo el sitio [Pigment](http
 
 {{< imagen "pigment.png" >}}
 
-Veamos algunos ejemplos de como queda el mismo gráfico con otros pares de colores:
+Veamos algunos ejemplos de como queda el mismo gráfico con otros pares de colores: 
+
+
+
+
 
 ``` r
 thematic_on(fg = "#51BBAC",
@@ -152,7 +160,8 @@ thematic_on(fg = "#51BBAC",
 grafico
 ```
 
-<img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
+<img src="/blog/ggplot_temas/ggplot_temas_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+
 
 ``` r
 thematic_on(fg = "#7FBCC4",
@@ -161,7 +170,8 @@ thematic_on(fg = "#7FBCC4",
 grafico
 ```
 
-<img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="768" />
+<img src="/blog/ggplot_temas/ggplot_temas_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+
 
 ``` r
 thematic_on(fg = "#6E6962",
@@ -170,9 +180,10 @@ thematic_on(fg = "#6E6962",
 grafico
 ```
 
-<img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
+<img src="/blog/ggplot_temas/ggplot_temas_files/figure-html/unnamed-chunk-10-1.png" width="672" />
 
 Para desactivar la aplicación del tema de colores, usa `thematic_off()` y volverás a la aburrida normalidad.
+
 
 ``` r
 thematic_off()
@@ -180,7 +191,7 @@ thematic_off()
 grafico
 ```
 
-<img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png" width="768" />
+<img src="/blog/ggplot_temas/ggplot_temas_files/figure-html/unnamed-chunk-11-1.png" width="672" />
 
 ¡Así de simple! Claramente es una forma **básica y rápida** de personalizar la apariencia de las visualizaciones, pero el resultado suele ser positivo considerando el poquísimo esfuerzo necesario para lograrlo. Eficiencia, yey! 🥰
 
