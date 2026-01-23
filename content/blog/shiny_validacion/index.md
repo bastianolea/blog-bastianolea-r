@@ -3,7 +3,8 @@ title: "Testeo automatizado de aplicaciones Shiny con {shinytest2}"
 author: Bastián Olea Herrera
 date: '2026-01-23'
 slug: []
-categories: []
+categories:
+  - Tutoriales
 tags:
   - shiny
   - automatización
