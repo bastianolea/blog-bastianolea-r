@@ -161,6 +161,8 @@ Antes definimos algunas cositas para que el gráfico se vea bonito:
 
 {{< detalles "**Ver código de temas y tipografías**">}}
 
+Vamos a [configurar una tipografía para el gráfico](../../../blog/ggplot_tipografias/), y vamos a [cambiar los colores del gráfico](../../../blog/ggplot_temas/).
+
 ``` r
 library(showtext)
 
