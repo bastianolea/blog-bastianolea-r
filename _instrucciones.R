@@ -13,10 +13,10 @@ abrir_post_reciente()
 
 
 # crear un post normal
-blogdown::new_post(title = "Post", 
+blogdown::new_post(title = "Por qué siempre visualizar datos", 
                    file = paste0("blog/", lubridate::today(), "/index.md"),
                    author = "Bastián Olea Herrera",
-                   tags = c("blog", "gráficos")
+                   tags = c("curiosidades", "básico")
 )
 
 # crear un post tutorial
