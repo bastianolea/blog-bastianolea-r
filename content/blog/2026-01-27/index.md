@@ -22,7 +22,7 @@ excerpt: >-
 ---
 
 
-Uno de los primeros pasos al trabajar con datos es explorarlos, y si bien existen [herramientas estadísticas para resumir datos y obtener medidas que los describan](../../../blog/r_introduccion/dplyr_summarize/), debemos recordar que **visualizar los datos es igual de importante que obtener sus estadísticas descriptivas** 🤯
+Uno de los primeros pasos al trabajar con datos es explorarlos, y si bien existen [herramientas estadísticas para resumir datos y obtener medidas que los describan](../../../blog/estadisticos_descriptivos/), debemos recordar que **visualizar los datos es igual de importante que obtener sus estadísticas descriptivas** 🤯
 
 Veamos un ejemplo clásico de ésto: el [cuarteto de Anscombe](https://es.wikipedia.org/wiki/Cuarteto_de_Anscombe). Este conjunto de datos, creado por Francis John Anscombe en 1973, está compuesto por cuatro grupos distintos, con **las mismas estadísticas descriptivas** (media, varianza, correlación y regresión lineal), pero que **al visualizarlos revelan distribuciones muy diferentes**!
 
@@ -89,7 +89,11 @@ Usamos `pivot_longer()` para *pivotar* los datos y hacer que todas las cifras es
 
 ## Calcular estadísticos descriptivos
 
-Con los datos ordenados, tenemos todas las cifras en una sola columna. Ahora podemos calcular sus **estadísticos descriptivos** con `summarize()`. Esto nos permite calcular, por ejemplo, un promedio de todas las observaciones. Pero como los datos vienen en grupos, agrupamos primero con `group_by()`:
+Con los datos ordenados, tenemos todas las cifras en una sola columna. Ahora podemos calcular sus **estadísticos descriptivos**.
+
+{{< info "Para aprender a calcular **estadísticos descriptivos**, [revisa este post](/blog/estadisticos_descriptivos/)." >}}
+
+Para [calcular resúmenes de datos](../../../blog/r_introduccion/dplyr_summarize/) usamos la función `summarize()`. Ella nos permite calcular, por ejemplo, un promedio de todas las observaciones. Pero como los datos vienen en grupos, agrupamos primero con `group_by()`:
 
 ``` r
 estadisticos <- anscombe_largo |> 
@@ -108,7 +112,7 @@ estadisticos <- anscombe_largo |>
 
 Al calcular algunos estadísticos descriptivos (**promedio**, **mediana** y **varianza**) confirmamos que los cuatro grupos del cuarteto tienen cifras casi idénticas!
 
-{{< info "Para aprender a calcular **estadísticos descriptivos**, revisa este tutorial sobre [resúmenes de datos con `{dplyr}`](/blog/r_introduccion/dplyr_summarize/)." >}}
+{{< info "Si quieres aprender a usar `summarize()`, revisa este tutorial sobre [resúmenes de datos con `{dplyr}`](/blog/r_introduccion/dplyr_summarize/)." >}}
 
 ## Visualizar los datos
 
@@ -175,6 +179,7 @@ theme_set(
 ```
 
 {{< /detalles >}}
+{{< info "Para aprender a crear gráficos con `{ggplot2}`, revisa este tutorial introductorio a la [visualización de datos](/blog/r_introduccion/tutorial_visualizacion_ggplot/)." >}}
 
 Al graficar los datos de cada grupo, podemos ver que las distribuciones son muy diferentes entre sí, a pesar de tener estadísticas descriptivas similares.
 
@@ -199,27 +204,9 @@ anscombe_ancho |>
   theme(plot.title = element_text(size = 14, face = "bold"))
 ```
 
-    `geom_smooth()` using formula = 'y ~ x'
+<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="672" />
 
-<img src="index.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
-
-{{< info "Para aprender a crear gráficos con `{ggplot2}`, revisa este tutorial sobre [visualización de datos con `{ggplot2}`](/blog/r_introduccion/tutorial_visualizacion_ggplot/)." >}}
-
-Si nos hubiéramos quedado con las estadísticas descriptivas, habríamos pasado por alto las diferencias entre los grupos! *Moraleja:* siempre hacer gráficos exploratorios para comprender con qué estamos trabajando.
+Si nos hubiéramos quedado con las estadísticas descriptivas, habríamos pasado por alto las diferencias entre los grupos! *Moraleja:* siempre hacer gráficos exploratorios para comprender con qué estamos trabajando 🤓☝🏼
 
 {{< cafecito >}}
 {{< cursos >}}
-
-``` r
-anscombe_ancho |>
-  filter(grupo == 2) |> 
-  ggplot() +
-  aes(x, y) +
-  # línea de regresión
-  geom_smooth(method = "lm", se = FALSE, 
-              fullrange = T, 
-              color = alpha("#9069C0", 0.6)) +
-  # puntitos   
-  geom_point(size = 2.5, 
-             alpha = 0.8)
-```
