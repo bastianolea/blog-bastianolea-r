@@ -14,15 +14,19 @@ links:
   icon_pack: fas
   name: streaming
   url: https://youtube.com/live/A9wtPBEaVvY
-- icon: file-pen
-  icon_pack: fas
-  name: inscripciones cerradas
-  url: https://bastianolea.rbind.io
-  # url: https://bastianoleah.shinyapps.io/inscripcion_curso_gratis_r_intro_1/
+# - icon: file-pen
+#   icon_pack: fas
+#   name: inscripciones cerradas
+#   url: https://bastianolea.rbind.io
+#   # url: https://bastianoleah.shinyapps.io/inscripcion_curso_gratis_r_intro_1/
 - icon: file-code
   icon_pack: fas
   name: materiales y código
-  url: https://github.com/bastianolea/curso_intro_R_gratis_1
+  url: https://github.com/bastianolea/curso_intro_R_gratis
+- icon: chalkboard-user
+  icon_pack: fas
+  name: diapositivas
+  url: https://bastianolea.github.io/curso_intro_R_gratis
 ---
 
 
@@ -58,8 +62,19 @@ Las clases serán **online** los días 3, 5, y 9 de febrero a las 7:30PM.
 Al inscribirte al curso aceptas el [código de conducta](https://bastianolea.rbind.io/code-of-conduct/).
 
 
+## Diapositivas y código
+
+A continuación dejo enlaces al código que veremos en el curso y a las diapositivas.
+
+{{< boton "Código" "https://github.com/bastianolea/curso_intro_R_gratis" "fas fa-file-code" >}}
+
+{{< boton "Diapositivas" "https://bastianolea.github.io/curso_intro_R_gratis" "fas fa-chalkboard-user" >}}
+
+
 ## Streaming
 
 Si no obtuviste un cupo, puedes **seguir las clases en vivo** a través de YouTube:
+
+{{< boton "Streaming" "https://youtube.com/live/A9wtPBEaVvY" "fab fa-youtube" >}}
 
 <iframe width="100%" height="315" src="https://www.youtube.com/embed/A9wtPBEaVvY?si=V49lRnW2gFam7iP7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>

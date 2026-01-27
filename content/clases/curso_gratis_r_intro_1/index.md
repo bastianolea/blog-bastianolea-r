@@ -13,28 +13,25 @@ links:
   icon_pack: fas
   name: streaming
   url: https://youtube.com/live/A9wtPBEaVvY
-- icon: file-pen
-  icon_pack: fas
-  name: inscripción
-  url: https://bastianoleah.shinyapps.io/inscripcion_curso_gratis_r_intro_1/
-# - icon: github
-#   icon_pack: fab
-#   name: código y contenidos
-#   url: https://github.com/bastianolea/taller_datos_unam
-# - icon: circle-play
+# - icon: file-pen
 #   icon_pack: fas
-#   name: diapositivas
-#   url: https://bastianolea.github.io/taller_datos_unam/taller.html
-# - icon: youtube
-#   icon_pack: fab
-#   name: grabación
-#   url: https://youtu.be/2E71ONRPMXo
+#   name: inscripciones cerradas
+#   url: https://bastianolea.rbind.io
+#   # url: https://bastianoleah.shinyapps.io/inscripcion_curso_gratis_r_intro_1/
+- icon: file-code
+  icon_pack: fas
+  name: materiales y código
+  url: https://github.com/bastianolea/curso_intro_R_gratis
+- icon: chalkboard-user
+  icon_pack: fas
+  name: diapositivas
+  url: https://bastianolea.github.io/curso_intro_R_gratis
 ---
 
 
 {{< imagen "curso_r_featured.png" >}}
 
-{{< aviso "Inscripciones cerradas! Gracias a las **más de 500 personas** que se inscribieron! En los próximos días enviaré correos a las personas que obtuvieron un cupo." >}}
+{{< aviso "Inscripciones cerradas! Gracias a las **más de 500 personas** que se inscribieron! Las personas que obtuvieron cupo **ya fueron notificadas**. Más información sobre la [asignación de cupos aquí.](/blog/2026-01-19/)" >}}
 
 ### ¿Quieres entrar al mundo de los datos, pero no sabes cómo?
 
@@ -59,11 +56,24 @@ Las clases serán **online** los días 3, 5, y 9 de febrero a las 7:30PM.
 
 {{< boton "Inscripciones cerradas" "https://bastianolea.rbind.io" "fas fa-file-pen" >}}
 
+{{< info "Conéctate a la **transmisión en vivo** del curso [en este enlace](https://www.youtube.com/watch?v=A9wtPBEaVvY)." >}}
+
 Al inscribirte al curso aceptas el [código de conducta](https://bastianolea.rbind.io/code-of-conduct/).
+
+
+## Diapositivas y código
+
+A continuación dejo enlaces al código que veremos en el curso y a las diapositivas.
+
+{{< boton "Código" "https://github.com/bastianolea/curso_intro_R_gratis" "fas fa-file-code" >}}
+
+{{< boton "Diapositivas" "https://bastianolea.github.io/curso_intro_R_gratis" "fas fa-chalkboard-user" >}}
 
 
 ## Streaming
 
-Si no obtuviste un cupo, puedes seguir las clases en vivo a través de YouTube:
+Si no obtuviste un cupo, puedes **seguir las clases en vivo** a través de YouTube:
+
+{{< boton "Streaming" "https://youtube.com/live/A9wtPBEaVvY" "fab fa-youtube" >}}
 
 <iframe width="100%" height="315" src="https://www.youtube.com/embed/A9wtPBEaVvY?si=V49lRnW2gFam7iP7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
