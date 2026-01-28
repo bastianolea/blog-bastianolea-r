@@ -158,7 +158,7 @@ anscombe_ancho
 Ahora los datos están en un formato mucho más simple e intuitivo: cada fila es una observación, separadas por la variable `grupo`, cuyos valores están en las columnas `x` e `y`.
 
 Para visualizar los datos cargamos `{ggplot2}`:
- 
+
 
 ``` r
 library(ggplot2)
@@ -217,15 +217,77 @@ anscombe_ancho |>
   theme(plot.title = element_text(size = 14, face = "bold"))
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<img src="{{< blogdown/postref >}}index_files/figure-html/anscombe-1.png" width="672" />
 
 Si nos hubiéramos quedado con las estadísticas descriptivas, habríamos pasado por alto las diferencias entre los grupos! _Moraleja:_ siempre hacer gráficos exploratorios para comprender con qué estamos trabajando 🤓☝🏼
+
+----
+
+
+
+
+
+## Bonus: _¿datasaurio?_
+
+El _datasaurio_ aparece en [el paquete `{datasauRus}`](https://jumpingrivers.github.io/datasauRus/articles/Datasaurus.html)_ y es un conjunto de datos que demuestra el mismo principio, pero de forma más extrema: cada uno de los 13 conjuntos tiene las mismas estadísticas descriptivas, pero visualmente son todas distintas, y uno de ellos **tiene forma de dinosaurio!** 🦖
+
+
+``` r
+install.packages("datasauRus")
+```
+
+
+``` r
+library(dplyr)
+library(datasauRus)
+
+datasaurus_dozen |> 
+  group_by(dataset) |> 
+  summarize(
+    mean_x    = mean(x),
+    mean_y    = mean(y),
+    std_dev_x = sd(x),
+    std_dev_y = sd(y),
+    corr_x_y  = cor(x, y)
+  )
+```
+
+```
+## # A tibble: 13 × 6
+##    dataset    mean_x mean_y std_dev_x std_dev_y corr_x_y
+##    <chr>       <dbl>  <dbl>     <dbl>     <dbl>    <dbl>
+##  1 away         54.3   47.8      16.8      26.9  -0.0641
+##  2 bullseye     54.3   47.8      16.8      26.9  -0.0686
+##  3 circle       54.3   47.8      16.8      26.9  -0.0683
+##  4 dino         54.3   47.8      16.8      26.9  -0.0645
+##  5 dots         54.3   47.8      16.8      26.9  -0.0603
+##  6 h_lines      54.3   47.8      16.8      26.9  -0.0617
+##  7 high_lines   54.3   47.8      16.8      26.9  -0.0685
+##  8 slant_down   54.3   47.8      16.8      26.9  -0.0690
+##  9 slant_up     54.3   47.8      16.8      26.9  -0.0686
+## 10 star         54.3   47.8      16.8      26.9  -0.0630
+## 11 v_lines      54.3   47.8      16.8      26.9  -0.0694
+## 12 wide_lines   54.3   47.8      16.8      26.9  -0.0666
+## 13 x_shape      54.3   47.8      16.8      26.9  -0.0656
+```
+
+``` r
+datasaurus_dozen |> 
+  ggplot() +
+  aes(x = x, y = y, colour = dataset) +
+  geom_point() +
+  # theme_void() +
+  theme(legend.position = "none") +
+  facet_wrap(~dataset, ncol = 3) +
+  theme(axis.title = element_blank())
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/datasaurus-1.png" width="672" />
+
+_¡Plop!_
+
+
 
 {{< cafecito >}}
 
 {{< cursos >}}
-
-
-
-
-

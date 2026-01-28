@@ -104,7 +104,7 @@ anscombe_ancho
 Ahora los datos están en un formato mucho más simple e intuitivo: cada fila es una observación, separadas por la variable `grupo`, cuyos valores están en las columnas `x` e `y`.
 
 Para visualizar los datos cargamos `{ggplot2}`:
- 
+
 ```{r}
 library(ggplot2)
 ```
@@ -140,7 +140,7 @@ theme_set(
 
 Al graficar los datos de cada grupo, podemos ver que las distribuciones son muy diferentes entre sí, a pesar de tener estadísticas descriptivas similares.
 
-```{r}
+```{r anscombe}
 #| message: false
 #| fig.width: 7
 #| fig.height: 6
@@ -167,9 +167,7 @@ anscombe_ancho |>
 
 Si nos hubiéramos quedado con las estadísticas descriptivas, habríamos pasado por alto las diferencias entre los grupos! _Moraleja:_ siempre hacer gráficos exploratorios para comprender con qué estamos trabajando 🤓☝🏼
 
-{{< cafecito >}}
-
-{{< cursos >}}
+----
 
 
 ```{r}
@@ -192,3 +190,48 @@ anscombe_ancho |>
              alpha = 0.8)
 ```
 
+
+## Bonus: _¿datasaurio?_
+
+El _datasaurio_ aparece en [el paquete `{datasauRus}`](https://jumpingrivers.github.io/datasauRus/articles/Datasaurus.html)_ y es un conjunto de datos que demuestra el mismo principio, pero de forma más extrema: cada uno de los 13 conjuntos tiene las mismas estadísticas descriptivas, pero visualmente son todas distintas, y uno de ellos **tiene forma de dinosaurio!** 🦖
+
+```{r}
+#| eval: false
+install.packages("datasauRus")
+```
+
+```{r}
+library(dplyr)
+library(datasauRus)
+
+datasaurus_dozen |> 
+  group_by(dataset) |> 
+  summarize(
+    mean_x    = mean(x),
+    mean_y    = mean(y),
+    std_dev_x = sd(x),
+    std_dev_y = sd(y),
+    corr_x_y  = cor(x, y)
+  )
+```
+```{r datasaurus}
+#| fig-width: 7
+#| fig-height: 10
+
+datasaurus_dozen |> 
+  ggplot() +
+  aes(x = x, y = y, colour = dataset) +
+  geom_point() +
+  # theme_void() +
+  theme(legend.position = "none") +
+  facet_wrap(~dataset, ncol = 3) +
+  theme(axis.title = element_blank())
+```
+
+_¡Plop!_
+
+
+
+{{< cafecito >}}
+
+{{< cursos >}}
