@@ -20,10 +20,10 @@ blogdown::new_post(title = "Por qué siempre visualizar datos",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Desplegar aplicaciones Shiny a producción en contenedores Docker", 
-                   file = "blog/shiny_docker/index.qmd",
+blogdown::new_post(title = "Gráficos ternarios o triangulares de tres variables en `{ggplot2}`", 
+                   file = "blog/ggplot_ternario/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("shiny"),
+                   tags = c("visualización de datos"),
                    categories = c() 
 )
 
