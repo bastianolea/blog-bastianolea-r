@@ -2,7 +2,7 @@
 title: Creación y personalización de colores y paletas en R
 author: Bastián Olea Herrera
 date: '2025-03-06'
-freeze: false
+freeze: true
 format:
   hugo-md:
     output-file: "index"
@@ -12,24 +12,54 @@ slug: []
 categories: []
 tags:
   - visualización de datos
-  - gráficos
   - ggplot2
 execute:
   message: false
+excerpt: "El uso del color es clave para comunicar, y el ecosistema de R tiene varios trucos convenientes para ayudarnos a usar el color de mejores formas. En este post reúno varios consejos y trucos para trabajar con colores: desde previsualizarlos, mezclarlos, combinarlos y usarlos como paletas en gráficos."
 ---
 
 
 El uso del color es clave para comunicar, y el ecosistema de R tiene varios trucos convenientes para ayudarnos a usar el color de mejores formas. 
 
-En R, los colores se escriben como código, y a grandes rasgos pueden ser colores con nombre (por ejemplo, `"purple"`), colores hexadecimales (escritos como códigos de al menos 6 dígitos, como `#FFFFFF`), o como parte de funciones que producen paletas de colores.
+En R, los colores se escriben como código, y a grandes rasgos pueden ser colores con **nombre** (por ejemplo, `"purple"`), colores **hexadecimales** (escritos como códigos de al menos 6 dígitos, como `#FFFFFF`), o como parte de funciones que producen **paletas** de colores.
 
-A lo largo de este post usaremos la función `swatch()` del paquete `{shades}`, que genera un gráfico que presenta el color o la paleta de colores a partir de un vector de colores, lo que nos ayudará a visualizar nuestros colores más fácil. Una alternativa es la función `show_col()` de `{scales}`, que hace lo mismo. 
 
 ```{r}
 #| message: false
 library(shades)
 library(scales)
 ```
+
+## Previsualizar colores
+
+A lo largo de este post usaremos la función `swatch()` del paquete `{shades}`, que genera un gráfico que presenta el color o la paleta de colores a partir de un vector de colores, lo que nos ayudará a visualizar nuestros colores más fácil. Una alternativa es la función `show_col()` de `{scales}`, que hace lo mismo. 
+
+```{r}
+colores <- c("#EAD2FA", "#9069C0", "#6E3A98")
+```
+
+{{< columnas >}}
+
+{{< columna >}}
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| fig-dpi: 280
+
+shades::swatch(colores)
+```
+
+{{< columna >}}
+```{r}
+#| fig-width: 4
+#| fig-height: 4
+#| fig-dpi: 280
+scales::show_col(colores)
+```
+
+{{< fin_columnas >}}
+
+
 
 
 ## Crear colores
