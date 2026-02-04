@@ -33,7 +33,7 @@ editor_options:
 
 Luego de haber aprendido las [funcionalidades básicas del lenguaje R](../../../../blog/r_introduccion/r_basico/), y habernos familiarizado con [herramientas un poco más avanzadas de la programación](../../../../blog/r_introduccion/r_intermedio/) en este lenguaje, ahora podemos aplicar estos aprendizajes a los datos. Aprenderemos a explorar, comprender, y navegar tablas de datos, tanto en la forma nativa de trabajar con R, como con la ayuda del paquete {dplyr}.
 
-## {dplyr}
+## `{dplyr}`
 
 <img src = dplyr.png style = "float: left; max-width: 128px; margin-right: 20px;">
 
@@ -379,6 +379,8 @@ mutate(tabla, cola = c("sí", "sí", "no", "no", "sí", "toda"))
     4 pollo     ave          2 rural   no   
     5 mapache   mamífero     4 urbano  sí   
     6 serpiente reptil       0 rural   toda 
+
+{{< info "Revisa un tutorial completo y en profundida de `mutate()` [en este post!](https://bastianolea.rbind.io/blog/r_introduccion/dplyr_mutate/)" >}}
 
 La diferencia es que con `mutate()` solamente estamos previsualizando el cambio, dado que no hemos asignado nada. Si queremos que la columna realmente se guarde en el *dataframe*, debemos asignar el resultado a un objeto nuevo, o sobreescribir el actual:
 

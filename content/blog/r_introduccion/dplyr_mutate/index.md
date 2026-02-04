@@ -77,7 +77,7 @@ Podemos usar `mutate()` para crear una nueva variable o columna (¡son sinónimo
 
 Para crear usar `mutate()`, aplicamos esta función a un *data frame* [conectando los datos a la función con un conector](../../../../blog/r_introduccion/conectores/) (`|>` o `%>%`).
 
-{{< info "Un **conector** en R es un operador que nos permite _conectar_ datos (o el resultado de una operación) con la siguiente operación." >}}
+{{< info "Un **conector** en R es un operador que nos permite _conectar_ datos (o el resultado de una operación) con la siguiente operación. Para más información, [revisa este tutorial](https://bastianolea.rbind.io/blog/r_introduccion/conectores/)" >}}
 
 ``` r
 ejemplo |> 
@@ -128,9 +128,9 @@ ejemplo |>
     # A tibble: 3 × 2
       números  azar
         <int> <int>
-    1       1    91
-    2       2     7
-    3       3    51
+    1       1     5
+    2       2    70
+    3       3    98
 
 En este ejemplo, los valores de la columna son definidos por la función que usamos.
 

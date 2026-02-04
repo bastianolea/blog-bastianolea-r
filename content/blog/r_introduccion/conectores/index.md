@@ -123,7 +123,7 @@ round(mean(datos), digits = 2)
 
 Este código se leería, de izquierda a derecha, como *redondear el promedio de datos*, lo cual no está mal, pero te obliga a entender la operación *desde adentro hacia afuera* (los datos o el inicio del proceso están al medio del código). Además, anidar las funciones empieza a hacer que el código sea cada vez menos legible. Imagínate si en vez de 2 funciones necesitas 4 o 5? 🫤
 
-#### Ejemplo con conector 👍
+#### Ejemplo con conector 👍🏼
 
 Para hacer lo mismo pero usando conectores, encadenamos las operaciones empezando con los datos, en el orden de su ejecución:
 
@@ -150,14 +150,6 @@ datos <- tibble(animal = c("gato", "ratón", "perro", "pez", "paloma"),
 ```
 
 {{< bajada "Copia y pega el código para ejecutarlo en tu sesión de R" >}}
-
-    Warning in attr(x, "align"): 'xfun::attr()' is deprecated.
-    Use 'xfun::attr2()' instead.
-    See help("Deprecated")
-
-    Warning in attr(x, "format"): 'xfun::attr()' is deprecated.
-    Use 'xfun::attr2()' instead.
-    See help("Deprecated")
 
 | animal | color  | patas | edad |
 |:-------|:-------|------:|-----:|
@@ -205,7 +197,7 @@ datos_4 <- arrange(datos_3, edad)
 
 ...pero esto hace que tengamos que crear muchos objetos intermedios, que no nos interesan! Además se lee muy mal porque te interrumpe la constante creación de objetos.
 
-#### Ejemplo con conector 👍
+#### Ejemplo con conector 👍🏼
 
 Para hacer lo mismo pero usando los conectores, empezamos con los datos y vamos agregando los pasos del procesamiento: primero la selección, luego el filtro, y finalmente el ordenamiento:
 
