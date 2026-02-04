@@ -3,7 +3,7 @@ title: "Curso gratuito: introducción al análisis de datos con R"
 subtitle: Curso online introductorio de programación dirigido a estudiantes o profesionales de ciencias sociales y humanidades, sin experiencia previa
 excerpt: "Existen muchas herramientas para analizar datos, pero hay algo que casi todas tienen en común: la programación. Pero no es tan difícil como suena! Por eso estoy organizando un curso gratuito del lenguaje R para análisis de datos!"
 author: Bastián Olea Herrera
-date: '2026-01-10'
+date: '2026-02-03'
 slug: []
 categories: []
 tags:
@@ -40,6 +40,8 @@ Existen muchas herramientas para analizar datos, pero hay algo que casi todas ti
 
 Por eso estoy organizando un curso gratuito del lenguaje R para análisis de datos! 
 
+{{< info "Mira las clases en vivo y las grabaciones de clases pasadas gratis [aquí](/blog/curso_gratis_r_intro_1/#streaming-y-grabaciones)" >}}
+
 R es un lenguaje diseñado para trabajar con datos. Además de exploración, transformación y análisis de datos, R permite hacer visualizaciones, animaciones, automatización de procesos, reportes, aplicaciones web, y mucho más. 
 
 Su gracia es que es un lenguaje usado por personas de múltiples disciplinas, y por lo mismo es un lenguaje orientado a ser usado por personas que no sean expertas en informática o ciencias de la computación.
@@ -71,10 +73,18 @@ A continuación dejo enlaces al código que veremos en el curso y a las diaposit
 {{< boton "Diapositivas" "https://bastianolea.github.io/curso_intro_R_gratis" "fas fa-chalkboard-user" >}}
 
 
-## Streaming
+## Streaming y grabaciones
 
 Si no obtuviste un cupo, puedes **seguir las clases en vivo** a través de YouTube:
 
-{{< boton "Streaming" "https://youtube.com/live/A9wtPBEaVvY" "fab fa-youtube" >}}
+### Clase 1: introducción a R
+
+{{< boton "Grabación clase 1" "https://youtube.com/live/A9wtPBEaVvY" "fab fa-youtube" >}}
 
 <iframe width="100%" height="315" src="https://www.youtube.com/embed/A9wtPBEaVvY?si=V49lRnW2gFam7iP7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+### Clase 2: trabajando con datos en R
+
+{{< boton "Streaming clase 2" "https://youtube.com/live/xhEOHnTZ2fM" "fab fa-youtube" >}}
+
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/xhEOHnTZ2fM?si=rxNAY_3dYto-Oneb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
