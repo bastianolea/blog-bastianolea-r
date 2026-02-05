@@ -3,7 +3,7 @@ title: "Curso gratuito: introducción al análisis de datos con R"
 subtitle: Curso online introductorio de programación dirigido a estudiantes o profesionales de ciencias sociales y humanidades, sin experiencia previa
 excerpt: "Existen muchas herramientas para analizar datos, pero hay algo que casi todas tienen en común: la programación. Pero no es tan difícil como suena! Por eso estoy organizando un curso gratuito del lenguaje R para análisis de datos!"
 author: Bastián Olea Herrera
-date: '2026-02-03'
+date: '2026-02-05'
 slug: []
 categories: []
 tags:

@@ -20,10 +20,10 @@ blogdown::new_post(title = "Por qué siempre visualizar datos",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Gráficos ternarios o triangulares de tres variables en `{ggplot2}`", 
-                   file = "blog/ggplot_ternario/index.qmd",
+blogdown::new_post(title = "Gráficos de puente en `{ggplot2}`", 
+                   file = "blog/ggplot_puente/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("visualización de datos"),
+                   tags = c("visualización de datos", "gráficos"),
                    categories = c() 
 )
 
