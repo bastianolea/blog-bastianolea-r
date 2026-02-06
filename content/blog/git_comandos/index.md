@@ -68,6 +68,15 @@ Un _commit_ es la operación en la que tomas los archivos del área de preparaci
 git commit -m "script de procesamiento de datos actualizado"
 ```
 
+
+### Cambiar un mensaje de _commit_
+Por si te equivocaste en el mensaje de commit, te permite cambiar el mensaje, siempre que lo ejecutes antes de haber hecho _push_
+
+```
+git commit --amend -m "nuevo mensaje de commit"
+```
+
+
 ### Ver todos los _commits_ que has hecho
 Te entrega una lista con las versiones de tu repositorio, con sus mensajes respectivos y el índice de cada uno de ellos (un código único que identifica cada cambio)
 

@@ -1,0 +1,47 @@
+---
+title: Cómo dejar de repetirte y escribir código más eficiente en R
+subtitle: Este script enorme podría haber sido un `for` loop
+author: Bastián Olea Herrera
+date: '2026-02-06'
+slug: []
+draft: true
+categories: []
+tags:
+  - loops
+  - optimización
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+---
+
+
+me llegó un script (muy probablemente hecho por una IA) de más de 9.000 líneas
+
+![](script.mp4)
+
+Es válido, pues se trata de un script que produce decenas o cientos de gráficos. Pero revisando el script me doy cuenta de que **se repite cientos de veces un mismo patrón de código.**
+
+En su mayoría, el script es una media docena de bloques de código idénticos, salvo algunos detalles y referencias a distintas columnas.
+
+Al tiro pensé: *Este script enorme podría haber sido un `for` loop* 😂
+
+## Separar un script en partes
+
+`source()`
+
+`{targets}`
+
+## Hacer un *loop* o bucle
+
+`for`
+
+`map()`
+
+`future_map()`
+
+## Crear una función
+
+`function()`
+
+## Hacer un *loop* con una función

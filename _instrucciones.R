@@ -13,10 +13,10 @@ abrir_post_reciente()
 
 
 # crear un post normal
-blogdown::new_post(title = "Por qué siempre visualizar datos", 
+blogdown::new_post(title = "Este script enorme podría haber sido un `for` loop: cómo dejar de repetirte y escribir código más eficiente en R", 
                    file = paste0("blog/", lubridate::today(), "/index.md"),
                    author = "Bastián Olea Herrera",
-                   tags = c("curiosidades", "básico")
+                   tags = c("loops", "optimización")
 )
 
 # crear un post tutorial
@@ -42,6 +42,7 @@ blogdown::new_post(title = "Gráficos de puente en `{ggplot2}`",
 
 ## borradores ----
 
+"content/blog/2026-02-06/repetirse.qmd"
 "content/blog/googledrive/index.qmd"
 # https://www.linkedin.com/feed/update/urn:li:activity:7405241344316841984?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB9if5MBe0keh4VrsmJOFbZxmIK9T9GSkYM
 # hacer que R te pregunte cosas

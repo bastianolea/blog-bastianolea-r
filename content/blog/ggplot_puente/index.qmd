@@ -164,7 +164,9 @@ datos |>
   guides(fill = guide_legend(position = "top"))
 ```
 
-¡Estamos cerca! Ahora engrosamos las líneas con el argumento `linewidth` dentro de `geom_segment()`, agregamos texto con `geom_text()` que se posicione según si es positivo o negativo, una escala de colores con `scale_color_manual()`, y algunos detalles en el tema:
+¡Estamos cerca! Ahora engrosamos las líneas con el argumento `linewidth` dentro de `geom_segment()`, agregamos texto con `geom_text()` que se posicione según si es positivo o negativo, una escala de colores con `scale_color_manual()`, y algunos detalles en el tema.
+
+El otro cambio principal es agregar **líneas horizontales** que conecten cada barra con la otra. Lamentablemente, creo que el largo de estas barras es específico a la cantidad de barras y el ancho del gráfico, entre otros factores, así que habrá que experimentar.
 
 ```{r grafico_puente_ggplot}
 #| fig-width: 7
@@ -182,6 +184,14 @@ datos |>
         y = base,
         yend = suma),
     linewidth = 12) +
+  # líneas horizontales que conecten las barras
+  geom_segment(
+    aes(x = as.numeric(factor)-0.4,
+        xend = ifelse(factor == "total",
+                      as.numeric(factor)+0.4,
+                      as.numeric(lead(factor))+0.4),
+        y = suma-0.005, yend = suma-0.005),
+    alpha = 0.5) +
   # textos encima o debajo de barras
   geom_text(aes(y = suma,
                 label = round(valor, 1),
