@@ -9,6 +9,7 @@ categories: []
 tags:
   - blog
   - básico
+  - videos
 links:
 - icon: video
   icon_pack: fas
@@ -21,7 +22,7 @@ links:
 #   # url: https://bastianoleah.shinyapps.io/inscripcion_curso_gratis_r_intro_1/
 - icon: file-code
   icon_pack: fas
-  name: materiales y código
+  name: código
   url: https://github.com/bastianolea/curso_intro_R_gratis
 - icon: chalkboard-user
   icon_pack: fas
@@ -64,14 +65,17 @@ Las clases serán **online** los días 3, 5, y 9 de febrero a las 7:30PM.
 Al inscribirte al curso aceptas el [código de conducta](https://bastianolea.rbind.io/code-of-conduct/).
 
 
-## Diapositivas y código
+## Diapositivas
+
+En las diapositivas del curso se resumen los temas, se muestran ejemplos de código, y se entregan enlaces a los datos necesarios y a los tutoriales para profundizar.
+
+{{< boton "Diapositivas" "https://bastianolea.github.io/curso_intro_R_gratis" "fas fa-chalkboard-user" >}}
+
+## Código
 
 A continuación dejo enlaces al código que veremos en el curso y a las diapositivas.
 
 {{< boton "Código" "https://github.com/bastianolea/curso_intro_R_gratis" "fas fa-file-code" >}}
-
-{{< boton "Diapositivas" "https://bastianolea.github.io/curso_intro_R_gratis" "fas fa-chalkboard-user" >}}
-
 
 ## Streaming y grabaciones
 
@@ -81,10 +85,14 @@ Si no obtuviste un cupo, puedes **seguir las clases en vivo** a través de YouTu
 
 {{< boton "Grabación clase 1" "https://youtube.com/live/A9wtPBEaVvY" "fab fa-youtube" >}}
 
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/A9wtPBEaVvY?si=V49lRnW2gFam7iP7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+{{< boton "Script clase 1" "https://github.com/bastianolea/curso_intro_R_gratis/blob/main/clases/clase_1.R" "fas fa-file-code" >}}
+
+<iframe width="100%" height="480" src="https://www.youtube.com/embed/A9wtPBEaVvY?si=V49lRnW2gFam7iP7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ### Clase 2: trabajando con datos en R
 
-{{< boton "Streaming clase 2" "https://youtube.com/live/xhEOHnTZ2fM" "fab fa-youtube" >}}
+{{< boton "Grabación clase 2" "https://youtube.com/live/xhEOHnTZ2fM" "fab fa-youtube" >}}
 
-<iframe width="100%" height="315" src="https://www.youtube.com/embed/xhEOHnTZ2fM?si=rxNAY_3dYto-Oneb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+{{< boton "Script clase 2" "https://github.com/bastianolea/curso_intro_R_gratis/blob/main/clases/clase_2.R" "fas fa-file-code" >}}
+
+<iframe width="100%" height="480" src="https://www.youtube.com/embed/xhEOHnTZ2fM?si=rxNAY_3dYto-Oneb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
