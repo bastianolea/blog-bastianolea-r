@@ -57,13 +57,13 @@ Los **cupos** son limitados, y se aplicarán **criterios de inclusión** para la
 
 Las clases serán **online** los días 3, 5, y 9 de febrero a las 7:30PM.
 
-
+<!--
 {{< boton "Inscripciones cerradas" "https://bastianolea.rbind.io" "fas fa-file-pen" >}}
 
 {{< info "Conéctate a la **transmisión en vivo** del curso [en este enlace](https://www.youtube.com/watch?v=A9wtPBEaVvY)." >}}
 
 Al inscribirte al curso aceptas el [código de conducta](https://bastianolea.rbind.io/code-of-conduct/).
-
+-->
 
 ## Diapositivas
 
@@ -71,9 +71,13 @@ En las diapositivas del curso se resumen los temas, se muestran ejemplos de cód
 
 {{< boton "Diapositivas" "https://bastianolea.github.io/curso_intro_R_gratis" "fas fa-chalkboard-user" >}}
 
+<iframe width="100%" height="480" 
+src="https://bastianolea.github.io/curso_intro_R_gratis" 
+title="Diapositivas" frameborder="0"></iframe>
+
 ## Código
 
-A continuación dejo enlaces al código que veremos en el curso y a las diapositivas.
+En este enlace puedes acceder al [repositorio de GitHub](https://github.com/bastianolea/curso_intro_R_gratis) que contiene el código que veremos en el curso, los datos que trabajemos, y también el código de R que genera las [diapositivas](https://bastianolea.github.io/curso_intro_R_gratis) con [Quarto Revealjs](https://quarto.org/docs/presentations/revealjs/).
 
 {{< boton "Código" "https://github.com/bastianolea/curso_intro_R_gratis" "fas fa-file-code" >}}
 
