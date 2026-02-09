@@ -34,7 +34,7 @@ library(dplyr)
 library(readr)
 library(stringr)
 
-url_datos <- "https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/datos/prensa_datos_muestra.csv"
+url_datos <- "https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/prensa_datos_muestra.csv"
 
 noticias <- read_csv2(url_datos)
 ```

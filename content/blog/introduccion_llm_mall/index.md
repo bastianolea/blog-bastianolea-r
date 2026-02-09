@@ -51,7 +51,7 @@ Con el siguiente código vamos a descargar un dataframe que contiene texto de no
 
 ``` r
 # obtener datos de prensa
-url <- "https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/datos/prensa_datos_muestra.csv"
+url <- "https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/prensa_datos_muestra.csv"
 
 datos_prensa <- readr::read_csv2(url, show_col_types = FALSE)
 ```
