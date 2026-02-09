@@ -3,7 +3,7 @@ title: "Curso gratuito: introducción al análisis de datos con R"
 subtitle: Curso online introductorio de programación dirigido a estudiantes o profesionales de ciencias sociales y humanidades, sin experiencia previa
 excerpt: "Existen muchas herramientas para analizar datos, pero hay algo que casi todas tienen en común: la programación. Pero no es tan difícil como suena! Por eso estoy organizando un curso gratuito del lenguaje R para análisis de datos!"
 author: Bastián Olea Herrera
-date: '2026-02-05'
+date: '2026-02-09'
 slug: []
 categories: []
 tags:
@@ -13,8 +13,8 @@ tags:
 links:
 - icon: video
   icon_pack: fas
-  name: streaming
-  url: https://youtube.com/live/A9wtPBEaVvY
+  name: grabaciones
+  url: https://www.youtube.com/@bastianolea/streams
 # - icon: file-pen
 #   icon_pack: fas
 #   name: inscripciones cerradas
@@ -100,3 +100,12 @@ Si no obtuviste un cupo, puedes **seguir las clases en vivo** a través de YouTu
 {{< boton "Script clase 2" "https://github.com/bastianolea/curso_intro_R_gratis/blob/main/clases/clase_2.R" "fas fa-file-code" >}}
 
 <iframe width="100%" height="480" src="https://www.youtube.com/embed/xhEOHnTZ2fM?si=rxNAY_3dYto-Oneb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+### Clase 3: manipulación de datos en R
+
+{{< boton "Streaming clase 3" "https://www.youtube.com/live/vfvTsQXZlFs" "fab fa-youtube" >}}
+
+<!---{{< boton "Script clase 2" "https://github.com/bastianolea/curso_intro_R_gratis/blob/main/clases/clase_2.R" "fas fa-file-code" >}}-->
+
+<iframe width="100%" height="480" src="https://www.youtube.com/embed/vfvTsQXZlFs?si=sic5ANNevJxgo77G" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
