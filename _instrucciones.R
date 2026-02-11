@@ -40,16 +40,6 @@ blogdown::new_post(title = "Gráficos de puente en `{ggplot2}`",
 #     url: https://gist.github.com/bastianolea/8ea85fa8169b302d2144e05434668c89
 
 
-## ARREGLAR ----
-
-"https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/prensa_datos_muestra.csv"
-"content/blog/nubes_de_palabras/index.qmd"
-"content/blog/analisis_sentimiento_llm/index.qmd"
-"content/blog/furrr_multiprocesador/prueba.R"
-"content/blog/furrr_multiprocesador/index.md"
-"content/blog/introduccion_llm_mall/index.qmd"
-"content/blog/resumir_texto_llm/index.md"
-
 ## borradores ----
 
 "content/blog/2026-02-06/repetirse.qmd"

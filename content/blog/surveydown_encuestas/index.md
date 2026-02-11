@@ -153,6 +153,10 @@ sd_question(
 )
 ```
 
+#### Preguntas condicionales o filtros
+
+Para ahcer preguntas condicionales o filtros, [revisa aquí la página correspondiente de la documentación oficial](https://surveydown.org/docs/conditional-logic).
+
 ### Navegación
 
 Al finalizar cada página de tu encuesta, tienes que agregar el botón de siguiente, para que los usuarios/as puedan avanzar a la siguiente página:
@@ -174,6 +178,8 @@ sd_close(label_close = "Terminar")
 Si quieres probar cómo va quedando tu encuesta, puedes ejecutar la aplicación Shiny desde el archivo `app.R`, presionando el botón _Run._
 
 {{< imagen "surveydown_2.png" >}}
+
+En este punto del desarrollo de tu encuesta, **todavía no configuramos la base de datos** que guardará las respuestas, así que, temporalmente, las respuestas van a quedar registradas en un archivo `preview_data.csv`.
 
 En [este repositorio](https://github.com/bastianolea/encuesta_animales) te dejo el código de [una encuesta básica](https://bastianoleah.shinyapps.io/encuesta_animales), de tres preguntas, con gráficos que visualizan las respuestas de la encuesta al terminar de responderla. Puedes usarla como guía al momento de diseñar tu propia encuesta.
 
@@ -243,7 +249,7 @@ Abre `app.R`, y revisa que la función `sd_db_connect()` que está al principio 
 
 Para ejecutar tu encuesta, tienes que abrir el script de la aplicación Shiny, `app.R`, y ejecutar la app con el botón _Run._ Tu encuesta se abrirá una nueva ventana y podrás ponerla a prueba, o responderla.
 
-Todas las respuestas que ingreses quedarán registradas en la base de datos de Supabase, incluso cuando la ejecutes localmenet. En el sitio web de Supabase, dentro de tu proyecto de la encuesta, puedes acceder a _Table editor_ para revisar la tabla que contiene las respuestas, y revisar las respuestas en una planilla interactiva.
+Todas las respuestas que ingreses quedarán registradas en la base de datos de Supabase, incluso cuando la ejecutes localmente. En el sitio web de Supabase, dentro de tu proyecto de la encuesta, puedes acceder a _Table editor_ para revisar la tabla que contiene las respuestas, y revisar las respuestas en una planilla interactiva.
 
 ## Subir tu encuesta y compartirla
 
