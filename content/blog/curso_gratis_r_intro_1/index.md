@@ -76,6 +76,8 @@ En las diapositivas del curso se resumen los temas, se muestran ejemplos de cód
 src="https://bastianolea.github.io/curso_intro_R_gratis" 
 title="Diapositivas" frameborder="0"></iframe>
 
+También puedes [descargar las diapositivas en formato PDF aquí](/blog/curso_gratis_r_intro_1/diapositivas.pdf).
+
 ----
 
 ## Código
