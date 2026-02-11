@@ -20,14 +20,15 @@ links:
 #   name: inscripciones cerradas
 #   url: https://bastianolea.rbind.io
 #   # url: https://bastianoleah.shinyapps.io/inscripcion_curso_gratis_r_intro_1/
-- icon: file-code
-  icon_pack: fas
-  name: código
-  url: https://github.com/bastianolea/curso_intro_R_gratis
 - icon: chalkboard-user
   icon_pack: fas
   name: diapositivas
   url: https://bastianolea.github.io/curso_intro_R_gratis
+- icon: file-code
+  icon_pack: fas
+  name: código
+  url: https://github.com/bastianolea/curso_intro_R_gratis
+
 ---
 
 
@@ -84,17 +85,28 @@ También puedes [descargar las diapositivas en formato PDF aquí](/blog/curso_gr
 
 En este enlace puedes acceder al [repositorio de GitHub](https://github.com/bastianolea/curso_intro_R_gratis) que contiene el código que veremos en el curso, los datos que trabajemos, y también el código de R que genera las [diapositivas](https://bastianolea.github.io/curso_intro_R_gratis) con [Quarto Revealjs](https://quarto.org/docs/presentations/revealjs/).
 
-{{< boton "Código" "https://github.com/bastianolea/curso_intro_R_gratis" "fas fa-file-code" >}}
+{{< boton "Código del curso" "https://github.com/bastianolea/curso_intro_R_gratis" "fas fa-file-code" >}}
 
-## Grabaciones
+También puedes revisar el [código para crear las diapositivas con Quarto.](https://github.com/bastianolea/curso_intro_R_gratis/blob/main/diapositivas.qmd)
+
+### Scripts de cada clase
+
+Scripts vistos en clase, con comentarios explicativos de cada paso y comando. Se sugiere [revisar a la par de las diapositivas](#diapositivas), que también contienen enlaces a **tutoriales más detallados** de cada tema.
+
+{{< boton "Script clase 1" "https://github.com/bastianolea/curso_intro_R_gratis/blob/main/clases/clase_1.R" "fas fa-file-code" >}}
+
+{{< boton "Script clase 2" "https://github.com/bastianolea/curso_intro_R_gratis/blob/main/clases/clase_2.R" "fas fa-file-code" >}}
+
+{{< boton "Script clase 3" "https://github.com/bastianolea/curso_intro_R_gratis/blob/main/clases/clase_3.R" "fas fa-file-code" >}}
+
 
 ----
+
+## Grabaciones
 
 ### Clase 1: introducción a R
 
 {{< boton "Grabación clase 1" "https://youtube.com/live/A9wtPBEaVvY" "fab fa-youtube" >}}
-
-{{< boton "Script clase 1" "https://github.com/bastianolea/curso_intro_R_gratis/blob/main/clases/clase_1.R" "fas fa-file-code" >}}
 
 <iframe width="100%" height="480" src="https://www.youtube.com/embed/A9wtPBEaVvY?si=V49lRnW2gFam7iP7" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
@@ -104,8 +116,6 @@ En este enlace puedes acceder al [repositorio de GitHub](https://github.com/bast
 
 {{< boton "Grabación clase 2" "https://youtube.com/live/xhEOHnTZ2fM" "fab fa-youtube" >}}
 
-{{< boton "Script clase 2" "https://github.com/bastianolea/curso_intro_R_gratis/blob/main/clases/clase_2.R" "fas fa-file-code" >}}
-
 <iframe width="100%" height="480" src="https://www.youtube.com/embed/xhEOHnTZ2fM?si=rxNAY_3dYto-Oneb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ----
@@ -114,6 +124,15 @@ En este enlace puedes acceder al [repositorio de GitHub](https://github.com/bast
 
 {{< boton "Grabación clase 3" "https://www.youtube.com/watch?v=vfvTsQXZlFs" "fab fa-youtube" >}}
 
-{{< boton "Script clase 3" "https://github.com/bastianolea/curso_intro_R_gratis/blob/main/clases/clase_3.R" "fas fa-file-code" >}}
-
 <iframe width="100%" height="480" src="https://www.youtube.com/embed/vfvTsQXZlFs?si=sic5ANNevJxgo77G" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+----
+
+Puedes descargar todos los materiales del curso (código de clases, diapositivas y enlaces) en un solo archivo comprimido acá:
+
+{{< boton "Descargar curso" "/blog/curso_gratis_r_intro_1/curso_intro_r.zip" "fas fa-download" >}}
+
+{{< cafecito >}}
+
+{{< cursos >}}
