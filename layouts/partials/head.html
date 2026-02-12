@@ -16,6 +16,10 @@
   <!-- headroom.js -->
   {{ $mainJs := resources.Get "js/main.js" | js.Build "main.js" | minify | fingerprint }}
   <script src="{{ $mainJs.RelPermalink }}" type="text/javascript"></script>
+  
   <!-- css del estilo de syntax higlighting -->
   <link rel="stylesheet" href="/css/syntax.css">
+  
+  <!-- precargar buscador -->
+  <link rel="preload" href="https://bastianoleah.shinyapps.io/buscador/" as="image">
 </head>

@@ -22,7 +22,7 @@ sidebar:
   title: Blog
   author: Bastián Olea Herrera
   categories_link: false
-  description: "Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el [buscador](https://bastianolea-buscador.share.connect.posit.cloud) para encontrar publicaciones o navega los [temas](/tags/)."
+  description: "Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el [buscador](https://bastianoleah.shinyapps.io/buscador/) para encontrar publicaciones o navega los [temas](/tags/)."
   series_link: true
   show_sidebar_adunit: false
   tags_link: true

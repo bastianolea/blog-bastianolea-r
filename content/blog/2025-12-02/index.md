@@ -94,7 +94,7 @@ Solamente ese código guardado en `layouts/shortcodes/detalles.html`, y se usa p
 ----
 
 ### Mejoras al buscador
-También mejoré el [buscador de mi blog](https://bastianolea-buscador.share.connect.posit.cloud), que es [una aplicación Shiny](https://bastianolea.rbind.io/blog/buscador/), para que sea un poquito más rápido, pero principalmente para que los resultados de búsqueda contengan un **resumen de cada publicación**. Más información sobre el buscador [en este post](https://bastianolea.rbind.io/blog/buscador/).
+También mejoré el [buscador de mi blog](https://bastianoleah.shinyapps.io/buscador/), que es [una aplicación Shiny](https://bastianolea.rbind.io/blog/buscador/), para que sea un poquito más rápido, pero principalmente para que los resultados de búsqueda contengan un **resumen de cada publicación**. Más información sobre el buscador [en este post](https://bastianolea.rbind.io/blog/buscador/).
 
 {{< detalles "**Más detalles sobre cómo lo hice**" >}}
 
@@ -109,7 +109,7 @@ Luego simplemente actualizar la app para que agregue ese texto, previamente inte
 
 <br>
 
-{{< boton "Buscador" "https://bastianolea-buscador.share.connect.posit.cloud" "fas fa-search" >}}
+{{< boton "Buscador" "https://bastianoleah.shinyapps.io/buscador/" "fas fa-search" >}}
 
 ----
 
