@@ -1,5 +1,5 @@
 ---
-title: "Usar un modelo de lenguaje local (LLM) para analiar texto en R"
+title: "Usar un modelo de lenguaje local (LLM) para analizar texto en R"
 author: Bastián Olea Herrera
 format: hugo-md
 date: 2024-10-29
@@ -10,10 +10,9 @@ tags:
   - inteligencia artificial
 lang: es
 cache: false
+freeze: true
 excerpt: Procesa datos con IA en R, localmente! El paquete `{mall}` permite aplicar un modelo de lenguaje (LLM) local a tus datos, para así crear nuevas columnas a partir de prompts, tales como resumir, extraer sentimiento, clasificación, y más.
 ---
-
-
 
 [Recientemente se lanzó el paquete `{mall}`,](https://mlverse.github.io/mall/) que facilita el uso de un LLM _(large language model)_ o modelo de lenguaje de gran tamaño para analizar texto con IA en un dataframe. Esto significa que, para cualquier dataframe que tengamos, podemos aplicar un modelo de IA a una de sus columnas y recibir sus resultados en una columna nueva.
 
@@ -22,18 +21,12 @@ Para poder hacer ésto, primero necitamos tener un modelo LLM instalado localmen
 Luego, [instalamos el paquete `{ollamar}` en R,](https://hauselin.github.io/ollama-r/), que es una dependencia de `{mall}`. Usamos `{ollamar}` para descargar a nuestro equipo el modelo de lenguaje que usaremos:
 
 
-
-
 ``` r
 library(ollamar)
-ollamar::pull("llama3.2")
+ollamar::pull("llama3.2:3b")
 ```
 
-
-
 Con eso hecho, ya puedes usar modelo directamente desde R con `{ollamar}`, o en un dataframe usando `{mall}`.
-
-
 
 
 
@@ -59,11 +52,26 @@ library(dplyr)
 ##     intersect, setdiff, setequal, union
 ```
 
+``` r
+mall::llm_use("ollama", "llama3.2:3b")
+```
 
+```
+## 
+```
+
+```
+## ── mall session object
+```
+
+```
+## Backend: ollama
+## LLM session: model:llama3.2:3b
+## R session:
+## cache_folder:/var/folders/gt/vdp_nx_x3bq5wgnlr1nphkd1zbdps_/T//RtmpPF92Qr/_mall_cachef5426374de4
+```
 
 Con el siguiente código vamos a descargar un dataframe que contiene texto de noticias de Chile, para usarlo como datos de prueba. Los datos provienen de mi [repositorio de web scraping y análisis de prensa de Chile.](https://github.com/bastianolea?tab=repositories)
-
-
 
 
 ``` r
@@ -82,30 +90,29 @@ head(datos_prensa)
 ```
 
 ```
-## # A tibble: 6 × 3
-##   titulo                                                       cuerpo fecha     
-##   <chr>                                                        <chr>  <date>    
-## 1 Dólar cierra sus operaciones con leve tendencia alcista y n… "Este… 2023-03-10
-## 2 Caso Convenios: Consejo de Defensa del Estado presenta quer… "El C… 2023-08-11
-## 3 Nuevo estudio revela que un café con leche tiene prometedor… "De a… 2023-01-30
-## 4 Contraloría oficia a 53 municipalidades del país por nivele… "La C… 2024-01-24
-## 5 Realizan funerales de los dos trabajadores fallecidos en el… "Dura… 2024-06-23
-## 6 Partido Comunista vuelve a la conducción de la FECH: La min… "“Con… 2023-08-30
+## # A tibble: 6 × 4
+##   titulo                                                cuerpo fuente fecha     
+##   <chr>                                                 <chr>  <chr>  <date>    
+## 1 Hombre de 66 años fue asesinado en plena vía pública… "El h… Coope… 2024-07-21
+## 2 Revive el cuarto capítulo de Indecisos: Candidatos a… "Este… Megan… 2024-09-03
+## 3 Menos personas circulando y miedo de los residentes:… "Poca… Megan… 2024-04-08
+## 4 CEO de Walmart Chile sostiene que si la empresa no d… "Hace… The C… 2024-12-22
+## 5 Pdte. Boric entregó mensaje por la muerte de Piñera … "El p… CNN C… 2024-02-06
+## 6 Encuentran dos cadáveres en un canal de regadío en P… "Pers… Publi… 2024-07-13
 ```
-
-
+## Análisis de texto
 
 Probemos `{mall}` con 10 noticias al azar, pidiéndole al LLM que detecte el sentimiento de cada texto (si es positivo, neutro o negativo):
-
-
 
 
 ``` r
 # extraer sentimiento de textos
 datos_sentimiento <- datos_prensa |> 
   select(titulo) |> 
-  slice(60:70) |> 
-  llm_sentiment(titulo, pred_name = "sentimiento")
+  slice(10:20) |> 
+  llm_sentiment(titulo, 
+                pred_name = "sentimiento",
+                options = c("positivo", "neutro", "negativo"))
 
 datos_sentimiento |> 
   relocate(sentimiento, .before = titulo)
@@ -115,52 +122,48 @@ datos_sentimiento |>
 ## # A tibble: 11 × 2
 ##    sentimiento titulo                                                           
 ##    <chr>       <chr>                                                            
-##  1 negative    "Ministerio de Desarrollo Social pone fin anticipado a contrato …
-##  2 negative    "Xi expuso cuál es \"la llave de oro\" para solucionar los probl…
-##  3 negative    "Multitudinarias protestas en Israel: Exigen dimisión de Netanya…
-##  4 negative    "Encuesta Cadem: desaprobación del Presidente Boric aumentó dos …
-##  5 negative    "Desaparición de TENS Rosa Lira: Las contradicciones que acusa e…
-##  6 negative    "Ministro Grau por cierre de Siderúrgica Huachipato: “Nuestro fo…
-##  7 negative    "Piñera confirma que no irá a La Moneda para el 11S: “El clima d…
-##  8 positive    "Subsecretaria defiende migración de isapres a Fonasa: \"Fortale…
-##  9 negative    "Ministra Orellana tras críticas por no contactar a denunciante …
-## 10 negative    "Joven fue acusado de grabar niñas en la entrada de un colegio e…
-## 11 negative    "Confirman que Jorge Valdivia se reunió con generales de Carabin…
+##  1 negativo    "Dos personas resultan baleadas tras intentar evitar asalto en m…
+##  2 negativo    "Mujer de 54 años recibió trasplante de bomba cardíaca y riñón d…
+##  3 negativo    "Fiscalía investiga una segunda presunta agresión de Monsalve co…
+##  4 negativo    "Los RUT definitivos que reciben el premio de La Suerte en Chile…
+##  5 positivo    "Este domingo parte el Festival de Viña 2024: Revisa el orden y …
+##  6 negativo    "Danesa se coronó como Miss Universo 2024: Emilia Dides quedó en…
+##  7 positivo    "Hassler opta por tesis de Boric por sobre la del PC en Venezuel…
+##  8 negativo    "Carabinero de civil disparó a delincuente que estaba robando en…
+##  9 negativo    "Seguridad en días del 18’: Ex PDI llama a ser precavido y a evi…
+## 10 negativo    "¿Quién es Janet Yellen? La Secretaria del Tesoro de EEEUU que v…
+## 11 negativo    "Fijan audiencia para los detenidos por el homicidio del subofic…
 ```
 
-
-
-Otro uso es pedirle que genere resúmenes de textos. Para ello, usaremos un _prompt_ manual, donde le pedimos explícitamente `"resumir en hasta 5 palabras"`. El paquete aplicará dicha solicitud a cada una de las observaciones en la columna indicada, y retornará los resultados en una nueva columna llamada `resumen`:
-
-
+## Resúmenes de texto
+Otro uso es pedirle que genere resúmenes de textos. Para ello, usaremos la función `llm_summarize()` a la que le pedimos un máximo de palabras y le indicamos un _prompt_ extra para mejorar las respuestas. El paquete aplicará dicha solicitud a cada una de las observaciones en la columna indicada, y retornará los resultados en una nueva columna llamada `resumen`:
 
 
 ``` r
 # resumir textos
 datos_resumidos <- datos_prensa |> 
   select(titulo, cuerpo) |> 
-  slice_sample(n = 10) |> 
-  mutate(resumen = llm_vec_custom(
-    cuerpo, 
-    "resumir en hasta 7 palabras")) |> 
+  slice(10:16) |> 
+  llm_summarize(cuerpo, 
+                max_words = 10, 
+                additional_prompt = "resumir noticias de Chile en español",
+                pred_name = "resumen") |> 
   select(resumen, titulo)
 
 datos_resumidos
 ```
 
 ```
-## # A tibble: 10 × 2
-##    resumen                                                      titulo          
-##    <chr>                                                        <chr>           
-##  1 "Trabajador muere aplastado por vidrios en Maipú."           "Trabajador mur…
-##  2 "Conexiones avanzan en Santiago."                            "Este lunes dos…
-##  3 "Tiroteo deja muerto menor de 16 años."                      "Menor de 16 Añ…
-##  4 "\"Prostíbulo clausurado en La Serena.\""                    "Apart hotel er…
-##  5 "Asociación de Isapres critica ley corta."                   "Isapres asegur…
-##  6 "Diputados UDI critican presión al Poder Judicial."          "Diputados UDI …
-##  7 "Mujer asesinada en Coronel con lesiones."                   "Posible femici…
-##  8 "\"Condenan a cuatro militares por homicidios\"."            "Corte Suprema …
-##  9 "Exfuncionario acusado de abusos sexuales."                  "Instructor de …
-## 10 "Irregularidades en listas de espera hospitales regionales." "Contraloría de…
+## # A tibble: 7 × 2
+##   resumen                                                     titulo            
+##   <chr>                                                       <chr>             
+## 1 dos personas resultan heridas a bala en asalto en chile.    "Dos personas res…
+## 2 chile no aparece en la noticia                              "Mujer de 54 años…
+## 3 manuel monsalve denuncia segunda agresión sexual en chile   "Fiscalía investi…
+## 4 ganaron premios en la suerte chilena                        "Los RUT definiti…
+## 5 festival de viña 2024 se realizará el domingo 25 de febrero "Este domingo par…
+## 6 emilia dides representa chile en miss universo 2024         "Danesa se coronó…
+## 7 irací hassler busca reelección en octubre                   "Hassler opta por…
 ```
+
 
