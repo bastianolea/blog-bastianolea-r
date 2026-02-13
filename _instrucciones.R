@@ -20,8 +20,8 @@ blogdown::new_post(title = "Redactar textos en base a datos con R",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Gráficos de puente en `{ggplot2}`", 
-                   file = "blog/ggplot_puente/index.qmd",
+blogdown::new_post(title = "Gráficos aluviales o diagramas _Sankey_ en `{ggplot2}`", 
+                   file = "blog/ggplot_sankey/index.qmd",
                    author = "Bastián Olea Herrera",
                    tags = c("visualización de datos", "gráficos"),
                    categories = c() 
@@ -41,11 +41,9 @@ blogdown::new_post(title = "Gráficos de puente en `{ggplot2}`",
 
 
 ## borradores ----
-
+"content/blog/ggplot_sankey/index.qmd"
 "content/blog/2026-02-06/repetirse.qmd"
 "content/blog/googledrive/index.qmd"
-# redactar textos con R
-# https://www.linkedin.com/feed/update/urn:li:activity:7405241344316841984?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB9if5MBe0keh4VrsmJOFbZxmIK9T9GSkYM
 # hacer que R te pregunte cosas
 # mapas de chile con comunas pero sin líneas en la costa
 # pildoritas en shiny y en ggiraph
@@ -53,6 +51,7 @@ blogdown::new_post(title = "Gráficos de puente en `{ggplot2}`",
 # tablas gt con flechitas
 # datos de género en chile (mmeg, subcomisión, datos.gob, red chilena, ibg)
 # How do I replace NA values with zeros in an R dataframe?
+# https://www.linkedin.com/feed/update/urn:li:activity:7405241344316841984?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB9if5MBe0keh4VrsmJOFbZxmIK9T9GSkYM
 
 # constantes
 "content/blog/mapas_sf/mapas_sf.qmd"
