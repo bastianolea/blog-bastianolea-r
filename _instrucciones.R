@@ -13,10 +13,10 @@ abrir_post_reciente()
 
 
 # crear un post normal
-blogdown::new_post(title = "Este script enorme podría haber sido un `for` loop: cómo dejar de repetirte y escribir código más eficiente en R", 
+blogdown::new_post(title = "Redactar textos en base a datos con R", 
                    file = paste0("blog/", lubridate::today(), "/index.md"),
                    author = "Bastián Olea Herrera",
-                   tags = c("loops", "optimización")
+                   tags = c("texto", "automatización")
 )
 
 # crear un post tutorial
@@ -44,6 +44,7 @@ blogdown::new_post(title = "Gráficos de puente en `{ggplot2}`",
 
 "content/blog/2026-02-06/repetirse.qmd"
 "content/blog/googledrive/index.qmd"
+# redactar textos con R
 # https://www.linkedin.com/feed/update/urn:li:activity:7405241344316841984?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB9if5MBe0keh4VrsmJOFbZxmIK9T9GSkYM
 # hacer que R te pregunte cosas
 # mapas de chile con comunas pero sin líneas en la costa
@@ -89,6 +90,7 @@ blogdown::new_post(title = "Gráficos de puente en `{ggplot2}`",
 # {{< imagen_tamaño "x" "300px" >}}
 # {{< video "x" >}}
 # {{< aviso "x" >}}
+# {{< info "x" >}}
 # {{< detalles "Hola" >}} {{< /detalles >}}
 # {{< boton "Buscador" "https://bastianoleah.shinyapps.io/buscador/" "fas fa-search" >}}
 

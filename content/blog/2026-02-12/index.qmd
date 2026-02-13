@@ -1,0 +1,468 @@
+---
+title: "Redactar textos basados en datos automáticamente con R: describiendo resultados del censo de población"
+author: Bastián Olea Herrera
+date: '2026-02-12'
+slug: []
+categories: []
+tags:
+  - texto
+  - automatización
+  - loops
+  - funciones
+  - género
+  - Chile
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+excerpt: Luego de explorar o procesar un conjunto de datos, toca presentar los resultados. Si bien esto nos hace pensar en gráficos, tablas o reportes, el texto también es una forma de comunicar resultados que puede ser optimizada mediante la programación. En este tutorial veremos cómo redactar textos a partir de datos, incluso redactar párrafos complejos que describan la información de múltiples observaciones, usando los resultados oficiales de las preguntas de género del Censo 2024.
+editor_options: 
+  chunk_output_type: console
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+
+Luego de explorar o procesar un conjunto de datos, toca **presentar los resultados**. Si bien esto nos hace pensar en [gráficos](/tags/visualización-de-datos/), [tablas](/tags/tablas/) o [reportes](/tags/quarto/), el **texto** también es una forma de comunicar resultados que puede ser **optimizada** mediante la programación.
+
+En este tutorial veremos cómo hacer que R redacte párrafos de texto que se pueden adaptar a tus datos, ya sea adoptando la sintaxis y **redacción** apropiadas, **integrando cifras**, o escribiendo distintas oraciones de manera **condicional** a los resultados.
+
+
+Empecemos con un conjunto de datos sociales: los [resultados del Censo de población y vivienda 2024](https://censo2024.ine.gob.cl/resultados/) de Chile, específicamente la **población por género** en cada región del país.
+
+
+{{< boton "Descargar datos" "blog/2026-02-12/P5_Genero.xlsx" "fas fa-file-download" >}}
+
+{{< detalles "**Ver código de la limpieza de los datos**" >}}
+
+```{r}
+library(dplyr)
+library(janitor)
+library(readxl)
+library(tidyr)
+
+# cargar
+genero <- read_xlsx("P5_Genero.xlsx", sheet = 2)
+
+# limpiar
+genero_limpio <- genero |> 
+  row_to_names(3) |> 
+  filter(!is.na(Región))
+
+# transformar a largo
+genero_long <- genero_limpio |> 
+  pivot_longer(cols = 4:last_col(),
+               names_to = "genero",
+               values_to = "poblacion") |> 
+  rename(total = 3)
+
+# convertir variables y calcular porcentajes
+genero_porcentaje <- genero_long |> 
+  mutate(poblacion = as.numeric(poblacion),
+         total = as.numeric(total)) |>
+  clean_names() |>
+  mutate(porcentaje = poblacion / total)
+
+# filtrar
+genero <- genero_porcentaje |> 
+  filter(region != "País")
+
+```
+
+{{< /detalles >}}
+
+
+Luego de limpiar estos datos, vemos columnas con las regiones del país, la población regional, los distintos géneros consultados en el censo, la cantidad de personas y su porcentaje:
+
+```{r}
+library(dplyr)
+
+genero |> 
+  filter(region == "Valparaíso")
+```
+
+## Usando datos para generar texto
+
+Empecemos **filtrando un caso** de una región específica y un género determinado:
+
+```{r}
+genero_f <- genero |> 
+  filter(region == "Valparaíso") |> 
+  filter(genero == "No binario")
+
+genero_f
+```
+
+
+Sabemos que podemos extraer el texto o los valores de una tabla de datos con el operador `$`, y si tenemos una tabla de una sola fila ésto se vuelve muy conveniente:
+
+```{r}
+genero_f$genero
+
+genero_f$poblacion
+```
+
+Podemos usar esta técnica para **redactar un párrafo simple**. 
+
+La función `glue()` del paquete `{glue}` nos permite crear textos que contengan valores de objetos de R, simplemente abriendo paréntesis de llave (`{` y `}`) con el código de R dentro:
+
+```{r}
+library(glue)
+
+glue("En la región de {genero_f$region} existen {genero_f$poblacion} personas de género {genero_f$genero}, que representan a un {genero_f$porcentaje * 100}% de la población regional.")
+```
+
+✍🏼 Creamos una oración que adquiere sus valores desde la tabla de datos filtrada!
+
+Por lo tanto, si filtramos la tabla de nuevo, obtendremos un **texto que se ajuste a los nuevos datos**:
+
+```{r}
+# volver a filtrar datos
+genero_f <- genero |> 
+  filter(region == "Metropolitana de Santiago") |> 
+  filter(genero == "Transfemenino")
+
+# volver a redactar texto
+glue("En la región de {genero_f$region} existen {genero_f$poblacion} personas de género {genero_f$genero}, que representan a un {genero_f$porcentaje * 100}% de la población regional.")
+```
+
+### Mejoras para la generación de texto
+
+Ahora podemos **mejorar el texto generado** usando algunas funciones que entregan formatos apropiados a las cifras y modifican otros textos.
+
+El paquete `{scales}` cuenta con varias funciones para formatear valores. Primero definimos una configuración por defecto con `number_options()`, y luego usamos  `number()` y `percent()` para formatear las cifras de población y porcentaje.
+
+También usamos `str_to_lower()` de `{stringr}` para convertir el texto del género a minúscula.
+
+```{r}
+library(scales)
+
+number_options(big.mark = ".",
+               decimal.mark = ",")
+
+n <- number(genero_f$poblacion) # números con puntos separadores de miles
+p <- percent(genero_f$porcentaje, 0.01) # porcentaje con 2 decimales
+
+library(stringr)
+g <- str_to_lower(genero_f$genero) # texto a minúscula
+
+# redactar texto mejorado
+glue("En la región de {genero_f$region} existen {n} personas de género {g}, que representan a un {p} de la población regional.")
+```
+
+
+## Crear una función que redacte texto
+
+Ahora que tenemos unas líneas de código que hacen lo que necesitamos, podemos ponerlas dentro de una función para poder utilizarla varias veces sin repetir tanto código.
+
+{{< info "Una **función** es un código que realiza una tarea específica, y que puede ser reutilizado varias veces, recibiendo distintos valores de entrada. Así simplificamos nuestro código, evitamos la repetición de código, y abrimos la posibilidad de automatizar." >}}
+
+Para crear la función, simplemente le damos un nombre y usamos `function()` para definir los **argumentos** que recibirá la función. En este caso, la función `redactar_genero()` recibe primero los datos, y luego el argumento `region`, que es la región para la que queremos filtrar los datos y redactar el texto.
+
+```{r}
+redactar_genero <- function(genero, region) {
+  
+  # filtrar la región y el género
+  genero_f <- genero |> 
+    filter(region == {{region}}) |> 
+    filter(genero == "No binario")
+  
+  # formatear cifras y valores
+  n <- number(genero_f$poblacion)
+  p <- percent(genero_f$porcentaje, 0.01)
+  g <- str_to_lower(genero_f$genero)
+  
+  # elegir artículo según la región
+  art <- recode_values(genero_f$region,
+                       "Biobío" ~ "del",
+                       "Metropolitana de Santiago" ~ "",
+                       "Libertador General Bernardo O'Higgins" ~ "del",
+                       "Maule" ~ "del",
+                       default = "de")
+  
+  # redactar texto
+  glue("En la **región {art} {genero_f$region}** existen {n} personas de **género {g}**, que representan a un {p} de la población regional.")
+}
+```
+
+Abre que tenemos la función, simplemente la aplicamos a la región que deseamos:
+
+```{r}
+redactar_genero(genero, "Valparaíso")
+
+redactar_genero(genero, "Metropolitana de Santiago")
+```
+
+## Redactar texto en serie usando _loops_
+
+El mismo código que usamos arriba, ya sea como líneas de código o como una función, puede ser usado dentro de un _loop_ para generar múltiples veces textos que se adaptan a distintos datos.
+
+{{< info "Un _loop_ sirve para repetir muchas veces una misma operación, a partir de un vector con valores distintos, a cada uno de los cuales se le aplicará la operación." >}}
+
+En este caso crearemos un _loop_ con `{purrr}` y la función `map()`, que primera recibe un vector con los elementos que queremos repetir, y la función que le aplicaremos a cada uno de los elementos:
+
+```{r}
+library(purrr)
+
+regiones <- unique(genero$region)
+
+textos <- map(regiones, 
+              ~redactar_genero(genero, .x)
+)
+```
+
+Recibimos como resultado una lista con todos los textos para cada uno de los valores que pusimos en el _loop_.
+
+```{r}
+#| echo: false
+#| output: asis
+library(shiny)
+
+textos |> 
+  map(markdown) |> 
+  map(tags$li) |> 
+  tagList() |> 
+  tags$ul()
+```
+
+
+{{< detalles "Otras formas de imprimir los resultados" >}}
+
+Algunas formas de obtener estos resultados son simplemente imprimiendo la lista, o usando `cat()` para imprimir cada texto en una nueva línea, y así poder copiarlos y pegarlos en otro programa:
+
+```{r}
+textos |> 
+  unlist() |> 
+  cat(sep = "\n\n")
+```
+
+
+{{< /detalles >}}
+
+
+## Redactar textos para grupos de observaciones
+
+En el ejemplo anterior hicimos que R redacte texto extraído de una sola fila de una tabla; es decir, de una sola observación. Ahora veremos cómo redactar texto que considere los **valores de varias filas de datos a la vez**.
+
+Por ejemplo, veamos cómo redactar un texto que nos resuma los **resultados del Censo en una región completa**, considerando los valores mayores y menores, entre otros datos.
+
+```{r}
+genero_r <- genero |> 
+  filter(region == "Coquimbo") |> 
+  filter(genero != "Prefiere no responder/No sabe",
+         genero != "Otro") |> 
+  arrange(desc(poblacion))
+
+genero_r
+```
+
+Luego de filtrar los datos para un grupo de observaciones, nos encontramos con datos para cinco filas.
+
+Primero obtenemos el **valor del grupo filtrado**, en este caso la región, y luego podemos **filtrar observaciones clave** que queramos destacar en el texto; en este caso, los géneros binarios que son mayoría:
+
+```{r}
+
+region <- genero_r$region[1]
+
+genero_masc <- genero_r |> 
+  filter(genero == "Masculino")
+
+genero_fem <- genero_r |> 
+  filter(genero == "Femenino")
+
+texto_general <- glue("La región de {region} tiene una distribución entre hombres y mujeres de {percent(genero_masc$porcentaje)} hombres y {percent(genero_fem$porcentaje)} mujeres.")
+
+texto_general
+```
+
+
+### Textos condicionales según datos
+
+Dado que en el párrafo anterior nos encontramos con porcentajes que varían muy poco, agregaremos un texto donde se compare un valor específico con un valor, generando un **texto condicional en base a los datos**. 
+
+En este caso, escribimos un texto que explica si el porcentaje de hombres en una región es mayor al promedio de hombres en el país.
+
+```{r}
+# calcular promedio de hombres a nivel nacional
+promedio <- genero |> 
+  summarize(total = sum(poblacion), .by = genero) |> 
+  mutate(porcentaje = total / sum(total)) |> 
+  filter(genero == "Masculino") |>
+  pull(porcentaje)
+
+comparacion <- if_else(genero_masc$porcentaje >= promedio,
+                       "mayor",
+                       "menor")
+
+texto_promedio <- glue("El porcentaje de hombres con respecto de mujeres es {comparacion} al promedio nacional de hombres.")
+```
+
+En el código anterior, si el valor de la observación supera al del promedio calculado, el texto dirá _mayor_, o de lo contrario dirá _menor_.
+
+Ahora podemos usar alguna función que nos permita **resumir los datos**; por ejemplo, la cantidad de **valores únicos** de una variable relevante; en este caso la cantidad de géneros medidos por el censo:
+
+```{r}
+n_generos <- n_distinct(genero_r$genero)
+
+texto_generos <- glue("El Censo en la región de {region} cuenta con estadísticas oficiales de {n_generos} géneros distintos, excluyendo no respuestas.")
+
+texto_generos
+```
+
+Luego podemos filtrar la tabla para obtener **estadísticos descriptivos** como las mayores y menores observaciones:
+
+```{r}
+genero_max <- genero_r |> slice_max(poblacion)
+genero_min <- genero_r |> slice_min(poblacion)
+
+texto_resumen <- glue("El género con mayor población es {genero_max$genero} con {number(genero_max$poblacion)} personas, mientras que el con menor población es {genero_min$genero}, con {number(genero_min$poblacion)}.")
+
+texto_resumen
+```
+
+Ahora redactemos uno texto para un **subgrupo de todas las observaciones**. En este caso, redactaremos algo específico para los géneros fuera del binario cis:
+
+```{r}
+cuir <- genero_r |> 
+  filter(genero != "Masculino",
+         genero != "Femenino")
+
+cuir
+```
+
+Filtramos en la observación **mayoritaria**, y luego generamos textos que **ordenen las observaciones** y las redacten como una secuencia de palabras. 
+
+La función `glue_collapse()` del paquete `{glue}` nos permite unir los elementos de un vector de texto, **separándolos por comas**, y convenientemente poniendo la letra _y griega_ antes del último elemento! Así, `A B C` se vuelven `A, B Y C`.
+
+```{r}
+# obtener la observación mayoritaria
+cuir_max <- cuir |> slice_max(poblacion)
+
+# redactar valores como secuencia de palabras
+cuir_gen <- glue_collapse(cuir$genero, sep = ", ", last = " y ")
+
+# redactar cifras como secuencia de palabras
+cuir_pob <- cuir$poblacion |> 
+  number() |> # puntos de miles
+  glue_collapse(, sep = ", ", last = " y ")
+
+# redactar texto combinando elementos anteriores
+texto_subgrupo <- glue("Aparte de masculino y femenino, los demás géneros en la región son {cuir_gen}, con {cuir_pob} personas respectivamente, siendo el género con mayor población {cuir_max$genero} con un {percent(cuir_max$porcentaje, 0.1)} de la región.")
+
+texto_subgrupo
+```
+
+Finalmente, podemos **unir todas estas técnicas** dentro de un _loop_ para obtener los párrafos para todas las regiones del país de manera **automática**:
+
+```{r}
+textos <- map(regiones, function(region) {
+  
+   # elegir artículo según la región
+  art <- recode_values(region,
+                       "Biobío" ~ "del",
+                       "Metropolitana de Santiago" ~ "",
+                       "Libertador General Bernardo O'Higgins" ~ "del",
+                       "Maule" ~ "del",
+                       default = "de")
+  
+  # filtrar datos
+  genero_r <- genero |> 
+    filter(region == {{region}})  |> 
+    filter(genero != "Prefiere no responder/No sabe",
+           genero != "Otro") |> 
+    arrange(desc(poblacion))
+  
+  # filtrar observaciones relevantes
+  genero_masc <- genero_r |> 
+    filter(genero == "Masculino")
+  
+  genero_fem <- genero_r |> 
+    filter(genero == "Femenino")
+  
+  texto_general <- glue("La **región {art} {region}** tiene una distribución entre hombres y mujeres de {percent(genero_masc$porcentaje, 0.01)} hombres y {percent(genero_fem$porcentaje, 0.01)} mujeres.")
+  
+  # calcular promedio de hombres a nivel nacional
+  promedio <- genero |> 
+    summarize(total = sum(poblacion), .by = genero) |> 
+    mutate(porcentaje = total / sum(total)) |> 
+    filter(genero == "Masculino") |>
+    pull(porcentaje)
+  
+  # texto condicional según los datos
+  comparacion <- if_else(genero_masc$porcentaje >= promedio,
+                         "mayor",
+                         "menor")
+  
+  texto_promedio <- glue("En esta región, el porcentaje de hombres con respecto de mujeres es {comparacion} al promedio nacional de hombres.")
+  
+  
+  # contar observaciones únicas
+  n_generos <- n_distinct(genero_r$genero)
+  
+  texto_generos <- glue("El censo en la región de {region} cuenta con estadísticas oficiales de {n_generos} géneros distintos, excluyendo no respuestas.")
+  
+  # redactar textos con estadísticos descriptivos
+  genero_max <- genero_r |> slice_max(poblacion)
+  genero_min <- genero_r |> slice_min(poblacion)
+  
+  texto_resumen <- glue("El género con mayor población es el **{str_to_lower(genero_max$genero)}** con {number(genero_max$poblacion)} personas, mientras que el con menor población es {str_to_lower(genero_min$genero)}, con {number(genero_min$poblacion)}.")
+  
+  # redactar textos sobre subgrupos de observaciones
+  cuir <- genero_r |> 
+    filter(genero != "Masculino",
+           genero != "Femenino")
+  
+  cuir_max <- cuir |> slice_max(poblacion, with_ties = FALSE)
+  
+  cuir_gen <- cuir$genero |> 
+    str_to_lower() |> 
+    glue_collapse(sep = ", ", last = " y ")
+  
+  cuir_pob <- cuir$poblacion |> 
+    number() |> 
+    glue_collapse(, sep = ", ", last = " y ")
+  
+  texto_subgrupo <- glue("Aparte de masculino y femenino, los demás géneros en la región son {cuir_gen} con {cuir_pob} personas respectivamente, siendo **{str_to_lower(cuir_max$genero)}** el de mayor población, con {number(cuir_max$poblacion)} personas en total, lo que representa un {percent(cuir_max$porcentaje, 0.1)} de la población regional.")
+  
+  # unir todas las oraciones en un párrafo
+  paste(texto_general, texto_promedio, texto_generos, texto_resumen, texto_subgrupo)
+})
+```
+
+Se trata de una técnica que te permite tener **total control sobre la redacción** de los textos, y **completa certeza acerca de la exactitud de los datos** incluidos. Este código se puede usar para [aplicaciones interactivas con Shiny](/tags/shiny/), para redactar [reportes de manera automatizada con Quarto](/blog/quarto_loop/), y más!
+
+Ahora veremos el resultado de obtener todos los **párrafos redactados automáticamente** a partir de los datos. 
+
+Pasamos de una tabla de datos como ésta:
+
+```{r}
+#| echo: false
+genero |> 
+  select(-codigo_region) |> 
+  slice_sample(n = 8) |> 
+  knitr::kable(format = "markdown")
+```
+
+A este texto que redacta todos los resultados 😱
+
+```{r}
+#| echo: false
+#| output: asis
+library(shiny)
+
+textos |> 
+  map(markdown) |> 
+  map(tags$li) |> 
+  tagList() |> 
+  tags$ul()
+```
+
+Contemplen **LA CANTIDAD** de texto que redactamos con el código anterior, donde no usamos nada demasiado complejo, solamente pequeñas piezas que juntas fueron armando el texto!
+
+Imagina lo conveniente que es hacer esto si tienes que **repetir un mismo análisis o descripción de datos de decenas o cientos de veces**, o si necesitas redactar texto acerca de **datos que puedan actualizarse** o que pueden ser corregidos!
+
+{{< cafecito >}}
+
+{{< cursos >}}

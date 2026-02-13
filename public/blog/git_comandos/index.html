@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=5219&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4125&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -31,16 +31,16 @@
 <meta property="og:title" content="Comandos comunes de Git | Bastián Olea">
 <meta property="og:description" content="Colección de comandos de `git` para realizar acciones comunes y resolver problemas frecuentes. `git` es una herramienta para el control de versiones de código, respaldo de código, y colaboración." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:5219/blog/git_comandos/" />
+<meta property="og:url" content="http://localhost:4125/blog/git_comandos/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:5219/blog/sidebar-listing.jpg" >
+        <meta property="og:image" content="http://localhost:4125/blog/sidebar-listing.jpg" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:5219/blog/sidebar-listing.jpg" >
+        <meta name="twitter:image" content="http://localhost:4125/blog/sidebar-listing.jpg" >
     
     
   
@@ -49,7 +49,7 @@
 Otro recurso mucho más completo es ohshitgit.com, que como su nombre indica, está enfocado en resolver problemas comunes con git.">
   <meta itemprop="datePublished" content="2025-10-27T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-10-27T00:00:00+00:00">
-  <meta itemprop="wordCount" content="725">
+  <meta itemprop="wordCount" content="761">
   <meta itemprop="keywords" content="Git,Programación">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -65,13 +65,17 @@ Otro recurso mucho más completo es ohshitgit.com, que como su nombre indica, es
   
   <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
   
+  
   <link rel="stylesheet" href="../../css/syntax.css">
+  
+  
+  <link rel="preload" href="https://bastianoleah.shinyapps.io/buscador/" as="image">
 </head>
 <body>
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:5219/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4125/" title="Home">
       <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -99,7 +103,7 @@ Otro recurso mucho más completo es ohshitgit.com, que como su nombre indica, es
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea-buscador.share.connect.posit.cloud" title="Buscador">Buscar</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
         
         
@@ -138,7 +142,7 @@ Otro recurso mucho más completo es ohshitgit.com, que como su nombre indica, es
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianolea-buscador.share.connect.posit.cloud" title="search" target="_blank" rel="me noopener"
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-search fa-lg fa-fw"></i>
     </a>
@@ -338,7 +342,7 @@ Otro recurso mucho más completo es ohshitgit.com, que como su nombre indica, es
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:5219/tags/git"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:4125/tags/git"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -347,7 +351,7 @@ Otro recurso mucho más completo es ohshitgit.com, que como su nombre indica, es
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            git</a>  <a href="http://localhost:5219/tags/programaci%C3%B3n"
+            git</a>  <a href="http://localhost:4125/tags/programaci%C3%B3n"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -464,6 +468,18 @@ Otro recurso mucho más completo es ohshitgit.com, que como su nombre indica, es
 </h3>
 <p>Un <em>commit</em> es la operación en la que tomas los archivos del área de preparación y los guardas como una nueva versión del proyecto. Siempre hay que agregar un mensaje que describa los cambios de esta versión:</p>
 <pre tabindex="0"><code>git commit -m &#34;script de procesamiento de datos actualizado&#34;
+</code></pre>
+
+
+
+<h3 id="cambiar-un-mensaje-de-commit">Cambiar un mensaje de <em>commit</em>
+  <a href="#cambiar-un-mensaje-de-commit"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Por si te equivocaste en el mensaje de commit, te permite cambiar el mensaje, siempre que lo ejecutes antes de haber hecho <em>push</em></p>
+<pre tabindex="0"><code>git commit --amend -m &#34;nuevo mensaje de commit&#34;
 </code></pre>
 
 
@@ -654,12 +670,12 @@ git reset --hard origin/main
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:5219/blog/2025-10-29/">&larr; Crea una carpeta inteligente con todos tus proyectos de R en Mac</a>
+    href="http://localhost:4125/blog/2025-10-29/">&larr; Crea una carpeta inteligente con todos tus proyectos de R en Mac</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:5219/blog/taller_datos_unam/">Taller: Compartir y colaborar desde el cruce entre las ciencias de datos y las ciencias sociales &rarr;</a>
+    href="http://localhost:4125/blog/taller_datos_unam/">Taller: Compartir y colaborar desde el cruce entre las ciencias de datos y las ciencias sociales &rarr;</a>
   
 </div>
 
@@ -696,14 +712,14 @@ git reset --hard origin/main
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">4 minute read, 725 words</dd>
+    <dd class="fw5 ml0">4 minute read, 761 words</dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:5219/tags/git">git</a>  <a href="http://localhost:5219/tags/programaci%C3%B3n">programación</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4125/tags/git">git</a>  <a href="http://localhost:4125/tags/programaci%C3%B3n">programación</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
@@ -729,7 +745,7 @@ git reset --hard origin/main
 
   <h1 class="f3">Blog</h1>
   <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
-<a href="https://bastianolea-buscador.share.connect.posit.cloud" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
+<a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
 <a href="../../tags/">temas</a>.</p>
   
 
@@ -753,7 +769,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/chile/">Chile</a></span>
+      href="http://localhost:4125/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -768,7 +784,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/datos/">Datos</a></span>
+      href="http://localhost:4125/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -783,7 +799,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/consejos/">Consejos</a></span>
+      href="http://localhost:4125/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -798,7 +814,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:4125/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -813,7 +829,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:4125/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -828,7 +844,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/blog/">Blog</a></span>
+      href="http://localhost:4125/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -843,7 +859,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:4125/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -858,7 +874,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/apps/">Apps</a></span>
+      href="http://localhost:4125/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -873,7 +889,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/shiny/">Shiny</a></span>
+      href="http://localhost:4125/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -888,7 +904,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:4125/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -903,7 +919,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/mapas/">Mapas</a></span>
+      href="http://localhost:4125/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -918,7 +934,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:4125/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -933,7 +949,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:4125/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -948,7 +964,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:4125/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -963,7 +979,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:4125/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -978,7 +994,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:4125/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -993,7 +1009,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/quarto/">Quarto</a></span>
+      href="http://localhost:4125/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -1008,7 +1024,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:4125/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -1023,7 +1039,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:4125/tags/ciencias-sociales/">Ciencias sociales</a></span>
   </span>
  
   
@@ -1038,7 +1054,7 @@ git reset --hard origin/main
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/optimizaci%C3%B3n/">Optimización</a></span>
+      href="http://localhost:4125/tags/loops/">Loops</a></span>
   </span>
 
 <a href="../../tags/" style="margin-left: 3px;">y más!</a>
@@ -1064,6 +1080,7 @@ git reset --hard origin/main
         <li><a href="#ver-estado-del-repositorio">Ver estado del repositorio</a></li>
         <li><a href="#agregar-archivos-al-área-de-preparación-staging-area">Agregar archivos al área de preparación (<em>staging area</em>)</a></li>
         <li><a href="#guardar-los-cambios-preparados-en-una-versión-commit">Guardar los cambios preparados en una versión (<em>commit</em>)</a></li>
+        <li><a href="#cambiar-un-mensaje-de-commit">Cambiar un mensaje de <em>commit</em></a></li>
         <li><a href="#ver-todos-los-commits-que-has-hecho">Ver todos los <em>commits</em> que has hecho</a></li>
         <li><a href="#subir-los-cambios-guardados-al-repositorio-remoto">Subir los cambios guardados al repositorio remoto</a></li>
       </ul>
@@ -1132,7 +1149,7 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianolea-buscador.share.connect.posit.cloud" title="search" target="_blank" rel="me noopener"
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-search fa-lg fa-fw"></i>
     </a>
@@ -1289,7 +1306,7 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
       
       <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
       
-      <a class="dib pv1 ph2 link" href="https://bastianolea-buscador.share.connect.posit.cloud" title="Buscador">Buscar</a>
+      <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
       <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
       

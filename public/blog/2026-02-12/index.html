@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4125&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.152.2">
+<title>Redactar textos basados en datos automáticamente con R: describiendo resultados del censo de población | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Luego de explorar o procesar un conjunto de datos, toca presentar los resultados. Si bien esto nos hace pensar en gráficos, tablas o reportes, el texto también es una forma de comunicar resultados que puede ser optimizada mediante la programación. En este tutorial veremos cómo redactar textos a partir de datos, incluso redactar párrafos complejos que describan la información de múltiples observaciones, usando los resultados oficiales de las preguntas de género del Censo 2024.">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="Redactar textos basados en datos automáticamente con R: describiendo resultados del censo de población | Bastián Olea">
+<meta property="og:description" content="Luego de explorar o procesar un conjunto de datos, toca presentar los resultados. Si bien esto nos hace pensar en gráficos, tablas o reportes, el texto también es una forma de comunicar resultados que puede ser optimizada mediante la programación. En este tutorial veremos cómo redactar textos a partir de datos, incluso redactar párrafos complejos que describan la información de múltiples observaciones, usando los resultados oficiales de las preguntas de género del Censo 2024." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:4125/blog/2026-02-12/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:4125/blog/2026-02-12/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:4125/blog/2026-02-12/featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Redactar textos basados en datos automáticamente con R: describiendo resultados del censo de población">
+  <meta itemprop="description" content="Luego de explorar o procesar un conjunto de datos, toca presentar los resultados. Si bien esto nos hace pensar en gráficos, tablas o reportes, el texto también es una forma de comunicar resultados que puede ser optimizada mediante la programación.
+En este tutorial veremos cómo hacer que R redacte párrafos de texto que se pueden adaptar a tus datos, ya sea adoptando la sintaxis y redacción apropiadas, integrando cifras, o escribiendo distintas oraciones de manera condicional a los resultados.">
+  <meta itemprop="datePublished" content="2026-02-12T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-02-12T00:00:00+00:00">
+  <meta itemprop="wordCount" content="5207">
+  <meta itemprop="image" content="http://localhost:4125/blog/2026-02-12/featured.png">
+  <meta itemprop="keywords" content="Texto,Automatización,Loops,Funciones,Género,Chile">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="../../style.main.min.8f721815d150079638fe25bf9714e71c67b8ddf7e9435d32764c3175c3e06556.css" integrity="sha256-j3IYFdFQB5Y4/iW/lxTnHGe43ffpQ10ydkwxdcPgZVY=" media="screen">
+  
+  
+  <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
+  
+  
+  <link rel="stylesheet" href="../../css/syntax.css">
+  
+  
+  <link rel="preload" href="https://bastianoleah.shinyapps.io/buscador/" as="image">
+</head>
+<body>
+      <div class="grid-container single-sidebar">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4125/" title="Home">
+      <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="../../blog/" title="Bastián Olea: Blog de R">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/aprende_r/" title="Aprende R">Aprende R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../clases/" title="Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+
+                       
+ 
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 pr3-l">
+      <header class="post-header" style="margin-top:-30px;">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Redactar textos basados en datos automáticamente con R: describiendo resultados del censo de población</h1>
+        
+        
+        
+        <div style = "display: inline-block;">  
+          <p class="f7 db mv0 ttu" style = "display: inline-block;">
+            12/2/2026</p>
+          
+          
+          <span>
+            
+
+
+
+
+<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
+<span id="36b99527c3d076655142db34bec90319" title="visitas">
+</span>
+<script>
+    var r = new XMLHttpRequest();
+    r.addEventListener('load', function() {
+        document.getElementById('36b99527c3d076655142db34bec90319').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
+    })
+    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/2026-02-12/".replace(/(\/)?$/, '')) + '.json')
+    r.send()
+</script>
+</span>
+
+          </span>
+        </div>
+          
+        
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="http://localhost:4125/tags/texto"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            texto</a>  <a href="http://localhost:4125/tags/automatizaci%C3%B3n"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            automatización</a>  <a href="http://localhost:4125/tags/loops"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            loops</a>  <a href="http://localhost:4125/tags/funciones"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            funciones</a>  <a href="http://localhost:4125/tags/g%C3%A9nero"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            género</a>  <a href="http://localhost:4125/tags/chile"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            Chile</a> </dd></em>
+        </dl>
+         
+      
+        
+      
+      
+    </header>
+      
+      
+    <section class="post-body pt5 pb4">
+        <p>Luego de explorar o procesar un conjunto de datos, toca <strong>presentar los resultados</strong>. Si bien esto nos hace pensar en 
+<a href="../../../tags/visualizaci%c3%b3n-de-datos/">gráficos</a>, 
+<a href="../../../tags/tablas/">tablas</a> o 
+<a href="../../../tags/quarto/">reportes</a>, el <strong>texto</strong> también es una forma de comunicar resultados que puede ser <strong>optimizada</strong> mediante la programación.</p>
+<p>En este tutorial veremos cómo hacer que R redacte párrafos de texto que se pueden adaptar a tus datos, ya sea adoptando la sintaxis y <strong>redacción</strong> apropiadas, <strong>integrando cifras</strong>, o escribiendo distintas oraciones de manera <strong>condicional</strong> a los resultados.</p>
+<p>Empecemos con un conjunto de datos sociales: los 
+<a href="https://censo2024.ine.gob.cl/resultados/" target="_blank" rel="noopener">resultados del Censo de población y vivienda 2024</a> de Chile, específicamente la <strong>población por género</strong> en cada región del país.</p>
+<p>
+
+
+
+<div class = "db pt1"
+style = "margin-bottom: 34px;">
+
+<a class = "btn-links mr2 ba dib"
+href = "blog/2026-02-12/P5_Genero.xlsx" target="_blank"
+style = "padding: 12px; padding-bottom: 8px; border-radius: 5px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #9069C0; margin-bottom: -12px;">
+<i class="fas fa-file-download fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
+Descargar datos</a>
+
+</div>
+
+
+<details>
+  <summary>
+    <strong>Ver código de la limpieza de los datos</strong>
+  </summary>
+    <div style="padding: 16px; border: solid 2px #A885C6AA; border-radius: 6px; 
+    background-color: #A885C630;
+    margin-top: 8px; padding-top: 0px; padding-bottom: 0px;">
+    <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">janitor</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">tidyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># cargar</span>
+</span></span><span class="line"><span class="cl"><span class="n">genero</span> <span class="o">&lt;-</span> <span class="nf">read_xlsx</span><span class="p">(</span><span class="s">&#34;P5_Genero.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># limpiar</span>
+</span></span><span class="line"><span class="cl"><span class="n">genero_limpio</span> <span class="o">&lt;-</span> <span class="n">genero</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">row_to_names</span><span class="p">(</span><span class="m">3</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">Región</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># transformar a largo</span>
+</span></span><span class="line"><span class="cl"><span class="n">genero_long</span> <span class="o">&lt;-</span> <span class="n">genero_limpio</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">pivot_longer</span><span class="p">(</span><span class="n">cols</span> <span class="o">=</span> <span class="m">4</span><span class="o">:</span><span class="nf">last_col</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">               <span class="n">names_to</span> <span class="o">=</span> <span class="s">&#34;genero&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="n">values_to</span> <span class="o">=</span> <span class="s">&#34;poblacion&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">rename</span><span class="p">(</span><span class="n">total</span> <span class="o">=</span> <span class="m">3</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># convertir variables y calcular porcentajes</span>
+</span></span><span class="line"><span class="cl"><span class="n">genero_porcentaje</span> <span class="o">&lt;-</span> <span class="n">genero_long</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">poblacion</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">poblacion</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">         <span class="n">total</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">total</span><span class="p">))</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">clean_names</span><span class="p">()</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">porcentaje</span> <span class="o">=</span> <span class="n">poblacion</span> <span class="o">/</span> <span class="n">total</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># filtrar</span>
+</span></span><span class="line"><span class="cl"><span class="n">genero</span> <span class="o">&lt;-</span> <span class="n">genero_porcentaje</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">region</span> <span class="o">!=</span> <span class="s">&#34;País&#34;</span><span class="p">)</span>
+</span></span></code></pre></div>
+    </div>
+</details></p>
+<p>Luego de limpiar estos datos, vemos columnas con las regiones del país, la población regional, los distintos géneros consultados en el censo, la cantidad de personas y su porcentaje:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">genero</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">region</span> <span class="o">==</span> <span class="s">&#34;Valparaíso&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code># A tibble: 7 × 6
+  codigo_region region       total genero                   poblacion porcentaje
+  &lt;chr&gt;         &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;                        &lt;dbl&gt;      &lt;dbl&gt;
+1 5             Valparaíso 1505034 Masculino                   704691   0.468   
+2 5             Valparaíso 1505034 Femenino                    780209   0.518   
+3 5             Valparaíso 1505034 Transmasculino                3003   0.00200 
+4 5             Valparaíso 1505034 Transfemenino                 1369   0.000910
+5 5             Valparaíso 1505034 No binario                    2161   0.00144 
+6 5             Valparaíso 1505034 Otro                           624   0.000415
+7 5             Valparaíso 1505034 Prefiere no responder/N…     12977   0.00862 
+</code></pre>
+
+
+
+
+<h2 id="usando-datos-para-generar-texto">Usando datos para generar texto
+  <a href="#usando-datos-para-generar-texto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Empecemos <strong>filtrando un caso</strong> de una región específica y un género determinado:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">genero_f</span> <span class="o">&lt;-</span> <span class="n">genero</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">region</span> <span class="o">==</span> <span class="s">&#34;Valparaíso&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">genero</span> <span class="o">==</span> <span class="s">&#34;No binario&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">genero_f</span>
+</span></span></code></pre></div><pre><code># A tibble: 1 × 6
+  codigo_region region       total genero     poblacion porcentaje
+  &lt;chr&gt;         &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;      &lt;dbl&gt;
+1 5             Valparaíso 1505034 No binario      2161    0.00144
+</code></pre>
+<p>Sabemos que podemos extraer el texto o los valores de una tabla de datos con el operador <code>$</code>, y si tenemos una tabla de una sola fila ésto se vuelve muy conveniente:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">genero_f</span><span class="o">$</span><span class="n">genero</span>
+</span></span></code></pre></div><pre><code>[1] &quot;No binario&quot;
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">genero_f</span><span class="o">$</span><span class="n">poblacion</span>
+</span></span></code></pre></div><pre><code>[1] 2161
+</code></pre>
+<p>Podemos usar esta técnica para <strong>redactar un párrafo simple</strong>.</p>
+<p>La función <code>glue()</code> del paquete <code>{glue}</code> nos permite crear textos que contengan valores de objetos de R, simplemente abriendo paréntesis de llave (<code>{</code> y <code>}</code>) con el código de R dentro:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">glue</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">glue</span><span class="p">(</span><span class="s">&#34;En la región de {genero_f$region} existen {genero_f$poblacion} personas de género {genero_f$genero}, que representan a un {genero_f$porcentaje * 100}% de la población regional.&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>En la región de Valparaíso existen 2161 personas de género No binario, que representan a un 0.143584796090985% de la población regional.
+</code></pre>
+<p>✍🏼 Creamos una oración que adquiere sus valores desde la tabla de datos filtrada!</p>
+<p>Por lo tanto, si filtramos la tabla de nuevo, obtendremos un <strong>texto que se ajuste a los nuevos datos</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># volver a filtrar datos</span>
+</span></span><span class="line"><span class="cl"><span class="n">genero_f</span> <span class="o">&lt;-</span> <span class="n">genero</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">region</span> <span class="o">==</span> <span class="s">&#34;Metropolitana de Santiago&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">genero</span> <span class="o">==</span> <span class="s">&#34;Transfemenino&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># volver a redactar texto</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glue</span><span class="p">(</span><span class="s">&#34;En la región de {genero_f$region} existen {genero_f$poblacion} personas de género {genero_f$genero}, que representan a un {genero_f$porcentaje * 100}% de la población regional.&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>En la región de Metropolitana de Santiago existen 5838 personas de género Transfemenino, que representan a un 0.0999694338062103% de la población regional.
+</code></pre>
+
+
+
+
+<h3 id="mejoras-para-la-generación-de-texto">Mejoras para la generación de texto
+  <a href="#mejoras-para-la-generaci%c3%b3n-de-texto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Ahora podemos <strong>mejorar el texto generado</strong> usando algunas funciones que entregan formatos apropiados a las cifras y modifican otros textos.</p>
+<p>El paquete <code>{scales}</code> cuenta con varias funciones para formatear valores. Primero definimos una configuración por defecto con <code>number_options()</code>, y luego usamos <code>number()</code> y <code>percent()</code> para formatear las cifras de población y porcentaje.</p>
+<p>También usamos <code>str_to_lower()</code> de <code>{stringr}</code> para convertir el texto del género a minúscula.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">scales</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">number_options</span><span class="p">(</span><span class="n">big.mark</span> <span class="o">=</span> <span class="s">&#34;.&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="n">decimal.mark</span> <span class="o">=</span> <span class="s">&#34;,&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">n</span> <span class="o">&lt;-</span> <span class="nf">number</span><span class="p">(</span><span class="n">genero_f</span><span class="o">$</span><span class="n">poblacion</span><span class="p">)</span> <span class="c1"># números con puntos separadores de miles</span>
+</span></span><span class="line"><span class="cl"><span class="n">p</span> <span class="o">&lt;-</span> <span class="nf">percent</span><span class="p">(</span><span class="n">genero_f</span><span class="o">$</span><span class="n">porcentaje</span><span class="p">,</span> <span class="m">0.01</span><span class="p">)</span> <span class="c1"># porcentaje con 2 decimales</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">stringr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">g</span> <span class="o">&lt;-</span> <span class="nf">str_to_lower</span><span class="p">(</span><span class="n">genero_f</span><span class="o">$</span><span class="n">genero</span><span class="p">)</span> <span class="c1"># texto a minúscula</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># redactar texto mejorado</span>
+</span></span><span class="line"><span class="cl"><span class="nf">glue</span><span class="p">(</span><span class="s">&#34;En la región de {genero_f$region} existen {n} personas de género {g}, que representan a un {p} de la población regional.&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>En la región de Metropolitana de Santiago existen 5.838 personas de género transfemenino, que representan a un 0,10% de la población regional.
+</code></pre>
+
+
+
+
+<h2 id="crear-una-función-que-redacte-texto">Crear una función que redacte texto
+  <a href="#crear-una-funci%c3%b3n-que-redacte-texto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Ahora que tenemos unas líneas de código que hacen lo que necesitamos, podemos ponerlas dentro de una función para poder utilizarla varias veces sin repetir tanto código.</p>
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%;">
+    Una <strong>función</strong> es un código que realiza una tarea específica, y que puede ser reutilizado varias veces, recibiendo distintos valores de entrada. Así simplificamos nuestro código, evitamos la repetición de código, y abrimos la posibilidad de automatizar.
+  </aside>
+  
+</div>
+<p>Para crear la función, simplemente le damos un nombre y usamos <code>function()</code> para definir los <strong>argumentos</strong> que recibirá la función. En este caso, la función <code>redactar_genero()</code> recibe primero los datos, y luego el argumento <code>region</code>, que es la región para la que queremos filtrar los datos y redactar el texto.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">redactar_genero</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">genero</span><span class="p">,</span> <span class="n">region</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># filtrar la región y el género</span>
+</span></span><span class="line"><span class="cl">  <span class="n">genero_f</span> <span class="o">&lt;-</span> <span class="n">genero</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">filter</span><span class="p">(</span><span class="n">region</span> <span class="o">==</span> <span class="p">{{</span><span class="n">region</span><span class="p">}})</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">filter</span><span class="p">(</span><span class="n">genero</span> <span class="o">==</span> <span class="s">&#34;No binario&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># formatear cifras y valores</span>
+</span></span><span class="line"><span class="cl">  <span class="n">n</span> <span class="o">&lt;-</span> <span class="nf">number</span><span class="p">(</span><span class="n">genero_f</span><span class="o">$</span><span class="n">poblacion</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">p</span> <span class="o">&lt;-</span> <span class="nf">percent</span><span class="p">(</span><span class="n">genero_f</span><span class="o">$</span><span class="n">porcentaje</span><span class="p">,</span> <span class="m">0.01</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">g</span> <span class="o">&lt;-</span> <span class="nf">str_to_lower</span><span class="p">(</span><span class="n">genero_f</span><span class="o">$</span><span class="n">genero</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># elegir artículo según la región</span>
+</span></span><span class="line"><span class="cl">  <span class="n">art</span> <span class="o">&lt;-</span> <span class="nf">recode_values</span><span class="p">(</span><span class="n">genero_f</span><span class="o">$</span><span class="n">region</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="s">&#34;Biobío&#34;</span> <span class="o">~</span> <span class="s">&#34;del&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="s">&#34;Metropolitana de Santiago&#34;</span> <span class="o">~</span> <span class="s">&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="s">&#34;Libertador General Bernardo O&#39;Higgins&#34;</span> <span class="o">~</span> <span class="s">&#34;del&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="s">&#34;Maule&#34;</span> <span class="o">~</span> <span class="s">&#34;del&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="n">default</span> <span class="o">=</span> <span class="s">&#34;de&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># redactar texto</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">glue</span><span class="p">(</span><span class="s">&#34;En la **región {art} {genero_f$region}** existen {n} personas de **género {g}**, que representan a un {p} de la población regional.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Abre que tenemos la función, simplemente la aplicamos a la región que deseamos:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">redactar_genero</span><span class="p">(</span><span class="n">genero</span><span class="p">,</span> <span class="s">&#34;Valparaíso&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>En la **región de Valparaíso** existen 2.161 personas de **género no binario**, que representan a un 0,14% de la población regional.
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">redactar_genero</span><span class="p">(</span><span class="n">genero</span><span class="p">,</span> <span class="s">&#34;Metropolitana de Santiago&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>En la **región  Metropolitana de Santiago** existen 8.230 personas de **género no binario**, que representan a un 0,14% de la población regional.
+</code></pre>
+
+
+
+
+<h2 id="redactar-texto-en-serie-usando-loops">Redactar texto en serie usando <em>loops</em>
+  <a href="#redactar-texto-en-serie-usando-loops"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>El mismo código que usamos arriba, ya sea como líneas de código o como una función, puede ser usado dentro de un <em>loop</em> para generar múltiples veces textos que se adaptan a distintos datos.</p>
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%;">
+    Un <em>loop</em> sirve para repetir muchas veces una misma operación, a partir de un vector con valores distintos, a cada uno de los cuales se le aplicará la operación.
+  </aside>
+  
+</div>
+<p>En este caso crearemos un <em>loop</em> con <code>{purrr}</code> y la función <code>map()</code>, que primera recibe un vector con los elementos que queremos repetir, y la función que le aplicaremos a cada uno de los elementos:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">purrr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">regiones</span> <span class="o">&lt;-</span> <span class="nf">unique</span><span class="p">(</span><span class="n">genero</span><span class="o">$</span><span class="n">region</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">textos</span> <span class="o">&lt;-</span> <span class="nf">map</span><span class="p">(</span><span class="n">regiones</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">              <span class="o">~</span><span class="nf">redactar_genero</span><span class="p">(</span><span class="n">genero</span><span class="p">,</span> <span class="n">.x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></div><p>Recibimos como resultado una lista con todos los textos para cada uno de los valores que pusimos en el <em>loop</em>.</p>
+<ul>
+<li><p>En la <strong>región de Arica y Parinacota</strong> existen 146 personas de <strong>género no binario</strong>, que representan a un 0,08% de la población regional.</p>
+</li>
+<li><p>En la <strong>región de Tarapacá</strong> existen 203 personas de <strong>género no binario</strong>, que representan a un 0,07% de la población regional.</p>
+</li>
+<li><p>En la <strong>región de Antofagasta</strong> existen 314 personas de <strong>género no binario</strong>, que representan a un 0,07% de la población regional.</p>
+</li>
+<li><p>En la <strong>región de Atacama</strong> existen 121 personas de <strong>género no binario</strong>, que representan a un 0,05% de la población regional.</p>
+</li>
+<li><p>En la <strong>región de Coquimbo</strong> existen 508 personas de <strong>género no binario</strong>, que representan a un 0,08% de la población regional.</p>
+</li>
+<li><p>En la <strong>región de Valparaíso</strong> existen 2.161 personas de <strong>género no binario</strong>, que representan a un 0,14% de la población regional.</p>
+</li>
+<li><p>En la <strong>región  Metropolitana de Santiago</strong> existen 8.230 personas de <strong>género no binario</strong>, que representan a un 0,14% de la población regional.</p>
+</li>
+<li><p>En la <strong>región del Libertador General Bernardo O'Higgins</strong> existen 474 personas de <strong>género no binario</strong>, que representan a un 0,06% de la población regional.</p>
+</li>
+<li><p>En la <strong>región del Maule</strong> existen 438 personas de <strong>género no binario</strong>, que representan a un 0,05% de la población regional.</p>
+</li>
+<li><p>En la <strong>región de Ñuble</strong> existen 181 personas de <strong>género no binario</strong>, que representan a un 0,04% de la población regional.</p>
+</li>
+<li><p>En la <strong>región del Biobío</strong> existen 1.016 personas de <strong>género no binario</strong>, que representan a un 0,08% de la población regional.</p>
+</li>
+<li><p>En la <strong>región de La Araucanía</strong> existen 533 personas de <strong>género no binario</strong>, que representan a un 0,07% de la población regional.</p>
+</li>
+<li><p>En la <strong>región de Los Ríos</strong> existen 388 personas de <strong>género no binario</strong>, que representan a un 0,12% de la población regional.</p>
+</li>
+<li><p>En la <strong>región de Los Lagos</strong> existen 458 personas de <strong>género no binario</strong>, que representan a un 0,07% de la población regional.</p>
+</li>
+<li><p>En la <strong>región de Aysén del General Carlos Ibáñez del Campo</strong> existen 81 personas de <strong>género no binario</strong>, que representan a un 0,11% de la población regional.</p>
+</li>
+<li><p>En la <strong>región de Magallanes y de la Antártica Chilena</strong> existen 143 personas de <strong>género no binario</strong>, que representan a un 0,11% de la población regional.</p>
+</li>
+</ul>
+
+
+<details>
+  <summary>
+    Otras formas de imprimir los resultados
+  </summary>
+    <div style="padding: 16px; border: solid 2px #A885C6AA; border-radius: 6px; 
+    background-color: #A885C630;
+    margin-top: 8px; padding-top: 0px; padding-bottom: 0px;">
+    <p>Algunas formas de obtener estos resultados son simplemente imprimiendo la lista, o usando <code>cat()</code> para imprimir cada texto en una nueva línea, y así poder copiarlos y pegarlos en otro programa:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">textos</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">unlist</span><span class="p">()</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">cat</span><span class="p">(</span><span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;\n\n&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>En la **región de Arica y Parinacota** existen 146 personas de **género no binario**, que representan a un 0,08% de la población regional.
+
+En la **región de Tarapacá** existen 203 personas de **género no binario**, que representan a un 0,07% de la población regional.
+
+En la **región de Antofagasta** existen 314 personas de **género no binario**, que representan a un 0,07% de la población regional.
+
+En la **región de Atacama** existen 121 personas de **género no binario**, que representan a un 0,05% de la población regional.
+
+En la **región de Coquimbo** existen 508 personas de **género no binario**, que representan a un 0,08% de la población regional.
+
+En la **región de Valparaíso** existen 2.161 personas de **género no binario**, que representan a un 0,14% de la población regional.
+
+En la **región  Metropolitana de Santiago** existen 8.230 personas de **género no binario**, que representan a un 0,14% de la población regional.
+
+En la **región del Libertador General Bernardo O'Higgins** existen 474 personas de **género no binario**, que representan a un 0,06% de la población regional.
+
+En la **región del Maule** existen 438 personas de **género no binario**, que representan a un 0,05% de la población regional.
+
+En la **región de Ñuble** existen 181 personas de **género no binario**, que representan a un 0,04% de la población regional.
+
+En la **región del Biobío** existen 1.016 personas de **género no binario**, que representan a un 0,08% de la población regional.
+
+En la **región de La Araucanía** existen 533 personas de **género no binario**, que representan a un 0,07% de la población regional.
+
+En la **región de Los Ríos** existen 388 personas de **género no binario**, que representan a un 0,12% de la población regional.
+
+En la **región de Los Lagos** existen 458 personas de **género no binario**, que representan a un 0,07% de la población regional.
+
+En la **región de Aysén del General Carlos Ibáñez del Campo** existen 81 personas de **género no binario**, que representan a un 0,11% de la población regional.
+
+En la **región de Magallanes y de la Antártica Chilena** existen 143 personas de **género no binario**, que representan a un 0,11% de la población regional.
+</code></pre>
+    </div>
+</details>
+
+
+
+
+<h2 id="redactar-textos-para-grupos-de-observaciones">Redactar textos para grupos de observaciones
+  <a href="#redactar-textos-para-grupos-de-observaciones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>En el ejemplo anterior hicimos que R redacte texto extraído de una sola fila de una tabla; es decir, de una sola observación. Ahora veremos cómo redactar texto que considere los <strong>valores de varias filas de datos a la vez</strong>.</p>
+<p>Por ejemplo, veamos cómo redactar un texto que nos resuma los <strong>resultados del Censo en una región completa</strong>, considerando los valores mayores y menores, entre otros datos.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">genero_r</span> <span class="o">&lt;-</span> <span class="n">genero</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">region</span> <span class="o">==</span> <span class="s">&#34;Coquimbo&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">genero</span> <span class="o">!=</span> <span class="s">&#34;Prefiere no responder/No sabe&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">         <span class="n">genero</span> <span class="o">!=</span> <span class="s">&#34;Otro&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">poblacion</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">genero_r</span>
+</span></span></code></pre></div><pre><code># A tibble: 5 × 6
+  codigo_region region    total genero         poblacion porcentaje
+  &lt;chr&gt;         &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;      &lt;dbl&gt;
+1 4             Coquimbo 643271 Femenino          331448   0.515   
+2 4             Coquimbo 643271 Masculino         304470   0.473   
+3 4             Coquimbo 643271 Transmasculino      1446   0.00225 
+4 4             Coquimbo 643271 Transfemenino        594   0.000923
+5 4             Coquimbo 643271 No binario           508   0.000790
+</code></pre>
+<p>Luego de filtrar los datos para un grupo de observaciones, nos encontramos con datos para cinco filas.</p>
+<p>Primero obtenemos el <strong>valor del grupo filtrado</strong>, en este caso la región, y luego podemos <strong>filtrar observaciones clave</strong> que queramos destacar en el texto; en este caso, los géneros binarios que son mayoría:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">region</span> <span class="o">&lt;-</span> <span class="n">genero_r</span><span class="o">$</span><span class="n">region[1]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">genero_masc</span> <span class="o">&lt;-</span> <span class="n">genero_r</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">genero</span> <span class="o">==</span> <span class="s">&#34;Masculino&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">genero_fem</span> <span class="o">&lt;-</span> <span class="n">genero_r</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">genero</span> <span class="o">==</span> <span class="s">&#34;Femenino&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">texto_general</span> <span class="o">&lt;-</span> <span class="nf">glue</span><span class="p">(</span><span class="s">&#34;La región de {region} tiene una distribución entre hombres y mujeres de {percent(genero_masc$porcentaje)} hombres y {percent(genero_fem$porcentaje)} mujeres.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">texto_general</span>
+</span></span></code></pre></div><pre><code>La región de Coquimbo tiene una distribución entre hombres y mujeres de 47% hombres y 52% mujeres.
+</code></pre>
+
+
+
+
+<h3 id="textos-condicionales-según-datos">Textos condicionales según datos
+  <a href="#textos-condicionales-seg%c3%ban-datos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Dado que en el párrafo anterior nos encontramos con porcentajes que varían muy poco, agregaremos un texto donde se compare un valor específico con un valor, generando un <strong>texto condicional en base a los datos</strong>.</p>
+<p>En este caso, escribimos un texto que explica si el porcentaje de hombres en una región es mayor al promedio de hombres en el país.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># calcular promedio de hombres a nivel nacional</span>
+</span></span><span class="line"><span class="cl"><span class="n">promedio</span> <span class="o">&lt;-</span> <span class="n">genero</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">summarize</span><span class="p">(</span><span class="n">total</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">poblacion</span><span class="p">),</span> <span class="n">.by</span> <span class="o">=</span> <span class="n">genero</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">porcentaje</span> <span class="o">=</span> <span class="n">total</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">total</span><span class="p">))</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">genero</span> <span class="o">==</span> <span class="s">&#34;Masculino&#34;</span><span class="p">)</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">pull</span><span class="p">(</span><span class="n">porcentaje</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">comparacion</span> <span class="o">&lt;-</span> <span class="nf">if_else</span><span class="p">(</span><span class="n">genero_masc</span><span class="o">$</span><span class="n">porcentaje</span> <span class="o">&gt;=</span> <span class="n">promedio</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="s">&#34;mayor&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="s">&#34;menor&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">texto_promedio</span> <span class="o">&lt;-</span> <span class="nf">glue</span><span class="p">(</span><span class="s">&#34;El porcentaje de hombres con respecto de mujeres es {comparacion} al promedio nacional de hombres.&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>En el código anterior, si el valor de la observación supera al del promedio calculado, el texto dirá <em>mayor</em>, o de lo contrario dirá <em>menor</em>.</p>
+<p>Ahora podemos usar alguna función que nos permita <strong>resumir los datos</strong>; por ejemplo, la cantidad de <strong>valores únicos</strong> de una variable relevante; en este caso la cantidad de géneros medidos por el censo:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">n_generos</span> <span class="o">&lt;-</span> <span class="nf">n_distinct</span><span class="p">(</span><span class="n">genero_r</span><span class="o">$</span><span class="n">genero</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">texto_generos</span> <span class="o">&lt;-</span> <span class="nf">glue</span><span class="p">(</span><span class="s">&#34;El Censo en la región de {region} cuenta con estadísticas oficiales de {n_generos} géneros distintos, excluyendo no respuestas.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">texto_generos</span>
+</span></span></code></pre></div><pre><code>El Censo en la región de Coquimbo cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas.
+</code></pre>
+<p>Luego podemos filtrar la tabla para obtener <strong>estadísticos descriptivos</strong> como las mayores y menores observaciones:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">genero_max</span> <span class="o">&lt;-</span> <span class="n">genero_r</span> <span class="o">|&gt;</span> <span class="nf">slice_max</span><span class="p">(</span><span class="n">poblacion</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">genero_min</span> <span class="o">&lt;-</span> <span class="n">genero_r</span> <span class="o">|&gt;</span> <span class="nf">slice_min</span><span class="p">(</span><span class="n">poblacion</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">texto_resumen</span> <span class="o">&lt;-</span> <span class="nf">glue</span><span class="p">(</span><span class="s">&#34;El género con mayor población es {genero_max$genero} con {number(genero_max$poblacion)} personas, mientras que el con menor población es {genero_min$genero}, con {number(genero_min$poblacion)}.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">texto_resumen</span>
+</span></span></code></pre></div><pre><code>El género con mayor población es Femenino con 331.448 personas, mientras que el con menor población es No binario, con 508.
+</code></pre>
+<p>Ahora redactemos uno texto para un <strong>subgrupo de todas las observaciones</strong>. En este caso, redactaremos algo específico para los géneros fuera del binario cis:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">cuir</span> <span class="o">&lt;-</span> <span class="n">genero_r</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">genero</span> <span class="o">!=</span> <span class="s">&#34;Masculino&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">         <span class="n">genero</span> <span class="o">!=</span> <span class="s">&#34;Femenino&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">cuir</span>
+</span></span></code></pre></div><pre><code># A tibble: 3 × 6
+  codigo_region region    total genero         poblacion porcentaje
+  &lt;chr&gt;         &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;      &lt;dbl&gt;
+1 4             Coquimbo 643271 Transmasculino      1446   0.00225 
+2 4             Coquimbo 643271 Transfemenino        594   0.000923
+3 4             Coquimbo 643271 No binario           508   0.000790
+</code></pre>
+<p>Filtramos en la observación <strong>mayoritaria</strong>, y luego generamos textos que <strong>ordenen las observaciones</strong> y las redacten como una secuencia de palabras.</p>
+<p>La función <code>glue_collapse()</code> del paquete <code>{glue}</code> nos permite unir los elementos de un vector de texto, <strong>separándolos por comas</strong>, y convenientemente poniendo la letra <em>y griega</em> antes del último elemento! Así, <code>A B C</code> se vuelven <code>A, B Y C</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># obtener la observación mayoritaria</span>
+</span></span><span class="line"><span class="cl"><span class="n">cuir_max</span> <span class="o">&lt;-</span> <span class="n">cuir</span> <span class="o">|&gt;</span> <span class="nf">slice_max</span><span class="p">(</span><span class="n">poblacion</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># redactar valores como secuencia de palabras</span>
+</span></span><span class="line"><span class="cl"><span class="n">cuir_gen</span> <span class="o">&lt;-</span> <span class="nf">glue_collapse</span><span class="p">(</span><span class="n">cuir</span><span class="o">$</span><span class="n">genero</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;, &#34;</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="s">&#34; y &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># redactar cifras como secuencia de palabras</span>
+</span></span><span class="line"><span class="cl"><span class="n">cuir_pob</span> <span class="o">&lt;-</span> <span class="n">cuir</span><span class="o">$</span><span class="n">poblacion</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">number</span><span class="p">()</span> <span class="o">|&gt;</span> <span class="c1"># puntos de miles</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">glue_collapse</span><span class="p">(,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;, &#34;</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="s">&#34; y &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># redactar texto combinando elementos anteriores</span>
+</span></span><span class="line"><span class="cl"><span class="n">texto_subgrupo</span> <span class="o">&lt;-</span> <span class="nf">glue</span><span class="p">(</span><span class="s">&#34;Aparte de masculino y femenino, los demás géneros en la región son {cuir_gen}, con {cuir_pob} personas respectivamente, siendo el género con mayor población {cuir_max$genero} con un {percent(cuir_max$porcentaje, 0.1)} de la región.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">texto_subgrupo</span>
+</span></span></code></pre></div><pre><code>Aparte de masculino y femenino, los demás géneros en la región son Transmasculino, Transfemenino y No binario, con 1.446, 594 y 508 personas respectivamente, siendo el género con mayor población Transmasculino con un 0,2% de la región.
+</code></pre>
+<p>Finalmente, podemos <strong>unir todas estas técnicas</strong> dentro de un <em>loop</em> para obtener los párrafos para todas las regiones del país de manera <strong>automática</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">textos</span> <span class="o">&lt;-</span> <span class="nf">map</span><span class="p">(</span><span class="n">regiones</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">region</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">   <span class="c1"># elegir artículo según la región</span>
+</span></span><span class="line"><span class="cl">  <span class="n">art</span> <span class="o">&lt;-</span> <span class="nf">recode_values</span><span class="p">(</span><span class="n">region</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="s">&#34;Biobío&#34;</span> <span class="o">~</span> <span class="s">&#34;del&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="s">&#34;Metropolitana de Santiago&#34;</span> <span class="o">~</span> <span class="s">&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="s">&#34;Libertador General Bernardo O&#39;Higgins&#34;</span> <span class="o">~</span> <span class="s">&#34;del&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="s">&#34;Maule&#34;</span> <span class="o">~</span> <span class="s">&#34;del&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="n">default</span> <span class="o">=</span> <span class="s">&#34;de&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># filtrar datos</span>
+</span></span><span class="line"><span class="cl">  <span class="n">genero_r</span> <span class="o">&lt;-</span> <span class="n">genero</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">filter</span><span class="p">(</span><span class="n">region</span> <span class="o">==</span> <span class="p">{{</span><span class="n">region</span><span class="p">}})</span>  <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">filter</span><span class="p">(</span><span class="n">genero</span> <span class="o">!=</span> <span class="s">&#34;Prefiere no responder/No sabe&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">           <span class="n">genero</span> <span class="o">!=</span> <span class="s">&#34;Otro&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">arrange</span><span class="p">(</span><span class="nf">desc</span><span class="p">(</span><span class="n">poblacion</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># filtrar observaciones relevantes</span>
+</span></span><span class="line"><span class="cl">  <span class="n">genero_masc</span> <span class="o">&lt;-</span> <span class="n">genero_r</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">filter</span><span class="p">(</span><span class="n">genero</span> <span class="o">==</span> <span class="s">&#34;Masculino&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">genero_fem</span> <span class="o">&lt;-</span> <span class="n">genero_r</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">filter</span><span class="p">(</span><span class="n">genero</span> <span class="o">==</span> <span class="s">&#34;Femenino&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">texto_general</span> <span class="o">&lt;-</span> <span class="nf">glue</span><span class="p">(</span><span class="s">&#34;La **región {art} {region}** tiene una distribución entre hombres y mujeres de {percent(genero_masc$porcentaje, 0.01)} hombres y {percent(genero_fem$porcentaje, 0.01)} mujeres.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># calcular promedio de hombres a nivel nacional</span>
+</span></span><span class="line"><span class="cl">  <span class="n">promedio</span> <span class="o">&lt;-</span> <span class="n">genero</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">summarize</span><span class="p">(</span><span class="n">total</span> <span class="o">=</span> <span class="nf">sum</span><span class="p">(</span><span class="n">poblacion</span><span class="p">),</span> <span class="n">.by</span> <span class="o">=</span> <span class="n">genero</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">mutate</span><span class="p">(</span><span class="n">porcentaje</span> <span class="o">=</span> <span class="n">total</span> <span class="o">/</span> <span class="nf">sum</span><span class="p">(</span><span class="n">total</span><span class="p">))</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">filter</span><span class="p">(</span><span class="n">genero</span> <span class="o">==</span> <span class="s">&#34;Masculino&#34;</span><span class="p">)</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">pull</span><span class="p">(</span><span class="n">porcentaje</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># texto condicional según los datos</span>
+</span></span><span class="line"><span class="cl">  <span class="n">comparacion</span> <span class="o">&lt;-</span> <span class="nf">if_else</span><span class="p">(</span><span class="n">genero_masc</span><span class="o">$</span><span class="n">porcentaje</span> <span class="o">&gt;=</span> <span class="n">promedio</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                         <span class="s">&#34;mayor&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                         <span class="s">&#34;menor&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">texto_promedio</span> <span class="o">&lt;-</span> <span class="nf">glue</span><span class="p">(</span><span class="s">&#34;En esta región, el porcentaje de hombres con respecto de mujeres es {comparacion} al promedio nacional de hombres.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># contar observaciones únicas</span>
+</span></span><span class="line"><span class="cl">  <span class="n">n_generos</span> <span class="o">&lt;-</span> <span class="nf">n_distinct</span><span class="p">(</span><span class="n">genero_r</span><span class="o">$</span><span class="n">genero</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">texto_generos</span> <span class="o">&lt;-</span> <span class="nf">glue</span><span class="p">(</span><span class="s">&#34;El censo en la región de {region} cuenta con estadísticas oficiales de {n_generos} géneros distintos, excluyendo no respuestas.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># redactar textos con estadísticos descriptivos</span>
+</span></span><span class="line"><span class="cl">  <span class="n">genero_max</span> <span class="o">&lt;-</span> <span class="n">genero_r</span> <span class="o">|&gt;</span> <span class="nf">slice_max</span><span class="p">(</span><span class="n">poblacion</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">genero_min</span> <span class="o">&lt;-</span> <span class="n">genero_r</span> <span class="o">|&gt;</span> <span class="nf">slice_min</span><span class="p">(</span><span class="n">poblacion</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">texto_resumen</span> <span class="o">&lt;-</span> <span class="nf">glue</span><span class="p">(</span><span class="s">&#34;El género con mayor población es el **{str_to_lower(genero_max$genero)}** con {number(genero_max$poblacion)} personas, mientras que el con menor población es {str_to_lower(genero_min$genero)}, con {number(genero_min$poblacion)}.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># redactar textos sobre subgrupos de observaciones</span>
+</span></span><span class="line"><span class="cl">  <span class="n">cuir</span> <span class="o">&lt;-</span> <span class="n">genero_r</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">filter</span><span class="p">(</span><span class="n">genero</span> <span class="o">!=</span> <span class="s">&#34;Masculino&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">           <span class="n">genero</span> <span class="o">!=</span> <span class="s">&#34;Femenino&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">cuir_max</span> <span class="o">&lt;-</span> <span class="n">cuir</span> <span class="o">|&gt;</span> <span class="nf">slice_max</span><span class="p">(</span><span class="n">poblacion</span><span class="p">,</span> <span class="n">with_ties</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">cuir_gen</span> <span class="o">&lt;-</span> <span class="n">cuir</span><span class="o">$</span><span class="n">genero</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">str_to_lower</span><span class="p">()</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">glue_collapse</span><span class="p">(</span><span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;, &#34;</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="s">&#34; y &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">cuir_pob</span> <span class="o">&lt;-</span> <span class="n">cuir</span><span class="o">$</span><span class="n">poblacion</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">number</span><span class="p">()</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">glue_collapse</span><span class="p">(,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;, &#34;</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="s">&#34; y &#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">texto_subgrupo</span> <span class="o">&lt;-</span> <span class="nf">glue</span><span class="p">(</span><span class="s">&#34;Aparte de masculino y femenino, los demás géneros en la región son {cuir_gen} con {cuir_pob} personas respectivamente, siendo **{str_to_lower(cuir_max$genero)}** el de mayor población, con {number(cuir_max$poblacion)} personas en total, lo que representa un {percent(cuir_max$porcentaje, 0.1)} de la población regional.&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># unir todas las oraciones en un párrafo</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">paste</span><span class="p">(</span><span class="n">texto_general</span><span class="p">,</span> <span class="n">texto_promedio</span><span class="p">,</span> <span class="n">texto_generos</span><span class="p">,</span> <span class="n">texto_resumen</span><span class="p">,</span> <span class="n">texto_subgrupo</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></div><p>Se trata de una técnica que te permite tener <strong>total control sobre la redacción</strong> de los textos, y <strong>completa certeza acerca de la exactitud de los datos</strong> incluidos. Este código se puede usar para 
+<a href="../../../tags/shiny/">aplicaciones interactivas con Shiny</a>, para redactar 
+<a href="../../../blog/quarto_loop/">reportes de manera automatizada con Quarto</a>, y más!</p>
+<p>Ahora veremos el resultado de obtener todos los <strong>párrafos redactados automáticamente</strong> a partir de los datos.</p>
+<p>Pasamos de una tabla de datos como ésta:</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">region</th>
+          <th style="text-align: right">total</th>
+          <th style="text-align: left">genero</th>
+          <th style="text-align: right">poblacion</th>
+          <th style="text-align: right">porcentaje</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">La Araucanía</td>
+          <td style="text-align: right">783037</td>
+          <td style="text-align: left">Prefiere no responder/No sabe</td>
+          <td style="text-align: right">4755</td>
+          <td style="text-align: right">0.0060725</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Tarapacá</td>
+          <td style="text-align: right">272334</td>
+          <td style="text-align: left">Transfemenino</td>
+          <td style="text-align: right">370</td>
+          <td style="text-align: right">0.0013586</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Maule</td>
+          <td style="text-align: right">873280</td>
+          <td style="text-align: left">Prefiere no responder/No sabe</td>
+          <td style="text-align: right">4131</td>
+          <td style="text-align: right">0.0047304</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Valparaíso</td>
+          <td style="text-align: right">1505034</td>
+          <td style="text-align: left">Prefiere no responder/No sabe</td>
+          <td style="text-align: right">12977</td>
+          <td style="text-align: right">0.0086224</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Libertador General Bernardo O&rsquo;Higgins</td>
+          <td style="text-align: right">768428</td>
+          <td style="text-align: left">Prefiere no responder/No sabe</td>
+          <td style="text-align: right">3821</td>
+          <td style="text-align: right">0.0049725</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Tarapacá</td>
+          <td style="text-align: right">272334</td>
+          <td style="text-align: left">Otro</td>
+          <td style="text-align: right">106</td>
+          <td style="text-align: right">0.0003892</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Libertador General Bernardo O&rsquo;Higgins</td>
+          <td style="text-align: right">768428</td>
+          <td style="text-align: left">Femenino</td>
+          <td style="text-align: right">392682</td>
+          <td style="text-align: right">0.5110199</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Los Ríos</td>
+          <td style="text-align: right">313208</td>
+          <td style="text-align: left">Transfemenino</td>
+          <td style="text-align: right">198</td>
+          <td style="text-align: right">0.0006322</td>
+      </tr>
+  </tbody>
+</table>
+<p>A este texto que redacta todos los resultados 😱</p>
+<ul>
+<li><p>La <strong>región de Arica y Parinacota</strong> tiene una distribución entre hombres y mujeres de 47,95% hombres y 50,54% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es mayor al promedio nacional de hombres. El censo en la región de Arica y Parinacota cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 94.037 personas, mientras que el con menor población es no binario, con 146. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, transfemenino y no binario con 414, 200 y 146 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 414 personas en total, lo que representa un 0,2% de la población regional.</p>
+</li>
+<li><p>La <strong>región de Tarapacá</strong> tiene una distribución entre hombres y mujeres de 48,19% hombres y 50,15% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es mayor al promedio nacional de hombres. El censo en la región de Tarapacá cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 136.577 personas, mientras que el con menor población es no binario, con 203. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, transfemenino y no binario con 854, 370 y 203 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 854 personas en total, lo que representa un 0,3% de la población regional.</p>
+</li>
+<li><p>La <strong>región de Antofagasta</strong> tiene una distribución entre hombres y mujeres de 48,16% hombres y 50,44% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es mayor al promedio nacional de hombres. El censo en la región de Antofagasta cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 243.287 personas, mientras que el con menor población es no binario, con 314. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, transfemenino y no binario con 1.315, 514 y 314 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 1.315 personas en total, lo que representa un 0,3% de la población regional.</p>
+</li>
+<li><p>La <strong>región de Atacama</strong> tiene una distribución entre hombres y mujeres de 48,42% hombres y 50,40% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es mayor al promedio nacional de hombres. El censo en la región de Atacama cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 114.109 personas, mientras que el con menor población es no binario, con 121. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, transfemenino y no binario con 473, 197 y 121 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 473 personas en total, lo que representa un 0,2% de la población regional.</p>
+</li>
+<li><p>La <strong>región de Coquimbo</strong> tiene una distribución entre hombres y mujeres de 47,33% hombres y 51,53% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es mayor al promedio nacional de hombres. El censo en la región de Coquimbo cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 331.448 personas, mientras que el con menor población es no binario, con 508. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, transfemenino y no binario con 1.446, 594 y 508 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 1.446 personas en total, lo que representa un 0,2% de la población regional.</p>
+</li>
+<li><p>La <strong>región de Valparaíso</strong> tiene una distribución entre hombres y mujeres de 46,82% hombres y 51,84% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es menor al promedio nacional de hombres. El censo en la región de Valparaíso cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 780.209 personas, mientras que el con menor población es transfemenino, con 1.369. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, no binario y transfemenino con 3.003, 2.161 y 1.369 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 3.003 personas en total, lo que representa un 0,2% de la población regional.</p>
+</li>
+<li><p>La <strong>región  Metropolitana de Santiago</strong> tiene una distribución entre hombres y mujeres de 47,04% hombres y 51,54% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es menor al promedio nacional de hombres. El censo en la región de Metropolitana de Santiago cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 3.010.084 personas, mientras que el con menor población es transfemenino, con 5.838. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, no binario y transfemenino con 13.754, 8.230 y 5.838 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 13.754 personas en total, lo que representa un 0,2% de la población regional.</p>
+</li>
+<li><p>La <strong>región del Libertador General Bernardo O'Higgins</strong> tiene una distribución entre hombres y mujeres de 48,03% hombres y 51,10% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es mayor al promedio nacional de hombres. El censo en la región de Libertador General Bernardo O'Higgins cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 392.682 personas, mientras que el con menor población es no binario, con 474. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, transfemenino y no binario con 1.514, 646 y 474 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 1.514 personas en total, lo que representa un 0,2% de la población regional.</p>
+</li>
+<li><p>La <strong>región del Maule</strong> tiene una distribución entre hombres y mujeres de 47,47% hombres y 51,67% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es mayor al promedio nacional de hombres. El censo en la región de Maule cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 451.238 personas, mientras que el con menor población es no binario, con 438. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, transfemenino y no binario con 1.953, 759 y 438 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 1.953 personas en total, lo que representa un 0,2% de la población regional.</p>
+</li>
+<li><p>La <strong>región de Ñuble</strong> tiene una distribución entre hombres y mujeres de 47,01% hombres y 52,21% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es menor al promedio nacional de hombres. El censo en la región de Ñuble cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 211.167 personas, mientras que el con menor población es no binario, con 181. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, transfemenino y no binario con 788, 289 y 181 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 788 personas en total, lo que representa un 0,2% de la población regional.</p>
+</li>
+<li><p>La <strong>región del Biobío</strong> tiene una distribución entre hombres y mujeres de 46,90% hombres y 52,34% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es menor al promedio nacional de hombres. El censo en la región de Biobío cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 662.218 personas, mientras que el con menor población es no binario, con 1.016. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, transfemenino y no binario con 2.907, 1.141 y 1.016 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 2.907 personas en total, lo que representa un 0,2% de la población regional.</p>
+</li>
+<li><p>La <strong>región de La Araucanía</strong> tiene una distribución entre hombres y mujeres de 46,92% hombres y 52,13% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es menor al promedio nacional de hombres. El censo en la región de La Araucanía cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 408.229 personas, mientras que el con menor población es no binario, con 533. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, transfemenino y no binario con 1.410, 570 y 533 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 1.410 personas en total, lo que representa un 0,2% de la población regional.</p>
+</li>
+<li><p>La <strong>región de Los Ríos</strong> tiene una distribución entre hombres y mujeres de 47,30% hombres y 51,67% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es mayor al promedio nacional de hombres. El censo en la región de Los Ríos cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 161.832 personas, mientras que el con menor población es transfemenino, con 198. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, no binario y transfemenino con 554, 388 y 198 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 554 personas en total, lo que representa un 0,2% de la población regional.</p>
+</li>
+<li><p>La <strong>región de Los Lagos</strong> tiene una distribución entre hombres y mujeres de 48,10% hombres y 50,93% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es mayor al promedio nacional de hombres. El censo en la región de Los Lagos cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 353.827 personas, mientras que el con menor población es no binario, con 458. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, transfemenino y no binario con 1.210, 463 y 458 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 1.210 personas en total, lo que representa un 0,2% de la población regional.</p>
+</li>
+<li><p>La <strong>región de Aysén del General Carlos Ibáñez del Campo</strong> tiene una distribución entre hombres y mujeres de 48,38% hombres y 50,54% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es mayor al promedio nacional de hombres. El censo en la región de Aysén del General Carlos Ibáñez del Campo cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 38.756 personas, mientras que el con menor población es transfemenino, con 43. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, no binario y transfemenino con 100, 81 y 43 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 100 personas en total, lo que representa un 0,1% de la población regional.</p>
+</li>
+<li><p>La <strong>región de Magallanes y de la Antártica Chilena</strong> tiene una distribución entre hombres y mujeres de 48,58% hombres y 50,13% mujeres. En esta región, el porcentaje de hombres con respecto de mujeres es mayor al promedio nacional de hombres. El censo en la región de Magallanes y de la Antártica Chilena cuenta con estadísticas oficiales de 5 géneros distintos, excluyendo no respuestas. El género con mayor población es el <strong>femenino</strong> con 66.252 personas, mientras que el con menor población es transfemenino, con 123. Aparte de masculino y femenino, los demás géneros en la región son transmasculino, no binario y transfemenino con 260, 143 y 123 personas respectivamente, siendo <strong>transmasculino</strong> el de mayor población, con 260 personas en total, lo que representa un 0,2% de la población regional.</p>
+</li>
+</ul>
+<p>Contemplen <strong>LA CANTIDAD</strong> de texto que redactamos con el código anterior, donde no usamos nada demasiado complejo, solamente pequeñas piezas que juntas fueron armando el texto!</p>
+<p>Imagina lo conveniente que es hacer esto si tienes que <strong>repetir un mismo análisis o descripción de datos de decenas o cientos de veces</strong>, o si necesitas redactar texto acerca de <strong>datos que puedan actualizarse</strong> o que pueden ser corregidos!</p>
+<p><div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+
+
+</p>
+ 
+    </section>
+      
+    <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:4125/blog/curso_gratis_r_intro_1/">Curso gratuito: introducción al análisis de datos con R &rarr;</a>
+  
+</div>
+
+    </footer>
+    
+  </article>
+    
+    <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+</section>
+  
+
+<section class="post-body pt5 pb4">
+  
+  <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">February 12, 2026</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">25 minute read, 5207 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4125/tags/texto">texto</a>  <a href="http://localhost:4125/tags/automatizaci%C3%B3n">automatización</a>  <a href="http://localhost:4125/tags/loops">loops</a>  <a href="http://localhost:4125/tags/funciones">funciones</a>  <a href="http://localhost:4125/tags/g%C3%A9nero">género</a>  <a href="http://localhost:4125/tags/chile">Chile</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="../../blog/shiny_validacion/">Testeo automatizado de aplicaciones Shiny con {shinytest2}</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/app_censo_mapas/">App: visualizador de mapas comunales del Censo 2024 por manzanas</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/mapas_censo_2024/">Visualiza datos del Censo 2024 en mapas a nivel de manzana con R</a></dd>
+    
+  </dl>
+</details>
+
+</section>
+</main>
+
+
+<aside class="page-sidebar" role="complementary">
+   
+   
+
+  <div class="blog-info ph4 pt4 pb4 pb0-l">
+    
+
+  <h1 class="f3">Blog</h1>
+  <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
+<a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
+<a href="../../tags/">temas</a>.</p>
+  
+
+   
+<h3 style="margin-bottom: 12px;">Temas:</h3>
+
+<div style="font-size:90%;">
+
+<div style="font-size: 90%;">
+  
+   
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/chile/">Chile</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/datos/">Datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/consejos/">Consejos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/gr%C3%A1ficos/">Gráficos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/blog/">Blog</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/ggplot2/">Ggplot2</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/shiny/">Shiny</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/apps/">Apps</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/web-scraping/">Web scraping</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/b%C3%A1sico/">Básico</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/mapas/">Mapas</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/curiosidades/">Curiosidades</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/quarto/">Quarto</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/dplyr/">Dplyr</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/ciencias-sociales/">Ciencias sociales</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:4125/tags/loops/">Loops</a></span>
+  </span>
+
+<a href="../../tags/" style="margin-left: 3px;">y más!</a>
+</div>
+</div>
+  
+  
+   
+   
+
+</div>
+
+  
+  <div id="PageTableOfContents" style="margin-top: 24px; position: sticky; top: 108px;">
+        <div class="blog-info ph4 pb4 pb0-l">
+        <h3 style="margin-bottom: 12px;">Índice:</h3>
+          <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: -22px; margin-bottom: 32px;">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#usando-datos-para-generar-texto">Usando datos para generar texto</a>
+      <ul>
+        <li><a href="#mejoras-para-la-generación-de-texto">Mejoras para la generación de texto</a></li>
+      </ul>
+    </li>
+    <li><a href="#crear-una-función-que-redacte-texto">Crear una función que redacte texto</a></li>
+    <li><a href="#redactar-texto-en-serie-usando-loops">Redactar texto en serie usando <em>loops</em></a></li>
+    <li><a href="#redactar-textos-para-grupos-de-observaciones">Redactar textos para grupos de observaciones</a>
+      <ul>
+        <li><a href="#textos-condicionales-según-datos">Textos condicionales según datos</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+          </div>
+        </div>
+    </div>
+  
+  
+
+</aside>
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2026 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source" style="color:#9069C0;">Hugo Apéro</a> 
+      y <a href="https://pkgs.rstudio.com/blogdown/" style="color:#9069C0;">{blogdown}</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source" style="color:#9069C0;">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL" style="color:#9069C0;">Formspree</a>.
+
+Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlify</a></span>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+      <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="../../tags/" title="Temas">Temas</a>
+      
+      <a class="dib pv1 ph2 link" href="../../clases/" title="Clases">Clases</a>
+      
+      <a class="dib pv1 ph2 link" href="../../code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
+      
+      <a class="dib pv1 ph2 link" href="../../license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

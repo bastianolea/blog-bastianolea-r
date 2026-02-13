@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=5219&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4125&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -31,16 +31,16 @@
 <meta property="og:title" content="Visualizando texto como nubes de palabras en R | Bastián Olea">
 <meta property="og:description" content="Blog de Bastián Olea, sociólogx y analista de datos" />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:5219/blog/nubes_de_palabras/" />
+<meta property="og:url" content="http://localhost:4125/blog/nubes_de_palabras/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:5219/blog/nubes_de_palabras/featured.png" >
+        <meta property="og:image" content="http://localhost:4125/blog/nubes_de_palabras/featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:5219/blog/nubes_de_palabras/featured.png" >
+        <meta name="twitter:image" content="http://localhost:4125/blog/nubes_de_palabras/featured.png" >
     
     
   
@@ -49,8 +49,8 @@
 En este post veremos dos formas de crear nubes de palabras con R: con {wordcloud2} y con {ggplot2}. Para empezar, necesitamos una base de datos que tenga información de texto; por ejemplo, una base donde cada fila contenga una respuesta abierta de una encuesta, una reseña de un producto, un párrafo de un texto, un capítulo de un libro, o un libro completo.">
   <meta itemprop="datePublished" content="2025-07-05T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-07-05T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1733">
-  <meta itemprop="image" content="http://localhost:5219/blog/nubes_de_palabras/featured.png">
+  <meta itemprop="wordCount" content="1742">
+  <meta itemprop="image" content="http://localhost:4125/blog/nubes_de_palabras/featured.png">
   <meta itemprop="keywords" content="Visualización de datos,Gráficos,Ggplot2,Análisis de texto">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -66,13 +66,17 @@ En este post veremos dos formas de crear nubes de palabras con R: con {wordcloud
   
   <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
   
+  
   <link rel="stylesheet" href="../../css/syntax.css">
+  
+  
+  <link rel="preload" href="https://bastianoleah.shinyapps.io/buscador/" as="image">
 </head>
 <body>
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:5219/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4125/" title="Home">
       <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -100,7 +104,7 @@ En este post veremos dos formas de crear nubes de palabras con R: con {wordcloud
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea-buscador.share.connect.posit.cloud" title="Buscador">Buscar</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
         
         
@@ -139,7 +143,7 @@ En este post veremos dos formas de crear nubes de palabras con R: con {wordcloud
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianolea-buscador.share.connect.posit.cloud" title="search" target="_blank" rel="me noopener"
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-search fa-lg fa-fw"></i>
     </a>
@@ -339,7 +343,7 @@ En este post veremos dos formas de crear nubes de palabras con R: con {wordcloud
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:5219/tags/visualizaci%C3%B3n-de-datos"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:4125/tags/visualizaci%C3%B3n-de-datos"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -348,7 +352,7 @@ En este post veremos dos formas de crear nubes de palabras con R: con {wordcloud
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            visualización de datos</a>  <a href="http://localhost:5219/tags/gr%C3%A1ficos"
+            visualización de datos</a>  <a href="http://localhost:4125/tags/gr%C3%A1ficos"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -357,7 +361,7 @@ En este post veremos dos formas de crear nubes de palabras con R: con {wordcloud
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            gráficos</a>  <a href="http://localhost:5219/tags/ggplot2"
+            gráficos</a>  <a href="http://localhost:4125/tags/ggplot2"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -366,7 +370,7 @@ En este post veremos dos formas de crear nubes de palabras con R: con {wordcloud
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            ggplot2</a>  <a href="http://localhost:5219/tags/an%C3%A1lisis-de-texto"
+            ggplot2</a>  <a href="http://localhost:4125/tags/an%C3%A1lisis-de-texto"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -391,9 +395,10 @@ En este post veremos dos formas de crear nubes de palabras con R: con {wordcloud
 <p>Con el siguiente código descargaremos una base de datos con 10.000 documentos de texto, en este caso se trata de noticias de la prensa chilena. Los datos son obtenidos de 
 <a href="https://github.com/bastianolea/prensa_chile" target="_blank" rel="noopener">este repositorio de obtención automatizada de textos de noticias de prensa escrita chilena.</a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># dirección web donde se encuentran los datos</span>
-</span></span><span class="line"><span class="cl"><span class="n">url_datos</span> <span class="o">&lt;-</span> <span class="s">&#34;https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/datos/prensa_datos_muestra.csv&#34;</span>
+</span></span></code></pre></div><pre><code>Warning: package 'dplyr' was built under R version 4.4.3
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># dirección web donde se encuentran los datos</span>
+</span></span><span class="line"><span class="cl"><span class="n">url_datos</span> <span class="o">&lt;-</span> <span class="s">&#34;https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/prensa_datos_muestra.csv&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># lectura de los datos ubicados en internet</span>
 </span></span><span class="line"><span class="cl"><span class="n">noticias</span> <span class="o">&lt;-</span> <span class="n">readr</span><span class="o">::</span><span class="nf">read_csv2</span><span class="p">(</span><span class="n">url_datos</span><span class="p">)</span>
@@ -616,6 +621,8 @@ Some words could not fit on page. They have been removed.
 <p>Con esta aproximación podemos crear visualizaciones más personalizadas y complejas a partir de datos de texto, sobre todo si tenemos variables adicionales que nos digan más información sobre las palabras que queremos graficar, cómo puede ser alguna otro criterio de prevalencia de palabras en los documentos, alguna clasificación de las palabras en tópicos o temas, una agrupación de los documentos de donde provienen las palabras, etc.</p>
 <hr>
 <p>
+
+
 <div style = "height: 18px;">
 </div>
 <div>
@@ -640,12 +647,12 @@ Some words could not fit on page. They have been removed.
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:5219/blog/2025-07-08/">&larr; Reduce el tamaño de tus reportes Quarto con este truco</a>
+    href="http://localhost:4125/blog/2025-07-08/">&larr; Reduce el tamaño de tus reportes Quarto con este truco</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:5219/blog/ordenar_comunas/">Ordenar las comunas de Chile de norte a sur en R &rarr;</a>
+    href="http://localhost:4125/blog/ordenar_comunas/">Ordenar las comunas de Chile de norte a sur en R &rarr;</a>
   
 </div>
 
@@ -682,24 +689,24 @@ Some words could not fit on page. They have been removed.
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">9 minute read, 1733 words</dd>
+    <dd class="fw5 ml0">9 minute read, 1742 words</dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:5219/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="http://localhost:5219/tags/gr%C3%A1ficos">gráficos</a>  <a href="http://localhost:5219/tags/ggplot2">ggplot2</a>  <a href="http://localhost:5219/tags/an%C3%A1lisis-de-texto">análisis de texto</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4125/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="http://localhost:4125/tags/gr%C3%A1ficos">gráficos</a>  <a href="http://localhost:4125/tags/ggplot2">ggplot2</a>  <a href="http://localhost:4125/tags/an%C3%A1lisis-de-texto">análisis de texto</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="../../blog/2025-12-04/">Gráfico exploratorio para el Sistema de Indicadores y Estándares Territoriales</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/ggplot_puente/">Gráficos de puente en `{ggplot2}`</a></dd>
     
-    <dd class="fw5 ml0"><a href="../../blog/mapas_sf/">Mapas y visualización de datos geoespaciales en R con {sf}</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/ggplot_ternario/">Gráficos ternarios o triangulares de tres variables en `{ggplot2}`</a></dd>
     
-    <dd class="fw5 ml0"><a href="../../blog/elecciones_presidenciales_2025/">Visualización y scraping de resultados de las elecciones presidenciales 2025</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/2026-01-27/">Por qué siempre visualizar los datos: el cuarteto de Anscombe</a></dd>
     
   </dl>
 </details>
@@ -717,7 +724,7 @@ Some words could not fit on page. They have been removed.
 
   <h1 class="f3">Blog</h1>
   <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
-<a href="https://bastianolea-buscador.share.connect.posit.cloud" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
+<a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
 <a href="../../tags/">temas</a>.</p>
   
 
@@ -741,7 +748,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/chile/">Chile</a></span>
+      href="http://localhost:4125/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -756,7 +763,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/datos/">Datos</a></span>
+      href="http://localhost:4125/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -771,7 +778,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/consejos/">Consejos</a></span>
+      href="http://localhost:4125/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -786,7 +793,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:4125/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -801,7 +808,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:4125/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -816,7 +823,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/blog/">Blog</a></span>
+      href="http://localhost:4125/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -831,7 +838,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:4125/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -846,7 +853,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/shiny/">Shiny</a></span>
+      href="http://localhost:4125/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -861,7 +868,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/apps/">Apps</a></span>
+      href="http://localhost:4125/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -876,7 +883,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:4125/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -891,7 +898,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:4125/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -906,7 +913,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/mapas/">Mapas</a></span>
+      href="http://localhost:4125/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -921,7 +928,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:4125/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -936,7 +943,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:4125/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -951,7 +958,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:4125/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -966,7 +973,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:4125/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -981,7 +988,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/quarto/">Quarto</a></span>
+      href="http://localhost:4125/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -996,7 +1003,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:4125/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -1011,7 +1018,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:4125/tags/ciencias-sociales/">Ciencias sociales</a></span>
   </span>
  
   
@@ -1026,7 +1033,7 @@ Some words could not fit on page. They have been removed.
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/loops/">Loops</a></span>
+      href="http://localhost:4125/tags/loops/">Loops</a></span>
   </span>
 
 <a href="../../tags/" style="margin-left: 3px;">y más!</a>
@@ -1091,7 +1098,7 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianolea-buscador.share.connect.posit.cloud" title="search" target="_blank" rel="me noopener"
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-search fa-lg fa-fw"></i>
     </a>
@@ -1248,7 +1255,7 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
       
       <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
       
-      <a class="dib pv1 ph2 link" href="https://bastianolea-buscador.share.connect.posit.cloud" title="Buscador">Buscar</a>
+      <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
       <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
       

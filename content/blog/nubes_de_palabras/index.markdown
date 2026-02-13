@@ -24,7 +24,11 @@ Con el siguiente código descargaremos una base de datos con 10.000 documentos d
 
 ``` r
 library(dplyr)
+```
 
+    ## Warning: package 'dplyr' was built under R version 4.4.3
+
+``` r
 # dirección web donde se encuentran los datos
 url_datos <- "https://raw.githubusercontent.com/bastianolea/prensa_chile/refs/heads/main/prensa_datos_muestra.csv"
 
@@ -238,10 +242,10 @@ palabras_conteo |>
 ```
 
     ## Warning in wordcloud_boxes(data_points = points_valid_first, boxes = boxes, :
-    ## One word could not fit on page. It has been placed at its original position.
+    ## Some words could not fit on page. They have been placed at their original
+    ## positions.
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
-
 El beneficio de usar esta estrategia es que te entrega toda la flexibilidad de visualizar datos con `{ggplot2}`. Por ejemplo, podemos agregar un mapeo de la transparencia y el color para crear una nube donde las palabras menos frecuentes sean más transparentes y donde ciertas palabras claves tengan un color distinto:
 
 ``` r
@@ -264,7 +268,6 @@ palabras_conteo |>
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" width="672" />
-
 También podemos crear una variable que destaques ciertas palabras específicas dentro de la nube:
 
 ``` r

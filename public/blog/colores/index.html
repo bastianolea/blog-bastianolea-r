@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=5219&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4125&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -24,35 +24,35 @@
   
     
   
-<meta name="description" content="Blog de Bastián Olea, sociólogx y analista de datos">
+<meta name="description" content="El uso del color es clave para comunicar, y el ecosistema de R tiene varios trucos convenientes para ayudarnos a usar el color de mejores formas. En este post reúno varios consejos y trucos para trabajar con colores: desde previsualizarlos, mezclarlos, combinarlos y usarlos como paletas en gráficos.">
 
 
 <meta property="og:site_name" content="Bastián Olea">
 <meta property="og:title" content="Creación y personalización de colores y paletas en R | Bastián Olea">
-<meta property="og:description" content="Blog de Bastián Olea, sociólogx y analista de datos" />
+<meta property="og:description" content="El uso del color es clave para comunicar, y el ecosistema de R tiene varios trucos convenientes para ayudarnos a usar el color de mejores formas. En este post reúno varios consejos y trucos para trabajar con colores: desde previsualizarlos, mezclarlos, combinarlos y usarlos como paletas en gráficos." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:5219/blog/colores/" />
+<meta property="og:url" content="http://localhost:4125/blog/colores/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:5219/blog/colores/featured.png" >
+        <meta property="og:image" content="http://localhost:4125/blog/colores/featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:5219/blog/colores/featured.png" >
+        <meta name="twitter:image" content="http://localhost:4125/blog/colores/featured.png" >
     
     
   
   <meta itemprop="name" content="Creación y personalización de colores y paletas en R">
   <meta itemprop="description" content="El uso del color es clave para comunicar, y el ecosistema de R tiene varios trucos convenientes para ayudarnos a usar el color de mejores formas.
 En R, los colores se escriben como código, y a grandes rasgos pueden ser colores con nombre (por ejemplo, &#34;purple&#34;), colores hexadecimales (escritos como códigos de al menos 6 dígitos, como #FFFFFF), o como parte de funciones que producen paletas de colores.
-A lo largo de este post usaremos la función swatch() del paquete {shades}, que genera un gráfico que presenta el color o la paleta de colores a partir de un vector de colores, lo que nos ayudará a visualizar nuestros colores más fácil. Una alternativa es la función show_col() de {scales}, que hace lo mismo.">
+library(shades) library(scales) Previsualizar colores A lo largo de este post usaremos la función swatch() del paquete {shades}, que genera un gráfico que presenta el color o la paleta de colores a partir de un vector de colores, lo que nos ayudará a visualizar nuestros colores más fácil. Una alternativa es la función show_col() de {scales}, que hace lo mismo.">
   <meta itemprop="datePublished" content="2025-03-06T00:00:00+00:00">
   <meta itemprop="dateModified" content="2025-03-06T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1858">
-  <meta itemprop="image" content="http://localhost:5219/blog/colores/featured.png">
-  <meta itemprop="keywords" content="Visualización de datos,Gráficos,Ggplot2">
+  <meta itemprop="wordCount" content="1867">
+  <meta itemprop="image" content="http://localhost:4125/blog/colores/featured.png">
+  <meta itemprop="keywords" content="Visualización de datos,Ggplot2">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="false" type="image/x-icon">
@@ -67,13 +67,17 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
   
   <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
   
+  
   <link rel="stylesheet" href="../../css/syntax.css">
+  
+  
+  <link rel="preload" href="https://bastianoleah.shinyapps.io/buscador/" as="image">
 </head>
 <body>
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:5219/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4125/" title="Home">
       <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -101,7 +105,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea-buscador.share.connect.posit.cloud" title="Buscador">Buscar</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
         
         
@@ -140,7 +144,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianolea-buscador.share.connect.posit.cloud" title="search" target="_blank" rel="me noopener"
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-search fa-lg fa-fw"></i>
     </a>
@@ -340,7 +344,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:5219/tags/visualizaci%C3%B3n-de-datos"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:4125/tags/visualizaci%C3%B3n-de-datos"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -349,16 +353,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            visualización de datos</a>  <a href="http://localhost:5219/tags/gr%C3%A1ficos"
-          style="margin-right: 2px; 
-                       color: #EAD2FA; 
-                       font-style: normal;
-                       text-decoration: none;
-                       font-size: 10pt;
-                       background-color: #9069C0; 
-                       border-radius: 3px; 
-                       padding: 2px 6px; ">
-            gráficos</a>  <a href="http://localhost:5219/tags/ggplot2"
+            visualización de datos</a>  <a href="http://localhost:4125/tags/ggplot2"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -379,11 +374,64 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
       
     <section class="post-body pt5 pb4">
         <p>El uso del color es clave para comunicar, y el ecosistema de R tiene varios trucos convenientes para ayudarnos a usar el color de mejores formas.</p>
-<p>En R, los colores se escriben como código, y a grandes rasgos pueden ser colores con nombre (por ejemplo, <code>&quot;purple&quot;</code>), colores hexadecimales (escritos como códigos de al menos 6 dígitos, como <code>#FFFFFF</code>), o como parte de funciones que producen paletas de colores.</p>
-<p>A lo largo de este post usaremos la función <code>swatch()</code> del paquete <code>{shades}</code>, que genera un gráfico que presenta el color o la paleta de colores a partir de un vector de colores, lo que nos ayudará a visualizar nuestros colores más fácil. Una alternativa es la función <code>show_col()</code> de <code>{scales}</code>, que hace lo mismo.</p>
+<p>En R, los colores se escriben como código, y a grandes rasgos pueden ser colores con <strong>nombre</strong> (por ejemplo, <code>&quot;purple&quot;</code>), colores <strong>hexadecimales</strong> (escritos como códigos de al menos 6 dígitos, como <code>#FFFFFF</code>), o como parte de funciones que producen <strong>paletas</strong> de colores.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">shades</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">scales</span><span class="p">)</span>
 </span></span></code></pre></div>
+
+
+
+<h2 id="previsualizar-colores">Previsualizar colores
+  <a href="#previsualizar-colores"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>A lo largo de este post usaremos la función <code>swatch()</code> del paquete <code>{shades}</code>, que genera un gráfico que presenta el color o la paleta de colores a partir de un vector de colores, lo que nos ayudará a visualizar nuestros colores más fácil. Una alternativa es la función <code>show_col()</code> de <code>{scales}</code>, que hace lo mismo.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colores</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;#EAD2FA&#34;</span><span class="p">,</span> <span class="s">&#34;#9069C0&#34;</span><span class="p">,</span> <span class="s">&#34;#6E3A98&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>
+
+<style>
+      div.splitbox {
+        width:100%; 
+        overflow:auto;}
+
+      div.splitbox div.column-left {
+                    width:50%;
+                    padding: 2px;
+                    float:left;}
+      div.splitbox div.column-right {
+                    width:50%;
+                    padding: 4px;
+                    float:right;}
+
+      @media only screen and (max-width: 600px) {
+      div.splitbox div.column-left {
+                    width:100%;
+                    float:left;}
+      div.splitbox div.column-right {
+                    width:100%;
+                    float:left;}
+      }
+  </style><div class="splitbox"><div class="column-left">
+
+
+
+</div><div class="column-right">
+</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">shades</span><span class="o">::</span><span class="nf">swatch</span><span class="p">(</span><span class="n">colores</span><span class="p">)</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="1120" />
+
+
+</div><div class="column-right">
+
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">scales</span><span class="o">::</span><span class="nf">show_col</span><span class="p">(</span><span class="n">colores</span><span class="p">)</span>
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png" width="1120" />
+
+
+</div><div style="clear:both"></div></div>
+
+
 
 
 
@@ -394,33 +442,33 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
     </svg></a>
 </h2>
 <p>La forma más básica de elegir un color en R es por su <em>nombre</em>. En R existen 657 colores con nombre. En la siguiente imagen puedes ver los principales:</p>
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png" width="2240" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="2240" />
 <p>Para usarlos, simplemente usa su nombre:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colores</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;indianred&#34;</span><span class="p">,</span> <span class="s">&#34;steelblue&#34;</span><span class="p">,</span> <span class="s">&#34;grey60&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nf">swatch</span><span class="p">(</span><span class="n">colores</span><span class="p">)</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.png" width="768" />
 <p>Casi todos estos colores pueden ser modificados agregando un número del 1 al 4 al final del nombre; por ejemplo, <code>mediumorchid</code> puede hacerse levemente más claro o más oscuro:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">escala</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;mediumorchid&#34;</span><span class="p">,</span> <span class="s">&#34;mediumorchid1&#34;</span><span class="p">,</span> <span class="s">&#34;mediumorchid2&#34;</span><span class="p">,</span> <span class="s">&#34;mediumorchid3&#34;</span><span class="p">,</span> <span class="s">&#34;mediumorchid4&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nf">swatch</span><span class="p">(</span><span class="n">escala</span><span class="p">)</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-1.png" width="768" />
 <p>Los grises (<code>gray</code>) tienen la particularidad de que puedes ponerles un número entre 10 y 99 para ajustar su brillo:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">escala</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;gray10&#34;</span><span class="p">,</span> <span class="s">&#34;gray30&#34;</span><span class="p">,</span> <span class="s">&#34;gray50&#34;</span><span class="p">,</span> <span class="s">&#34;gray70&#34;</span><span class="p">,</span> <span class="s">&#34;gray90&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nf">swatch</span><span class="p">(</span><span class="n">escala</span><span class="p">)</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
 <p>También puedes escribir un color definiendo su tonalidad (<em>hue</em>), saturación (<em>saturation</em>) y brillo (<em>value</em>) con <code>hsv()</code>, entendiendo que el matiz es la posición del color en la escala de todos los colores, que va del 0 al 1, empezando y terminando con el rojo:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">color</span> <span class="o">&lt;-</span> <span class="nf">hsv</span><span class="p">(</span><span class="n">h</span> <span class="o">=</span> <span class="m">0</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nf">swatch</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="768" />
 <p>Para guiarse, la siguiente gráfica muestra la tonalidad de colores entre <code>0</code> y <code>1</code>,</p>
-<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-1.png" width="768" />
+<img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
 <p>Siguiendo el gráfico anterior, vemos que el tono <code>0.8</code> corresponde al color morado, así que podemos crearlo con <code>hsv()</code>:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">color</span> <span class="o">&lt;-</span> <span class="nf">hsv</span><span class="p">(</span><span class="m">0.85</span><span class="p">,</span> <span class="m">1</span><span class="p">,</span> <span class="m">1</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nf">swatch</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png" width="768" />
 <p>Luego podemos modificar la saturación y brillo del color con los otros dos argumentos de <code>hsv()</code>:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">color</span> <span class="o">&lt;-</span> <span class="nf">hsv</span><span class="p">(</span><span class="m">0.82</span><span class="p">,</span> <span class="m">0.5</span><span class="p">,</span> <span class="m">0.4</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nf">swatch</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.png" width="768" />
 
 
 
@@ -436,16 +484,16 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 </span></span><span class="line"><span class="cl"><span class="n">paleta</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;#f4b43f&#34;</span><span class="p">,</span> <span class="s">&#34;#ec6a2d&#34;</span><span class="p">,</span> <span class="s">&#34;#cc3b7b&#34;</span><span class="p">,</span> <span class="s">&#34;#705ce6&#34;</span><span class="p">,</span> <span class="s">&#34;#668cf6&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nf">swatch</span><span class="p">(</span><span class="n">paleta</span><span class="p">)</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-13-1.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># extender la paleta de 5 colores a 12 colores</span>
 </span></span><span class="line"><span class="cl"><span class="nf">colorRampPalette</span><span class="p">(</span><span class="n">paleta</span><span class="p">)(</span><span class="m">12</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-2.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-13-2.png" width="768" />
 <p>También podemos usar esta función para crear con facilidad una paleta secuencial entre dos o más colores:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colores</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;#df65b2&#34;</span><span class="p">,</span> <span class="s">&#34;#fae55f&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># extender la paleta a 8 colores</span>
 </span></span><span class="line"><span class="cl"><span class="nf">colorRampPalette</span><span class="p">(</span><span class="n">colores</span><span class="p">)(</span><span class="m">8</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png" width="768" />
 
 
 
@@ -459,7 +507,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 <p>Varios paquetes de R contienen sus propias paletas de colores prediseñadas. Uno de los conjuntos de paletas principales en visualización de datos, sobre todo para mapas, son las de 
 <a href="https://colorbrewer2.org/#type=sequential&amp;scheme=BuGn&amp;n=3" target="_blank" rel="noopener">Color Brewer</a>, a las que puedes acceder con el paquete <code>{RColorBrewer}</code>:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">RColorBrewer</span><span class="o">::</span><span class="nf">display.brewer.all</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-12-1.png" width="864" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png" width="864" />
 <p>Cuando elijas una de las paletas, puedes usarla 
 <a href="../../../blog/r_introduccion/tutorial_visualizacion_ggplot/">en cualquier gráfico de <code>{ggplot2}</code></a> con la función <code>scale_color_brewer()</code> o <code>scale_fill_brewer()</code>, según corresponda:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
@@ -470,12 +518,12 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 </span></span><span class="line"><span class="cl">  <span class="nf">geom_point</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="m">4</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">0.7</span><span class="p">)</span> <span class="o">+</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">scale_color_brewer</span><span class="p">(</span><span class="n">palette</span> <span class="o">=</span> <span class="s">&#34;PuRd&#34;</span><span class="p">)</span> <span class="o">+</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">theme_classic</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-13-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png" width="768" />
 <p>Con el paquete <code>{colorspace}</code> también podemos ver otras paletas disponibles:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">colorspace</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">hcl_palettes</span><span class="p">(</span><span class="n">plot</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-14-1.png" width="1152" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png" width="1152" />
 <p>Usar estas paletas en <code>{ggplot2}</code> es tan fácil como agregar la función de escala apropiada para definir los colores del gráfico:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">iris</span> <span class="o">|&gt;</span> 
 </span></span><span class="line"><span class="cl">  <span class="nf">ggplot</span><span class="p">()</span> <span class="o">+</span>
@@ -484,7 +532,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 </span></span><span class="line"><span class="cl">  <span class="n">colorspace</span><span class="o">::</span><span class="nf">scale_color_continuous_sequential</span><span class="p">(</span><span class="n">palette</span> <span class="o">=</span> <span class="s">&#34;Sunset&#34;</span><span class="p">)</span> <span class="o">+</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.1</span><span class="p">)))</span> <span class="o">+</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">theme_classic</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-15-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png" width="768" />
 <p>Encuentro una lista que compila todas las paletas de colores de la comunidad de R 
 <a href="https://github.com/EmilHvitfeldt/r-color-palettes" target="_blank" rel="noopener">en este repositorio.</a></p>
 
@@ -500,17 +548,17 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 <p>Las paletas secuenciales consiste en un degradado entre dos o más colores. Suelen usarse para representar una variable continua o numérica, cuyo valor va cambiando de forma cuantitativa.</p>
 <p>La función <code>sequential_hcl()</code> del paquete {colorspace} permite crear paletas secuenciales</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">sequential_hcl</span><span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="m">300</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-19-1.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">sequential_hcl</span><span class="p">(</span><span class="m">8</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">300</span><span class="p">,</span> <span class="m">100</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-2.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-19-2.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">sequential_hcl</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="m">260</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">                           <span class="n">c</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">45</span><span class="p">,</span> <span class="m">25</span><span class="p">),</span> <span class="n">l</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">25</span><span class="p">,</span> <span class="m">85</span><span class="p">),</span> <span class="n">power</span> <span class="o">=</span> <span class="m">.9</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-16-3.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-19-3.png" width="768" />
 <p>También se pueden obtener vectores de colores a partir de las paletas existentes que vienen con el paquete {colorspace}:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">sequential_hcl</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="s">&#34;Red-Blue&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">sequential_hcl</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="s">&#34;Purple-Orange&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-17-2.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-2.png" width="768" />
 
 
 
@@ -524,17 +572,17 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 <p>Como su nombre ética, en las paletas cualitativas los colores van saltando para maximizar la diferencia entre ellos. Se utilizan para variables cualitativas, categóricas o discretas, donde cada elemento de una secuencia es independiente de los demás, y el objetivo del uso del color es poder distinguirlos.</p>
 <p>La función <code>rainbow_hcl()</code> de {colorspace} entrega una típica paleta de arcoíris, pero con la posibilidad de modificar sus atributos de color en sus argumentos, tales como las tonalidades (<em>hue</em>) de inicio o final, la intensidad (<em>chroma</em>) de los tonos</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">rainbow_hcl</span><span class="p">(</span><span class="m">7</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="m">70</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">rainbow_hcl</span><span class="p">(</span><span class="m">7</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="m">100</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="m">190</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="m">380</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-2.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-2.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">rainbow_hcl</span><span class="p">(</span><span class="m">6</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="m">60</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="m">30</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="m">230</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="m">370</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-18-3.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-3.png" width="768" />
 <p>Éste tipo de paletas usualmente reúne colores en una escala tipo arcoíris, o bien reúne colores temáticos, distintos entre ellos, pero armónicos entre sí.</p>
 <p>También pueden usarse los nombres de las paredes preexistentes para generar una secuencia cualitativa con ellos.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">qualitative_hcl</span><span class="p">(</span><span class="m">6</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="s">&#34;Cold&#34;</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="m">80</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-19-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">qualitative_hcl</span><span class="p">(</span><span class="m">6</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="s">&#34;Warm&#34;</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="m">80</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-19-2.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-2.png" width="768" />
 
 
 
@@ -547,11 +595,11 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 </h3>
 <p>Las paletas divergentes se utilizan cuando una variable expresa a dos polos, una una misma magnitud donde los extremos son separados por una brecha central.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">diverging_hcl</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="m">5</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">200</span><span class="p">,</span> <span class="m">300</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">diverging_hcl</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="m">7</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">700</span><span class="p">,</span> <span class="m">180</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-2.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-2.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">diverging_hcl</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="m">7</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">700</span><span class="p">,</span> <span class="m">180</span><span class="p">),</span> <span class="n">c</span> <span class="o">=</span> <span class="m">130</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">.7</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-20-3.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-3.png" width="768" />
 
 
 
@@ -569,42 +617,42 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 </span></span><span class="line"><span class="cl"><span class="n">color</span> <span class="o">&lt;-</span> <span class="s">&#34;#f65b74&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nf">swatch</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-21-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-24-1.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">hue</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
 </span></span></code></pre></div><pre><code>[1] 350.3226
 </code></pre>
 <p>Obtenemos que, para el color definido, el valor de su tonalidad es 350. Podemos usar esta información para modificar levemente el mismo color y así obtener una variable del mismo color levemente más anaranjada.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">swatch</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="nf">hue</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="m">370</span><span class="p">)))</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-22-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-25-1.png" width="768" />
 <p>Podemos obtener mismos resultados utilizando el <em>delta</em> de la tonalidad del color; es decir, sumándole restándole una cantidad de grados a el valor de la tonalidad del color mismo:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">swatch</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="nf">hue</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="nf">delta</span><span class="p">(</span><span class="m">50</span><span class="p">))))</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-23-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-26-1.png" width="768" />
 <p>Al usar la función <code>delta()</code>, lo que hacemos es pedirle que cambie la tonalidad del color en 50°, volviéndose en un tono amarillo.</p>
 <p>Podemos obtener un resultado similar usando <code>col_shift()</code> del paquete <code>{scales}</code>:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">scales</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nf">show_col</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="nf">col_shift</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="m">20</span><span class="p">)))</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-24-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-27-1.png" width="768" />
 <p>El <strong>brillo</strong> (<em>brighness</em>) va de cero a uno, mientras que la claridad (<em>lightness</em>) va de cero a 100.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">color</span> <span class="o">|&gt;</span> <span class="nf">brightness</span><span class="p">(</span><span class="m">0.7</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-25-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-28-1.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">color</span> <span class="o">|&gt;</span> <span class="nf">lightness</span><span class="p">(</span><span class="nf">delta</span><span class="p">(</span><span class="m">20</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-25-2.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-28-2.png" width="768" />
 <p>Con <code>{scales}</code>, la función <code>col_lighter()</code> realiza el mismo propósito:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">col_lighter</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="m">20</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">show_col</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-26-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-29-1.png" width="768" />
 <p>Por su parte, la <strong>saturación</strong> aumenta la intensidad del color.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">color</span> <span class="o">|&gt;</span> <span class="nf">saturation</span><span class="p">(</span><span class="nf">delta</span><span class="p">(</span><span class="m">30</span><span class="p">))</span> <span class="o">|&gt;</span> <span class="nf">swatch</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-27-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-30-1.png" width="768" />
 <p>Podemos utilizar la función <code>delta()</code> para crear una sencilla paleta de colores a partir de un mismo color, aumentando y disminuyendo su intensidad (<em>chroma</em>):</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">swatch</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">c</span><span class="p">(</span><span class="n">color</span> <span class="o">|&gt;</span> <span class="nf">chroma</span><span class="p">(</span><span class="nf">delta</span><span class="p">(</span><span class="m">30</span><span class="p">)),</span> 
 </span></span><span class="line"><span class="cl">    <span class="n">color</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">    <span class="n">color</span> <span class="o">|&gt;</span> <span class="nf">chroma</span><span class="p">(</span><span class="nf">delta</span><span class="p">(</span><span class="m">-30</span><span class="p">)))</span>
 </span></span><span class="line"><span class="cl"><span class="p">)</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-28-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-31-1.png" width="768" />
 <p>En <code>{scales}</code>, la función es <code>col_saturate()</code>:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">col_saturate</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="m">-50</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">show_col</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-29-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-32-1.png" width="768" />
 <p>Podemos combinar estas técnicas para crear una paleta de colores más compleja, construida toda a partir de un solo color al cual se le va aumentando o disminuyendo sus valores de claridad e intensidad. El beneficio de hacerlo de esta manera es que luego basta con cambiar el color principal para obtener una paleta de iguales características, pero basada en una tonalidad distinta.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">color_principal</span> <span class="o">=</span> <span class="s">&#34;#4D4484&#34;</span>
 </span></span><span class="line"><span class="cl">
@@ -618,7 +666,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 </span></span><span class="line"><span class="cl">         <span class="n">color_detalle</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">         <span class="n">color_destacado</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">         <span class="n">color_texto</span><span class="p">))</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-30-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-33-1.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">color_principal</span> <span class="o">=</span> <span class="s">&#34;#3170ac&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">color_fondo</span> <span class="o">=</span> <span class="n">color_principal</span> <span class="o">|&gt;</span> <span class="nf">lightness</span><span class="p">(</span><span class="m">13</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">chroma</span><span class="p">(</span><span class="m">20</span><span class="p">)</span>
@@ -631,7 +679,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 </span></span><span class="line"><span class="cl">         <span class="n">color_detalle</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">         <span class="n">color_destacado</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">         <span class="n">color_texto</span><span class="p">))</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-31-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-34-1.png" width="768" />
 <p>Notar que el código es igual, y sólo se cambió el valor del <code>color_principal</code>. Esta estrategia es muy útil si se están produciendo visualizaciones o aplicaciones que ocupan una paleta de colores monocroma.</p>
 
 
@@ -647,20 +695,20 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">swatch</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;#70f1d5&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">         <span class="nf">submix</span><span class="p">(</span><span class="s">&#34;#70f1d5&#34;</span><span class="p">,</span> <span class="s">&#34;#fae55f&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">         <span class="s">&#34;#fae55f&#34;</span><span class="p">))</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-32-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-35-1.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">swatch</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;#3377f7&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">         <span class="nf">addmix</span><span class="p">(</span><span class="s">&#34;#3377f7&#34;</span><span class="p">,</span> <span class="s">&#34;#ec4e3c&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">         <span class="s">&#34;#ec4e3c&#34;</span><span class="p">))</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-33-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-36-1.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">swatch</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;#f9ce45&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">         <span class="nf">submix</span><span class="p">(</span><span class="s">&#34;#f9ce45&#34;</span><span class="p">,</span> <span class="s">&#34;#77d671&#34;</span><span class="p">,</span> <span class="n">amount</span> <span class="o">=</span> <span class="m">0.5</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">         <span class="s">&#34;#77d671&#34;</span><span class="p">))</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-34-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-37-1.png" width="768" />
 <p>El paquete <code>{scales}</code> también provee una función para mezclar colores. Se puede usar esta función para tomar una paleta de colores y volverla más coherente al aplicarle una pequeña fracción de otro color, en este caso naranja:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">col_mix</span><span class="p">(</span><span class="n">a</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;#77d671&#34;</span><span class="p">,</span> <span class="s">&#34;#70f1d5&#34;</span><span class="p">,</span> <span class="s">&#34;#fae55f&#34;</span><span class="p">,</span> <span class="s">&#34;#ff479c&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">        <span class="n">b</span> <span class="o">=</span> <span class="s">&#34;orange2&#34;</span><span class="p">,</span> 
 </span></span><span class="line"><span class="cl">        <span class="n">amount</span> <span class="o">=</span> <span class="m">0.2</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">show_col</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-35-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-38-1.png" width="768" />
 
 
 
@@ -681,7 +729,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 </span></span><span class="line"><span class="cl">  <span class="n">colorspace</span><span class="o">::</span><span class="nf">scale_fill_discrete_qualitative</span><span class="p">(</span><span class="n">palette</span> <span class="o">=</span> <span class="s">&#34;Dark 3&#34;</span><span class="p">)</span> <span class="o">+</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.1</span><span class="p">)))</span> <span class="o">+</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">theme_classic</span><span class="p">()</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-36-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-39-1.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">iris</span> <span class="o">|&gt;</span> 
 </span></span><span class="line"><span class="cl">  <span class="nf">ggplot</span><span class="p">()</span> <span class="o">+</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">Sepal.Width</span><span class="p">,</span> <span class="n">Sepal.Length</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">Petal.Width</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">Petal.Length</span><span class="p">),</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">.8</span><span class="p">)</span> <span class="o">+</span>
@@ -691,7 +739,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 </span></span><span class="line"><span class="cl">         <span class="n">color</span> <span class="o">=</span> <span class="nf">guide_colorsteps</span><span class="p">())</span> <span class="o">+</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">theme</span><span class="p">(</span><span class="n">legend.title</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">(),</span>
 </span></span><span class="line"><span class="cl">        <span class="n">axis.title</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">())</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-36-2.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-39-2.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">iris</span> <span class="o">|&gt;</span> 
 </span></span><span class="line"><span class="cl">  <span class="nf">ggplot</span><span class="p">()</span> <span class="o">+</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">geom_point</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">Petal.Length</span><span class="p">,</span> <span class="n">Sepal.Width</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="n">Petal.Width</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="n">Sepal.Length</span><span class="p">),</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">.8</span><span class="p">)</span> <span class="o">+</span>
@@ -701,7 +749,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 </span></span><span class="line"><span class="cl">         <span class="n">color</span> <span class="o">=</span> <span class="nf">guide_colorsteps</span><span class="p">())</span> <span class="o">+</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">theme</span><span class="p">(</span><span class="n">legend.title</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">(),</span>
 </span></span><span class="line"><span class="cl">        <span class="n">axis.title</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">())</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-36-3.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-39-3.png" width="768" />
 <p>Algunas de las funciones para aplicar paletas de colores tienen funcionalidades extras. Por ejemplo, las funciones de <code>{colorspace}</code> permiten modificar sus paletas en términos de la saturación (<em>chroma</em>) y el brillo del color (<em>luminance</em>), entregándote más libertad al momento de definir una apariencia específica:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">grafico</span> <span class="o">&lt;-</span> <span class="n">iris</span> <span class="o">|&gt;</span> 
 </span></span><span class="line"><span class="cl">  <span class="nf">ggplot</span><span class="p">()</span> <span class="o">+</span>
@@ -716,13 +764,13 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 </span></span><span class="line"><span class="cl">    <span class="n">palette</span> <span class="o">=</span> <span class="s">&#34;TealGrn&#34;</span><span class="p">,</span> 
 </span></span><span class="line"><span class="cl">    <span class="n">c1</span> <span class="o">=</span> <span class="m">50</span><span class="p">,</span> <span class="c1"># intensidad del color</span>
 </span></span><span class="line"><span class="cl">    <span class="n">l1</span> <span class="o">=</span> <span class="m">60</span><span class="p">)</span> <span class="c1"># brillo del color</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-37-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-40-1.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">grafico</span> <span class="o">+</span>
 </span></span><span class="line"><span class="cl">  <span class="n">colorspace</span><span class="o">::</span><span class="nf">scale_color_continuous_sequential</span><span class="p">(</span>
 </span></span><span class="line"><span class="cl">    <span class="n">palette</span> <span class="o">=</span> <span class="s">&#34;TealGrn&#34;</span><span class="p">,</span> 
 </span></span><span class="line"><span class="cl">    <span class="n">c1</span> <span class="o">=</span> <span class="m">20</span><span class="p">,</span> <span class="c1"># intensidad del color</span>
 </span></span><span class="line"><span class="cl">    <span class="n">l1</span> <span class="o">=</span> <span class="m">30</span><span class="p">)</span> <span class="c1"># brillo del color</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-37-2.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-40-2.png" width="768" />
 
 
 <div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
@@ -751,9 +799,9 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 </h2>
 <p><code>{colorspace}</code> incluye funciones para poder visualizar secuencias de colores en proyecciones del espacio de color HCL (<em>hue, chroma, luminance</em>), lo que nos permite contextualizar las paletas en un espacio perceptual del color basado en estos tres parámetros.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">hclplot</span><span class="p">(</span><span class="nf">sequential_hcl</span><span class="p">(</span><span class="m">7</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="m">260</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="m">80</span><span class="p">,</span> <span class="n">l</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">35</span><span class="p">,</span> <span class="m">95</span><span class="p">),</span> <span class="n">power</span> <span class="o">=</span> <span class="m">1.5</span><span class="p">))</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-38-1.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-41-1.png" width="768" />
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">colorspace</span><span class="o">::</span><span class="nf">hclplot</span><span class="p">(</span><span class="nf">sequential_hcl</span><span class="p">(</span><span class="m">7</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">260</span><span class="p">,</span> <span class="m">220</span><span class="p">),</span> <span class="n">c</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">50</span><span class="p">,</span> <span class="m">75</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="n">l</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">30</span><span class="p">,</span> <span class="m">95</span><span class="p">),</span> <span class="n">power</span> <span class="o">=</span> <span class="m">1</span><span class="p">))</span>
-</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-38-2.png" width="768" />
+</span></span></code></pre></div><img src="colores.markdown_strict_files/figure-markdown_strict/unnamed-chunk-41-2.png" width="768" />
 <hr>
 
 
@@ -791,12 +839,12 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:5219/blog/patchwork/">&larr; Unir y combinar gráficos {ggplot2} con {patchwork}</a>
+    href="http://localhost:4125/blog/patchwork/">&larr; Unir y combinar gráficos {ggplot2} con {patchwork}</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:5219/blog/mapa_chile_horizontal/">Rotar un mapa de Chile en R para que quede horizontal &rarr;</a>
+    href="http://localhost:4125/blog/mapa_chile_horizontal/">Rotar un mapa de Chile en R para que quede horizontal &rarr;</a>
   
 </div>
 
@@ -833,24 +881,24 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">9 minute read, 1858 words</dd>
+    <dd class="fw5 ml0">9 minute read, 1867 words</dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:5219/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="http://localhost:5219/tags/gr%C3%A1ficos">gráficos</a>  <a href="http://localhost:5219/tags/ggplot2">ggplot2</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4125/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="http://localhost:4125/tags/ggplot2">ggplot2</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="../../blog/2025-12-04/">Gráfico exploratorio para el Sistema de Indicadores y Estándares Territoriales</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/ggplot_puente/">Gráficos de puente en `{ggplot2}`</a></dd>
     
-    <dd class="fw5 ml0"><a href="../../blog/mapas_sf/">Mapas y visualización de datos geoespaciales en R con {sf}</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/ggplot_ternario/">Gráficos ternarios o triangulares de tres variables en `{ggplot2}`</a></dd>
     
-    <dd class="fw5 ml0"><a href="../../blog/elecciones_presidenciales_2025/">Visualización y scraping de resultados de las elecciones presidenciales 2025</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/2026-01-27/">Por qué siempre visualizar los datos: el cuarteto de Anscombe</a></dd>
     
   </dl>
 </details>
@@ -868,7 +916,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
 
   <h1 class="f3">Blog</h1>
   <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
-<a href="https://bastianolea-buscador.share.connect.posit.cloud" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
+<a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
 <a href="../../tags/">temas</a>.</p>
   
 
@@ -892,7 +940,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/chile/">Chile</a></span>
+      href="http://localhost:4125/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -907,7 +955,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/datos/">Datos</a></span>
+      href="http://localhost:4125/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -922,7 +970,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/consejos/">Consejos</a></span>
+      href="http://localhost:4125/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -937,7 +985,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:4125/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -952,7 +1000,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:4125/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -967,7 +1015,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/blog/">Blog</a></span>
+      href="http://localhost:4125/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -982,7 +1030,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:4125/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -997,7 +1045,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/apps/">Apps</a></span>
+      href="http://localhost:4125/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -1012,7 +1060,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/shiny/">Shiny</a></span>
+      href="http://localhost:4125/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -1027,7 +1075,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:4125/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -1042,7 +1090,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/mapas/">Mapas</a></span>
+      href="http://localhost:4125/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -1057,7 +1105,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:4125/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -1072,7 +1120,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:4125/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -1087,7 +1135,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:4125/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -1102,7 +1150,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:4125/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -1117,7 +1165,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:4125/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -1132,7 +1180,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/quarto/">Quarto</a></span>
+      href="http://localhost:4125/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -1147,7 +1195,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:4125/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -1162,7 +1210,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:4125/tags/ciencias-sociales/">Ciencias sociales</a></span>
   </span>
  
   
@@ -1177,7 +1225,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/optimizaci%C3%B3n/">Optimización</a></span>
+      href="http://localhost:4125/tags/loops/">Loops</a></span>
   </span>
 
 <a href="../../tags/" style="margin-left: 3px;">y más!</a>
@@ -1197,6 +1245,7 @@ A lo largo de este post usaremos la función swatch() del paquete {shades}, que 
           <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: -22px; margin-bottom: 32px;">
             <nav id="TableOfContents">
   <ul>
+    <li><a href="#previsualizar-colores">Previsualizar colores</a></li>
     <li><a href="#crear-colores">Crear colores</a></li>
     <li><a href="#extender-paletas-de-colores">Extender paletas de colores</a></li>
     <li><a href="#paletas-de-colores">Paletas de colores</a>
@@ -1254,7 +1303,7 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianolea-buscador.share.connect.posit.cloud" title="search" target="_blank" rel="me noopener"
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-search fa-lg fa-fw"></i>
     </a>
@@ -1411,7 +1460,7 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
       
       <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
       
-      <a class="dib pv1 ph2 link" href="https://bastianolea-buscador.share.connect.posit.cloud" title="Buscador">Buscar</a>
+      <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
       <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
       

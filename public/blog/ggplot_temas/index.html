@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=5219&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4125&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -24,34 +24,36 @@
   
     
   
-<meta name="description" content="Darle un toque de color a tus gráficos produce visualizaciones con más personalidad y mayor impacto. Pero cambiar el color de cada elemento puede ser engorroso. Para ayudarte eso existe el paquete `{thematic}`. En este post vemos cómo usar `{thematic}` para cambiar fácilmente los colores de fondo de tus gráficos.">
+<meta name="description" content="Darle un toque de color a tus gráficos en `{ggplot2}` produce visualizaciones con más personalidad y mayor impacto. En este post veremos cómo aplicar temas de colores a tus gráficos! Para ayudarte con eso también existe el paquete `{thematic}` para cambiar fácilmente los colores de fondo de tus gráficos.">
 
 
 <meta property="og:site_name" content="Bastián Olea">
 <meta property="og:title" content="Temas de colores personalizados para tus gráficos {ggplot2} | Bastián Olea">
-<meta property="og:description" content="Darle un toque de color a tus gráficos produce visualizaciones con más personalidad y mayor impacto. Pero cambiar el color de cada elemento puede ser engorroso. Para ayudarte eso existe el paquete `{thematic}`. En este post vemos cómo usar `{thematic}` para cambiar fácilmente los colores de fondo de tus gráficos." />
+<meta property="og:description" content="Darle un toque de color a tus gráficos en `{ggplot2}` produce visualizaciones con más personalidad y mayor impacto. En este post veremos cómo aplicar temas de colores a tus gráficos! Para ayudarte con eso también existe el paquete `{thematic}` para cambiar fácilmente los colores de fondo de tus gráficos." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:5219/blog/ggplot_temas/" />
+<meta property="og:url" content="http://localhost:4125/blog/ggplot_temas/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:5219/blog/ggplot_temas/featured.png" >
+        <meta property="og:image" content="http://localhost:4125/blog/ggplot_temas/featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:5219/blog/ggplot_temas/featured.png" >
+        <meta name="twitter:image" content="http://localhost:4125/blog/ggplot_temas/featured.png" >
     
     
   
   <meta itemprop="name" content="Temas de colores personalizados para tus gráficos {ggplot2}">
-  <meta itemprop="description" content="Darle un toque de color a tus gráficos produce visualizaciones con más personalidad y mayor impacto. Pero cambiar el color de cada elemento puede ser engorroso. Para ayudarte con eso existe el paquete {thematic}! En este post vemos cómo usar {thematic} para cambiar fácilmente los colores de tus gráficos.
+  <meta itemprop="description" content="Darle un toque de color a tus gráficos produce visualizaciones con más personalidad y mayor impacto. Pero cambiar el color de cada elemento puede parecer engorroso 😣
+¡Pero es fácil! Veamos cómo se puede hacer con las nuevas funcionalidades de {ggplot2} versión 4.0.
 Primero generemos datos al azar para crear una visualización de demostración:
-library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, mean = 7, sd = 2) ) Ahora creemos un gráfico básico:">
-  <meta itemprop="datePublished" content="2025-08-26T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-08-26T00:00:00+00:00">
-  <meta itemprop="wordCount" content="389">
-  <meta itemprop="image" content="http://localhost:5219/blog/ggplot_temas/featured.png">
+library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, mean = 7, sd = 2) ) Ahora creemos un gráfico básico:
+library(ggplot2) grafico &lt;- datos |&gt; ggplot() &#43; aes(x = as.factor(a), y = b) &#43; # capa de columnas geom_col(width = 0.5) &#43; # capa de texto geom_text(aes(label = round(b, 0), y = b &#43; 0.6), size = 3, fontface = &#34;bold&#34;) grafico Agreguemos algunas capas extra para mejorar la apariencia de nuestro gráfico:">
+  <meta itemprop="datePublished" content="2026-01-22T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-01-22T00:00:00+00:00">
+  <meta itemprop="wordCount" content="590">
+  <meta itemprop="image" content="http://localhost:4125/blog/ggplot_temas/featured.png">
   <meta itemprop="keywords" content="Visualización de datos,Ggplot2,Gráficos">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -67,13 +69,17 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
   
   <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
   
+  
   <link rel="stylesheet" href="../../css/syntax.css">
+  
+  
+  <link rel="preload" href="https://bastianoleah.shinyapps.io/buscador/" as="image">
 </head>
 <body>
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:5219/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4125/" title="Home">
       <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -101,7 +107,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea-buscador.share.connect.posit.cloud" title="Buscador">Buscar</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
         
         
@@ -140,7 +146,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianolea-buscador.share.connect.posit.cloud" title="search" target="_blank" rel="me noopener"
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-search fa-lg fa-fw"></i>
     </a>
@@ -311,7 +317,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
         
         <div style = "display: inline-block;">  
           <p class="f7 db mv0 ttu" style = "display: inline-block;">
-            26/8/2025</p>
+            22/1/2026</p>
           
           
           <span>
@@ -340,7 +346,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:5219/tags/visualizaci%C3%B3n-de-datos"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:4125/tags/visualizaci%C3%B3n-de-datos"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -349,7 +355,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            visualización de datos</a>  <a href="http://localhost:5219/tags/ggplot2"
+            visualización de datos</a>  <a href="http://localhost:4125/tags/ggplot2"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -358,7 +364,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            ggplot2</a>  <a href="http://localhost:5219/tags/gr%C3%A1ficos"
+            ggplot2</a>  <a href="http://localhost:4125/tags/gr%C3%A1ficos"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -406,8 +412,9 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
       
       
     <section class="post-body pt5 pb4">
-        <p>Darle un toque de color a tus gráficos produce visualizaciones con <strong>más personalidad</strong> y <strong>mayor impacto</strong>. Pero cambiar el color de cada elemento puede ser engorroso. Para ayudarte con eso existe el 
-<a href="https://rstudio.github.io/thematic/" target="_blank" rel="noopener">paquete <code>{thematic}</code></a>! En este post vemos cómo usar <code>{thematic}</code> para cambiar fácilmente los colores de tus gráficos.</p>
+        <p>Darle un toque de color a tus gráficos produce visualizaciones con <strong>más personalidad</strong> y <strong>mayor impacto</strong>. Pero cambiar el color de cada elemento puede parecer engorroso 😣</p>
+<p>¡Pero es fácil! Veamos cómo se puede hacer 
+<a href="https://tidyverse.org/blog/2025/09/ggplot2-4-0-0/#theme-improvements" target="_blank" rel="noopener">con las nuevas funcionalidades de <code>{ggplot2}</code> versión 4.0.</a></p>
 <p>Primero generemos datos al azar para crear una visualización de demostración:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
@@ -421,7 +428,9 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
 </span></span><span class="line"><span class="cl"><span class="n">grafico</span> <span class="o">&lt;-</span> <span class="n">datos</span> <span class="o">|&gt;</span> 
 </span></span><span class="line"><span class="cl">  <span class="nf">ggplot</span><span class="p">()</span> <span class="o">+</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="nf">as.factor</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="n">y</span> <span class="o">=</span> <span class="n">b</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># capa de columnas</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">geom_col</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="m">0.5</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># capa de texto</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="nf">round</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="m">0</span><span class="p">),</span> <span class="n">y</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="m">0.6</span><span class="p">),</span> 
 </span></span><span class="line"><span class="cl">            <span class="n">size</span> <span class="o">=</span> <span class="m">3</span><span class="p">,</span> <span class="n">fontface</span> <span class="o">=</span> <span class="s">&#34;bold&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
@@ -429,26 +438,83 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
 </span></span></code></pre></div><img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png" width="768" />
 <p>Agreguemos algunas capas extra para mejorar la apariencia de nuestro gráfico:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">grafico</span> <span class="o">&lt;-</span> <span class="n">grafico</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># etiquetas de texto</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">labs</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s">&#34;Gráfico de barras&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">       <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;Números al azar&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">       <span class="n">x</span> <span class="o">=</span> <span class="s">&#34;Eje horizontal&#34;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s">&#34;Eje vertical&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">       <span class="n">caption</span> <span class="o">=</span> <span class="s">&#34;Fuente: de los deseos&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># ajuste del espaciado vertical</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.05</span><span class="p">)))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># detalles del tema</span>
 </span></span><span class="line"><span class="cl">  <span class="nf">theme</span><span class="p">(</span><span class="n">plot.title</span> <span class="o">=</span> <span class="nf">element_text</span><span class="p">(</span><span class="n">face</span> <span class="o">=</span> <span class="s">&#34;bold&#34;</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">        <span class="n">panel.grid.minor.y</span> <span class="o">=</span> <span class="nf">element_line</span><span class="p">(</span><span class="n">linetype</span> <span class="o">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">linewidth</span> <span class="o">=</span> <span class="m">.5</span><span class="p">),</span>
 </span></span><span class="line"><span class="cl">        <span class="n">axis.ticks.x</span> <span class="o">=</span> <span class="nf">element_blank</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">grafico</span>
 </span></span></code></pre></div><img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-3-1.png" width="768" />
-<p>Ahora que tenemos un gráfico, probemos <code>{thematic}</code>. La idea es que tenemos que <em>activar</em> la función que genera los temas con <code>thematic_on()</code>, y en el momento que la activamos, definimos los <strong>colores principales</strong> de nuestro tema. Estos colores son de <strong>fondo</strong> (<code>bg</code>) y de <strong>frente</strong> (<code>fg</code>), que como su nobre lo indica, definen el color base del gráfico y el color de los elementos principales.</p>
+
+
+
+
+<h2 id="cambiar-colores-de-los-temas-de-ggplot2">Cambiar colores de los temas de <code>{ggplot2}</code>
+  <a href="#cambiar-colores-de-los-temas-de-ggplot2"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Ahora, para cambiar los colores del gráfico, podemos usar una <strong>función para aplicar un tema</strong>, como <code>theme_classic()</code> o <code>theme_minimal()</code>, dentro de la cual podremos <strong>definir los colores principales</strong> del gráfico:</p>
+<ul>
+<li>El color de <strong>fondo</strong> o <em>papel</em> (<code>paper</code>)</li>
+<li>El color de los <strong>elementos</strong> o <em>tinta</em> (<code>ink</code>)</li>
+<li>El color de <strong>acento</strong> (<code>accent</code>)</li>
+</ul>
+<p>Probemos con <code>theme_classic()</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">grafico</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">theme_classic</span><span class="p">(</span><span class="n">paper</span> <span class="o">=</span> <span class="s">&#34;#EAD2FA&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                <span class="n">ink</span> <span class="o">=</span> <span class="s">&#34;#553A74&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                <span class="n">accent</span> <span class="o">=</span> <span class="s">&#34;#9069C0&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png" width="768" />
+<p>Tan solo con definir tres colores, obtenemos un gráfico con una apariencia mucho mejor! 💜</p>
+<p>Intentemos ahora con <code>theme_minimal()</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">grafico</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">theme_minimal</span><span class="p">(</span><span class="n">paper</span> <span class="o">=</span> <span class="s">&#34;#EAD2FA&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                <span class="n">ink</span> <span class="o">=</span> <span class="s">&#34;#553A74&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                <span class="n">accent</span> <span class="o">=</span> <span class="s">&#34;#9069C0&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-5-1.png" width="768" />
+
+
+
+
+<h2 id="aplicar-temas-con-thematic">Aplicar temas con <code>{thematic}</code>
+  <a href="#aplicar-temas-con-thematic"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Otra forma de aplicar temas de colores a tus gráficos es con el 
+<a href="https://rstudio.github.io/thematic/" target="_blank" rel="noopener">paquete <code>{thematic}</code></a>.</p>
+<p>La idea de <code>{thematic}</code> es que tenemos que <em>activar</em> la <strong>función que aplica los temas</strong> con <code>thematic_on()</code>, y en el momento que la activamos, definimos los <strong>colores principales</strong> de nuestro tema. Estos colores son de <strong>fondo</strong> (<code>bg</code>) y de <strong>frente</strong> (<code>fg</code>), que como su nombre lo indica, definen el color base del gráfico y el color de los elementos principales.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">thematic</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nf">thematic_on</span><span class="p">(</span><span class="n">fg</span> <span class="o">=</span> <span class="s">&#34;#553A74&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">            <span class="n">bg</span> <span class="o">=</span> <span class="s">&#34;#EAD2FA&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">grafico</span>
-</span></span></code></pre></div><img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-4-1.png" width="768" />
+</span></span></code></pre></div><img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.png" width="768" />
 <p>Solamente con definir dos colores con <code>thematic_on()</code> e imprimir el gráfico obtenemos el gráfico con el tema aplicado. Muy lindo 💜</p>
+<p>La diferencia entre cambiar los temas con las funciones de <code>{ggplot2}</code> y con <code>{thematic}</code> es que <code>{thematic}</code> toma algunas decisiones extra para hacer más bonitos tus gráficos, como un color de fondo más tenue, entre otras.</p>
+<p>Por otro lado, <code>{thematic}</code> tiene la ventaja de que 
+<a href="https://bastianolea.rbind.io/blog/shiny_temas/#aplicar-el-tema-de-tu-app-shiny-a-tus-gr%c3%a1ficos" target="_blank" rel="noopener">puede trabajar en conjunto con tus aplicaciones Shiny</a>, de manera que el tema de tu app se aplique a tus gráficos automáticamente.</p>
+
+
+
+
+<h2 id="eligiendo-temas-de-colores">Eligiendo temas de colores
+  <a href="#eligiendo-temas-de-colores"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
 <p>Para encontrar pares de colores interesantes, recomiendo el sitio 
 <a href="https://pigment.shapefactory.co" target="_blank" rel="noopener">Pigment</a>, que genera pares de colores a los que puedes ajustar su saturación y su nivel de iluminación.</p>
 <a href="pigment.png" target="_blank">
@@ -457,26 +523,26 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
   
 </a>
 <p>Veamos algunos ejemplos de como queda el mismo gráfico con otros pares de colores:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">thematic_on</span><span class="p">(</span><span class="n">fg</span> <span class="o">=</span> <span class="s">&#34;#6A3F5B&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">            <span class="n">bg</span> <span class="o">=</span> <span class="s">&#34;#E28B9F&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">grafico</span>
-</span></span></code></pre></div><img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.png" width="768" />
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">thematic_on</span><span class="p">(</span><span class="n">fg</span> <span class="o">=</span> <span class="s">&#34;#81BFC3&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">            <span class="n">bg</span> <span class="o">=</span> <span class="s">&#34;#684D5B&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">grafico</span>
-</span></span></code></pre></div><img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-1.png" width="768" />
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">thematic_on</span><span class="p">(</span><span class="n">fg</span> <span class="o">=</span> <span class="s">&#34;#524337&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">            <span class="n">bg</span> <span class="o">=</span> <span class="s">&#34;#C4B495&#34;</span><span class="p">)</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">thematic_on</span><span class="p">(</span><span class="n">fg</span> <span class="o">=</span> <span class="s">&#34;#51BBAC&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bg</span> <span class="o">=</span> <span class="s">&#34;#2B5556&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">grafico</span>
 </span></span></code></pre></div><img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-8-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">thematic_on</span><span class="p">(</span><span class="n">fg</span> <span class="o">=</span> <span class="s">&#34;#7FBCC4&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bg</span> <span class="o">=</span> <span class="s">&#34;#473649&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">grafico</span>
+</span></span></code></pre></div><img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="768" />
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">thematic_on</span><span class="p">(</span><span class="n">fg</span> <span class="o">=</span> <span class="s">&#34;#6E6962&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">bg</span> <span class="o">=</span> <span class="s">&#34;#C5BEB5&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">grafico</span>
+</span></span></code></pre></div><img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-10-1.png" width="768" />
 <p>Para desactivar la aplicación del tema de colores, usa <code>thematic_off()</code> y volverás a la aburrida normalidad.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">thematic_off</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">grafico</span>
-</span></span></code></pre></div><img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="768" />
+</span></span></code></pre></div><img src="ggplot_temas.markdown_strict_files/figure-markdown_strict/unnamed-chunk-11-1.png" width="768" />
 <p>¡Así de simple! Claramente es una forma <strong>básica y rápida</strong> de personalizar la apariencia de las visualizaciones, pero el resultado suele ser positivo considerando el poquísimo esfuerzo necesario para lograrlo. Eficiencia, yey! 🥰</p>
 <p><div style = "height: 18px;">
 </div>
@@ -486,6 +552,8 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
   align-items: center;">
     <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
   </div>
+
+
 </p>
  
     </section>
@@ -495,12 +563,12 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:5219/blog/2025-08-27/">&larr; Generando ruido visual con R</a>
+    href="http://localhost:4125/blog/shiny_validacion/">&larr; Testeo automatizado de aplicaciones Shiny con {shinytest2}</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:5219/blog/ggplot_tipografias/">Tipografías personalizadas en gráficos {ggplot2} &rarr;</a>
+    href="http://localhost:4125/blog/gt_pildoras/">Crea tablas con píldoras de colores usando `{gt}` en R &rarr;</a>
   
 </div>
 
@@ -533,28 +601,28 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
   <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
     <dt class="fw7">Fecha de publicación:</dt>
-    <dd class="fw5 ml0">August 26, 2025</dd>
+    <dd class="fw5 ml0">January 22, 2026</dd>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">2 minute read, 389 words</dd>
+    <dd class="fw5 ml0">3 minute read, 590 words</dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:5219/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="http://localhost:5219/tags/ggplot2">ggplot2</a>  <a href="http://localhost:5219/tags/gr%C3%A1ficos">gráficos</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4125/tags/visualizaci%C3%B3n-de-datos">visualización de datos</a>  <a href="http://localhost:4125/tags/ggplot2">ggplot2</a>  <a href="http://localhost:4125/tags/gr%C3%A1ficos">gráficos</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="../../blog/2025-12-04/">Gráfico exploratorio para el Sistema de Indicadores y Estándares Territoriales</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/ggplot_puente/">Gráficos de puente en `{ggplot2}`</a></dd>
     
-    <dd class="fw5 ml0"><a href="../../blog/mapas_sf/">Mapas y visualización de datos geoespaciales en R con {sf}</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/ggplot_ternario/">Gráficos ternarios o triangulares de tres variables en `{ggplot2}`</a></dd>
     
-    <dd class="fw5 ml0"><a href="../../blog/elecciones_presidenciales_2025/">Visualización y scraping de resultados de las elecciones presidenciales 2025</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/2026-01-27/">Por qué siempre visualizar los datos: el cuarteto de Anscombe</a></dd>
     
   </dl>
 </details>
@@ -572,7 +640,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
 
   <h1 class="f3">Blog</h1>
   <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
-<a href="https://bastianolea-buscador.share.connect.posit.cloud" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
+<a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
 <a href="../../tags/">temas</a>.</p>
   
 
@@ -596,7 +664,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/chile/">Chile</a></span>
+      href="http://localhost:4125/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -611,7 +679,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/datos/">Datos</a></span>
+      href="http://localhost:4125/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -626,7 +694,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/consejos/">Consejos</a></span>
+      href="http://localhost:4125/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -641,7 +709,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:4125/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -656,7 +724,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:4125/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -671,7 +739,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/blog/">Blog</a></span>
+      href="http://localhost:4125/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -686,7 +754,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:4125/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -701,7 +769,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/shiny/">Shiny</a></span>
+      href="http://localhost:4125/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -716,7 +784,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/apps/">Apps</a></span>
+      href="http://localhost:4125/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -731,7 +799,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:4125/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -746,7 +814,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:4125/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -761,7 +829,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/mapas/">Mapas</a></span>
+      href="http://localhost:4125/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -776,7 +844,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:4125/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -791,7 +859,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:4125/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -806,7 +874,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:4125/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -821,7 +889,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:4125/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -836,7 +904,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/quarto/">Quarto</a></span>
+      href="http://localhost:4125/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -851,7 +919,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:4125/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -866,7 +934,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:4125/tags/ciencias-sociales/">Ciencias sociales</a></span>
   </span>
  
   
@@ -881,7 +949,7 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/loops/">Loops</a></span>
+      href="http://localhost:4125/tags/loops/">Loops</a></span>
   </span>
 
 <a href="../../tags/" style="margin-left: 3px;">y más!</a>
@@ -895,6 +963,20 @@ library(dplyr) # crear datos al azar datos &lt;- tibble(a = 1:10, b = rnorm(10, 
 </div>
 
   
+  <div id="PageTableOfContents" style="margin-top: 24px; position: sticky; top: 108px;">
+        <div class="blog-info ph4 pb4 pb0-l">
+        <h3 style="margin-bottom: 12px;">Índice:</h3>
+          <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: -22px; margin-bottom: 32px;">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#cambiar-colores-de-los-temas-de-ggplot2">Cambiar colores de los temas de <code>{ggplot2}</code></a></li>
+    <li><a href="#aplicar-temas-con-thematic">Aplicar temas con <code>{thematic}</code></a></li>
+    <li><a href="#eligiendo-temas-de-colores">Eligiendo temas de colores</a></li>
+  </ul>
+</nav>
+          </div>
+        </div>
+    </div>
   
   
 
@@ -933,7 +1015,7 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianolea-buscador.share.connect.posit.cloud" title="search" target="_blank" rel="me noopener"
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-search fa-lg fa-fw"></i>
     </a>
@@ -1090,7 +1172,7 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
       
       <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
       
-      <a class="dib pv1 ph2 link" href="https://bastianolea-buscador.share.connect.posit.cloud" title="Buscador">Buscar</a>
+      <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
       <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
       

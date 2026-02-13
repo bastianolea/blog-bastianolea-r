@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=5219&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4125&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -24,32 +24,32 @@
   
     
   
-<meta name="description" content="Validar aplicaciones te permite crear un conjunto de pruebas para confirmar que tus aplicaciones funcionan bien sin tener que probarlas manualmente. Puedes programar un _bot_ que apriete todos los botones de tu aplicación y obtener capturas de pantalla que te confirmen que todo se ve bien. En esta guía aprenderás a utilizar `{shinytest2}` para automatizar el testeo de tus aplicaciones Shiny, asegurando su correcto funcionamiento a través de capturas de pantalla y otras validaciones automáticas.">
+<meta name="description" content="La validación de aplicaciones te permite crear un conjunto de pruebas para confirmar que tus aplicaciones funcionan bien sin tener que probarlas manualmente. Puedes programar un _bot_ que apriete todos los botones de tu aplicación y obtener capturas de pantalla que te confirmen que todo se ve bien. En esta guía aprenderás a utilizar `{shinytest2}` para automatizar el testeo de tus aplicaciones Shiny, asegurando su correcto funcionamiento a través de capturas de pantalla y otras validaciones automáticas.">
 
 
 <meta property="og:site_name" content="Bastián Olea">
 <meta property="og:title" content="Testeo automatizado de aplicaciones Shiny con {shinytest2} | Bastián Olea">
-<meta property="og:description" content="Validar aplicaciones te permite crear un conjunto de pruebas para confirmar que tus aplicaciones funcionan bien sin tener que probarlas manualmente. Puedes programar un _bot_ que apriete todos los botones de tu aplicación y obtener capturas de pantalla que te confirmen que todo se ve bien. En esta guía aprenderás a utilizar `{shinytest2}` para automatizar el testeo de tus aplicaciones Shiny, asegurando su correcto funcionamiento a través de capturas de pantalla y otras validaciones automáticas." />
+<meta property="og:description" content="La validación de aplicaciones te permite crear un conjunto de pruebas para confirmar que tus aplicaciones funcionan bien sin tener que probarlas manualmente. Puedes programar un _bot_ que apriete todos los botones de tu aplicación y obtener capturas de pantalla que te confirmen que todo se ve bien. En esta guía aprenderás a utilizar `{shinytest2}` para automatizar el testeo de tus aplicaciones Shiny, asegurando su correcto funcionamiento a través de capturas de pantalla y otras validaciones automáticas." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:5219/blog/shiny_validacion/" />
+<meta property="og:url" content="http://localhost:4125/blog/shiny_validacion/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:5219/blog/shiny_validacion/featured.png" >
+        <meta property="og:image" content="http://localhost:4125/blog/shiny_validacion/featured.png" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:5219/blog/shiny_validacion/featured.png" >
+        <meta name="twitter:image" content="http://localhost:4125/blog/shiny_validacion/featured.png" >
     
     
   
   <meta itemprop="name" content="Testeo automatizado de aplicaciones Shiny con {shinytest2}">
-  <meta itemprop="description" content="⚠️ post en construcción ⚠️ Índice Empezar a usar {shinytest2} Estructura de carpetas Creando una prueba para tu app Automatizar tests repetitivos Al igual que la validación de datos, validar aplicaciones te permite crear un conjunto de pruebas para confirmar que tus aplicaciones funcionan bien sin tener que probarlas manualmente. En la práctica, puedes programar un bot que apriete todos los botones de tu aplicación y obtener capturas de pantalla que te confirmen que todo se ve bien, o realizar otros tipos de pruebas más complejas.">
-  <meta itemprop="datePublished" content="2025-11-02T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2025-11-02T00:00:00+00:00">
-  <meta itemprop="wordCount" content="715">
-  <meta itemprop="image" content="http://localhost:5219/blog/shiny_validacion/featured.png">
+  <meta itemprop="description" content="Índice Empezar a usar {shinytest2} Grabar el primer test Estructura de carpetas de tests Creando una prueba Ejecutar un test Expectativas del test Debugging Resultados Automatizar tests repetitivos Ejemplo de test automatizado Conclusión Al igual que la validación de datos, validar aplicaciones Shiny te permite crear un conjunto de pruebas para confirmar que tus aplicaciones funcionan bien sin tener que probarlas manualmente. En la práctica, significa programar un bot que apriete todos los botones de tu aplicación y obtenga capturas de pantalla que te confirmen que todo se ve bien, o realizar otros tipos de pruebas más complejas.">
+  <meta itemprop="datePublished" content="2026-01-23T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-01-23T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1742">
+  <meta itemprop="image" content="http://localhost:4125/blog/shiny_validacion/featured.png">
   <meta itemprop="keywords" content="Shiny,Automatización">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -65,13 +65,17 @@
   
   <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
   
+  
   <link rel="stylesheet" href="../../css/syntax.css">
+  
+  
+  <link rel="preload" href="https://bastianoleah.shinyapps.io/buscador/" as="image">
 </head>
 <body>
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:5219/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:4125/" title="Home">
       <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -99,7 +103,7 @@
         
         
         
-      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea-buscador.share.connect.posit.cloud" title="Buscador">Buscar</a>
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
         
         
@@ -138,7 +142,7 @@
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianolea-buscador.share.connect.posit.cloud" title="search" target="_blank" rel="me noopener"
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-search fa-lg fa-fw"></i>
     </a>
@@ -309,7 +313,7 @@
         
         <div style = "display: inline-block;">  
           <p class="f7 db mv0 ttu" style = "display: inline-block;">
-            2/11/2025</p>
+            23/1/2026</p>
           
           
           <span>
@@ -338,7 +342,7 @@
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:5219/tags/shiny"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:4125/tags/shiny"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -347,7 +351,7 @@
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            shiny</a>  <a href="http://localhost:5219/tags/automatizaci%C3%B3n"
+            shiny</a>  <a href="http://localhost:4125/tags/automatizaci%C3%B3n"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -395,22 +399,7 @@
       
       
     <section class="post-body pt5 pb4">
-        
-
-<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
-            background-color: #493365;  border-radius: 6px;
-            margin: 20px 40px 20px 40px;">
-  
-  <div style="flex-shrink: 0;">
-    <i class="fas fa-triangle-exclamation" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #EAD2FA;"></i>
-  </div>
-  
-  <aside style = "font-size: 90%; color: #EAD2FA;">
-    ⚠️ post en construcción ⚠️
-  </aside>
-  
-</div>
-<div style="margin:auto; max-width:70%;">
+        <div style="margin:auto; max-width:70%;">
 <video src="apps.mov" style="border-radius:7px; max-width: 100%; margin:auto;" autoplay loop>
 </video>
 </div>
@@ -424,10 +413,30 @@
     <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: 16px; margin-bottom: 32px;">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#empezar-a-usar-shinytest2">Empezar a usar <code>{shinytest2}</code></a></li>
-    <li><a href="#estructura-de-carpetas">Estructura de carpetas</a></li>
-    <li><a href="#creando-una-prueba-para-tu-app">Creando una prueba para tu app</a></li>
-    <li><a href="#automatizar-tests-repetitivos">Automatizar tests repetitivos</a></li>
+    <li><a href="#empezar-a-usar-shinytest2">Empezar a usar <code>{shinytest2}</code></a>
+      <ul>
+        <li><a href="#grabar-el-primer-test">Grabar el primer test</a></li>
+      </ul>
+    </li>
+    <li><a href="#estructura-de-carpetas-de-tests">Estructura de carpetas de tests</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#creando-una-prueba">Creando una prueba</a></li>
+    <li><a href="#ejecutar-un-test">Ejecutar un test</a>
+      <ul>
+        <li><a href="#expectativas-del-test">Expectativas del test</a></li>
+        <li><a href="#debugging">Debugging</a></li>
+        <li><a href="#resultados">Resultados</a></li>
+      </ul>
+    </li>
+    <li><a href="#automatizar-tests-repetitivos">Automatizar tests repetitivos</a>
+      <ul>
+        <li><a href="#ejemplo-de-test-automatizado">Ejemplo de test automatizado</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusión">Conclusión</a></li>
   </ul>
 </nav>
     </div>
@@ -435,7 +444,8 @@
   
 </div>
 <p>Al igual que la 
-<a href="../../blog/validacion_avanzada/">validación de datos</a>, validar aplicaciones te permite crear un conjunto de pruebas para <strong>confirmar que tus aplicaciones funcionan bien sin tener que probarlas manualmente</strong>. En la práctica, puedes programar un <em>bot</em> que apriete todos los botones de tu aplicación y obtener capturas de pantalla que te confirmen que todo se ve bien, o realizar otros tipos de pruebas más complejas.</p>
+<a href="../../blog/validacion_avanzada/">validación de datos</a>, validar 
+<a href="../../tags/shiny/">aplicaciones Shiny</a> te permite crear un conjunto de pruebas para <strong>confirmar que tus aplicaciones funcionan bien sin tener que probarlas manualmente</strong>. En la práctica, significa programar un <em>bot</em> que apriete todos los botones de tu aplicación y obtenga capturas de pantalla que te confirmen que todo se ve bien, o realizar otros tipos de pruebas más complejas.</p>
 <p>En esta guía aprenderás a utilizar <code>{shinytest2}</code> para automatizar el testeo de tus aplicaciones Shiny, asegurando su correcto funcionamiento a través de capturas de pantalla y otras validaciones automáticas.</p>
 <p>Primero que nada, instalamos el paquete:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">install.packages</span><span class="p">(</span><span class="s">&#34;shinytest2&#34;</span><span class="p">)</span>
@@ -449,34 +459,80 @@
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>Hay dos formas de empezar con los tests en tu app Shiny.</p>
-<p>La primera opción es crear la infraestructura necesaria, ejecutando <code>use_shinytest2()</code> e indicando la carpeta donde está tu app:</p>
+<p>Lo primero es crear la infraestructura necesaria, ejecutando <code>use_shinytest2()</code> en la carpeta de tu aplicación (donde están los archivos <code>app.R</code> o <code>server.R</code> y <code>ui.R</code>):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">shinytest2</span><span class="o">::</span><span class="nf">use_shinytest2</span><span class="p">()</span>
+</span></span></code></pre></div><p>Si tu app está en otra carpeta ed tu proyecto, puedes especificar la ruta así:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">shinytest2</span><span class="o">::</span><span class="nf">use_shinytest2</span><span class="p">(</span><span class="n">app_dir</span> <span class="o">=</span> <span class="s">&#34;app/inversion_gores/&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><p>Este comando solamente crea las carpetas de <code>tests</code> que son básicas para 
 <a href="../../blog/validacion_avanzada/">validación con <code>{testthat}</code></a>, pero no crea ningún test en particular.</p>
-<p>La segunda opción, y recomendada, es empezar</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">shinytest2</span><span class="o">::</span><span class="nf">record_test</span><span class="p">(</span><span class="s">&#34;app/inversion_gores/&#34;</span><span class="p">)</span>
-</span></span></code></pre></div><p>Además de crear la infraestructura necesaria, este comando abre tu aplicación Shiny en un navegador para que <strong>grabes tus interacciones con la app</strong> para generar automáticamente tu primer test.</p>
+
+
+
+
+<h3 id="grabar-el-primer-test">Grabar el primer test
+  <a href="#grabar-el-primer-test"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Una vez creada la carpeta <code>test</code>, grabamos nuestro primer test de manera interactiva, ejecutando:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">shinytest2</span><span class="o">::</span><span class="nf">record_test</span><span class="p">()</span>
+</span></span></code></pre></div><p>Este comando abre tu aplicación Shiny en un navegador web para que <strong>grabes tus interacciones con la app</strong> y así generar automáticamente tu primer test.</p>
 <a href="shinytest_recording.png" target="_blank">
 
   <img src="shinytest_recording.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
-<p>Presiona los <em>inputs</em> de tu aplicación para navegar por ella, y elige uno de los botones de la parte superior para esperar (<em>expect</em>) que tu app retorne un valor (<em>Expect Shiny value</em>) o genere una captura de pantalla (<em>Expect screenshot</em>). Contra estas <em>expectativas</em> se evaluará el funcionamiento de tu app.</p>
+<p>Al interactuar con tu app, verás que en el lado derecho se <strong>registran las interacciones con la app</strong>, para que las mismas acciones puedan ser repetidas en los siguientes tests.</p>
+<p>Elige uno de los botones de la parte superior para esperar (<em>expect</em>) que tu app <strong>retorne un valor</strong> (<em>Expect Shiny value</em>) o genere una <strong>captura de pantalla</strong> (<em>Expect screenshot</em>). Estas <em>expectativas</em> serán las <strong>pruebas</strong> con las que se evaluará el funcionamiento de tu app, así que es necesario generar al menos una.</p>
 <p>Cuando termines de simular una visita a tu app presiona <em>Save test and exit</em>. Esto generará automáticamente un archivo de pruebas en la carpeta <code>tests/testthat/</code> de tu aplicación Shiny, que se abrirá y de inmediato <strong>ejecutará la prueba</strong> en el fondo; es decir, tu app se ejecutará de manera invisible reproduciendo los pasos que tomaste.</p>
-<p>De esto se trata la validación de aplicaciones: <strong>programar interacciones con tu aplicación para evaluar que siemrpe retorne los valores esperados</strong>.</p>
+<a href="shiny_test.png" target="_blank">
+
+  <img src="shiny_test.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>También se abrirá el script del test que se generó automáticamente, que empiaza con <code>test-{x}.R</code> y queda guardado en <code>test/testthat/</code>, el cual puedes editar manualmente para agregar más pruebas o modificar las existentes.</p>
+<p>El script de prueba se verá más o menos así:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">shinytest2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">test_that</span><span class="p">(</span><span class="s">&#34;{shinytest2} recording: ebc&#34;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">app</span> <span class="o">&lt;-</span> <span class="n">AppDriver</span><span class="o">$</span><span class="nf">new</span><span class="p">(</span><span class="n">variant</span> <span class="o">=</span> <span class="nf">platform_variant</span><span class="p">(),</span> 
+</span></span><span class="line"><span class="cl">                       <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;ebc&#34;</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="m">694</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="m">885</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">app</span><span class="o">$</span><span class="nf">set_inputs</span><span class="p">(</span><span class="n">tabs_resultados</span> <span class="o">=</span> <span class="s">&#34;Resultados por indicador&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">app</span><span class="o">$</span><span class="nf">set_inputs</span><span class="p">(</span><span class="n">indicador_ambito</span> <span class="o">=</span> <span class="s">&#34;Ciclovías&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">app</span><span class="o">$</span><span class="nf">set_inputs</span><span class="p">(</span><span class="n">indicador_ambito</span> <span class="o">=</span> <span class="s">&#34;Educación&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">app</span><span class="o">$</span><span class="nf">set_inputs</span><span class="p">(</span><span class="n">tabs_resultados</span> <span class="o">=</span> <span class="s">&#34;Resultados por comuna&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">app</span><span class="o">$</span><span class="nf">set_inputs</span><span class="p">(</span><span class="n">region</span> <span class="o">=</span> <span class="s">&#34;Tarapacá&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">app</span><span class="o">$</span><span class="nf">expect_screenshot</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></div><p>De esto se trata la validación de aplicaciones: <strong>programar interacciones con tu aplicación para evaluar que siemrpe retorne los valores esperados</strong>.</p>
 
 
 
 
-<h2 id="estructura-de-carpetas">Estructura de carpetas
-  <a href="#estructura-de-carpetas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="estructura-de-carpetas-de-tests">Estructura de carpetas de tests
+  <a href="#estructura-de-carpetas-de-tests"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>En la carpeta de tu app tendrás la carpeta <code>tests</code>. Dentro está <code>testthat.R</code>, que contiene la función <code>shinytest2::test_app()</code>, con la que puedes <strong>ejecutar todas tus pruebas</strong>.</p>
-<p>Dentro de la carpeta <code>testthat/</code> estarán todos los archivos de tests que hayas grabado o creado manualmente, que siguen la estructura <code>test-x.R</code>. Puedes agregar los tests que necesites.</p>
+<p>Entendamos un poco qué hace <code>{shinytest2}</code> dentro de nuestra app.</p>
+<p>En la carpeta de tu app aparecerá la carpeta <code>tests</code>. Dentro de ella está <code>testthat.R</code>, que contiene la función <code>shinytest2::test_app()</code>, con la que puedes <strong>ejecutar todas tus pruebas</strong>.</p>
+
+
+
+
+<h4 id="scripts-de-tests">Scripts de tests
+  <a href="#scripts-de-tests"></a>
+</h4>
+<p>Dentro de la carpeta <code>testthat/</code> estarán todos los <strong>archivos de tests</strong> que hayas grabado o creado manualmente, que siguen la estructura <code>test-{x}.R</code>. Puedes agregar los tests que necesites siguiendo esta estructura de nombres.</p>
+
+
+
+
+<h4 id="resultados-de-los-tests">Resultados de los tests
+  <a href="#resultados-de-los-tests"></a>
+</h4>
 <p>Además, dentro de <code>tests/testthat/</code> está <code>_snaps</code>, que contiene las capturas de pantalla tomadas en cada prueba.</p>
 <p>Aquí hay un ejemplo de las carpetas de una app mía:</p>
 <pre tabindex="0"><code>inversion_gores/
@@ -486,30 +542,31 @@
   +-- tests/
     |-- testthat.R
     +-- testthat/
-      |-- setup-shinytest2.R    # archivo necesario
-      |-- test-mapas.R          # test para probar mapas
-      |-- test-tablas.R         # test para probar tablas
-      +-- _snaps/               # carpeta con pantallazos
+      |-- setup-shinytest2.R  # archivo necesario
+      |-- test-mapas.R        # test para probar mapas
+      |-- test-tablas.R       # test para probar tablas
+      +-- _snaps/             # carpeta con pantallazos
         +-- mac-4.4/
-          +-- test-mapas/
-            |-- test-mapas-001.png
-            |-- test-mapas-002.png
+          +-- test-mapas/         # resultados de tests de mapas
+            |-- test-mapas-1.png
+            |-- test-mapas-2.png
             |-- ...
-          +-- test-tablas/
-            |-- test-tablas-001.png
-            |-- test-tablas-002.png
+          +-- test-tablas/        # resultados de tests de tablas
+            |-- test-tablas-1.png
+            |-- test-tablas-2.png
             |-- ...
 </code></pre>
 
 
 
-<h2 id="creando-una-prueba-para-tu-app">Creando una prueba para tu app
-  <a href="#creando-una-prueba-para-tu-app"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+<h2 id="creando-una-prueba">Creando una prueba
+  <a href="#creando-una-prueba"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
       <path d="M0 0h24v24H0z" fill="currentColor"></path>
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
 <p>Para empezar, puedes basarte en el test que se genera al simular y grabar tu interacción con <code>shinytest2::record_test()</code>, o crear un test manualmente.</p>
+<p>Aquí hay un ejemplo de un test que navega a una pestaña de una app Shiny, cambia un input, espera a que la app cargue, y toma una captura de pantalla:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">shinytest2</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nf">test_that</span><span class="p">(</span><span class="s">&#34;{shinytest2} recording: inversion_gores_2&#34;</span><span class="p">,</span> <span class="p">{</span>
@@ -517,7 +574,7 @@
 </span></span><span class="line"><span class="cl">                       <span class="n">height</span> <span class="o">=</span> <span class="m">985</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="m">1254</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  
 </span></span><span class="line"><span class="cl">  <span class="c1"># cambiar de pestaña</span>
-</span></span><span class="line"><span class="cl">  <span class="n">app</span><span class="o">$</span><span class="nf">set_inputs</span><span class="p">(</span><span class="n">tabs</span> <span class="o">=</span> <span class="s">&#34;Tabla&#34;</span><span class="p">,</span> <span class="n">allow_no_input_binding_</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">app</span><span class="o">$</span><span class="nf">set_inputs</span><span class="p">(</span><span class="n">tabs</span> <span class="o">=</span> <span class="s">&#34;Tabla&#34;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  
 </span></span><span class="line"><span class="cl">  <span class="c1"># cambiar un input</span>
 </span></span><span class="line"><span class="cl">  <span class="n">app</span><span class="o">$</span><span class="nf">set_inputs</span><span class="p">(</span><span class="n">region</span> <span class="o">=</span> <span class="s">&#34;2&#34;</span><span class="p">)</span>  
@@ -525,12 +582,82 @@
 </span></span><span class="line"><span class="cl">  <span class="c1"># esperar a que la app haya cargado</span>
 </span></span><span class="line"><span class="cl">  <span class="n">app</span><span class="o">$</span><span class="nf">wait_for_idle</span><span class="p">(</span><span class="m">200</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="c1"># tomar pantallazo</span>
-</span></span><span class="line"><span class="cl">  <span class="n">app</span><span class="o">$</span><span class="nf">expect_screenshot</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># tomar pantallazo y guardar archivo con inputs/outputs</span>
+</span></span><span class="line"><span class="cl">  <span class="n">app</span><span class="o">$</span><span class="nf">expect_values</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="p">})</span>
-</span></span></code></pre></div><p>Dentro de la carpeta <code>tests/testthat/_snaps</code> se pueden encontrar los resultados de los pantallazos producidos durante el test con <code>app$expect_screenshot()</code></p>
+</span></span></code></pre></div>
+
+
+
+<h2 id="ejecutar-un-test">Ejecutar un test
+  <a href="#ejecutar-un-test"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Dentro de <code>tests/testthat/</code> están todos tus tests, y al abrirlos con RStudio aparecerá el botón <em>Run tests</em>, que si lo aprietas repite el test.</p>
+<a href="run_tests.png" target="_blank">
+
+  <img src="run_tests.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Se abrirá un panel <em>Tests</em> donde se muestra el avance de los tests, y los avisos o errores que éstos pudieran tener.</p>
+<a href="panel_tests.png" target="_blank">
+
+  <img src="panel_tests.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Al final podrás ver el resultado de las pruebas: pruebas con error, con avisos, saltadas y exitosas.</p>
+<a href="test_terminado.png" target="_blank">
+
+  <img src="test_terminado.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+<p>Al terminar los tests, en la carpeta <code>tests/testthat/_snaps/</code> estarán los resultados de las pruebas, que pueden ser capturas de pantalla o archivos JSON con los valores de los inputs y outputs de la app en cada prueba.</p>
+<p>En mi caso, obtuve más de 50 pantallazos de mi aplicación, los cuales puedo ir inspeccionando en búsqueda de gráficos que se desconfiguraron, o casos extremos (<em>edge cases</em>) donde la app no esté comportándose como se esperaba (por ejemplo, con valores muy bajos o muy altos, casos donde no hay observaciones, etc.)</p>
+<a href="resultados_tests.png" target="_blank">
+
+  <img src="resultados_tests.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+
+
+
+
+<h3 id="expectativas-del-test">Expectativas del test
+  <a href="#expectativas-del-test"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Para crear una <strong>expectativa</strong> del test; es decir, un <strong>resultado de la prueba</strong>, dependiendo de lo que necesitemos podemos usar <code>app$expect_screenshot()</code> para tomar una captura de pantalla, o <code>app$expect_values()</code> para validar que los valores de los outputs sean los esperados.</p>
+<p>Se recomienda usar <code>app$expect_values()</code>, porque además de tomar una captura de pantalla, te entrega un <strong>archivo JSON que contiene el estado de todos los inputs de tu app</strong>, con el cual puedes hacer debug del estado de la app en cada test. Así puedes encontrar dónde está el problema!</p>
+
+
+
+
+<h3 id="debugging">Debugging
+  <a href="#debugging"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Dentro del test, puedes usar <code>cat()</code> para imprimir texto y que se vea en el panel de tests. Así podrías ayudarte a que el test te diga en qué parte de la app está, o qué operación está haciendo.</p>
+<p>Una línea que me ha sido útil es <code>app$wait_for_idle()</code>, que hace que el test <strong>espere hasta que la app esté quieta</strong> por un tiempo breve antes de continuar. Así se evita que el test capture la pantalla cuando la app todavía no termina de cargarse! 😂 Si aún así el test no logra avanzar, puedes agregar <code>Sys.sleep(2)</code> para forzar una espera de <em>x</em> segundos antes del siguiente paso (tuve que hacerlo en apps que mostraban outputs demasiado grandes).</p>
+
+
+
+
+<h3 id="resultados">Resultados
+  <a href="#resultados"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Dentro de la carpeta <code>tests/testthat/_snaps</code> se pueden encontrar los resultados de los pantallazos producidos durante el test con <code>app$expect_screenshot()</code>, o de los pantallazos más los archivos JSON si usaste <code>app$expect_values()</code>.</p>
 <p>Podemos <strong>inspeccionar visualmente las capturas</strong> para corroborar que la aplicación funciona correctamente (asegurarnos que todos los outputs se vean, que la disposición de la app es visualmente correcta), pero también <strong>la prueba nos avisará si las capturas de pantalla nuevas difieren de las anteriores</strong>, lo que significaría un cambio en los resultados.</p>
+<p>Si el test <strong>resultó en un error</strong> en alguno de sus pasos, puede inspeccionar el archivo JSON para ver en qué input estaba la prueba, y qué resultados estaba entregando la app. Así puedes ver si hay inconsistencias, o puedes probar la app manualmente a ver qué pasa si reproduces la situación que resultó en error.</p>
 
 
 
@@ -541,21 +668,96 @@
       <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
     </svg></a>
 </h2>
-<p>Si tienes una lista con los valores de uno o varios inputs que quieres testear, puedes <strong>correr las pruebas en un loop</strong> que repita la prueba para cada elemento.</p>
-<p>De ser necesario, dentro del test puedes cargar datos que te entreguen la lista de inputs (por ejemplo, los valores únicos de una variable)</p>
+<p>Si tienes un vector con los valores de uno o varios inputs que quieres testear, puedes <strong>correr las pruebas en un loop</strong> que repita la prueba para cada elemento.</p>
+<p>De ser necesario, dentro del test puedes <strong>cargar datos</strong> que te entreguen el vector de inputs (por ejemplo, los valores únicos de una variable), y usar esos valores para un <em>loop</em> que navegue por todos los valores del input tomando capturas de pantalla 📸</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># por cada variable, navegar y captura de pantalla</span>
 </span></span><span class="line"><span class="cl">  <span class="kr">for</span><span class="p">(</span><span class="n">i</span> <span class="kr">in</span> <span class="n">variables</span><span class="p">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">$</span><span class="nf">set_inputs</span><span class="p">(</span><span class="n">indicador_lista</span> <span class="o">=</span> <span class="n">i</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">$</span><span class="nf">wait_for_idle</span><span class="p">(</span><span class="m">200</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">$</span><span class="nf">expect_screenshot</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span></code></pre></div><p>Para ejecutar todos los tests</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">shinytest2</span><span class="o">::</span><span class="nf">test_app</span><span class="p">(</span><span class="s">&#34;app/icbg/&#34;</span><span class="p">)</span>
-</span></span></code></pre></div><div style="margin:auto; max-width:70%;">
-<video src="apps.mov" style="border-radius:7px; max-width: 100%; margin:auto;" autoplay loop>
-</video>
-</div>
+</span></span></code></pre></div><p>Para cargar datos dentro del test, recomiendo usar la función <code>here()</code> del paquete <code>{here}</code>, que permite cargar archivos relativos a la carpeta de tu proyecto, para evitar complicaciones con las rutas de los archivos.</p>
 
+
+
+
+<h3 id="ejemplo-de-test-automatizado">Ejemplo de test automatizado
+  <a href="#ejemplo-de-test-automatizado"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>En esta app, hay un input con indicadores de un instrumento estadístico, y los indicadores se agrupan por dimensiones. Entonces hay que elegir una dimensión para obtener los indicadores, y elegir un indicador para ver los outputs de la app. Entonces, el test recorre todas las dimensiones de un indicador, y dentro de cada dimensión, pasa por los indicadores de esa dimensión, para luego ir a la siguiente dimensión y así sucesivamente.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">shinytest2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">arrow</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">here</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">test_that</span><span class="p">(</span><span class="s">&#34;{shinytest2} recording: ebc&#34;</span><span class="p">,</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">app</span> <span class="o">&lt;-</span> <span class="n">AppDriver</span><span class="o">$</span><span class="nf">new</span><span class="p">(</span><span class="n">variant</span> <span class="o">=</span> <span class="nf">platform_variant</span><span class="p">(),</span> 
+</span></span><span class="line"><span class="cl">                       <span class="n">name</span> <span class="o">=</span> <span class="s">&#34;ebc indicadores&#34;</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="m">694</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="m">885</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># cargar datos</span>
+</span></span><span class="line"><span class="cl">  <span class="n">indice</span> <span class="o">&lt;-</span> <span class="nf">read_parquet</span><span class="p">(</span><span class="nf">here</span><span class="p">(</span><span class="s">&#34;indice_app.parquet&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># vector con dimensiones   </span>
+</span></span><span class="line"><span class="cl">  <span class="n">ambitos</span> <span class="o">&lt;-</span> <span class="nf">unique</span><span class="p">(</span><span class="n">indice</span><span class="o">$</span><span class="n">ambito</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># tabla con dimensiones e indicadores</span>
+</span></span><span class="line"><span class="cl">  <span class="n">indicadores</span> <span class="o">&lt;-</span> <span class="n">indice</span> <span class="o">|&gt;</span> <span class="nf">distinct</span><span class="p">(</span><span class="n">ambito</span><span class="p">,</span> <span class="n">etiqueta</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># ir a la pestaña</span>
+</span></span><span class="line"><span class="cl">  <span class="n">app</span><span class="o">$</span><span class="nf">set_inputs</span><span class="p">(</span><span class="n">tabs_resultados</span> <span class="o">=</span> <span class="s">&#34;Resultados por indicador&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">app</span><span class="o">$</span><span class="nf">wait_for_idle</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="c1"># por cada dimensión</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">for</span><span class="p">(</span><span class="n">i</span> <span class="kr">in</span> <span class="n">ambitos</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">cat</span><span class="p">(</span><span class="s">&#34; Probando ambito&#34;</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">$</span><span class="nf">set_inputs</span><span class="p">(</span><span class="n">indicador_ambito</span> <span class="o">=</span> <span class="n">i</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">Sys.sleep</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">app</span><span class="o">$</span><span class="nf">wait_for_idle</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># obtener indicadores de la dimensión     </span>
+</span></span><span class="line"><span class="cl">    <span class="n">indicadores_ambito</span> <span class="o">&lt;-</span> <span class="n">indicadores</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">      <span class="nf">filter</span><span class="p">(</span><span class="n">ambito</span> <span class="o">==</span> <span class="n">i</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">      <span class="nf">pull</span><span class="p">(</span><span class="n">etiqueta</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1"># por cada indicador del ambito</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">for</span><span class="p">(</span><span class="n">j</span> <span class="kr">in</span> <span class="n">indicadores_ambito</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">cat</span><span class="p">(</span><span class="s">&#34; Probando indicador&#34;</span><span class="p">,</span> <span class="n">j</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="n">app</span><span class="o">$</span><span class="nf">set_inputs</span><span class="p">(</span><span class="n">indicador</span> <span class="o">=</span> <span class="n">j</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">Sys.sleep</span><span class="p">(</span><span class="m">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">      <span class="n">app</span><span class="o">$</span><span class="nf">wait_for_idle</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">      <span class="n">app</span><span class="o">$</span><span class="nf">expect_values</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">})</span>
+</span></span></code></pre></div>
+
+
+
+<h2 id="conclusión">Conclusión
+  <a href="#conclusi%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Si desarrollaste una aplicación Shiny medianamente compleja, dedicar unos minutos a crear tests te podrá <strong>asegurar que tu app funciona correctamente</strong> siempre. Cuando cambie el código o los datos, presionas <em>Run tests</em> y confirmas al 100% que todo está funcionando.</p>
+<p>Otro beneficio no menor es la <strong>paz mental</strong> 😇 que te entrega haber confirmado que la app funciona bien en todos los escenarios posibles, cosa que solemos omitir luego de dedicar varios días a un mismo proyecto (solamente cruzamos los dedos para que todo funcione bien 🤞🏼 jaja)</p>
+<p><strong>Bonus:</strong> Si activas la opción de que 
+<a href="../../blog/shiny_optimizar/">Shiny guarde caché de tus outputs en un carpeta</a>, ejecutar un test que use todos tus inputs para generar todos los outputs posibles te permitirá <strong>generar caché para todos los outputs de tu app de manera automática</strong>, lo que aumentará la velocidad de tu app de manera considerable!</p>
+<hr>
+<p><div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+
+
+</p>
  
     </section>
       
@@ -564,12 +766,12 @@
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:5219/blog/shiny_optimizar/">&larr; Optimiza la velocidad de tus aplicaciones Shiny con bindCache()</a>
+    href="http://localhost:4125/blog/2026-01-27/">&larr; Por qué siempre visualizar los datos: el cuarteto de Anscombe</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:5219/blog/2025-10-29/">Crea una carpeta inteligente con todos tus proyectos de R en Mac &rarr;</a>
+    href="http://localhost:4125/blog/ggplot_temas/">Temas de colores personalizados para tus gráficos {ggplot2} &rarr;</a>
   
 </div>
 
@@ -602,28 +804,33 @@
   <details closed class="f6 fw7 input-reset">
   <dl class="f6 lh-copy">
     <dt class="fw7">Fecha de publicación:</dt>
-    <dd class="fw5 ml0">November 2, 2025</dd>
+    <dd class="fw5 ml0">January 23, 2026</dd>
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">4 minute read, 715 words</dd>
+    <dd class="fw5 ml0">9 minute read, 1742 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categorías:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:4125/categories/tutoriales">Tutoriales</a> </dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:5219/tags/shiny">shiny</a>  <a href="http://localhost:5219/tags/automatizaci%C3%B3n">automatización</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:4125/tags/shiny">shiny</a>  <a href="http://localhost:4125/tags/automatizaci%C3%B3n">automatización</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
+    <dd class="fw5 ml0"><a href="../../blog/2026-02-12/">Redactar textos basados en datos automáticamente con R: describiendo resultados del censo de población</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/shiny_docker/">Desplegar aplicaciones Shiny a producción en contenedores Docker</a></dd>
+    
     <dd class="fw5 ml0"><a href="../../blog/app_censo_mapas/">App: visualizador de mapas comunales del Censo 2024 por manzanas</a></dd>
-    
-    <dd class="fw5 ml0"><a href="../../blog/surveydown_encuestas/">Crea encuestas online gratis en R con {surveydown}</a></dd>
-    
-    <dd class="fw5 ml0"><a href="../../blog/2025-11-25/">Configura R para que haga cosas automáticamente al abrirlo</a></dd>
     
   </dl>
 </details>
@@ -641,7 +848,7 @@
 
   <h1 class="f3">Blog</h1>
   <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
-<a href="https://bastianolea-buscador.share.connect.posit.cloud" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
+<a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
 <a href="../../tags/">temas</a>.</p>
   
 
@@ -665,7 +872,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/chile/">Chile</a></span>
+      href="http://localhost:4125/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -680,7 +887,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/datos/">Datos</a></span>
+      href="http://localhost:4125/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -695,7 +902,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/consejos/">Consejos</a></span>
+      href="http://localhost:4125/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -710,7 +917,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:4125/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -725,7 +932,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:4125/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -740,7 +947,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/blog/">Blog</a></span>
+      href="http://localhost:4125/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -755,7 +962,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:4125/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -770,7 +977,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/apps/">Apps</a></span>
+      href="http://localhost:4125/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -785,7 +992,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/shiny/">Shiny</a></span>
+      href="http://localhost:4125/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -800,7 +1007,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:4125/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -815,7 +1022,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/mapas/">Mapas</a></span>
+      href="http://localhost:4125/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -830,7 +1037,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:4125/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -845,7 +1052,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:4125/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -860,7 +1067,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:4125/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -875,7 +1082,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:4125/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -890,7 +1097,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:4125/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -905,7 +1112,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/quarto/">Quarto</a></span>
+      href="http://localhost:4125/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -920,7 +1127,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:4125/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -935,7 +1142,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:4125/tags/ciencias-sociales/">Ciencias sociales</a></span>
   </span>
  
   
@@ -950,7 +1157,7 @@
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:5219/tags/optimizaci%C3%B3n/">Optimización</a></span>
+      href="http://localhost:4125/tags/loops/">Loops</a></span>
   </span>
 
 <a href="../../tags/" style="margin-left: 3px;">y más!</a>
@@ -970,10 +1177,30 @@
           <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: -22px; margin-bottom: 32px;">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#empezar-a-usar-shinytest2">Empezar a usar <code>{shinytest2}</code></a></li>
-    <li><a href="#estructura-de-carpetas">Estructura de carpetas</a></li>
-    <li><a href="#creando-una-prueba-para-tu-app">Creando una prueba para tu app</a></li>
-    <li><a href="#automatizar-tests-repetitivos">Automatizar tests repetitivos</a></li>
+    <li><a href="#empezar-a-usar-shinytest2">Empezar a usar <code>{shinytest2}</code></a>
+      <ul>
+        <li><a href="#grabar-el-primer-test">Grabar el primer test</a></li>
+      </ul>
+    </li>
+    <li><a href="#estructura-de-carpetas-de-tests">Estructura de carpetas de tests</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#creando-una-prueba">Creando una prueba</a></li>
+    <li><a href="#ejecutar-un-test">Ejecutar un test</a>
+      <ul>
+        <li><a href="#expectativas-del-test">Expectativas del test</a></li>
+        <li><a href="#debugging">Debugging</a></li>
+        <li><a href="#resultados">Resultados</a></li>
+      </ul>
+    </li>
+    <li><a href="#automatizar-tests-repetitivos">Automatizar tests repetitivos</a>
+      <ul>
+        <li><a href="#ejemplo-de-test-automatizado">Ejemplo de test automatizado</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusión">Conclusión</a></li>
   </ul>
 </nav>
           </div>
@@ -1017,7 +1244,7 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
     
       
     
-    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianolea-buscador.share.connect.posit.cloud" title="search" target="_blank" rel="me noopener"
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
     style="margin-bottom: 6px !important;"> 
       <i class="fas fa-search fa-lg fa-fw"></i>
     </a>
@@ -1174,7 +1401,7 @@ Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlif
       
       <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
       
-      <a class="dib pv1 ph2 link" href="https://bastianolea-buscador.share.connect.posit.cloud" title="Buscador">Buscar</a>
+      <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
       
       <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
       
