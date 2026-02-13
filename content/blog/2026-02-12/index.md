@@ -42,7 +42,7 @@ En este tutorial veremos cómo hacer que R redacte párrafos de texto que se pue
 
 Empecemos con un conjunto de datos sociales: los [resultados del Censo de población y vivienda 2024](https://censo2024.ine.gob.cl/resultados/) de Chile, específicamente la **población por género** en cada región del país.
 
-{{< boton "Descargar datos" "blog/2026-02-12/P5_Genero.xlsx" "fas fa-file-download" >}}
+{{< boton "Descargar datos" "P5_Genero.xlsx" "fas fa-file-download" >}}
 {{< detalles "**Ver código de la limpieza de los datos**" >}}
 
 ``` r
@@ -550,14 +550,14 @@ Pasamos de una tabla de datos como ésta:
 
 | region | total | genero | poblacion | porcentaje |
 |:--------------------------|------:|:---------------------|-------:|--------:|
-| Ñuble | 404488 | Transfemenino | 289 | 0.0007145 |
-| Libertador General Bernardo O'Higgins | 768428 | Otro | 188 | 0.0002447 |
-| Maule | 873280 | Prefiere no responder/No sabe | 4131 | 0.0047304 |
-| Arica y Parinacota | 186079 | Prefiere no responder/No sabe | 1988 | 0.0106836 |
-| Ñuble | 404488 | Prefiere no responder/No sabe | 1826 | 0.0045143 |
+| Atacama | 226415 | Transmasculino | 473 | 0.0020891 |
+| Antofagasta | 482315 | Prefiere no responder/No sabe | 4459 | 0.0092450 |
+| Magallanes y de la Antártica Chilena | 132151 | Otro | 39 | 0.0002951 |
+| Metropolitana de Santiago | 5839785 | Prefiere no responder/No sabe | 52567 | 0.0090015 |
 | Antofagasta | 482315 | Transfemenino | 514 | 0.0010657 |
-| Metropolitana de Santiago | 5839785 | Otro | 2318 | 0.0003969 |
-| La Araucanía | 783037 | Prefiere no responder/No sabe | 4755 | 0.0060725 |
+| La Araucanía | 783037 | Masculino | 367383 | 0.4691771 |
+| Los Lagos | 694729 | Transfemenino | 463 | 0.0006664 |
+| Tarapacá | 272334 | Masculino | 131243 | 0.4819193 |
 
 A este texto que redacta todos los resultados 😱
 
