@@ -38,6 +38,8 @@ Luego de explorar o procesar un conjunto de datos, toca **presentar los resultad
 
 En este tutorial veremos cómo hacer que R redacte párrafos de texto que se pueden adaptar a tus datos, ya sea adoptando la sintaxis y **redacción** apropiadas, **integrando cifras**, o escribiendo distintas oraciones de manera **condicional** a los resultados.
 
+{{< imagen "featured.png" >}}
+
 Empecemos con un conjunto de datos sociales: los [resultados del Censo de población y vivienda 2024](https://censo2024.ine.gob.cl/resultados/) de Chile, específicamente la **población por género** en cada región del país.
 
 {{< boton "Descargar datos" "blog/2026-02-12/P5_Genero.xlsx" "fas fa-file-download" >}}
@@ -548,14 +550,14 @@ Pasamos de una tabla de datos como ésta:
 
 | region | total | genero | poblacion | porcentaje |
 |:--------------------------|------:|:---------------------|-------:|--------:|
-| La Araucanía | 783037 | Prefiere no responder/No sabe | 4755 | 0.0060725 |
-| Tarapacá | 272334 | Transfemenino | 370 | 0.0013586 |
+| Ñuble | 404488 | Transfemenino | 289 | 0.0007145 |
+| Libertador General Bernardo O'Higgins | 768428 | Otro | 188 | 0.0002447 |
 | Maule | 873280 | Prefiere no responder/No sabe | 4131 | 0.0047304 |
-| Valparaíso | 1505034 | Prefiere no responder/No sabe | 12977 | 0.0086224 |
-| Libertador General Bernardo O'Higgins | 768428 | Prefiere no responder/No sabe | 3821 | 0.0049725 |
-| Tarapacá | 272334 | Otro | 106 | 0.0003892 |
-| Libertador General Bernardo O'Higgins | 768428 | Femenino | 392682 | 0.5110199 |
-| Los Ríos | 313208 | Transfemenino | 198 | 0.0006322 |
+| Arica y Parinacota | 186079 | Prefiere no responder/No sabe | 1988 | 0.0106836 |
+| Ñuble | 404488 | Prefiere no responder/No sabe | 1826 | 0.0045143 |
+| Antofagasta | 482315 | Transfemenino | 514 | 0.0010657 |
+| Metropolitana de Santiago | 5839785 | Otro | 2318 | 0.0003969 |
+| La Araucanía | 783037 | Prefiere no responder/No sabe | 4755 | 0.0060725 |
 
 A este texto que redacta todos los resultados 😱
 
