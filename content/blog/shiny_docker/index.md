@@ -177,6 +177,28 @@ docker ps
 
 {{< imagen "docker_ps.png" >}}
 
+
+## Configuración avanzada
+
+### Permisos de escritura para Shiny
+Si [tu aplicación Shiny usa cache](/blog/shiny_optimizar/) y decides que [el cache se guarde en el disco](https://bastianolea.rbind.io/blog/shiny_optimizar/#configurar-el-almacenamiento-del-cache) (lo que aumenta la velocidad de la app para todos sus usuarios), necesitas que la aplicación tenga **permiso para leer y escribir** en la carpeta del cache. Esto es porque Shiny por defecto no puede escribir en el disco, por razones de seguridad, pero necesita escribir si se usa cache en disco para ir guardando las combinaciones de inputs nuevas que vayan realizando tus usuarios/as.
+
+Para que Shiny pueda escribir en la carpeta del cache, en el archivo `docker-compose.yml` tienes que agregar la siguiente línea dentro del bloque `shiny_server`:
+
+```yml
+services:
+   shiny_server:
+     container_name: shiny_app
+     ...
+     volumes:
+       - ...
+     post_start:
+      - command: ["sh", "-c", "chown -R shiny:shiny /srv/shiny-server/app_cache"] # dar permisos después de montar volumen
+```
+
+El argumento `post_start` ejecutará un comando justo después de montar el volumen, lo que le dará permisos a Shiny para escribir en la carpeta del cache. Asegúrate de reemplazar la ruta por el nombre de la carpeta que usas para guardar el cache en disco.
+ 
+
 ----
 
 ## Comandos de Docker más frecuentes

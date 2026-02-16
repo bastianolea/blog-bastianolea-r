@@ -85,10 +85,10 @@ En este ejemplo, el `bindCache()` se puso en cada output, en la misma función `
 Por defecto, el cache se guarda en memoria, lo que significa que al cerrar la aplicación, el cache se pierde. Si queremos que el cache persista entre sesiones, podemos **configurar el almacenamiento del cache en disco**, agregando la siguiente línea en el archivo `app.R`:
 
 ```r
-shinyOptions(cache = cachem::cache_disk("./cache"))
+shinyOptions(cache = cachem::cache_disk("app_cache/cache"))
 ```
 
-De este modo, el cache quedará guardado en la carpeta `cache` de la app, y podremos ver en tiempo real que los archivos del cache se van generando a medida que los usuarios interactúan con la app.
+De este modo, el cache quedará guardado en la carpeta `app_cache/cache` de la app, y podremos ver en tiempo real que los archivos del cache se van generando a medida que los usuarios interactúan con la app.
 
 Esto entrega el beneficio de poder ampliar el cache a múltiples usuarios, porque si varios usuarios solicitan el mismo cálculo, el segundo usuario en adelante obtendrá el resultado desde el cache en disco. También te permite evitar que el primer usuario tenga que esperar la carga de los elementos, al poder subir una app que ya venga con su cache generado.
 
