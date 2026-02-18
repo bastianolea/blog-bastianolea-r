@@ -13,10 +13,10 @@ abrir_post_reciente()
 
 
 # crear un post normal
-blogdown::new_post(title = "Redactar textos en base a datos con R", 
+blogdown::new_post(title = "Crea árboles de las carpetas de tus proyectos con `{printtree}` en R", 
                    file = paste0("blog/", lubridate::today(), "/index.md"),
                    author = "Bastián Olea Herrera",
-                   tags = c("texto", "automatización")
+                   tags = c("consejos")
 )
 
 # crear un post tutorial
