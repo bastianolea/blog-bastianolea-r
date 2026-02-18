@@ -42,7 +42,6 @@ blogdown::new_post(title = "Gráficos aluviales o diagramas _Sankey_ en `{ggplot
 
 ## borradores ----
 "content/blog/ggplot_sankey/index.qmd"
-"content/blog/2026-02-06/repetirse.qmd"
 "content/blog/googledrive/index.qmd"
 # hacer que R te pregunte cosas
 # mapas de chile con comunas pero sin líneas en la costa

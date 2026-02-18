@@ -6,7 +6,7 @@ library(janitor)
 library(tidyr)
 library(ggplot2)
 
-# setwd("~/Documents/Otros/blog/content/blog/2026-02-18b")
+# setwd("~/Documents/Otros/blog/content/blog/repetirse")
 
 # https://censo2024.ine.gob.cl/resultados/
 

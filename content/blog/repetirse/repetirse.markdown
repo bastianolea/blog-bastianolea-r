@@ -165,7 +165,7 @@ genero_long |>
        x = "Géneros", y = "Población (a distintas escalas)")
 ```
 
-<img src="/blog/2026-02-18b/repetirse_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="/blog/repetirse/repetirse_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 
 Pero imaginemos que ahora queremos **hacer el mismo gráfico varias veces**. ¿Copiamos el bloque del gráfico y lo pegamos las veces que lo necesitemos? **NO!** 😡
@@ -245,7 +245,7 @@ censo_grafico_genero(genero_long,
                      titulo = "Población de Valparaíso según género")
 ```
 
-<img src="/blog/2026-02-18b/repetirse_files/figure-html/unnamed-chunk-6-1.png" width="672" />
+<img src="/blog/repetirse/repetirse_files/figure-html/unnamed-chunk-6-1.png" width="672" />
 
 ¡Mucho más breve y ordenado! 😍
 
@@ -258,7 +258,7 @@ censo_grafico_genero(genero_long,
                      titulo = "Población de Biobío según género")
 ```
 
-<img src="/blog/2026-02-18b/repetirse_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+<img src="/blog/repetirse/repetirse_files/figure-html/unnamed-chunk-7-1.png" width="672" />
 
 En el fondo lo que hicimos fue _esconder_ parte del código dentro de las funciones, despejando nuestro script.
 
@@ -315,7 +315,7 @@ censo_grafico_genero(genero_long,
                      filtro = "Arica y Parinacota")
 ```
 
-<img src="/blog/2026-02-18b/repetirse_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<img src="/blog/repetirse/repetirse_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 
 
 ## Hacer un _loop_ o bucle
