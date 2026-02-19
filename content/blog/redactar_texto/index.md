@@ -34,6 +34,8 @@ execute:
 ---
 
 
+{{< aviso "También tengo [una versión alternativa de este tutorial donde usamos IA para generar textos desde R.](/blog/redactar_texto_llm) Pero ten en consideración que **usar IA y aprender son cosas distintas!** Recomiendo aprender primero y luego apoyarte en IA." >}}
+
 Luego de explorar o procesar un conjunto de datos, toca **presentar los resultados**. Si bien esto nos hace pensar en [gráficos](../../../tags/visualización-de-datos/), [tablas](../../../tags/tablas/) o [reportes](../../../tags/quarto/), el **texto** también es una forma de comunicar resultados que puede ser **optimizada** mediante la programación.
 
 En este tutorial veremos cómo hacer que R redacte párrafos de texto que se pueden adaptar a tus datos, ya sea adoptando la sintaxis y **redacción** apropiadas, **integrando cifras**, o escribiendo distintas oraciones de manera **condicional** a los resultados.
@@ -549,15 +551,15 @@ Ahora veremos el resultado de obtener todos los **párrafos redactados automáti
 Pasamos de una tabla de datos como ésta:
 
 | region | total | genero | poblacion | porcentaje |
-|:----------------------------|-----:|:--------------------|-------:|--------:|
+|:---------------------------------|-------:|:------------|--------:|---------:|
+| Valparaíso | 1505034 | Femenino | 780209 | 0.5183996 |
+| Ñuble | 404488 | No binario | 181 | 0.0004475 |
+| Aysén del General Carlos Ibáñez del Campo | 76678 | Transmasculino | 100 | 0.0013042 |
+| Arica y Parinacota | 186079 | Otro | 70 | 0.0003762 |
 | Tarapacá | 272334 | Masculino | 131243 | 0.4819193 |
-| Magallanes y de la Antártica Chilena | 132151 | Femenino | 66252 | 0.5013356 |
-| Libertador General Bernardo O'Higgins | 768428 | Femenino | 392682 | 0.5110199 |
-| Magallanes y de la Antártica Chilena | 132151 | Prefiere no responder/No sabe | 1131 | 0.0085584 |
-| Aysén del General Carlos Ibáñez del Campo | 76678 | Transfemenino | 43 | 0.0005608 |
-| Arica y Parinacota | 186079 | Transfemenino | 200 | 0.0010748 |
-| Libertador General Bernardo O'Higgins | 768428 | Transfemenino | 646 | 0.0008407 |
-| Magallanes y de la Antártica Chilena | 132151 | Transmasculino | 260 | 0.0019674 |
+| Metropolitana de Santiago | 5839785 | Femenino | 3010084 | 0.5154443 |
+| Ñuble | 404488 | Otro | 81 | 0.0002003 |
+| Arica y Parinacota | 186079 | Transmasculino | 414 | 0.0022249 |
 
 A este texto que redacta todos los resultados 😱
 

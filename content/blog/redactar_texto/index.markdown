@@ -24,6 +24,8 @@ execute:
   message: false
 ---
 
+{{< aviso “También tengo [una versión alternativa de este tutorial donde usamos IA para generar textos desde R.](/blog/redactar_texto_llm) Pero ten en consideración que **usar IA y aprender son cosas distintas!** Recomiendo aprender primero y luego apoyarte en IA.” >}}
+
 Luego de explorar o procesar un conjunto de datos, toca **presentar los resultados**. Si bien esto nos hace pensar en [gráficos](/tags/visualización-de-datos/), [tablas](/tags/tablas/) o [reportes](/tags/quarto/), el **texto** también es una forma de comunicar resultados que puede ser **optimizada** mediante la programación.
 
 En este tutorial veremos cómo hacer que R redacte párrafos de texto que se pueden adaptar a tus datos, ya sea adoptando la sintaxis y **redacción** apropiadas, **integrando cifras**, o escribiendo distintas oraciones de manera **condicional** a los resultados.
@@ -589,14 +591,14 @@ Pasamos de una tabla de datos como ésta:
 
 | region | total | genero | poblacion | porcentaje |
 |:---|---:|:---|---:|---:|
-| Aysén del General Carlos Ibáñez del Campo | 76678 | No binario | 81 | 0.0010564 |
-| Ñuble | 404488 | Otro | 81 | 0.0002003 |
-| La Araucanía | 783037 | Otro | 157 | 0.0002005 |
-| Metropolitana de Santiago | 5839785 | Otro | 2318 | 0.0003969 |
-| Libertador General Bernardo O’Higgins | 768428 | Masculino | 369103 | 0.4803352 |
-| Metropolitana de Santiago | 5839785 | Masculino | 2746994 | 0.4703930 |
-| Atacama | 226415 | Prefiere no responder/No sabe | 1829 | 0.0080781 |
-| Aysén del General Carlos Ibáñez del Campo | 76678 | Prefiere no responder/No sabe | 581 | 0.0075771 |
+| La Araucanía | 783037 | Prefiere no responder/No sabe | 4755 | 0.0060725 |
+| Maule | 873280 | Masculino | 414561 | 0.4747172 |
+| Los Lagos | 694729 | No binario | 458 | 0.0006592 |
+| Coquimbo | 643271 | Otro | 201 | 0.0003125 |
+| Libertador General Bernardo O’Higgins | 768428 | No binario | 474 | 0.0006168 |
+| Atacama | 226415 | No binario | 121 | 0.0005344 |
+| Valparaíso | 1505034 | Femenino | 780209 | 0.5183996 |
+| Libertador General Bernardo O’Higgins | 768428 | Transfemenino | 646 | 0.0008407 |
 
 A este texto que redacta todos los resultados 😱
 

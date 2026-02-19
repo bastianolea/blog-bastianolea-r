@@ -21,9 +21,9 @@ blogdown::new_post(title = "Crea árboles de las carpetas de tus proyectos con `
 
 # crear un post tutorial
 blogdown::new_post(title = "Gráficos aluviales o diagramas _Sankey_ en `{ggplot2}`", 
-                   file = "blog/ggplot_sankey/index.qmd",
+                   file = "blog/redactar_text_llm/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("visualización de datos", "gráficos"),
+                   tags = c("texto", "inteligencia artificial"),
                    categories = c() 
 )
 
@@ -66,6 +66,7 @@ blogdown::new_post(title = "Gráficos aluviales o diagramas _Sankey_ en `{ggplot
 "content/blog/shiny_tipografias/shiny_tipografias.qmd"
 
 # ideas
+# ejercicios de datos usando datos abiertos: limpiar datos, calcular alguna cosa, predecir algo
 "content/blog/dt_tablas/index.qmd"
 "content/blog/ellmer/ellmer.qmd"
 "content/blog/2025-07-06/index.qmd" # cargar y unir datos
