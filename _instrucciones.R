@@ -20,11 +20,11 @@ blogdown::new_post(title = "Crea árboles de las carpetas de tus proyectos con `
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Gráficos aluviales o diagramas _Sankey_ en `{ggplot2}`", 
-                   file = "blog/redactar_text_llm/index.md",
+blogdown::new_post(title = "App: Suicidios en Chile con perspectiva de género", 
+                   file = "blog/app_suicidios_genero/index.md",
                    author = "Bastián Olea Herrera",
-                   tags = c("texto", "inteligencia artificial"),
-                   categories = c() 
+                   tags = c("apps", "Chile", "datos", "gráficos"),
+                   categories = c("Aplicaciones") 
 )
 
 # draft: true
