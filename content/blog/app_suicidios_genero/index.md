@@ -1,5 +1,5 @@
 ---
-title: 'App: Suicidios en Chile con perspectiva de género'
+title: 'App: Suicidios en Chile (2010-2024) desde una perspectiva de género'
 author: Bastián Olea Herrera
 date: '2026-02-21'
 slug: []
