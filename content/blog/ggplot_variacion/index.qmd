@@ -19,3 +19,189 @@ format:
 
 grafico delincuencia
 grafico icr variacion
+
+https://github.com/bastianolea/delincuencia_chile
+
+
+
+```{r}
+library(arrow)
+
+# delitos <- read_parquet("https://github.com/bastianolea/delincuencia_chile/raw/main/datos_procesados/cead_delincuencia_chile.parquet")
+
+delitos <- read_parquet("cead_delincuencia_chile.parquet")
+
+delitos
+```
+
+```{r}
+library(lubridate)
+
+delitos_conteo <- delitos |> 
+  mutate(año = year(fecha)) |> 
+  group_by(año, delito) |> 
+  summarize(delitos = sum(delito_n)) |> 
+  ungroup()
+```
+
+```{r}
+delitos_conteo |> 
+  filter(año == 2025) |> 
+  arrange(-delitos)
+```
+
+```{r}
+
+
+delitos_filtro <- delitos_conteo |> 
+  filter(delito %in% c("Delitos asociados a armas", "Robo por sorpresa", "Robo en lugar habitado", "Robos con violencia o intimidación")) |> 
+  filter(año %in% c(2018, 2024))
+
+delitos_filtro
+```
+
+```{r}
+library(readxl)
+
+poblacion <- read_xlsx("estimaciones-y-proyecciones-base.xlsx")
+
+poblacion_suma <- poblacion |> 
+  janitor::clean_names() |> 
+  group_by(nivel, fecha) |> 
+  summarize(poblacion = sum(poblacion)) |> 
+  ungroup()
+
+poblacion_filtro <- poblacion_suma |> 
+  filter(fecha %in% c("1/1/2018", "1/1/2024")) |> 
+  mutate(fecha = dmy(fecha),
+         año = year(fecha)) |>
+  select(-nivel, -fecha)
+```
+
+
+```{r}
+delitos_poblacion <- delitos_filtro |> 
+  left_join(poblacion_filtro, join_by(año))
+
+delitos_poblacion
+```
+
+```{r}
+delitos_tasa <- delitos_poblacion |> 
+  mutate(tasa = delitos / poblacion * 1000)
+
+delitos_tasa
+```
+
+```{r}
+delitos_tasa_2 <- delitos_tasa |> 
+  arrange(delito, año)
+```
+
+
+```{r}
+delitos_tasa_3 <- delitos_tasa_2 |> 
+  group_by(delito) |>
+  mutate(tipo = case_when(tasa > lag(tasa) ~ "sube", 
+                          tasa < lag(tasa) ~ "baja",
+                          tasa == lag(tasa) ~ "igual"))
+
+delitos_tasa_3
+```
+
+```{r}
+library(tidyr)
+
+delitos_tasa_4 <- delitos_tasa_3 |> 
+  fill(tipo, .direction = "up")
+
+delitos_tasa_4
+```
+```{r}
+library(ggplot2)
+
+delitos_tasa_4 |> 
+  ggplot() +
+  aes(x = delito, y = tasa, fill = as.factor(año)) +
+  geom_col()
+```
+
+```{r}
+delitos_tasa_4 |> 
+  ggplot() +
+  aes(x = delito, y = tasa, fill = as.factor(año)) +
+  geom_col(
+    position = position_dodge())
+```
+
+```{r}
+delitos_tasa_4 |> 
+  ggplot() +
+  aes(x = delito, y = tasa, color = as.factor(año)) +
+  geom_line(aes(group = delito), size = 1.2) +
+  geom_point(size = 4) +
+  # scale_color_manual(values = c("sube" = "#cc3e6a", "baja" = "#4d75a0", "igual" = "grey50")) +
+  labs(x = NULL, y = "Tasa de delitos por cada 1000 habitantes", color = "Variación:") +
+  theme(legend.position = "top",
+        axis.text.x = element_text(angle = 45, hjust = 1, face = "bold"))
+```
+
+
+
+
+```{r}
+delitos_tasa_4 |> 
+  mutate(pos = case_when(tipo == "baja" & año == 2023 ~ tasa + 0.7,
+                         tipo == "sube" & año == 2023 ~ tasa - 0.7,
+                         TRUE ~ tasa)) |>
+  mutate(dif = tasa - lag(tasa)) |> 
+  mutate(dif = if_else(dif > 0, paste0("+", dif), as.character(dif))) |> 
+  ungroup()
+```
+
+```{r}
+datos_long |> 
+  
+  # mutate(variable = reordenar_ranking(variable)) |>
+  ggplot() +
+  aes(x = reordenar_ranking(variable),
+      y = valor, 
+      color = año) +
+  # fondos
+  geom_rect(
+    aes(xmin = -Inf, xmax = Inf, ymin = -Inf, ymax = Inf), 
+    tibble(nivel = factor(c('ICR', "Dimensiones", "Factores"), levels = c("ICR", "Dimensiones", "Factores"))),
+    inherit.aes = F,
+    fill = color$texto, alpha = c(0.28, 0.15, 0.04)
+  ) +
+  # flechas
+  geom_path(aes(group = variable, y = pos),
+            arrow = grid::arrow(length = unit(0.12, "cm"), type = "open"),
+            color = color$texto) +
+  geom_point(size = 5.6, color = "white", alpha = 0.4) +
+  geom_point(size = 5) +
+  geom_text(
+    data = ~filter(.x, año == 2023),
+    aes(label = dif,
+        y = if_else(tipo == "sube", valor + 1.4, valor - 0.4)),
+    size = 3, nudge_y = 0.5, color = color$texto, show.legend = F) + 
+  geom_text(
+    aes(label = valor),
+    size = 2.6, color = "#FFFFFF", alpha = 0.8, show.legend = F) + 
+  scale_fill_manual(values = c("2014" = "#cc3e6a", "2023" = "#4d75a0"), 
+                    aesthetics = c("fill", "color")) +
+  scale_y_continuous(breaks = 1:16, limits = c(1, 16), transform = "reverse",
+                     # sec.axis = dup_axis(name = NULL)
+  ) +
+  facet_wrap(~nivel, nrow = 1, scales = "free_x", space = "free_x", axes = "all_y") +
+  labs(y = "Ranking (menor es mejor)",
+       x = NULL,
+       color = "Año:") +
+  theme(legend.position = "top",
+        axis.text.x = element_text(angle = 45, hjust = 1, face = "bold"),
+        legend.margin = margin(t = 0, b = -15, l = 0, r = 0),
+        panel.grid.major.y = element_line(linetype = "dashed", color = "grey80", linewidth = 0.2)) +
+  theme(panel.spacing.x = unit(.5, "lines")) +
+  theme(strip.text = element_text(face = "plain", size = 10))
+```
+
