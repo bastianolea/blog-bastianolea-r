@@ -1,0 +1,72 @@
+---
+title: Renombrar archivos desde R
+author: Bastián Olea Herrera
+date: '2026-02-25'
+draft: true
+slug: []
+categories: []
+tags:
+  - automatización
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+---
+
+Una tarea común en al trabajar con datos (y también en la computación en general) es necesitar renombrar muchos archivos. Además de ser un lenguaje centrado en el análisis de datos, R también puede usarse para cualquier otro propósito, como éste.
+
+Veamos cómo podemos usar R para renombrar archivos, poniéndonos en varios casos recurrentes:
+
+
+## Inspeccionar directorios y archivos con R
+
+Hagamos como que tenemos una carpeta llena de archivos (pueden ser imágenes, documentos PDF, u otros documentos), en este caso se llama `reportes` y tiene 10 documentos PDF. Usamos el paquete `{fs}` para traer a R las **rutas** de los archivos:
+
+```{r}
+# install.packages("fs")
+library(fs)
+
+# rutas de archivos
+reportes <- dir_ls("reportes")
+
+reportes
+```
+
+Obtenemos un vector con las _rutas_ de los archivos, es decir, el lugar en nuestro computador donde se ubican los archivos[^1]
+
+[^1]: Considera que las rutas dependen del lugar desde donde se ejecute R: [recuerda usar Proyectos!](https://bastianolea.rbind.io/blog/r_introduccion/proyectos/) para tener control y orden sobre dónde está trabajando R!
+
+
+cambiar nombres
+
+
+
+limpiar nombres
+
+```{r}
+library(dplyr)
+library(stringr)
+library(fs)
+library(purrr)
+library(janitor)
+
+# lista con archivos
+reportes <- dir_ls("reportes")
+
+# limpiar nombres
+reportes <- tibble(ruta = reportes) |> 
+  mutate(nombre_nuevo = str_extract(ruta, "(?<=reportes/).*")) |> 
+  mutate(nombre_nuevo = make_clean_names(nombre_nuevo)) |> 
+  # mutate(nombre_nuevo = str_to_snake(nombre_nuevo)) |> 
+  mutate(nombre_nuevo = str_replace(nombre_nuevo, "_pdf$", ".pdf")) |>
+  # print(n = 30)
+  mutate(ruta_nueva = paste0("reportes/", nombre_nuevo))
+
+reportes$ruta_nueva
+
+# renombrar todos los archivos
+file_move(reportes$ruta, 
+          reportes$ruta_nueva)
+
+```
+

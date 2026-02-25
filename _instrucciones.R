@@ -13,10 +13,10 @@ abrir_post_reciente()
 
 
 # crear un post normal
-blogdown::new_post(title = "Crea árboles de las carpetas de tus proyectos con `{printtree}` en R", 
+blogdown::new_post(title = "Renombrar muchos archivos desde R", 
                    file = paste0("blog/", lubridate::today(), "/index.md"),
                    author = "Bastián Olea Herrera",
-                   tags = c("consejos")
+                   tags = c("automatización")
 )
 
 # crear un post tutorial
