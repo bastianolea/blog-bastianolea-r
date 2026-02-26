@@ -6,7 +6,6 @@ slug: []
 categories: []
 tags:
   - texto
-  - automatización
   - inteligencia artificial
 format:
   hugo-md:
@@ -100,6 +99,8 @@ Para ver más claramente los datos, aquí una tabla:
 Ahora que tenemos los datos, pasemos a lo interesante!
 
 ## Configurar un modelo de IA en R con `{ellmer}`
+
+{{< info “Puedes encontrar instrucciones más detalladas sobre configurar el uso de IA en R [en esta publicación.](/blog/ellmer/)” >}}
 
 Usaremos un modelo de lenguaje (LLM) en R [por medio del paquete `{ellmer}`.](https://ellmer.tidyverse.org)
 

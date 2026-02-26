@@ -24,9 +24,7 @@ grafico icr variacion
 
 https://github.com/bastianolea/delincuencia_chile
 
-
-
-```{r}
+``` r
 library(arrow)
 
 # delitos <- read_parquet("https://github.com/bastianolea/delincuencia_chile/raw/main/datos_procesados/cead_delincuencia_chile.parquet")
@@ -36,7 +34,7 @@ delitos <- read_parquet("cead_delincuencia_chile.parquet")
 delitos
 ```
 
-```{r}
+``` r
 library(lubridate)
 
 delitos_conteo <- delitos |> 
@@ -46,15 +44,13 @@ delitos_conteo <- delitos |>
   ungroup()
 ```
 
-```{r}
+``` r
 delitos_conteo |> 
   filter(año == 2025) |> 
   arrange(-delitos)
 ```
 
-```{r}
-
-
+``` r
 delitos_filtro <- delitos_conteo |> 
   filter(delito %in% c("Delitos asociados a armas", "Robo por sorpresa", "Robo en lugar habitado", "Robos con violencia o intimidación")) |> 
   filter(año %in% c(2018, 2024))
@@ -62,7 +58,7 @@ delitos_filtro <- delitos_conteo |>
 delitos_filtro
 ```
 
-```{r}
+``` r
 library(readxl)
 
 poblacion <- read_xlsx("estimaciones-y-proyecciones-base.xlsx")
@@ -80,28 +76,26 @@ poblacion_filtro <- poblacion_suma |>
   select(-nivel, -fecha)
 ```
 
-
-```{r}
+``` r
 delitos_poblacion <- delitos_filtro |> 
   left_join(poblacion_filtro, join_by(año))
 
 delitos_poblacion
 ```
 
-```{r}
+``` r
 delitos_tasa <- delitos_poblacion |> 
   mutate(tasa = delitos / poblacion * 1000)
 
 delitos_tasa
 ```
 
-```{r}
+``` r
 delitos_tasa_2 <- delitos_tasa |> 
   arrange(delito, año)
 ```
 
-
-```{r}
+``` r
 delitos_tasa_3 <- delitos_tasa_2 |> 
   group_by(delito) |>
   mutate(tipo = case_when(tasa > lag(tasa) ~ "sube", 
@@ -111,7 +105,7 @@ delitos_tasa_3 <- delitos_tasa_2 |>
 delitos_tasa_3
 ```
 
-```{r}
+``` r
 library(tidyr)
 
 delitos_tasa_4 <- delitos_tasa_3 |> 
@@ -119,7 +113,8 @@ delitos_tasa_4 <- delitos_tasa_3 |>
 
 delitos_tasa_4
 ```
-```{r}
+
+``` r
 library(ggplot2)
 
 delitos_tasa_4 |> 
@@ -128,7 +123,7 @@ delitos_tasa_4 |>
   geom_col()
 ```
 
-```{r}
+``` r
 delitos_tasa_4 |> 
   ggplot() +
   aes(x = delito, y = tasa, fill = as.factor(año)) +
@@ -136,7 +131,7 @@ delitos_tasa_4 |>
     position = position_dodge())
 ```
 
-```{r}
+``` r
 delitos_tasa_4 |> 
   ggplot() +
   aes(x = delito, y = tasa, color = as.factor(año)) +
@@ -148,10 +143,7 @@ delitos_tasa_4 |>
         axis.text.x = element_text(angle = 45, hjust = 1, face = "bold"))
 ```
 
-
-
-
-```{r}
+``` r
 delitos_tasa_4 |> 
   mutate(pos = case_when(tipo == "baja" & año == 2023 ~ tasa + 0.7,
                          tipo == "sube" & año == 2023 ~ tasa - 0.7,
@@ -161,7 +153,7 @@ delitos_tasa_4 |>
   ungroup()
 ```
 
-```{r}
+``` r
 datos_long |> 
   
   # mutate(variable = reordenar_ranking(variable)) |>
@@ -206,4 +198,3 @@ datos_long |>
   theme(panel.spacing.x = unit(.5, "lines")) +
   theme(strip.text = element_text(face = "plain", size = 10))
 ```
-
