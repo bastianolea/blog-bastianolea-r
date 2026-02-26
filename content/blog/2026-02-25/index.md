@@ -223,51 +223,85 @@ dir_ls("reportes")
 
 Si trabajamos con archivos que van a subirse a internet o a algún servicio, se recomienda limpiar los nombres de archivos para evitar problemas de compatibilidad: evitar espacios, tildes, eñes, mayúsculas, etc.
 
-Podemos usar la función `make_clean_names()` del paquete `{janitor}` para limpiar los nombres de los archivos, y luego usar `str_replace()` para arreglar la extensión de los archivos (porque la función cambia los puntos por guiones bajo):
+Podemos usar la función `make_clean_names()` del paquete `{janitor}` para limpiar los nombres de los archivos. Pero para hacerlo más ordenado, podemos sacar las rutas para trabajar solamente sobre los nombres de los archivos: luego de `dir_ls()` para obtener las rutas, usamos `path_file()` para quedarnos sólo con los nombres, y así no afectamos a las carpetas con la limpieza.
 
 ``` r
-library(dplyr)
-library(stringr)
 library(fs)
-library(janitor)
+
+# lista con nombres de archivos sin ruta
+ruta_archivos <- "reportes"
+nombres_archivos <- dir_ls(ruta_archivos) |> path_file()
+
+nombres_archivos
 ```
 
+     [1] "Documento Camarones.pdf" "Documento Camiña.pdf"   
+     [3] "Documento Canela.pdf"    "Documento Cañete.pdf"   
+     [5] "Documento Carahue.pdf"   "Documento Cartagena.pdf"
+     [7] "Documento Castro.pdf"    "Documento Catemu.pdf"   
+     [9] "Documento Cauquenes.pdf" "Documento Cerrillos.pdf"
 
-    Attaching package: 'janitor'
-
-    The following objects are masked from 'package:stats':
-
-        chisq.test, fisher.test
+Luego, creamos la tabla con `tibble()`, y separamos el nombre del archivo de su extensión (`.pdf`, `.xlsx`, etc.) con `separate()`, para poder limpiar el nombre sin afectar la extensión. Luego usamos `make_clean_names()` del paquete `{janitor}` para limpiar los nombres:
 
 ``` r
-# lista con archivos
-rutas <- dir_ls("reportes")
+library(tidyr) # para separar columnas a partir de un separador
+library(dplyr) # para crear nuevas columnas
+library(janitor) # para limpiar nombres
 
-# separar ruta de nombres de archivos
-archivos <- tibble(ruta = rutas) |> 
+archivos <- tibble(archivo = nombres_archivos) |>
+  # separar nombres de archivos de su extensión
+  separate(archivo, sep = "\\.", into = c("nombre", "extension")) |>
   # limpiar nombres
-  mutate(ruta_nueva = janitor::make_clean_names(ruta)) |> 
-  # arreglar extensiones
-  mutate(ruta_nueva = str_replace(ruta_nueva, "_pdf", ".pdf"))
+  mutate(nombre_nuevo = janitor::make_clean_names(nombre))
+
+archivos
+```
+
+    # A tibble: 10 × 3
+       nombre              extension nombre_nuevo       
+       <chr>               <chr>     <chr>              
+     1 Documento Camarones pdf       documento_camarones
+     2 Documento Camiña    pdf       documento_camina   
+     3 Documento Canela    pdf       documento_canela   
+     4 Documento Cañete    pdf       documento_canete   
+     5 Documento Carahue   pdf       documento_carahue  
+     6 Documento Cartagena pdf       documento_cartagena
+     7 Documento Castro    pdf       documento_castro   
+     8 Documento Catemu    pdf       documento_catemu   
+     9 Documento Cauquenes pdf       documento_cauquenes
+    10 Documento Cerrillos pdf       documento_cerrillos
+
+Nótese que las eñes se reemplazaron por enes, y las letras con tilde se cambiaron por sus versiones sin tilde.
+
+En la tabla podemos ver que separamos los nombres en distintas columnas. Ahora, usamos estas columnas para reconstruir las rutas originales y las nuevas rutas con los nombres limpios:
+
+``` r
+archivos <- archivos |> 
+  # reconstruir ruta original
+  mutate(ruta = paste(ruta_archivos, nombre, sep = "/"),
+         ruta = paste(ruta, extension, sep = ".")) |>
+  # crear ruta nueva
+  mutate(ruta_nueva = paste(ruta_archivos, nombre_nuevo, sep = "/"),
+         ruta_nueva = paste(ruta_nueva, extension, sep = ".")) |> 
+  # ordenar
+  select(ruta, ruta_nueva)
 
 archivos
 ```
 
     # A tibble: 10 × 2
        ruta                             ruta_nueva                      
-       <fs::path>                       <chr>                           
-     1 reportes/Documento Camarones.pdf reportes_documento_camarones.pdf
-     2 reportes/Documento Camiña.pdf    reportes_documento_camina.pdf   
-     3 reportes/Documento Canela.pdf    reportes_documento_canela.pdf   
-     4 reportes/Documento Cañete.pdf    reportes_documento_canete.pdf   
-     5 reportes/Documento Carahue.pdf   reportes_documento_carahue.pdf  
-     6 reportes/Documento Cartagena.pdf reportes_documento_cartagena.pdf
-     7 reportes/Documento Castro.pdf    reportes_documento_castro.pdf   
-     8 reportes/Documento Catemu.pdf    reportes_documento_catemu.pdf   
-     9 reportes/Documento Cauquenes.pdf reportes_documento_cauquenes.pdf
-    10 reportes/Documento Cerrillos.pdf reportes_documento_cerrillos.pdf
-
-Nótese que las eñes se reemplazaron por enes, y las letras con tilde se cambiaron por sus versiones sin tilde.
+       <chr>                            <chr>                           
+     1 reportes/Documento Camarones.pdf reportes/documento_camarones.pdf
+     2 reportes/Documento Camiña.pdf    reportes/documento_camina.pdf   
+     3 reportes/Documento Canela.pdf    reportes/documento_canela.pdf   
+     4 reportes/Documento Cañete.pdf    reportes/documento_canete.pdf   
+     5 reportes/Documento Carahue.pdf   reportes/documento_carahue.pdf  
+     6 reportes/Documento Cartagena.pdf reportes/documento_cartagena.pdf
+     7 reportes/Documento Castro.pdf    reportes/documento_castro.pdf   
+     8 reportes/Documento Catemu.pdf    reportes/documento_catemu.pdf   
+     9 reportes/Documento Cauquenes.pdf reportes/documento_cauquenes.pdf
+    10 reportes/Documento Cerrillos.pdf reportes/documento_cerrillos.pdf
 
 Renombramos todos los archivos usando las columnas de la tabla:
 
@@ -276,6 +310,8 @@ Renombramos todos los archivos usando las columnas de la tabla:
 file_move(archivos$ruta, 
           archivos$ruta_nueva)
 ```
+
+Claramente, todo lo anterior se puede hacer sin pasos intermedios, pero lo puse en varios pasos por motivos pedagógicos.
 
 Así, podemos usar R para renombrar cientos o miles de archivos. Podemos usar este código básico para hacer cosas mucho más complejas, como cargar cada archivo y poner en su nombre algo relacionado a sus datos, crear nombres condicionales, navegar estructuras de directorios y organizar los archivos por carpetas, y más. Pero eso queda para otro tutorial! Si te interesa hacer alguna de estas cosas o algo similar, [escríbeme para motivarme a escribir otro post](../../../contacto/) ☺️
 
