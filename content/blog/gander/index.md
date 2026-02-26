@@ -66,6 +66,8 @@ Pero antes de usarlo hay que configurar dos cosas: la IA que usará, y las tecla
 
 Para conectar la IA a `{gander}`, tenemos dos opciones: [usar un **modelo de IA local**](#opción-a-instalar-un-modelo-de-lenguaje-local-desde-r), o [usar un **proveedor de IA en la nube.**](#opción-b-configurar-un-proveedor-de-ia-en-la-nube)
 
+{{< info "Puedes encontrar instrucciones más detalladas sobre configurar el uso de IA en R [en esta publicación.](/blog/ellmer/)" >}}
+
 ### Opción A: instalar un modelo de lenguaje local desde R
 
 Si tu computador tiene una tarjeta de video lo suficientemente grande (más de 16GB de memoria de video), si quieres usar IA gratis, o si prefieres no usar modelos en la nube por privacidad, puedes instalar un modelo de lenguaje localmente en tu equipo.

@@ -31,6 +31,8 @@ El paquete incluye varias funciones para usar un modelo LLM local en las columna
 - confirmar si algo es verdadero o falso a partir de un texto
 - y también a aplicar cualquier *prompt* a una variable.
 
+{{< info "Puedes encontrar instrucciones detalladas sobre configurar el uso de IA en R [en esta publicación.](/blog/ellmer/)" >}}
+
 Recientemente lo usé para un caso real, donde tenía una columna de casi 2.000 nombres, y necesitaba asignarle un género a cada una de estas personas, solamente a partir de sus nombres y apellidos.
 
 ``` r

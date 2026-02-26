@@ -88,6 +88,8 @@ Los datos tienen una columna con el título, otra con el cuerpo de la noticia, y
 
 Para poder usar modelos LLM localmente con R, [tenemos que instalar Ollama](https://ollama.com/) en nuestro equipo, que es la aplicación que nos permite obtener y usar modelos de lenguaje locales, y ejecutar la aplicación en nuestro computador. Ollama tiene que estar abierto para poder proveer del modelo a nuestra sesión de R.
 
+{{< info "Puedes encontrar instrucciones más detalladas sobre configurar el uso de IA en R [en esta publicación.](/blog/ellmer/)" >}}
+
 Luego, ya sea desde Ollama o desde R, tenemos que instalar un modelo de lenguaje. Desde R, es tan simple como ejecutar: `ollamar::pull("llama3.2:1b")`, definiendo el [modelo](https://ollama.com/search) que queremos instalar. Al elegir un modelo, debes considerar las capacidades de tu computador para ejecutar los modelos, y que el tamaño del modelo es directamente proporcional con la calidad de sus respuestas[^1].
 
 Una vez tengas Ollama abierto en tu computador, y un modelo previamente instalado, puedes proceder a usarlo en R en el siguiente paso.

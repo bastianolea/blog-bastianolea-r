@@ -41,6 +41,9 @@ blogdown::new_post(title = "Gráficos de variación o _dumbbell_ en `{ggplot2}`"
 
 
 ## borradores ----
+"content/blog/ggplot_variacion/index.qmd"
+"content/blog/2026-02-25/index.qmd"
+"content/blog/ellmer/index.md"
 "content/blog/ggplot_sankey/index.qmd"
 "content/blog/googledrive/index.qmd"
 # hacer que R te pregunte cosas
@@ -58,7 +61,7 @@ blogdown::new_post(title = "Gráficos de variación o _dumbbell_ en `{ggplot2}`"
 
 # en construcción
 "content/blog/mapas_sf/mapas_sf.qmd"
-"content/blog/ellmer/index.md"
+
 "content/blog/shiny_validacion/index.md"
 "content/blog/tutorial_digitalocean/index.md"
 
