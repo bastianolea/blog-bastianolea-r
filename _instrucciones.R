@@ -42,10 +42,11 @@ blogdown::new_post(title = "Gráficos de variación o _dumbbell_ en `{ggplot2}`"
 
 ## borradores ----
 "content/blog/ggplot_variacion/index.qmd"
-"content/blog/2026-02-25/index.qmd"
-"content/blog/ellmer/index.md"
 "content/blog/ggplot_sankey/index.qmd"
 "content/blog/googledrive/index.qmd"
+
+# ideas ----
+# {futurize} https://www.jottr.org/2026/01/22/futurize-0.1.0/
 # hacer que R te pregunte cosas
 # mapas de chile con comunas pero sin líneas en la costa
 # pildoritas en shiny y en ggiraph
@@ -54,6 +55,14 @@ blogdown::new_post(title = "Gráficos de variación o _dumbbell_ en `{ggplot2}`"
 # datos de género en chile (mmeg, subcomisión, datos.gob, red chilena, ibg)
 # How do I replace NA values with zeros in an R dataframe?
 # https://www.linkedin.com/feed/update/urn:li:activity:7405241344316841984?utm_source=share&utm_medium=member_desktop&rcm=ACoAAB9if5MBe0keh4VrsmJOFbZxmIK9T9GSkYM
+# ejercicios de datos usando datos abiertos: limpiar datos, calcular alguna cosa, predecir algo
+"content/blog/dt_tablas/index.qmd"
+"content/blog/2025-07-06/index.qmd" # cargar y unir datos
+"https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html" # plagiar
+"https://github.com/rundel/livecode"
+"content/blog/2025-07-01/index.qmd" # st_join
+"content/blog/unpivotr/index.qmd"
+"content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
 
 # constantes
 "content/blog/mapas_sf/mapas_sf.qmd"
@@ -68,17 +77,7 @@ blogdown::new_post(title = "Gráficos de variación o _dumbbell_ en `{ggplot2}`"
 # casi listos
 "content/blog/shiny_tipografias/shiny_tipografias.qmd"
 
-# ideas
-# ejercicios de datos usando datos abiertos: limpiar datos, calcular alguna cosa, predecir algo
-"content/blog/dt_tablas/index.qmd"
-"content/blog/ellmer/ellmer.qmd"
-"content/blog/2025-07-06/index.qmd" # cargar y unir datos
 
-"https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html" # plagiar
-"https://github.com/rundel/livecode"
-"content/blog/2025-07-01/index.qmd" # st_join
-"content/blog/unpivotr/index.qmd"
-"content/blog/web_scraping_github_actions/github_actions_scraping.qmd"
 
 
 
