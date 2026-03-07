@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=5651&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.152.2">
+<title>Extracción de datos estructurados desde texto usando IA | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Podemos usar la IA para transformar textos de cualquier tipo en datos estructurados. Esto significa que puedes convertir entrevistas, reseñas, opiniones, correos, noticias y más en bases de datos con la información que necesitas debidamente ordenada en filas y columnas. En ese tutorial usaremos modelos de lenguaje para extraer datos estructurados a partir de noticias reales.">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="Extracción de datos estructurados desde texto usando IA | Bastián Olea">
+<meta property="og:description" content="Podemos usar la IA para transformar textos de cualquier tipo en datos estructurados. Esto significa que puedes convertir entrevistas, reseñas, opiniones, correos, noticias y más en bases de datos con la información que necesitas debidamente ordenada en filas y columnas. En ese tutorial usaremos modelos de lenguaje para extraer datos estructurados a partir de noticias reales." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:5651/blog/datos_estructurados_llm/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:5651/blog/sidebar-listing.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:5651/blog/sidebar-listing.jpg" >
+    
+    
+  
+  <meta itemprop="name" content="Extracción de datos estructurados desde texto usando IA">
+  <meta itemprop="description" content="Este tutorial lo hice con los aprendizajes que obtuve del excelente workshop LLMs in R for Data Analysis impartido por Nic Crane en la fabulosa conferencia de RainbowR 2026 Los modelos de lenguaje (LLMs, también llamados coloquialmente inteligencia artifical) nos pueden ayudar a transformar textos de cualquier tipo en datos estructurados. Esto significa que puedes convertir entrevistas, reseñas, opiniones, correos, noticias y más en bases de datos con la información que necesitas debidamente ordenada en filas y columnas.">
+  <meta itemprop="datePublished" content="2026-03-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-03-07T00:00:00+00:00">
+  <meta itemprop="wordCount" content="2177">
+  <meta itemprop="keywords" content="Inteligencia artificial,Texto,Análisis de texto,Datos">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="../../style.main.min.8f721815d150079638fe25bf9714e71c67b8ddf7e9435d32764c3175c3e06556.css" integrity="sha256-j3IYFdFQB5Y4/iW/lxTnHGe43ffpQ10ydkwxdcPgZVY=" media="screen">
+  
+  
+  <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
+  
+  
+  <link rel="stylesheet" href="../../css/syntax.css">
+  
+  
+  <link rel="preload" href="https://bastianoleah.shinyapps.io/buscador/" as="image">
+</head>
+<body>
+      <div class="grid-container single-sidebar">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:5651/" title="Home">
+      <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="../../blog/" title="Bastián Olea: Blog de R">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/aprende_r/" title="Aprende R">Aprende R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../clases/" title="Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+
+                       
+ 
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 pr3-l">
+      <header class="post-header" style="margin-top:-30px;">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Extracción de datos estructurados desde texto usando IA</h1>
+        
+        
+        
+        <div style = "display: inline-block;">  
+          <p class="f7 db mv0 ttu" style = "display: inline-block;">
+            7/3/2026</p>
+          
+          
+          <span>
+            
+
+
+
+
+<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
+<span id="282b2c578c85c2f98211f2279973e511" title="visitas">
+</span>
+<script>
+    var r = new XMLHttpRequest();
+    r.addEventListener('load', function() {
+        document.getElementById('282b2c578c85c2f98211f2279973e511').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
+    })
+    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/datos_estructurados_llm/".replace(/(\/)?$/, '')) + '.json')
+    r.send()
+</script>
+</span>
+
+          </span>
+        </div>
+          
+        
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/inteligencia-artificial"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            inteligencia artificial</a>  <a href="http://localhost:5651/tags/texto"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            texto</a>  <a href="http://localhost:5651/tags/an%C3%A1lisis-de-texto"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            análisis de texto</a>  <a href="http://localhost:5651/tags/datos"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            datos</a> </dd></em>
+        </dl>
+         
+      
+        
+      
+      <div class="ph0 pt3">
+        
+
+<div style="margin-top:-24px;">
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+    
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; 
+  color: #EAD2FA; font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; 
+  margin-right: 1px; margin-top: 6px; margin-bottom: 0px;"
+  href="https://thisisnic.github.io/rainbowrworkshop/code.html" target="_blank" rel="noopener"><i class="fas fa-book fa-lg fa-fw mr2"></i>Workshop</a>
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+    
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; 
+  color: #EAD2FA; font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; 
+  margin-right: 1px; margin-top: 6px; margin-bottom: 0px;"
+  href="https://gist.github.com/bastianolea/8bc40e3acbb0716fbf607b6488886274" target="_blank" rel="noopener"><i class="fas fa-file-code fa-lg fa-fw mr2"></i>Código</a>
+
+</div>
+
+      </div>
+      
+      
+    </header>
+      
+      
+    <section class="post-body pt5 pb4">
+        
+
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #493365;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-triangle-exclamation" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #EAD2FA;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%; color: #EAD2FA;">
+    Este tutorial lo hice con los aprendizajes que obtuve del excelente 
+<a href="https://thisisnic.github.io/rainbowrworkshop/code.html" target="_blank" rel="noopener">workshop <em>LLMs in R for Data Analysis</em></a> impartido por 
+<a href="https://niccrane.com" target="_blank" rel="noopener">Nic Crane</a> en la fabulosa 
+<a href="https://conference.rainbowr.org" target="_blank" rel="noopener">conferencia de RainbowR 2026</a>
+  </aside>
+  
+</div>
+<p>Los modelos de lenguaje (LLMs, también llamados coloquialmente <em>inteligencia artifical</em>) nos pueden ayudar a <strong>transformar textos de cualquier tipo en datos estructurados</strong>. Esto significa que puedes convertir <strong>entrevistas, reseñas, opiniones, correos, noticias y más</strong> en <strong>bases de datos</strong> con la información que necesitas debidamente ordenada en filas y columnas.</p>
+<p><strong><em>Ejemplos de uso:</em></strong></p>
+<ul>
+<li>Puedes pasar de un conjunto de entrevistas a una tabla con las respuestas a preguntas específicas sobre los entrevistados, incluyendo información como edad, género, profesión, opiniones, etc.</li>
+<li>Puedes convertir reseñas de productos en una tabla con la opinión general, los aspectos positivos y negativos, la puntuación, etc.</li>
+<li>Puedes tomar conjuntos de noticias o de artículos y obtener tablas que indican los actores principales, ubicaciones clave, fechas, resúmenes, análisis de sentimiento, etc.</li>
+</ul>
+<p>En ese tutorial usaremos modelos de lenguaje para <strong>extraer datos estructurados</strong> a partir de noticias reales.</p>
+<p>El requisito para poder realizar esto es tener acceso a una IA o modelo de lenguaje (LLM), ya sea local o en la nube (ChatGPT, Claude, Gemini, etc.). Puedes seguir este tutorial para 
+<a href="../../blog/ellmer/">configurar el uso de inteligencia artificial con R.</a></p>
+
+
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #493365;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-triangle-exclamation" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #EAD2FA;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%; color: #EAD2FA;">
+    <strong>Requisito:</strong> si necesitas configurar tu proveedor de IA con R, 
+<a href="../../blog/ellmer/">sigue este tutorial</a> para empezar a analizar datos con IA!
+  </aside>
+  
+</div>
+
+
+
+
+<h2 id="datos-de-texto-de-ejemplo">Datos de texto de ejemplo
+  <a href="#datos-de-texto-de-ejemplo"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Los datos que usaremos para el tutorial será una base de <strong>10.000 noticias reales</strong> obtenidas desde medios digitales de Chile durante el año 2025. Las noticias son obtenidas por <em>web scraping</em>, y el código de este proyecto está disponible 
+<a href="https://github.com/bastianolea/prensa_chile" target="_blank" rel="noopener">en este repositorio</a>.</p>
+
+
+
+
+<div class = "db pt1"
+style = "margin-bottom: 34px;">
+
+<a class = "btn-links mr2 ba dib"
+href = "prensa_datos_muestra_2025.csv" target="_blank"
+style = "padding: 12px; padding-bottom: 8px; border-radius: 5px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #9069C0; margin-bottom: -12px;">
+<i class="fas fa-download fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
+Descargar datos (clic derecho y <em>guardar como</em>)</a>
+
+</div>
+<p>También puedes descargar los datos desde R:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># dirección de los datos</span>
+</span></span><span class="line"><span class="cl"><span class="n">url</span> <span class="o">=</span> <span class="s">&#34;https://github.com/bastianolea/prensa_chile/raw/main/prensa_datos_muestra_2025.csv&#34;</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># descargar el archivo con R</span>
+</span></span><span class="line"><span class="cl"><span class="nf">download.file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="n">destfile</span> <span class="o">=</span> <span class="s">&#34;prensa_datos_muestra_2025.csv&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>O bien, cargar los datos directamente desde internet sin necesidad de descargar el archivo:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># cargar datos directamente desde internet</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">readr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">noticias</span> <span class="o">&lt;-</span> <span class="nf">read_csv2</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span></span></code></pre></div><p>Veamos rápidamente la tabla de datos:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span></code></pre></div><pre tabindex="0"><code>## 
+## Attaching package: &#39;dplyr&#39;
+</code></pre><pre tabindex="0"><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag
+</code></pre><pre tabindex="0"><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union
+</code></pre><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">glimpse</span><span class="p">(</span><span class="n">noticias</span><span class="p">)</span>
+</span></span></code></pre></div><pre tabindex="0"><code>## Rows: 10,000
+## Columns: 4
+## $ titulo &lt;chr&gt; &#34;Acusa falta de imparcialidad: Defensa de Vivanco pide excluir …
+## $ cuerpo &lt;chr&gt; &#34;La estrategia judicial de la exministra de la Corte Suprema, Á…
+## $ fuente &lt;chr&gt; &#34;CNN Chile&#34;, &#34;The Clinic&#34;, &#34;El Ciudadano&#34;, &#34;La Tercera&#34;, &#34;El Ci…
+## $ fecha  &lt;date&gt; 2025-12-31, 2025-12-31, 2025-12-31, 2025-12-31, 2025-12-31, 20…
+</code></pre><p>Vemos que tenemos una columna con los títulos, otra con el texto o <em>cuerpo</em> de las noticias, la fuente y la fecha de cada noticia.</p>
+
+
+
+
+<h2 id="extraer-datos-desde-un-solo-texto">Extraer datos desde un solo texto
+  <a href="#extraer-datos-desde-un-solo-texto"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Empecemos extrayendo una sola noticia como ejemplo:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">noticia</span> <span class="o">&lt;-</span> <span class="n">noticias</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">slice</span><span class="p">(</span><span class="m">6</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">pull</span><span class="p">(</span><span class="n">cuerpo</span><span class="p">)</span>
+</span></span></code></pre></div><p>Veamos un poco de qué se trata la noticia:</p>
+<pre tabindex="0"><code>## &gt; El subprefecto Adolfo Domínguez, jefe de la Brigada Contra el Crimen Organizado, señaló que “se pudo indagar en diferentes comunas de Santiago y se logró dar con el paradero del sujeto, que mantiene múltiples antecedentes”. La Policía de Investigaciones (PDI) recapturó a Matías Jesús Fuentes Roja...
+</code></pre><p>Puedes 
+<a href="https://www.cooperativa.cl/noticias/pais/judicial/gendarmeria/pdi-recapturo-a-sujeto-al-que-gendarmeria-libero-por-error/2025-12-31/073547.html" target="_blank" rel="noopener">leer la noticia completa en este enlace</a>, pero la idea general es que contamos con el cuerpo entero de la noticia en el objeto <code>noticia</code>.</p>
+
+
+
+
+<h3 id="pregunta-simple-al-modelo">Pregunta simple al modelo
+  <a href="#pregunta-simple-al-modelo"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Veamos la forma más simple de extraer datos estructurados desde información no estructurada: preguntarle al modelo de IA y cruzar los dedos 🤞🏼</p>
+<p><strong>Creamos el <em>chat</em> de IA</strong> que usaremos para <strong>extraer los datos</strong>. En mi caso, voy a usar modelos de <em>Anthropic</em>, por lo que uso la función <code>chat_anthropic()</code>, pero si usas otro modelo, puedes usar la función correspondiente de <code>{ellmer}</code> para crear tu chat, como se explica 
+<a href="../../blog/ellmer/">en este tutorial</a>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">ellmer</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># crear un chat</span>
+</span></span><span class="line"><span class="cl"><span class="n">chat</span> <span class="o">&lt;-</span> <span class="nf">chat_anthropic</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="s">&#34;claude-haiku-4-5&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%;">
+    Si necesitas configurar tu proveedor de IA con R, o configurar modelos locales de IA con R, 
+<a href="../../blog/ellmer/">sigue este tutorial</a>
+  </aside>
+  
+</div>
+<p>Ahora hagamos una prueba/ejemplo: usemos la <strong>noticia</strong> que elegimos para entregarla al modelo de lenguaje, junto a una <strong>breve instrucción</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># crear el prompt con la instrucción y el texto</span>
+</span></span><span class="line"><span class="cl"><span class="n">prompt</span> <span class="o">&lt;-</span> <span class="nf">paste</span><span class="p">(</span><span class="s">&#34;En qué lugar se desarrolla la siguiente noticia:&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">noticia</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># enviar el prompt al modelo</span>
+</span></span><span class="line"><span class="cl"><span class="n">chat</span><span class="o">$</span><span class="nf">chat</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+</span></span></code></pre></div><pre tabindex="0"><code>## # Lugar donde se desarrolla la noticia
+## 
+## La noticia se desarrolla en **Santiago, Chile**, específicamente en la **comuna
+## de Cerrillos**.
+## 
+## Según el texto, la recaptura de Matías Jesús Fuentes Rojas fue concretada 
+## durante la madrugada del miércoles en la comuna de Cerrillos, luego de que la 
+## PDI realizara indagaciones en diferentes comunas de Santiago para ubicar al 
+## sujeto.
+</code></pre><p>El modelo de lenguaje <em>trata</em> de ser útil, y por eso entrega mucha más información que la que necesitamos! No podemos poner todo ese texto en una tabla de datos. Habría que limpiarlo muchísimo y dejaría de ser útil 🙄</p>
+<p>Podemos <strong>corregir el comportamiento del modelo</strong> especificando una instrucción más clara en el <em>system prompt</em>, que es la <strong>instrucción general</strong> que le damos al modelo al crear el chat:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># definir instrucción general para el modelo</span>
+</span></span><span class="line"><span class="cl"><span class="n">instruccion</span> <span class="o">&lt;-</span> <span class="s">&#34;Eres un experto en noticias de Chile.
+</span></span></span><span class="line"><span class="cl"><span class="s">                Entrega la información lo más breve posible,
+</span></span></span><span class="line"><span class="cl"><span class="s">                especificando en una o dos palabras y sin
+</span></span></span><span class="line"><span class="cl"><span class="s">                comentarios extra. Por ejemplo: {Puente Alto, Santiago}.&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># crear chat con el modelo y con system prompt</span>
+</span></span><span class="line"><span class="cl"><span class="n">chat</span> <span class="o">&lt;-</span> <span class="nf">chat_anthropic</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="s">&#34;claude-haiku-4-5&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="n">system_prompt</span> <span class="o">=</span> <span class="n">instruccion</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># escribir prompt o instrucción particular</span>
+</span></span><span class="line"><span class="cl"><span class="n">prompt</span> <span class="o">&lt;-</span> <span class="nf">paste</span><span class="p">(</span><span class="s">&#34;En qué lugar se desarrolla la siguiente noticia:&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">noticia</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># enviar el prompt al modelo</span>
+</span></span><span class="line"><span class="cl"><span class="n">chat</span><span class="o">$</span><span class="nf">chat</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+</span></span></code></pre></div><pre tabindex="0"><code>## Cerrillos, Santiago.
+</code></pre><p>Podemos confirmar en la 
+<a href="https://www.cooperativa.cl/noticias/pais/judicial/gendarmeria/pdi-recapturo-a-sujeto-al-que-gendarmeria-libero-por-error/2025-12-31/073547.html" target="_blank" rel="noopener">noticia completa</a> que efectivamente los hechos tuvieron lugar en la comuna de Cerrillos.</p>
+<p>Ahora sí, el modelo de lenguaje responde tal como esperamos. Pero esta forma de hacerlo aún deja mucho al <strong>azar</strong>: la especificidad del <em>system prompt</em> que escribas, y la aleatoriedad del modelo que puede responder algo distinto sin previo aviso.</p>
+
+
+
+
+<h3 id="especificación-de-datos-estructurados">Especificación de datos estructurados
+  <a href="#especificaci%c3%b3n-de-datos-estructurados"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Ahora veremos una una <strong>forma más consistente de extraer datos a partir de textos con IA</strong>, para que los modelos de lenguaje respondan específicamente lo que necesitamos.</p>
+<p>Para ello, vamos a <strong>especificar las respuestas que queremos recibir</strong> del modelo, usando las funciones <code>type_{x}</code> de <code>{ellmer}</code>:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Función</th>
+          <th>Tipo de respuesta</th>
+          <th>Descripción</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>type_string()</code></td>
+          <td>Texto abierto</td>
+          <td>Para respuestas en texto libre, como nombres, conceptos, explicaciones, etc.</td>
+      </tr>
+      <tr>
+          <td><code>type_enum()</code></td>
+          <td>Variable categórica</td>
+          <td>Para respuestas que asuman un valor de un conjunto de valores predefinidos.</td>
+      </tr>
+      <tr>
+          <td><code>type_number()</code></td>
+          <td>Numérica</td>
+          <td>Para respuestas que son cifras (números enteros, decimales, etc.)</td>
+      </tr>
+      <tr>
+          <td><code>type_boolean()</code></td>
+          <td>Variable lógica</td>
+          <td>Para respuestas de verdadero/falso (<code>TRUE</code> / <code>FALSE</code>)</td>
+      </tr>
+  </tbody>
+</table>
+<p>Siguiendo con el ejemplo, si queremos extraer la <strong>ubicación principal</strong> mencionada en la noticia, usamos <code>type_string()</code> para pedirle una respuesta de texto al modelo, junto a una breve descripción de lo que queremos:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">tipo_lugar</span> <span class="o">&lt;-</span> <span class="nf">type_string</span><span class="p">(</span><span class="s">&#34;Ubicación principal de la noticia&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>Ahora, al momento de enviar el <em>prompt</em> al modelo (el objeto <code>noticia</code> que contiene el texto), usamos <code>chat$structured()</code> en vez de <code>chat$chat()</code> para recibir datos estructurados en vez de la respuesta libre del modelo, y le indicamos que queremos que la respuesta sea del tipo <code>tipo_lugar</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># crear chat con el modelo</span>
+</span></span><span class="line"><span class="cl"><span class="n">chat</span> <span class="o">&lt;-</span> <span class="nf">chat_anthropic</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="s">&#34;claude-haiku-4-5&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># empezar chat estructurado especificando el tipo de respuesta</span>
+</span></span><span class="line"><span class="cl"><span class="n">resultado</span> <span class="o">&lt;-</span> <span class="n">chat</span><span class="o">$</span><span class="nf">chat_structured</span><span class="p">(</span><span class="n">noticia</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                  <span class="n">type</span> <span class="o">=</span> <span class="n">tipo_lugar</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">resultado</span>
+</span></span></code></pre></div><pre tabindex="0"><code>## [1] &#34;Santiago, Chile&#34;
+</code></pre><p>El modelo de lenguaje responde con la ubicación principal de la noticia, sin ningún comentario extra, y sin necesidad de hacer un procesamiento posterior para limpiar la respuesta.</p>
+
+
+
+
+<h3 id="extraer-variables-categóricas">Extraer variables categóricas
+  <a href="#extraer-variables-categ%c3%b3ricas"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Si queremos extraer desde los datos no estructurados una variable categórica, es decir, que sólo pueda tomar un valor entre varias opciones predefinidas, podemos usar <code>type_enum()</code>, donde especificamos un vector con los valores posibles.</p>
+<p>Por ejemplo, preguntemos qué tipo de noticia se trata, entre categorías como <em>social, economía, política,</em> etc.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># definir tipo de respuesta categórica</span>
+</span></span><span class="line"><span class="cl"><span class="n">tipo_clasificacion</span> <span class="o">&lt;-</span> <span class="nf">type_enum</span><span class="p">(</span><span class="n">description</span> <span class="o">=</span> <span class="s">&#34;Clasificación de la noticia según su enfoque temático principal&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                <span class="n">values</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;social&#34;</span><span class="p">,</span> <span class="s">&#34;económico&#34;</span><span class="p">,</span> <span class="s">&#34;político&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                           <span class="s">&#34;judicial&#34;</span><span class="p">,</span> <span class="s">&#34;delincuencia&#34;</span><span class="p">,</span> <span class="s">&#34;otros&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># crear chat con el modelo</span>
+</span></span><span class="line"><span class="cl"><span class="n">chat</span> <span class="o">&lt;-</span> <span class="nf">chat_anthropic</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="s">&#34;claude-haiku-4-5&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># empezar chat estructurado especificando el tipo de respuesta</span>
+</span></span><span class="line"><span class="cl"><span class="n">resultado</span> <span class="o">&lt;-</span> <span class="n">chat</span><span class="o">$</span><span class="nf">chat_structured</span><span class="p">(</span><span class="n">noticia</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                  <span class="n">type</span> <span class="o">=</span> <span class="n">tipo_clasificacion</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">resultado</span>
+</span></span></code></pre></div><pre tabindex="0"><code>## [1] &#34;delincuencia&#34;
+</code></pre><p>De esta forma, el modelo se limita a responder solamente entre las opciones que tú le especifiques, delimitando mucho más la calidad de la respuesta.</p>
+
+
+
+
+<h2 id="extracción-datos-estructurados-desde-varios-textos">Extracción datos estructurados desde varios textos
+  <a href="#extracci%c3%b3n-datos-estructurados-desde-varios-textos"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Hasta ahora hemos extraído datos estructurados a partir de un solo elemento de texto no estructurado.</p>
+<p>Realicemos la extracción de datos estructurados de varias unidades de información al mismo tiempo. Como ejemplo, probemos con una muestra de 5 noticias:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">muestra</span> <span class="o">&lt;-</span> <span class="n">noticias</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">slice</span><span class="p">(</span><span class="m">20</span><span class="o">:</span><span class="m">25</span><span class="p">)</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">muestra</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">select</span><span class="p">(</span><span class="n">titulo</span><span class="p">)</span>
+</span></span></code></pre></div><pre tabindex="0"><code>## # A tibble: 6 × 1
+##   titulo                                                                        
+##   &lt;chr&gt;                                                                         
+## 1 Nuevo error en Gendarmería: imputado queda en libertad pese a que debía cumpl…
+## 2 Andes Iron acusa ofensiva política contra Dominga tras conocerse que enfrenta…
+## 3 Fiscalía acusó a Cathy Barriga por cuatro delitos y pide más de 23 años de cá…
+## 4 No fue Patricia Muñoz: Boric nombra a Macarena Cortés como la primera directo…
+## 5 “Ya tomaron las huellas”: dueño de tienda asaltada durante incendio en Mall P…
+## 6 Presidente Boric recibe cartas credenciales de cinco embajadores y cierra pol…
+</code></pre><p>Siguiendo la definición de <em>tipos</em> de resultado que aprendimos más arriba, podemos <strong>definir de una vez las distintas variables que queremos extraer desde nuestros datos no estructurados</strong>: en el caso de las noticias, queremos extraer el lugar, los personajes principales, el tipo de personaje, la clasificación de las noticias, y el sentimiento general de la noticia.</p>
+<p>Estas variables serán generalmente de tipo texto, pero varias de ellas queremos que sean variables categóricas con valores específicos.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">tipo_lugar</span> <span class="o">&lt;-</span> <span class="nf">type_string</span><span class="p">(</span><span class="s">&#34;Ubicación principal de la noticia&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">tipo_actor</span> <span class="o">&lt;-</span> <span class="nf">type_string</span><span class="p">(</span><span class="s">&#34;Actor, personaje o institución principal de la noticia&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">tipo_grupo</span> <span class="o">&lt;-</span> <span class="nf">type_enum</span><span class="p">(</span><span class="n">description</span> <span class="o">=</span> <span class="s">&#34;Tipo de entidad del actor, personaje o institución principal de la noticia&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">values</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;institución pública&#34;</span><span class="p">,</span> <span class="s">&#34;político&#34;</span><span class="p">,</span> <span class="s">&#34;empresa&#34;</span><span class="p">,</span> <span class="s">&#34;empresario&#34;</span><span class="p">,</span> <span class="s">&#34;ciudadano&#34;</span><span class="p">,</span> <span class="s">&#34;otros&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">tipo_clasificacion</span> <span class="o">&lt;-</span> <span class="nf">type_enum</span><span class="p">(</span><span class="n">description</span> <span class="o">=</span> <span class="s">&#34;Clasificación de la noticia según su enfoque temático principal&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                <span class="n">values</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;social&#34;</span><span class="p">,</span> <span class="s">&#34;económico&#34;</span><span class="p">,</span> <span class="s">&#34;político&#34;</span><span class="p">,</span> <span class="s">&#34;judicial&#34;</span><span class="p">,</span> <span class="s">&#34;delincuencia&#34;</span><span class="p">,</span> <span class="s">&#34;otros&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">tipo_sentimiento</span> <span class="o">&lt;-</span> <span class="nf">type_enum</span><span class="p">(</span><span class="n">values</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;positivo&#34;</span><span class="p">,</span> <span class="s">&#34;neutro&#34;</span><span class="p">,</span> <span class="s">&#34;negativo&#34;</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">                              <span class="n">description</span> <span class="o">=</span> <span class="s">&#34;Sentimiento general de la noticia según su contenido&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>Ahora podemos usar la función <code>parallel_chat_structured()</code> para enviar varios textos al modelo de lenguaje, y recibir datos estructurados para cada uno de ellos. Esta función recibe como argumentos el <strong>chat</strong> (que además tiene un <em>system prompt</em> que especifica el actuar del modelo), una lista con los <strong>textos</strong> que queremos procesar (en este caso, la columna <code>cuerpo</code> de la tabla <code>muestra</code>), y los <strong>tipos de respuesta</strong> que queremos recibir (al ser varias, van en dentro de <code>type_object()</code>).</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">instruccion</span> <span class="o">&lt;-</span> <span class="s">&#34;Eres un clasificador de noticias experto en el acontecer nacional de Chile&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">resultado</span> <span class="o">&lt;-</span> <span class="nf">parallel_chat_structured</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">  <span class="n">chat</span> <span class="o">=</span> <span class="nf">chat_anthropic</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="s">&#34;claude-haiku-4-5&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">system_prompt</span> <span class="o">=</span> <span class="n">instruccion</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">prompts</span> <span class="o">=</span> <span class="nf">as.list</span><span class="p">(</span><span class="n">muestra</span><span class="o">$</span><span class="n">cuerpo</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">  <span class="n">type</span> <span class="o">=</span> <span class="nf">type_object</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lugar</span> <span class="o">=</span> <span class="n">tipo_lugar</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">actor</span> <span class="o">=</span> <span class="n">tipo_actor</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">actor_grupo</span> <span class="o">=</span> <span class="n">tipo_grupo</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">sentimiento</span> <span class="o">=</span> <span class="n">tipo_sentimiento</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">clasificacion</span> <span class="o">=</span> <span class="n">tipo_clasificacion</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">)</span>
+</span></span></code></pre></div><pre tabindex="0"><code>## [waiting] (2 + 2) -&gt; 2 -&gt; 2 | ■■■■■■■■■■■                       33%
+</code></pre><pre tabindex="0"><code>## [working] (0 + 2) -&gt; 2 -&gt; 4 | ■■■■■■■■■■■■■■■■■■■■■             67%
+</code></pre><pre tabindex="0"><code>## [working] (0 + 2) -&gt; 0 -&gt; 6 | ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■  100%
+</code></pre><pre tabindex="0"><code>## Warning: Found 2 JSON responses, using the first.
+</code></pre><p>Al solicitar varias variables al modelo, retorna una tabla o <em>tibble</em> con los datos estructurados de cada noticia, con una fila por cada noticia, en el orden que se entregaron las noticias.</p>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">lugar</th>
+          <th style="text-align: left">actor</th>
+          <th style="text-align: left">actor_grupo</th>
+          <th style="text-align: left">sentimiento</th>
+          <th style="text-align: left">clasificacion</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">Santiago</td>
+          <td style="text-align: left">Gendarmería de Chile</td>
+          <td style="text-align: left">institución pública</td>
+          <td style="text-align: left">negativo</td>
+          <td style="text-align: left">judicial</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Chile</td>
+          <td style="text-align: left">Andes Iron</td>
+          <td style="text-align: left">empresa</td>
+          <td style="text-align: left">negativo</td>
+          <td style="text-align: left">judicial</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Maipú, Región Metropolitana</td>
+          <td style="text-align: left">Cathy Barriga, exalcaldesa de Maipú</td>
+          <td style="text-align: left">político</td>
+          <td style="text-align: left">negativo</td>
+          <td style="text-align: left">judicial</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Chile</td>
+          <td style="text-align: left">Gabriel Boric</td>
+          <td style="text-align: left">político</td>
+          <td style="text-align: left">positivo</td>
+          <td style="text-align: left">político</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Mall Plaza Norte</td>
+          <td style="text-align: left">Propietario de local comercial Chenza</td>
+          <td style="text-align: left">empresario</td>
+          <td style="text-align: left">negativo</td>
+          <td style="text-align: left">delincuencia</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">La Moneda, Santiago, Chile</td>
+          <td style="text-align: left">Presidente Gabriel Boric</td>
+          <td style="text-align: left">político</td>
+          <td style="text-align: left">negativo</td>
+          <td style="text-align: left">político</td>
+      </tr>
+  </tbody>
+</table>
+<p>Como vienen en el mismo orden que las noticias, podemos unir las columnas obtenidas a los datos originales:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">tabla</span> <span class="o">&lt;-</span> <span class="n">muestra</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">select</span><span class="p">(</span><span class="n">titulo</span><span class="p">,</span> <span class="n">fecha</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">bind_cols</span><span class="p">(</span><span class="n">resultado</span><span class="p">)</span>
+</span></span></code></pre></div><table>
+  <thead>
+      <tr>
+          <th style="text-align: left">titulo</th>
+          <th style="text-align: left">fecha</th>
+          <th style="text-align: left">lugar</th>
+          <th style="text-align: left">actor</th>
+          <th style="text-align: left">actor_grupo</th>
+          <th style="text-align: left">sentimiento</th>
+          <th style="text-align: left">clasificacion</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left">Nuevo error en Gendarmería: imputado queda en libertad pese a que debía cumplir prisión preventiva</td>
+          <td style="text-align: left">2025-12-30</td>
+          <td style="text-align: left">Santiago</td>
+          <td style="text-align: left">Gendarmería de Chile</td>
+          <td style="text-align: left">institución pública</td>
+          <td style="text-align: left">negativo</td>
+          <td style="text-align: left">judicial</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Andes Iron acusa ofensiva política contra Dominga tras conocerse que enfrenta indagatoria penal</td>
+          <td style="text-align: left">2025-12-30</td>
+          <td style="text-align: left">Chile</td>
+          <td style="text-align: left">Andes Iron</td>
+          <td style="text-align: left">empresa</td>
+          <td style="text-align: left">negativo</td>
+          <td style="text-align: left">judicial</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Fiscalía acusó a Cathy Barriga por cuatro delitos y pide más de 23 años de cárcel</td>
+          <td style="text-align: left">2025-12-30</td>
+          <td style="text-align: left">Maipú, Región Metropolitana</td>
+          <td style="text-align: left">Cathy Barriga, exalcaldesa de Maipú</td>
+          <td style="text-align: left">político</td>
+          <td style="text-align: left">negativo</td>
+          <td style="text-align: left">judicial</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">No fue Patricia Muñoz: Boric nombra a Macarena Cortés como la primera directora de la Defensoría de Víctimas</td>
+          <td style="text-align: left">2025-12-30</td>
+          <td style="text-align: left">Chile</td>
+          <td style="text-align: left">Gabriel Boric</td>
+          <td style="text-align: left">político</td>
+          <td style="text-align: left">positivo</td>
+          <td style="text-align: left">político</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">“Ya tomaron las huellas”: dueño de tienda asaltada durante incendio en Mall Plaza Norte afirma que responsables fueron identificadas</td>
+          <td style="text-align: left">2025-12-30</td>
+          <td style="text-align: left">Mall Plaza Norte</td>
+          <td style="text-align: left">Propietario de local comercial Chenza</td>
+          <td style="text-align: left">empresario</td>
+          <td style="text-align: left">negativo</td>
+          <td style="text-align: left">delincuencia</td>
+      </tr>
+      <tr>
+          <td style="text-align: left">Presidente Boric recibe cartas credenciales de cinco embajadores y cierra polémica con EEUU e Israel</td>
+          <td style="text-align: left">2025-12-30</td>
+          <td style="text-align: left">La Moneda, Santiago, Chile</td>
+          <td style="text-align: left">Presidente Gabriel Boric</td>
+          <td style="text-align: left">político</td>
+          <td style="text-align: left">negativo</td>
+          <td style="text-align: left">político</td>
+      </tr>
+  </tbody>
+</table>
+<p>Si te interesa profundizar en este tema, 
+<a href="https://www.aifordatapeople.com/courses/llms-in-r" target="_blank" rel="noopener">Nic Crane ofrece un curso específico sobre el uso de LLMs con R</a></p>
+
+
+
+
+<h2 id="referencias">Referencias
+  <a href="#referencias"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<ul>
+<li>
+<a href="https://thisisnic.github.io/rainbowrworkshop/code.html" target="_blank" rel="noopener">RainbowR Workshop: LLMs in R for Data Analysis</a> por 
+<a href="https://niccrane.com" target="_blank" rel="noopener">Nic Crane</a></li>
+<li>
+<a href="https://www.aifordatapeople.com/courses/llms-in-r" target="_blank" rel="noopener">Learn to work with LLMs in R</a>, curso impartido por 
+<a href="https://niccrane.com" target="_blank" rel="noopener">Nic Crane</a></li>
+<li>
+<a href="https://ellmer.tidyverse.org/articles/structured-data.html" target="_blank" rel="noopener">Documentación del paquete <code>{ellmer}</code></a> sobre datos estructurados</li>
+</ul>
+
+
+
+<div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+ 
+    </section>
+      
+    <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:5651/blog/ellmer/">Interactúa con modelos de lenguaje (LLM) y chatea con IAs en R &rarr;</a>
+  
+</div>
+
+    </footer>
+    
+  </article>
+    
+    <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+</section>
+  
+
+<section class="post-body pt5 pb4">
+  
+  <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">March 7, 2026</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">11 minute read, 2177 words</dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Categorías:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:5651/categories/tutoriales">Tutoriales</a> </dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:5651/tags/inteligencia-artificial">inteligencia artificial</a>  <a href="http://localhost:5651/tags/texto">texto</a>  <a href="http://localhost:5651/tags/an%C3%A1lisis-de-texto">análisis de texto</a>  <a href="http://localhost:5651/tags/datos">datos</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="../../blog/ellmer/">Interactúa con modelos de lenguaje (LLM) y chatea con IAs en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/2026-02-25/">Renombrar archivos desde R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/app_suicidios_genero/">App: Suicidios en Chile (2017-2024) desde una perspectiva de género</a></dd>
+    
+  </dl>
+</details>
+
+</section>
+</main>
+
+
+<aside class="page-sidebar" role="complementary">
+   
+   
+
+  <div class="blog-info ph4 pt4 pb4 pb0-l">
+    
+
+  <h1 class="f3">Blog</h1>
+  <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
+<a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
+<a href="../../tags/">temas</a>.</p>
+  
+
+   
+<h3 style="margin-bottom: 12px;">Temas:</h3>
+
+<div style="font-size:90%;">
+
+<div style="font-size: 90%;">
+  
+   
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/chile/">Chile</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/datos/">Datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/consejos/">Consejos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/gr%C3%A1ficos/">Gráficos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/blog/">Blog</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/ggplot2/">Ggplot2</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/apps/">Apps</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/shiny/">Shiny</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/web-scraping/">Web scraping</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/b%C3%A1sico/">Básico</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/mapas/">Mapas</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/curiosidades/">Curiosidades</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/quarto/">Quarto</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/dplyr/">Dplyr</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/ciencias-sociales/">Ciencias sociales</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/texto/">Texto</a></span>
+  </span>
+
+<a href="../../tags/" style="margin-left: 3px;">y más!</a>
+</div>
+</div>
+  
+  
+   
+   
+
+</div>
+
+  
+  <div id="PageTableOfContents" style="margin-top: 24px; position: sticky; top: 108px;">
+        <div class="blog-info ph4 pb4 pb0-l">
+        <h3 style="margin-bottom: 12px;">Índice:</h3>
+          <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: -22px; margin-bottom: 32px;">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#datos-de-texto-de-ejemplo">Datos de texto de ejemplo</a></li>
+    <li><a href="#extraer-datos-desde-un-solo-texto">Extraer datos desde un solo texto</a>
+      <ul>
+        <li><a href="#pregunta-simple-al-modelo">Pregunta simple al modelo</a></li>
+        <li><a href="#especificación-de-datos-estructurados">Especificación de datos estructurados</a></li>
+        <li><a href="#extraer-variables-categóricas">Extraer variables categóricas</a></li>
+      </ul>
+    </li>
+    <li><a href="#extracción-datos-estructurados-desde-varios-textos">Extracción datos estructurados desde varios textos</a></li>
+    <li><a href="#referencias">Referencias</a></li>
+  </ul>
+</nav>
+          </div>
+        </div>
+    </div>
+  
+  
+
+</aside>
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2026 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source" style="color:#9069C0;">Hugo Apéro</a> 
+      y <a href="https://pkgs.rstudio.com/blogdown/" style="color:#9069C0;">{blogdown}</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source" style="color:#9069C0;">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL" style="color:#9069C0;">Formspree</a>.
+
+Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlify</a></span>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+      <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="../../tags/" title="Temas">Temas</a>
+      
+      <a class="dib pv1 ph2 link" href="../../clases/" title="Clases">Clases</a>
+      
+      <a class="dib pv1 ph2 link" href="../../code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
+      
+      <a class="dib pv1 ph2 link" href="../../license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

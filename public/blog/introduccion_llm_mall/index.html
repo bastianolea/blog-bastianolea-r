@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=3717&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=5651&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -31,25 +31,25 @@
 <meta property="og:title" content="Usar un modelo de lenguaje local (LLM) para analizar texto en R | Bastián Olea">
 <meta property="og:description" content="Procesa datos con IA en R, localmente! El paquete `{mall}` permite aplicar un modelo de lenguaje (LLM) local a tus datos, para así crear nuevas columnas a partir de prompts, tales como resumir, extraer sentimiento, clasificación, y más." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:3717/blog/introduccion_llm_mall/" />
+<meta property="og:url" content="http://localhost:5651/blog/introduccion_llm_mall/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:3717/blog/sidebar-listing.jpg" >
+        <meta property="og:image" content="http://localhost:5651/blog/sidebar-listing.jpg" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:3717/blog/sidebar-listing.jpg" >
+        <meta name="twitter:image" content="http://localhost:5651/blog/sidebar-listing.jpg" >
     
     
   
   <meta itemprop="name" content="Usar un modelo de lenguaje local (LLM) para analizar texto en R">
   <meta itemprop="description" content="Recientemente se lanzó el paquete {mall}, que facilita el uso de un LLM (large language model) o modelo de lenguaje de gran tamaño para analizar texto con IA en un dataframe. Esto significa que, para cualquier dataframe que tengamos, podemos aplicar un modelo de IA a una de sus columnas y recibir sus resultados en una columna nueva.
-Para poder hacer ésto, primero necitamos tener un modelo LLM instalado localmente en nuestra computadora. Para eso, tenemos que instalar Ollama, y ejecutar la aplicación. Ollama tiene que estar abierto para poder proveer del modelo a nuestra sesión de R.">
+Puedes encontrar instrucciones más detalladas sobre configurar el uso de IA en R en esta publicación. Para poder hacer ésto, primero necesitamos tener un modelo LLM instalado localmente en nuestra computadora. Para eso, tenemos que instalar Ollama, y ejecutar la aplicación. Ollama tiene que estar abierto para poder proveer del modelo a nuestra sesión de R.">
   <meta itemprop="datePublished" content="2024-10-29T00:00:00+00:00">
   <meta itemprop="dateModified" content="2024-10-29T00:00:00+00:00">
-  <meta itemprop="wordCount" content="695">
+  <meta itemprop="wordCount" content="779">
   <meta itemprop="keywords" content="Análisis de texto,Inteligencia artificial">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -75,7 +75,7 @@ Para poder hacer ésto, primero necitamos tener un modelo LLM instalado localmen
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:3717/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:5651/" title="Home">
       <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -342,7 +342,7 @@ Para poder hacer ésto, primero necitamos tener un modelo LLM instalado localmen
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/an%C3%A1lisis-de-texto"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/an%C3%A1lisis-de-texto"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -351,7 +351,7 @@ Para poder hacer ésto, primero necitamos tener un modelo LLM instalado localmen
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            análisis de texto</a>  <a href="http://localhost:3717/tags/inteligencia-artificial"
+            análisis de texto</a>  <a href="http://localhost:5651/tags/inteligencia-artificial"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -373,12 +373,26 @@ Para poder hacer ésto, primero necitamos tener un modelo LLM instalado localmen
     <section class="post-body pt5 pb4">
         <p>
 <a href="https://mlverse.github.io/mall/" target="_blank" rel="noopener">Recientemente se lanzó el paquete <code>{mall}</code>,</a> que facilita el uso de un LLM <em>(large language model)</em> o modelo de lenguaje de gran tamaño para analizar texto con IA en un dataframe. Esto significa que, para cualquier dataframe que tengamos, podemos aplicar un modelo de IA a una de sus columnas y recibir sus resultados en una columna nueva.</p>
-<p>Para poder hacer ésto, primero necitamos tener un modelo LLM instalado localmente en nuestra computadora. Para eso, 
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%;">
+    Puedes encontrar instrucciones más detalladas sobre configurar el uso de IA en R 
+<a href="../../blog/ellmer/">en esta publicación.</a>
+  </aside>
+  
+</div>
+<p>Para poder hacer ésto, primero necesitamos tener un modelo LLM instalado localmente en nuestra computadora. Para eso, 
 <a href="https://ollama.com" target="_blank" rel="noopener">tenemos que instalar Ollama</a>, y ejecutar la aplicación. Ollama tiene que estar abierto para poder proveer del modelo a nuestra sesión de R.</p>
 <p>Luego, 
 <a href="https://hauselin.github.io/ollama-r/" target="_blank" rel="noopener">instalamos el paquete <code>{ollamar}</code> en R,</a>, que es una dependencia de <code>{mall}</code>. Usamos <code>{ollamar}</code> para descargar a nuestro equipo el modelo de lenguaje que usaremos:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">ollamar</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="n">ollamar</span><span class="o">::</span><span class="nf">pull</span><span class="p">(</span><span class="s">&#34;llama3.2&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">ollamar</span><span class="o">::</span><span class="nf">pull</span><span class="p">(</span><span class="s">&#34;llama3.2:3b&#34;</span><span class="p">)</span>
 </span></span></code></pre></div><p>Con eso hecho, ya puedes usar modelo directamente desde R con <code>{ollamar}</code>, o en un dataframe usando <code>{mall}</code>.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">mall</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
@@ -392,6 +406,14 @@ The following objects are masked from 'package:base':
 
     intersect, setdiff, setequal, union
 </code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">mall</span><span class="o">::</span><span class="nf">llm_use</span><span class="p">(</span><span class="s">&#34;ollama&#34;</span><span class="p">,</span> <span class="s">&#34;llama3.2:3b&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>── mall session object 
+
+Backend: ollama
+LLM session: model:llama3.2:3b
+R session:
+cache_folder:/var/folders/gt/vdp_nx_x3bq5wgnlr1nphkd1zbdps_/T//RtmpzqBMog/_mall_cachee7f20d2b28
+</code></pre>
 <p>Con el siguiente código vamos a descargar un dataframe que contiene texto de noticias de Chile, para usarlo como datos de prueba. Los datos provienen de mi 
 <a href="https://github.com/bastianolea?tab=repositories" target="_blank" rel="noopener">repositorio de web scraping y análisis de prensa de Chile.</a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># obtener datos de prensa</span>
@@ -401,39 +423,41 @@ The following objects are masked from 'package:base':
 </span></span></code></pre></div><pre><code>ℹ Using &quot;','&quot; as decimal and &quot;'.'&quot; as grouping mark. Use `read_delim()` for more control.
 </code></pre>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">head</span><span class="p">(</span><span class="n">datos_prensa</span><span class="p">)</span>
-</span></span></code></pre></div><pre><code># A tibble: 6 × 3
-  titulo                                                       cuerpo fecha     
-  &lt;chr&gt;                                                        &lt;chr&gt;  &lt;date&gt;    
-1 Dólar cierra sus operaciones con leve tendencia alcista y n… &quot;Este… 2023-03-10
-2 Caso Convenios: Consejo de Defensa del Estado presenta quer… &quot;El C… 2023-08-11
-3 Nuevo estudio revela que un café con leche tiene prometedor… &quot;De a… 2023-01-30
-4 Contraloría oficia a 53 municipalidades del país por nivele… &quot;La C… 2024-01-24
-5 Realizan funerales de los dos trabajadores fallecidos en el… &quot;Dura… 2024-06-23
-6 Partido Comunista vuelve a la conducción de la FECH: La min… &quot;“Con… 2023-08-30
+</span></span></code></pre></div><pre><code># A tibble: 6 × 4
+  titulo                                                cuerpo fuente fecha     
+  &lt;chr&gt;                                                 &lt;chr&gt;  &lt;chr&gt;  &lt;date&gt;    
+1 Hombre de 66 años fue asesinado en plena vía pública… &quot;El h… Coope… 2024-07-21
+2 Revive el cuarto capítulo de Indecisos: Candidatos a… &quot;Este… Megan… 2024-09-03
+3 Menos personas circulando y miedo de los residentes:… &quot;Poca… Megan… 2024-04-08
+4 CEO de Walmart Chile sostiene que si la empresa no d… &quot;Hace… The C… 2024-12-22
+5 Pdte. Boric entregó mensaje por la muerte de Piñera … &quot;El p… CNN C… 2024-02-06
+6 Encuentran dos cadáveres en un canal de regadío en P… &quot;Pers… Publi… 2024-07-13
 </code></pre>
 <p>Probemos <code>{mall}</code> con 10 noticias al azar, pidiéndole al LLM que detecte el sentimiento de cada texto (si es positivo, neutro o negativo):</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># extraer sentimiento de textos</span>
 </span></span><span class="line"><span class="cl"><span class="n">datos_sentimiento</span> <span class="o">&lt;-</span> <span class="n">datos_prensa</span> <span class="o">|&gt;</span> 
 </span></span><span class="line"><span class="cl">  <span class="nf">select</span><span class="p">(</span><span class="n">titulo</span><span class="p">)</span> <span class="o">|&gt;</span> 
-</span></span><span class="line"><span class="cl">  <span class="nf">slice</span><span class="p">(</span><span class="m">60</span><span class="o">:</span><span class="m">70</span><span class="p">)</span> <span class="o">|&gt;</span> 
-</span></span><span class="line"><span class="cl">  <span class="nf">llm_sentiment</span><span class="p">(</span><span class="n">titulo</span><span class="p">,</span> <span class="n">pred_name</span> <span class="o">=</span> <span class="s">&#34;sentimiento&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">slice</span><span class="p">(</span><span class="m">10</span><span class="o">:</span><span class="m">20</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">llm_sentiment</span><span class="p">(</span><span class="n">titulo</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                <span class="n">pred_name</span> <span class="o">=</span> <span class="s">&#34;sentimiento&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="n">options</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;positivo&#34;</span><span class="p">,</span> <span class="s">&#34;neutro&#34;</span><span class="p">,</span> <span class="s">&#34;negativo&#34;</span><span class="p">))</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">datos_sentimiento</span> <span class="o">|&gt;</span> 
 </span></span><span class="line"><span class="cl">  <span class="nf">relocate</span><span class="p">(</span><span class="n">sentimiento</span><span class="p">,</span> <span class="n">.before</span> <span class="o">=</span> <span class="n">titulo</span><span class="p">)</span>
 </span></span></code></pre></div><pre><code># A tibble: 11 × 2
    sentimiento titulo                                                           
    &lt;chr&gt;       &lt;chr&gt;                                                            
- 1 negative    &quot;Ministerio de Desarrollo Social pone fin anticipado a contrato …
- 2 positive    &quot;Xi expuso cuál es \&quot;la llave de oro\&quot; para solucionar los probl…
- 3 negative    &quot;Multitudinarias protestas en Israel: Exigen dimisión de Netanya…
- 4 negative    &quot;Encuesta Cadem: desaprobación del Presidente Boric aumentó dos …
- 5 negative    &quot;Desaparición de TENS Rosa Lira: Las contradicciones que acusa e…
- 6 negative    &quot;Ministro Grau por cierre de Siderúrgica Huachipato: “Nuestro fo…
- 7 negative    &quot;Piñera confirma que no irá a La Moneda para el 11S: “El clima d…
- 8 positive    &quot;Subsecretaria defiende migración de isapres a Fonasa: \&quot;Fortale…
- 9 negative    &quot;Ministra Orellana tras críticas por no contactar a denunciante …
-10 negative    &quot;Joven fue acusado de grabar niñas en la entrada de un colegio e…
-11 negative    &quot;Confirman que Jorge Valdivia se reunió con generales de Carabin…
+ 1 negativo    &quot;Dos personas resultan baleadas tras intentar evitar asalto en m…
+ 2 negativo    &quot;Mujer de 54 años recibió trasplante de bomba cardíaca y riñón d…
+ 3 negativo    &quot;Fiscalía investiga una segunda presunta agresión de Monsalve co…
+ 4 negativo    &quot;Los RUT definitivos que reciben el premio de La Suerte en Chile…
+ 5 negativo    &quot;Este domingo parte el Festival de Viña 2024: Revisa el orden y …
+ 6 negativo    &quot;Danesa se coronó como Miss Universo 2024: Emilia Dides quedó en…
+ 7 positivo    &quot;Hassler opta por tesis de Boric por sobre la del PC en Venezuel…
+ 8 negativo    &quot;Carabinero de civil disparó a delincuente que estaba robando en…
+ 9 negativo    &quot;Seguridad en días del 18’: Ex PDI llama a ser precavido y a evi…
+10 positivo    &quot;¿Quién es Janet Yellen? La Secretaria del Tesoro de EEEUU que v…
+11 negativo    &quot;Fijan audiencia para los detenidos por el homicidio del subofic…
 </code></pre>
 <p>Otro uso es pedirle que genere resúmenes de textos. Para ello, usaremos un <em>prompt</em> manual, donde le pedimos explícitamente <code>&quot;resumir en hasta 5 palabras&quot;</code>. El paquete aplicará dicha solicitud a cada una de las observaciones en la columna indicada, y retornará los resultados en una nueva columna llamada <code>resumen</code>:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># resumir textos</span>
@@ -447,18 +471,18 @@ The following objects are masked from 'package:base':
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="n">datos_resumidos</span>
 </span></span></code></pre></div><pre><code># A tibble: 10 × 2
-   resumen                                                               titulo 
-   &lt;chr&gt;                                                                 &lt;chr&gt;  
- 1 &quot;Expo Viñas Campesinas en Chépica, 27-28 abril.&quot;                      &quot;Expo …
- 2 &quot;Inflación baja en Estados Unidos.&quot;                                   &quot;La te…
- 3 &quot;\&quot;Operación Renta 2024 incluye cobro de impuestos arrendamientos\&quot;.&quot; &quot;Opera…
- 4 &quot;Normas para vehículos de Uber.&quot;                                      &quot;\&quot;Ley…
- 5 &quot;Coca Guazzini defiende a Camila Vallejo.&quot;                            &quot;Coca …
- 6 &quot;Asesinato de dirigente indígena en Ecuador.&quot;                         &quot;Conmo…
- 7 &quot;Seremi aborda problemas de higiene en restaurante.&quot;                  &quot;Inici…
- 8 &quot;\&quot;Las empresas de Inteligencia y Consulting piden liquidación.\&quot;&quot;    &quot;Grupo…
- 9 &quot;Tiroteo en Puente Alto deja muerto y herido.&quot;                        &quot;Balac…
-10 &quot;Cuerpos sin vida encontrados en Región Metropolitana.&quot;               &quot;Dos c…
+   resumen                                     titulo                           
+   &lt;chr&gt;                                       &lt;chr&gt;                            
+ 1 Lo siento, no tengo información disponible. Sernageomin decreta Alerta Amari…
+ 2 Lo siento, no tengo información disponible. Caos y golpes durante llegada de…
+ 3 Lo siento, no tengo información disponible. Delegada Martínez y evacuaciones…
+ 4 Lo siento, no tengo información disponible. Incendio en Copenhague destruye …
+ 5 Lo siento, no tengo información disponible. VIDEO| “No entienden que…”: Jorg…
+ 6 Lo siento, no tengo información disponible. Alza en los planes podría genera…
+ 7 Lo siento, no tengo información disponible. Exmilitar venezolano presuntamen…
+ 8 Lo siento, no tengo información disponible. ¿Hay que adelantar o retrasar el…
+ 9 Lo siento, no tengo información disponible. Familia Imschenetzky compra part…
+10 Lo siento, no tengo información disponible. Feria de vinos llega a Providenc…
 </code></pre>
  
     </section>
@@ -468,12 +492,12 @@ The following objects are masked from 'package:base':
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:3717/blog/elecciones_municipales_2024/">&larr; Visualización y scraping de resultados en vivo de las elecciones municipales 2024</a>
+    href="http://localhost:5651/blog/elecciones_municipales_2024/">&larr; Visualización y scraping de resultados en vivo de las elecciones municipales 2024</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:3717/blog/numeros_romanos/">Números romanos en R &rarr;</a>
+    href="http://localhost:5651/blog/numeros_romanos/">Números romanos en R &rarr;</a>
   
 </div>
 
@@ -510,29 +534,29 @@ The following objects are masked from 'package:base':
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">4 minute read, 695 words</dd>
+    <dd class="fw5 ml0">4 minute read, 779 words</dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Categorías:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:3717/categories/an%C3%A1lisis-de-texto">Análisis de texto</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:5651/categories/an%C3%A1lisis-de-texto">Análisis de texto</a> </dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:3717/tags/an%C3%A1lisis-de-texto">análisis de texto</a>  <a href="http://localhost:3717/tags/inteligencia-artificial">inteligencia artificial</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:5651/tags/an%C3%A1lisis-de-texto">análisis de texto</a>  <a href="http://localhost:5651/tags/inteligencia-artificial">inteligencia artificial</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
-    <dd class="fw5 ml0"><a href="../../blog/btw/">Interactúa desde R con una IA que conoce tus datos, archivos y paquetes</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/datos_estructurados_llm/">Extracción de datos estructurados desde texto usando IA</a></dd>
     
-    <dd class="fw5 ml0"><a href="../../blog/gander/">Acelera tus análisis con {gander}, un asistente de IA integrado en RStudio</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/ellmer/">Interactúa con modelos de lenguaje (LLM) y chatea con IAs en R</a></dd>
     
-    <dd class="fw5 ml0"><a href="../../blog/taller_corrupcion_cesi/">Video: Taller Medición y Análisis de la Corrupción en Chile desde el Análisis de Datos y Herramientas Abiertas</a></dd>
+    <dd class="fw5 ml0"><a href="../../blog/redactar_texto_llm/">Redactar textos basados en datos usando IA desde R</a></dd>
     
   </dl>
 </details>
@@ -574,7 +598,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/chile/">Chile</a></span>
+      href="http://localhost:5651/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -589,7 +613,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/datos/">Datos</a></span>
+      href="http://localhost:5651/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -604,7 +628,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:5651/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -619,7 +643,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/consejos/">Consejos</a></span>
+      href="http://localhost:5651/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -634,7 +658,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:5651/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -649,7 +673,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/blog/">Blog</a></span>
+      href="http://localhost:5651/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -664,7 +688,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:5651/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -679,7 +703,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/shiny/">Shiny</a></span>
+      href="http://localhost:5651/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -694,7 +718,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/apps/">Apps</a></span>
+      href="http://localhost:5651/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -709,7 +733,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:5651/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -724,7 +748,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:5651/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -739,7 +763,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/mapas/">Mapas</a></span>
+      href="http://localhost:5651/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -754,7 +778,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:5651/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -769,7 +793,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:5651/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -784,7 +808,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:5651/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -799,7 +823,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:5651/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -814,7 +838,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/quarto/">Quarto</a></span>
+      href="http://localhost:5651/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -829,7 +853,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:5651/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -844,7 +868,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:5651/tags/texto/">Texto</a></span>
   </span>
  
   
@@ -859,7 +883,7 @@ The following objects are masked from 'package:base':
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/loops/">Loops</a></span>
+      href="http://localhost:5651/tags/loops/">Loops</a></span>
   </span>
 
 <a href="../../tags/" style="margin-left: 3px;">y más!</a>

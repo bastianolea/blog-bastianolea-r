@@ -140,7 +140,11 @@ Ahora que tenemos los datos por región y género, procedemos a **visualizar los
 
 ``` r
 library(ggplot2)
+```
 
+    Warning: package 'ggplot2' was built under R version 4.4.3
+
+``` r
 # visualizar
 genero_long |> 
   filter(region == "País") |> 

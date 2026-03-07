@@ -1,0 +1,335 @@
+---
+title: Extracción de datos estructurados desde texto usando IA
+author: Bastián Olea Herrera
+date: '2026-03-07'
+slug: []
+categories:
+  - Tutoriales
+tags:
+  - inteligencia artificial
+  - texto
+  - datos
+format:
+  hugo-md:
+    output-file: index
+    output-ext: md
+execute:
+  warning: false
+  message: false
+editor_options: 
+  chunk_output_type: console
+excerpt: "Podemos usar la IA para transformar textos de cualquier tipo en datos estructurados. Esto significa que puedes convertir entrevistas, reseñas, opiniones, correos, noticias y más en bases de datos con la información que necesitas debidamente ordenada en filas y columnas. En ese tutorial usaremos modelos de lenguaje para extraer datos estructurados a partir de noticias reales."
+links:
+  - icon: book
+    icon_pack: fas
+    name: Workshop
+    url: https://thisisnic.github.io/rainbowrworkshop/code.html
+  - icon: file-code
+    icon_pack: fas
+    name: Código
+    url: https://gist.github.com/bastianolea/8bc40e3acbb0716fbf607b6488886274
+---
+
+```{r}
+#| echo: false
+readRenviron("~/.Renviron")
+```
+
+
+{{< aviso "Este tutorial lo hice con los aprendizajes que obtuve del excelente [workshop _LLMs in R for Data Analysis_](https://thisisnic.github.io/rainbowrworkshop/code.html) impartido por [Nic Crane](https://niccrane.com) en la fabulosa [conferencia de RainbowR 2026](https://conference.rainbowr.org)" >}}
+
+Los modelos de lenguaje (LLMs, también llamados coloquialmente _inteligencia artifical_) nos pueden ayudar a **transformar textos de cualquier tipo en datos estructurados**. Esto significa que puedes convertir **entrevistas, reseñas, opiniones, correos, noticias y más** en **bases de datos** con la información que necesitas debidamente ordenada en filas y columnas.
+
+**_Ejemplos de uso:_**
+- Puedes pasar de un conjunto de entrevistas a una tabla con las respuestas a preguntas específicas sobre los entrevistados, incluyendo información como edad, género, profesión, opiniones, etc.
+- Puedes convertir reseñas de productos en una tabla con la opinión general, los aspectos positivos y negativos, la puntuación, etc.
+- Puedes tomar conjuntos de noticias o de artículos y obtener tablas que indican los actores principales, ubicaciones clave, fechas, resúmenes, análisis de sentimiento, etc.
+
+En ese tutorial usaremos modelos de lenguaje para **extraer datos estructurados** a partir de noticias reales.
+
+El requisito para poder realizar esto es tener acceso a una IA o modelo de lenguaje (LLM), ya sea local o en la nube (ChatGPT, Claude, Gemini, etc.). Puedes seguir este tutorial para [configurar el uso de inteligencia artificial con R.](/blog/ellmer/)
+
+
+{{< aviso "**Requisito:** si necesitas configurar tu proveedor de IA con R, [sigue este tutorial](/blog/ellmer/) para empezar a analizar datos con IA!" >}}
+
+
+## Datos de texto de ejemplo
+
+Los datos que usaremos para el tutorial será una base de **10.000 noticias reales** obtenidas desde medios digitales de Chile durante el año 2025. Las noticias son obtenidas por _web scraping_, y el código de este proyecto está disponible [en este repositorio](https://github.com/bastianolea/prensa_chile).
+
+{{< boton "Descargar datos (clic derecho y _guardar como_)" "prensa_datos_muestra_2025.csv" "fas fa-download" >}}
+
+También puedes descargar los datos desde R:
+```{r}
+# dirección de los datos
+url = "https://github.com/bastianolea/prensa_chile/raw/main/prensa_datos_muestra_2025.csv"
+```
+
+```{r}
+#| eval: false
+# descargar el archivo con R
+download.file(url,
+              destfile = "prensa_datos_muestra_2025.csv")
+```
+
+O bien, cargar los datos directamente desde internet sin necesidad de descargar el archivo:
+
+```{r}
+#| eval: false
+# cargar datos directamente desde internet
+library(readr)
+noticias <- read_csv2(url)
+```
+
+```{r}
+#| echo: false
+#| message: false
+library(readr)
+noticias <- read_csv2("prensa_datos_muestra_2025.csv")
+```
+Veamos rápidamente la tabla de datos:
+
+```{r}
+library(dplyr)
+
+glimpse(noticias)
+```
+
+Vemos que tenemos una columna con los títulos, otra con el texto o _cuerpo_ de las noticias, la fuente y la fecha de cada noticia.
+
+## Extraer datos desde un solo texto
+
+Empecemos extrayendo una sola noticia como ejemplo:
+
+```{r}
+library(dplyr)
+
+noticia <- noticias |> 
+  slice(6) |> 
+  pull(cuerpo)
+```
+
+Veamos un poco de qué se trata la noticia:
+
+```{r}
+#| echo: false
+#| output: asis
+paste(">", stringr::str_trunc(noticia, 300)) |> cat()
+```
+
+Puedes [leer la noticia completa en este enlace](https://www.cooperativa.cl/noticias/pais/judicial/gendarmeria/pdi-recapturo-a-sujeto-al-que-gendarmeria-libero-por-error/2025-12-31/073547.html), pero la idea general es que contamos con el cuerpo entero de la noticia en el objeto `noticia`.
+
+### Pregunta simple al modelo
+
+Veamos la forma más simple de extraer datos estructurados desde información no estructurada: preguntarle al modelo de IA y cruzar los dedos 🤞🏼
+
+**Creamos el _chat_ de IA** que usaremos para **extraer los datos**. En mi caso, voy a usar modelos de _Anthropic_, por lo que uso la función `chat_anthropic()`, pero si usas otro modelo, puedes usar la función correspondiente de `{ellmer}` para crear tu chat, como se explica [en este tutorial](/blog/ellmer/).
+
+```{r}
+library(ellmer)
+
+# crear un chat
+chat <- chat_anthropic(model = "claude-haiku-4-5")
+```
+
+{{< info "Si necesitas configurar tu proveedor de IA con R, o configurar modelos locales de IA con R, [sigue este tutorial](/blog/ellmer/)" >}}
+
+Ahora hagamos una prueba/ejemplo: usemos la **noticia** que elegimos para entregarla al modelo de lenguaje, junto a una **breve instrucción**:
+
+```{r ejemplo_resumen_1}
+#| cache: true
+
+# crear el prompt con la instrucción y el texto
+prompt <- paste("En qué lugar se desarrolla la siguiente noticia:",
+                noticia)
+
+# enviar el prompt al modelo
+chat$chat(prompt)
+```
+
+El modelo de lenguaje _trata_ de ser útil, y por eso entrega mucha más información que la que necesitamos! No podemos poner todo ese texto en una tabla de datos. Habría que limpiarlo muchísimo y dejaría de ser útil 🙄
+
+Podemos **corregir el comportamiento del modelo** especificando una instrucción más clara en el _system prompt_, que es la **instrucción general** que le damos al modelo al crear el chat:
+
+```{r ejemplo_resumen_2}
+#| cache: true
+
+# definir instrucción general para el modelo
+instruccion <- "Eres un experto en noticias de Chile.
+                Entrega la información lo más breve posible,
+                especificando en una o dos palabras y sin
+                comentarios extra. Por ejemplo: {Puente Alto, Santiago}."
+
+# crear chat con el modelo y con system prompt
+chat <- chat_anthropic(model = "claude-haiku-4-5",
+                       system_prompt = instruccion)
+
+# escribir prompt o instrucción particular
+prompt <- paste("En qué lugar se desarrolla la siguiente noticia:",
+                noticia)
+
+# enviar el prompt al modelo
+chat$chat(prompt)
+```
+
+Podemos confirmar en la [noticia completa](https://www.cooperativa.cl/noticias/pais/judicial/gendarmeria/pdi-recapturo-a-sujeto-al-que-gendarmeria-libero-por-error/2025-12-31/073547.html) que efectivamente los hechos tuvieron lugar en la comuna de Cerrillos.
+
+Ahora sí, el modelo de lenguaje responde tal como esperamos. Pero esta forma de hacerlo aún deja mucho al **azar**: la especificidad del _system prompt_ que escribas, y la aleatoriedad del modelo que puede responder algo distinto sin previo aviso.
+
+
+### Especificación de datos estructurados
+
+Ahora veremos una una **forma más consistente de extraer datos a partir de textos con IA**, para que los modelos de lenguaje respondan específicamente lo que necesitamos.
+
+Para ello, vamos a **especificar las respuestas que queremos recibir** del modelo, usando las funciones `type_{x}` de `{ellmer}`:
+
+| Función | Tipo de respuesta | Descripción |
+|---|---|---|
+| `type_string()` | Texto abierto | Para respuestas en texto libre, como nombres, conceptos, explicaciones, etc. |
+| `type_enum()` | Variable categórica | Para respuestas que asuman un valor de un conjunto de valores predefinidos. |
+| `type_number()` | Numérica | Para respuestas que son cifras (números enteros, decimales, etc.) |
+| `type_boolean()` | Variable lógica | Para respuestas de verdadero/falso (`TRUE` / `FALSE`) |
+
+Siguiendo con el ejemplo, si queremos extraer la **ubicación principal** mencionada en la noticia, usamos `type_string()` para pedirle una respuesta de texto al modelo, junto a una breve descripción de lo que queremos:
+
+```{r}
+tipo_lugar <- type_string("Ubicación principal de la noticia")
+```
+
+Ahora, al momento de enviar el _prompt_ al modelo (el objeto `noticia` que contiene el texto), usamos `chat$structured()` en vez de `chat$chat()` para recibir datos estructurados en vez de la respuesta libre del modelo, y le indicamos que queremos que la respuesta sea del tipo `tipo_lugar`:
+
+```{r ejemplo_lugar_1}
+#| cache: true
+
+# crear chat con el modelo
+chat <- chat_anthropic(model = "claude-haiku-4-5")
+
+# empezar chat estructurado especificando el tipo de respuesta
+resultado <- chat$chat_structured(noticia, 
+                                  type = tipo_lugar)
+
+resultado
+```
+
+El modelo de lenguaje responde con la ubicación principal de la noticia, sin ningún comentario extra, y sin necesidad de hacer un procesamiento posterior para limpiar la respuesta.
+
+
+### Extraer variables categóricas
+Si queremos extraer desde los datos no estructurados una variable categórica, es decir, que sólo pueda tomar un valor entre varias opciones predefinidas, podemos usar `type_enum()`, donde especificamos un vector con los valores posibles.
+
+Por ejemplo, preguntemos qué tipo de noticia se trata, entre categorías como _social, economía, política,_ etc.
+
+```{r ejemplo_clasificacion}
+#| cache: true
+
+# definir tipo de respuesta categórica
+tipo_clasificacion <- type_enum(description = "Clasificación de la noticia según su enfoque temático principal",
+                                values = c("social", "económico", "político", 
+                                           "judicial", "delincuencia", "otros"))
+
+# crear chat con el modelo
+chat <- chat_anthropic(model = "claude-haiku-4-5")
+
+# empezar chat estructurado especificando el tipo de respuesta
+resultado <- chat$chat_structured(noticia, 
+                                  type = tipo_clasificacion)
+
+resultado
+```
+
+De esta forma, el modelo se limita a responder solamente entre las opciones que tú le especifiques, delimitando mucho más la calidad de la respuesta.
+
+
+## Extracción datos estructurados desde varios textos
+
+Hasta ahora hemos extraído datos estructurados a partir de un solo elemento de texto no estructurado.
+
+Realicemos la extracción de datos estructurados de varias unidades de información al mismo tiempo. Como ejemplo, probemos con una muestra de 5 noticias:
+
+```{r}
+library(dplyr)
+
+muestra <- noticias |> 
+  slice(20:25)
+```
+
+
+```{r}
+muestra |> 
+  select(titulo)
+```
+
+Siguiendo la definición de _tipos_ de resultado que aprendimos más arriba, podemos **definir de una vez las distintas variables que queremos extraer desde nuestros datos no estructurados**: en el caso de las noticias, queremos extraer el lugar, los personajes principales, el tipo de personaje, la clasificación de las noticias, y el sentimiento general de la noticia.
+
+Estas variables serán generalmente de tipo texto, pero varias de ellas queremos que sean variables categóricas con valores específicos.
+
+```{r}
+tipo_lugar <- type_string("Ubicación principal de la noticia")
+
+tipo_actor <- type_string("Actor, personaje o institución principal de la noticia")
+
+tipo_grupo <- type_enum(description = "Tipo de entidad del actor, personaje o institución principal de la noticia",
+                        values = c("institución pública", "político", "empresa", "empresario", "ciudadano", "otros"))
+
+tipo_clasificacion <- type_enum(description = "Clasificación de la noticia según su enfoque temático principal",
+                                values = c("social", "económico", "político", "judicial", "delincuencia", "otros"))
+
+tipo_sentimiento <- type_enum(values = c("positivo", "neutro", "negativo"), 
+                              description = "Sentimiento general de la noticia según su contenido")
+```
+
+Ahora podemos usar la función `parallel_chat_structured()` para enviar varios textos al modelo de lenguaje, y recibir datos estructurados para cada uno de ellos. Esta función recibe como argumentos el **chat** (que además tiene un _system prompt_ que especifica el actuar del modelo), una lista con los **textos** que queremos procesar (en este caso, la columna `cuerpo` de la tabla `muestra`), y los **tipos de respuesta** que queremos recibir (al ser varias, van en dentro de `type_object()`).
+
+```{r datos_estructurados}
+#| cache: true
+instruccion <- "Eres un clasificador de noticias experto en el acontecer nacional de Chile"
+
+resultado <- parallel_chat_structured(
+  chat = chat_anthropic(model = "claude-haiku-4-5",
+                        system_prompt = instruccion),
+  prompts = as.list(muestra$cuerpo),
+  type = type_object(
+    lugar = tipo_lugar,
+    actor = tipo_actor,
+    actor_grupo = tipo_grupo,
+    sentimiento = tipo_sentimiento,
+    clasificacion = tipo_clasificacion
+  )
+)
+```
+
+Al solicitar varias variables al modelo, retorna una tabla o _tibble_ con los datos estructurados de cada noticia, con una fila por cada noticia, en el orden que se entregaron las noticias.
+
+```{r}
+#| echo: false
+#| output: asis
+
+knitr::kable(resultado)
+```
+
+Como vienen en el mismo orden que las noticias, podemos unir las columnas obtenidas a los datos originales:
+
+```{r}
+tabla <- muestra |> 
+  select(titulo, fecha) |> 
+  bind_cols(resultado)
+```
+
+```{r}
+#| echo: false
+#| output: asis
+
+knitr::kable(tabla)
+```
+
+Si te interesa profundizar en este tema, [Nic Crane ofrece un curso específico sobre el uso de LLMs con R](https://www.aifordatapeople.com/courses/llms-in-r)
+
+## Referencias
+- [RainbowR Workshop: LLMs in R for Data Analysis](https://thisisnic.github.io/rainbowrworkshop/code.html) por [Nic Crane](https://niccrane.com)
+- [Learn to work with LLMs in R](https://www.aifordatapeople.com/courses/llms-in-r), curso impartido por [Nic Crane](https://niccrane.com)
+- [Documentación del paquete `{ellmer}`](https://ellmer.tidyverse.org/articles/structured-data.html) sobre datos estructurados
+
+
+{{< cursos >}}
+
+{{< cafecito >}}

@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=5651&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.152.2">
+<title>Cómo dejar de repetirte y escribir código más eficiente en R | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Este script enorme podría haber sido un `for` loop">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="Cómo dejar de repetirte y escribir código más eficiente en R | Bastián Olea">
+<meta property="og:description" content="Este script enorme podría haber sido un `for` loop" />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:5651/blog/repetirse/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:5651/blog/repetirse/featured.png" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:5651/blog/repetirse/featured.png" >
+    
+    
+  
+  <meta itemprop="name" content="Cómo dejar de repetirte y escribir código más eficiente en R">
+  <meta itemprop="description" content="El otro día me llegó un script (muy probablemente hecho por una IA) de más de 9.000 líneas!
+Igual era entendible, porque era un script que producía cientos de gráficos. Pero revisando el script me doy cuenta de que también se repiten cientos de veces los mismos patrones de código.
+Scripts como éstos suelen ser apenas una docena de bloques de código distintos, pero repetidos muchas veces cada uno con mínimas diferencias entre ellos: referencias a columnas distintas, etc.">
+  <meta itemprop="datePublished" content="2026-02-18T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-02-18T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1796">
+  <meta itemprop="image" content="http://localhost:5651/blog/repetirse/featured.png">
+  <meta itemprop="keywords" content="Loops,Optimización,Consejos">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="../../style.main.min.8f721815d150079638fe25bf9714e71c67b8ddf7e9435d32764c3175c3e06556.css" integrity="sha256-j3IYFdFQB5Y4/iW/lxTnHGe43ffpQ10ydkwxdcPgZVY=" media="screen">
+  
+  
+  <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
+  
+  
+  <link rel="stylesheet" href="../../css/syntax.css">
+  
+  
+  <link rel="preload" href="https://bastianoleah.shinyapps.io/buscador/" as="image">
+</head>
+<body>
+      <div class="grid-container single-sidebar">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:5651/" title="Home">
+      <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="../../blog/" title="Bastián Olea: Blog de R">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/aprende_r/" title="Aprende R">Aprende R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../clases/" title="Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+
+                       
+ 
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 pr3-l">
+      <header class="post-header" style="margin-top:-30px;">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Cómo dejar de repetirte y escribir código más eficiente en R</h1>
+        <h4 class="f4 mt0 mb4 lh-title measure">Este script enorme podría haber sido un `for` loop</h4>
+        
+        
+        <div style = "display: inline-block;">  
+          <p class="f7 db mv0 ttu" style = "display: inline-block;">
+            18/2/2026</p>
+          
+          
+          <span>
+            
+
+
+
+
+<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
+<span id="262e98677daee0fe9e25c92e917458d9" title="visitas">
+</span>
+<script>
+    var r = new XMLHttpRequest();
+    r.addEventListener('load', function() {
+        document.getElementById('262e98677daee0fe9e25c92e917458d9').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
+    })
+    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/repetirse/".replace(/(\/)?$/, '')) + '.json')
+    r.send()
+</script>
+</span>
+
+          </span>
+        </div>
+          
+        
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/loops"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            loops</a>  <a href="http://localhost:5651/tags/optimizaci%C3%B3n"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            optimización</a>  <a href="http://localhost:5651/tags/consejos"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            consejos</a> </dd></em>
+        </dl>
+         
+      
+        
+      
+      <div class="ph0 pt3">
+        
+
+<div style="margin-top:-24px;">
+
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+      
+    
+  <a class="btn-links mr2 ba dib" 
+  style = "background-color: #9069C0; border-radius: 4px; 
+  color: #EAD2FA; font-size: 10pt;
+  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; 
+  margin-right: 1px; margin-top: 6px; margin-bottom: 0px;"
+  href="https://gist.github.com/bastianolea/a80092f4552e9d4e648eca7fd287baeb" target="_blank" rel="noopener"><i class="fas fa-file-code fa-lg fa-fw mr2"></i>Código</a>
+
+</div>
+
+      </div>
+      
+      
+    </header>
+      
+      
+    <section class="post-body pt5 pb4">
+        <p>El otro día me llegó un script (muy probablemente hecho por una IA) de más de 9.000 líneas!</p>
+<p><img src="../../blog/repetirse/script.mov" alt=""></p>
+<p>Igual era entendible, porque era un script que producía cientos de gráficos. Pero revisando el script me doy cuenta de que también <strong>se repiten cientos de veces los mismos patrones de código.</strong></p>
+<p>Scripts como éstos suelen ser apenas una docena de bloques de código distintos, pero repetidos muchas veces cada uno con mínimas diferencias entre ellos: referencias a columnas distintas, etc.</p>
+<p>Esa extensión y ese nivel de repetición hizo que modificar el script para mejorar los gráficos, que en teoría eran un puñado de visualizaciones repetidas muchas veces, fuera un enorme dolor de cabeza.</p>
+<p>Al tiro pensé: <em>Este script enorme podría haber sido un <code>for</code> loop</em> 😂</p>
+<p><em><strong>¿Qué tiene de malo la repetición?</strong></em></p>
+<ul>
+<li>Produce scripts <strong>difíciles de revisar y entender</strong>, porque son tan eternos que no puedes contenerlos en tu cabeza 🤕</li>
+<li>Es código <strong>difícil de mantener</strong>, porque si quieres hacer un cambio, vas a tener que aplicarlo infinitas veces de forma manual 😫</li>
+<li>Producen <strong>problemas a largo plazo</strong>, porque puede ser que aparezca un error en el código y vas a tener que bucear 🐠 entre miles de líneas para encontrarlo</li>
+</ul>
+<p>Aquí dejo algunos consejos para escribir código más <strong>eficiente</strong>, más <strong>fácil de entender</strong>, y <strong>más fácil de mantener</strong>.</p>
+<hr>
+
+
+
+
+<h2 id="separar-un-script-en-partes">Separar un script en partes
+  <a href="#separar-un-script-en-partes"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Si tienes un script muy largo, lo primero que puedes hacer es <strong>separar el script en varias partes</strong>, y cada parte ponerla en un archivo distinto.</p>
+<p>Si un script requiere que se ejecute otro, puedes agregar <code>source()</code> para que dentro de un script se ejecute otro script.</p>
+<p>Por ejemplo, en un script pones todo el código de la carga de datos, en otro pones las funciones que usarás, y el tercer script lo empiezas con <code>source(&quot;cargar.R&quot;)</code> y <code>source(&quot;funciones.R&quot;)</code>.</p>
+
+
+<style>
+      div.splitbox {
+        width:100%; 
+        overflow:auto;}
+
+      div.splitbox div.column-left {
+                    width:48%;
+                    padding: 2px;
+                    float:left;}
+      div.splitbox div.column-right {
+                    width:48%;
+                    padding: 4px;
+                    float:right;}
+
+      @media only screen and (max-width: 600px) {
+      div.splitbox div.column-left {
+                    width:100%;
+                    float:left;}
+      div.splitbox div.column-right {
+                    width:100%;
+                    float:left;}
+      }
+  </style><div class="splitbox"><div class="column-left">
+
+<p>Entonces pasas desde esto:</p>
+<ul>
+<li><code>script_enorme.R</code></li>
+</ul>
+
+
+</div><div class="column-right">
+
+<p>A esto:</p>
+<ul>
+<li><code>cargar.R</code></li>
+<li><code>funciones.R</code></li>
+<li><code>pruebas.R</code></li>
+<li><code>gráficos.R</code></li>
+</ul>
+
+
+</div><div style="clear:both"></div></div>
+
+<p>Entonces, si necesitas cambiar algo en la carga de datos, vas al script correspondiente y lo arreglas!</p>
+<p>Otra opción es tener todo en scripts separados, y luego tener un <strong>script principal que ejecute todos los pasos necesarios</strong> con <code>source()</code>, una especie de orquestador de todos los pasos de tu proyecto. En estos casos se recomienda anteceder los scripts con una numeración para registrar el orden de los pasos.</p>
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%;">
+    Para orquestar <em>pipelines</em> en R existe 
+<a href="https://docs.ropensci.org/targets/" target="_blank" rel="noopener">el paquete <code>{targets}</code></a>, que permite declarar flujos o <em>pipelines</em> con los pasos necesarios para tu proyecto, coordinando la ejecución de todos los pasos. Tiene el beneficio de que optimiza el tiempo de procesamiento al ejecutar solamente los pasos que tienen cambios. Para más información 
+<a href="https://books.ropensci.org/targets/" target="_blank" rel="noopener">revisa este libro.</a>
+  </aside>
+  
+</div>
+
+
+
+
+<h2 id="crear-funciones">Crear funciones
+  <a href="#crear-funciones"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Si tienes un <strong>bloque de código que se repite muchas veces</strong>, lo mejor es convertirlo en una función, y luego llamar a esa función cada vez que necesites ejecutar ese bloque de código.</p>
+<p><em><strong>Por qué usar funciones?</strong></em></p>
+<ul>
+<li>Permiten <strong>ordenar el código</strong>, porque <em>esconden</em> la complejidad del código dentro de la función, dejando sólo lo necesario a la vista: pasas de muchas líneas de código a una función con un nombre que describa lo que hace</li>
+<li>Permiten <strong>reutilizar código</strong>, porque una vez que creas la función, puedes usarla las veces que quieras sin tener que copiar y pegar el mismo bloque de código</li>
+<li>Te ayudan a <strong>mantener el código</strong>, porque si después necesitas hacer un cambio o corrección, la haces en un sólo lugar, y ese cambio se va a aplicar a todas las veces que uses la función</li>
+</ul>
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%;">
+    Para aprender lo básico sobre <strong>crear funciones</strong> en R, 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/r_intermedio/#crear-funciones" target="_blank" rel="noopener">revisa este tutorial</a>
+  </aside>
+  
+</div>
+<p>Pongámonos en el caso de que vamos a procesar los 
+<a href="https://censo2024.ine.gob.cl/resultados/" target="_blank" rel="noopener">resultados del Censo de población y vivienda 2024</a> de Chile, y cargamos los <strong>datos sobre población según género</strong>:</p>
+
+
+
+
+<div class = "db pt1"
+style = "margin-bottom: 34px;">
+
+<a class = "btn-links mr2 ba dib"
+href = "P5_Genero.xlsx" target="_blank"
+style = "padding: 12px; padding-bottom: 8px; border-radius: 5px; padding-right: 18px; text-decoration: none; border: 1px solid; color: #EAD2FA; background-color: #9069C0; margin-bottom: -12px;">
+<i class="fas fa-file-download fa-lg fa-fw mr2" style="color: #EAD2FA;"></i>
+Descargar datos</a>
+
+</div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">readxl</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">janitor</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">tidyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># cargar datos</span>
+</span></span><span class="line"><span class="cl"><span class="n">genero</span> <span class="o">&lt;-</span> <span class="nf">read_xlsx</span><span class="p">(</span><span class="s">&#34;P5_Genero.xlsx&#34;</span><span class="p">,</span> <span class="n">sheet</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># limpiar y procesar</span>
+</span></span><span class="line"><span class="cl"><span class="n">genero_long</span> <span class="o">&lt;-</span> <span class="n">genero</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">row_to_names</span><span class="p">(</span><span class="m">3</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">pivot_longer</span><span class="p">(</span><span class="n">cols</span> <span class="o">=</span> <span class="m">4</span><span class="o">:</span><span class="nf">last_col</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">               <span class="n">names_to</span> <span class="o">=</span> <span class="s">&#34;genero&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="n">values_to</span> <span class="o">=</span> <span class="s">&#34;poblacion&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">select</span><span class="p">(</span><span class="n">region</span> <span class="o">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">genero</span><span class="p">,</span> <span class="n">poblacion</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">poblacion</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">poblacion</span><span class="p">))</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">tipo</span> <span class="o">=</span> <span class="nf">case_when</span><span class="p">(</span><span class="n">genero</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;Masculino&#34;</span><span class="p">,</span> <span class="s">&#34;Femenino&#34;</span><span class="p">)</span> <span class="o">~</span> <span class="s">&#34;Binario cis&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                          <span class="n">genero</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;No binario&#34;</span><span class="p">,</span> <span class="s">&#34;Transfemenino&#34;</span><span class="p">,</span> <span class="s">&#34;Transmasculino&#34;</span><span class="p">)</span> <span class="o">~</span> <span class="s">&#34;Trans&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                          <span class="kc">TRUE</span> <span class="o">~</span> <span class="s">&#34;Otros&#34;</span><span class="p">))</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">tipo</span> <span class="o">!=</span> <span class="s">&#34;Otros&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">genero_long</span>
+</span></span></code></pre></div><pre><code># A tibble: 95 × 4
+   region             genero         poblacion tipo       
+   &lt;chr&gt;              &lt;chr&gt;              &lt;dbl&gt; &lt;chr&gt;      
+ 1 País               Masculino        6836779 Binario cis
+ 2 País               Femenino         7455952 Binario cis
+ 3 País               Transmasculino     31955 Trans      
+ 4 País               Transfemenino      13314 Trans      
+ 5 País               No binario         15395 Trans      
+ 6 Arica y Parinacota Masculino          89224 Binario cis
+ 7 Arica y Parinacota Femenino           94037 Binario cis
+ 8 Arica y Parinacota Transmasculino       414 Trans      
+ 9 Arica y Parinacota Transfemenino        200 Trans      
+10 Arica y Parinacota No binario           146 Trans      
+# ℹ 85 more rows
+</code></pre>
+<p>Ahora que tenemos los datos por región y género, procedemos a <strong>visualizar los datos</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>Warning: package 'ggplot2' was built under R version 4.4.3
+</code></pre>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># visualizar</span>
+</span></span><span class="line"><span class="cl"><span class="n">genero_long</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">filter</span><span class="p">(</span><span class="n">region</span> <span class="o">==</span> <span class="s">&#34;País&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">genero</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">poblacion</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">genero</span><span class="p">))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">geom_col</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="m">0.5</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#EAD2FA&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">comma</span><span class="p">(</span><span class="n">poblacion</span><span class="p">)),</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">position</span> <span class="o">=</span> <span class="nf">position_dodge</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="m">0.9</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">vjust</span> <span class="o">=</span> <span class="m">-0.5</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">size</span> <span class="o">=</span> <span class="m">3</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">scale_fill_brewer</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="s">&#34;qual&#34;</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="s">&#34;Set2&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="n">comma</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.1</span><span class="p">)))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">scale_x_discrete</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="nf">label_wrap_gen</span><span class="p">(</span><span class="m">15</span><span class="p">))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">tipo</span><span class="p">,</span> <span class="n">scales</span> <span class="o">=</span> <span class="s">&#34;free&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">guides</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="nf">guide_none</span><span class="p">())</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">theme_grey</span><span class="p">(</span><span class="n">ink</span> <span class="o">=</span> <span class="s">&#34;#553A74&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="n">paper</span> <span class="o">=</span> <span class="s">&#34;#EAD2FA&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="n">accent</span> <span class="o">=</span> <span class="s">&#34;#9069C0&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">labs</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s">&#34;Población nacional según género&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">       <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;Censo 2024&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">       <span class="n">x</span> <span class="o">=</span> <span class="s">&#34;Géneros&#34;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s">&#34;Población (a distintas escalas)&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="repetirse.markdown_strict_files/figure-markdown_strict/unnamed-chunk-2-1.png" width="768" />
+<p>Pero imaginemos que ahora queremos <strong>hacer el mismo gráfico varias veces</strong>. ¿Copiamos el bloque del gráfico y lo pegamos las veces que lo necesitemos? <strong>NO!</strong> 😡</p>
+<p>En vez de repetir el código, copiamos el código y creamos funciones para ordenarlo y hacerlo más manejable:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># función para cargar datos</span>
+</span></span><span class="line"><span class="cl"><span class="n">censo_cargar_genero</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">archivo</span> <span class="o">=</span> <span class="s">&#34;P5_Genero.xlsx&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">read_xlsx</span><span class="p">(</span><span class="n">archivo</span><span class="p">,</span> <span class="n">sheet</span> <span class="o">=</span> <span class="m">2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># función para procesar datos</span>
+</span></span><span class="line"><span class="cl"><span class="n">censo_procesar_genero</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">genero</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">genero</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">row_to_names</span><span class="p">(</span><span class="m">3</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">pivot_longer</span><span class="p">(</span><span class="n">cols</span> <span class="o">=</span> <span class="m">4</span><span class="o">:</span><span class="nf">last_col</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">names_to</span> <span class="o">=</span> <span class="s">&#34;genero&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                 <span class="n">values_to</span> <span class="o">=</span> <span class="s">&#34;poblacion&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">select</span><span class="p">(</span><span class="n">region</span> <span class="o">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">genero</span><span class="p">,</span> <span class="n">poblacion</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">mutate</span><span class="p">(</span><span class="n">poblacion</span> <span class="o">=</span> <span class="nf">as.numeric</span><span class="p">(</span><span class="n">poblacion</span><span class="p">))</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">mutate</span><span class="p">(</span><span class="n">tipo</span> <span class="o">=</span> <span class="nf">case_when</span><span class="p">(</span><span class="n">genero</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;Masculino&#34;</span><span class="p">,</span> <span class="s">&#34;Femenino&#34;</span><span class="p">)</span> <span class="o">~</span> <span class="s">&#34;Binario cis&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">genero</span> <span class="o">%in%</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;No binario&#34;</span><span class="p">,</span> <span class="s">&#34;Transfemenino&#34;</span><span class="p">,</span> <span class="s">&#34;Transmasculino&#34;</span><span class="p">)</span> <span class="o">~</span> <span class="s">&#34;Trans&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                            <span class="kc">TRUE</span> <span class="o">~</span> <span class="s">&#34;Otros&#34;</span><span class="p">))</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">filter</span><span class="p">(</span><span class="n">tipo</span> <span class="o">!=</span> <span class="s">&#34;Otros&#34;</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">filter</span><span class="p">(</span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">region</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># función para visualizar datos </span>
+</span></span><span class="line"><span class="cl"><span class="n">censo_grafico_genero</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">genero_long</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                 <span class="n">filtro</span> <span class="o">=</span> <span class="s">&#34;País&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                 <span class="n">titulo</span> <span class="o">=</span> <span class="s">&#34;Población nacional según género&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">genero_long</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">filter</span><span class="p">(</span><span class="n">region</span> <span class="o">==</span> <span class="n">filtro</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">genero</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">poblacion</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">genero</span><span class="p">))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">geom_col</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="m">0.5</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#EAD2FA&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">comma</span><span class="p">(</span><span class="n">poblacion</span><span class="p">)),</span> 
+</span></span><span class="line"><span class="cl">              <span class="n">position</span> <span class="o">=</span> <span class="nf">position_dodge</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="m">0.9</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">              <span class="n">vjust</span> <span class="o">=</span> <span class="m">-0.5</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">              <span class="n">size</span> <span class="o">=</span> <span class="m">3</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">scale_fill_brewer</span><span class="p">(</span><span class="n">type</span> <span class="o">=</span> <span class="s">&#34;qual&#34;</span><span class="p">,</span> <span class="n">palette</span> <span class="o">=</span> <span class="s">&#34;Set2&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="n">comma</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.1</span><span class="p">)))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">scale_x_discrete</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="nf">label_wrap_gen</span><span class="p">(</span><span class="m">15</span><span class="p">))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">tipo</span><span class="p">,</span> <span class="n">scales</span> <span class="o">=</span> <span class="s">&#34;free&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">guides</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="nf">guide_none</span><span class="p">())</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">theme_grey</span><span class="p">(</span><span class="n">ink</span> <span class="o">=</span> <span class="s">&#34;#553A74&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="n">paper</span> <span class="o">=</span> <span class="s">&#34;#EAD2FA&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="n">accent</span> <span class="o">=</span> <span class="s">&#34;#9069C0&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">labs</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="n">titulo</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">         <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;Censo 2024&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">         <span class="n">x</span> <span class="o">=</span> <span class="s">&#34;Géneros&#34;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s">&#34;Población (a distintas escalas)&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Lo que hicimos fue simplemente <strong>meter las partes del código dentro de <code>function()</code></strong> para crear funciones.</p>
+<p>Ahora cuando necesitemos ejecutar esas partes del código, simplemente llamamos las funciones:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">genero</span> <span class="o">&lt;-</span> <span class="nf">censo_cargar_genero</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">genero_long</span> <span class="o">&lt;-</span> <span class="nf">censo_procesar_genero</span><span class="p">(</span><span class="n">genero</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">censo_grafico_genero</span><span class="p">(</span><span class="n">genero_long</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">filtro</span> <span class="o">=</span> <span class="s">&#34;Valparaíso&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">titulo</span> <span class="o">=</span> <span class="s">&#34;Población de Valparaíso según género&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="repetirse.markdown_strict_files/figure-markdown_strict/unnamed-chunk-6-1.png" width="768" />
+<p>¡Mucho más breve y ordenado! 😍</p>
+<p>Ahora podemos <strong>reutilizar la función</strong> para generar otro gráfico similar en tan sólo un par de líneas:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">censo_grafico_genero</span><span class="p">(</span><span class="n">genero_long</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">filtro</span> <span class="o">=</span> <span class="s">&#34;Biobío&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">titulo</span> <span class="o">=</span> <span class="s">&#34;Población de Biobío según género&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="repetirse.markdown_strict_files/figure-markdown_strict/unnamed-chunk-7-1.png" width="768" />
+<p>En el fondo lo que hicimos fue <em>esconder</em> parte del código dentro de las funciones, despejando nuestro script.</p>
+<p>Ahora, si queremos <strong>hacer algún cambio en el código</strong>, cambiamos la función que creamos y re-ejecutamos la función, y así el cambio se aplicará a las siguientes veces que ocupemos la función.
+Por ejemplo, cambiemos la paleta de colores:</p>
+
+
+<details>
+  <summary>
+    Ver código de la función con cambios
+  </summary>
+    <div style="padding: 16px; border: solid 2px #A885C6AA; border-radius: 6px; 
+    background-color: #A885C630;
+    margin-top: 8px; padding-top: 0px; padding-bottom: 0px;">
+    <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># cambiamos la función, agregando el código nuevo dentro de ella</span>
+</span></span><span class="line"><span class="cl"><span class="n">censo_grafico_genero</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">genero_long</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                 <span class="n">filtro</span> <span class="o">=</span> <span class="s">&#34;País&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                 <span class="n">titulo</span> <span class="o">=</span> <span class="s">&#34;Población nacional según género&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">genero_long</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">filter</span><span class="p">(</span><span class="n">region</span> <span class="o">==</span> <span class="n">filtro</span><span class="p">)</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">    <span class="nf">ggplot</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">genero</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">poblacion</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">genero</span><span class="p">))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">geom_col</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="m">0.5</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">&#34;#EAD2FA&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">geom_text</span><span class="p">(</span><span class="nf">aes</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">comma</span><span class="p">(</span><span class="n">poblacion</span><span class="p">)),</span> 
+</span></span><span class="line"><span class="cl">              <span class="n">position</span> <span class="o">=</span> <span class="nf">position_dodge</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="m">0.9</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">              <span class="n">vjust</span> <span class="o">=</span> <span class="m">-0.5</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">              <span class="n">size</span> <span class="o">=</span> <span class="m">3</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># scale_fill_brewer(type = &#34;qual&#34;, palette = &#34;Set2&#34;) +</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#### cambio en la función para cambiar paleta de colores</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">scale_fill_manual</span><span class="p">(</span><span class="n">values</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;Femenino&#34;</span> <span class="o">=</span> <span class="s">&#34;#9069C0&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                 <span class="s">&#34;Masculino&#34;</span> <span class="o">=</span> <span class="s">&#34;#6974C0&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                 <span class="s">&#34;No binario&#34;</span> <span class="o">=</span> <span class="s">&#34;#C46EBA&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                 <span class="s">&#34;Transfemenino&#34;</span> <span class="o">=</span> <span class="s">&#34;#9069C0&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                 <span class="s">&#34;Transmasculino&#34;</span> <span class="o">=</span> <span class="s">&#34;#6974C0&#34;</span><span class="p">))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">####</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">scale_y_continuous</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="n">comma</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                       <span class="n">expand</span> <span class="o">=</span> <span class="nf">expansion</span><span class="p">(</span><span class="n">mult</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">0.1</span><span class="p">)))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">scale_x_discrete</span><span class="p">(</span><span class="n">labels</span> <span class="o">=</span> <span class="nf">label_wrap_gen</span><span class="p">(</span><span class="m">15</span><span class="p">))</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">tipo</span><span class="p">,</span> <span class="n">scales</span> <span class="o">=</span> <span class="s">&#34;free&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">guides</span><span class="p">(</span><span class="n">fill</span> <span class="o">=</span> <span class="nf">guide_none</span><span class="p">())</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">theme_grey</span><span class="p">(</span><span class="n">ink</span> <span class="o">=</span> <span class="s">&#34;#553A74&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="n">paper</span> <span class="o">=</span> <span class="s">&#34;#EAD2FA&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">               <span class="n">accent</span> <span class="o">=</span> <span class="s">&#34;#9069C0&#34;</span><span class="p">)</span> <span class="o">+</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#### cambio en la función para usar el filtro en el título</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">labs</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="nf">paste</span><span class="p">(</span><span class="s">&#34;Población de&#34;</span><span class="p">,</span> <span class="n">filtro</span><span class="p">,</span> <span class="s">&#34;según género&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">         <span class="c1">####</span>
+</span></span><span class="line"><span class="cl">         <span class="n">subtitle</span> <span class="o">=</span> <span class="s">&#34;Censo 2024&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">         <span class="n">x</span> <span class="o">=</span> <span class="s">&#34;Géneros&#34;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s">&#34;Población (a distintas escalas)&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+    </div>
+</details>
+<p>Ahora que actualizamos la función, al volver a usarla tendrá los cambios nuevos:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">censo_grafico_genero</span><span class="p">(</span><span class="n">genero_long</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">filtro</span> <span class="o">=</span> <span class="s">&#34;Arica y Parinacota&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><img src="repetirse.markdown_strict_files/figure-markdown_strict/unnamed-chunk-9-1.png" width="768" />
+
+
+
+
+<h2 id="hacer-un-loop-o-bucle">Hacer un <em>loop</em> o bucle
+  <a href="#hacer-un-loop-o-bucle"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Otro caso de repetición es cuando tenemos que <strong>hacer una misma cosa muchas veces</strong>.</p>
+<p>Siguiendo el ejeplo anterior, donde creamos una función, una opción es usar la función muchas veces:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">censo_grafico_genero</span><span class="p">(</span><span class="n">genero_long</span><span class="p">,</span> <span class="n">filtro</span> <span class="o">=</span> <span class="s">&#34;Arica y Parinacota&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">censo_grafico_genero</span><span class="p">(</span><span class="n">genero_long</span><span class="p">,</span> <span class="n">filtro</span> <span class="o">=</span> <span class="s">&#34;Tarapacá&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">censo_grafico_genero</span><span class="p">(</span><span class="n">genero_long</span><span class="p">,</span> <span class="n">filtro</span> <span class="o">=</span> <span class="s">&#34;Antofagasta&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">censo_grafico_genero</span><span class="p">(</span><span class="n">genero_long</span><span class="p">,</span> <span class="n">filtro</span> <span class="o">=</span> <span class="s">&#34;Coquimbo&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>&hellip; y así hasta el infinito. Pero esto no es eficiente!</p>
+<p>Lo mejor sería usar un <em>loop</em> o bucle, que es una estructura de código que permite repetir un bloque de código varias veces, cambiando alguna parte del código cada vez.</p>
+<div style="display: flex; align-items: center; gap: 15px; padding: 14px; 
+            background-color: #A985C650;  border-radius: 6px;
+            margin: 20px 40px 20px 40px;">
+  
+  <div style="flex-shrink: 0;">
+    <i class="fas fa-info-circle" style="font-size: 130%; margin-left: 2px; opacity: 1; color: #9069C0;"></i>
+  </div>
+  
+  <aside style = "font-size: 90%;">
+    Para aprender lo básico sobre <strong>crear <em>loops</em></strong> en R, 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/r_intermedio/#bucles" target="_blank" rel="noopener">revisa este tutorial</a>
+  </aside>
+  
+</div>
+<p>En este caso, el código repetido siempre es la misma función (o el bloque de código que genera el gráfico), y lo único que cambia son los argumentos que se le enrega a la función (la región a filtrar), así que podemos hacer un <em>loop</em> que ejecute varias veces el código, y en cada paso cambie el filtro:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># obtener vector con las regiones</span>
+</span></span><span class="line"><span class="cl"><span class="n">regiones</span> <span class="o">&lt;-</span> <span class="nf">unique</span><span class="p">(</span><span class="n">genero_long</span><span class="o">$</span><span class="n">region</span><span class="p">)</span>
+</span></span></code></pre></div><p>Primero obtenemos un vector que contenga el valor que queremos que se use en cada paso del <em>loop</em>, y luego construimos el <em>loop</em> para que, por cada valor del vector (<code>for (region in regiones)</code>), ejecute el bloque de código que queremos repetir:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># hacer un loop para generar un gráfico por cada región</span>
+</span></span><span class="line"><span class="cl"><span class="kr">for</span> <span class="p">(</span><span class="n">region</span> <span class="kr">in</span> <span class="n">regiones</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">censo_grafico_genero</span><span class="p">(</span><span class="n">genero_long</span><span class="p">,</span> <span class="n">filtro</span> <span class="o">=</span> <span class="n">region</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Con sólo esas pocas líneas, generamos gráficos para todas las regiones del país!</p>
+<a href="collage.png" target="_blank">
+
+  <img src="collage.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
+  
+</a>
+
+
+
+
+<h2 id="conclusión">Conclusión
+  <a href="#conclusi%c3%b3n"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>En resumidas cuentas, si aplicamos lo aprendido en este tutorial, lo que hicimos quedaría así:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">source</span><span class="p">(</span><span class="s">&#34;funciones.R&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># cargar</span>
+</span></span><span class="line"><span class="cl"><span class="n">genero</span> <span class="o">&lt;-</span> <span class="nf">censo_cargar_genero</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># procesar</span>
+</span></span><span class="line"><span class="cl"><span class="n">genero_long</span> <span class="o">&lt;-</span> <span class="nf">censo_procesar_genero</span><span class="p">(</span><span class="n">genero</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># loop</span>
+</span></span><span class="line"><span class="cl"><span class="kr">for</span> <span class="p">(</span><span class="n">region</span> <span class="kr">in</span> <span class="nf">unique</span><span class="p">(</span><span class="n">genero</span><span class="o">$</span><span class="n">regiones</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">censo_grafico_genero</span><span class="p">(</span><span class="n">genero_long</span><span class="p">,</span> <span class="n">filtro</span> <span class="o">=</span> <span class="n">region</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Hermoso. Elegante. Conciso. Reproducible. Una obra de arte 👌🏼</p>
+<p>Quizás lo mejor que puedes hacer con tu código es <strong>hacerlo legible</strong> y <strong>no repetirte</strong>. Como hemos visto, lo mejor es <strong>separar el código en partes</strong>, <strong>crear funciones</strong> para ordenar el código y hacerlo más manejable, y <strong>usar loops</strong> para ejecutar un mismo código varias veces.</p>
+<p><div style = "height: 18px;">
+</div>
+<div>
+  <div style="display: flex;
+  justify-content: center;
+  align-items: center;">
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="bastimapache" data-color="#FFDD00" data-emoji="☕"  data-font="Cookie" data-text="Regálame un cafecito" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+  </div>
+
+
+</p>
+ 
+    </section>
+      
+    <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="http://localhost:5651/blog/redactar_texto_llm/">&larr; Redactar textos basados en datos usando IA desde R</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:5651/blog/2026-02-18/">Crea árboles de las carpetas de tus proyectos con `{printtree}` en R &rarr;</a>
+  
+</div>
+
+    </footer>
+    
+  </article>
+    
+    <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+</section>
+  
+
+<section class="post-body pt5 pb4">
+  
+  <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">February 18, 2026</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">9 minute read, 1796 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:5651/tags/loops">loops</a>  <a href="http://localhost:5651/tags/optimizaci%C3%B3n">optimización</a>  <a href="http://localhost:5651/tags/consejos">consejos</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="../../blog/2026-02-18/">Crea árboles de las carpetas de tus proyectos con `{printtree}` en R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/redactar_texto/">Redactar textos basados en datos automáticamente con R: describiendo resultados del censo de población</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/shiny_docker/">Desplegar aplicaciones Shiny a producción en contenedores Docker</a></dd>
+    
+  </dl>
+</details>
+
+</section>
+</main>
+
+
+<aside class="page-sidebar" role="complementary">
+   
+   
+
+  <div class="blog-info ph4 pt4 pb4 pb0-l">
+    
+
+  <h1 class="f3">Blog</h1>
+  <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
+<a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
+<a href="../../tags/">temas</a>.</p>
+  
+
+   
+<h3 style="margin-bottom: 12px;">Temas:</h3>
+
+<div style="font-size:90%;">
+
+<div style="font-size: 90%;">
+  
+   
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/chile/">Chile</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/datos/">Datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/consejos/">Consejos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/gr%C3%A1ficos/">Gráficos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/blog/">Blog</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/ggplot2/">Ggplot2</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/apps/">Apps</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/shiny/">Shiny</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/web-scraping/">Web scraping</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/b%C3%A1sico/">Básico</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/mapas/">Mapas</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/curiosidades/">Curiosidades</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/quarto/">Quarto</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/dplyr/">Dplyr</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/loops/">Loops</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/optimizaci%C3%B3n/">Optimización</a></span>
+  </span>
+
+<a href="../../tags/" style="margin-left: 3px;">y más!</a>
+</div>
+</div>
+  
+  
+   
+   
+
+</div>
+
+  
+  <div id="PageTableOfContents" style="margin-top: 24px; position: sticky; top: 108px;">
+        <div class="blog-info ph4 pb4 pb0-l">
+        <h3 style="margin-bottom: 12px;">Índice:</h3>
+          <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: -22px; margin-bottom: 32px;">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#separar-un-script-en-partes">Separar un script en partes</a></li>
+    <li><a href="#crear-funciones">Crear funciones</a></li>
+    <li><a href="#hacer-un-loop-o-bucle">Hacer un <em>loop</em> o bucle</a></li>
+    <li><a href="#conclusión">Conclusión</a></li>
+  </ul>
+</nav>
+          </div>
+        </div>
+    </div>
+  
+  
+
+</aside>
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2026 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source" style="color:#9069C0;">Hugo Apéro</a> 
+      y <a href="https://pkgs.rstudio.com/blogdown/" style="color:#9069C0;">{blogdown}</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source" style="color:#9069C0;">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL" style="color:#9069C0;">Formspree</a>.
+
+Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlify</a></span>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+      <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="../../tags/" title="Temas">Temas</a>
+      
+      <a class="dib pv1 ph2 link" href="../../clases/" title="Clases">Clases</a>
+      
+      <a class="dib pv1 ph2 link" href="../../code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
+      
+      <a class="dib pv1 ph2 link" href="../../license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>

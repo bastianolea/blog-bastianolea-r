@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=3717&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=5651&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -31,16 +31,16 @@
 <meta property="og:title" content="Desplegar aplicaciones Shiny a producción en contenedores Docker | Bastián Olea">
 <meta property="og:description" content="Docker es una plataforma que permite empaquetar aplicaciones y sus dependencias en contenedores, lo que simplifica el proceso de despliegue (_deployment_) y gestión de aplicaciones. Con Docker puedes empaquetar tu app Shiny junto con todo lo necesario para que funcione correctamente, y así poder desplegarla en cualquier lugar sin preocuparte por las diferencias en los entornos de ejecución. Esto significa que crearás un contenedor con una versión de Linux y de R específica, junto a todas las configuraciones e instalaciones que necesites." />
 <meta property="og:type" content="page" />
-<meta property="og:url" content="http://localhost:3717/blog/shiny_docker/" />
+<meta property="og:url" content="http://localhost:5651/blog/shiny_docker/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:3717/blog/sidebar-listing.jpg" >
+        <meta property="og:image" content="http://localhost:5651/blog/sidebar-listing.jpg" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:3717/blog/sidebar-listing.jpg" >
+        <meta name="twitter:image" content="http://localhost:5651/blog/sidebar-listing.jpg" >
     
     
   
@@ -49,7 +49,7 @@
 Post en construcción! A medida que voy aprendiendo iré complementando la publicación. Este es un post para usuarios avanzados de Shiny que necesiten desplegar sus apps contextos de empresas o producción. Si eres un usuario casual de Shiny, probablemente sea mejor usar Posit Connect Cloud para publicar tus apps. ¿Qué es Docker? Docker es un programa que te permite crear contenedores dentro de los cuales puedes ejecutar aplicaciones. Estos son entornos exclusivos y específicos para tu app, de manera que ya no la ejecutas en tu computador, sino que la ejecutas dentro del contenedor, que es una especie de computador virtual sólo para tu app. Estos contenedores son independientes entre sí y reproducibles, ayudándote a que tus apps siempre funcionen siempre igual, sin importar dónde las ejecutes.">
   <meta itemprop="datePublished" content="2026-01-20T00:00:00+00:00">
   <meta itemprop="dateModified" content="2026-01-20T00:00:00+00:00">
-  <meta itemprop="wordCount" content="1317">
+  <meta itemprop="wordCount" content="1498">
   <meta itemprop="keywords" content="Shiny,Optimización">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -75,7 +75,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
       <div class="grid-container single-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:3717/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:5651/" title="Home">
       <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -342,7 +342,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/shiny"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/shiny"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -351,7 +351,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                        background-color: #9069C0; 
                        border-radius: 3px; 
                        padding: 2px 6px; ">
-            shiny</a>  <a href="http://localhost:3717/tags/optimizaci%C3%B3n"
+            shiny</a>  <a href="http://localhost:5651/tags/optimizaci%C3%B3n"
           style="margin-right: 2px; 
                        color: #EAD2FA; 
                        font-style: normal;
@@ -641,6 +641,39 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
   <img src="docker_ps.png" style="border-radius: 5px; width: 80%; max-width: 700px; display: block; margin: auto; margin-bottom: 8px; margin-top: 8px;">
   
 </a>
+
+
+
+
+<h2 id="configuración-avanzada">Configuración avanzada
+  <a href="#configuraci%c3%b3n-avanzada"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+
+
+
+
+<h3 id="permisos-de-escritura-para-shiny">Permisos de escritura para Shiny
+  <a href="#permisos-de-escritura-para-shiny"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h3>
+<p>Si 
+<a href="../../blog/shiny_optimizar/">tu aplicación Shiny usa cache</a> y decides que 
+<a href="https://bastianolea.rbind.io/blog/shiny_optimizar/#configurar-el-almacenamiento-del-cache" target="_blank" rel="noopener">el cache se guarde en el disco</a> (lo que aumenta la velocidad de la app para todos sus usuarios), necesitas que la aplicación tenga <strong>permiso para leer y escribir</strong> en la carpeta del cache. Esto es porque Shiny por defecto no puede escribir en el disco, por razones de seguridad, pero necesita escribir si se usa cache en disco para ir guardando las combinaciones de inputs nuevas que vayan realizando tus usuarios/as.</p>
+<p>Para que Shiny pueda escribir en la carpeta del cache, en el archivo <code>docker-compose.yml</code> tienes que agregar la siguiente línea dentro del bloque <code>shiny_server</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">services</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="nt">shiny_server</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">shiny_app</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="l">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">       </span>- <span class="l">...</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">     </span><span class="nt">post_start</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&#34;sh&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;-c&#34;</span><span class="p">,</span><span class="w"> </span><span class="s2">&#34;chown -R shiny:shiny /srv/shiny-server/app_cache&#34;</span><span class="p">]</span><span class="w"> </span><span class="c"># dar permisos después de montar volumen</span><span class="w">
+</span></span></span></code></pre></div><p>El argumento <code>post_start</code> ejecutará un comando justo después de montar el volumen, lo que le dará permisos a Shiny para escribir en la carpeta del cache. Asegúrate de reemplazar la ruta por el nombre de la carpeta que usas para guardar el cache en disco.</p>
 <hr>
 
 
@@ -715,12 +748,12 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
   
   
     <a class="prev dtc pr2 tl v-top fw6"
-    href="http://localhost:3717/blog/gt_pildoras/">&larr; Crea tablas con píldoras de colores usando `{gt}` en R</a>
+    href="http://localhost:5651/blog/gt_pildoras/">&larr; Crea tablas con píldoras de colores usando `{gt}` en R</a>
   
   
   
     <a class="next dtc pl2 tr v-top fw6"
-    href="http://localhost:3717/blog/2026-01-19/">Selección de cupos para curso gratuito de introducción a R &rarr;</a>
+    href="http://localhost:5651/blog/2026-01-19/">Selección de cupos para curso gratuito de introducción a R &rarr;</a>
   
 </div>
 
@@ -757,24 +790,24 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
   </dl>
   <dl class="f6 lh-copy">
     <dt class="fw7">Extensión:</dt>
-    <dd class="fw5 ml0">7 minute read, 1317 words</dd>
+    <dd class="fw5 ml0">8 minute read, 1498 words</dd>
   </dl>
   
   
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Tags:</dt>
-    <dd class="fw5 ml0"> <a href="http://localhost:3717/tags/shiny">shiny</a>  <a href="http://localhost:3717/tags/optimizaci%C3%B3n">optimización</a> </dd>
+    <dd class="fw5 ml0"> <a href="http://localhost:5651/tags/shiny">shiny</a>  <a href="http://localhost:5651/tags/optimizaci%C3%B3n">optimización</a> </dd>
   </dl>
   
   <dl class="f6 lh-copy">
     <dt class="fw7">Ver también:</dt>
     
+    <dd class="fw5 ml0"><a href="../../blog/repetirse/">Cómo dejar de repetirte y escribir código más eficiente en R</a></dd>
+    
     <dd class="fw5 ml0"><a href="../../blog/shiny_validacion/">Testeo automatizado de aplicaciones Shiny con {shinytest2}</a></dd>
     
     <dd class="fw5 ml0"><a href="../../blog/app_censo_mapas/">App: visualizador de mapas comunales del Censo 2024 por manzanas</a></dd>
-    
-    <dd class="fw5 ml0"><a href="../../blog/surveydown_encuestas/">Crea encuestas online gratis en R con {surveydown}</a></dd>
     
   </dl>
 </details>
@@ -816,7 +849,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/chile/">Chile</a></span>
+      href="http://localhost:5651/tags/chile/">Chile</a></span>
   </span>
  
   
@@ -831,7 +864,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/datos/">Datos</a></span>
+      href="http://localhost:5651/tags/datos/">Datos</a></span>
   </span>
  
   
@@ -846,7 +879,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+      href="http://localhost:5651/tags/consejos/">Consejos</a></span>
   </span>
  
   
@@ -861,7 +894,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/consejos/">Consejos</a></span>
+      href="http://localhost:5651/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
   </span>
  
   
@@ -876,7 +909,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/gr%C3%A1ficos/">Gráficos</a></span>
+      href="http://localhost:5651/tags/gr%C3%A1ficos/">Gráficos</a></span>
   </span>
  
   
@@ -891,7 +924,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/blog/">Blog</a></span>
+      href="http://localhost:5651/tags/blog/">Blog</a></span>
   </span>
  
   
@@ -906,7 +939,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/ggplot2/">Ggplot2</a></span>
+      href="http://localhost:5651/tags/ggplot2/">Ggplot2</a></span>
   </span>
  
   
@@ -921,7 +954,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/shiny/">Shiny</a></span>
+      href="http://localhost:5651/tags/apps/">Apps</a></span>
   </span>
  
   
@@ -936,7 +969,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/apps/">Apps</a></span>
+      href="http://localhost:5651/tags/shiny/">Shiny</a></span>
   </span>
  
   
@@ -951,7 +984,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/web-scraping/">Web scraping</a></span>
+      href="http://localhost:5651/tags/web-scraping/">Web scraping</a></span>
   </span>
  
   
@@ -966,7 +999,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/b%C3%A1sico/">Básico</a></span>
+      href="http://localhost:5651/tags/b%C3%A1sico/">Básico</a></span>
   </span>
  
   
@@ -981,7 +1014,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/mapas/">Mapas</a></span>
+      href="http://localhost:5651/tags/mapas/">Mapas</a></span>
   </span>
  
   
@@ -996,7 +1029,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+      href="http://localhost:5651/tags/limpieza-de-datos/">Limpieza de datos</a></span>
   </span>
  
   
@@ -1011,7 +1044,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+      href="http://localhost:5651/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
   </span>
  
   
@@ -1026,7 +1059,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/curiosidades/">Curiosidades</a></span>
+      href="http://localhost:5651/tags/curiosidades/">Curiosidades</a></span>
   </span>
  
   
@@ -1041,7 +1074,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/dplyr/">Dplyr</a></span>
+      href="http://localhost:5651/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
   </span>
  
   
@@ -1056,7 +1089,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/quarto/">Quarto</a></span>
+      href="http://localhost:5651/tags/quarto/">Quarto</a></span>
   </span>
  
   
@@ -1071,7 +1104,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+      href="http://localhost:5651/tags/dplyr/">Dplyr</a></span>
   </span>
  
   
@@ -1086,7 +1119,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/ciencias-sociales/">Ciencias sociales</a></span>
+      href="http://localhost:5651/tags/loops/">Loops</a></span>
   </span>
  
   
@@ -1101,7 +1134,7 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
                  padding: 2px 6px;
                  padding-top: 3px;">
     <a style="color: #EAD1FA !important; text-decoration: none;" 
-      href="http://localhost:3717/tags/loops/">Loops</a></span>
+      href="http://localhost:5651/tags/optimizaci%C3%B3n/">Optimización</a></span>
   </span>
 
 <a href="../../tags/" style="margin-left: 3px;">y más!</a>
@@ -1134,6 +1167,11 @@ Post en construcción! A medida que voy aprendiendo iré complementando la publi
       </ul>
     </li>
     <li><a href="#ejecutando-apps-shiny-desde-contenedores-docker">Ejecutando apps Shiny desde contenedores Docker</a></li>
+    <li><a href="#configuración-avanzada">Configuración avanzada</a>
+      <ul>
+        <li><a href="#permisos-de-escritura-para-shiny">Permisos de escritura para Shiny</a></li>
+      </ul>
+    </li>
     <li><a href="#comandos-de-docker-más-frecuentes">Comandos de Docker más frecuentes</a></li>
     <li><a href="#recursos">Recursos</a></li>
   </ul>

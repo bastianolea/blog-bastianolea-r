@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=3717&amp;path=livereload" data-no-instant defer></script>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=5651&amp;path=livereload" data-no-instant defer></script>
   
                            
      
@@ -31,30 +31,30 @@
 <meta property="og:title" content="Blog: análisis de datos en R | Bastián Olea">
 <meta property="og:description" content="Blog de Bastián Olea, sociólogx y analista de datos" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="http://localhost:3717/blog/" />
+<meta property="og:url" content="http://localhost:5651/blog/" />
 <meta property="og:locale" content="es-ES">
 
 
 
 
     
-        <meta property="og:image" content="http://localhost:3717/blog/sidebar-listing.jpg" >
+        <meta property="og:image" content="http://localhost:5651/blog/sidebar-listing.jpg" >
         <meta property="twitter:card" content="summary_large_image">
-        <meta name="twitter:image" content="http://localhost:3717/blog/sidebar-listing.jpg" >
+        <meta name="twitter:image" content="http://localhost:5651/blog/sidebar-listing.jpg" >
     
     
   
   <meta itemprop="name" content="Blog: análisis de datos en R">
   <meta itemprop="description" content="** No content below YAML for the blog _index. This file provides front matter for the listing page layout and sidebar content. It is also a branch bundle, and all settings under cascade provide front matter for all pages inside blog/. You may still override any of these by changing them in a page’s front matter.**">
-  <meta itemprop="datePublished" content="2026-02-12T00:00:00+00:00">
-  <meta itemprop="dateModified" content="2026-02-12T00:00:00+00:00">
+  <meta itemprop="datePublished" content="2026-03-07T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-03-07T00:00:00+00:00">
   <meta itemprop="wordCount" content="56">
   
   <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <link rel="shortcut icon" href="false" type="image/x-icon">
   <link rel="icon" href="false" type="image/x-icon">
   
-    <link rel="alternate" type="application/rss+xml" href="http://localhost:3717/blog/index.xml" title="Bastián Olea" />
+    <link rel="alternate" type="application/rss+xml" href="http://localhost:5651/blog/index.xml" title="Bastián Olea" />
   
   
   <link rel="stylesheet" href="../../../style.main.min.8f721815d150079638fe25bf9714e71c67b8ddf7e9435d32764c3175c3e06556.css" integrity="sha256-j3IYFdFQB5Y4/iW/lxTnHGe43ffpQ10ydkwxdcPgZVY=" media="screen">
@@ -75,7 +75,7 @@
       <div class="grid-container list-sidebar">
 <header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
   <nav class="site-nav db dt-l w-100" role="navigation">
-    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:3717/" title="Home">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:5651/" title="Home">
       <img src="../../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
     </a>
     <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
@@ -319,8 +319,714 @@
   
   <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="../../../blog/quarto_loop/" class="db">
+        <img src="http://localhost:5651/blog/quarto_loop/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="../../../blog/quarto_loop/" class="db">Generar contenido en serie usando loops en un reporte Quarto</a></h1>
+        
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;"><p>Una de las gracias de generar documentos en Quarto es que podemos combinar la redacción con el código. Pero esto puede ir más allá que simplemente escribir un párrafo de texto y seguido de un párrafo de código. Podemos usar código para literalmente generar texto, títulos y más.</p>
+<p>En otros tutoriales vimos cómo podemos 
+<a href="../../../blog/quarto_reportes/#c%c3%b3digo-entre-el-texto">incluir resultados del código dentro de nuestros párrafos de texto</a>, por ejemplo, para que una cifra que esté dentro de una oración venga directamente del resultado de un cálculo en vez de tener que escribirle de forma manual. Pero en esta guía vamos a ver cómo podemos programar la generación masiva de títulos, párrafos y gráficos en base a una 
+<a href="../../../blog/r_introduccion/r_intermedio/#bucles">iteración, bucle o <em>loop</em>.</a></p></p>
+      
+      
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/quarto"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            quarto</a>  <a href="http://localhost:5651/tags/loops"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            loops</a>  <a href="http://localhost:5651/tags/automatizaci%C3%B3n"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            automatización</a>  <a href="http://localhost:5651/tags/gr%C3%A1ficos"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            gráficos</a> </dd></em>
+        </dl>
+        
+        
+      
+      <footer class="w-100">
+        
+      
+      
+      
+      <div><div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">8/6/2025</div>
+      
+        <span>
+          
+
+
+
+
+<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
+<span id="dd91d36c23a88d8d07c8c26eb99f6e4d" title="visitas">
+</span>
+<script>
+    var r = new XMLHttpRequest();
+    r.addEventListener('load', function() {
+        document.getElementById('dd91d36c23a88d8d07c8c26eb99f6e4d').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
+    })
+    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/quarto_loop/".replace(/(\/)?$/, '')) + '.json')
+    r.send()
+</script>
+</span>
+
+        </span>
+      </div>
+      
+      
+    </footer>
+    </div>
+  </div>
+  
+
+  
+  
+</article>
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="../../../blog/ordenar_regiones/" class="db">
+        <img src="http://localhost:5651/blog/ordenar_regiones/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="../../../blog/ordenar_regiones/" class="db">Ordenar las regiones de Chile de norte a sur en R</a></h1>
+        
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">La franja larga y angosta que es Chile tiene el beneficio de que sus regiones se ubican casi perfectamente una sobre la otra, de norte a sur. Este orgen geográfico natural de sus regiones resulta familiar para sus habitantes, por lo que se vuelve recomendable ordenar los datos a nivel regional siguiendo este orden geográfico.</p>
+      
+      
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/consejos"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            consejos</a>  <a href="http://localhost:5651/tags/mapas"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            mapas</a>  <a href="http://localhost:5651/tags/chile"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            Chile</a> </dd></em>
+        </dl>
+        
+        
+      
+      <footer class="w-100">
+        
+      
+      
+      
+      <div><div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">6/6/2025</div>
+      
+        <span>
+          
+
+
+
+
+<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
+<span id="8240e82d8d853fb3fab92ac4c1041698" title="visitas">
+</span>
+<script>
+    var r = new XMLHttpRequest();
+    r.addEventListener('load', function() {
+        document.getElementById('8240e82d8d853fb3fab92ac4c1041698').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
+    })
+    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/ordenar_regiones/".replace(/(\/)?$/, '')) + '.json')
+    r.send()
+</script>
+</span>
+
+        </span>
+      </div>
+      
+      
+    </footer>
+    </div>
+  </div>
+  
+
+  
+  
+</article>
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="../../../blog/datapasta/" class="db">
+        <img src="http://localhost:5651/blog/datapasta/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="../../../blog/datapasta/" class="db">Copia y pega datos en R con {datapasta} y {clipr}</a></h1>
+        
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;"><code>{datapasta}</code> es un paquete para R que te ayuda a copiar y pegar datos desde y hacia R. Este paquete convierte tus datos en texto que puedes copiar y pegar en otro script, o editar manualmente. Usa la función <code>dpasta()</code> sobre un dataframe para hacer que los datos aparezcan como en texto directamente debajo de donde la ejecutaste. Por otro lado, <code>{clipr}</code> nos va a permitir copiar un dataframe desde R para poder pegarlo en programas como Excel.</p>
+      
+      
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/consejos"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            consejos</a>  <a href="http://localhost:5651/tags/datos"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            datos</a> </dd></em>
+        </dl>
+        
+        
+      
+      <footer class="w-100">
+        
+      
+      
+      
+      <div><div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">6/6/2025</div>
+      
+        <span>
+          
+
+
+
+
+<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
+<span id="ea669d6333618e7889d739ac1fac6415" title="visitas">
+</span>
+<script>
+    var r = new XMLHttpRequest();
+    r.addEventListener('load', function() {
+        document.getElementById('ea669d6333618e7889d739ac1fac6415').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
+    })
+    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/datapasta/".replace(/(\/)?$/, '')) + '.json')
+    r.send()
+</script>
+</span>
+
+        </span>
+      </div>
+      
+      
+    </footer>
+    </div>
+  </div>
+  
+
+  
+  
+</article>
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="../../../blog/quarto_params/" class="db">
+        <img src="http://localhost:5651/blog/quarto_params/quarto_params_2-featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="../../../blog/quarto_params/" class="db">Automatiza la generación de reportes creando documentos parametrizados con Quarto y R</a></h1>
+        
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;"><p>En este tutorial aprenderemos a crear 
+<a href="https://posit.co/blog/parameterized-quarto/" target="_blank" rel="noopener">reportes parametrizados</a> con Quarto. Un reporte parametrizado es un reporte diseñado para que el contenido, incluyendo textos, gráficos y más, cambien al modificar una variable en su encabezado. En este sentido, por <em>parámetro</em> nos referimos a un valor que podremos cambiar para alterar el resultado obtenido por un mismo reporte.</p>
+<p>De esta manera, podemos <strong>generar múltiples versiones de un mismo reporte simplemente cambiando el parámetro</strong>, por ejemplo, para diseñar un reporte con datos para un país, en base a un conjuntos de datos de múltiples países, y luego obtener múltiples versiones del mismo reporte pero para distintos países. O generar un reporte con datos de un año específico, y luego generar versiones del mismo reporte para distintos años.</p></p>
+      
+      
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/quarto"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            quarto</a>  <a href="http://localhost:5651/tags/loops"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            loops</a> </dd></em>
+        </dl>
+        
+        
+      
+      <footer class="w-100">
+        
+      
+      
+      
+      <div><div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">15/4/2025</div>
+      
+        <span>
+          
+
+
+
+
+<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
+<span id="5211889d89d3ea9a199b561bfff51db4" title="visitas">
+</span>
+<script>
+    var r = new XMLHttpRequest();
+    r.addEventListener('load', function() {
+        document.getElementById('5211889d89d3ea9a199b561bfff51db4').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
+    })
+    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/quarto_params/".replace(/(\/)?$/, '')) + '.json')
+    r.send()
+</script>
+</span>
+
+        </span>
+      </div>
+      
+      
+    </footer>
+    </div>
+  </div>
+  
+
+  
+  
+</article>
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="../../../blog/quarto_reportes/" class="db">
+        <img src="http://localhost:5651/blog/quarto_reportes/quarto_theme_cosmo-featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="../../../blog/quarto_reportes/" class="db">Tutorial: presenta los resultados de tus análisis de datos con R creando reportes y documentos Quarto</a></h1>
+        
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Quarto es una herramienta que te permite generar documentos y reportes de manera muy sencilla utilizando bloques de código de R. En estos reportes puedes incluir tablas, gráficos, y mucho más, de forma atractiva, para poder compartir tus análisis y resultados con otras personas. Aprender a generar documentos Quarto es una herramienta que puede llevar tus habilidades de análisis de datos al siguiente nivel!</p>
+      
+      
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/quarto"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            quarto</a> </dd></em>
+        </dl>
+        
+        
+      
+      <footer class="w-100">
+        
+      
+      
+      
+      <div><div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">14/4/2025</div>
+      
+        <span>
+          
+
+
+
+
+<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
+<span id="427d693daecaad2dbe36fc52cdd2b062" title="visitas">
+</span>
+<script>
+    var r = new XMLHttpRequest();
+    r.addEventListener('load', function() {
+        document.getElementById('427d693daecaad2dbe36fc52cdd2b062').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
+    })
+    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/quarto_reportes/".replace(/(\/)?$/, '')) + '.json')
+    r.send()
+</script>
+</span>
+
+        </span>
+      </div>
+      
+      
+    </footer>
+    </div>
+  </div>
+  
+
+  
+  
+</article>
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="../../../blog/2025-03-31/" class="db">
+        <img src="http://localhost:5651/blog/2025-03-31/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="../../../blog/2025-03-31/" class="db">Limpiar textos con símbolos, tildes o eñes en R</a></h1>
+        
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Amamos el castellano, con sus tildes y eñes, y nos encanta que R no tenga problemas para usar estos símbolos en cualquier parte del lenguaje. Pero hay veces en las que necesitamos deshacernos de estos símbolos especiales, como tildes, eñes, e incluso mayúsculas. En este post te muestro varias opciones de limpieza de texto con R.</p>
+      
+      
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/consejos"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            consejos</a>  <a href="http://localhost:5651/tags/texto"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            texto</a>  <a href="http://localhost:5651/tags/limpieza-de-datos"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            limpieza de datos</a> </dd></em>
+        </dl>
+        
+        
+      
+      <footer class="w-100">
+        
+      
+      
+      
+      <div><div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">31/3/2025</div>
+      
+        <span>
+          
+
+
+
+
+<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
+<span id="6177b7680b9b3e7de817227d06abfef2" title="visitas">
+</span>
+<script>
+    var r = new XMLHttpRequest();
+    r.addEventListener('load', function() {
+        document.getElementById('6177b7680b9b3e7de817227d06abfef2').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
+    })
+    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/2025-03-31/".replace(/(\/)?$/, '')) + '.json')
+    r.send()
+</script>
+</span>
+
+        </span>
+      </div>
+      
+      
+    </footer>
+    </div>
+  </div>
+  
+
+  
+  
+</article>
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
+      <a href="../../../blog/2025-03-30/" class="db">
+        <img src="http://localhost:5651/blog/2025-03-30/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+      </a>
+    </figure>
+    <div class="flex flex-column w-100 w-60-ns pl3-ns">
+      <header class="w-100">
+        <h1 class="f3 mv2 lh-title underline"><a href="../../../blog/2025-03-30/" class="db">Redactar una lista de palabras separadas por comas en R</a></h1>
+        
+        
+      </header>
+      
+      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Aprende a generar un texto que redacte un vector de palabras sueltas en una oración separada por comas y con el separador <em>y</em> al final; por ejemplo: ’uno, dos y tres’. Útil para escribir programáticamente títulos, subtítulos y textos para reportes.</p>
+      
+      
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/texto"
+          style="margin-right: 2px; 
+                 color: #EAD2FA; 
+                 font-style: normal;
+                 text-decoration: none;
+                 font-size: 9pt;
+                 white-space: nowrap;
+                 background-color: #9069C0; 
+                 border-radius: 3px; 
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+            texto</a> </dd></em>
+        </dl>
+        
+        
+      
+      <footer class="w-100">
+        
+      
+      
+      
+      <div><div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">30/3/2025</div>
+      
+        <span>
+          
+
+
+
+
+<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
+<span id="23e232662ae6649d3f8654e18b916c59" title="visitas">
+</span>
+<script>
+    var r = new XMLHttpRequest();
+    r.addEventListener('load', function() {
+        document.getElementById('23e232662ae6649d3f8654e18b916c59').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
+    })
+    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/2025-03-30/".replace(/(\/)?$/, '')) + '.json')
+    r.send()
+</script>
+</span>
+
+        </span>
+      </div>
+      
+      
+    </footer>
+    </div>
+  </div>
+  
+
+  
+  
+</article>
+      
+        
+                                   
+     
+     
+<article class="mv4 mv5-l bb">
+
+  
+  
+  
+  
+  
+  
+  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
+    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="../../../blog/tutorial_quarto_github_pages/" class="db">
-        <img src="http://localhost:3717/blog/tutorial_quarto_github_pages/afiche-featured.jpg" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+        <img src="http://localhost:5651/blog/tutorial_quarto_github_pages/afiche-featured.jpg" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
       </a>
     </figure>
     <div class="flex flex-column w-100 w-60-ns pl3-ns">
@@ -336,7 +1042,7 @@
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/quarto"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/quarto"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -347,7 +1053,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            quarto</a>  <a href="http://localhost:3717/tags/shiny"
+            quarto</a>  <a href="http://localhost:5651/tags/shiny"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -358,7 +1064,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            shiny</a>  <a href="http://localhost:3717/tags/git"
+            shiny</a>  <a href="http://localhost:5651/tags/git"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -369,7 +1075,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            git</a>  <a href="http://localhost:3717/tags/github"
+            git</a>  <a href="http://localhost:5651/tags/github"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -439,7 +1145,7 @@
   <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="../../../blog/r_introduccion/tutorial_visualizacion_ggplot/" class="db">
-        <img src="http://localhost:3717/blog/r_introduccion/tutorial_visualizacion_ggplot/ggplot2-featured.jpg" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+        <img src="http://localhost:5651/blog/r_introduccion/tutorial_visualizacion_ggplot/ggplot2-featured.jpg" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
       </a>
     </figure>
     <div class="flex flex-column w-100 w-60-ns pl3-ns">
@@ -457,7 +1163,7 @@
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/visualizaci%C3%B3n-de-datos"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/visualizaci%C3%B3n-de-datos"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -468,7 +1174,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            visualización de datos</a>  <a href="http://localhost:3717/tags/gr%C3%A1ficos"
+            visualización de datos</a>  <a href="http://localhost:5651/tags/gr%C3%A1ficos"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -479,7 +1185,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            gráficos</a>  <a href="http://localhost:3717/tags/ggplot2"
+            gráficos</a>  <a href="http://localhost:5651/tags/ggplot2"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -549,7 +1255,7 @@
   <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="../../../blog/patchwork/" class="db">
-        <img src="http://localhost:3717/blog/patchwork/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+        <img src="http://localhost:5651/blog/patchwork/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
       </a>
     </figure>
     <div class="flex flex-column w-100 w-60-ns pl3-ns">
@@ -565,7 +1271,7 @@
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/visualizaci%C3%B3n-de-datos"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/visualizaci%C3%B3n-de-datos"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -576,7 +1282,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            visualización de datos</a>  <a href="http://localhost:3717/tags/gr%C3%A1ficos"
+            visualización de datos</a>  <a href="http://localhost:5651/tags/gr%C3%A1ficos"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -587,7 +1293,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            gráficos</a>  <a href="http://localhost:3717/tags/ggplot2"
+            gráficos</a>  <a href="http://localhost:5651/tags/ggplot2"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -685,7 +1391,7 @@
   <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="../../../blog/colores/" class="db">
-        <img src="http://localhost:3717/blog/colores/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+        <img src="http://localhost:5651/blog/colores/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
       </a>
     </figure>
     <div class="flex flex-column w-100 w-60-ns pl3-ns">
@@ -701,7 +1407,7 @@
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/visualizaci%C3%B3n-de-datos"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/visualizaci%C3%B3n-de-datos"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -712,7 +1418,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            visualización de datos</a>  <a href="http://localhost:3717/tags/ggplot2"
+            visualización de datos</a>  <a href="http://localhost:5651/tags/ggplot2"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -782,7 +1488,7 @@
   <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="../../../blog/mapa_chile_horizontal/" class="db">
-        <img src="http://localhost:3717/blog/mapa_chile_horizontal/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+        <img src="http://localhost:5651/blog/mapa_chile_horizontal/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
       </a>
     </figure>
     <div class="flex flex-column w-100 w-60-ns pl3-ns">
@@ -798,7 +1504,7 @@
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/mapas"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/mapas"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -809,7 +1515,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            mapas</a>  <a href="http://localhost:3717/tags/visualizaci%C3%B3n-de-datos"
+            mapas</a>  <a href="http://localhost:5651/tags/visualizaci%C3%B3n-de-datos"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -820,7 +1526,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            visualización de datos</a>  <a href="http://localhost:3717/tags/chile"
+            visualización de datos</a>  <a href="http://localhost:5651/tags/chile"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -918,7 +1624,7 @@
   <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="../../../blog/simplificar_mapas/" class="db">
-        <img src="http://localhost:3717/blog/simplificar_mapas/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+        <img src="http://localhost:5651/blog/simplificar_mapas/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
       </a>
     </figure>
     <div class="flex flex-column w-100 w-60-ns pl3-ns">
@@ -934,7 +1640,7 @@
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/mapas"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/mapas"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -945,7 +1651,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            mapas</a>  <a href="http://localhost:3717/tags/visualizaci%C3%B3n-de-datos"
+            mapas</a>  <a href="http://localhost:5651/tags/visualizaci%C3%B3n-de-datos"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -1015,7 +1721,7 @@
   <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="../../../blog/genero_nombres_llm/" class="db">
-        <img src="http://localhost:3717/blog/genero_nombres_llm/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+        <img src="http://localhost:5651/blog/genero_nombres_llm/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
       </a>
     </figure>
     <div class="flex flex-column w-100 w-60-ns pl3-ns">
@@ -1031,7 +1737,7 @@
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/procesamiento-de-datos"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/procesamiento-de-datos"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -1042,7 +1748,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            procesamiento de datos</a>  <a href="http://localhost:3717/tags/inteligencia-artificial"
+            procesamiento de datos</a>  <a href="http://localhost:5651/tags/inteligencia-artificial"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -1053,7 +1759,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            inteligencia artificial</a>  <a href="http://localhost:3717/tags/an%C3%A1lisis-de-texto"
+            inteligencia artificial</a>  <a href="http://localhost:5651/tags/an%C3%A1lisis-de-texto"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -1064,7 +1770,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            análisis de texto</a>  <a href="http://localhost:3717/tags/g%C3%A9nero"
+            análisis de texto</a>  <a href="http://localhost:5651/tags/g%C3%A9nero"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -1134,7 +1840,7 @@
   <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
     <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
       <a href="../../../blog/tutorial_shinymanager/" class="db">
-        <img src="http://localhost:3717/blog/tutorial_shinymanager/shinymanager_2-featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
+        <img src="http://localhost:5651/blog/tutorial_shinymanager/shinymanager_2-featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
       </a>
     </figure>
     <div class="flex flex-column w-100 w-60-ns pl3-ns">
@@ -1152,7 +1858,7 @@
         
         
         <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/shiny"
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/shiny"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -1163,7 +1869,7 @@
                  border-radius: 3px; 
                  padding: 2px 6px;
                  padding-top: 3px;">
-            shiny</a>  <a href="http://localhost:3717/tags/aplicaciones"
+            shiny</a>  <a href="http://localhost:5651/tags/aplicaciones"
           style="margin-right: 2px; 
                  color: #EAD2FA; 
                  font-style: normal;
@@ -1218,822 +1924,6 @@
   
 </article>
       
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  
-  
-  
-  
-  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
-    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
-      <a href="../../../blog/r_introduccion/dplyr_intro/" class="db">
-        <img src="http://localhost:3717/blog/r_introduccion/sidebar-featured.jpg" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
-      </a>
-    </figure>
-    <div class="flex flex-column w-100 w-60-ns pl3-ns">
-      <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="../../../blog/r_introduccion/dplyr_intro/" class="db">Introducción al manejo de datos con {dplyr}</a></h1>
-        
-        
-        <h2 class="f5"><i class="fas fa-stream fa-fw pr1"></i><small class="f5 ttu tracked">Series: </small><a class="link i dim" href="../../../blog/r_introduccion/">Introducción a R</a></h2>
-        
-      </header>
-      
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Luego de haber aprendido las funcionalidades básicas del lenguaje y R, y habernos familiarizado con herramientas un poco más avanzadas de la programación en este lenguaje, ahora podemos aplicar estos aprendizajes a los datos. Aprenderemos a explorar, comprender, y navegar tablas de datos, tanto en la forma nativa de trabajar con R, como con la ayuda del paquete {dplyr}.</p>
-      
-      
-        
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/dplyr"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            dplyr</a>  <a href="http://localhost:3717/tags/datos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            datos</a>  <a href="http://localhost:3717/tags/b%C3%A1sico"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            básico</a> </dd></em>
-        </dl>
-        
-        
-      
-      <footer class="w-100">
-        
-      
-      
-      
-      <div><div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">15/2/2025</div>
-      
-        <span>
-          
-
-
-
-
-<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
-<span id="50fc803e2794ca92d41032b53d8bb6e1" title="visitas">
-</span>
-<script>
-    var r = new XMLHttpRequest();
-    r.addEventListener('load', function() {
-        document.getElementById('50fc803e2794ca92d41032b53d8bb6e1').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
-    })
-    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/r_introduccion/dplyr_intro/".replace(/(\/)?$/, '')) + '.json')
-    r.send()
-</script>
-</span>
-
-        </span>
-      </div>
-      
-      
-    </footer>
-    </div>
-  </div>
-  
-
-  
-  
-</article>
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  
-  
-  
-  
-  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
-    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
-      <a href="../../../blog/2025-02-14/" class="db">
-        <img src="http://localhost:3717/blog/2025-02-14/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
-      </a>
-    </figure>
-    <div class="flex flex-column w-100 w-60-ns pl3-ns">
-      <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="../../../blog/2025-02-14/" class="db">Rellenar datos perdidos usando datos de otra tabla</a></h1>
-        
-        
-      </header>
-      
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">¿Te ha pasado que tienes una tabla con datos perdidos, y otra tabla con una columna que coincide con la primera tabla, que además cuenta con datos que quieres usar para rellenar las observaciones perdidas? Antes pensaba que esto se resolvía con <code>left_join()</code> y algún ajuste para reemplazar los perdidos con los datos anexados. Pero ayer conocí una función que resuelve este problema de inmediato: <code>rows_update()</code>!</p>
-      
-      
-        
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/dplyr"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            dplyr</a>  <a href="http://localhost:3717/tags/limpieza-de-datos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            limpieza de datos</a>  <a href="http://localhost:3717/tags/datos-perdidos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            datos perdidos</a> </dd></em>
-        </dl>
-        
-        
-      
-      <footer class="w-100">
-        
-      
-      
-      
-      <div><div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">14/2/2025</div>
-      
-        <span>
-          
-
-
-
-
-<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
-<span id="471b618f1882ae6406b5aa1852bc32dd" title="visitas">
-</span>
-<script>
-    var r = new XMLHttpRequest();
-    r.addEventListener('load', function() {
-        document.getElementById('471b618f1882ae6406b5aa1852bc32dd').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
-    })
-    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/2025-02-14/".replace(/(\/)?$/, '')) + '.json')
-    r.send()
-</script>
-</span>
-
-        </span>
-      </div>
-      
-      
-    </footer>
-    </div>
-  </div>
-  
-
-  
-  
-</article>
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  
-  
-  
-  
-  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
-    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
-      <a href="../../../blog/r_introduccion/r_intermedio/" class="db">
-        <img src="http://localhost:3717/blog/r_introduccion/sidebar-featured.jpg" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
-      </a>
-    </figure>
-    <div class="flex flex-column w-100 w-60-ns pl3-ns">
-      <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="../../../blog/r_introduccion/r_intermedio/" class="db">Herramientas básicas para programar con R</a></h1>
-        
-        
-        <h2 class="f5"><i class="fas fa-stream fa-fw pr1"></i><small class="f5 ttu tracked">Series: </small><a class="link i dim" href="../../../blog/r_introduccion/">Introducción a R</a></h2>
-        
-      </header>
-      
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">En guía aprenderemos herramientas de programación poderosas que flexibilizarán mucho nuestras capacidades de análisis de datos, abriendo infinitas posibilidades. Con ellas, podremos crear nuevas herramientas que nos permitan hacer lo que necesitamos (funciones), condicionar lo que queremos que ocurra en nuestros procesos (controlar el flujo), y realizar operaciones repetidamente (iteraciones o loops).</p>
-      
-      
-        
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/b%C3%A1sico"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            básico</a>  <a href="http://localhost:3717/tags/funciones"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            funciones</a>  <a href="http://localhost:3717/tags/control-de-flujo"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            control de flujo</a>  <a href="http://localhost:3717/tags/loops"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            loops</a>  <a href="http://localhost:3717/tags/programaci%C3%B3n"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            programación</a> </dd></em>
-        </dl>
-        
-        
-      
-      <footer class="w-100">
-        
-      
-      
-      
-      <div><div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">14/2/2025</div>
-      
-        <span>
-          
-
-
-
-
-<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
-<span id="59b1b7a92d8b1dbb7211f2589df94de9" title="visitas">
-</span>
-<script>
-    var r = new XMLHttpRequest();
-    r.addEventListener('load', function() {
-        document.getElementById('59b1b7a92d8b1dbb7211f2589df94de9').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
-    })
-    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/r_introduccion/r_intermedio/".replace(/(\/)?$/, '')) + '.json')
-    r.send()
-</script>
-</span>
-
-        </span>
-      </div>
-      
-      
-    </footer>
-    </div>
-  </div>
-  
-
-  
-  
-</article>
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  
-  
-  
-  
-  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
-    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
-      <a href="../../../blog/2025-02-12/" class="db">
-        <img src="http://localhost:3717/blog/2025-02-12/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
-      </a>
-    </figure>
-    <div class="flex flex-column w-100 w-60-ns pl3-ns">
-      <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="../../../blog/2025-02-12/" class="db">Cargar archivos csv más rápido en R con Arrow</a></h1>
-        
-        
-      </header>
-      
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;"><p>Los archivos <code>csv</code> (<em>comma-separated values,</em> valores separados por comas) suelen ser el formato más básico para guardar datos. Los beneficios que tienen los csv con respecto a compatibilidad y accesibilidad son a su vez la causa de sus desventajas: son más pesados porque sus datos no se guardan comprimidos, y suelen ser <strong>más lentos de cargar</strong>, porque los datos no vienen codificados de una forma optimizada.</p>
-<p>Sin embargo, usualmente grandes bases de datos son guardadas en archivos csv, con varios millones de filas, lo que puede hacer que la carga de un archivo dure entre varios segundos a <strong>minutos</strong>.</p></p>
-      
-      
-        
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/consejos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            consejos</a>  <a href="http://localhost:3717/tags/datos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            datos</a>  <a href="http://localhost:3717/tags/optimizaci%C3%B3n"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            optimización</a> </dd></em>
-        </dl>
-        
-        
-      
-      <footer class="w-100">
-        
-      
-      
-      
-      <div><div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">12/2/2025</div>
-      
-        <span>
-          
-
-
-
-
-<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
-<span id="dd285c0071e41fe926c7bb24fc353566" title="visitas">
-</span>
-<script>
-    var r = new XMLHttpRequest();
-    r.addEventListener('load', function() {
-        document.getElementById('dd285c0071e41fe926c7bb24fc353566').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
-    })
-    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/2025-02-12/".replace(/(\/)?$/, '')) + '.json')
-    r.send()
-</script>
-</span>
-
-        </span>
-      </div>
-      
-      
-    </footer>
-    </div>
-  </div>
-  
-
-  
-  
-</article>
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  
-  
-  
-  
-  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
-    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
-      <a href="../../../blog/datos_sociales/" class="db">
-        <img src="http://localhost:3717/blog/datos_sociales/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
-      </a>
-    </figure>
-    <div class="flex flex-column w-100 w-60-ns pl3-ns">
-      <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="../../../blog/datos_sociales/" class="db">Repositorio de datos sociales</a></h1>
-        
-        
-      </header>
-      
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;"><p>Acabo de 
-<a href="https://bastianolea.github.io/datos_sociales/" target="_blank" rel="noopener">publicar una nueva página</a> donde voy a estar recopilando todos los conjuntos de datos sociales con los que trabajo o he trabajado.</p>
-<p>La idea de esta página es poder compartir fácilmente datos sociales sobre Chile que vienen limpios y procesados, para facilitar el trabajo de otras personas, y también ayudarles a aprender análisis de datos.</p>
-<p>Se trata de una tabla que se genera automáticamente, la cual contiene una lista de repositorios enfocados en datos sociales, con clasificación según la temática del dato, y varias columnas que indican las características del conjunto de datos, como si es que el dato contiene variables de género, si está desagregado a nivel comunal, si existe una aplicación de visualización de datos asociada, la temporalidad (anual/mensual/semanal) de las observaciones, y más.</p></p>
-      
-      
-        
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/blog"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            blog</a>  <a href="http://localhost:3717/tags/datos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            datos</a>  <a href="http://localhost:3717/tags/tablas"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            tablas</a>  <a href="http://localhost:3717/tags/quarto"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            quarto</a>  <a href="http://localhost:3717/tags/chile"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            Chile</a> </dd></em>
-        </dl>
-        
-        
-      
-      <footer class="w-100">
-        
-      
-      
-      
-      <div><div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">9/2/2025</div>
-      
-        <span>
-          
-
-
-
-
-<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
-<span id="2aa7389b74118c3c8b4930a6598e8dd0" title="visitas">
-</span>
-<script>
-    var r = new XMLHttpRequest();
-    r.addEventListener('load', function() {
-        document.getElementById('2aa7389b74118c3c8b4930a6598e8dd0').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
-    })
-    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/datos_sociales/".replace(/(\/)?$/, '')) + '.json')
-    r.send()
-</script>
-</span>
-
-        </span>
-      </div>
-      
-      
-        <p class="db pt1">
-        
-
-<div style="margin-top:-24px;">
-
-    
-    
-    
-      
-    
-    
-    
-    
-    
-      
-      
-    
-  <a class="btn-links mr2 ba dib" 
-  style = "background-color: #9069C0; border-radius: 4px; 
-  color: #EAD2FA; font-size: 10pt;
-  padding-top: 9px; padding-bottom: 6px; padding-left: 9px; padding-right: 10px; 
-  margin-right: 1px; margin-top: 6px; margin-bottom: 0px;"
-  href="https://bastianolea.github.io/datos_sociales/" target="_blank" rel="noopener"><i class="fas fa-link fa-lg fa-fw mr2"></i>datos sociales</a>
-
-</div>
-
-        </p>
-      
-    </footer>
-    </div>
-  </div>
-  
-
-  
-  
-</article>
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  
-  
-  
-  
-  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
-    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
-      <a href="../../../blog/resumir_texto_llm/" class="db">
-        <img src="http://localhost:3717/blog/resumir_texto_llm/featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
-      </a>
-    </figure>
-    <div class="flex flex-column w-100 w-60-ns pl3-ns">
-      <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="../../../blog/resumir_texto_llm/" class="db">Resumir textos usando modelos de lenguaje (LLM) locales en R</a></h1>
-        
-        
-      </header>
-      
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">Los modelos de lenguaje (LLM) son herramientas muy útiles para analizar texto, y usarlos en tus análisis de datos con R es sencillo. En este tutorial, te enseño a utilizar modelos de lenguaje locales, instalados en tu propio computador, para obtener resúmenes de textos.</p>
-      
-      
-        
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/an%C3%A1lisis-de-texto"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            análisis de texto</a>  <a href="http://localhost:3717/tags/inteligencia-artificial"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            inteligencia artificial</a> </dd></em>
-        </dl>
-        
-        
-      
-      <footer class="w-100">
-        
-      
-      
-      
-      <div><div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">8/2/2025</div>
-      
-        <span>
-          
-
-
-
-
-<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
-<span id="d465a28240686abec5948d37155ebe94" title="visitas">
-</span>
-<script>
-    var r = new XMLHttpRequest();
-    r.addEventListener('load', function() {
-        document.getElementById('d465a28240686abec5948d37155ebe94').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
-    })
-    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/resumir_texto_llm/".replace(/(\/)?$/, '')) + '.json')
-    r.send()
-</script>
-</span>
-
-        </span>
-      </div>
-      
-      
-    </footer>
-    </div>
-  </div>
-  
-
-  
-  
-</article>
-      
-        
-                                   
-     
-     
-<article class="mv4 mv5-l bb">
-
-  
-  
-  
-  
-  
-  
-  <div class="flex flex-column mb4 mb5-l  flex-row-reverse-ns">
-    <figure class="ml4-ns ma0 mb2 mb0-l w-100 w-40-ns">
-      <a href="../../../blog/r_introduccion/tutorial_github/" class="db">
-        <img src="http://localhost:3717/blog/r_introduccion/tutorial_github/titulo_github-featured.png" class="db ma0 dim" alt="" style = "border-radius: 4px; margin-top: 18px;">
-      </a>
-    </figure>
-    <div class="flex flex-column w-100 w-60-ns pl3-ns">
-      <header class="w-100">
-        <h1 class="f3 mv2 lh-title underline"><a href="../../../blog/r_introduccion/tutorial_github/" class="db">Tutorial: crear un repositorio Git para tu proyecto de R y comparte tu código en GitHub</a></h1>
-        
-        
-        <h2 class="f5"><i class="fas fa-stream fa-fw pr1"></i><small class="f5 ttu tracked">Series: </small><a class="link i dim" href="../../../blog/r_introduccion/">Introducción a R</a></h2>
-        
-      </header>
-      
-      <p class="f6 lh-copy mv2 flex-auto" style ="margin-bottom: -2px;">En este tutorial se entregan los pasos para empezar a usar Git con tus proyectos de R. Git te permite llevar un registro de las versiones y un control de cambios en tu código, mientras que GitHub te permite subir tus repositorios a un servicio online, en el cual puedes compartir tu código con otras personas, descargar el código de otros, y colaborar en un mismo proyecto.</p>
-      
-      
-        
-        
-        <dl class="f6 lh-copy">
-          <em><dd class="fw5 ml0"> <a href="http://localhost:3717/tags/git"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            Git</a>  <a href="http://localhost:3717/tags/consejos"
-          style="margin-right: 2px; 
-                 color: #EAD2FA; 
-                 font-style: normal;
-                 text-decoration: none;
-                 font-size: 9pt;
-                 white-space: nowrap;
-                 background-color: #9069C0; 
-                 border-radius: 3px; 
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-            Consejos</a> </dd></em>
-        </dl>
-        
-        
-      
-      <footer class="w-100">
-        
-      
-      
-      
-      <div><div class="f7 db mv1" style="display:inline-block; margin-bottom:0;">7/2/2025</div>
-      
-        <span>
-          
-
-
-
-
-<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
-<span id="a589ee7db91617ba0a97ed3d01ce4019" title="visitas">
-</span>
-<script>
-    var r = new XMLHttpRequest();
-    r.addEventListener('load', function() {
-        document.getElementById('a589ee7db91617ba0a97ed3d01ce4019').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
-    })
-    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/r_introduccion/tutorial_github/".replace(/(\/)?$/, '')) + '.json')
-    r.send()
-</script>
-</span>
-
-        </span>
-      </div>
-      
-      
-    </footer>
-    </div>
-  </div>
-  
-
-  
-  
-</article>
-      
     
 
 
@@ -2046,7 +1936,7 @@
     
     </li>
     <li class="dtc w-50 v-mid">
-      <span class="page_number fw6 f7 ttu tracked">7 of 11</span>
+      <span class="page_number fw6 f7 ttu tracked">7 of 12</span>
     </li>
     <li class="dtc w-25 tr v-mid">
     
@@ -2106,10 +1996,10 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/chile/">Chile</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/chile/">Chile</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
-    opacity: 40%;">41 posts</span>
+    opacity: 40%;">42 posts</span>
   </div>
  
   
@@ -2121,7 +2011,22 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/datos/">Datos</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/datos/">Datos</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">30 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/consejos/">Consejos</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
     opacity: 40%;">28 posts</span>
@@ -2136,7 +2041,7 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
     opacity: 40%;">27 posts</span>
@@ -2151,10 +2056,10 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/consejos/">Consejos</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/gr%C3%A1ficos/">Gráficos</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
-    opacity: 40%;">26 posts</span>
+    opacity: 40%;">24 posts</span>
   </div>
  
   
@@ -2166,22 +2071,7 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/gr%C3%A1ficos/">Gráficos</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">23 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/blog/">Blog</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/blog/">Blog</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
     opacity: 40%;">21 posts</span>
@@ -2196,7 +2086,7 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/ggplot2/">Ggplot2</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/ggplot2/">Ggplot2</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
     opacity: 40%;">20 posts</span>
@@ -2211,7 +2101,7 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/shiny/">Shiny</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/apps/">Apps</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
     opacity: 40%;">19 posts</span>
@@ -2226,10 +2116,10 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/apps/">Apps</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/shiny/">Shiny</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
-    opacity: 40%;">18 posts</span>
+    opacity: 40%;">19 posts</span>
   </div>
  
   
@@ -2241,7 +2131,7 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/web-scraping/">Web scraping</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/web-scraping/">Web scraping</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
     opacity: 40%;">17 posts</span>
@@ -2256,7 +2146,7 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/b%C3%A1sico/">Básico</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/b%C3%A1sico/">Básico</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
     opacity: 40%;">16 posts</span>
@@ -2271,7 +2161,7 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/mapas/">Mapas</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/limpieza-de-datos/">Limpieza de datos</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
     opacity: 40%;">15 posts</span>
@@ -2286,10 +2176,10 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/mapas/">Mapas</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
-    opacity: 40%;">14 posts</span>
+    opacity: 40%;">15 posts</span>
   </div>
  
   
@@ -2301,7 +2191,7 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
     opacity: 40%;">13 posts</span>
@@ -2316,7 +2206,7 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/curiosidades/">Curiosidades</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/curiosidades/">Curiosidades</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
     opacity: 40%;">13 posts</span>
@@ -2331,7 +2221,22 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/dplyr/">Dplyr</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+    <span style = "font-weight: normal; 
+    font-size: 9pt;
+    opacity: 40%;">13 posts</span>
+  </div>
+ 
+  
+  <div style="margin-bottom: 8px;">
+    <span style = "margin-right: 2px; 
+                 font-style: normal;
+                 font-size: 9pt;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/dplyr/">Dplyr</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
     opacity: 40%;">11 posts</span>
@@ -2346,7 +2251,7 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/quarto/">Quarto</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/quarto/">Quarto</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
     opacity: 40%;">11 posts</span>
@@ -2361,7 +2266,7 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/optimizaci%C3%B3n/">Optimización</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
     opacity: 40%;">10 posts</span>
@@ -2376,25 +2281,10 @@
                  border-radius: 3px;
                  padding: 2px 6px;
                  padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/ciencias-sociales/">Ciencias sociales</a></span>
+    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:5651/tags/ciencias-sociales/">Ciencias sociales</a></span>
     <span style = "font-weight: normal; 
     font-size: 9pt;
     opacity: 40%;">10 posts</span>
-  </div>
- 
-  
-  <div style="margin-bottom: 8px;">
-    <span style = "margin-right: 2px; 
-                 font-style: normal;
-                 font-size: 9pt;
-                 background-color: #9069C0; 
-                 border-radius: 3px;
-                 padding: 2px 6px;
-                 padding-top: 3px;">
-    <a style="color: #EAD1FA !important; text-decoration: none;" href="http://localhost:3717/tags/loops/">Loops</a></span>
-    <span style = "font-weight: normal; 
-    font-size: 9pt;
-    opacity: 40%;">9 posts</span>
   </div>
 
 <a href="../../../tags/" style="font-size: 9pt; margin-left:2px;">Ver todos los temas</a>

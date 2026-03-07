@@ -20,10 +20,10 @@ blogdown::new_post(title = "Renombrar muchos archivos desde R",
 )
 
 # crear un post tutorial
-blogdown::new_post(title = "Gráficos de variación o _dumbbell_ en `{ggplot2}`", 
-                   file = "blog/ggplot_variacion/index.md",
+blogdown::new_post(title = "Extracción de datos estructurados desde texto usando IA", 
+                   file = "blog/datos_estructurados_llm/index.qmd",
                    author = "Bastián Olea Herrera",
-                   tags = c("visualización de datos", "ggplot2", "gráficos"),
+                   tags = c("inteligencia artificial", "texto", "datos"),
                    categories = c("Tutoriales") 
 )
 

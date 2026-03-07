@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="es-ES" dir="ltr"><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=5651&amp;path=livereload" data-no-instant defer></script>
+  
+                           
+     
+
+
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="generator" content="Hugo 0.152.2">
+<title>Renombrar archivos desde R | Bastián Olea</title>
+
+
+<meta property="twitter:site" content="@bastimapache">
+<meta property="twitter:creator" content="@bastimapache">
+
+
+
+
+
+
+
+  
+    
+  
+<meta name="description" content="Una tarea común en al trabajar con datos (y también en la computación en general) es necesitar renombrar muchos archivos. Podemos usar R para automatizar este tipo de tareas repetitivas; un ejemplo de que R no es sólo un lenguaje para análisis de datos.">
+
+
+<meta property="og:site_name" content="Bastián Olea">
+<meta property="og:title" content="Renombrar archivos desde R | Bastián Olea">
+<meta property="og:description" content="Una tarea común en al trabajar con datos (y también en la computación en general) es necesitar renombrar muchos archivos. Podemos usar R para automatizar este tipo de tareas repetitivas; un ejemplo de que R no es sólo un lenguaje para análisis de datos." />
+<meta property="og:type" content="page" />
+<meta property="og:url" content="http://localhost:5651/blog/2026-02-25/" />
+<meta property="og:locale" content="es-ES">
+
+
+
+
+    
+        <meta property="og:image" content="http://localhost:5651/blog/sidebar-listing.jpg" >
+        <meta property="twitter:card" content="summary_large_image">
+        <meta name="twitter:image" content="http://localhost:5651/blog/sidebar-listing.jpg" >
+    
+    
+  
+  <meta itemprop="name" content="Renombrar archivos desde R">
+  <meta itemprop="description" content="Una tarea común en al trabajar con datos (y también en la computación en general) es necesitar renombrar muchos archivos. R puede ayudarnos a realizar este tipo de tareas repetitivas, dado que, además de ser un lenguaje centrado en el análisis de datos, R también puede usarse para cualquier otro propósito!
+Inspeccionar directorios y archivos con R Hagamos como que tenemos una carpeta llena de archivos (pueden ser imágenes, documentos PDF, u otros documentos), en este caso la carpeta se llama reportes y dentro tiene 10 documentos PDF.">
+  <meta itemprop="datePublished" content="2026-02-25T00:00:00+00:00">
+  <meta itemprop="dateModified" content="2026-02-25T00:00:00+00:00">
+  <meta itemprop="wordCount" content="1497">
+  <meta itemprop="keywords" content="Automatización,Texto,Limpieza de datos">
+  
+  <!--[if IE]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <link rel="shortcut icon" href="false" type="image/x-icon">
+  <link rel="icon" href="false" type="image/x-icon">
+  
+  
+  <link rel="stylesheet" href="../../style.main.min.8f721815d150079638fe25bf9714e71c67b8ddf7e9435d32764c3175c3e06556.css" integrity="sha256-j3IYFdFQB5Y4/iW/lxTnHGe43ffpQ10ydkwxdcPgZVY=" media="screen">
+  
+  
+  <script src="../../panelset.min.ed1ac24b6e16f4e2481e3d1d098ae66f5bc77438aef619e6e266d8ac5b00dc72.js" type="text/javascript"></script>
+  
+  
+  <script src="../../main.min.858230d8d39b17ec435a8cd8991902766cb7afe0621875ffe5fcdf376474ca6e.js" type="text/javascript"></script>
+  
+  
+  <link rel="stylesheet" href="../../css/syntax.css">
+  
+  
+  <link rel="preload" href="https://bastianoleah.shinyapps.io/buscador/" as="image">
+</head>
+<body>
+      <div class="grid-container single-sidebar">
+<header class="site-header pt4 pb2 mb4 bb b--transparent ph5 headroom z-max" role="banner">
+  <nav class="site-nav db dt-l w-100" role="navigation">
+    <a class="site-brand db dtc-l v-mid link no-underline w-100 w-33-l tc tl-l" href="http://localhost:5651/" title="Home">
+      <img src="../../img/logo.png" class="dib db-l h2 w-auto" alt="Bastián Olea">
+    </a>
+    <div class="site-links db dtc-l v-mid w-100 w-47-l tc tr-l mt3 mt0-l ttu tracked">
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 active" href="../../blog/" title="Bastián Olea: Blog de R">Blog</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/aprende_r/" title="Aprende R">Aprende R</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/shiny_apps/" title="Apps">Apps</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianolea.github.io/datos_sociales/" title="Datos">Datos</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../clases/" title="Clases">Clases</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../categories/tutoriales/" title="Tutoriales">Tutoriales</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../blog/r_introduccion/recursos_r/" title="Recursos">Enlaces</a>
+      
+        
+        
+        
+      <a class="link f6 f5-l dib pv1 ph2 " href="../../about/" title="Bastián Olea: Sobre mi">Yo</a>
+      
+      
+      
+      <div class="dib v-mid", style = "padding: 4px; margin-top: 4px;">
+        <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+      </div>
+      
+    </div>
+  </nav>
+</header>
+
+
+                       
+ 
+
+<main class="page-main pa4" role="main">
+  <section class="page-content mw7 center">
+    <article class="post-content pa0 pr3-l">
+      <header class="post-header" style="margin-top:-30px;">
+        <h1 class="f1 lh-solid measure-narrow mb3 fw4">Renombrar archivos desde R</h1>
+        
+        
+        
+        <div style = "display: inline-block;">  
+          <p class="f7 db mv0 ttu" style = "display: inline-block;">
+            25/2/2026</p>
+          
+          
+          <span>
+            
+
+
+
+
+<span style="font-size: 79%; opacity: 100%; margin-left: 6px;">
+<span id="6b635d35401bdd7a21d0a579ec82a08c" title="visitas">
+</span>
+<script>
+    var r = new XMLHttpRequest();
+    r.addEventListener('load', function() {
+        document.getElementById('6b635d35401bdd7a21d0a579ec82a08c').innerText = JSON.parse(this.responseText).count_unique + ' ' + 'visitas'
+    })
+    r.open('GET', "https://bastimapache.goatcounter.com/counter/" + encodeURIComponent("/blog/2026-02-25/".replace(/(\/)?$/, '')) + '.json')
+    r.send()
+</script>
+</span>
+
+          </span>
+        </div>
+          
+        
+        
+        
+        <dl class="f6 lh-copy">
+          <em><dd class="fw5 ml0"> <a href="http://localhost:5651/tags/automatizaci%C3%B3n"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            automatización</a>  <a href="http://localhost:5651/tags/texto"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            texto</a>  <a href="http://localhost:5651/tags/limpieza-de-datos"
+          style="margin-right: 2px; 
+                       color: #EAD2FA; 
+                       font-style: normal;
+                       text-decoration: none;
+                       font-size: 10pt;
+                       background-color: #9069C0; 
+                       border-radius: 3px; 
+                       padding: 2px 6px; ">
+            limpieza de datos</a> </dd></em>
+        </dl>
+         
+      
+        
+      
+      
+    </header>
+      
+      
+    <section class="post-body pt5 pb4">
+        <p>Una tarea común en al trabajar con datos (y también en la computación en general) es necesitar renombrar muchos archivos. R puede ayudarnos a realizar este tipo de tareas repetitivas, dado que, además de ser un lenguaje centrado en el análisis de datos, R también puede usarse para cualquier otro propósito!</p>
+
+
+
+
+<h2 id="inspeccionar-directorios-y-archivos-con-r">Inspeccionar directorios y archivos con R
+  <a href="#inspeccionar-directorios-y-archivos-con-r"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Hagamos como que tenemos una carpeta llena de archivos (pueden ser imágenes, documentos PDF, u otros documentos), en este caso la carpeta se llama <code>reportes</code> y dentro tiene 10 documentos PDF.</p>
+<p>Usamos el paquete <code>{fs}</code> para <strong>ver los archivos dentro de la carpeta</strong>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># install.packages(&#34;fs&#34;)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># rutas de archivos</span>
+</span></span><span class="line"><span class="cl"><span class="n">rutas</span> <span class="o">&lt;-</span> <span class="nf">dir_ls</span><span class="p">(</span><span class="s">&#34;reportes&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">rutas</span>
+</span></span></code></pre></div><pre><code>reportes/Reporte 2025 comuna Camarones.pdf
+reportes/Reporte 2025 comuna Camiña.pdf
+reportes/Reporte 2025 comuna Canela.pdf
+reportes/Reporte 2025 comuna Cañete.pdf
+reportes/Reporte 2025 comuna Carahue.pdf
+reportes/Reporte 2025 comuna Cartagena.pdf
+reportes/Reporte 2025 comuna Castro.pdf
+reportes/Reporte 2025 comuna Catemu.pdf
+reportes/Reporte 2025 comuna Cauquenes.pdf
+reportes/Reporte 2025 comuna Cerrillos.pdf
+</code></pre>
+<p>Obtenemos un vector con las <em>rutas</em> de los archivos, es decir, el lugar en nuestro computador donde se ubican los archivos<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<p>Estas rutas representan los archivos, y con ellas podemos hacer distintas operaciones.</p>
+<p>Veamos cómo podemos usar R para <strong>renombrar archivos</strong>:</p>
+
+
+
+
+<h2 id="cambiar-nombres">Cambiar nombres
+  <a href="#cambiar-nombres"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Para cambiar el nombre de un archivo, en realidad lo que hacemos es <strong>moverlo</strong> pero con un <strong>nombre distinto</strong>. Para eso usamos la función <code>file_move()</code>, que recibe como argumentos la ruta del archivo que queremos mover, y la ruta nueva, que sería el mismo lugar pero con un nombre distinto.</p>
+<p>Renombremos un sólo archivo desde R:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># mover un sólo archivo</span>
+</span></span><span class="line"><span class="cl"><span class="nf">file_move</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s">&#34;reportes/Reporte 2025 comuna Cartagena.pdf&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="n">new_path</span> <span class="o">=</span> <span class="s">&#34;reportes/reporte_camarones.pdf&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>Y revisemos el resultado:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">dir_ls</span><span class="p">(</span><span class="s">&#34;reportes&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>reportes/Reporte 2025 comuna Camarones.pdf
+reportes/Reporte 2025 comuna Camiña.pdf
+reportes/Reporte 2025 comuna Canela.pdf
+reportes/Reporte 2025 comuna Cañete.pdf
+reportes/Reporte 2025 comuna Carahue.pdf
+reportes/Reporte 2025 comuna Castro.pdf
+reportes/Reporte 2025 comuna Catemu.pdf
+reportes/Reporte 2025 comuna Cauquenes.pdf
+reportes/Reporte 2025 comuna Cerrillos.pdf
+reportes/reporte_camarones.pdf
+</code></pre>
+<p>Ahora, si queremos <strong>renombrar todos los archivos de la carpeta</strong>, podemos crear una tabla que tenga como primera variable los nombres de los archivos, y como segunda variable los nuevos nombres.</p>
+<p>Aquí nos servirá mucho el paquete <code>{stringr}</code> para manipulación de texto. Algunas 
+<a href="../../../blog/2025-03-31/">funciones útiles para limpieza de texto</a> son:</p>
+<ul>
+<li><code>str_replace()</code> para reemplazar partes del texto por otros textos</li>
+<li><code>str_remove()</code> para eliminar partes del texto</li>
+</ul>
+<p>Creemos una tabla con el vector de rutas usando la función <code>tibble()</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># crear tabla con las rutas</span>
+</span></span><span class="line"><span class="cl"><span class="n">archivos</span> <span class="o">&lt;-</span> <span class="nf">tibble</span><span class="p">(</span><span class="n">ruta</span> <span class="o">=</span> <span class="n">rutas</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">archivos</span>
+</span></span></code></pre></div><pre><code># A tibble: 10 × 1
+   ruta                                      
+   &lt;fs::path&gt;                                
+ 1 reportes/Reporte 2025 comuna Camarones.pdf
+ 2 reportes/Reporte 2025 comuna Camiña.pdf   
+ 3 reportes/Reporte 2025 comuna Canela.pdf   
+ 4 reportes/Reporte 2025 comuna Cañete.pdf   
+ 5 reportes/Reporte 2025 comuna Carahue.pdf  
+ 6 reportes/Reporte 2025 comuna Cartagena.pdf
+ 7 reportes/Reporte 2025 comuna Castro.pdf   
+ 8 reportes/Reporte 2025 comuna Catemu.pdf   
+ 9 reportes/Reporte 2025 comuna Cauquenes.pdf
+10 reportes/Reporte 2025 comuna Cerrillos.pdf
+</code></pre>
+<p>Ahora creemos una nueva columna con <code>mutate()</code> que tenga versiones modificadas de los nombres: cambiemos el texto <em>&ldquo;Reporte 2025&rdquo;</em> en el nombre de cada archivo por <em>&ldquo;Documento&rdquo;</em> y así creamos una nueva ruta:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">stringr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">archivos</span> <span class="o">&lt;-</span> <span class="n">archivos</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">ruta_nueva</span> <span class="o">=</span> <span class="nf">str_replace</span><span class="p">(</span><span class="n">ruta</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                  <span class="n">pattern</span> <span class="o">=</span> <span class="s">&#34;Reporte 2025&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                  <span class="n">replacement</span> <span class="o">=</span> <span class="s">&#34;Documento&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">archivos</span>
+</span></span></code></pre></div><pre><code># A tibble: 10 × 2
+   ruta                                       ruta_nueva                        
+   &lt;fs::path&gt;                                 &lt;chr&gt;                             
+ 1 reportes/Reporte 2025 comuna Camarones.pdf reportes/Documento comuna Camaron…
+ 2 reportes/Reporte 2025 comuna Camiña.pdf    reportes/Documento comuna Camiña.…
+ 3 reportes/Reporte 2025 comuna Canela.pdf    reportes/Documento comuna Canela.…
+ 4 reportes/Reporte 2025 comuna Cañete.pdf    reportes/Documento comuna Cañete.…
+ 5 reportes/Reporte 2025 comuna Carahue.pdf   reportes/Documento comuna Carahue…
+ 6 reportes/Reporte 2025 comuna Cartagena.pdf reportes/Documento comuna Cartage…
+ 7 reportes/Reporte 2025 comuna Castro.pdf    reportes/Documento comuna Castro.…
+ 8 reportes/Reporte 2025 comuna Catemu.pdf    reportes/Documento comuna Catemu.…
+ 9 reportes/Reporte 2025 comuna Cauquenes.pdf reportes/Documento comuna Cauquen…
+10 reportes/Reporte 2025 comuna Cerrillos.pdf reportes/Documento comuna Cerrill…
+</code></pre>
+<p>Entonces tenemos las rutas originales con las rutas nuevas.</p>
+<p>Sabemos que con <code>file_move()</code> podemos mover cada archivo a su nuevo nombre. Pero ahora tenemos una tabla con dos columnas, así que podemos <strong>mover todos los archivos al mismo tiempo!</strong></p>
+<p>Usaremos las <strong>columnas como vectores</strong> para aplicar la función a todos los archivos. En el primer argumento (<code>path</code>) insertamos la columna con las rutas originales (<code>archivos$ruta</code>), y en el segundo argumento (<code>new_path</code>) insertamos la columna con las rutas nuevas (<code>archivos$ruta_nueva</code>):</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># renombrar todos los archivos</span>
+</span></span><span class="line"><span class="cl"><span class="nf">file_move</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="n">archivos</span><span class="o">$</span><span class="n">ruta</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">          <span class="n">new_path</span> <span class="o">=</span> <span class="n">archivos</span><span class="o">$</span><span class="n">ruta_nueva</span><span class="p">)</span>
+</span></span></code></pre></div><p>Lo que hicimos fue <strong>vectorizar</strong> la función, haciendo que se aplique para todos los elementos de los vectores (ambos del mismo largo) que entregamos!</p>
+<p>Revisemos el cambio que hicimos:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">dir_ls</span><span class="p">(</span><span class="s">&#34;reportes&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>reportes/Documento comuna Camarones.pdf reportes/Documento comuna Camiña.pdf   
+reportes/Documento comuna Canela.pdf    reportes/Documento comuna Cañete.pdf   
+reportes/Documento comuna Carahue.pdf   reportes/Documento comuna Cartagena.pdf 
+reportes/Documento comuna Castro.pdf    reportes/Documento comuna Catemu.pdf    
+reportes/Documento comuna Cauquenes.pdf reportes/Documento comuna Cerrillos.pdf 
+</code></pre>
+<p>Funcionó!</p>
+
+
+
+
+<h2 id="eliminar-palabras-de-los-nombres">Eliminar palabras de los nombres
+  <a href="#eliminar-palabras-de-los-nombres"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Usamos la función <code>str_remove()</code> si queremos eliminar palabras, textos o patrones específicos de los nombres de archivos. Luego usamos <code>str_squish()</code> para eliminar todos los espacios repetidos que pueden qeudar por la eliminación de palabras:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># obtener rutas</span>
+</span></span><span class="line"><span class="cl"><span class="n">rutas</span> <span class="o">&lt;-</span> <span class="nf">dir_ls</span><span class="p">(</span><span class="s">&#34;reportes&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># crear tabla con las rutas</span>
+</span></span><span class="line"><span class="cl"><span class="n">archivos</span> <span class="o">&lt;-</span> <span class="nf">tibble</span><span class="p">(</span><span class="n">ruta</span> <span class="o">=</span> <span class="n">rutas</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">archivos</span> <span class="o">&lt;-</span> <span class="n">archivos</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">ruta_nueva</span> <span class="o">=</span> <span class="nf">str_remove</span><span class="p">(</span><span class="n">ruta</span><span class="p">,</span> <span class="n">pattern</span> <span class="o">=</span> <span class="s">&#34;comuna&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">         <span class="n">ruta_nueva</span> <span class="o">=</span> <span class="nf">str_squish</span><span class="p">(</span><span class="n">ruta_nueva</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">archivos</span>
+</span></span></code></pre></div><pre><code># A tibble: 10 × 2
+   ruta                                    ruta_nueva                      
+   &lt;fs::path&gt;                              &lt;chr&gt;                           
+ 1 reportes/Documento comuna Camarones.pdf reportes/Documento Camarones.pdf
+ 2 reportes/Documento comuna Camiña.pdf    reportes/Documento Camiña.pdf   
+ 3 reportes/Documento comuna Canela.pdf    reportes/Documento Canela.pdf   
+ 4 reportes/Documento comuna Cañete.pdf    reportes/Documento Cañete.pdf   
+ 5 reportes/Documento comuna Carahue.pdf   reportes/Documento Carahue.pdf  
+ 6 reportes/Documento comuna Cartagena.pdf reportes/Documento Cartagena.pdf
+ 7 reportes/Documento comuna Castro.pdf    reportes/Documento Castro.pdf   
+ 8 reportes/Documento comuna Catemu.pdf    reportes/Documento Catemu.pdf   
+ 9 reportes/Documento comuna Cauquenes.pdf reportes/Documento Cauquenes.pdf
+10 reportes/Documento comuna Cerrillos.pdf reportes/Documento Cerrillos.pdf
+</code></pre>
+<p>Y nuevamente aplicamos los cambios a los archivos:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># renombrar todos los archivos</span>
+</span></span><span class="line"><span class="cl"><span class="nf">file_move</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="n">archivos</span><span class="o">$</span><span class="n">ruta</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">          <span class="n">new_path</span> <span class="o">=</span> <span class="n">archivos</span><span class="o">$</span><span class="n">ruta_nueva</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># revisar cambios</span>
+</span></span><span class="line"><span class="cl"><span class="nf">dir_ls</span><span class="p">(</span><span class="s">&#34;reportes&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><pre><code>reportes/Documento Camarones.pdf reportes/Documento Camiña.pdf   
+reportes/Documento Canela.pdf    reportes/Documento Cañete.pdf   
+reportes/Documento Carahue.pdf   reportes/Documento Cartagena.pdf 
+reportes/Documento Castro.pdf    reportes/Documento Catemu.pdf    
+reportes/Documento Cauquenes.pdf reportes/Documento Cerrillos.pdf 
+</code></pre>
+
+
+
+
+<h2 id="limpiar-nombres">Limpiar nombres
+  <a href="#limpiar-nombres"><svg class="anchor-symbol" aria-hidden="true" height="26" width="26" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="currentColor"></path>
+      <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76.0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71.0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71.0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76.0 5-2.24 5-5s-2.24-5-5-5z"></path>
+    </svg></a>
+</h2>
+<p>Si trabajamos con archivos que van a subirse a internet o a algún servicio, se recomienda limpiar los nombres de archivos para evitar problemas de compatibilidad: evitar espacios, tildes, eñes, mayúsculas, etc.</p>
+<p>Podemos usar la función <code>make_clean_names()</code> del paquete <code>{janitor}</code> para limpiar los nombres de los archivos. Pero para hacerlo más ordenado, podemos sacar las rutas para trabajar solamente sobre los nombres de los archivos: luego de <code>dir_ls()</code> para obtener las rutas, usamos <code>path_file()</code> para quedarnos sólo con los nombres, y así no afectamos a las carpetas con la limpieza.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">fs</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># lista con nombres de archivos sin ruta</span>
+</span></span><span class="line"><span class="cl"><span class="n">ruta_archivos</span> <span class="o">&lt;-</span> <span class="s">&#34;reportes&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">nombres_archivos</span> <span class="o">&lt;-</span> <span class="nf">dir_ls</span><span class="p">(</span><span class="n">ruta_archivos</span><span class="p">)</span> <span class="o">|&gt;</span> <span class="nf">path_file</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">nombres_archivos</span>
+</span></span></code></pre></div><pre><code> [1] &quot;Documento Camarones.pdf&quot; &quot;Documento Camiña.pdf&quot;   
+ [3] &quot;Documento Canela.pdf&quot;    &quot;Documento Cañete.pdf&quot;   
+ [5] &quot;Documento Carahue.pdf&quot;   &quot;Documento Cartagena.pdf&quot;
+ [7] &quot;Documento Castro.pdf&quot;    &quot;Documento Catemu.pdf&quot;   
+ [9] &quot;Documento Cauquenes.pdf&quot; &quot;Documento Cerrillos.pdf&quot;
+</code></pre>
+<p>Luego, creamos la tabla con <code>tibble()</code>, y separamos el nombre del archivo de su extensión (<code>.pdf</code>, <code>.xlsx</code>, etc.) con <code>separate()</code>, para poder limpiar el nombre sin afectar la extensión. Luego usamos <code>make_clean_names()</code> del paquete <code>{janitor}</code> para limpiar los nombres:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">tidyr</span><span class="p">)</span> <span class="c1"># para separar columnas a partir de un separador</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span> <span class="c1"># para crear nuevas columnas</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">janitor</span><span class="p">)</span> <span class="c1"># para limpiar nombres</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">archivos</span> <span class="o">&lt;-</span> <span class="nf">tibble</span><span class="p">(</span><span class="n">archivo</span> <span class="o">=</span> <span class="n">nombres_archivos</span><span class="p">)</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># separar nombres de archivos de su extensión</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">separate</span><span class="p">(</span><span class="n">archivo</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;\\.&#34;</span><span class="p">,</span> <span class="n">into</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;nombre&#34;</span><span class="p">,</span> <span class="s">&#34;extension&#34;</span><span class="p">))</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># limpiar nombres</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">nombre_nuevo</span> <span class="o">=</span> <span class="n">janitor</span><span class="o">::</span><span class="nf">make_clean_names</span><span class="p">(</span><span class="n">nombre</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">archivos</span>
+</span></span></code></pre></div><pre><code># A tibble: 10 × 3
+   nombre              extension nombre_nuevo       
+   &lt;chr&gt;               &lt;chr&gt;     &lt;chr&gt;              
+ 1 Documento Camarones pdf       documento_camarones
+ 2 Documento Camiña    pdf       documento_camina   
+ 3 Documento Canela    pdf       documento_canela   
+ 4 Documento Cañete    pdf       documento_canete   
+ 5 Documento Carahue   pdf       documento_carahue  
+ 6 Documento Cartagena pdf       documento_cartagena
+ 7 Documento Castro    pdf       documento_castro   
+ 8 Documento Catemu    pdf       documento_catemu   
+ 9 Documento Cauquenes pdf       documento_cauquenes
+10 Documento Cerrillos pdf       documento_cerrillos
+</code></pre>
+<p>Nótese que las eñes se reemplazaron por enes, y las letras con tilde se cambiaron por sus versiones sin tilde.</p>
+<p>En la tabla podemos ver que separamos los nombres en distintas columnas. Ahora, usamos estas columnas para reconstruir las rutas originales y las nuevas rutas con los nombres limpios:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">archivos</span> <span class="o">&lt;-</span> <span class="n">archivos</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="c1"># reconstruir ruta original</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">ruta</span> <span class="o">=</span> <span class="nf">paste</span><span class="p">(</span><span class="n">ruta_archivos</span><span class="p">,</span> <span class="n">nombre</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;/&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">         <span class="n">ruta</span> <span class="o">=</span> <span class="nf">paste</span><span class="p">(</span><span class="n">ruta</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;.&#34;</span><span class="p">))</span> <span class="o">|&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># crear ruta nueva</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">mutate</span><span class="p">(</span><span class="n">ruta_nueva</span> <span class="o">=</span> <span class="nf">paste</span><span class="p">(</span><span class="n">ruta_archivos</span><span class="p">,</span> <span class="n">nombre_nuevo</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;/&#34;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">         <span class="n">ruta_nueva</span> <span class="o">=</span> <span class="nf">paste</span><span class="p">(</span><span class="n">ruta_nueva</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;.&#34;</span><span class="p">))</span> <span class="o">|&gt;</span> 
+</span></span><span class="line"><span class="cl">  <span class="c1"># ordenar</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">select</span><span class="p">(</span><span class="n">ruta</span><span class="p">,</span> <span class="n">ruta_nueva</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">archivos</span>
+</span></span></code></pre></div><pre><code># A tibble: 10 × 2
+   ruta                             ruta_nueva                      
+   &lt;chr&gt;                            &lt;chr&gt;                           
+ 1 reportes/Documento Camarones.pdf reportes/documento_camarones.pdf
+ 2 reportes/Documento Camiña.pdf    reportes/documento_camina.pdf   
+ 3 reportes/Documento Canela.pdf    reportes/documento_canela.pdf   
+ 4 reportes/Documento Cañete.pdf    reportes/documento_canete.pdf   
+ 5 reportes/Documento Carahue.pdf   reportes/documento_carahue.pdf  
+ 6 reportes/Documento Cartagena.pdf reportes/documento_cartagena.pdf
+ 7 reportes/Documento Castro.pdf    reportes/documento_castro.pdf   
+ 8 reportes/Documento Catemu.pdf    reportes/documento_catemu.pdf   
+ 9 reportes/Documento Cauquenes.pdf reportes/documento_cauquenes.pdf
+10 reportes/Documento Cerrillos.pdf reportes/documento_cerrillos.pdf
+</code></pre>
+<p>Renombramos todos los archivos usando las columnas de la tabla:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># renombrar todos los archivos</span>
+</span></span><span class="line"><span class="cl"><span class="nf">file_move</span><span class="p">(</span><span class="n">archivos</span><span class="o">$</span><span class="n">ruta</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">          <span class="n">archivos</span><span class="o">$</span><span class="n">ruta_nueva</span><span class="p">)</span>
+</span></span></code></pre></div><p>Claramente, todo lo anterior se puede hacer sin pasos intermedios, pero lo puse en varios pasos por motivos pedagógicos.</p>
+<p>Así, podemos usar R para renombrar cientos o miles de archivos. Podemos usar este código básico para hacer cosas mucho más complejas, como cargar cada archivo y poner en su nombre algo relacionado a sus datos, crear nombres condicionales, navegar estructuras de directorios y organizar los archivos por carpetas, y más. Pero eso queda para otro tutorial! Si te interesa hacer alguna de estas cosas o algo similar, 
+<a href="../../../contacto/">escríbeme para motivarme a escribir otro post</a> ☺️</p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>Considera que las rutas dependen del lugar desde donde se ejecute R: 
+<a href="https://bastianolea.rbind.io/blog/r_introduccion/proyectos/" target="_blank" rel="noopener">recuerda usar Proyectos!</a> para tener control y orden sobre dónde está trabajando R!&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+ 
+    </section>
+      
+    <footer class="post-footer">
+        <div class="post-pagination dt w-100 mt4 mb2">
+  
+  
+    <a class="prev dtc pr2 tl v-top fw6"
+    href="http://localhost:5651/blog/ellmer/">&larr; Interactúa con modelos de lenguaje (LLM) y chatea con IAs en R</a>
+  
+  
+  
+    <a class="next dtc pl2 tr v-top fw6"
+    href="http://localhost:5651/blog/app_suicidios_genero/">App: Suicidios en Chile (2017-2024) desde una perspectiva de género &rarr;</a>
+  
+</div>
+
+    </footer>
+    
+  </article>
+    
+    <div class="post-comments pa0 pa4-l mt4">
+  
+    
+      <script src="https://utteranc.es/client.js"
+              repo="bastianolea/blog-bastianolea-r"
+              issue-term="pathname"
+              theme="github-light"
+              label="comments"
+              crossorigin="anonymous"
+              async
+              type="text/javascript">
+      </script>
+    
+  
+</div>
+
+    
+</section>
+  
+
+<section class="post-body pt5 pb4">
+  
+  <details closed class="f6 fw7 input-reset">
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Fecha de publicación:</dt>
+    <dd class="fw5 ml0">February 25, 2026</dd>
+  </dl>
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Extensión:</dt>
+    <dd class="fw5 ml0">8 minute read, 1497 words</dd>
+  </dl>
+  
+  
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Tags:</dt>
+    <dd class="fw5 ml0"> <a href="http://localhost:5651/tags/automatizaci%C3%B3n">automatización</a>  <a href="http://localhost:5651/tags/texto">texto</a>  <a href="http://localhost:5651/tags/limpieza-de-datos">limpieza de datos</a> </dd>
+  </dl>
+  
+  <dl class="f6 lh-copy">
+    <dt class="fw7">Ver también:</dt>
+    
+    <dd class="fw5 ml0"><a href="../../blog/datos_estructurados_llm/">Extracción de datos estructurados desde texto usando IA</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/redactar_texto_llm/">Redactar textos basados en datos usando IA desde R</a></dd>
+    
+    <dd class="fw5 ml0"><a href="../../blog/redactar_texto/">Redactar textos basados en datos automáticamente con R: describiendo resultados del censo de población</a></dd>
+    
+  </dl>
+</details>
+
+</section>
+</main>
+
+
+<aside class="page-sidebar" role="complementary">
+   
+   
+
+  <div class="blog-info ph4 pt4 pb4 pb0-l">
+    
+
+  <h1 class="f3">Blog</h1>
+  <p class="f6 lh-copy measure">Tutoriales, reseñas y consejos sobre R para análisis de datos. Usa el 
+<a href="https://bastianoleah.shinyapps.io/buscador/" target="_blank" rel="noopener">buscador</a> para encontrar publicaciones o navega los 
+<a href="../../tags/">temas</a>.</p>
+  
+
+   
+<h3 style="margin-bottom: 12px;">Temas:</h3>
+
+<div style="font-size:90%;">
+
+<div style="font-size: 90%;">
+  
+   
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/chile/">Chile</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/datos/">Datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/consejos/">Consejos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/visualizaci%C3%B3n-de-datos/">Visualización de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/gr%C3%A1ficos/">Gráficos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/blog/">Blog</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/ggplot2/">Ggplot2</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/apps/">Apps</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/shiny/">Shiny</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/web-scraping/">Web scraping</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/b%C3%A1sico/">Básico</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/mapas/">Mapas</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/limpieza-de-datos/">Limpieza de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/procesamiento-de-datos/">Procesamiento de datos</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/curiosidades/">Curiosidades</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/inteligencia-artificial/">Inteligencia artificial</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/quarto/">Quarto</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/dplyr/">Dplyr</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/automatizaci%C3%B3n/">Automatización</a></span>
+  </span>
+ 
+  
+  <span style="margin-bottom: 10px; line-height: 1.1;">
+    <span style="margin: 3px; margin-left: 1px; margin-right: 1px; 
+                 word-break: none;
+                 display: inline-block; 
+                 white-space: nowrap;
+                 font-style: normal;
+                 background-color: #9069C0; 
+                 border-radius: 3px;
+                 padding: 2px 6px;
+                 padding-top: 3px;">
+    <a style="color: #EAD1FA !important; text-decoration: none;" 
+      href="http://localhost:5651/tags/ciencias-sociales/">Ciencias sociales</a></span>
+  </span>
+
+<a href="../../tags/" style="margin-left: 3px;">y más!</a>
+</div>
+</div>
+  
+  
+   
+   
+
+</div>
+
+  
+  <div id="PageTableOfContents" style="margin-top: 24px; position: sticky; top: 108px;">
+        <div class="blog-info ph4 pb4 pb0-l">
+        <h3 style="margin-bottom: 12px;">Índice:</h3>
+          <div class="pl2 pr0 mh0" style = "font-size: 90%; margin-top: -8px; margin-left: -22px; margin-bottom: 32px;">
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#inspeccionar-directorios-y-archivos-con-r">Inspeccionar directorios y archivos con R</a></li>
+    <li><a href="#cambiar-nombres">Cambiar nombres</a></li>
+    <li><a href="#eliminar-palabras-de-los-nombres">Eliminar palabras de los nombres</a></li>
+    <li><a href="#limpiar-nombres">Limpiar nombres</a></li>
+  </ul>
+</nav>
+          </div>
+        </div>
+    </div>
+  
+  
+
+</aside>
+
+        
+          <script id="partials/analytics.html" 
+  data-goatcounter="https://bastimapache.goatcounter.com/count"
+  async src="//gc.zgo.at/count.js"></script>
+<footer class="site-footer pv4 bt b--transparent ph5" role="contentinfo">
+  <nav class="db dt-l w-100">
+    <p class="site-copyright f7 db dtc-l v-mid w-100 w-33-l tc tl-l pv2 pv0-l mv0 lh-copy">
+      &copy; 2026 Bastián Olea Herrera, Chile
+      <span class="middot-divider"></span>
+      Hecho con <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/hugo-apero/" rel="dct:source" style="color:#9069C0;">Hugo Apéro</a> 
+      y <a href="https://pkgs.rstudio.com/blogdown/" style="color:#9069C0;">{blogdown}</a></span>.
+      <br />
+      
+Basado en <span xmlns:dct="http://purl.org/dc/terms/" property="dct:title"><a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/formspree/blogophonic-hugo" rel="dct:source" style="color:#9069C0;">Blogophonic</a></span>, de <a xmlns:cc="http://creativecommons.org/ns#" href="https://formspree.io" property="cc:attributionName" rel="cc:attributionURL" style="color:#9069C0;">Formspree</a>.
+
+Sitio alojado en <a href="https://www.netlify.com" style="color:#9069C0;">Netlify</a></span>.
+    </p>
+    
+    <div class="site-social-links db dtc-l v-mid w-100 w-33-l tc pv2 pv0-l mv0">
+      <div class="social-icon-links" aria-hidden="true">
+  
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bastianoleah.shinyapps.io/buscador/" title="search" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-search fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://github.com/bastianolea" title="github" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-github fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://x.com/bastimapache" title="twitter" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-twitter fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.linkedin.com/in/bastianolea/" title="linkedin" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-linkedin fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.tiktok.com/@bastimapache" title="tiktok" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-tiktok fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.instagram.com/raccunnie" title="instagram" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-instagram fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.goodreads.com/user/show/53224910-basti-n-olea-herrera" title="goodreads" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-goodreads fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://www.last.fm/user/bastimapache" title="lastfm" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-lastfm fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="https://bsky.app/profile/bastianolea.rbind.io" title="bluesky" target="_blank" rel="me noopener"
+    style="margin-bottom: 6px !important;"> 
+      <i class="fab fa-bluesky fa-lg fa-fw"></i>
+    </a>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <a class="link dib h1 w1 ml0 mr2 f6 o-90 glow" href="../../contacto/" title="envelope" 
+    style="margin-bottom: 6px !important;"> 
+      <i class="fas fa-envelope fa-lg fa-fw"></i>
+    </a>
+  
+</div>
+
+    </div>
+    
+    <div class="site-links f6 db dtc-l v-mid w-100 w-67-l tc tr-l pv2 pv0-l mv0">
+      
+      <a class="dib pv1 ph2 link" href="../../about/" title="Bastián Olea: Sobre mi">Sobre mi</a>
+      
+      <a class="dib pv1 ph2 link" href="https://bastianoleah.shinyapps.io/buscador/" title="Buscador">Buscar</a>
+      
+      <a class="dib pv1 ph2 link" href="../../contacto/" title="Bastián Olea: Contacto">Contacto</a>
+      
+      <a class="dib pv1 ph2 link" href="../../tags/" title="Temas">Temas</a>
+      
+      <a class="dib pv1 ph2 link" href="../../clases/" title="Clases">Clases</a>
+      
+      <a class="dib pv1 ph2 link" href="../../code-of-conduct/" title="Bastián Olea: Código de conducta">Código de conducta</a>
+      
+      <a class="dib pv1 ph2 link" href="../../license/" title="Bastián Olea: Licencia">Licencia</a>
+      
+    </div>
+  </nav>
+  
+    <script>
+
+    var i, text, code, codes = document.getElementsByTagName('code');
+    for (let i = 0; i < codes.length;) {
+      code = codes[i];
+      if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+        text = code.textContent;
+        if (/^\$[^$]/.test(text) && /[^$]\$$/.test(text)) {
+          text = text.replace(/^\$/, '\\(').replace(/\$$/, '\\)');
+          code.textContent = text;
+        }
+        if (/^\\\((.|\s)+\\\)$/.test(text) ||
+            /^\\\[(.|\s)+\\\]$/.test(text) ||
+            /^\$(.|\s)+\$$/.test(text) ||
+            /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+          code.outerHTML = code.innerHTML;  
+          continue;
+        }
+      }
+      i++;
+    }
+</script>
+
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.css" integrity="sha384-RZU/ijkSsFbcmivfdRBQDtwuwVqK7GMOw6IMvKyeWL2K5UAlyp6WonmB8m7Jd0Hn" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/katex.min.js" integrity="sha384-pK1WpvzWVBQiP0/GjnvRxV4mOb0oxFuyRxJlk6vVw146n3egcN5C925NCP7a7BY8" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.13/dist/contrib/auto-render.min.js" integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+
+
+
+    
+  
+  
+</footer>
+
+      </div>
+    </body>
+</html>
