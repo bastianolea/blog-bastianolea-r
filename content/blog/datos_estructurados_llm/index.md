@@ -30,7 +30,7 @@ links:
   - icon: book
     icon_pack: fas
     name: Workshop
-    url: https://thisisnic.github.io/rainbowrworkshop/code.html
+    url: https://thisisnic.github.io/rainbowrworkshop/
   - icon: file-code
     icon_pack: fas
     name: Código
@@ -80,11 +80,10 @@ library(readr)
 noticias <- read_csv2(url)
 ```
 
-Veamos rápidamente la tabla de datos:
+Veamos rápidamente la tabla de datos con la función `glimpse()`:
 
 ``` r
 library(dplyr)
-
 glimpse(noticias)
 ```
 
@@ -99,7 +98,7 @@ Vemos que tenemos una columna con los títulos, otra con el texto o *cuerpo* de 
 
 ## Extraer datos desde un solo texto
 
-Empecemos extrayendo una sola noticia como ejemplo:
+Empecemos extrayendo una sola noticia como ejemplo, usando `slice()` para elegir una fila de la tabla, y `pull()` para extraer la columna `cuerpo`, que contiene el texto de la noticia.
 
 ``` r
 library(dplyr)
