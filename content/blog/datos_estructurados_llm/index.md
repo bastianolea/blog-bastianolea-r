@@ -40,7 +40,7 @@ links:
 
 {{< aviso "Este tutorial lo hice con los aprendizajes que obtuve del excelente [workshop _LLMs in R for Data Analysis_](https://thisisnic.github.io/rainbowrworkshop/code.html) impartido por [Nic Crane](https://niccrane.com) en la fabulosa [conferencia de RainbowR 2026](https://conference.rainbowr.org)" >}}
 
-Los modelos de lenguaje (LLMs, también llamados coloquialmente *inteligencia artifical*) nos pueden ayudar a **transformar textos de cualquier tipo en datos estructurados**. Esto significa que puedes convertir **entrevistas, reseñas, opiniones, correos, noticias y más** en **bases de datos** con la información que necesitas debidamente ordenada en filas y columnas.
+Los modelos de lenguaje (LLMs, también llamados coloquialmente *inteligencia artificial*) nos pueden ayudar a **transformar textos de cualquier tipo en datos estructurados**. Esto significa que puedes convertir **entrevistas, reseñas, opiniones, correos, noticias y más** en **bases de datos** con la información que necesitas debidamente ordenada en filas y columnas.
 
 ***Ejemplos de uso:***
 - Puedes pasar de un conjunto de entrevistas a una tabla con las respuestas a preguntas específicas sobre los entrevistados, incluyendo información como edad, género, profesión, opiniones, etc.
