@@ -71,6 +71,14 @@ De todas maneras, cualquier persona podrá ver el **streaming en vivo** de las c
 ## Clases
 Las clases serán **online** los días 25 y 30 de marzo, y 1 de abril a las 7:30PM (horario de Chile). Se enviará un enlace de Zoom a las personas que obtengan un cupo, y paralelamente cualquier persona podrá ver el **streaming en vivo** de las clases.
 
+## Docente
+
+<img src="/img/bastian_olea.jpg" alt="Foto de Bastián Olea" width="140px" style="float: left; padding: 8px; padding-top: 0px; margin-right: 12px; border-radius: 50%;">
+
+**[Bastián Olea Herrera](/about/)** posee un magíster en Sociología de la Universidad Católica de Chile, y se ha dedicado por más de 5 años al análisis de datos con R. 
+
+Su experiencia consiste principalmente en [visualización de datos](/tags/gráficos/) y desarrollo de [aplicaciones interactivas](/shiny_apps/) con R. También se dedica a escribir [tutoriales](/categories/tutoriales/) para ayudar a otr@s a [aprender R](https://bastianolea.github.io/aprende_r/).
+
 ## Inscripciones
 
 Para inscribirte, rellena el siguiente formulario[^2] y te contactaré en caso de que hayas obtenido un cupo. 
