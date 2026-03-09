@@ -30,17 +30,22 @@ links:
 ---
 
 
+
 {{< imagen "curso_r_featured.png" >}}
 
 <!-- {{< aviso "Muchas gracias a todas las personas que participaron 🤍 Fue un placer poder enseñarles lo básico de estas herramientas a un curso mayoritariamente conformado por mujeres y personas LBGTIQ. Las [grabaciones](#grabaciones) y las [diapositivas](#diapositivas) están disponibles en este post!" >}} -->
 
 ## Sobre el curso
 
-Segundo curso gratuito de introducción a R enfocados en ciencias sociales. En este curso, de tres sesiones, aprenderemos a usar R para **analizar datos sociales**, aprenderemos lo básico de la **visualización de datos**, y exploraremos la **creación de mapas** con R.
+Segundo curso gratuito de introducción al análisis de datos con R, enfocado en las ciencias sociales. 
+
+En este curso de tres sesiones aprenderemos a usar R para **analizar datos sociales**, revisando lo básico de la **visualización de datos**, y explorando aspectos básicos de la **creación de mapas** con R. 
 
 {{< info "Recomiendo revisar los [contenidos del primer curso gratuito de R](/blog/curso_gratis_r_intro_1/) que organicé, incluyendo grabaciones y diapositivas, para tener una base de conocimientos básicos!" >}}
 
-En este curso gratuito de R podrás **aprender desde cero** a usar programación para análisis de datos! 
+El curso se dirige a personas de las **ciencias sociales** con mínima experiencia en análisis de datos y/o en R, ya que no es tan introductorio como [el primer curso](/blog/curso_gratis_r_intro_1/) (va a empezar directamente con el trabajo con datos, saltando los aspectos básicos). Sin embargo, el curso es apto para personas sin experiencia previa, aunque se recomienda [revisar los contenidos del primer curso!](/blog/curso_gratis_r_intro_1/)
+
+----
 
 R es un lenguaje diseñado para trabajar con datos. Además de exploración, transformación y análisis de datos, R permite hacer visualizaciones, animaciones, automatización de procesos, reportes, aplicaciones web, y mucho más. 
 
@@ -51,6 +56,8 @@ Aprende **desde cero** a usar este lenguaje y complementa tu carrera con herrami
 {{< imagen afiche_shiny.jpg >}}
 
 El curso va dirigido a **profesionales o estudiantes de las ciencias sociales** con **mínima experiencia** programando y/o usando R, o **alguna experiencia** trabajando con datos.
+
+{{< info "Mi objetivo con estos cursos es apoyar a personas de las ciencias sociales a prender nuevas habilidades, y hacer crecer la comunidad de usuari@s de R 📈" >}}
 
 ## Cupos
 
