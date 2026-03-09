@@ -63,9 +63,10 @@ El curso va dirigido a **profesionales o estudiantes de las ciencias sociales** 
 
 Los **cupos** son limitados, y se aplicarán **criterios de inclusión** para la participación de grupos minoritarios (mujeres, disidencias de sexo y género, personas con discapacidad). 
 
-A diferencia del primer curso, **sólo podrán participar personas de Chile**[^1]. De todas maneras, cualquier persona podrá ver el **streaming en vivo** de las clases.
+<!-- A diferencia del primer curso, **sólo podrán participar personas de Chile**[^1]. -->
+De todas maneras, cualquier persona podrá ver el **streaming en vivo** de las clases, que se transmitirá por Youtube.
 
-[^1]: Lamento tener que cerrar la posibilidad, pero el esfuerzo de impartir cursos gratuitos es alto, y necesito generar conexiones laborales y de colaboración centradas en mi territorio. 
+<!--[^1]: Lamento tener que cerrar la posibilidad, pero el esfuerzo de impartir cursos gratuitos es alto, y necesito generar conexiones laborales y de colaboración centradas en mi territorio. -->
 
 ## Clases
 Las clases serán **online** los días 25 y 30 de marzo, y 1 de abril a las 7:30PM (horario de Chile). Se enviará un enlace de Zoom a las personas que obtengan un cupo, y paralelamente cualquier persona podrá ver el **streaming en vivo** de las clases.
