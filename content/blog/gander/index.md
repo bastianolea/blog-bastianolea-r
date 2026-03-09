@@ -1,5 +1,5 @@
 ---
-title: Acelera tus análisis con {gander}, un asistente de IA integrado en RStudio
+title: Acelera tus análisis con `{gander}`, un asistente de IA integrado en RStudio
 author: Bastián Olea Herrera
 date: '2025-10-20'
 draft: false
@@ -37,11 +37,13 @@ excerpt: "`{gander}` es un paquete de R para integrar asistentes de inteligencia
 
 Se trata de una herramienta capaz de acelerar tu trabajo escribiéndote código, ayudándote a salir de bloqueos mentales, y solucionando problemas en los que usualmente perdemos tiempo tipeando. 
 
-**Pasos a seguir:** tienes que configurar su acceso a un modelo de lenguaje (como OpenAI, Anthropic, Copilot, o un modelo local como Llama), luego configurar el atajo de teclado para invocarlo, y listo!
-
-**Cómo funciona:** en vez de tener que copiar tu código e ir pidiéndole a una IA que te ayude, `{gander}` se conecta directamente a la IA para entregarle lo que le pides, y te lo entrega directo en tu código. Pero además le entrega al modelo información contextual sobre tu proyecto que hará que el código recibido se adecúe a tu entorno de R. Esto significa que el modelo sabrá los objetos que tienes cargados, sus columnas, y más, por lo que las respuestas serán mucho más útiles.
+- **Para qué sirve:** selecciona código en RStudio, presiona una combinación de teclas, y se abrirá una ventana donde puedes pedir a una IA que corrija tu código, que escriba código por tí, y más. Tendrás un asistente de IA a tu alcance para ayudarte a **mejorar tu código** y **escribir más rápido**!
+- **Pasos a seguir:** tienes que [configurar su acceso a un modelo de lenguaje](/blog/ellmer/) (como OpenAI, Anthropic, Copilot, o un modelo local como Llama), luego configurar el atajo de teclado para invocarlo, y listo!
+- **Cómo funciona:** en vez de tener que copiar tu código e ir pidiéndole a una IA que te ayude, `{gander}` se conecta directamente a la IA para entregarle lo que le pides, y te lo entrega directo en tu código. Pero además le entrega al modelo información contextual sobre tu proyecto que **hará que el código recibido se adecúe a tu entorno de R**. Esto significa que el modelo sabrá los objetos que tienes cargados, sus columnas, y más, por lo que las respuestas serán mucho más útiles.
 
 La idea principal es que puedes seleccionar tu código en R, o invocarlo en una línea nueva, y presionar una combinación de teclas para abrir una ventana en la que puedes escribir tu solicitud. Presionas enter y el modelo te entrega el código directamente en RStudio, ya sea reemplazando el código que tenías seleccionado, o agregando código en el punto que le pediste.
+
+{{< aviso "Este paquete requiere configurar RStudio con tu proveedor de Inteligencia Artificial. Puedes encontrar instrucciones más detalladas sobre configurar el uso de IA en R [en esta publicación.](/blog/ellmer/)" >}}
 
 
 ## Instalación
@@ -89,7 +91,7 @@ Es necesario tener la aplicación Ollama abierta en tu computadora, dado que és
 
 ### Opción B: configurar un proveedor de IA en la nube
 
-Para conectarte a un proveedor en la nube de IA, como ChatGPT y otros, necesitas darle a R la _API key_ o clave de acceso, como se explica en la [documentación de `{ellmer}`](https://ellmer.tidyverse.org/index.html#authentication). Como esta clave es privada (nadie más la debería ver!), la mejor forma de guardarla es en las **variables de entorno** de R. 
+Para conectarte a un proveedor en la nube de IA, como ChatGPT y otros, necesitas darle a R la _API key_ o clave de acceso, como se explica en este [tutorial de `{ellmer}`](/blog/ellmer/). Como esta clave es privada (nadie más la debería ver!), la mejor forma de guardarla es en las **variables de entorno** de R. 
 
 #### Variables de entorno
 
@@ -103,7 +105,9 @@ OPENAI_API_KEY=345345398475937434534539847593743453453984759374
 
 Si tu proveedor es Claude (Anthropic), el nombre de la variable es `ANTHROPIC_API_KEY`, etc.
 
-----
+{{< info "Para una explicación más detallada de este proceso, [revisa este post](/blog/ellmer/)" >}}
+
+
 
 ## Guardar configuración del modelo
 
@@ -127,7 +131,7 @@ options(.gander_chat = ellmer::chat_openai())
 
 Personalmente uso Copilot, así que pongo `ellmer::chat_copilot()`.
 
-{{< aviso "Para conocer otras formas de usar la integración de IA con R, revisa [este post sobre `{ellmer}`](/blog/ellmer/)" >}}
+{{< info "Para entender en más detalle la integración de IA con R, revisa [este post sobre `{ellmer}`](/blog/ellmer/)" >}}
 
 
 ----
