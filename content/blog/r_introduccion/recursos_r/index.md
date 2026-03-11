@@ -91,24 +91,24 @@ _Conoce a otras personas que usan R o únete a una comunidad de usuarios/as!_
 - [rainbowR](https://rainbowr.org) 🏳️‍🌈 comunidad de usuarixs de R enfocada en diversidad y disidencias sexo-genéricas y activismo de datos
 
 ### Usuarios de R
-- [Julia Silge](https://juliasilge.com) (análisis de texto, machine learning)
-- [Yanina Bellini Saibene](https://yabellini.netlify.app) 🇦🇷 (organizadora, traductora)
-- [Josiah Parry](https://josiahparry.com) (geoespacial, Rust)
-- [Danielle Navarro](https://blog.djnavarro.net) (data scientist, arte generativo)
-- [Nicola Rennie](https://nrennie.rbind.io) (visualización de datos, salud)
-- [Deepali Kank](https://deepalikank.in) (visualización de datos)
-- [Yan Holtz](https://blog.yan-holtz.com) (visualización de datos)
-- [Georgios Karamanis](https://karaman.is) (visualización de datos y mapas)
-- [Kyle Walker](https://walker-data.com) (desarrollador del paquete [mapGL](https://github.com/walkerke/mapgl) para mapas interactivos)
-- [Dominic Royé](https://dominicroye.github.io) (mapas y datos geoespaciales)
-- [Albert Rapp](https://albert-rapp.de/blog) (tips y tutoriales)
-- [Mauricio "Pacha" Vargas](https://pacha.dev/blog/) 🇨🇱 (estadística, econometría)
-- [Rosana Ferrero](https://x.com/RosanaFerrero) 🇪🇸 (comparte mucho contenido sobre estadísticas y R)
-- [Lesly Flores](https://x.com/lesssflo) 🇲🇽 (comparte contenido de estadísticas en R)
-- [Riva Quiroga](https://rivaquiroga.cl/ahora/) 🇨🇱 (humanidades computacionales, lingüística)
-- [Bruno Rodrigues](https://www.brodrigues.co) (reproducibilidad)
-- [Luis D. Verde Arregoitia](https://luisdva.github.io) 🇲🇽 (biólogo)
-- [Joachim Schork](https://statisticsglobe.com)
+- [Julia Silge](https://juliasilge.com), análisis de texto, machine learning
+- [Yanina Bellini Saibene](https://yabellini.netlify.app) 🇦🇷, organizadora, traductora
+- [Josiah Parry](https://josiahparry.com), geoespacial, Rust
+- [Danielle Navarro](https://blog.djnavarro.net), data scientist, arte generativo
+- [Nicola Rennie](https://nrennie.rbind.io), visualización de datos, salud
+- [Joachim Schork](https://statisticsglobe.com), estadísticas con R
+- [Luis D. Verde Arregoitia](https://luisdva.github.io) 🇲🇽 biólogo, inteligencia artificial
+- [Rosana Ferrero](https://x.com/RosanaFerrero) 🇪🇸 comparte mucho contenido sobre estadísticas y R
+- [Lesly Flores](https://x.com/lesssflo) 🇲🇽 comparte contenido de estadísticas en R
+- [Kyle Walker](https://walker-data.com), desarrollador del paquete [mapGL](https://github.com/walkerke/mapgl) para mapas interactivos
+- [Dominic Royé](https://dominicroye.github.io) 🇪🇸 mapas, datos geoespaciales, clima
+- [Albert Rapp](https://albert-rapp.de/blog), tips y tutoriales
+- [Deepali Kank](https://deepalikank.in), visualización de datos
+- [Yan Holtz](https://blog.yan-holtz.com), visualización de datos
+- [Georgios Karamanis](https://karaman.is), visualización de datos y mapas
+- [Mauricio "Pacha" Vargas](https://pacha.dev/blog/) 🇨🇱 estadística, econometría
+- [Riva Quiroga](https://rivaquiroga.cl/ahora/) 🇨🇱 humanidades computacionales, lingüística
+- [Bruno Rodrigues](https://www.brodrigues.co), reproducibilidad
 - [Kennedy Mwavu](https://x.com/kennedymwavu)
 - [Rony Rodríguez-Ramírez](https://rrmaximiliano.github.io) 🇳🇮
 
