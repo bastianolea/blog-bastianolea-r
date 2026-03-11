@@ -89,8 +89,9 @@ _Conoce a otras personas que usan R o únete a una comunidad de usuarios/as!_
 
 #### Otras comunidades de R
 - [rainbowR](https://rainbowr.org) 🏳️‍🌈 comunidad de usuarixs de R enfocada en diversidad y disidencias sexo-genéricas y activismo de datos
+- [Data Science Learning Community](https://dslc.io)
 
-### Usuarios de R
+### Usuari@s de R
 - [Julia Silge](https://juliasilge.com), análisis de texto, machine learning
 - [Yanina Bellini Saibene](https://yabellini.netlify.app) 🇦🇷, organizadora, traductora
 - [Josiah Parry](https://josiahparry.com), geoespacial, Rust
@@ -111,8 +112,6 @@ _Conoce a otras personas que usan R o únete a una comunidad de usuarios/as!_
 - [Bruno Rodrigues](https://www.brodrigues.co), reproducibilidad
 - [Kennedy Mwavu](https://x.com/kennedymwavu)
 - [Rony Rodríguez-Ramírez](https://rrmaximiliano.github.io) 🇳🇮
-
-
 
 #### Blogs sobre R
 - [R-Bloggers](https://www.r-bloggers.com/), blog que reúne cientos de posts desde blogs de usuarios y desarrolladores de R
