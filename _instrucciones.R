@@ -94,6 +94,9 @@ blogdown::new_post(title = "Extracción de datos estructurados desde texto usand
 # {{< info "x" >}}
 # {{< detalles "Hola" >}} {{< /detalles >}}
 # {{< boton "Buscador" "https://bastianoleah.shinyapps.io/buscador/" "fas fa-search" >}}
+# <i class='fas fa-chalkboard-user'></i>
+# <i class='fas fa-chalkboard-user' style='font-size: 200%'></i>
+
 
 
 
