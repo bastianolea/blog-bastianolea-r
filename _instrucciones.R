@@ -13,10 +13,10 @@ abrir_post_reciente()
 
 
 # crear un post normal
-blogdown::new_post(title = "Renombrar muchos archivos desde R", 
+blogdown::new_post(title = "Primera reunión: grupo de usuari@s de R, Santiago de Chile", 
                    file = paste0("blog/", lubridate::today(), "/index.md"),
                    author = "Bastián Olea Herrera",
-                   tags = c("automatización")
+                   tags = c("blog", "Chile")
 )
 
 # crear un post tutorial
