@@ -79,9 +79,10 @@ _Conoce a otras personas que usan R o únete a una comunidad de usuarios/as!_
 ### <i class='fas fa-people-group'></i> Comunidades de R
 
 #### Comunidades de R en Chile 🇨🇱
+- [Grupo de Usuarias y Usuarios de R de Santiago de Chile](https://santiagorusers.github.io/) ⭐️ **nuevo grupo** para compartir con otras personas que usan R!
 - [RLadies Santiago](https://www.meetup.com/rladies-scl/), grupo por la diversidad de género en la comunidad R
 - [RLadies Chile](https://linktr.ee/rladieschile) 
-
+- [RLadies Temuco](https://www.meetup.com/es-es/rladies-temuco/)
 
 #### Comunidades de R en Latinoamérica o hipanohablantes
 - [Latin R](https://latinr.org), Conferencia Latinoamericana de R para investigación y desarrollo

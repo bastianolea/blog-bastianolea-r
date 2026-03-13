@@ -1,5 +1,4 @@
 # previsualizar sitio
-
 blogdown::serve_site()
 blogdown::stop_server()
 blogdown::build_site()
@@ -67,6 +66,7 @@ blogdown::new_post(title = "Extracción de datos estructurados desde texto usand
 # constantes
 "content/blog/mapas_sf/mapas_sf.qmd"
 "content/blog/git_comandos/index.md"
+"content/blog/r_introduccion/recursos_r/index.md" # enlaces
 
 # en construcción
 "content/blog/mapas_sf/mapas_sf.qmd"
